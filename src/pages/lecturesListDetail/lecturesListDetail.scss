@@ -1,0 +1,926 @@
+@mixin button_style {
+  width: 100px;
+  height: 38px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  cursor: pointer;
+}
+@mixin title_text {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  color: #5e5e5e;
+}
+@mixin grid_item_span2 {
+  grid-column: span 2 / span 2;
+}
+@mixin grid_item_span3 {
+  grid-column: span 3 / span 3;
+}
+@mixin grid_item_span4 {
+  grid-column: span 4 / span 4;
+}
+
+@mixin hide_for_mobile {
+  @media screen and (max-width:615px) {
+    display: none;
+  }
+}
+@mixin hide_for_desktop {
+  @media screen and (min-width:615px) {
+    display: none;
+  }
+}
+@mixin font_mobile {
+  @media screen and (max-width:615px) {
+    font-size:14px;
+  }
+}
+
+.leclistdet_wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  @media screen and (max-width:615px) {
+    align-items: unset;
+    //padding-top:13px;
+    width:100%;
+  }
+  .leclistdet_header_link {
+
+    width: 100%;
+    position:fixed;
+    left:0;
+    right:0;
+    z-index: 10;
+    font-size: 14px;
+    font-weight: 400;
+    padding:unset;
+    background:none;
+    opacity:1;
+    transition: opacity 250ms ease-in;
+
+    .header_bg{
+      
+      position:absolute;
+      width:100%;
+      height:62px;
+      z-index:-1;
+      object-fit:contain;
+      inset:0;
+      .img {
+        width:100%;
+        height:100%;
+      }
+    }
+  }
+  .leclistdet_header_link_none {
+    opacity:0;
+    .header_bg {
+      display: none;
+    }
+  }
+  .leclistdet_hero {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    filter: blur(200px);
+    height:12%;
+    @media screen and (max-width: 1096px) {
+      height:20%;
+     }
+    @include hide_for_mobile;
+  }
+  .leclistdet_container {
+    z-index: 1;
+    padding:2%;
+    width: 100%;
+    @media screen and (max-width:615px) {
+      padding:0px;
+    }
+    // ----------- Bread Crumbs --------------
+    .leclistdet_breadcrumb {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 0.3rem;
+      @include hide_for_mobile;
+      margin-bottom: 3rem;
+      .leclistdet_breadcrumb_first {
+        margin: unset;
+        font-family: "Nunito Sans";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        color: #868686;
+        cursor: pointer;
+        &:hover {
+          color: #d6ff00;
+        }
+      }
+      .leclistdet_breadcrumb_second {
+        margin: unset;
+        font-family: "Nunito Sans";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        color: #ffffff;
+      }
+    }
+    // ----------- Bread Crumbs End --------------
+
+    // ----------- Section 1 --------------
+    .leclistdet_head_wrap {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      @media screen and (max-width: 1132px) {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+     @include hide_for_mobile;
+
+      .leclistdet_head_left {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+
+        width: 240px;
+        height: 240px;
+        border-radius: 8px;
+        overflow: hidden;
+        
+        @media screen and (max-width: 1132px) {
+          margin-bottom: 1rem;
+        }
+     
+        .leclistdet_head_left_img {
+          width: 100%;
+          height: 100%;
+          
+        }
+       
+       
+      }
+     
+      .leclistdet_head_right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        // justify-content: space-between;
+        // height: 12rem;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        @include hide_for_mobile;
+        .leclistdet_head_right_head {
+          margin: unset;
+          font-family: "Nunito Sans";
+          font-style: normal;
+          font-weight: 600;
+          font-size: 20px;
+          line-height: 26px;
+          color: #ffffff;
+          //max-width: 350px;
+          @media screen and (max-width:600px) {
+            width: 100%;
+            font-size:15px;
+            line-height:18px;
+          }
+        }
+        .leclistdet_head_right_text {
+          display: flex;
+          flex-direction: column;
+         align-items: flex-start;
+         
+          gap: 0.3rem;
+          margin-bottom:4px;
+          .rpimage_wrap {
+            display: flex;
+            flex-direction: row;
+            gap:5px;
+            align-items: center;
+            justify-content: flex-start;
+            .rpimage_circle {
+              width:25px;
+              height:25px;
+              border-radius: 50%;
+              .rpimage_sz {
+                width:25px;
+                height:25px;
+                border-radius:50%;
+
+              }
+             }
+            .leclistdet_head_right_text1 {
+              margin: unset;
+              font-family: "Nunito Sans";
+              font-style: normal;
+              font-size: 14px;
+              line-height: 20px;
+              color: #d4d4d4;
+              @media screen and (max-width:600px) {
+                margin-top: 0.5rem;
+                font-size:14px;
+              font-weight: 400;
+                line-height: 16px;
+              }
+            }
+          }
+     
+        }
+
+        .leclistdet_head_right_actions_wrap {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 1rem;
+          @media screen and (max-width: 600px) {
+            margin-top: 1rem;
+          }
+          .leclistdet_play {
+            background: #ddff2b;
+           
+            border:0;
+  height: 38px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap:0.6rem;
+  width:120px;
+  cursor: pointer;
+            .leclistdet_play_icon {
+              font-size: 25px;
+              color: #000000;
+              font-weight:200;
+            }
+            .leclistdet_play_text {
+              font-family: "Nunito Sans";
+              font-style: normal;
+              font-weight: 600;
+              font-size: 14px;
+              line-height: 24px;
+
+              color: #000000;
+              margin: unset;
+            }
+          }
+          .leclistdet_fav {
+            background-color: #ffffff17;
+            @include button_style;
+            &:hover {
+              background-color: #ffffff2d;
+            }
+            .fav_btn {
+              background:none;
+              margin:0;
+              border: 0;
+              .leclistdet_fav_icon {
+                font-size: 25px;
+                
+                @media screen and (max-width:600px) {
+                  font-size:20px;
+                }
+                color: #cfcfcf;
+              }
+              .leclistdet_fav_icon_active {
+                font-size: 25px;
+                
+                @media screen and (max-width:600px) {
+                  font-size:20px;
+                }
+                color:#ddff2b;
+              }
+            }
+            .leclistdet_fav_text {
+              font-family: "Nunito Sans";
+              font-style: normal;
+              font-weight: 400;
+              font-size: 14px;
+              line-height: 24px;
+              @media screen and (max-width:615px) {
+                font-size:12px;
+                line-height: 20px;
+              }
+              color: #cfcfcf;
+              margin: unset;
+            }
+          }
+          .leclistdet_share {
+            background-color: #ffffff17;
+            @include button_style;
+            &:hover {
+              background-color: #ffffff2d;
+            }
+            .leclistdet_share_icon {
+              font-size: 25px;
+              @media screen and (max-width:615px) {
+                font-size:20px;
+              }
+              color: #cfcfcf;
+            }
+            .leclistdet_share_text {
+              font-family: "Nunito Sans";
+              font-style: normal;
+              font-weight: 400;
+              font-size: 14px;
+              line-height: 24px;
+              color: #cfcfcf;
+              margin: unset;
+              @media screen and (max-width:600px) {
+                font-size:12px;
+                line-height: 20px;
+              }
+            }
+          }
+          .leclistdet_comment {
+            background-color: #ffffff17;
+            @include button_style;
+            &:hover {
+              background-color: #ffffff2d;
+            }
+            .leclistdet_comment_icon {
+              font-size: 25px;
+              @media screen and (max-width:615px) {
+                font-size:20px;
+              }
+              color: #cfcfcf;
+            }
+            .leclistdet_comment_text {
+              font-family: "Nunito Sans";
+              font-style: normal;
+              font-weight: 400;
+              font-size: 14px;
+              line-height: 24px;
+              @media screen and (max-width:615px) {
+                font-size:12px;
+                line-height: 20px;
+              }
+              color: #cfcfcf;
+              margin: unset;
+            }
+          }
+          .leclistdet_download {
+            background-color: #ffffff17;
+            width:fit-content;
+  height: 38px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  justify-content: center;
+padding:0rem 1rem;
+  cursor: pointer;
+            &:hover {
+              background-color: #ffffff2d;
+            }
+            .leclistdet_download_icon {
+              font-size: 25px;
+              @media screen and (max-width:615px) {
+                font-size:20px;
+              }
+              color: #cfcfcf;
+            }
+          }
+        }
+      }
+    }
+   
+    .leclistdet_head_right_text2 {
+      margin: unset;
+      @include hide_for_mobile;
+      font-family: "Nunito Sans";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 20px;
+
+      color: #d4d4d4;
+      @media screen and (max-width:600px) {
+        margin-top: 0.5rem;
+        font-size: 14px;
+      line-height: 16px;
+      }
+      .braces {
+        color:#868686;
+        margin-left: 3px;
+        .braces_text {
+          color: #d4d4d4;
+        }
+      }
+    }
+
+    //----------mobile ----------
+    .leclistdet_head_mobile {
+      @include hide_for_desktop;
+      position: fixed;
+      width:98%;
+      top:65px;
+      left:0;
+      right:0;
+      @media screen and (max-width:450px) {
+        width:100%;
+      }
+      .leclistdet_head_img {
+        width:100%;
+        height:250px;
+        position:relative;
+        .leclistdet_head_img_sz {
+          width:100%;
+          height:50%;
+          object-fit:cover;
+          filter:blur(80px)
+        }
+
+      }
+      .leclistdet_head_img_none {
+        display:none;
+      }
+
+      .leclistdet_min_wrap {
+        position: absolute;
+        width:100%;
+        height: 100%;
+        top:0;
+        left:0;
+        padding:0 3%;
+        background: none;
+        color:white;
+        display: flex;
+        flex-direction: column;
+
+        .mob_arrow {
+          width:28px;
+          height:28px;
+          margin-bottom: 2rem;
+          .mob_arrow_sz {
+            width:100%;
+            height:100%;
+          }
+        }
+       
+      }
+
+    }
+    // ----------- Section1 ends --------------
+    // ----------- Section2 --------------
+
+    
+    //----------------mobile --------
+
+    .mobile_leclistdet_tab_wrap {
+      position: relative;
+      margin-top:5em;
+      
+      color:white;
+      font-size:14px;
+      width:100%;
+      @include hide_for_desktop;
+      .mob_txt {
+        display: grid;
+       // flex-direction: row;
+       grid-template-columns: repeat(2, auto);
+        color: white;
+          font-size: 14px;
+          padding:0 3%;
+          align-items: center;
+          justify-content: flex-start;
+          font-family: "Poppins";
+          margin-bottom:10%;
+          .album_img {
+            width:100px;
+            height:100px;
+            margin-right:1.5rem;
+            border-radius: 4px;
+           
+           .album_img_sz {
+            width:100%;
+            height:100%;
+            border-radius: 4px;
+          }
+          }
+        
+        .mob_like {
+          display: flex;
+          flex-direction: column;
+          color:white;
+          gap:1rem;
+          font-family: "Poppins";
+          font-size: 14px;
+         
+          .rp_img_name {
+            display: flex;
+            flex-direction: row;
+            .likeys_img {
+              width:20px;
+              height:20px;
+              border-radius: 50%;
+             
+             .likeys_img_sz {
+              width:20px;
+              height:20px;
+              border-radius: 50%;
+            }
+            }
+            .likeys_text {
+              padding-left:4px;
+              font-size: 12px;
+            }
+
+          }
+       
+
+        }
+       
+
+      }
+      .listrank_and_listblack_wrap {
+        width:100%;
+        position: relative;
+        max-height:105px;
+        .listranking {
+          display:flex;
+          flex-direction: row;
+          align-items: center;
+          width: 100%;
+          font-family: "Poppins";
+          justify-content: space-around;
+          background:rgba(0,0,0,0.3);
+          padding:0% 2%;
+          height:65px;
+          opacity: 1;
+          //position: relative;
+          border-top-right-radius: 24px;
+          border-top-left-radius: 24px;
+          .icons_mob_listblack {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            font-family: "Poppins";
+            .likeys_img {
+              width:18px;
+              height:17px;
+              background: none;
+              border:0;
+              margin-right:6px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+             
+             .likeys_img_sz {
+              width:18px;
+              height:17px;
+            }
+            }
+            .likeys_text {
+              padding-left:3px;
+              font-size: 14px;
+              color:#AEAEAE;
+              
+            }
+            
+          }
+        }
+        .listranking_none {
+          opacity: 0;
+          transition: opacity 250ms ease-out;
+        }
+        
+      .headings {
+        width: 100%;
+        font-family: "Poppins";
+        position:fixed;
+        top:52px;
+        background:rgba(0,0,0,1);
+        height:fit-content;
+        opacity: 1;
+        //position: relative;
+        //border-top-right-radius: 24px;
+        //border-top-left-radius: 24px;
+        width:100%;
+        color:white;
+        display: flex;
+        z-index: 10;
+        padding-top:7px;
+        flex-direction:row;
+        justify-content: space-between;
+        align-items: center;
+        transition: opacity 250ms ease-in;
+
+        .fixed_mob_arrow {
+          width:28px;
+          height:28px;
+          //margin-bottom: 2rem;
+          .fixed_mob_arrow_sz {
+            width:100%;
+            height:100%;
+            
+          }
+        }
+        .fixed_text {
+          color:white;
+          font-weight: 600;
+        }
+        .fixed_bg_none {
+          width:28px;
+          height:28px;
+          background: none;
+        }
+
+    .header_bg{
+      
+      position:absolute;
+      width:100%;
+      height:53px;
+      z-index:-1;
+      
+      inset:0;
+      .img {
+        width:100%;
+        height:70%;
+        opacity:1;
+        object-fit:cover;
+        filter:blur(30px);
+      }
+    }
+       
+      }
+      .headings_none {
+        opacity: 0;
+        display:none;
+
+      }
+        .listblacks {
+          width:100%;
+          background: #0D0D0D;
+          border-top-right-radius: 24px;
+          border-top-left-radius: 24px;
+          position: relative;
+          right:0;
+          left:0;
+          height: 100%;
+          top:-0.8em;
+          overflow: hidden;
+          
+          .icons_listblack {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            font-family: "Poppins";
+            justify-content:flex-start;
+            //padding:1% 2%;
+            background:#0D0D0D;
+            border-bottom: 1px solid gray;
+           
+            .play_header {
+              display: flex;
+              gap:0.5em;
+              align-items: center;
+              .play_img_size {
+                 border: 1px solid #CFCFCF;
+                 border-radius: 50%;
+                 padding: 2%;
+                 width:20px;
+                 height:20px;
+                 display:flex;
+                 align-items: center;
+                 justify-content: center;
+                .play_img_size_sm {
+                  width: 100%;
+                  height:100%;
+                  padding-left: 3px;
+                  padding-right: 2px;
+                }
+              }
+              .play_header_text {
+                font-size: 14px;
+                font-weight: 500;
+              }
+            }
+  
+          }
+          .fixed_icons_listblack {
+            position: fixed;
+            top:90px;
+            width:100%;
+            font-family: "Poppins";
+            border-top-right-radius: 24px;
+            border-top-left-radius: 24px;
+            z-index:10;
+            background:#0D0D0D;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content:flex-start;
+            //padding:1% 2%;
+            border-bottom: 1px solid gray;
+            .play_header {
+              display: flex;
+              gap:0.5em;
+              align-items: center;
+              justify-content: center;
+              .play_img_size {
+                 border: 1px solid #CFCFCF;
+                 border-radius: 50%;
+                 width:20px;
+                 height:20px;
+                 display:flex;
+                 padding: 2%;
+                 align-items: center;
+                 justify-content: center;
+                .play_img_size_sm {
+                  width: 100%;
+                  height:100%;
+                  padding-left: 3px;
+                  padding-right: 2px;
+                }
+              }
+              .play_header_text {
+                font-size: 14px;
+                font-weight: 500;
+              }
+            }
+          }
+          .descript {
+            font-size:14px;
+            color:white;
+            font-family:"Poppins";
+            padding:4% 3% 3% 5%;
+          }
+        
+          .mobile_color_vid {
+            background: #0D0D0D;
+            padding:3%;
+            @include hide_for_desktop;
+          }
+        }
+
+       
+      }
+
+    }
+    // ----------- Section2 ends --------------
+  
+    .desktop_color_vid {
+      @include hide_for_mobile;
+        //background: #0D0D0D;
+        //padding:3%;
+        //position: relative;
+        //@media screen and (min-width:615px) {
+          //background:none;
+       // }
+    }
+
+    .lecsong_wrapper {
+      padding: 1rem 0rem 3rem;
+      @media screen and (max-width:615px) {
+        background:#0D0D0D;
+        position:relative;
+        padding:1rem 0rem 1.5rem;
+      }
+      .lecsong_title_res_wrap {
+        @media screen and (min-width: 1221px) {
+          display: none;
+        }
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 2rem;
+        .lecsong_title_res_icon {
+          font-size: 40px;
+          color: #d4d4d4;
+          cursor: pointer;
+        }
+        .lecsong_title_res_text {
+          font-family: "Poppins";
+          font-style: normal;
+          font-weight: 500;
+          font-size: 20px;
+          line-height: 30px;
+          color: #d4d4d4;
+          margin-left: 40%;
+        }
+      }
+      .lect_title_wrap {
+        font-weight:600;
+        @media screen and (max-width: 600px) {
+          display: none;
+        }
+        display: flex;
+        //gap: 1rem;
+       // grid-template-columns: repeat(11, minmax(0, 1fr));
+        justify-items: flex-start;
+        width: 100%;
+        margin-bottom: 2rem;
+        .lect_title2,
+        .lect_title3,
+        .lect_title4 {
+          @include title_text;
+          margin: unset;
+          padding: unset;
+        }
+        .lect_title1 {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          width:50%;
+         // grid-column: span 5 / span 5;
+          * {
+            @include title_text;
+            margin: unset;
+            padding: unset;
+          }
+          .lect_hash {
+            // margin-right: 1.6rem;
+            width: 30px;
+          }
+        }
+        .lect_title2 {
+         /// grid-column: span 2 / span 2;
+         width:40%;
+         display: flex;
+         align-items: start;
+         justify-content: flex-start;
+        }
+       
+        .lect_title4 {
+         // grid-column: span 2 / span 2;
+         display: flex;
+         align-items: start;
+         justify-content: flex-start;
+        }
+      }
+      .loads {
+        width:100%;
+        height:400px;
+        position: relative;
+        //justify-content: last baseline;
+        .load {
+          width:100%;
+          height:50%;
+          position: absolute;
+          inset: 0;
+    
+          margin:auto auto;
+    
+        }
+      
+        
+      }
+
+    .lecsong_content {
+      display: flex;
+      flex-direction: column;
+      gap: 0rem;
+      width:100%;
+      .lecsong_content_item {
+        cursor: pointer;
+        .desktops_item {
+          @media screen and (max-width:615px) {
+            display:none;
+          }
+        }
+        .mobile_item {
+          font-size:14px;
+          color:white;
+          width:100%;
+          font-family: "Poppins";
+          padding:0%;
+          border-bottom:1px solid #999999;
+          margin-bottom: 3px;
+          @media screen and (min-width:615px) {
+            display:none;
+          }
+       
+        }
+      
+      
+      }
+    }
+    }
+  
+  }
+
+  .share_wrapper {
+    display: block;
+  }
+  .hide_share_wrapper {
+    display: none;
+  }
+}

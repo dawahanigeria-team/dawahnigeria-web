@@ -1,0 +1,157 @@
+@mixin title_text {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  color: #5e5e5e;
+}
+
+@mixin mobile_hide {
+  @media screen and (max-width:600px) {
+    display:none;
+  }
+}
+
+.favalbum_wrapper {
+  //padding: 2rem 2rem 3rem;
+  display: flex;
+  width:100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  .favalbum_img_wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    .favalbum_text {
+      font-family: "Nunito Sans";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      color: #ffffff;
+      text-align: center;
+    }
+  }
+  .favalbum_button {
+    background: #ddff2b;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 198px;
+    height: 56px;
+    font-family: "Nunito Sans";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: #000000;
+    cursor: pointer;
+  }
+
+  .load_desktop {
+    width:100%;
+    height:400px;
+    position: relative;
+    @include mobile_hide;
+    .load {
+      width:100%;
+      height:50%;
+      position: absolute;
+      inset: 0;
+  
+      margin:auto auto;
+  
+    }
+  
+    
+  }
+
+  .favalb_wrapper {
+    padding: 1rem 0rem 0rem;
+    // overflow: hidden;
+    width:100%;
+     display: flex;
+     flex-direction: row;
+     align-items: flex-start;
+     flex-wrap: wrap;
+     
+     //display:grid;
+     //grid-template-columns:repeat(5, auto);
+     //width: 100%;
+     gap:1rem;
+     @media screen and (max-width: 1060px) {
+       //justify-content: center;
+      //display:grid;
+     // grid-template-columns:repeat(4, auto);
+      //gap:2rem;
+      //margin-top: 2rem;
+    }
+    @media screen and (max-width: 890px) {
+     //justify-content: center;
+    //display:grid;
+    //grid-template-columns:repeat(4, auto);
+    //gap:2rem;
+    //margin-top: 2rem;
+   }
+   @media screen and (max-width: 768px) {
+   //grid-template-columns:repeat(3, auto);
+   //gap:2rem;
+   //margin-top: 2rem;
+   }
+   @media screen and (max-width: 615px) {
+     display:grid;
+     grid-template-columns:repeat(2, minmax(0,1fr));
+     gap:1rem;
+     //margin-top: 2rem;
+     }
+   
+  
+    //gap: 1rem;
+    .favalb_album_item {
+      cursor: pointer;
+      width:18%;
+     height:220px;
+       @media screen and (max-width: 1100px) {
+         width:23%;
+         //height:175px;
+       }
+       @media screen and (max-width: 1000px) {
+         //width:140px;
+        // width:20%;
+         height:160px;
+       }
+       @media screen and (max-width: 890px) {
+         width:20%;
+         height:180px;
+      }
+      @media screen and (max-width: 850px) {
+      
+       height:160px;
+    }
+    @media screen and (max-width: 768px) {
+      width:22%;
+     height:180px;
+   }
+   @media screen and (max-width: 670px) {
+     width:23%;
+    height:180px;
+   }
+   @media screen and (max-width: 640px) {
+     width:31%;
+    height:180px;
+   }
+   @media screen and (max-width: 615px) {
+     width:100%;
+    height:165px;
+   }
+      
+    }
+  }
+
+
+}

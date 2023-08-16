@@ -1,0 +1,224 @@
+.album_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  //width: 12.5rem;
+  //height: 14.313rem;
+  overflow-x: hidden;
+  width:100%;
+  height:100%;
+
+  border-radius: 6px;
+  @media screen and (max-width: 615px) {
+    width: 100%;
+    height: 100%;
+   
+  }
+  .album_container .album_play_super_wrap .album_play_wrapper {
+    display: none;
+  }
+
+  .album_container:hover .album_play_super_wrap {
+    width: 100%;
+    height:100%;
+    border-radius: 6px;
+    inset:0;
+    position: absolute;
+    transition-timing-function: ease-in;
+    transition: 0.3s;
+    transform: translateY(0);
+    background:rgba(0,0,0,0.5);
+    .album_play_wrapper {
+      position: absolute;
+      width:fit-content;
+      height:fit-content;
+      display: block;
+      top:0;
+      bottom:0;
+      left:0;
+      right:0;
+      border-radius: 6px;
+     
+      margin:auto;
+      
+      .album_play {
+        cursor: pointer;
+  
+        transition-timing-function: ease-in;
+        transition: 0.3s;
+        transform: translateY(0);
+        width: 62.07px;
+        height: 62.07px;
+        background: rgba(34, 34, 34, 0.4);
+        border-radius: 50%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        .album_play_icon {
+          color: #cfcfcf;
+          font-size: 30px;
+        }
+      }
+    }
+  } 
+  .album_playing {
+    width: 100%;
+    height:100%;
+    border-radius: 8px;
+    position: absolute;
+    inset:0;
+    transition-timing-function: ease-in;
+    transition: 0.3s;
+    transform: translateY(0);
+    background:rgba(0,0,0,0.5);
+    .album_playing_wrapper {
+      position: absolute;
+      width:fit-content;
+      height:fit-content;
+      display: block;
+      top:0;
+      bottom:0;
+      left:0;
+      right:0;
+     
+      margin:auto;
+      
+      .album_play {
+        cursor: pointer;
+  
+        transition-timing-function: ease-in;
+        transition: 0.3s;
+        transform: translateY(0);
+        width: 62.07px;
+        height: 62.07px;
+        background: rgba(34, 34, 34, 0.4);
+        border-radius: 50%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+      
+      }
+    }
+  } 
+  .album_container {
+    width: 100%;
+    height: 100%;
+    //overflow: hidden;
+    
+    border-radius: 6px;
+    position: relative;
+    @media screen and (max-width: 600px) {
+      //width: 90px;
+      //height: 94.19px;
+    }
+    .album_img {
+      width: 100%;
+  
+      height: 100%;
+      .album_background_image {
+        position: absolute;
+        width: 100%;
+  
+        height: 100%;
+        top: 0;
+        left: 0;
+        border-radius: 6px;
+      }
+    }
+   
+    .album_overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 35%;
+      border-radius: 6px;
+      background: linear-gradient(
+        180deg,
+        rgba(217, 217, 217, 0) 0%,
+        rgb(25, 25, 26) 71.74%
+      );
+      @media screen and (max-width: 500px) {
+        height: 50%;
+      }
+    }
+    .album_widget_name {
+      font-family: "Poppins";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 36px;
+      display: flex;
+      align-items: center;
+      color: #040404;
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      margin: unset;
+      padding: unset;
+      @media screen and (max-width: 600px) {
+        font-size: 10px;
+        line-height: 0px;
+        top: 1rem;
+      }
+    }
+    .album_listen_wrapper {
+      position: absolute;
+      bottom: 0.5rem;
+      left: 0.5rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .album_listen_icon {
+        font-size: 16px;
+        color: #d4d4d4;
+        @media screen and (max-width: 600px) {
+          font-size: 10px;
+        }
+      }
+      .album_listen_text {
+        margin-left: 0.5rem;
+        font-family: "Nunito Sans";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        color: #d4d4d4;
+        text-shadow: 0px 3px 4px rgba(44, 44, 44, 0.25);
+        margin-bottom: unset;
+        margin-top: unset;
+        @media screen and (max-width: 600px) {
+          font-size: 10px;
+          line-height: 0px;
+          margin-left: 0.2rem;
+        }
+      }
+    }
+  }
+  .album_categories {
+    font-family: "Nunito Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    color: #d4d4d4;
+    text-shadow: 0px 3px 4px rgba(44, 44, 44, 0.25);
+    white-space: nowrap;
+    max-width: 12rem;
+    //overflow: hidden;
+    padding-left:3%;
+    @media screen and (max-width: 600px) {
+      font-size: 12px;
+      max-width: 150px;
+    }
+  }
+
+  .show {
+    display: block;
+  }
+  .hide {
+    display: none;
+  }
+}

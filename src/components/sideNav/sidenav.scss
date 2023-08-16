@@ -1,0 +1,204 @@
+@mixin section_headers {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  margin-bottom:0.5rem;
+  display: flex;
+  align-items: center;
+  color: #d4d4d4;
+}
+@mixin section_layouts {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+@media screen and (max-width:600px) {
+  
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  .sidenav_wrapper:hover::-webkit-scrollbar {
+  display: none;
+}
+.sidenav_wrapper:focus::-webkit-scrollbar {
+  display: none;
+}
+.sidenav_wrapper:hover::-moz-scrollbar {
+  display: none;
+}
+.sidenav_wrapper:focus::-moz-scrollbar {
+  display: none;
+}
+}
+
+.sidenav_wrapper:hover::-webkit-scrollbar {
+    display:block;
+}
+
+.sidenav_wrapper::-webkit-scrollbar {
+  width: 5px;
+  height: 18px;
+  display:none;
+}
+
+.sidenav_wrapper:hover::-moz-scrollbar {
+  display:block;
+}
+
+.sidenav_wrapper::-moz-scrollbar {
+width: 5px;
+height: 18px;
+display:none;
+}
+
+.sidenav_wrapper::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.sidenav_wrapper::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background-color: rgba(244, 245, 234, 0.5);
+}
+
+.sidenav_wrapper::-moz-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.sidenav_wrapper::-moz-scrollbar-track {
+  border-radius: 8px;
+  background-color: rgba(244, 245, 234, 0.5);
+}
+
+
+
+.sidenav_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.5rem 2rem;
+  height:100vh;
+  z-index: 100;
+  width:240px;
+  padding-bottom:90px;
+  overflow-y:auto;
+  background: #030303;
+
+
+  .sidenav_logo {
+    margin-bottom: 1rem;
+    @media screen and (max-width: 890px) {
+      //display: none;
+    }
+  }
+  .logout {
+    display:flex;
+    width:100%;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-bottom: 0.5rem;
+    .logout_btn {
+      padding:1%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #868686;
+      border-radius: 1px;
+      font-family: "Nunito Sans";
+      font-style: normal;
+      font-weight: 400;
+      background: none;
+      font-size: 12px;
+      color: #868686;
+      &:hover {
+        color: #d6ff00;
+      }
+    }
+  }
+  .sidenav_auth {
+    display:grid;
+    grid-template-columns: repeat(5, auto);
+    align-items: center;
+    margin-bottom: 1.5rem;
+    
+    .sidenav_avatar {
+      width: 35px;
+      height: 35px;
+      grid-column: span 2 / 5;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      background-color: #5e5e5e;
+      margin-right: 0.7rem;
+    }
+    .sidenav_auth_text {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.2rem;
+      .sidenav_auth_text1,
+      .sidenav_auth_text2 {
+        cursor: pointer;
+        font-family: "Nunito Sans";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 21px;
+        align-items: center;
+        color: #d4d4d4;
+        &:hover {
+          color: #d6ff00;
+        }
+      }
+    }
+    .user_name {
+      color: #d4d4d4;
+      font-family: "Nunito Sans";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+      text-transform: capitalize;
+      line-height: 21px;
+      &:hover {
+        color: #d6ff00;
+      }
+    }
+
+
+  }
+  .sidenav_lectures {
+    @include section_layouts;
+    margin-bottom: 0rem;
+    .sidenav_lectures_header {
+      @include section_headers;
+    }
+  }
+  .sidenav_library {
+    @include section_layouts;
+    margin-bottom: 0rem;
+    .sidenav_library_header {
+      @include section_headers;
+    }
+  }
+  .sidenav_Buzz {
+    @include section_layouts;
+    margin-bottom: 0rem;
+    .sidenav_Buzz_header {
+      @include section_headers;
+    }
+  }
+  .sidenav_podcast {
+    @include section_layouts;
+    margin-bottom: 0rem;
+    .sidenav_podcast_header {
+      @include section_headers;
+    }
+  }
+
+  
+}

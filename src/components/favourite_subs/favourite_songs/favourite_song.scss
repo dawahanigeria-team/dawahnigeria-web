@@ -1,0 +1,139 @@
+@mixin title_text {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  color: #5e5e5e;
+}
+
+.favsongs_wrapper {
+  padding: 4% 2% 4% 2%;
+  @media screen and (max-width:600px) {
+    padding: 3% 2% 4% 2%;
+  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  .favsongs_img_wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    .favsongs_text {
+      font-family: "Nunito Sans";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      @media screen and (max-width:600px) {
+        font-size:14px;
+      }
+      line-height: 24px;
+      color: #ffffff;
+      text-align: center;
+    }
+  }
+  .favsongs_button {
+    background: #ddff2b;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 198px;
+    height: 56px;
+    font-family: "Nunito Sans";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: #000000;
+    cursor: pointer;
+  }
+
+  .trend_title_wrap {
+    @media screen and (max-width: 600px) {
+      display: none;
+    }
+    display: flex;
+    //gap: 1rem;
+   // grid-template-columns: repeat(11, minmax(0, 1fr));
+    justify-items: flex-start;
+    width: 100%;
+    margin-bottom: 2rem;
+    .tend_title2,
+    .tend_title3,
+    .tend_title4 {
+      @include title_text;
+      margin: unset;
+      padding: unset;
+    }
+    .tend_title1 {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width:50%;
+     // grid-column: span 5 / span 5;
+      * {
+        @include title_text;
+        margin: unset;
+        padding: unset;
+      }
+      .tend_hash {
+        // margin-right: 1.6rem;
+        width: 30px;
+      }
+    }
+    .tend_title2 {
+     /// grid-column: span 2 / span 2;
+     width:40%;
+     display: flex;
+     align-items: start;
+     justify-content: flex-start;
+    }
+   
+    .tend_title4 {
+     // grid-column: span 2 / span 2;
+     display: flex;
+     align-items: start;
+     justify-content: flex-start;
+    }
+  }
+  .load_desktop {
+    width:100%;
+    height:400px;
+    position: relative;
+    
+    .load {
+      width:100%;
+      height:50%;
+      position: absolute;
+      inset: 0;
+
+      margin:auto auto;
+
+    }
+  
+    
+  }
+  .table {
+    
+    
+      color: #E0E0E0;
+      font-family:"Poppins";
+      width:100%;
+      font-size:14px;
+      border-collapse: collapse;
+     
+      
+  }
+  
+
+  .load_m {
+    display: flex;
+    width:100%;
+    align-items: center;
+    justify-content: center;
+  }
+}

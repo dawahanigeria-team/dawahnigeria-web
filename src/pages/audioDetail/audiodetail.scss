@@ -1,0 +1,1717 @@
+@mixin button_style {
+  width: 90px;
+  height: 38px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  cursor: pointer;
+}
+@mixin font_mobile {
+  @media screen and (max-width:615px) {
+    font-size:13px;
+  }
+}
+
+@mixin dfco_icon_size_res {
+  color: white;
+  font-size: 25px;
+  @media screen and (max-width:615px) {
+    font-size:20px;
+    
+  }
+}
+
+.audiodetail_wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  .audiodetail_hero {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height:28%;
+    @media screen and (max-width: 1096px) {
+      height:50%;
+     }
+    filter: blur(200px);
+    z-index: 0;
+  }
+  .audiodetail_container {
+    z-index: 1;
+    padding: 2rem 2rem 3rem;
+    width: 100%;
+    @media screen and (max-width:615px) {
+      padding:5% 5% 0% 5%;
+    }
+    .audiodetail_breadcrumb {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 0.3rem;
+      margin-bottom: 3rem;
+      @media screen and (max-width:615px) {
+        margin-bottom:1rem;
+      }
+      .audiodetail_breadcrumb_first {
+        margin: unset;
+        font-family: "Nunito Sans";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        color: #868686;
+        cursor: pointer;
+        @media screen and (max-width:615px) {
+          font-size:14px;
+        }
+        &:hover {
+          color: #d6ff00;
+        }
+      }
+      .audiodetail_breadcrumb_second {
+        margin: unset;
+        font-family: "Nunito Sans";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        color: #ffffff;
+        @media screen and (max-width:615px) {
+          font-size:14px;
+        }
+      }
+    }
+    .audiodetail_head_wrap {
+      width:55vw;
+      @media screen and (max-width:1238px) {
+        width:70vw;
+      }
+      @media screen and (max-width:1060px) {
+        width:40vw;
+      }
+      display: grid;
+      grid-template-columns: repeat(7, auto);
+      //flex-direction: row;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      @media screen and (max-width: 1132px) {
+        flex-direction: column;
+      }
+      @media screen and (max-width: 615px) {
+       display: none;
+      }
+
+      .audiodetail_head_left {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+      grid-column:span 1 / span 1;
+        height: 200px;
+        width:200px;
+        border-radius: 8px;
+        overflow: hidden;
+        .audiodetail_head_left_img {
+          width: 100%;
+          height: 100%;
+        }
+        @media screen and (max-width: 1132px) {
+          margin-bottom: 1rem;
+        }
+      }
+      .audiodetail_head_right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        grid-column:span 6 / span 6;
+        height: 12rem;
+        .audiodetail_head_right_head {
+          margin: unset;
+          font-family: "Nunito Sans";
+          font-style: normal;
+          font-weight: 700;
+          font-size: 20px;
+          @media screen and (max-width:615px) {
+            font-size:16px;
+          }
+          line-height: 24px;
+          color: #ffffff;
+          max-width: 400px;
+        }
+        .audiodetail_head_right_text {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.1rem;
+          .audiodetail_head_right_text1 {
+            margin: unset;
+            font-family: "Nunito Sans";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            @media screen and (max-width:615px) {
+              font-size:14px;
+            }
+            line-height: 20px;
+            color: #d4d4d4;
+          }
+          .audiodetail_head_right_text2 {
+            margin: unset;
+            font-family: "Nunito Sans";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            @media screen and (max-width:615px) {
+              font-size:14px;
+            }
+            line-height: 20px;
+            color: #d4d4d4;
+          }
+        }
+
+        .audiodetail_head_right_actions_wrap {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 1rem;
+          .audiodetail_play {
+            background: #ddff2b;
+            @include button_style;
+            .audiodetail_play_icon {
+              font-size: 30px;
+              color: #000000;
+              
+              @media screen and (max-width:615px) {
+                font-size:20px;
+              }
+            }
+            .audiodetail_play_text {
+              font-family: "Nunito Sans";
+              font-style: normal;
+              font-weight: 400;
+              font-size: 14px;
+              @media screen and (max-width:615px) {
+                font-size:12px;
+              }
+              line-height: 24px;
+              color: #000000;
+              margin: unset;
+              @media screen and (max-width:615px) {
+                font-size:13px;
+              }
+            }
+          }
+          .audiodetail_fav {
+            background-color: #ffffff17;
+            @include button_style;
+            &:hover {
+              background-color: #ffffff2d;
+            }
+            .fav_btn {
+              background:none;
+              margin:0;
+              border: 0;
+              .audiodetail_fav_icon {
+                font-size: 25px;
+                
+                @media screen and (max-width:615px) {
+                  font-size:20px;
+                }
+                color: #cfcfcf;
+              }
+              .audiodetail_fav_icon_active {
+                font-size: 25px;
+                
+                @media screen and (max-width:615px) {
+                  font-size:20px;
+                }
+                color:#ddff2b;
+              }
+            }
+            .audiodetail_fav_text {
+              font-family: "Nunito Sans";
+              font-style: normal;
+              font-weight: 400;
+              font-size: 14px;
+              @media screen and (max-width:615px) {
+                font-size:12px;
+              }
+              line-height: 24px;
+              color: #cfcfcf;
+              margin: unset;
+            }
+          }
+          .audiodetail_share {
+            background-color: #ffffff17;
+            @include button_style;
+            &:hover {
+              background-color: #ffffff2d;
+            }
+            .audiodetail_share_icon {
+              font-size: 25px;
+              margin-bottom:4px;
+              @media screen and (max-width:615px) {
+                font-size:20px;
+              }
+              color: #cfcfcf;
+            }
+            .audiodetail_share_text {
+              font-family: "Nunito Sans";
+              font-style: normal;
+              font-weight: 400;
+              font-size: 14px;
+              @media screen and (max-width:615px) {
+                font-size:12px;
+              }
+              line-height: 24px;
+              color: #cfcfcf;
+              margin: unset;
+            }
+          }
+          .audiodetail_comment {
+            background-color: #ffffff17;
+            @include button_style;
+            &:hover {
+              background-color: #ffffff2d;
+            }
+            .audiodetail_comment_icon {
+              font-size: 25px;
+              margin-bottom:4px;
+              @media screen and (max-width:615px) {
+                font-size:20px;
+              }
+              color: #cfcfcf;
+            }
+            .audiodetail_comment_text {
+              font-family: "Nunito Sans";
+              font-style: normal;
+              font-weight: 400;
+              font-size: 14px;
+              @media screen and (max-width:615px) {
+                font-size:12px;
+              }
+              line-height: 24px;
+              color: #cfcfcf;
+              margin: unset;
+            }
+          }
+          .audiodetail_download {
+            background-color: #ffffff17;
+            @include button_style;
+            &:hover {
+              background-color: #ffffff2d;
+            }
+            .audiodetail_download_icon {
+              font-size: 25px;
+              margin-bottom:4px;
+              @media screen and (max-width:615px) {
+                font-size:20px;
+              }
+              color: #cfcfcf;
+            }
+            .audiodetail_download_text {
+              font-family: "Nunito Sans";
+              font-style: normal;
+              font-weight: 400;
+              font-size: 14px;
+              @media screen and (max-width:615px) {
+                font-size:12px;
+              }
+              line-height: 24px;
+              color: #cfcfcf;
+              margin: unset;
+            }
+          }
+        }
+      }
+    }
+    // -------------------------- Audio Detial play -------------------
+    .audiodetail_play_contain {
+      background: #000;
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
+      margin-bottom: 2rem;
+      @media screen and (max-width: 1096px) {
+        display: none;
+      }
+      .audiodetail_play_wrap {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding-left: 1rem;
+        background: #000;
+        width: 100%;
+        // margin-bottom: 1rem;
+        .audiodetail_play_txt {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          overflow: hidden;
+          max-width: 240px;
+          // gap: .2rem;
+          &::-webkit-scrollbar {
+            display: none;
+          }
+          &::-moz-scrollbar {
+            display: none;
+          }
+          // @media screen and (min-width: 1100px) {
+          //   max-width: unset;
+          // }
+          .audiodetail_play_txt1 {
+            font-family: "Nunito Sans";
+            font-style: normal;
+            font-weight: 615;
+            font-size: 14px;
+            line-height: 24px;
+            color: #ffffff;
+            margin: unset;
+            white-space: nowrap;
+          }
+          .audiodetail_play_txt2 {
+            font-family: "Nunito Sans";
+            font-style: normal;
+            font-weight: 615;
+            font-size: 12px;
+            line-height: 24px;
+            color: #ffffff;
+            margin: unset;
+            white-space: nowrap;
+          }
+        }
+        .audiodetail_play_control {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 1rem;
+          .audiodetail_play_btn {
+            background: none;
+            border:0;
+            margin:0;
+            padding:0;
+            .audiodetail_play_back {
+              color: white;
+              font-size: 20px;
+              @media screen and (max-width:615px) {
+                font-size:16px;
+              }
+              cursor: pointer;
+            }
+
+          }
+          
+          .audiodetail_play_start {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            height: 42px;
+            width: 42px;
+            border-radius: 50%;
+            background-color: #ddff2b;
+            .audiodetail_play_start_icon {
+              font-size: 22px;
+              @media screen and (max-width:615px) {
+                font-size:20px;
+              }
+              cursor: pointer;
+            }
+          }
+          .audiodetail_play_forward {
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+          }
+        }
+        .audiodetail_play_action {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 0.6rem;
+          @media screen and (max-width: 650px) {
+            display: none;
+          }
+          .audiodetail_play_repeat,
+          .audiodetail_play_download,
+          .audiodetail_play_fav,
+          .audiodetail_play_share,
+          .audiodetail_play_add {
+            color: white;
+            font-size: 22px;
+            @media screen and (max-width:615px) {
+              font-size:18px;
+            }
+            cursor: pointer;
+          }
+        }
+
+        .audiodetail_timing {
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          justify-content: flex-start;
+          height: 100%;
+          .audiodetail_timing_text {
+            font-family: "Nunito Sans";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 14px;
+            color: #5e5e5e;
+          }
+        }
+        .audiodetail_close {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          height: 5rem;
+          width: 30px;
+          background: #353535;
+          .audiodetail_close_icon {
+            color: white;
+            font-size: 22px;
+            @media screen and (max-width:615px) {
+              font-size:18px;
+            }
+            cursor: pointer;
+          }
+        }
+      }
+      .audiodetail_scroll_bar {
+        width: 100%;
+        background-color: white;
+        border-radius: 100px;
+        height: 1px;
+      }
+    }
+
+    // -------------------------- End -------------------
+
+    .audiodetail_info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+      @media screen and (max-width: 615px) {
+        display: none;
+      }
+      .audiodetail_info_wrap {
+        display: flex;
+        //grid-template-columns: repeat(2, minmax(0, 1fr));
+        flex-direction: row;
+        //align-items: center;
+        gap: 0.2rem;
+        .audiodetail_info_name {
+          font-family: "Nunito Sans";
+          font-style: normal;
+          font-weight: 300;
+          font-size: 16px;
+          @include font_mobile;
+          line-height: 24px;
+          color: #cfcfcf;
+          margin: unset;
+        }
+        .audiodetail_info_value {
+          font-family: "Nunito Sans";
+          font-style: normal;
+          font-weight: 300;
+          font-size: 16px;
+          @include font_mobile;
+          line-height: 24px;
+          color: #868686;
+          margin: unset;
+        }
+      }
+    }
+    .audiodetail_summary {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      @media screen and (max-width: 615px) {
+        display: none;
+      }
+      .audiodetail_summary_header {
+        font-family: "Nunito Sans";
+        font-style: normal;
+        font-weight: 615;
+        font-size: 20px;
+        @media screen and (max-width:615px) {
+          font-size:18px;
+        }
+        line-height: 32px;
+        color: #ffffff;
+        margin: unset;
+      }
+      .audiodetail_summary_body {
+        font-family: "Nunito Sans";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        @include font_mobile;
+        line-height: 24px;
+        color: #ffffff;
+        width: 300px;
+        text-align: justify;
+        overflow: hidden;
+      }
+      .audiodetail_summary_body_close {
+        height: 150px;
+      }
+      .audiodetail_summary_body_open {
+        height: 100%;
+      }
+      .audiodetail_more {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        cursor: pointer;
+        margin-top: 0.6rem;
+        .audiodetail_more_text {
+          font-family: "Nunito Sans";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          @include font_mobile;
+          line-height: 24px;
+          display: flex;
+          align-items: center;
+          color: #d6ff00;
+          margin: unset;
+        }
+        .audiodetail_more_icon {
+          color: #d6ff00;
+          font-size: 24px;
+          @media screen and (max-width:615px) {
+            font-size:18px;
+          }
+          margin-left: 0.2rem;
+        }
+      }
+    }
+
+    .audiodetail_songs {
+      margin-top: 3rem;
+      @media screen and (max-width: 1096px) {
+        display: none;
+      }
+    }
+
+    .audiodetail_album {
+      margin-top: 1rem;
+      @media screen and (max-width: 1096px) {
+        display: none;
+      }
+    }
+
+    // ----------------------- audiores ---------------------
+    .audiores_wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width:100%;
+      @media screen and (min-width: 615px) {
+        display: none;
+      }
+      .audiores_image_wrap {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 320px;
+        height: 320px;
+        @media screen and (max-width:615px) {
+          width:80%;
+        height: 265px;
+        }
+        border-radius: 6px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+        .audiores_image {
+          width: 100%;
+          height: 100%;
+          border-radius: 6px;
+        }
+      }
+      .audiores_text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        .audiores_text1 {
+          margin: unset;
+          font-family: "Nunito Sans";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          @include font_mobile;
+          line-height: 20px;
+          color: #d4d4d4;
+          text-align: center;
+        }
+        .audiores_text2 {
+          margin: unset;
+          font-family: "Nunito Sans";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          @include font_mobile;
+          line-height: 20px;
+          color: #d4d4d4;
+        }
+      }
+      .audiores_scroll_wrap {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        gap: 1rem;
+        .audiores_scroll_start {
+          margin: unset;
+          font-family: "Nunito Sans";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          @include font_mobile;
+          line-height: 20px;
+          color: #d4d4d4;
+        }
+    
+
+        .range_progress {
+          position: relative;
+          
+          width:80%;
+          height:4px;
+          padding: 3px;
+          padding-left: unset;
+          z-index: 10;
+    
+          .audiodet_bar {
+            position: absolute;
+            top:0;
+            height:4px;
+            z-index:12;
+            left:0;
+            background-color:#ddff2b;
+    
+           
+          }
+           
+        input[type="range"] {
+          -webkit-appearance: none;
+          appearance: none;
+          -moz-appearance: none;
+          width: 100%;
+          position: absolute ;
+          top:0;
+          left:0;
+          z-index: 10;
+          outline: none;
+          background-color: white;
+          border-radius: 100px;
+          height: 4px;
+        }
+        input[type="range"]::-webkit-slider-runnable-track {
+          //-webkit-appearance: none;
+          height:4px;
+        }
+        input[type="range"]::-moz-track {
+          //-moz-appearance: none;
+          height:4px;
+    
+        }
+        input[type="range"]::-ms-track {
+         // appearance: none;
+          height:4px;
+          
+        }
+        input[type="range"]::-webkit-slider-thumb {
+          
+          -webkit-appearance: none;
+          height:8px;
+          width:8px;
+          border-radius:50%;
+          margin-top:-2px;
+          background:#ddff2b;
+          cursor:pointer;
+          border:none;
+        }
+        input[type="range"]::-moz-range-thumb {
+          -moz-appearance: none;
+          height:8px;
+          width:8px;
+          border-radius:50%;
+          margin-top:-2px;
+          
+          background:#ddff2b;
+          cursor:pointer;
+          border:none;
+    
+        }
+        input[type="range"]::-ms-range-thumb {
+          appearance: none;
+          height:8px;
+          width:8px;
+          border-radius:50%;
+          margin-top:-2px;
+          
+          background:#ddff2b;
+          cursor:pointer;
+          border:none;
+    
+        }
+        
+    
+    
+        }
+        .audiores_scroll_stop {
+          margin: unset;
+          font-family: "Nunito Sans";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          @include font_mobile;
+          line-height: 20px;
+          color: #d4d4d4;
+        }
+      }
+      .audiores_play_control_wrap {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        margin-top: 3rem;
+        @media screen and (max-width:615px) {
+          margin-top:1rem;
+        }
+        .audiores_play_control_repeat {
+          color: white;
+          font-size: 20px;
+          @media screen and (max-width:615px) {
+            font-size:18px;
+          }
+          cursor: pointer;
+        }
+        .audiores_play_control_repeat_active {
+          color: #ddff2b;
+          font-size: 20px;
+          @media screen and (max-width:615px) {
+            font-size:18px;
+          }
+          cursor: pointer;
+        }
+        .audiores_play_control {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 3rem;
+.audiores_button {
+  background:none;
+  border:0;
+  padding:0;
+  margin:0;
+  .audiores_play_back {
+    color: white;
+    font-size: 20px;
+    @media screen and (max-width:615px) {
+      font-size:16px;
+    }
+    cursor: pointer;
+  }
+
+}
+         
+          .audiores_play_start {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            height: 42px;
+            width: 42px;
+            border-radius: 50%;
+            background-color: #ddff2b;
+            .audiores_play_start_icon {
+              font-size: 22px;
+              cursor: pointer;
+            }
+          }
+          .audiores_play_forward {
+            color: white;
+            font-size: 20px;
+            @media screen and (max-width:615px) {
+              font-size:16px;
+            }
+            cursor: pointer;
+          }
+        }
+        .audiores_play_control_list {
+          color: white;
+          font-size: 20px;
+          cursor: pointer;
+        }
+      }
+      .audiores_actions {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        gap: 3rem;
+        margin-top: 3rem;
+        @media screen and (max-width:615px) {
+          margin-top:1rem;
+        }
+       
+        .audiores_download {
+          @include dfco_icon_size_res;
+        }
+        .audiores_download_active {
+          color:#d6ff00;
+          font-size: 25px;
+          @media screen and (max-width:615px) {
+            font-size:20px;
+            
+          }
+        }
+       
+        .fav_btn {
+          background:none;
+          margin:0;
+          border: 0;
+          .audiores_fav {
+            font-size: 25px;
+            
+            @media screen and (max-width:615px) {
+              font-size:20px;
+            }
+            color: #cfcfcf;
+          }
+          .audiores_fav_active {
+            font-size: 25px;
+            
+            @media screen and (max-width:615px) {
+              font-size:20px;
+            }
+            color:#ddff2b;
+          }
+        }
+        .audiores_comment {
+          @include dfco_icon_size_res;
+
+        }
+        .audres_option_relative {
+          position:relative;
+          font-family:"Poppins";
+          font-size:14px;
+         
+          .audiores_option {
+            @include dfco_icon_size_res;
+           }
+          .aud_hidden_drops {
+            display: block;
+            position: absolute;
+            left:9px;
+            background:black;
+           
+            color:#CFCFCF;
+            padding:1rem;
+            display: block;
+            width:max-content;
+            .aud_hidden_superwrap {
+                z-index:80;
+                width:100%;
+                height:fit-content;
+              .aud_hidden_wrapper {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                width:100%;
+                margin-bottom: 5px;
+                .hidden_img {
+                  width:12px;
+                  height:12px;
+                  margin-bottom:5px;
+                  
+                  .h_img {
+                    width:100%;
+                    height:100%;
+                  }
+                }
+                .hidden_text {
+                  padding-left:4px;
+                }
+              }
+
+            }
+            
+           
+          
+        }
+     
+        .aud_hidden_drops_none {
+          display:none;
+        }
+        }
+       
+      
+       
+
+        }
+        .audiores_comment_active {
+          color: #d6ff00;
+          font-size: 25px;
+          @media screen and (max-width:615px) {
+            font-size:20px;
+            
+          }
+      }
+     
+
+.mobile {
+  margin-top:2rem;
+  display:flex;
+    flex-direction:column;
+  align-items:flex-start;
+  gap:1rem;
+  width:100%;
+  color:#CFCFCF;
+  font-family:"Poppins";
+  .audiodetail_info_mob {
+    display:flex;
+    flex-direction:column;
+    color:#CFCFCF;
+    gap:0rem;
+    width:100%;
+    .audiodetail_info_mob_head {
+      
+      font-weight:500;
+      font-size:15px;
+    }
+    .audiodetail_info_wrap_mob {
+      display:flex;
+      font-size:16px;
+      font-weight: 400;
+      width:100%;
+      @media screen and (max-width:615px) {
+        font-size: 14px;
+      }
+      //grid-template-columns: repeat(2, auto);
+      
+      gap:1rem;
+      .audiodetail_info_value_mob{
+        font-weight:300
+      }
+    }
+  }
+  .audiodetail_summary_mob {
+    display:flex;
+    flex-direction:column;
+    gap:0rem;
+    width:100%;
+    font-size:14px;
+    .audiodetail_summary_header_mob {
+      font-size:15px;
+    }
+    .audiodetail_summary_body_close_mob {
+      height: 150px;
+    }
+    .audiodetail_summary_body_open_mob {
+      height: 100%;
+    }
+    
+    .audiodetail_more_mob {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width:100%;
+      cursor: pointer;
+      margin-top: 0.6rem;
+      .audiodetail_more_text_mob {
+        
+        font-style: normal;
+        font-weight: 400;
+    
+        @include font_mobile;
+        line-height: 24px;
+        display: flex;
+        align-items: center;
+        color: #d6ff00;
+        margin: unset;
+      }
+      .audiodetail_more_icon_mob {
+        color: #d6ff00;
+        font-size:18px;
+       
+        margin-left: 0.2rem;
+      }
+    
+  }
+  }
+  
+  .audiodetail_songs_mob {
+    padding:0;
+    align-items: flex-start;
+    overflow: hidden;
+    width:100%;
+    height:fit-content;
+    .overflow_wrapper {
+      overflow-x: auto;
+      width:90%;
+      display:flex;
+      flex-direction: row;
+      .test_wrap {
+        display: flex;
+        gap:2%;
+        flex-direction: row;
+        width:100%;
+        height:230px;
+      
+        .test {
+          display:flex;
+          flex-direction: column;
+          gap:1%;
+          width:150px;
+            height:160px;
+          .test_image {
+            width:100%;
+            height:100%;
+            border-radius: 3px;
+            .test_img {
+              width:100%;
+              height: 100%;
+              border-radius: 3px;
+            }
+          }
+          .test_text {
+            color:#CFCFCF;
+            padding-left:2%;
+            font-size:13px;
+          }
+        }
+      }
+    }
+   
+  
+   
+  }
+
+ 
+}
+
+
+    }
+
+    
+    // ----------------------- audiores ends ---------------------
+  }
+  @mixin hide_for_mobile {
+    @media screen and (max-width:615px) {
+      display:none;
+    }
+  }
+  @mixin hide_for_desktop {
+    @media screen and (min-width:615px) {
+      display:none;
+    }
+  }
+  
+  
+  .similarWidget_wrapper {
+    display: flex;
+    margin-bottom:1rem;
+    flex-direction: column;
+    width: 100%;
+
+    overflow: hidden;
+    .similarWidget_top {
+     // padding: 0rem 2%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      z-index:1;
+      margin-bottom: 1rem;
+      @media screen and (max-width: 615px) {
+        padding: 0rem 0rem;
+        margin-bottom: 0.5rem;
+        width: 100%;
+      }
+      .similarWidget_top_heading {
+        font-family: "Nunito Sans";
+        font-style: normal;
+        font-weight: 615;
+        font-size: 22px;
+        line-height: 42px;
+        display: flex;
+        color: #d4d4d4;
+        margin: unset;
+        @media screen and (max-width: 900px) {
+          font-size: 20px;
+      }
+        @media screen and (max-width: 615px) {
+            font-size: 15px;
+            margin-right:2px;
+        }
+      }
+      .similarWidget_more {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        cursor: pointer;
+        .similarWidget_more_text {
+          font-family: "Nunito Sans";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          @media screen and (max-width: 615px) {
+            font-size: 14px;
+          }
+          line-height: 24px;
+          display: flex;
+          align-items: center;
+          color: #d6ff00;
+          margin: unset;
+        }
+        .similarWidget_more_icon {
+          color: #d6ff00;
+          font-size: 25px;
+          @media screen and (max-width: 615px) {
+            font-size: 20px;
+          }
+          margin-left: 0.2rem;
+        }
+      }
+    }
+    .overflow_hidden_wrapper,
+    .overflow_hidden_wrapper_lect,
+    .overflow_hidden_wrapper_talb {
+      width:100%;
+      overflow-x:hidden;
+      position:relative;
+
+      .prev,
+      .next {
+        cursor: pointer;
+        position: absolute;
+       // top: 30px;
+        //width: auto;
+        padding: 1px;
+        color: white;
+        font-weight: bold;
+        bottom:95px;
+        z-index:90;
+        //padding:3px 12px;
+        background:rgba(0,0,0,0.6);
+        //font-size: 18px;
+        transition: 0.7s ease;
+       // border-radius: 50%;
+        text-decoration: none;
+        user-select: none;
+        
+      }
+      .next {
+        right: 7px;
+        @media screen and (max-width:615px) {
+          display:none;
+        }
+      }
+      .prev {
+        left: 15px;
+        @media screen and (max-width:615px) {
+          display:none;
+        }
+      }
+      
+  .prev_none {
+    display:none;
+  }
+  .next_none {
+    display:none;
+  }
+    }
+    .overflow_auto_wrapper::-webkit-scrollbar,
+    .overflow_auto_wrapper_lect::-webkit-scrollbar,
+    .overflow_auto_wrapper_talb::-webkit-scrollbar{
+      display:none;
+    };
+    .overflow_auto_wrapper {
+      @media screen and (max-width:615px) {
+        gap:0.5em;
+       // padding-right:2em;
+        //padding-left:4px;
+      }
+    }
+    .overflow_auto_wrapper,
+    .overflow_auto_wrapper_lect,
+    .overflow_auto_wrapper_talb {
+      width:105%;
+      display:flex;
+     // gap:1em;
+     // padding-right:4em;
+      //padding-left:1em;
+      
+      flex-direction: row;
+      overflow: auto;
+  
+      
+        .similarWidget_album_item {
+          cursor: pointer;
+        }
+        .similarWidget_album_item {
+          width: fit-content !important;
+          height: fit-content !important;
+        }
+        .similarWidget_album_item_talb {
+          @include hide_for_mobile;
+        }
+        
+      
+      
+    }
+  }
+
+  .audiodetail_comments {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding-left:2rem;
+    margin: 1rem 0 2rem;
+    width: 70%;
+    @media screen and (max-width: 615px) {
+      display: none;
+    }
+    .audiodetail_comments_header {
+      font-family: "Nunito Sans";
+      font-style: normal;
+      font-weight: 615;
+      font-size: 20px;
+      @include font_mobile;
+      line-height: 42px;
+      color: #d4d4d4;
+      margin: unset;
+    }
+    .audiodetail_comment_input {
+      background: #222222;
+      border: 1px solid rgba(212, 212, 212, 0.5);
+      border-radius: 4px;
+      width: 100%;
+      padding: 1rem;
+      font-family: "Nunito Sans";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      @include font_mobile;
+      line-height: 21px;
+      resize: none;
+      color: #d4d4d4;
+
+      &::placeholder {
+        font-family: "Nunito Sans";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        @include font_mobile;
+        color: #999999;
+      }
+    }
+    .audiodetail_comment_action {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.5rem;
+      align-self: flex-end;
+      .audiodetail_comment_moji {
+        color: #d4d4d4;
+        font-size: 20px;
+        @include font_mobile;
+        cursor: pointer;
+      }
+      .audiodetail_comment_button {
+        background: #ddff2b;
+        border-radius: 12px;
+        border: none;
+        width: 108px;
+        height: 29px;
+        font-family: "Nunito Sans";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        @media screen and (max-width:615px) {
+          font-size:12px;
+        }
+        line-height: 21px;
+        color: #000000;
+        cursor: pointer;
+      }
+    }
+    .aud_comment_texts {
+      margin-top: 1rem;
+      width:100%;
+      font-family: "Poppins";
+      .com_wrap {
+        padding:3% 2%;
+        border-bottom: 1px solid #353535;
+        width:100%;
+        .com_date {
+          display: flex;
+          gap:1rem;
+          align-items: center;
+          justify-content: flex-start;
+          margin-bottom: 1rem;
+          .logo_img {
+            width:18px;
+            height:18px;
+            @media screen and (max-width:615px) {
+              width:16px;
+              height:16px;
+            }
+
+            .logo_img_sz {
+              width:100%;
+              height:100%;
+            }
+          }
+        
+          .commentor {
+            color:#868686;
+            text-transform: capitalize;
+            font-size: 14px;
+          
+            @media screen and (max-width:615px) {
+              font-size:12px;
+            }
+          }
+          .comment_date {
+            font-size:12px;
+            color:#5E5E5E;
+            @media screen and (max-width:615px) {
+              font-size:10px;
+            }
+
+
+          }
+        }
+        .comment_content {
+          color: #D4D4D4;
+          font-size: 14px;
+          padding-left:2rem;
+          
+          @media screen and (max-width:615px) {
+            font-size:12px;
+          }
+        }
+
+      }
+    }
+  }
+
+  .audiodetail_comments_mob_none {
+    display:none;
+  }
+  .audiodetail_comments_mob {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+   // width:55vw;
+    padding-left:1rem;
+    width:90vw;
+    @media screen and (max-width:615px) {
+     
+    }
+    margin: 1rem 0 2rem;
+    
+    @media screen and (min-width: 1096px) {
+      display: none;
+    }
+    .audiodetail_comments_header_mob {
+      font-family: "Nunito Sans";
+      font-style: normal;
+      font-weight: 615;
+      font-size: 15px;
+      width:100%;
+     
+      line-height: 42px;
+      color: #d4d4d4;
+      margin: unset;
+    }
+    .audiodetail_comment_input_mob {
+      background: #222222;
+      border: 1px solid rgba(212, 212, 212, 0.5);
+      border-radius: 4px;
+      width: 100%;
+      padding: 3%;
+      height:150px;
+      font-family: "Nunito Sans";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      width:100%;
+      @include font_mobile;
+      line-height: 21px;
+      resize: none;
+      color: #d4d4d4;
+
+      &::placeholder {
+        font-family: "Nunito Sans";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        @include font_mobile;
+        color: #999999;
+      }
+    }
+    .audiodetail_comment_action_mob {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.5rem;
+      align-self: flex-end;
+      .audiodetail_comment_moji_mob {
+        color: #d4d4d4;
+        font-size: 20px;
+        @include font_mobile;
+        cursor: pointer;
+      }
+      .audiodetail_comment_button_mob {
+        background: #ddff2b;
+        border-radius: 12px;
+        border: none;
+        width: 108px;
+        height: 29px;
+        font-family: "Nunito Sans";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        @media screen and (max-width:615px) {
+          font-size:12px;
+        }
+        line-height: 21px;
+        color: #000000;
+        cursor: pointer;
+      }
+    }
+
+    .aud_comment_texts {
+      margin-top: 1rem;
+      width:100%;
+      font-family: "Poppins";
+      .com_wrap {
+        padding:3% 2%;
+        border-bottom: 1px solid #353535;
+        width:100%;
+        .com_date {
+          display: flex;
+          gap:1rem;
+          align-items: center;
+          justify-content: flex-start;
+          margin-bottom: 1rem;
+          .logo_img {
+            width:18px;
+            height:18px;
+            @media screen and (max-width:615px) {
+              width:16px;
+              height:16px;
+            }
+
+            .logo_img_sz {
+              width:100%;
+              height:100%;
+            }
+          }
+        
+          .commentor {
+            color:#868686;
+            text-transform: capitalize;
+            font-size: 14px;
+          
+            @media screen and (max-width:615px) {
+              font-size:12px;
+            }
+          }
+          .comment_date {
+            font-size:12px;
+            color:#5E5E5E;
+            @media screen and (max-width:615px) {
+              font-size:10px;
+            }
+
+
+          }
+        }
+        .comment_content {
+          color: #D4D4D4;
+          font-size: 14px;
+          padding-left:2rem;
+          
+          @media screen and (max-width:615px) {
+            font-size:12px;
+          }
+        }
+
+      }
+    }
+  }
+
+  .fixed_wrapper {
+    display:block;
+    width:100%;
+    height:100%;
+    position:fixed;
+    background:rgba(0,0,0,0.6);
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index: 100;
+  font-family: "Poppins";
+
+  .small_wrapper {
+    position: absolute;
+    margin:auto;
+    height:fit-content;
+    inset:0;
+    width:50%;
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 8px;
+    background:#1E1E1E;
+    color:#CFCFCF;
+    padding:1% 0% 2% 0%;
+    font-size:16px;
+   
+    @media screen and (max-width:615px) {
+        font-size:14px;
+        width:80%;
+    }
+   
+        .download_text {
+            width:100%;
+            padding:0% 4% 3% 4%;
+        
+            border-bottom:1px solid#353535;
+        
+        }
+        .download_size {
+            width:100%;
+            padding:3% 4%;
+            border-bottom:1px solid#353535;
+            background:#1E1E1E
+        }
+        .download_amr {
+            width:100%;
+            padding:3% 4%;
+            color:#030303;
+             background: #DDFF2B;
+        }
+        .download_mp4 {
+            width:100%;
+            padding:3% 4%;
+            color:#030303;
+            background: #DDFF2B;
+        }
+        .download_btn {
+            width:98%;
+            padding:2%;
+            margin:1rem auto 0 auto;
+            color:#030303;
+            display: flex;
+            font-size:16px;
+            justify-content: center;
+            align-items: center;
+            background: #DDFF2B;
+            border: none;
+            @media screen and (max-width:615px) {
+                font-size:14px;
+                
+            }
+            border-radius: 4px;
+
+        }
+
+    
+    
+}
+  }
+  .fixed_wrapper_none {
+    display:none;
+  }
+
+  .share_wrapper {
+    display: block;
+  }
+  .hide_share_wrapper {
+    display: none;
+  }
+}
+
+/*
+      .audiodetail_summary_body_close {
+        height: 150px;
+      }
+      .audiodetail_summary_body_open {
+        height: 100%;
+      }
+      .audiodetail_more {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        cursor: pointer;
+        margin-top: 0.6rem;
+        .audiodetail_more_text {
+          font-family: "Nunito Sans";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          @include font_mobile;
+          line-height: 24px;
+          display: flex;
+          align-items: center;
+          color: #d6ff00;
+          margin: unset;
+        }
+        .audiodetail_more_icon {
+          color: #d6ff00;
+          font-size: 24px;
+          @media screen and (max-width:615px) {
+            font-size:18px;
+          }
+          margin-left: 0.2rem;
+        }
+      }
+    }
+
+    .audiodetail_songs {
+      margin-top: 3rem;
+      @media screen and (max-width: 1096px) {
+        display: none;
+      }
+    }
+
+    .audiodetail_album {
+      margin-top: 1rem;
+      @media screen and (max-width: 1096px) {
+        display: none;
+      }
+    }
+*/

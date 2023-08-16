@@ -1,0 +1,28 @@
+export const FETCH_USER_SUCCESS = "FETCH_USER_SUCCESS";
+export const FETCH_USER_FAILED = "FETCH_USER_FAILED";
+export const FETCH_USER_START = "FETCH_USER_START";
+
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAILED = "LOGIN_FAILED";
+export const LOGIN_START = "LOGIN_START";
+
+export const LOGOUT = "LOGOUT";
+
+export const GET_GALLERY_SUCCESS = "GET_GALLERY_SUCCESS";
+export const GET_JOB_SUCCESS = "GET_JOB_SUCCESS";
+export const GET_TYPE = "GET_TYPE";
+export const GET_CURRENT_PLAY = "GET_CURRENT_PLAY";
+export const SET_PLAYING = "SET_PLAYING";
+export const SHOW_ADD_PLAYLIST = "SHOW_ADD_PLAYLIST"
+export const GET_LECID = "GET_LECID"
+export const GET_AUDIO_ID = "GET_AUDIO_ID"
+export const GET_AUDIO_DATA = "GET_AUDIO_DATA"
+export const GET_AUDIO_COUNT = "GET_AUDIO_COUNT"
+export const GET_AUDIO_PACK = "GET_AUDIO_PACK"
+export const GET_AUDIO_PAGE = "GET_AUDIO_PAGE"
+export const GET_VALUE = "GET_VALUE"
+export const GET_REPEAT = "GET_REPEAT"
+export const GET_SEARCH_RECORD = "GET_SEARCH_RECORD"
+export const GET_SEARCH_DATA  = "GET_SEARCH_DATA"
+export const GET_SEARCH_OPTIONS = "GET_SEARCH_OPTIONS";
+

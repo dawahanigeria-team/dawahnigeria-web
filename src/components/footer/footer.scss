@@ -1,0 +1,30 @@
+@mixin footer_text_header {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 21px;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+}
+@mixin footer_text {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  display: flex;
+  align-items: center;
+  color: #d4d4d4;
+}
+
+.footer_wrapper {
+  position: relative;
+  width:100%;
+  font-family: "Nunito Sans";
+  bottom:0px;
+  background-color: #222222;
+
+ 
+}

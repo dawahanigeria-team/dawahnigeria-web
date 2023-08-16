@@ -1,0 +1,40 @@
+.hroute_title_res_wrap {
+  //background:#090909;
+  margin-bottom: 2px;
+  width:100%;
+  @media screen and (min-width: 600px) {
+    display: none;
+  }
+  display: flex;
+  //grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4%;
+  @media screen and (max-width: 615px) {
+    margin-bottom:3%;
+  }
+  justify-content: space-between;
+  .hroute_title_res_icon {
+    font-size: 40px;
+    color: #d4d4d4;
+    cursor: pointer;
+  }
+  .hroute_title_res_text {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 0px;
+    color: #d4d4d4;
+    text-align: center;
+    @media screen and (max-width: 615px) {
+      font-size: 17px;
+    }
+   // grid-column: span 2;
+    //margin-left: 1.5rem;
+  }
+  .hides {
+    width:40px;
+    background: none;
+  }
+}

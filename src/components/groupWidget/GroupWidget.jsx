@@ -1,0 +1,585 @@
+import React, { useState, useEffect, useRef, useContext } from "react";
+import "./groupWidget.scss";
+import LandingWidget from "../landingWidget/LandingWidget";
+import { FiChevronsRight } from "react-icons/fi";
+import LecturersWidget from "../lecturersWidget/LecturersWidget";
+import { useNavigate,Link } from "react-router-dom";
+import back from "../../assets/svg/back.svg";
+import foward from "../../assets/svg/foward.svg";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { AudioContext } from "../../App";
+import {  settings3, settings4 } from "./settings";
+import {
+  getType,
+  getaudioData,
+  getaudioId,
+  getCount,
+  getPack,
+  getPage,
+} from "../../Redux/Actions/ActionCreators";
+import { useDispatch } from "react-redux";
+import LecturerMobileChart from "./chartUIs/lecturersMobileChart";
+import LectureMobileChart from "./chartUIs/lectureMobileChart";
+import AlbumMobileChart from "./chartUIs/albumMobileChart";
+import GenreMobileLecturer from "../../pages/genredetail/genreMobileLecturer";
+
+const GroupWidget = ({
+  data,
+  heading,
+  type,
+  nav1,
+  isrecent,
+  styling,
+  endpoint_url,
+  currentPage,
+  previousPlay,
+}) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { setinitial } = useContext(AudioContext);
+  const slide = useRef();
+
+  const [isprev, setisprev] = useState(false);
+  const [isnext, setisnext] = useState(true);
+  const [size, setSize] = useState(window.innerWidth);
+  const [, setSettingsresponsive] = useState(() => {
+    return size < 513 ? { ...settings4 } : { ...settings3 };
+  });
+  //const data=[]
+  useEffect(() => {
+    const handleResize = () => {
+      setSize(window.innerWidth);
+      setSettingsresponsive(() => {
+        return window.innerWidth < 513 ? { ...settings4 } : { ...settings3 };
+      });
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [size]);
+
+  //console.log(data);
+
+  function prev() {
+    // e.stopPropagation()
+
+    //console.log('window.scrollWidth')
+    console.log(slide.current.scrollLeft);
+    console.log(slide.current.scrollWidth);
+    console.log(slide.current.offsetWidth);
+    slide.current.scrollBy({
+      left: -slide.current.scrollWidth / 10,
+      behavior: "smooth",
+    });
+  }
+
+  function next() {
+    //e.stopPropagation()
+    //console.log('window.scrollWidth')
+
+    console.log(slide.current.scrollWidth);
+    console.log(slide.current.offsetWidth);
+    slide.current.scrollBy({
+      left: slide.current.scrollWidth / 10,
+      behavior: "smooth",
+    });
+  }
+
+  useEffect(() => {
+    function scrollEl() {
+    
+      console.log("Slide");
+      if (slide.current.scrollLeft === 0) {
+        setisprev(false);
+      } else {
+        setisprev(true);
+      }
+
+      if (
+        slide.current.scrollLeft + slide.current.offsetWidth >=
+        slide.current.scrollWidth
+      ) {
+        setisnext(false);
+      } else {
+        setisnext(true);
+      }
+    }
+
+    slide.current?.addEventListener("scroll", scrollEl);
+
+    return () => slide.current?.removeEventListener("scroll", scrollEl);
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slide.current?.scrollLeft]);
+
+  /**
+   *
+   */
+
+  return (
+    <div className="groupWidget_wrapper">
+      <div className="groupWidget_top">
+        <p className="groupWidget_top_heading">{heading}</p>
+        <div
+          onClick={() => {
+            if (heading === "Trending") {
+              navigate("/trending");
+            } else {
+              navigate("/more", {
+                state: {
+                  name: "",
+                  heading: heading,
+                  id: "",
+                  img: "",
+                  type,
+                  currentdata: data,
+                  endpoint_url: endpoint_url || "",
+                  currentPage: currentPage || "",
+                  navtitle: nav1.title || "",
+                },
+              });
+            }
+
+            dispatch(getType(heading));
+          }}
+          className={
+            styling && endpoint_url
+              ? "flex text-[#d6ff00] text-[15px] items-center"
+              : `flex text-[#d6ff00] text-[15px] items-center ${
+                  nav1.title === "Charts" ? "max-[615px]:hidden" : ""
+                }  `
+          }
+        >
+          <p className="cursor-pointer">more</p>
+          <FiChevronsRight className=" cursor-pointer text-[20px] pt-1" />
+        </div>
+      </div>
+
+      {type === "recent" && (
+        <div className="overflow_hidden_wrapper">
+          <div className={isprev ? "prev" : "prev_none"} onClick={prev}>
+            <img src={back} alt="back" />
+          </div>
+          <div className={isnext ? "next" : "next_none"} onClick={next}>
+            <img src={foward} alt="foward" />
+          </div>
+          <div ref={slide} className="overflow_auto_wrapper">
+            <div className="overflow_auto_after">
+              {data.map(
+                (
+                  {
+                    img,
+                    lec_img,
+                    categories,
+                    cats,
+                    title,
+                    Title,
+                    rpname,
+                    nid,
+                    audio,
+                    views,
+                  },
+                  idx
+                ) => {
+                  return (
+                    <Link to={isrecent ? `/a/${nid}`: `/l/${nid}`}
+                      id={idx}
+                      name={nid}
+                      className="groupWidget_album_item"
+                      onClick={() => {
+                        if (isrecent) {
+                          //navigate(`/a/${nid}`);
+                          dispatch(getaudioId(previousPlay[idx]));
+                          dispatch(getPack(null));
+                          dispatch(getCount(idx));
+                          dispatch(getPack(data));
+                          dispatch(getPage(currentPage));
+                          dispatch(
+                            getaudioData({
+                              nid,
+                              id: idx,
+                              endpoint_url,
+                              currentPage,
+                              controlData: data,
+                              navName: nav1.navName,
+                            })
+                          );
+                        } else {
+                         // navigate(`/l/${nid}`);
+                          if (window.innerWidth <= 615) {
+                            dispatch(getPack(null));
+                            dispatch(getPage(currentPage));
+                            dispatch(getPack(data));
+                            dispatch(getCount(idx));
+                            setinitial(false);
+                          }
+                        }
+                      }}
+                      key={idx + 1}
+                    >
+                      <LandingWidget
+                        key={idx}
+                        categories={
+                          title?.split("-")[0] || Title?.split("-")[0] || title
+                        }
+                        img={img || lec_img}
+                        views={views || 0}
+                        nid={nid}
+                      />
+                    </Link>
+                  );
+                }
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {type === "lectures" && (
+        <div className="overflow_hidden_wrapper">
+          <div className={isprev ? "prev" : "prev_none"} onClick={prev}>
+            <img src={back} alt="back" />
+          </div>
+          <div className={isnext ? "next" : "next_none"} onClick={next}>
+            <img src={foward} alt="foward" />
+          </div>
+          <div ref={slide} className={`overflow_auto_wrapper `}>
+            <div
+              className={`overflow_auto_after  ${
+                styling ? "min-[615px]:space-x-3 space-x-3" : ""
+              }`}
+            >
+              {data.map(
+                (
+                  {
+                    img,
+                    lec_img,
+                    categories,
+                    cats,
+                    id,
+                    mp3_title,
+                    title,
+                    Title,
+                    rpname,
+                    nid,
+                    audio,
+                    views,
+                  },
+                  idx
+                ) => {
+                  return (
+                    <>
+                      <Link to={`/l/${nid || id}`}
+                        id={idx}
+                        className={`groupWidget_album_item  ${
+                          styling ? "relative max-[615px]:hidden" : ""
+                        }`}
+                        onClick={() => {
+                         // navigate(`/l/${nid || id}`);
+                          if (window.innerWidth <= 615) {
+                            dispatch(getPack(null));
+                            dispatch(getPage(currentPage));
+                            dispatch(getCount(idx));
+                            dispatch(getPack(data));
+                            setinitial(false);
+                          }
+                        }}
+                        key={idx + 1}
+                      >
+                        <LandingWidget
+                          key={idx}
+                          categories={
+                            title?.split("-")[0] ||
+                            Title?.split("-")[0] ||
+                            title ||
+                            mp3_title
+                          }
+                          img={img || lec_img}
+                          views={views || 0}
+                          nid={nid || id}
+                          styling={styling}
+                        />
+                        <div
+                          className={`absolute right-[-14px] bottom-[10px] rounded-full h-[38px] w-[38px] flex justify-center items-center text-white text-xl ${
+                            idx === 2 ? "bg-[#96734a]" : ""
+                          } ${idx === 1 ? "bg-[#76a8d7]" : ""}${
+                            idx === 0 ? "bg-[#ffa736]" : ""
+                          }
+                        ${styling && idx < 3 ? "block" : "hidden"}`}
+                        >
+                          <span>{idx + 1}</span>
+                        </div>
+                      </Link>
+                    </>
+                  );
+                }
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+      {type === "lectures" && (
+        <div
+          className={
+            styling
+              ? "hidden mx-auto w-full max-[615px]:flex flex-col justify-center"
+              : "hidden"
+          }
+        >
+          <LectureMobileChart data={data} />
+        </div>
+      )}
+
+      {type === "album" && (
+        <div
+          className={
+            styling
+              ? "hidden mx-auto w-full max-[615px]:flex flex-col justify-center"
+              : "hidden"
+          }
+        >
+          <AlbumMobileChart data={data} />
+        </div>
+      )}
+
+      {type === "lecturer" && (
+        <div
+          className={
+            styling
+              ? "hidden mx-auto w-full max-[615px]:flex flex-col justify-center"
+              : "hidden"
+          }
+        >
+          <LecturerMobileChart data={data} />
+        </div>
+      )}
+      {type === "album" && (
+        <div className="overflow_hidden_wrapper">
+          <div className={isprev ? "prev" : "prev_none"} onClick={prev}>
+            <img src={back} alt="back" />
+          </div>
+          <div className={isnext ? "next" : "next_none"} onClick={next}>
+            <img src={foward} alt="foward" />
+          </div>
+          <div ref={slide} className="overflow_auto_wrapper">
+            <div
+              className={`overflow_auto_after  ${
+                styling ? "min-[615px]:space-x-3 space-x-3" : ""
+              }`}
+            >
+              {data.map(
+                (
+                  {
+                    img,
+                    lec_img,
+                    categories,
+                    cats,
+                    title,
+                    nid,
+                    Title,
+                    rpname,
+                    name,
+                    id,
+                    audio,
+                    views,
+                  },
+                  idx
+                ) => {
+                  return (
+                    <Link to={`/a/${id || nid}`}
+                      id={idx}
+                      className={`groupWidget_album_item  ${
+                        styling ? "relative max-[615px]:hidden" : ""
+                      }`}
+                      onClick={() => {
+                        //navigate(`/a/${id || nid}`);
+                      }}
+                      key={idx + 1}
+                    >
+                      <LandingWidget
+                        key={idx}
+                        categories={
+                          name ||
+                          title?.split("-")[0] ||
+                          Title?.split("-")[0] ||
+                          title
+                        }
+                        img={img || lec_img}
+                        views={views || 0}
+                        nid={id || nid}
+                        styling={styling}
+                      />
+                      <div
+                        className={`absolute right-[-14px] bottom-[10px] rounded-full h-[38px] w-[38px] flex justify-center items-center text-white text-xl ${
+                          idx === 2 ? "bg-[#96734a]" : ""
+                        } ${idx === 1 ? "bg-[#76a8d7]" : ""}${
+                          idx === 0 ? "bg-[#ffa736]" : ""
+                        }
+                        ${styling && idx < 3 ? "block" : "hidden"}`}
+                      >
+                        <span>{idx + 1}</span>
+                      </div>
+                    </Link>
+                  );
+                }
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {type === "playlist" && (
+        <div className="overflow_hidden_wrapper">
+          <div className={isprev ? "prev" : "prev_none"} onClick={prev}>
+            <img src={back} alt="back" />
+          </div>
+          <div className={isnext ? "next" : "next_none"} onClick={next}>
+            <img src={foward} alt="foward" />
+          </div>
+          <div ref={slide} className="overflow_auto_wrapper">
+            <div className="overflow_auto_after">
+              {data.map(
+                (
+                  {
+                    img,
+                    lec_img,
+                    categories,
+                    cats,
+                    title,
+                    nid,
+                    Title,
+                    rpname,
+                    name,
+                    playlist_img,
+                    id,
+                    audio,
+                    views,
+                  },
+                  idx
+                ) => {
+                  return (
+                    <Link to={`/pl/${id || nid}`}
+                      id={idx}
+                      className="groupWidget_album_item"
+                      onClick={() => {
+                       // navigate(`/pl/${id || nid}`);
+                      }}
+                      key={idx + 1}
+                    >
+                      <LandingWidget
+                        key={idx}
+                        categories={
+                          name ||
+                          title?.split("-")[0] ||
+                          Title?.split("-")[0] ||
+                          title
+                        }
+                        img={lec_img}
+                        views={views || 0}
+                        nid={id || nid}
+                      />
+                    </Link>
+                  );
+                }
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+      {nav1.title === "Genres" && type === "lecturer" && (
+        <div className="w-full h-full overflow-hidden min-[615px]:hidden">
+          <div className="w-full overflow-x-auto flex items-center space-x-4 h-full">
+            {data.map(({ img, name, id, nid }, idx) => {
+              return (
+                <Link to={`/rp/${id || nid}`} key={idx} className="">
+                  <GenreMobileLecturer img={img} rp={name} />
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {type === "lecturer" && (
+        <div className="overflow_hidden_wrapper_lect">
+          <div className={isprev ? "prev" : "prev_none"} onClick={prev}>
+            <img src={back} alt="back" />
+          </div>
+          <div className={isnext ? "next" : "next_none"} onClick={next}>
+            <img src={foward} alt="foward" />
+          </div>
+          <div
+            ref={slide}
+            className={`overflow_auto_wrapper_lect ${nav1.title === 'Genres' ?'hidden':''} min-[615px]:space-x-20 `}
+          >
+            {data.map(
+              (
+                {
+                  img,
+                  lec_img,
+                  categories,
+                  cats,
+                  title,
+                  Title,
+                  views,
+                  name,
+                  nid,
+                  id,
+                  audio,
+
+                  favorites,
+                },
+                idx
+              ) => {
+                return (
+                  <>
+                    <Link to={`/rp/${id || nid}`}
+                      className="max-[615px]:hidden relative"
+                      onClick={() => {
+                       // navigate(`/rp/${id || nid}`);
+                      }}
+                      key={idx + 1}
+                    >
+                      <LecturersWidget
+                        views={views}
+                        key={idx}
+                        rp={name}
+                        img={img}
+                        styling={styling}
+                      />
+                      <div
+                        className={`absolute right-[-18px] bottom-[100px] rounded-full h-[38px] w-[38px] flex justify-center items-center text-white text-xl ${
+                          idx === 2 ? "bg-[#96734a]" : ""
+                        } ${idx === 1 ? "bg-[#76a8d7]" : ""}${
+                          idx === 0 ? "bg-[#ffa736]" : ""
+                        }
+                        ${styling && idx < 3 ? "block" : "hidden"}`}
+                      >
+                        <span>{idx + 1}</span>
+                      </div>
+                    </Link>
+                   
+                  </>
+                );
+              }
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default GroupWidget;
+
+// className={`groupWidget_items ${
+//             more ? "groupWidget_open_more" : "groupWidget_close_more"
+//           }`}
+
+/*
+{rp
+            ? `${rp.split(" ")[0]} ${rp.split(" ")[1]} ${rp.split(" ")[2]}`
+            : "undefined"}
+
+
+*/

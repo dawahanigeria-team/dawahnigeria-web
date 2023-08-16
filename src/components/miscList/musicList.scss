@@ -1,0 +1,427 @@
+@mixin mobile_hide {
+    @media screen and (max-width:615px) {
+      display:none;
+    }
+  }
+  @mixin desktop_hide {
+    @media screen and (min-width:615px) {
+      display:none;
+    }
+  }
+  .nowplaying {
+    background: #222222;
+         
+    border-radius: 7px;
+  }
+  .show {
+  display:block;
+  }
+  .hide {
+    display: none;
+  }
+  
+  .musicslist_wrapper {
+    cursor: pointer;
+    font-weight: 300;
+  .table {
+      
+      @include mobile_hide;
+        color: #E0E0E0;
+        font-family:"Poppins";
+        width:100%;
+        font-size:13px;
+        border-collapse: collapse;
+        .td:hover {
+          background: #222222;
+         
+          border-radius: 7px;
+      }
+        .td:hover .tr .plays {
+          width:20px;
+          height:20px;
+          margin-right:2px;
+          display: block;
+          transition-timing-function: ease-in;
+          transition: 0.5s;
+          transform: translateY(0);
+          .play_sz {
+            width:100%;
+            height:100%;
+            
+          }
+        }
+        .td:hover .tr .num {
+          display: none;
+        } 
+        .td {
+          width:100%;
+          display:flex;
+          align-items: center;
+          padding: 11px;
+          max-height:100px;
+          //margin-bottom: 15px;
+          //overflow: hidden;
+          .tr {
+            display:grid;
+            grid-template-columns: repeat(3, auto);
+            width:35%;
+            @media screen and (max-width:1238px) {
+              width:40%;
+              margin-right:10%;
+            }
+            margin-right: 15%;
+            align-items: center;
+            gap:5px;
+            .num {
+              width:20px;
+              height:20px;
+              margin-right:2px;
+            }
+            .plays {
+              display: none;
+            }
+            .margin {
+              margin-right:8px;
+            }
+          
+            .img_size {
+              width:43px;
+              height:43px;
+              
+              border-radius: 3px;
+              .img_size_sm {
+                width:100%;
+                height:100%;
+                  border-radius: 3px;
+              }
+            }
+            .trend_lect_data {
+            
+                display:flex;
+                flex-direction:column;
+                
+                align-items:start;
+                justify-content: flex-start;
+                width:100%;
+             
+                .rel_text {
+                 margin-bottom:3px;
+              
+                  .main_txt_wrap {
+                    text-overflow: ellipsis;
+                    white-space:nowrap;
+                    width:250px;
+                    overflow: hidden;
+                    @media screen and (max-width:1050px) {
+                      width:200px;
+                    }
+                    @media screen and (max-width:890px) {
+                      width:240px;
+                    }
+                    @media screen and (max-width:768px) {
+                      width:170px;
+                    }
+                  }
+                }
+              
+              
+            }
+          }
+  
+          .tr2 {
+            width:40%;
+            display:flex;
+            flex-direction: column;
+            margin-right:5px;
+            @media screen and (max-width:650px) {
+             // margin-right:10px;
+            }
+            //align-items:center;
+            //justify-content:flex-start;
+            
+           
+            .tr2_real_wrap {
+              display: flex;
+              flex-direction: row;
+              gap:20%;
+              width:100%;
+          
+              
+                .tr2_text {
+                 // margin-bottom:2px;
+                  .text_child {
+                    text-overflow: ellipsis;
+                    white-space:nowrap;
+                    width:130px;
+                    @media screen and (max-width:1000px) {
+                      width:100px;
+                    }
+                    @media screen and (max-width:700px) {
+                      width:80px;
+                    }
+                    overflow: hidden;
+                  }
+                }
+                
+       
+                 
+              
+             
+               .tr2_likeys {
+                 display: grid;
+                 grid-template-columns: repeat(3,auto);
+                 //flex-direction: row;
+                 gap:20px;
+                 align-items: center;
+                 .likeys_img {
+                   width:18px;
+                   height:18px;
+                   color:#fff;
+                   font-size: 18px;
+                   font-weight: 200;
+                  .likeys_img_sz {
+                   width:18px;
+                   height:18px;
+                 }
+                 }
+                 .likeys_img:hover {
+                  color:#ddff2b
+                 }
+               }
+            }
+            .tr2_none_wrap {
+              width: 2px;
+              height:2px;
+              background: none;
+            }
+          
+          }
+  
+          .tr3 {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: start;
+            .tr3_none_wrap {
+              width: 2px;
+              height:2px;
+              background: none;
+            }
+          }
+        }
+    }
+  
+  /*************** moobile **********/
+  .mobile_musicslist {
+  @include desktop_hide;
+  display:flex;
+  flex-direction:column;
+  gap:0.5em;
+  font-family: "Poppins";
+  color:#CFCFCF;
+  font-size:12px;
+  
+  .music_list {
+    display:flex;
+    width:100%;
+    max-height:100px;
+    margin-bottom: 6px;
+    justify-content:space-between;
+    align-items: center;
+    .wrapped_right {
+      display:flex;
+      flex-direction: row;
+      gap:0.5em;
+      align-items: center;
+      width:80vw;
+    
+  
+      .wrap_image {
+        width:66px;
+        height:66px;
+        border-radius: 6px;
+        position:relative;
+        
+        .img_wr {
+          width:66px;
+         height:66px;
+          border-radius: 6px;
+          .img_wrp {
+            width: 100%;
+            height:100%;
+            border-radius: 6px;
+            object-fit:cover;
+  
+          }
+        }
+        .likeys {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          position: absolute;
+          justify-content: center;
+          background: linear-gradient(180deg, rgba(217, 217, 217, 0) 0%, rgba(25, 25, 26, 0.88) 71.74%);
+          left:0px;
+          bottom:0px;
+          gap:6px;
+          border-bottom-right-radius: 6px;
+          border-bottom-left-radius: 6px;
+          width:100%;
+          .likeys_img {
+            width:13px;
+            height:13px;
+            background: none;
+            border:0;
+            margin-right:6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+           .likeys_img_sz {
+            width:13px;
+            height:13px;
+          }
+          }
+          .likeys_text {
+            color:white;
+          }
+        }
+      }
+  
+      .wrap_text {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: flex-start;
+        gap:5px;
+        width: 100%;
+  
+        .title_wrap {
+          width: 60vw;
+          .texta {
+            font-size:13px;
+            text-overflow: ellipsis;
+            white-space:nowrap;
+            //width:50vw;
+            //overflow: hidden;
+            
+          }
+  
+        }
+        .lect_name_wrap {
+          width: 60vw;
+          .textb {
+            font-size:12px;
+            color:#E0E0E0;
+            margin:0;
+            text-overflow: ellipsis;
+              white-space:nowrap;
+              //width:50vw;
+              //overflow: hidden;
+          }
+  
+        }
+       
+      
+        .likey_wrap {
+          display:flex;
+          flex-direction: row;
+          gap:0.8em;
+          width:100%;
+          //height:20px;
+            color:#868686;
+            .likeys {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              gap:5px;
+              justify-content:  center;
+            .likeys_img {
+              width:13px;
+              height:13px;
+              background: none;
+              margin-right:6px;
+              border: 0;
+              display: flex;
+              align-items: center;
+              
+         
+             .likeys_img_sz {
+              width:13px;
+              height:13px;
+            }
+            }
+          }
+        }
+      }
+    }
+  
+    .wrap_left {
+      display: flex;
+      flex-direction: row;
+      gap:10px;
+    width:13vw;
+      align-items: start;
+      justify-content: flex-start;
+      
+        .likeys_img_left {
+          position: relative;
+          width:18px;
+        height:18px;
+          .likeys_img_sz_left {
+            width:100%;
+            height:100%;
+          }
+        }
+        .hidden_drops {
+          display: block;
+          position: absolute;
+          left:-95px;
+          background:black;
+          color:#CFCFCF;
+          padding:0.5rem;
+          display: block;
+          width:max-content;
+          .hidden_wrapper {
+            display: flex;
+            align-items: center;
+            width:100%;
+            margin-bottom: 3px;
+            .hidden_img {
+              width:12px;
+              height:12px;
+              
+              .h_img {
+                width:100%;
+                height:100%;
+              }
+            }
+            .hidden_text {
+              padding-left:4px;
+            }
+          }
+         
+        
+      }
+      .hidden_drops_none {
+        display:none;
+      }
+  
+    }
+  }
+  
+  }
+  
+  .download_wrapper {
+    display: block;
+  }
+  .hide_download_wrapper {
+    display: none;
+  }
+  .share_wrapper {
+    display: block;
+  }
+  .hide_share_wrapper {
+    display: none;
+  }
+    
+  }

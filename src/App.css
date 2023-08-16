@@ -1,0 +1,271 @@
+.app_wrapper {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+* {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 18px;
+  
+  
+}
+::-moz-scrollbar {
+  width: 10px;
+  height: 18px;
+  
+  
+}
+
+@media screen and (max-width:615px) {
+ 
+::-webkit-scrollbar {
+  display:none;
+  
+  
+}
+::-moz-scrollbar {
+  display:none;
+  
+  
+}
+
+}
+
+.let {
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.swipeDown {
+  animation-name: swipeDown;
+  -webkit-animation-name: swipeDown;
+}
+
+@keyframes swipeDown {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@-webkit-keyframes swipeDown {
+  0% {
+    -webkit-transform: translateY(-100%);
+  }
+
+  100% {
+    -webkit-transform: translateY(0px);
+  }
+}
+
+.swipeUp {
+  animation-name: swipep;
+  -webkit-animation-name: swipep;
+}
+
+@keyframes swipep {
+  from {
+    bottom:-130px 
+  }
+
+  to {
+    bottom:130px
+  }
+}
+
+@-webkit-keyframes swipep {
+  0% {
+    -webkit-transform: translateY(100%);
+  }
+
+  100% {
+    -webkit-transform: translateY(0px);
+  }
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background-color: rgba(244, 245, 234, 0.5);
+}
+
+::-moz-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+::-moz-scrollbar-track {
+  border-radius: 8px;
+  background-color: rgba(244, 245, 234, 0.5);
+}
+
+.gradientbg {
+
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    background:linear-gradient(180deg, rgba(217, 217, 217, 0) 0%, rgba(25, 25, 26, 0.88) 71.74%);
+  
+}
+.gradientgenre {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  background:linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(13, 13, 13, 1) 61.74%);
+
+}
+@media screen and (max-width:615px) {
+  .gradientgenre {
+    display: none;
+  }
+}
+.boom {
+  font-family:'Nunito Sans';
+}
+
+.name_abs {
+  font-family: "Poppins";
+}
+
+.brightness {
+  filter:brightness(20%);
+}
+
+/* The container */
+.filter-container {
+  position: relative;
+  padding-left: 30px;
+  
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox rounded-full w-3 h-3 bg-black*/
+.filter-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.filter-checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  height: 20px;
+  width: 20px;
+  border-radius: 6px;
+  border: 1px solid gray;
+  @apply bg-gray-300
+}
+.filter-checkmark::before {
+  position:absolute;
+  content: "";
+  width: 5px;
+  height: 10px;
+  left:6px;
+  top:3px;
+  transform: rotate(50deg);
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  
+
+}
+
+/* On mouse-over, add a grey background color */
+.filter-container:hover input ~ .checkmark {
+  background-color: white;
+}
+
+/* When the checkbox is checked, add a blue background */
+.filter-container input:checked ~ .filter-checkmark {
+  @apply bg-[#ddff2b];
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.filter-checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.filter-container input:checked ~ .filter-checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.filter-container .filter-checkmark:after {
+  position:absolute;
+  content:"";
+  width: 5px;
+  height: 10px;
+  left:6px;
+  top:3px;
+  transform: rotate(50deg);
+ @apply border-r-2 border-b-2 border-black;
+  border-radius: 6px;
+ 
+ 
+}
+
+.no-range::-webkit-inner-spin-button,
+.no-range::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.no-range {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.no-range[type=number] {
+  -moz-appearance: textfield;
+}
+
+.no-range[type=number]::-webkit-inner-spin-button,
+.no-range[type=number]::-webkit-outer-spin-button {
+  display: none;
+}
+
+@media screen and (min-width:615px) {
+  .text-color {
+    color:#070707
+  }
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

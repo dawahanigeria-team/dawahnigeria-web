@@ -1,0 +1,367 @@
+@mixin mobile_hide {
+    @media screen and (max-width:615px) {
+      display:none;
+    }
+  }
+  @mixin desktop_hide {
+    @media screen and (min-width:615px) {
+      display:none;
+    }
+  }
+  
+  .playlistwidget_wrapper {
+    cursor: pointer;
+  .play_table {
+      
+      @include mobile_hide;
+        color: #868686;
+        font-family:"Poppins";
+        width:100%;
+        font-size:14px;
+        border-collapse: collapse;
+        .play_td {
+          width:100%;
+          display:flex;
+          max-height:100px;
+          margin-bottom: 15px;
+          //overflow: hidden;
+          .play_tr {
+            display:flex;
+            width:50%;
+            align-items: center;
+            gap:10px;
+            .img_size {
+              width:56px;
+              height:56px;
+              
+              border-radius: 3px;
+              .img_size_sm {
+                width:100%;
+                height:100%;
+                  border-radius: 3px;
+              }
+            }
+            .trend_lect_data {
+            
+                display:flex;
+                flex-direction:column;
+                
+                align-items:start;
+                justify-content: flex-start;
+                width:100%;
+                .rel_text {
+                 margin-bottom:6px;
+                  .main_txt_wrap {
+                    text-overflow: ellipsis;
+                    white-space:nowrap;
+                    width:250px;
+                    overflow: hidden;
+                    @media screen and (max-width:1000px) {
+                      width:200px;
+                    }
+                    @media screen and (max-width:890px) {
+                      width:240px;
+                    }
+                    @media screen and (max-width:768px) {
+                      width:190px;
+                    }
+                  }
+                }
+              
+               
+                .like_others {
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                  justify-content: space-between;
+                  width:100%;
+                  .likeys {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    gap:6px;
+                    width:100%;
+                    .likeys_img {
+                      width:15px;
+                      height:15px;
+                      background: none;
+            margin-right:6px;
+            border: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+                     .likeys_img_sz {
+                      width:15px;
+                      height:15px;
+                    }
+                    }
+                  }
+                }
+            }
+          }
+  
+          .play_tr2 {
+            width:40%;
+            display:flex;
+            flex-direction: column;
+            //align-items:center;
+            //justify-content:flex-start;
+            
+           
+            .tr2_real_wrap {
+              display: flex;
+              flex-direction: row;
+              gap:25px;
+              width:100%;
+              
+                .tr2_text {
+                 // margin-bottom:2px;
+                  .text_child {
+                    text-overflow: ellipsis;
+                    white-space:nowrap;
+                    width:150px;
+                    overflow: hidden;
+                  }
+                }
+                
+       
+                 
+              
+             
+               .tr2_likeys {
+                 display: flex;
+                 flex-direction: row;
+                 gap:8px;
+                 align-items: center;
+                 .likeys_img {
+                   width:20px;
+                   height:20px;
+                  .likeys_img_sz {
+                   width:20px;
+                   height:20px;
+                 }
+                 }
+               }
+            }
+            .tr2_none_wrap {
+              width: 2px;
+              height:2px;
+              background: none;
+            }
+          
+          }
+  
+          .play_tr3 {
+            display: flex;
+            justify-content: flex-start;
+            align-items: start;
+          }
+        }
+    }
+  
+  
+  
+  
+  /*************** moobile **********/
+  
+  
+  .play_mobile_list {
+  @include desktop_hide;
+  display:flex;
+  flex-direction:column;
+  gap:0.5em;
+  font-family: "Poppins";
+  color:#CFCFCF;
+  font-size:12px;
+  
+  .play_music_list {
+    display:flex;
+    width:100%;
+    max-height:100px;
+    margin-bottom: 6px;
+    justify-content:space-between;
+    align-items: center;
+    .play_wrapped_right {
+      display:flex;
+      flex-direction: row;
+      gap:0.5em;
+      align-items: center;
+      width:90%;
+  
+      .wrap_image {
+        width:90px;
+        height:90px;
+        border-radius: 6px;
+        position:relative;
+        
+        .img_wr {
+          width:90px;
+         height:90px;
+          border-radius: 6px;
+          .img_wrp {
+            width: 100%;
+            height:100%;
+            border-radius: 6px;
+            object-fit:cover;
+  
+          }
+        }
+        .likeys {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          position: absolute;
+          justify-content: center;
+          background: linear-gradient(180deg, rgba(217, 217, 217, 0) 0%, rgba(25, 25, 26, 0.88) 71.74%);
+          left:0px;
+          bottom:0px;
+          gap:6px;
+          border-bottom-right-radius: 6px;
+          border-bottom-left-radius: 6px;
+          width:100%;
+          .likeys_img {
+            width:14px;
+            height:14px;
+            background: none;
+            margin-right:6px;
+            border: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+           .likeys_img_sz {
+            width:14px;
+            height:14px;
+          }
+          }
+          .likeys_text {
+            color:white;
+          }
+        }
+      }
+  
+      .wrap_text {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: flex-start;
+        gap:5px;
+        width: 100%;
+  
+        .title_wrap {
+          width: 100%;
+          .texta {
+            font-size:14px;
+            text-overflow: ellipsis;
+            white-space:nowrap;
+            width:170px;
+            overflow: hidden;
+            
+          }
+  
+        }
+        .lect_name_wrap {
+          width: 100%;
+          .textb {
+            font-size:12px;
+            color:#868686;
+            margin:0;
+            text-overflow: ellipsis;
+              white-space:nowrap;
+              width:170px;
+              overflow: hidden;
+          }
+  
+        }
+       
+      
+        .likey_wrap {
+          display:flex;
+          flex-direction: row;
+          gap:0.8em;
+          width:100%;
+          //height:20px;
+          .likeys {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap:3px;
+            color:#868686;
+            .likeys_img {
+              width:14px;
+              height:14px;
+              border:0;
+              background: none;
+              margin-right:6px;
+             .likeys_img_sz {
+              width:14px;
+              height:14px;
+            }
+            }
+          }
+        }
+      }
+    }
+  
+    .play_wrap_left {
+      display: flex;
+      flex-direction: row;
+      gap:2%;
+      align-items: start;
+      justify-content: flex-start;
+      
+        .likeys_img_left {
+          position: relative;
+          width:28px;
+          height:28px;
+          .likeys_img_sz_left {
+            width:100%;
+            height:100%;
+          }
+        }
+        .hidden_drops {
+          display: block;
+          position: absolute;
+          left:-95px;
+          background:black;
+          color:#CFCFCF;
+          padding:0.5rem;
+          display: block;
+          width:max-content;
+          .hidden_wrapper {
+            display: flex;
+            align-items: center;
+            width:100%;
+            margin-bottom: 3px;
+            .hidden_img {
+              width:12px;
+              height:12px;
+              
+              .h_img {
+                width:100%;
+                height:100%;
+              }
+            }
+            .hidden_text {
+              padding-left:4px;
+            }
+          }
+         
+        
+      }
+      .hidden_drops_none {
+        display:none;
+      }
+  
+    }
+  }
+  
+  }
+  
+  .download_wrapper {
+    display: block;
+  }
+  .hide_download_wrapper {
+    display: none;
+  }
+    
+  }
