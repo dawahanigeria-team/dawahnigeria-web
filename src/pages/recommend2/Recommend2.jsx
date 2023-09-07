@@ -4,6 +4,7 @@ import Container from "../../components/container/Container";
 import AlbumWidget from "../../components/albumWidget/AlbumWidget";
 import { recommended2Data } from "./data";
 import axios from "axios";
+import { LECTURE } from "../../utils/routes/constants";
 import { useNavigate } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import { useSelector } from "react-redux";
@@ -37,7 +38,7 @@ const Recommend2 = () => {
             return (
               <div
                 onClick={() => {
-                  navigate(`/l/${nid}`, {
+                  navigate(`${LECTURE}${nid}`, {
                     state: {
                       title: title,
                       rpname,

@@ -43,6 +43,7 @@ import {
   RepeatedIcon,
 } from "../svgcomponent/svgComponent";
 import Addplaylist from "../../pages/add_playlist/AddPlaylist";
+import { LECTURE, RESOURCE_PERSON } from "../../utils/routes/constants";
 const AudioActionDesktop = () => {
   const { currentUser, audioId,isrepeat, value, page, count, pack, playing } =
     useSelector((state) => state.user);
@@ -420,7 +421,7 @@ const AudioActionDesktop = () => {
           <div className="flex flex-col items-start justify-start ">
             <div
               onClick={() => {
-                navigate(`/l/${audioId}`);
+                navigate(`${LECTURE}${audioId}`);
               }}
               className="font-semibold text-sm whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px]  lg:max-w-[250px]  xl:max-w-[270px]"
             >
@@ -429,7 +430,7 @@ const AudioActionDesktop = () => {
             <div
               onClick={(e) => {
                 e.stopPropagation();
-                navigate(`/rp/${currentaudio?.rp_id}`);
+                navigate(`${RESOURCE_PERSON}${currentaudio?.rp_id}`);
               }}
               className="font-semibold text-[12px] whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px] lg:max-w-[250px]  xl:max-w-[270px]"
             >

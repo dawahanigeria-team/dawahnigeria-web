@@ -8,7 +8,7 @@ import logo from "../../../assets/png/dn logo.png";
 import _ from "lodash";
 import { useSelector } from "react-redux";
 import MusicList from "../../miscList/musicList";
-
+import { LECTURE } from "../../../utils/routes/constants";
 const Lecturer_songs = ({ id, setCount1 }) => {
   const { currentUser } = useSelector((state) => state.user);
   const [data, setData] = useState([]);
@@ -165,7 +165,7 @@ const Lecturer_songs = ({ id, setCount1 }) => {
                       lecturer={rpname || rp}
                       rpid={rp_id}
                       image={img}
-                      url={`/l/${nid}`}
+                      url={`${LECTURE}${nid}`}
                       Title={Title || title}
                       rpname={rpname}
                       cats={cats}
@@ -190,7 +190,7 @@ const Lecturer_songs = ({ id, setCount1 }) => {
                       lecturer={rpname || rp}
                       rpid={rp_id}
                       image={img}
-                      url={`/l/${nid}`}
+                      url={`${LECTURE}${nid}`}
                       Title={Title || title}
                       rpname={rpname}
                       cats={cats}

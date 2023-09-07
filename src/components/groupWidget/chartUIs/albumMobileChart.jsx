@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import LectChartWidget from "./chartWidgets/lectChartWidget";
-
+import { ALBUMS } from "../../../utils/routes/constants";
 const AlbumMobileChart = ({ data }) => {
  
 
@@ -11,7 +11,7 @@ const AlbumMobileChart = ({ data }) => {
     <div>
       <div className="w-[95%] mx-auto">
         <div className="top3 grid grid-cols-3 items-center gap-10  ">
-          <Link to={`/a/${data[1]?.id || data[1]?.nid}`}
+          <Link to={`${ALBUMS}${data[1]?.id || data[1]?.nid}`}
            
             className="w-full h-full flex flex-col space-y-3 pt-[5px]  overflow-hidden text-white"
           >
@@ -35,7 +35,7 @@ const AlbumMobileChart = ({ data }) => {
             </div>
           </Link>
 
-          <Link to={`/a/${data[0]?.id || data[0]?.nid}`}
+          <Link to={`${ALBUMS}${data[0]?.id || data[0]?.nid}`}
            
             className="w-[105%] h-full flex flex-col space-y-3 overflow-hidden text-white"
           >
@@ -57,7 +57,7 @@ const AlbumMobileChart = ({ data }) => {
               {data[0]?.name}
             </div>
           </Link>
-          <Link to={`/a/${data[2]?.id || data[2]?.nid}`}
+          <Link to={`${ALBUMS}${data[2]?.id || data[2]?.nid}`}
             className="w-full h-full flex flex-col space-y-3 pt-[5px] overflow-hidden text-white"
           >
             <div className="w-full relative h-[80px] rounded-md">
@@ -85,7 +85,7 @@ const AlbumMobileChart = ({ data }) => {
       <div className="flex flex-col w-full mt-4 space-y-2 justify-end items-end">
         {data?.slice(3).map(({ lec_img, id, img, nid, name }, idx) => {
           return (
-            <Link to={`/a/${id || nid}`}
+            <Link to={`${ALBUMS}${id || nid}`}
              
               key={idx}
               className="w-[90%]"

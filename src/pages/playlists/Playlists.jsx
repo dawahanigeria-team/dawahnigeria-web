@@ -9,7 +9,7 @@ import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import Loader from "../../components/UI/loader/loader";
 import axios from "../../utils/useAxios";
 import _ from "lodash";
-
+import { PLAYLISTS } from "../../utils/routes/constants";
 const Playlists = () => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState([]);
@@ -168,7 +168,7 @@ const Playlists = () => {
                 <div
                   key={idx + 1}
                   onClick={() => {
-                    navigate(`/pl/${id}`);
+                    navigate(`${PLAYLISTS}${id}`);
                   }}
                   className="playlist_lists_items"
                 >

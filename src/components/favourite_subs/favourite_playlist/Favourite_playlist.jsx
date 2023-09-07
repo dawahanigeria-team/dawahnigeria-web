@@ -8,7 +8,7 @@ import _ from "lodash";
 import axios from "../../../utils/useAxios";
 import { useNavigate } from "react-router-dom";
 import infinitePlayFavScroll from "../../UI/infinitePlayFavScroll";
-
+import { PLAYLISTS } from "../../../utils/routes/constants";
 
 const Favourite_playlist = ({setCount3}) => {
   const {currentUser} = useSelector((state) => state.user)
@@ -145,7 +145,7 @@ const Favourite_playlist = ({setCount3}) => {
                   className="favalb_album_item"
                   ref={lastElement}
                   onClick={() => {
-                    navigate(`/pl/${id}`, {
+                    navigate(`${PLAYLISTS}${id}`, {
                       state: {
                         title: Title || title || name.split(" - ")[0],
                         rpname,
@@ -171,7 +171,7 @@ const Favourite_playlist = ({setCount3}) => {
                 
                   className="favalb_album_item"
                   onClick={() => {
-                    navigate(`/pl/${id}`, {
+                    navigate(`${PLAYLISTS}${id}`, {
                       state: {
                         title: Title || title || name.split(" - ")[0],
                         rpname,

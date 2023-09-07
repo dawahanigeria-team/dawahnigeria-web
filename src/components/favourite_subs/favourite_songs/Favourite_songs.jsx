@@ -8,6 +8,7 @@ import axios from "../../../utils/useAxios";
 import { useNavigate } from "react-router-dom";
 import infinitePlayFavScroll from "../../UI/infinitePlayFavScroll";
 import MusicList from "../../miscList/musicList";
+import { LECTURE } from "../../../utils/routes/constants";
 
 const Favourite_songs = ({ setCount1 }) => {
   const { currentUser } = useSelector((state) => state.user);
@@ -160,7 +161,7 @@ const Favourite_songs = ({ setCount1 }) => {
                       duration={duration}
                       title={title || Title}
                       lecturer={rpname || rp}
-                      url={`/l/${nid}`}
+                      url={`${LECTURE}${nid}`}
                       Title={Title}
                       rpname={rpname || rp}
                       cats={cats}
@@ -184,7 +185,7 @@ const Favourite_songs = ({ setCount1 }) => {
                       duration={duration}
                       title={Title || title}
                       lecturer={rpname || rp}
-                      url={`/l/${nid}`}
+                      url={`${LECTURE}${nid}`}
                       Title={Title}
                       rpname={rpname || rp}
                       cats={cats}

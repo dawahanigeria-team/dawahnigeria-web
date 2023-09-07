@@ -29,7 +29,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AudioContext } from "../../App";
 import LecturersWidget from "../lecturersWidget/LecturersWidget";
 import GenreMobileLecturer from "../../pages/genredetail/genreMobileLecturer";
-
+import { LECTURE, ALBUMS, RESOURCE_PERSON,PLAYLISTS } from "../../utils/routes/constants";
 function More() {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
@@ -164,7 +164,7 @@ function More() {
                 if (data.length === idx + 1) {
                   return (
                     <Link
-                      to={`/l/${nid || id}`}
+                      to={`${LECTURE}${nid || id}`}
                       onClick={() => {
                         if (window.innerWidth <= 615) {
                           dispatch(getPack(null));
@@ -195,7 +195,7 @@ function More() {
                 } else {
                   return (
                     <Link
-                      to={`/l/${nid || id}`}
+                      to={`${LECTURE}${nid || id}`}
                       onClick={() => {
                         if (window.innerWidth <= 615) {
                           dispatch(getPack(null));
@@ -248,7 +248,7 @@ function More() {
                 if (data.length === idx + 1) {
                   return (
                     <Link
-                      to={`/a/${nid || id}`}
+                      to={`${ALBUMS}${nid || id}`}
                       ref={lastElement}
                       key={idx + 1}
                       className="widget_list_items"
@@ -270,7 +270,7 @@ function More() {
                 } else {
                   return (
                     <Link
-                      to={`/a/${nid || id}`}
+                      to={`${ALBUMS}${nid || id}`}
                       key={idx + 1}
                       className="widget_list_items"
                     >
@@ -314,7 +314,7 @@ function More() {
                 if (data.length === idx + 1) {
                   return (
                     <Link
-                      to={`/pl/${nid || id}`}
+                      to={`${PLAYLISTS}${nid || id}`}
                       ref={lastElement}
                       key={idx + 1}
                       className="widget_list_items"
@@ -337,7 +337,7 @@ function More() {
                 } else {
                   return (
                     <Link
-                      to={`/pl/${nid || id}`}
+                      to={`${PLAYLISTS}${nid || id}`}
                       key={idx + 1}
                       className="widget_list_items"
                     >
@@ -383,7 +383,7 @@ function More() {
                 if (data.length === idx + 1) {
                   return (
                     <Link
-                      to={endpoint_url ? `/l/${nid || id}` : `/a/${nid || id}`}
+                      to={endpoint_url ? `${LECTURE}${nid || id}` : `${ALBUMS}${nid || id}`}
                       onClick={() => {
                         if (endpoint_url && window.innerWidth <= 615) {
                           dispatch(getPack(null));
@@ -414,7 +414,7 @@ function More() {
                 } else {
                   return (
                     <Link
-                      to={endpoint_url ? `/l/${nid || id}` : `/a/${nid || id}`}
+                      to={endpoint_url ? `${LECTURE}${nid || id}` : `${ALBUMS}${nid || id}`}
                       onClick={() => {
                         if (endpoint_url && window.innerWidth <= 615) {
                           dispatch(getPack(null));
@@ -467,7 +467,7 @@ function More() {
                 if (data.length === idx + 1) {
                   return (
                     <Link
-                      to={`/rp/${id}`}
+                      to={`${RESOURCE_PERSON}${id}`}
                       key={idx}
                       className="lecturers_item"
                       ref={lastElement}
@@ -488,7 +488,7 @@ function More() {
                   );
                 } else {
                   return (
-                    <Link to={`/rp/${id}`} key={idx} className="lecturers_item">
+                    <Link to={`${RESOURCE_PERSON}${id}`} key={idx} className="lecturers_item">
                       <LecturersWidget
                         img={img}
                         views={views}

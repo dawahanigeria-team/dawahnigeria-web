@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import DownloadAudio from "../download/download";
 import Add_playlist from "../../pages/add_playlist/AddPlaylist";
 import { toast } from "react-hot-toast";
+import { LECTURE, RESOURCE_PERSON } from "../../utils/routes/constants";
 import {
   getaudioData,
   getaudioId,
@@ -215,7 +216,7 @@ function List({
       const rpindex = rpnameArray.indexOf(lecturer);
 
       console.log(rpData[rpindex]?.id);
-      navigate(`/rp/${rpData[rpindex]?.id}`);
+      navigate(`${RESOURCE_PERSON}${rpData[rpindex]?.id}`);
     }
   };
 
@@ -277,7 +278,7 @@ function List({
               <div
                 onClick={(e) => {
                   e.stopPropagation();
-                  navigate(`/l/${nid}`);
+                  navigate(`${LECTURE}${nid}`);
                   if (window.innerWidth <= 615) {
                     //dispatch(getaudioId(nid));
                     dispatch(getPack(controlData));
@@ -348,7 +349,7 @@ function List({
                 onClick={(e) => {
                   e.stopPropagation();
                   if (rpid) {
-                    navigate(`/rp/${rpid}`);
+                    navigate(`${RESOURCE_PERSON}${rpid}`);
                   } 
                 }}
                 className="tr2_text"

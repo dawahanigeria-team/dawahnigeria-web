@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import Loader from "../../UI/loader/loader";
 import _ from "lodash";
 import CommentBox from "../../comment/comment";
-
+import { ALBUMS } from "../../../utils/routes/constants";
 
 const Lecturer_album = ({ id, setCount2, rpname, setImg }) => {
   const [data, setData] = useState([]);
@@ -145,7 +145,7 @@ const Lecturer_album = ({ id, setCount2, rpname, setImg }) => {
             ) => {
              
                 return (
-                  <Link to={`/a/${id}`}
+                  <Link to={`${ALBUMS}${id}`}
                     className="lecalb_album_item"
                     
                     key={idx + 1}

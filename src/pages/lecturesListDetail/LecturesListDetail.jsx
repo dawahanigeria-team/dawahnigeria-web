@@ -43,7 +43,7 @@ import {
   getPack,
 } from "../../Redux/Actions/ActionCreators";
 import { AudioContext } from "../../App";
-
+import { LECTURE } from "../../utils/routes/constants";
 const LecturesListDetail = () => {
   const { id } = useParams();
   const { state } = useLocation();
@@ -230,7 +230,7 @@ const LecturesListDetail = () => {
   //play all audio files
   const playAll = () => {
     if (window.innerWidth <= 615) {
-      navigate(`/l/${data[0]?.nid}`);
+      navigate(`${LECTURE}${data[0]?.nid}`);
     } else {
       dispatch(getaudioId(data[0]?.nid));
     }
@@ -661,7 +661,7 @@ const LecturesListDetail = () => {
                               title={lectitle || title}
                               lecturer={rpname || rp}
                               image={lec_img || img}
-                              url={`/l/${nid}`}
+                              url={`${LECTURE}${nid}`}
                               rpid={rp_id}
                               Title={Title || lectitle || title}
                               share={share}
@@ -685,7 +685,7 @@ const LecturesListDetail = () => {
                               title={lectitle || title}
                               lecturer={rpname || rp}
                               image={lec_img || img}
-                              url={`/l/${nid}`}
+                              url={`${LECTURE}${nid}`}
                               Title={Title || lectitle || title}
                               rpname={rpname || rp}
                               cats={cats}
@@ -713,7 +713,7 @@ const LecturesListDetail = () => {
                               title={lectitle || title}
                               lecturer={rpname || rp}
                               image={lec_img || img}
-                              url={`/l/${nid}`}
+                              url={`${LECTURE}${nid}`}
                               Title={Title || lectitle || title}
                               rpname={rpname || rp}
                               cats={cats}
@@ -737,7 +737,7 @@ const LecturesListDetail = () => {
                               title={lectitle || title}
                               lecturer={rpname || rp}
                               image={lec_img}
-                              url={`/l/${nid}`}
+                              url={`${LECTURE}${nid}`}
                               Title={Title || lectitle || title}
                               rpname={rpname || rp}
                               cats={cats}

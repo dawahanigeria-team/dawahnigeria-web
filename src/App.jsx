@@ -32,6 +32,7 @@ import GenreDetail from "./pages/genredetail/genreDetail";
 import Buzz from "./pages/buzz/buzz";
 import Podcast from "./pages/podcast/podcast";
 import SearchPage from "./pages/searchPage/searchPage";
+import { ALBUMS, LECTURE,RESOURCE_PERSON,VIDEOS, PLAYLISTS } from "./utils/routes/constants";
 import ForgotPassword from "./pages/forgotpassword/forgotPassword";
 export const AudioContext = createContext();
 export const SearchContext = createContext();
@@ -121,12 +122,12 @@ const App = () => {
                 <Route path="/charts" element={<Charts />} />
                 <Route path="/trending" element={<Trending />} />
                 <Route path="/new" element={<New />} />
-                <Route path="/l/:id" element={<AudioDetail />} />
+                <Route path={`${LECTURE}/:id`} element={<AudioDetail />} />
                 <Route path="/download" element={<DownloadAudio />} />
-                <Route path="/pl/:id" element={<PlaylistDetail />} />
-                <Route path="/rp/:id" element={<LecturerDetail />} />
-                <Route path="/a/:id" element={<LecturesListDetail />} />
-                <Route path="/videos/:id" element={<VideoPlayer />} />
+                <Route path={`${PLAYLISTS}/:id`} element={<PlaylistDetail />} />
+                <Route path={`${RESOURCE_PERSON}/:id`} element={<LecturerDetail />} />
+                <Route path={`${ALBUMS}/:id`} element={<LecturesListDetail />} />
+                <Route path={`${VIDEOS}/:id`} element={<VideoPlayer />} />
                 <Route path="/favourite" element={<Favourite />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/myplaylist" element={<Myplaylist />} />

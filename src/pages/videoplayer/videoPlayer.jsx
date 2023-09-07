@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import Container from "../../components/container/Container";
-import test from "../../assets/png/recommend_rect.png";
+import { VIDEOS } from "../../utils/routes/constants";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import { useNavigate, useLocation, useParams, Link } from "react-router-dom";
 import axios from "../../utils/useAxios";
@@ -94,7 +94,7 @@ const VideoPlayer = () => {
   const handleNextAudio = () => {
     const next = subdata.findIndex((value) => value.id === id);
     console.log(next);
-    navigate(`/videos/${subdata[next + 1]?.id}`);
+    navigate(`${VIDEOS}${subdata[next + 1]?.id}`);
   };
 
   const shareAudio = (e) => {
@@ -235,7 +235,7 @@ console.log('video data',data?.share, data?.views, data?.comments)
               navigate(-1);
             }}
             className={
-              pathname === `/videos/${id}`
+              pathname === `${VIDEOS}${id}`
                 ? "text-white text-[22px]"
                 : "text-[22px] text-gray-300"
             }
@@ -382,7 +382,7 @@ console.log('video data',data?.share, data?.views, data?.comments)
                 <div className="video_widget">
                   {subdata?.map(({ images, id, author, views, title }, idx) => {
                     return (
-                      <Link to={`/videos/${id}`}
+                      <Link to={`${VIDEOS}${id}`}
                        
                         className="min-[615px]:mb-3"
                         key={idx}

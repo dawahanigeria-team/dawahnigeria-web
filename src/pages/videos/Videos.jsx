@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../components/UI/loader/loader";
 import infiniteScroll from "../../components/UI/infiniteScroll";
 import _ from 'lodash'
+import { VIDEOS } from "../../utils/routes/constants";
 const Videos = () => {
   const navigate = useNavigate()
   const observer = useRef()
@@ -110,7 +111,7 @@ const Videos = () => {
               <div
               ref={lastElement}
               onClick={() => {
-                navigate(`/videos/${id}`)
+                navigate(`${VIDEOS}${id}`)
               }}
               >
               <VideoWidget
@@ -129,7 +130,7 @@ const Videos = () => {
             return (
               <div
               onClick={() => {
-                navigate(`/videos/${id}`)
+                navigate(`${VIDEOS}${id}`)
               }}
               >
               <VideoWidget

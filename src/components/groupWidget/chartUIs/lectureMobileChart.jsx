@@ -4,6 +4,7 @@ import {  Link } from "react-router-dom";
 import { getCount, getPack } from "../../../Redux/Actions/ActionCreators";
 import { AudioContext } from "../../../App";
 import LectChartWidget from "./chartWidgets/lectChartWidget";
+import { LECTURE } from "../../../utils/routes/constants";
 const LectureMobileChart = ({ data }) => {
 
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const LectureMobileChart = ({ data }) => {
     <div>
       <div className="w-[95%] mx-auto">
         <div className="top3 grid grid-cols-3 items-center gap-10  ">
-          <Link to={`/l/${data[1]?.id}`}
+          <Link to={`${LECTURE}${data[1]?.id}`}
             onClick={() => {
               gotoLecture();
               dispatch(getCount(1))
@@ -49,7 +50,7 @@ const LectureMobileChart = ({ data }) => {
             </div>
           </Link>
 
-          <Link to={`/l/${data[0]?.id}`}
+          <Link to={`${LECTURE}${data[0]?.id}`}
             onClick={() => {
               gotoLecture();
               dispatch(getCount(0))
@@ -74,7 +75,7 @@ const LectureMobileChart = ({ data }) => {
               {data[0]?.mp3_title}
             </div>
           </Link>
-          <Link to={`/l/${data[2]?.id}`}
+          <Link to={`${LECTURE}${data[2]?.id}`}
             onClick={() => {
               gotoLecture();
               dispatch(getCount(2))
@@ -106,7 +107,7 @@ const LectureMobileChart = ({ data }) => {
       <div className="flex flex-col w-full mt-4 space-y-2 justify-end items-end">
         {data?.slice(3).map(({ mp3_title, id, lec_img, img }, idx) => {
           return (
-            <Link to={`/l/${id}`}
+            <Link to={`${LECTURE}${id}`}
               onClick={() => {
                 dispatch(getPack(null));
               

@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AudioContext } from "../../App.jsx";
 import AudioActionDesktop from "../audio/audioActionDesktop";
 import { setPlaying } from "../../Redux/Actions/ActionCreators";
+import { LECTURE } from "../../utils/routes/constants";
 export const NavContext = createContext();
 
 const Layout = () => {
@@ -104,7 +105,7 @@ const Layout = () => {
      
           <div
           onClick={() => {
-            navigate(`/l/${audioId}`, {
+            navigate(`${LECTURE}${audioId}`, {
               state: {
                 layout:islayout
               }

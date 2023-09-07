@@ -23,6 +23,7 @@ import LecturerMobileChart from "./chartUIs/lecturersMobileChart";
 import LectureMobileChart from "./chartUIs/lectureMobileChart";
 import AlbumMobileChart from "./chartUIs/albumMobileChart";
 import GenreMobileLecturer from "../../pages/genredetail/genreMobileLecturer";
+import { ALBUMS, LECTURE, PLAYLISTS, RESOURCE_PERSON } from "../../utils/routes/constants";
 
 const GroupWidget = ({
   data,
@@ -182,7 +183,7 @@ const GroupWidget = ({
                   idx
                 ) => {
                   return (
-                    <Link to={isrecent ? `/a/${nid}`: `/l/${nid}`}
+                    <Link to={isrecent ? `${ALBUMS}${nid}`: `${LECTURE}${nid}`}
                       id={idx}
                       name={nid}
                       className="groupWidget_album_item"
@@ -269,7 +270,7 @@ const GroupWidget = ({
                 ) => {
                   return (
                     <>
-                      <Link to={`/l/${nid || id}`}
+                      <Link to={`${LECTURE}${nid || id}`}
                         id={idx}
                         className={`groupWidget_album_item  ${
                           styling ? "relative max-[615px]:hidden" : ""
@@ -386,7 +387,7 @@ const GroupWidget = ({
                   idx
                 ) => {
                   return (
-                    <Link to={`/a/${id || nid}`}
+                    <Link to={`${ALBUMS}${id || nid}`}
                       id={idx}
                       className={`groupWidget_album_item  ${
                         styling ? "relative max-[615px]:hidden" : ""
@@ -458,7 +459,7 @@ const GroupWidget = ({
                   idx
                 ) => {
                   return (
-                    <Link to={`/pl/${id || nid}`}
+                    <Link to={`${PLAYLISTS}${id || nid}`}
                       id={idx}
                       className="groupWidget_album_item"
                       onClick={() => {
@@ -491,7 +492,7 @@ const GroupWidget = ({
           <div className="w-full overflow-x-auto flex items-center space-x-4 h-full">
             {data.map(({ img, name, id, nid }, idx) => {
               return (
-                <Link to={`/rp/${id || nid}`} key={idx} className="">
+                <Link to={`${RESOURCE_PERSON}${id || nid}`} key={idx} className="">
                   <GenreMobileLecturer img={img} rp={name} />
                 </Link>
               );
@@ -533,10 +534,10 @@ const GroupWidget = ({
               ) => {
                 return (
                   <>
-                    <Link to={`/rp/${id || nid}`}
+                    <Link to={`${RESOURCE_PERSON}${id || nid}`}
                       className="max-[615px]:hidden relative"
                       onClick={() => {
-                       // navigate(`/rp/${id || nid}`);
+                       // navigate(`${RESOURCE_PERSON}${id || nid}`);
                       }}
                       key={idx + 1}
                     >
