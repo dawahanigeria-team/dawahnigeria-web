@@ -1018,6 +1018,7 @@ const AudioDetail = () => {
                       className="similarWidget_album_item"
                       onClick={() => {
                         navigate(`${LECTURE}${id}`);
+                        
                         // setendpUrl(similarAudioUrl);
                         dispatch(getPack(null))
                        dispatch(getPage(1));
@@ -1026,6 +1027,7 @@ const AudioDetail = () => {
                         dispatch(getPack(similarAudio));
                         
                         setCurUser(currentUser);
+                        window.location.reload()
                       }}
                       key={idx + 1}
                     >

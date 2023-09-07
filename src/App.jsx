@@ -122,12 +122,12 @@ const App = () => {
                 <Route path="/charts" element={<Charts />} />
                 <Route path="/trending" element={<Trending />} />
                 <Route path="/new" element={<New />} />
-                <Route path={`${LECTURE}/:id`} element={<AudioDetail />} />
+                <Route path={`${LECTURE}:id`} element={<AudioDetail />} />
                 <Route path="/download" element={<DownloadAudio />} />
-                <Route path={`${PLAYLISTS}/:id`} element={<PlaylistDetail />} />
-                <Route path={`${RESOURCE_PERSON}/:id`} element={<LecturerDetail />} />
-                <Route path={`${ALBUMS}/:id`} element={<LecturesListDetail />} />
-                <Route path={`${VIDEOS}/:id`} element={<VideoPlayer />} />
+                <Route path={`${PLAYLISTS}:id`} element={<PlaylistDetail />} />
+                <Route path={`${RESOURCE_PERSON}:id`} element={<LecturerDetail />} />
+                <Route path={`${ALBUMS}:id`} element={<LecturesListDetail />} />
+                <Route path={`${VIDEOS}:id`} element={<VideoPlayer />} />
                 <Route path="/favourite" element={<Favourite />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/myplaylist" element={<Myplaylist />} />
