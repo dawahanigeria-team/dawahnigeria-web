@@ -15,7 +15,7 @@ const Library = () => {
 
 
 
-  console.log(currentUser);
+  //console.log(currentUser);
   return (
     <Container>
       <div className="lib_wrapper">

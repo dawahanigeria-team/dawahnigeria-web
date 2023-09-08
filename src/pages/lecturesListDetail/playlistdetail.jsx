@@ -72,7 +72,7 @@ const PlaylistDetail = () => {
     useaxios
       .get(`/playlistApi.php?playlist_id=${id}&action=single_playlist_data`)
       .then((res) => {
-        console.log("single data @@@@@@@@@", res);
+        //console.log("single data @@@@@@@@@", res);
         const { audio, name, lec_img } = res.data[0];
         setsingleData({ name, img: lec_img });
         setlistdetail(audio);
@@ -80,7 +80,7 @@ const PlaylistDetail = () => {
         setsumofFav(res.data[0]?.favorites || 0);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, [id]);
 
@@ -101,11 +101,11 @@ const PlaylistDetail = () => {
         }
       )
       .then((res) => {
-        console.log("comment result", res);
+        //console.log("comment result", res);
         setaudioComment(res.data.reverse());
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, [id]);
 
@@ -114,7 +114,7 @@ const PlaylistDetail = () => {
       useaxios
         .get(`/leclisting_multi_nid_api.php?id=${listdetail.toString()}`)
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           setLoading(false);
           setData(res.data);
           if (res.data === null) {
@@ -128,7 +128,7 @@ const PlaylistDetail = () => {
   async function fetchFavorites(addFav) {
     if (!currentUser?.id) return;
     if (addFav || (!addFav && id)) {
-      console.log("...ALBUM.......@@@@@@@@@@@@@");
+      //console.log("...ALBUM.......@@@@@@@@@@@@@");
       await useaxios
         .get(
           `/leclisting_favorites.php?user_id=${currentUser?.id}&type=playlist`,
@@ -141,13 +141,13 @@ const PlaylistDetail = () => {
           }
         )
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           const { playlist } = res.data;
           setgetfavs(playlist);
           // const isExist = [Object.values(audio)].includes(id)
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     }
   }
@@ -158,7 +158,7 @@ const PlaylistDetail = () => {
   const addToFav = async (e) => {
     /// add to favorites
     e.stopPropagation();
-    console.log("event clicked");
+    //console.log("event clicked");
     if (!currentUser?.id) {
       toast.error("Login or register to add to favorites");
       return;
@@ -177,10 +177,10 @@ const PlaylistDetail = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         toast.success(res.data.message);
         setdisabled(false);
-        console.log(addFav);
+        //console.log(addFav);
         if (!getFavs?.includes(parseInt(id))) {
           setsumofFav(sumofFav + 1);
         } else {
@@ -189,7 +189,7 @@ const PlaylistDetail = () => {
       })
 
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -197,7 +197,7 @@ const PlaylistDetail = () => {
   const firstElement = useCallback((node) => {
     observeEl.current = new IntersectionObserver((entries) => {
       if (!entries[0].isIntersecting) {
-        console.log("not visible");
+        //console.log("not visible");
         setIsVisible(true);
       } else {
         setIsVisible(false);
@@ -219,11 +219,11 @@ const PlaylistDetail = () => {
   
       [page]
     );
-    console.log("current page", page);
+    //console.log("current page", page);
   
      */
 
-  console.log(data);
+  //console.log(data);
   //play all audio files
   const playAll = () => {
     if (window.innerWidth <= 615) {
@@ -239,7 +239,7 @@ const PlaylistDetail = () => {
   ///**** share album ******** */
 
   const sharePlaylist = (e) => {
-    console.log("playlist id", id);
+    //console.log("playlist id", id);
     e.stopPropagation();
     if (!currentUser?.id) {
       toast.error("Log in or register to share audio");

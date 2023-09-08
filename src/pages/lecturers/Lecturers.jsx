@@ -35,16 +35,16 @@ const Lecturers = () => {
   const [initialAlpha, setinitialAlpha] = useState();
   const [lectId, setlectId] = useState()
 
-  console.log(langid);
-  console.log(typeName);
-  console.log("this is alpha team, over", alpha);
+  //console.log(langid);
+  //console.log(typeName);
+  //console.log("this is alpha team, over", alpha);
   useEffect(() => {
     function getLang() {
       //get all langyages
       axios
         .get(`https://dawahnigeria.com/dawahcast/dboxapi/langjson`)
         .then((res) => {
-          //console.log(res.data.rp);
+          ////console.log(res.data.rp);
           setLanguages([...language, ...res.data.rp]);
         });
     }
@@ -53,7 +53,7 @@ const Lecturers = () => {
 
   useEffect(() => {
     setData3(data);
-    console.log(data);
+    //console.log(data);
   }, [data]);
 
   useEffect(() => {
@@ -66,9 +66,9 @@ const Lecturers = () => {
         setData([]);
         setLoading(true);
         setPage(1);
-        console.log("reset page", page);
+        //console.log("reset page", page);
       }
-      console.log("current page", page);
+      //console.log("current page", page);
       if (page > 1) setNextPageLoad(true);
 
       axios
@@ -78,7 +78,7 @@ const Lecturers = () => {
           }`}${`${alpha && alpha !== 'Hot' ? `&alpha=${alpha}` : ""}`}`
         )
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           if (res.data.length === 0) return;
           const data = res.data.filter((a) => a.name !== null);
           setLoading(false);
@@ -92,7 +92,7 @@ const Lecturers = () => {
           setinitialAlpha(alpha);
 
           if (alpha && alpha !== "Hot") {
-            console.log("this is alpha team, over", alpha);
+            //console.log("this is alpha team, over", alpha);
             const filterByAlpha = data.filter(
               (value) => value?.name[0]?.toLocaleUpperCase() === alpha
             );
@@ -107,13 +107,13 @@ const Lecturers = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     };
 
     handleRequest();
   }, [page, langid, alpha]);
-  console.log(data);
+  //console.log(data);
 
   useEffect(() => {
     if (typeName !== 'name' && active === 'All') {
@@ -121,13 +121,13 @@ const Lecturers = () => {
     }
   axios.get(`https://www.dawahbox.com/mongo/api/rplisting_multi_nid_api.php?id=${lectId}`)
       .then((res) => {
-        console.log(res.data[0])
+        //console.log(res.data[0])
       })
   },[lectId])
 
   const lastElement = useCallback(
     (node) => {
-      console.log(typeName);
+      //console.log(typeName);
 
       if (isEmpty) {
         //setIsEmpty(false);

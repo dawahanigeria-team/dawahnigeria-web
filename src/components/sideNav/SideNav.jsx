@@ -16,7 +16,7 @@ const SideNav = ({ res, handleSideBar }) => {
   const dispatch = useDispatch()
   const { currentUser } = useSelector((state) => state.user);
  // const { id, username } = currentUser;
-  console.log(currentUser);
+  //console.log(currentUser);
 
   function handleLogout() {
     dispatch({ type: "LOGOUT" });

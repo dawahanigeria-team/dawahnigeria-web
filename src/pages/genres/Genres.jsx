@@ -19,12 +19,12 @@ const Genres = () => {
       axios
         .get(`https://dawahnigeria.com/dawahcast/dboxapi/catjson2`)
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           setData(res.data.rp);
           setLoading(false);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
 
    

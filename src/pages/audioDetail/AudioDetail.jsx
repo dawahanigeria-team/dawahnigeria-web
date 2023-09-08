@@ -125,10 +125,10 @@ const AudioDetail = () => {
   const [noOfComments, setNoOfComments] = useState("");
 
   const dispatch = useDispatch();
-  console.log("count: ", count);
-  console.log("controlData: ", id);
+  //console.log("count: ", count);
+  //console.log("controlData: ", id);
 
-  console.log("currentPage", page);
+  //console.log("currentPage", page);
   /**
    
    */
@@ -141,11 +141,11 @@ const AudioDetail = () => {
       axios
         .get(`/leclistingapi.php?lecid=${id}`)
         .then((res) => {
-          console.log(res);
+          //console.log(res);
           dispatch(getcurrentAudioInfo(res.data[0]));
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     }
   };
@@ -170,23 +170,23 @@ const AudioDetail = () => {
 
   const handleRange = (curr) => {
     dispatch(getValue(curr));
-    //   console.log(rangeRef.current.value);
+    //   //console.log(rangeRef.current.value);
     if (audioRef.current) {
       audioRef.current.currentTime = curr;
     }
   };
 
   const handleNextAudio = () => {
-    // console.log("first count: ", count);
+    // //console.log("first count: ", count);
     setIsPrevious(false);
-    console.log(pack);
+    //console.log(pack);
  
      const next = pack?.findIndex((value) => {
       return value.nid === parseInt(id);
     })
   
-     console.log("first count: ", next);
-    // console.log("current diff: ", data?.length - 1 - next);
+     //console.log("first count: ", next);
+    // //console.log("current diff: ", data?.length - 1 - next);
     if (!isEmpty && pack?.length - 1 - next <= 2) {
       dispatch(getPage(page + 1));
     }
@@ -194,14 +194,14 @@ const AudioDetail = () => {
     if (next === pack?.length - 1) {
       navigate(`${LECTURE}${pack[next]?.nid}`)
    
-      console.log("@@@@@@@@@@ end of track next");
+      //console.log("@@@@@@@@@@ end of track next");
       dispatch(getCount(next));
     } else if (count < pack?.length - 1) {
-      console.log("@@@@@@@@@@@ working");
+      //console.log("@@@@@@@@@@@ working");
       navigate(`${LECTURE}${pack[next + 1]?.nid}`)
      
       dispatch(getCount(next + 1));
-      console.log("@@@@@@ last count: ", next);
+      //console.log("@@@@@@ last count: ", next);
     } else {
 
       navigate(`${LECTURE}${pack[0]?.id}`)
@@ -211,28 +211,28 @@ const AudioDetail = () => {
     setinitial (false)
   };
   const handlePreviousAudio = () => {
-    //  console.log("first count: ", count);
+    //  //console.log("first count: ", count);
 
     const prev = pack?.findIndex((value) => {
       return value.nid === parseInt(id);
     });
-    console.log("standard: ", pack?.length - 1 - 2);
-    console.log("current diff frm prev: ", pack?.length - 1 - prev);
+    //console.log("standard: ", pack?.length - 1 - 2);
+    //console.log("current diff frm prev: ", pack?.length - 1 - prev);
     if (page > 1 && pack.length - 1 - prev <= pack.length - 1 - 2) {
       setIsPrevious(true);
       dispatch(getPage(page - 1));
     }
 
     // getCount(prev);
-    // console.log("second count: ", count);
+    // //console.log("second count: ", count);
     if (prev === 0) {
     navigate(`${LECTURE}${pack[prev]?.nid}`)
       //dispatch(getaudioId(pack[prev]?.nid));
       dispatch(getCount(prev));
 
-      console.log("end of track prev");
+      //console.log("end of track prev");
     } else {
-      console.log("third count: ", count);
+      //console.log("third count: ", count);
       navigate(`${LECTURE}${pack[prev -  1]?.nid}`)
       //dispatch(getaudioId(pack[prev - 1]?.nid));
       dispatch(getCount(prev - 1));
@@ -244,7 +244,7 @@ const AudioDetail = () => {
   /// add to playlist ...../////////
   const addToPlaylist = (e, lecid) => {
     e.stopPropagation();
-    console.log(`adding to playlist`);
+    //console.log(`adding to playlist`);
     dispatch(showaddPlaylist(true));
     dispatch(getLecid(lecid));
   };
@@ -261,7 +261,7 @@ const AudioDetail = () => {
         },
       })
       .then((res) => {
-        console.log("from download audio detailed", res.data);
+        //console.log("from download audio detailed", res.data);
         const { data } = res;
         setdownloaddata(data);
         const { amr_size, mp3_size } = data;
@@ -270,18 +270,18 @@ const AudioDetail = () => {
         setmp4Text(`${mp3_size} [MP3]`);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, [id, audioId]);
 
-  //console.log(data)
+  ////console.log(data)
 
   const selectAMR = () => {
     const { amr_url } = downloaddata;
     setisMP4(false);
     setisAMR(true);
     setdownloadUrl(amr_url);
-    console.log(amr_url);
+    //console.log(amr_url);
   };
 
   const selectMP4 = () => {
@@ -299,14 +299,14 @@ const AudioDetail = () => {
 
 
 
-  console.log("data", data);
+  //console.log("data", data);
 
   /////get users favorites
   async function fetchFavorites(addFav, lecid) {
     //setsumofFav(favorites)
     if (!curUser?.id) return;
     if (addFav || (!addFav && lecid)) {
-      //console.log("..........@@@@@@@@@@@@@");
+      ////console.log("..........@@@@@@@@@@@@@");
       await axios
         .get(`/leclisting_favorites.php?user_id=${curUser?.id}&type=audio`, {
           headers: {
@@ -316,13 +316,13 @@ const AudioDetail = () => {
           },
         })
         .then((res) => {
-        //  console.log(res.data);
+        //  //console.log(res.data);
           const { audio } = res.data;
           setgetfavs(Object.values(audio));
           // const isExist = [Object.values(audio)].includes(nid)
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     }
   }
@@ -333,7 +333,7 @@ const AudioDetail = () => {
   const addToFav = async (e, lecid) => {
     /// add to favorites
     e.stopPropagation();
-    console.log("event clicked");
+    //console.log("event clicked");
     if (!curUser?.id) {
       
       toast.error("Login or register to add to favorites");
@@ -353,10 +353,10 @@ const AudioDetail = () => {
         },
       })
       .then((res) => {
-      //  console.log(res);
+      //  //console.log(res);
         toast.success(res.data.message);
         setdisabled(false);
-       // console.log(addFav);
+       // //console.log(addFav);
         if (!getFavs?.includes(parseInt(lecid))) {
           setsumofFav(sumofFav + 1);
         } else {
@@ -365,7 +365,7 @@ const AudioDetail = () => {
       })
 
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -389,11 +389,11 @@ const AudioDetail = () => {
         }
       )
       .then((res) => {
-        console.log("comment result", res);
+        //console.log("comment result", res);
         setaudioComment(res.data.reverse());
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, [currentAudioInfo?.nid]);
 
@@ -405,7 +405,7 @@ const AudioDetail = () => {
     }
 
     if (comment === "") return;
-    console.log(comment);
+    //console.log(comment);
     const payload = {
       user_id: curUser?.id,
       item_id: currentAudioInfo?.nid,
@@ -421,17 +421,17 @@ const AudioDetail = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         setComment("");
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
   ///scrolll to view 
   useEffect(() => {
-    console.log(isComment)
+    //console.log(isComment)
     if (isComment) {
       
       window.scrollTo({
@@ -449,10 +449,10 @@ const AudioDetail = () => {
   function prev() {
     // e.stopPropagation()
 
-    //console.log('window.scrollWidth')
-    console.log(slide.current.scrollLeft);
-    console.log(slide.current.scrollWidth);
-    console.log(slide.current.offsetWidth);
+    ////console.log('window.scrollWidth')
+    //console.log(slide.current.scrollLeft);
+    //console.log(slide.current.scrollWidth);
+    //console.log(slide.current.offsetWidth);
     slide.current.scrollBy({
       left: -slide.current.scrollWidth / 10,
       behavior: "smooth",
@@ -461,10 +461,10 @@ const AudioDetail = () => {
 
   function next() {
     //e.stopPropagation()
-    //console.log('window.scrollWidth')
+    ////console.log('window.scrollWidth')
 
-    console.log(slide.current.scrollWidth);
-    console.log(slide.current.offsetWidth);
+    //console.log(slide.current.scrollWidth);
+    //console.log(slide.current.offsetWidth);
     slide.current.scrollBy({
       left: slide.current.scrollWidth / 10,
       behavior: "smooth",
@@ -473,7 +473,7 @@ const AudioDetail = () => {
 
   useEffect(() => {
     function scrollEl() {
-      //console.log("Slide")
+      ////console.log("Slide")
       if (slide.current?.scrollLeft === 0) {
         setisprev(false);
       } else {
@@ -500,31 +500,31 @@ const AudioDetail = () => {
     axios
       .get("https://dawahnigeria.com/dawahcast/dboxapi/rpjson")
       .then((res) => {
-        console.log(res.data.rp);
+        //console.log(res.data.rp);
         const data = res.data.rp;
         const rpArray = data.map((rp) => rp.name);
         const isPresent = rpArray.includes(currentAudioInfo?.rpname);
-        console.log("is rp present is", isPresent);
+        //console.log("is rp present is", isPresent);
         if (isPresent) {
           const rpindex = rpArray.indexOf(currentAudioInfo?.rpname);
           const page = 1;
-          //console.log(data[rpindex]?.id);
+          ////console.log(data[rpindex]?.id);
           axios
             .get(
               `/leclisting_rp.php?page=${page}&lim=10&offset=30&rpid=${data[rpindex]?.id}`
             )
             .then((res) => {
-             // console.log(res);
+             // //console.log(res);
               setSimilarAudio(res.data);
              // dispatch(getPack(res.data));
             })
             .catch((err) => {
-              console.log(err);
+              //console.log(err);
             });
         }
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, [currentAudioInfo?.rpname]);
 
@@ -880,7 +880,7 @@ const AudioDetail = () => {
                   <div
                     onClick={(e) => {
                       e.stopPropagation();
-                      //console.log('cliked')
+                      ////console.log('cliked')
                     }}
                     className="bg-black z-[200] relative rounded-sm space-y-2 p-1 font-light text-[12px] text-white"
                   >

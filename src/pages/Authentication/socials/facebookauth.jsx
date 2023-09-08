@@ -13,14 +13,14 @@ function GetFacebookAuth  ()  {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
 
-    //console.log(socialData)
+    ////console.log(socialData)
     return (
         <div>
             <LoginSocialFacebook
             appId='392392739611134'
 
             onResolve={(response) => {
-                console.log(response.data)
+                //console.log(response.data)
                 const {name, email, accessToken} = response.data
                 if (pathname === "/auth/login") {
                     const payload = {
@@ -30,7 +30,7 @@ function GetFacebookAuth  ()  {
                       //password: "pa$$word",
                     };
       
-                    console.log(payload);
+                    //console.log(payload);
                    // dispatch(LoginAction(payload, navigate, setLoading));
                 }else {
                     navigate("/auth/selectlanguage", {
@@ -46,7 +46,7 @@ function GetFacebookAuth  ()  {
             }}
 
             onReject={(err) => {
-                console.log(err)
+                //console.log(err)
             }}
             >
             

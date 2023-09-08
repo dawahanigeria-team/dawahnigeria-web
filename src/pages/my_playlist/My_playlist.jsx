@@ -47,11 +47,11 @@ const My_playlist = () => {
         }
       )
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         setmyFolders(_.uniqBy(res.data, "name"));
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, []);
 
@@ -75,8 +75,8 @@ const My_playlist = () => {
         }
       )
       .then((res) => {
-        console.log(res.data);
-       // console.log(res.data.audio);
+        //console.log(res.data);
+       // //console.log(res.data.audio);
         const {audio} = res.data[0];
        if (audio?.length === 0)  {
         setLoading(false)
@@ -87,7 +87,7 @@ const My_playlist = () => {
           return
        }
         const audioArr = Object.values(audio);
-        console.log(audioArr.toString());
+        //console.log(audioArr.toString());
         //setmyplaylist(res.data);
         //setdata(res.data?.slice(0, 10));
        
@@ -95,7 +95,7 @@ const My_playlist = () => {
         .get(`/leclisting_multi_nid_api.php?id=${audioArr.toString()}`)
 
         .then((res) => {
-          console.log(res);
+          //console.log(res);
           if ((res.data === null) || !res.data) {
             toast.error('selected folder is empty')
             setmyplaylist([]);
@@ -106,14 +106,14 @@ const My_playlist = () => {
           setdata(_.uniqBy(res.data?.slice(0, 10), "nid"));
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
         
 
         
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -143,10 +143,10 @@ const My_playlist = () => {
     function prev() {
       // e.stopPropagation()
   
-      //console.log('window.scrollWidth')
-      console.log(slide.current.scrollLeft);
-      console.log(slide.current.scrollWidth);
-      console.log(slide.current.offsetWidth);
+      ////console.log('window.scrollWidth')
+      //console.log(slide.current.scrollLeft);
+      //console.log(slide.current.scrollWidth);
+      //console.log(slide.current.offsetWidth);
       slide.current.scrollBy({
         left: -slide.current.scrollWidth / 10,
         behavior: "smooth",
@@ -155,10 +155,10 @@ const My_playlist = () => {
   
     function next() {
       //e.stopPropagation()
-      //console.log('window.scrollWidth')
+      ////console.log('window.scrollWidth')
   
-      console.log(slide.current.scrollWidth);
-      console.log(slide.current.offsetWidth);
+      //console.log(slide.current.scrollWidth);
+      //console.log(slide.current.offsetWidth);
       slide.current.scrollBy({
         left: slide.current.scrollWidth / 10,
         behavior: "smooth",
@@ -167,7 +167,7 @@ const My_playlist = () => {
   
     useEffect(() => {
       function scrollEl() {
-        //console.log("Slide")
+        ////console.log("Slide")
         if (slide.current.scrollLeft === 0) {
           setisprev(false);
         } else {
@@ -191,7 +191,7 @@ const My_playlist = () => {
 
 
 
-  console.log(data);
+  //console.log(data);
   return (
     <Container>
       <div className="myplay_wrapper">

@@ -12,7 +12,7 @@ const LangOptions = () => {
   
   //const dispatch = useDispatch();
   const handleSelected = (e) => {
-    console.log(e.target.value);
+    //console.log(e.target.value);
     if (e.target.checked) {
       setLanguageId((prev) => [...prev, e.target.value]);
     } else {
@@ -24,7 +24,7 @@ const LangOptions = () => {
    
   };
 
-  console.log(selectCategory);
+  //console.log(selectCategory);
   return (
     <div className="flex flex-col text-zinc-400 text-sm font-normal mb-6 w-full space-y-3 h-fit justify-start">
       <div className="flex items-center justify-between">

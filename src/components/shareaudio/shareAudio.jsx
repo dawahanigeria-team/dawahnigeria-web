@@ -35,13 +35,13 @@ async function share () {
           },
         })
         .then((res) => {
-        console.log("from share payload", res);
+        //console.log("from share payload", res);
 
           setLink(res.data.success)
          // window.open(res.data.success, "_blank");
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
 }
 

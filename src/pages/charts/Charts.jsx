@@ -26,44 +26,44 @@ const Charts = () => {
     axios
       .get("/leclisting_charts_api.php?action=daily")
       .then((res) => {
-        console.log('daily lectures',res.data);
+        //console.log('daily lectures',res.data);
         const {data} = res.data
         setdailyLectures(data);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
       //weekly lectures
       axios.get("/leclisting_charts_api.php?action=weekly")
       .then((res) => {
-        console.log(res.data)
+        //console.log(res.data)
         const {data} = res.data
         setweeklyLectures(data);
       })
       .catch((err) => {
-        console.log(err)
+        //console.log(err)
       })
        //monthly lectures
        axios.get("/leclisting_charts_api.php?action=monthly")
        .then((res) => {
-         console.log(res.data)
+         //console.log(res.data)
          const {data} = res.data
          setmonthlyLectures(data);
        })
        .catch((err) => {
-         console.log(err)
+         //console.log(err)
        })
       //monthly  https://www.dawahbox.com/mongo/api/albumlisting_charts_api.php?action=daily
      
       // daily album
       axios.get("/albumlisting_charts_api.php?action=daily")
       .then((res) => {
-        console.log(res.data)
+        //console.log(res.data)
         const {data} = res.data
         setdailyAlbum(data)
       })
       .catch((err) => {
-        console.log(err)
+        //console.log(err)
       })
 
         // weekly album
@@ -73,7 +73,7 @@ const Charts = () => {
           setweeklyAlbum(data)
         })
         .catch((err) => {
-          console.log(err)
+          //console.log(err)
         })
 
           //monthly album
@@ -83,7 +83,7 @@ const Charts = () => {
         setmonthlyAlbum(data)
       })
       .catch((err) => {
-        console.log(err)
+        //console.log(err)
       })
       // https://www.dawahbox.com/mongo/api/rplisting_charts_api.php?action=daily
       
@@ -94,7 +94,7 @@ const Charts = () => {
         setdailyLecturer(data)
       })
       .catch((err) => {
-        console.log(err)
+        //console.log(err)
       })
         
       //weekly lecturers
@@ -104,7 +104,7 @@ const Charts = () => {
         setweeklyLecturer(data)
       })
       .catch((err) => {
-        console.log(err)
+        //console.log(err)
       })
         
       //monthly lecturers
@@ -114,7 +114,7 @@ const Charts = () => {
         setmonthlyLecturer(data)
       })
       .catch((err) => {
-        console.log(err)
+        //console.log(err)
       })
    
       //weekly album  https://www.dawahbox.com/mongo/api/playlist_charts_api.php?action=daily
@@ -124,12 +124,12 @@ const Charts = () => {
       //daily plalist
       axios.get("/playlist_charts_api.php?action=daily")
       .then((res) => {
-        console.log(res.data)
+        //console.log(res.data)
         const {data} = res.data
         setdailyPlaylist(data)
       })
       .catch((err) => {
-        console.log(err)
+        //console.log(err)
       })
         
       //weekly playlist
@@ -139,7 +139,7 @@ const Charts = () => {
         setweeklyPlaylist(data)
       })
       .catch((err) => {
-        console.log(err)
+        //console.log(err)
       })
         
       //monthly playlist
@@ -149,7 +149,7 @@ const Charts = () => {
         setmonthlyPlaylist(data)
       })
       .catch((err) => {
-        console.log(err)
+        //console.log(err)
       })
 
 

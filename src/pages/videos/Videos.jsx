@@ -36,7 +36,7 @@ const Videos = () => {
          `/video_listingApi.php?page=${page}&action=allVideo`
         )
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           if (page === 1) {
             setLoading(false);
           }
@@ -49,13 +49,13 @@ const Videos = () => {
           setData((prev) => _.uniqBy([...prev, ...res.data], 'id'));
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     };
 
     handleRequest();
   }, [page]);
-  console.log(page)
+  //console.log(page)
 
   
   const lastElement = useCallback(

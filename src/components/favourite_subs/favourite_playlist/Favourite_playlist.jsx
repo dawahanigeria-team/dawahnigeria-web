@@ -33,7 +33,7 @@ const Favourite_playlist = ({setCount3}) => {
     }
     axios.get(`/leclisting_favorites.php?user_id=${currentUser?.id}&type=album`)
     .then ((res) => {
-      console.log(res)
+      //console.log(res)
 
       if(res.data.length === 0) {
         setmyAlb([])
@@ -45,23 +45,23 @@ const Favourite_playlist = ({setCount3}) => {
       const {album} = res.data
       setmyAlb(album)
 
-      console.log(album.toString());
+      //console.log(album.toString());
 
       axios.get(`/albumlisting_multi_nid_api.php?id=${album.toString()}`)
 
       .then((res) => {
-        console.log(res)
+        //console.log(res)
            setLoading(false);
         setMyFavAlbum(res.data)
       setdata(_.uniqBy(res.data?.slice(0,10), 'nid'))
       })
       .catch((err) => {
-        console.log(err)
+        //console.log(err)
       })
 
     })
     .catch((err) => {
-      console.log(err)
+      //console.log(err)
     })
 
  // eslint-disable-next-line react-hooks/exhaustive-deps

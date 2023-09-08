@@ -53,7 +53,7 @@ const LoginForm = () => {
       password: password,
     };
     const isSocial = false;
-    console.log(payload);
+    //console.log(payload);
     dispatch(LoginAction(payload,isSocial, navigate, setLoading));
 
     //toast.success("Login successful");

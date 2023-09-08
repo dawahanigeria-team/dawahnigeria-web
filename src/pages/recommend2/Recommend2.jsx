@@ -18,15 +18,15 @@ const Recommend2 = () => {
         "/albumlisting_page_api.php?lim=10&langid=7&page=1"
       )
       .then((res) => {
-        //console.log(res.data)
+        ////console.log(res.data)
         setData(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
        // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // console.log(r)
+  // //console.log(r)
   return (
     <Container>
       <div className="recommend2_header_link">

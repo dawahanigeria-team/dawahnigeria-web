@@ -13,8 +13,8 @@ const GoogleCustomButton = () => {
 
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      console.log(tokenResponse);
-      console.log(tokenResponse.access_token);
+      //console.log(tokenResponse);
+      //console.log(tokenResponse.access_token);
       axios
         .get("https://www.googleapis.com/oauth2/v3/userinfo", {
           headers: {
@@ -22,7 +22,7 @@ const GoogleCustomButton = () => {
           },
         })
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           const { email, name } = res.data;
           const payload = {
             action: "register_user",
@@ -36,7 +36,7 @@ const GoogleCustomButton = () => {
           if (pathname === "/auth/login") {
             const isSocial = true;
 
-            // console.log(payload);
+            // //console.log(payload);
             dispatch(
               LoginAction(
                 { languageId: 6, ...payload },
@@ -54,7 +54,7 @@ const GoogleCustomButton = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     },
   });

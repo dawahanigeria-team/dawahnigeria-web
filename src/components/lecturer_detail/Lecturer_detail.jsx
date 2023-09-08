@@ -51,7 +51,7 @@ const LecturerDetail = () => {
     axios
       .get(`/rplisting_multi_nid_api.php?id=${id}`)
       .then((res) => {
-        console.log(`@@@@ rp `, res.data[0]);
+        //console.log(`@@@@ rp `, res.data[0]);
         setsingleData(res.data[0]);
         setsumofFav(res.data[0]?.favorites);
       })
@@ -65,7 +65,7 @@ const LecturerDetail = () => {
   async function fetchFavorites(addFav, rpid) {
     if (!currentUser?.id) return;
     if (addFav || (!addFav && rpid)) {
-      console.log("..........@@@@@@@@@@@@@");
+      //console.log("..........@@@@@@@@@@@@@");
       await axios
         .get(`/leclisting_favorites.php?user_id=${currentUser?.id}&type=rp`, {
           headers: {
@@ -75,19 +75,19 @@ const LecturerDetail = () => {
           },
         })
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           const { rp } = res.data;
           setgetfavs(rp);
          /**
          const isExist = rp.includes(parseInt(id));
-          console.log(isExist);
+          //console.log(isExist);
           if (isExist) {
-            console.log(id);
+            //console.log(id);
           }
           */
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     }
   }
@@ -117,10 +117,10 @@ const LecturerDetail = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         toast.success(res.data.message);
         setdisabled(false);
-        console.log(addFav);
+        //console.log(addFav);
         if (!getFavs?.includes(parseInt(rpid))) {
           setsumofFav(sumofFav + 1);
         } else {
@@ -129,15 +129,15 @@ const LecturerDetail = () => {
       })
 
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
- // console.log("fav", getFavs);
+ // //console.log("fav", getFavs);
   /// Get the exiting element
   const firstElement = useCallback((node) => {
     observeEl.current = new IntersectionObserver((entries) => {
       if (!entries[0].isIntersecting) {
-        console.log("not visible");
+        //console.log("not visible");
         setIsVisible(true);
       } else {
         setIsVisible(false);

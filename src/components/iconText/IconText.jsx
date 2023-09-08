@@ -12,7 +12,7 @@ const IconText = ({ icon, link, name, id}) => {
   const navigate = useNavigate();
   const {addplaylist} = useSelector((state) => state.user)
 
-  console.log(addplaylist)
+  //console.log(addplaylist)
   useEffect(() => {
 
 
@@ -57,7 +57,7 @@ const IconText = ({ icon, link, name, id}) => {
       navigate(link)
       if (id === 8) {
         dispatch(showaddPlaylist(true))
-        console.log('8')
+        //console.log('8')
       }
     }}
       

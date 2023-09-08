@@ -19,10 +19,10 @@ const SimilarAudio = ({similar, heading,endpoint_url, currentPage, current,navti
   function prev() {
     // e.stopPropagation()
 
-    //console.log('window.scrollWidth')
-    console.log(slide.current.scrollLeft);
-    console.log(slide.current.scrollWidth);
-    console.log(slide.current.offsetWidth);
+    ////console.log('window.scrollWidth')
+    //console.log(slide.current.scrollLeft);
+    //console.log(slide.current.scrollWidth);
+    //console.log(slide.current.offsetWidth);
     slide.current.scrollBy({
       left: -slide.current.scrollWidth / 10,
       behavior: "smooth",
@@ -31,10 +31,10 @@ const SimilarAudio = ({similar, heading,endpoint_url, currentPage, current,navti
 
   function next() {
     //e.stopPropagation()
-    //console.log('window.scrollWidth')
+    ////console.log('window.scrollWidth')
 
-    console.log(slide.current.scrollWidth);
-    console.log(slide.current.offsetWidth);
+    //console.log(slide.current.scrollWidth);
+    //console.log(slide.current.offsetWidth);
     slide.current.scrollBy({
       left: slide.current.scrollWidth / 10,
       behavior: "smooth",
@@ -43,7 +43,7 @@ const SimilarAudio = ({similar, heading,endpoint_url, currentPage, current,navti
 
   useEffect(() => {
     function scrollEl() {
-      //console.log("Slide")
+      ////console.log("Slide")
       if (slide.current?.scrollLeft === 0) {
         setisprev(false);
       } else {

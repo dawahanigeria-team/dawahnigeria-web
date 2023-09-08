@@ -10,7 +10,7 @@ const AlbumOptions = () => {
   const [selectCategory, setSelectCategory] = useState()
 
   const handleSelected=(e)=>{
-    console.log(e.target.value)
+    //console.log(e.target.value)
     if (e.target.checked) {
       setAlbumId((prev) => [...prev, e.target.value]);
     } else {

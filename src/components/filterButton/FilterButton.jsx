@@ -30,7 +30,7 @@ const FilterButton = ({
 
   const handleFilter = () => {
     setActive(title);
-    console.log(action)
+    //console.log(action)
     setTypeName(action)
    
     if (action === "name") {
@@ -48,7 +48,7 @@ const FilterButton = ({
     } else if (action === "language") {
     
       setLangid(lid);
-      console.log(lid)
+      //console.log(lid)
       setIsEmpty(false)
       if (title === "All") {
         

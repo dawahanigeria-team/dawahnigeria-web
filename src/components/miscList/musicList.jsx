@@ -76,7 +76,7 @@ function MusicList({
   const [rpnameArray, setrpnameArray] = useState([]);
   const [isShare, setisShare] = useState(false);
   //const [lectureId, setlectureId] = useState()
-  //console.log(currentUser?.id)
+  ////console.log(currentUser?.id)
   ////not contented but under presssure by DN project manager
   useEffect(() => {
     function lazyImage() {
@@ -115,7 +115,7 @@ function MusicList({
   async function fetchFavorites(addFav, lecid) {
     if (!currentUser?.id) return;
     if ((addFav || !addFav) && lecid) {
-      console.log("..........@@@@@@@@@@@@@");
+      //console.log("..........@@@@@@@@@@@@@");
       await axios
         .get(
           `/leclisting_favorites.php?user_id=${currentUser?.id}&type=audio`,
@@ -128,13 +128,13 @@ function MusicList({
           }
         )
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           const { audio } = res.data;
           setgetfavs(Object.values(audio));
           // const isExist = [Object.values(audio)].includes(nid)
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     }
   }
@@ -163,10 +163,10 @@ function MusicList({
         },
       })
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         toast.success(res.data.message);
         setdisabled(false);
-        console.log(addFav);
+        //console.log(addFav);
         if (!getFavs?.includes(lecid)) {
           setsumofFav(sumofFav + 1);
         } else {
@@ -175,7 +175,7 @@ function MusicList({
       })
 
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -190,23 +190,23 @@ function MusicList({
     axios
       .get("https://dawahnigeria.com/dawahcast/dboxapi/rpjson")
       .then((res) => {
-        console.log(res.data.rp);
+        //console.log(res.data.rp);
         const data = res.data.rp;
         setrpData(data);
         setrpnameArray(data.map((rp) => rp.name));
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, []);
 
   const lecturerDetail = (lecturer) => {
     const isPresent = rpnameArray.includes(lecturer);
-    console.log("is rp present is", isPresent);
+    //console.log("is rp present is", isPresent);
     if (isPresent) {
       const rpindex = rpnameArray.indexOf(lecturer);
 
-      console.log(rpData[rpindex]?.id);
+      //console.log(rpData[rpindex]?.id);
       navigate(`${RESOURCE_PERSON}${rpData[rpindex]?.id}`);
     }
   };
@@ -230,8 +230,8 @@ function MusicList({
             });
    */
 
-  console.log("nid @@@@@@@@@@@", nid);
-  console.log("audioid @@@@@@@@@@@", audioId);
+  //console.log("nid @@@@@@@@@@@", nid);
+  //console.log("audioid @@@@@@@@@@@", audioId);
 
   return (
     <div className="musicslist_wrapper">

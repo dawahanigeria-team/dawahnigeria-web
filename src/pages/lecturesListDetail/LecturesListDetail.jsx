@@ -73,12 +73,12 @@ const LecturesListDetail = () => {
     useaxios
       .get(`/albumlisting_multi_nid_api.php?id=${id}`)
       .then((res) => {
-        console.log("single data @@@@@@@@@", res);
+        //console.log("single data @@@@@@@@@", res);
         setsingleData(res.data[0]);
         setsumofFav(res.data[0]?.favorites || 0);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, [id]);
 
@@ -99,11 +99,11 @@ const LecturesListDetail = () => {
         }
       )
       .then((res) => {
-        console.log("comment result", res);
+        //console.log("comment result", res);
         setaudioComment(res.data.reverse());
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, [id]);
 
@@ -112,16 +112,16 @@ const LecturesListDetail = () => {
     axios
       .get(`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}`)
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         setLoading(false);
         setrpname(res.data[0]?.rp);
         setrpImg(res.data[0]?.rp_image);
-        console.log(typeof res.data);
+        //console.log(typeof res.data);
 
         setData(_.uniqBy(res.data, "nid"));
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, [id]);
 
@@ -131,7 +131,7 @@ const LecturesListDetail = () => {
   async function fetchFavorites(addFav, aid) {
     if (!currentUser?.id) return;
     if (addFav || (!addFav && aid)) {
-      console.log("...ALBUM.......@@@@@@@@@@@@@");
+      //console.log("...ALBUM.......@@@@@@@@@@@@@");
       await useaxios
         .get(
           `/leclisting_favorites.php?user_id=${currentUser?.id}&type=album`,
@@ -144,13 +144,13 @@ const LecturesListDetail = () => {
           }
         )
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           const { album } = res.data;
           setgetfavs(album);
           // const isExist = [Object.values(audio)].includes(id)
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     }
   }
@@ -161,7 +161,7 @@ const LecturesListDetail = () => {
   const addToFav = async (e, aid) => {
     /// add to favorites
     e.stopPropagation();
-    console.log("event clicked");
+    //console.log("event clicked");
     if (!currentUser?.id) {
       toast.error("Login or register to add to favorites");
       return;
@@ -180,10 +180,10 @@ const LecturesListDetail = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         toast.success(res.data.message);
         setdisabled(false);
-        console.log(addFav);
+        //console.log(addFav);
         if (!getFavs?.includes(parseInt(aid))) {
           setsumofFav(sumofFav + 1);
         } else {
@@ -192,7 +192,7 @@ const LecturesListDetail = () => {
       })
 
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -200,7 +200,7 @@ const LecturesListDetail = () => {
   const firstElement = useCallback((node) => {
     observeEl.current = new IntersectionObserver((entries) => {
       if (!entries[0].isIntersecting) {
-        console.log("not visible");
+        //console.log("not visible");
         setIsVisible(true);
       } else {
         setIsVisible(false);
@@ -222,11 +222,11 @@ const LecturesListDetail = () => {
 
     [page]
   );
-  console.log("current page", page);
+  //console.log("current page", page);
 
    */
 
-  console.log(data);
+  //console.log(data);
   //play all audio files
   const playAll = () => {
     if (window.innerWidth <= 615) {
@@ -242,7 +242,7 @@ const LecturesListDetail = () => {
   ///**** share album ******** */
 
   const shareAlbum = (e) => {
-    console.log("album id", id);
+    //console.log("album id", id);
     e.stopPropagation();
     if (!currentUser?.id) {
       toast.error("Log in or register to share audio");
@@ -258,18 +258,18 @@ const LecturesListDetail = () => {
       axios
         .get("https://dawahnigeria.com/dawahcast/dboxapi/rpjson")
         .then(async (res) => {
-          console.log(res.data.rp);
+          //console.log(res.data.rp);
           const datas = res.data.rp;
           //setrpData(datas)
           const rpnameArray = datas.map((rp) => rp.name);
-          console.log("my rp", rpnames);
+          //console.log("my rp", rpnames);
           const isPresent = rpnameArray.includes(rpnames);
-          console.log("is rp present is", isPresent);
+          //console.log("is rp present is", isPresent);
           const page = 1;
           if (isPresent) {
             const rpindex = rpnameArray.indexOf(rpnames);
 
-            console.log(datas[rpindex]?.id);
+            //console.log(datas[rpindex]?.id);
             // navigate(`/rp/${rpData[rpindex]?.id}`)
 
             useaxios
@@ -277,14 +277,14 @@ const LecturesListDetail = () => {
                 `/albumlisting_rp.php?offset=30&lim=10&page=${page}&rpid=${datas[rpindex]?.id}`
               )
               .then((res) => {
-                console.log(res);
+                //console.log(res);
                 setsimilarAlb(res.data);
                 setsimilarUrl(`/albumlisting_rp.php?offset=30&lim=10&rpid=${datas[rpindex]?.id}&page=`)
               });
           }
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     }
   }, [rpnames]);

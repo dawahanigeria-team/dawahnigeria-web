@@ -35,7 +35,7 @@ const Favourite_songs = ({ setCount1 }) => {
     axios
       .get(`/leclisting_favorites.php?user_id=${currentUser?.id}&type=audio`)
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         if(res.data.length === 0) {
           setmyAud([])
           setLoading(false)
@@ -45,23 +45,23 @@ const Favourite_songs = ({ setCount1 }) => {
         const { audio } = res.data;
         const audioArr = Object.values(audio);
         setmyAud(audioArr)
-        //console.log(audioArr.toString());
+        ////console.log(audioArr.toString());
 
         axios
           .get(`/leclisting_multi_nid_api.php?id=${audioArr.toString()}`)
 
           .then((res) => {
-            console.log(res);
+            //console.log(res);
             setLoading(false);
             setMyFavSong(res.data);
             setdata(_.uniqBy(res.data?.slice(0, 10), "nid"));
           })
           .catch((err) => {
-            console.log(err);
+            //console.log(err);
           });
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
        // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

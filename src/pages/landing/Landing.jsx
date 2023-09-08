@@ -43,10 +43,10 @@ const Landing = () => {
       .get(`/slider_image.php`)
       .then((res) => {
         setimages(res.data);
-        console.log(res);
+        //console.log(res);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, []);
 
@@ -60,14 +60,14 @@ const Landing = () => {
           setTrending(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
 
       if (currentUser?.id) {
         await axios
           .get(`/recentApi.php?user_id=${currentUser?.id}&action=get_recent`)
           .then((res) => {
-            console.log('user recent',res.data);
+            //console.log('user recent',res.data);
 
             if (res.data?.length === 0) {
               //recent
@@ -76,31 +76,31 @@ const Landing = () => {
                 .get(`/leclisting_lang.php?langid=6&page=${page}`)
                 .then((res) => {
                   setRecent(res.data?.slice(0, 10));
-                  // console.log("trending: ", res.data);
+                  // //console.log("trending: ", res.data);
                 })
                 .catch((err) => {
-                  console.log(err);
+                  //console.log(err);
                 });
             } else {
               const { data } = res.data[0];
               setcurPlay(Object.values(data));
               const recArr = Object.keys(data);
               setisrecent(true);
-              console.log(recArr);
+              //console.log(recArr);
 
               axios
                 .get(`/albumlisting_multi_nid_api.php?id=${recArr.toString()}`)
                 .then((res) => {
-                   console.log("I am the new guy", res);
+                   //console.log("I am the new guy", res);
                   setRecent(res.data?.slice(0, 10));
                 })
                 .catch((err) => {
-                  console.log(err);
+                  //console.log(err);
                 });
             }
           })
           .catch((err) => {
-            console.log(err);
+            //console.log(err);
           });
       } else {
         //recent
@@ -109,10 +109,10 @@ const Landing = () => {
           .get(`/leclisting_lang.php?langid=6&page=${page}`)
           .then((res) => {
             setRecent(res.data?.slice(0, 10));
-            // console.log("trending: ", res.data);
+            // //console.log("trending: ", res.data);
           })
           .catch((err) => {
-            console.log(err);
+            //console.log(err);
           });
       }
 
@@ -120,12 +120,12 @@ const Landing = () => {
       await axios
         .get(`/leclisting_cat_api.php?catid=40217&page=${page}`)
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
 
           setRamadan(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
 
       //quran and tafseer 40255
@@ -133,11 +133,11 @@ const Landing = () => {
       await axios
         .get(`/leclisting_cat_api.php?catid=40255&page=${page}`)
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           setQuran(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     }
     fetchData();

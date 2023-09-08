@@ -21,13 +21,13 @@ const GenreDetail = () => {
     axios
       .get(`/genre_api.php?cat_id=${id}`)
       .then((res) => {
-        console.log("genre", res.data);
+        //console.log("genre", res.data);
         const { audio, album, rp, category_details } = res.data;
 
         setlectalbum(album);
         setartist(rp);
         setcatDetail(category_details);
-        //console.log(category_details)
+        ////console.log(category_details)
         setLectures(audio);
       })
       .catch((err) => {
