@@ -5,6 +5,7 @@ import axios from "../../../utils/useAxios"
 import infiniteScroll from "../../UI/infiniteScroll";
 import LecturersWidget from "../../lecturersWidget/LecturersWidget";
 import { Link, useNavigate } from "react-router-dom";
+import { RESOURCE_PERSON } from "../../../utils/routes/constants";
 import Loader from "../../UI/loader/loader";
 import _ from 'lodash'
 import GenreMobileLecturer from "../../../pages/genredetail/genreMobileLecturer";
@@ -70,7 +71,7 @@ const Simillarrp = ({langid}) => {
       {!loading && data.map(({ img, name, views, id }, idx) => {
       if(data.length === idx + 1) {
         return (
-          <Link to={`/rp/${id}`}
+          <Link to={`${RESOURCE_PERSON}${id}`}
        
           
           className="lecturers_item"
@@ -94,10 +95,10 @@ const Simillarrp = ({langid}) => {
         );
       } else {
         return (
-          <Link to={`/rp/${id}`}
+          <Link to={`${RESOURCE_PERSON}${id}`}
           key={idx}
           onClick={() => {
-            navigate(`/rp/${id}`);
+            navigate(`${RESOURCE_PERSON}${id}`);
           }}
           className="lecturers_item"
          

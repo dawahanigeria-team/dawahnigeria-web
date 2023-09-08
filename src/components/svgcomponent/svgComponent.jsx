@@ -95,7 +95,7 @@ export const RepeatedIcon = () => {
  
 <svg width="21px" height="21px" viewBox="0 0 21 21"  version="1.1" >
  
-    <g id="Symbols" stroke="none"     strokeWidth="1" fill="none" fillRule="evenodd" strokeLineCap="round" strokeLineJoin="round">
+    <g id="Symbols" stroke="none"     strokeWidth="1" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLineJoin="round">
         <g id="btn/music-player/Play-style/loop" >
             <g id="编组" transform="translate(0.500000, 1.500000)" stroke="#ddff2e">
                 <path d="M1.55981168,-8.8817842e-16 L0,1.91536613 L6,1.91536613 C10.1421356,1.91536613 13.5,5.06831882 13.5,8.95768307 C13.5,11.4541695 12.1165472,13.6472516 10.0302412,14.897863" id="矩形" transform="translate(6.750000, 7.448932) scale(-1, 1) translate(-6.750000, -7.448932) "></path>

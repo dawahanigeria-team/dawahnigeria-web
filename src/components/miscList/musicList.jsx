@@ -35,6 +35,7 @@ import { formatNumber } from "../UI/formatter";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "../../utils/useAxios";
 import { AudioWave } from "../UI/soundwave/soundWave";
+import { RESOURCE_PERSON } from "../../utils/routes/constants";
 import { AddplayIcon, DownloadIcon } from "../svgcomponent/svgComponent";
 function MusicList({
   lecturer,
@@ -206,7 +207,7 @@ function MusicList({
       const rpindex = rpnameArray.indexOf(lecturer);
 
       console.log(rpData[rpindex]?.id);
-      navigate(`/rp/${rpData[rpindex]?.id}`);
+      navigate(`${RESOURCE_PERSON}${rpData[rpindex]?.id}`);
     }
   };
 
@@ -287,7 +288,7 @@ function MusicList({
                 onClick={(e) => {
                   e.stopPropagation();
                   if (rpid) {
-                    navigate(`/rp/${rpid}`);
+                    navigate(`${RESOURCE_PERSON}${rpid}`);
                   } 
                 }}
                 id="player"

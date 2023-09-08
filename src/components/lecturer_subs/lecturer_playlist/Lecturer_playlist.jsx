@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import Loader from "../../UI/loader/loader";
 import CommentBox from "../../comment/comment";
 import { useSelector } from "react-redux";
-
+import { PLAYLISTS } from "../../../utils/routes/constants";
 const Lecturer_playlist = ({ id, setCount3}) => {
   const [data, setData] = useState([]);
   const {currentUser} = useSelector((state) => state.user)
@@ -85,7 +85,7 @@ const Lecturer_playlist = ({ id, setCount3}) => {
           data.length !== 0 &&
           data.map(({ name, id, views, lec_img }, idx) => {
             return (
-              <Link to={`/pl/${id}`}
+              <Link to={`${PLAYLISTS}${id}`}
                 className="lecplaylist_item "
                 onClick={() => {
                   

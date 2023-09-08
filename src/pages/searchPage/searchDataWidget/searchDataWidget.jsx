@@ -1,5 +1,6 @@
 import React,{useEffect} from "react";
 import { Link } from "react-router-dom";
+import { LECTURE } from "../../../utils/routes/constants";
 const SearchDataWidget = ({lec_img,mp3_description,mp3_title,mp3_duration,cat_name, id}) => {
   
     useEffect(() => {
@@ -19,7 +20,7 @@ const SearchDataWidget = ({lec_img,mp3_description,mp3_title,mp3_duration,cat_na
       }, []);
     
     return (
-        <Link to={`/l/${id}`}  className="w-full mb-3 grid grid-cols-8 gap-5">
+        <Link to={`${LECTURE}${id}`}  className="w-full mb-3 grid grid-cols-8 gap-5">
                     <div className="col-span-3 min-[615px]:col-span-2 h-[100px] min-[615px]:h-[150px] w-full rounded-md">
                       <img
                         src-data={lec_img}

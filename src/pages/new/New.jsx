@@ -9,6 +9,7 @@ import axios from "../../utils/useAxios";
 import Loader from "../../components/UI/loader/loader";
 import infiniteScroll from "../../components/UI/infiniteScroll";
 import _ from "lodash"
+import { LECTURE } from "../../utils/routes/constants";
 import { useNavigate } from "react-router-dom";
 const New = () => {
   const [data, setData] = useState([]);
@@ -69,7 +70,7 @@ const New = () => {
     const playAll = () => {
     
 
-      navigate(`/l/${data[0?.nid]}`, {
+      navigate(`${LECTURE}${data[0?.nid]}`, {
         state: {
           endpoint_url: `/popular_lec_api.php?langid=6&page=`,
           currentPage: 1,
@@ -130,7 +131,7 @@ const New = () => {
                       lecturer={rpname}
                       drop={drop}
                       setDrop={setDrop}
-                      url={`/l/${nid}`}
+                      url={`${LECTURE}${nid}`}
                       Title={Title}
                       rpid={rp_id}
                       rpname={rpname}
@@ -162,7 +163,7 @@ const New = () => {
                       favorites={favorites}
                      
                       rpid={rp_id}
-                      url={`/l/${nid}`}
+                      url={`${LECTURE}${nid}`}
                       Title={Title}
                       rpname={rpname}
                       endpoint_url={"/leclistingapi.php?sort=desc&page="}
@@ -231,7 +232,7 @@ const New = () => {
                       favorites={favorites}
                       comments={comments}
                      
-                      url={`/l/${nid}`}
+                      url={`${LECTURE}${nid}`}
                       Title={Title}
                       rpname={rpname}
                       endpoint_url={"/leclistingapi.php?sort=desc&page="}
@@ -260,7 +261,7 @@ const New = () => {
                       lecturer={rpname}
                       comments={comments}
                       rpid={rp_id}
-                      url={`/l/${nid}`}
+                      url={`${LECTURE}${nid}`}
                       Title={Title}
                       favorites={favorites}
                       rpname={rpname}

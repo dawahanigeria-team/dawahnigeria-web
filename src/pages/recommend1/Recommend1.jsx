@@ -10,6 +10,7 @@ import infiniteScroll from "../../components/UI/infiniteScroll";
 import Loader from "../../components/UI/loader/loader";
 import axios from "../../utils/useAxios"
 import { useSelector } from "react-redux";
+import { LECTURE } from "../../utils/routes/constants";
 const Recommend1 = () => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState([]);
@@ -120,7 +121,7 @@ const Recommend1 = () => {
                 <div
                   ref={lastElement}
                   onClick={() => {
-                    navigate(`/l/${nid}`, {
+                    navigate(`${LECTURE}${nid}`, {
                       state: {
                         title: title,
                         rpname,
@@ -152,7 +153,7 @@ const Recommend1 = () => {
               return (
                 <div
                   onClick={() => {
-                    navigate(`/l/${nid}`, {
+                    navigate(`${LECTURE}${nid}`, {
                       state: {
                         title: title,
                         rpname,

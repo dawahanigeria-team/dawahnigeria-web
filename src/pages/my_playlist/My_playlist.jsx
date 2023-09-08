@@ -7,6 +7,7 @@ import axios from "../../utils/useAxios";
 import { useSelector } from "react-redux";
 import back from "../../assets/svg/back.svg";
 import foward from "../../assets/svg/foward.svg";
+import { LECTURE } from "../../utils/routes/constants";
 import LandingWidget from "../../components/landingWidget/LandingWidget";
 import Loader from "../../components/UI/loader/loader";
 import infinitePlayFavScroll from "../../components/UI/infinitePlayFavScroll";
@@ -288,7 +289,7 @@ const My_playlist = () => {
                         duration={duration}
                         title={title || Title}
                         lecturer={rpname || rp}
-                        url={`/l/${nid}`}
+                        url={`${LECTURE}${nid}`}
                         Title={Title}
                         rpname={rpname || rp}
                         cats={cats}
@@ -312,7 +313,7 @@ const My_playlist = () => {
                         duration={duration}
                         title={Title || title}
                         lecturer={rpname || rp}
-                        url={`/l/${nid}`}
+                        url={`${LECTURE}${nid}`}
                         Title={Title}
                         rpname={rpname || rp}
                         cats={cats}

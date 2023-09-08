@@ -8,8 +8,7 @@ import _ from "lodash";
 import axios from "../../../utils/useAxios";
 import { useNavigate } from "react-router-dom";
 import infinitePlayFavScroll from "../../UI/infinitePlayFavScroll";
-
-
+import { ALBUMS } from "../../../utils/routes/constants";
 
 const Favourite_album = ({setCount2}) => {
   const {currentUser} = useSelector((state) => state.user)
@@ -148,7 +147,7 @@ const Favourite_album = ({setCount2}) => {
                   className="favalb_album_item"
                   ref={lastElement}
                   onClick={() => {
-                    navigate(`/a/${id}`)
+                    navigate(`${ALBUMS}${id}`)
                   }}
                   key={idx + 1}
                 >
@@ -162,7 +161,7 @@ const Favourite_album = ({setCount2}) => {
                 
                   className="favalb_album_item"
                   onClick={() => {
-                    navigate(`/a/${id}`);
+                    navigate(`${ALBUMS}${id}`);
                   }}
                   key={idx + 1}
                 >

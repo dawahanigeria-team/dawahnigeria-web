@@ -8,7 +8,7 @@ import infiniteScroll from "../../components/UI/infiniteScroll";
 import pmobile from "../../../src/assets/svg/playmobile.svg";
 import axios from "../../utils/useAxios";
 import Loader from "../../components/UI/loader/loader";
-
+import { LECTURE } from "../../utils/routes/constants";
 
 import _ from "lodash"
 const Trending = () => {
@@ -73,7 +73,7 @@ const Trending = () => {
       const playAll = () => {
     
 
-        navigate(`/l/${data[0]?.nid}`, {
+        navigate(`${LECTURE}${data[0]?.nid}`, {
           state: {
             endpoint_url: `/popular_lec_api.php?langid=6&page=`,
             currentPage: 1,
@@ -132,7 +132,7 @@ const Trending = () => {
                       title={Title}
                       lecturer={rpname}
                       rpid={rp_id}
-                      url={`/l/${nid}`}
+                      url={`${LECTURE}${nid}`}
                       Title={Title}
                       rpname={rpname}
                       endpoint_url={"/popular_lec_api.php?langid=6&page="}
@@ -161,7 +161,7 @@ const Trending = () => {
                       title={Title}
                       lecturer={rpname}
                       rpid={rp_id}
-                      url={`/l/${nid}`}
+                      url={`${LECTURE}${nid}`}
                       Title={Title}
                       rpname={rpname}
                       endpoint_url={"/popular_lec_api.php?langid=6&page="}
@@ -230,7 +230,7 @@ const Trending = () => {
                       favorites={favorites}
                       comments={comments}
                       rpid={rp_id}
-                      url={`/l/${nid}`}
+                      url={`${LECTURE}${nid}`}
                       Title={Title}
                       rpname={rpname}
                       endpoint_url={"/popular_lec_api.php?langid=6&page="}
@@ -260,7 +260,7 @@ const Trending = () => {
                       favorites={favorites}
                       comments={comments}
                       rpid={rp_id}
-                      url={`/l/${nid}`}
+                      url={`${LECTURE}${nid}`}
                       Title={Title}
                       rpname={rpname}
                       endpoint_url={"/popular_lec_api.php?langid=6&page="}

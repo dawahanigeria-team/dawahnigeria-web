@@ -1,9 +1,9 @@
-name: Build and Deploy DawahPlay Prod
+name: Build and Deploy DawahPlay Dev
 
 on:
   push:
     branches:
-      - master
+      - dev
 
 jobs:
   build:
@@ -35,11 +35,11 @@ jobs:
       run: |
         aws s3 sync \
           --delete \
-          build/ s3://dawahplay-prod
+          build/ s3://dawahplay-dev
 
     - name: Invalidate CloudFront cache
       env:
-        CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+        CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID_DEV }}
       run: | 
         aws cloudfront create-invalidation \
           --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \

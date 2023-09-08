@@ -10,7 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import Loader from "../../components/UI/loader/loader";
 import infiniteScroll from "../../components/UI/infiniteScroll";
-import lazy from "../../assets/png/lazyrps.jpeg";
+import { RESOURCE_PERSON } from "../../utils/routes/constants";
 import _ from "lodash";
 const Lecturers = () => {
   const [data, setData] = useState([]);
@@ -262,7 +262,7 @@ const Lecturers = () => {
               ) => {
                 if (filter.length === idx + 1) {
                   return (
-                    <Link to={`/rp/${id}`}
+                    <Link to={`${RESOURCE_PERSON}${id}`}
                       key={idx}
                     
                       className="lecturers_item"
@@ -289,7 +289,7 @@ const Lecturers = () => {
                   );
                 } else {
                   return (
-                    <Link to={`/rp/${id}`}
+                    <Link to={`${RESOURCE_PERSON}${id}`}
                       key={idx}
                    
                       className="lecturers_item"

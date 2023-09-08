@@ -1,0 +1,5 @@
+export const ALBUMS = '/dawahcast/a/'
+export const LECTURE = '/dawahcast/l/'
+export const RESOURCE_PERSON = '/dawahcast/rp/'
+export const VIDEOS = '/dawahcast/videos/'
+export const PLAYLISTS = '/dawahcast/pl/'

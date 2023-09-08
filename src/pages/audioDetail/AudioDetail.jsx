@@ -60,7 +60,7 @@ import {
   getRepeat,
   getValue
 } from "../../Redux/Actions/ActionCreators";
-
+import { LECTURE } from "../../utils/routes/constants";
 import plus from "../../../src/assets/svg/plus.svg";
 import CurrentPlayData from "../../components/currentData/currentPlayData";
 import Loader from "../../components/UI/loader/loader";
@@ -158,7 +158,7 @@ const AudioDetail = () => {
   const handlePlay = () => {
     if (playing) {
       dispatch(setPlaying(!playing));
-      //audioRef.current?.pause();
+      //audioRef.current?.pause(); 
       //cancelAnimationFrame(playAnimation.current);
     } else {
       dispatch(setPlaying(!playing));
@@ -192,19 +192,19 @@ const AudioDetail = () => {
     }
 
     if (next === pack?.length - 1) {
-      navigate(`/l/${pack[next]?.nid}`)
+      navigate(`${LECTURE}${pack[next]?.nid}`)
    
       console.log("@@@@@@@@@@ end of track next");
       dispatch(getCount(next));
     } else if (count < pack?.length - 1) {
       console.log("@@@@@@@@@@@ working");
-      navigate(`/l/${pack[next + 1]?.nid}`)
+      navigate(`${LECTURE}${pack[next + 1]?.nid}`)
      
       dispatch(getCount(next + 1));
       console.log("@@@@@@ last count: ", next);
     } else {
 
-      navigate(`/l/${pack[0]?.id}`)
+      navigate(`${LECTURE}${pack[0]?.id}`)
     
      dispatch(getCount(0));
     }
@@ -226,14 +226,14 @@ const AudioDetail = () => {
     // getCount(prev);
     // console.log("second count: ", count);
     if (prev === 0) {
-    navigate(`/l/${pack[prev]?.nid}`)
+    navigate(`${LECTURE}${pack[prev]?.nid}`)
       //dispatch(getaudioId(pack[prev]?.nid));
       dispatch(getCount(prev));
 
       console.log("end of track prev");
     } else {
       console.log("third count: ", count);
-      navigate(`/l/${pack[prev -  1]?.nid}`)
+      navigate(`${LECTURE}${pack[prev -  1]?.nid}`)
       //dispatch(getaudioId(pack[prev - 1]?.nid));
       dispatch(getCount(prev - 1));
     }
@@ -1017,7 +1017,8 @@ const AudioDetail = () => {
                     <div
                       className="similarWidget_album_item"
                       onClick={() => {
-                        navigate(`/l/${id}`);
+                        navigate(`${LECTURE}${id}`);
+                        
                         // setendpUrl(similarAudioUrl);
                         dispatch(getPack(null))
                        dispatch(getPage(1));
@@ -1026,6 +1027,7 @@ const AudioDetail = () => {
                         dispatch(getPack(similarAudio));
                         
                         setCurUser(currentUser);
+                        window.location.reload()
                       }}
                       key={idx + 1}
                     >

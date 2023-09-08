@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import LecturersChartWidget from "./chartWidgets/lecturersChartWidget";
-
+import { RESOURCE_PERSON } from "../../../utils/routes/constants";
 const LecturerMobileChart = ({ data }) => {
   const navigate = useNavigate();
 
@@ -12,7 +12,7 @@ const LecturerMobileChart = ({ data }) => {
         <div className="top3 grid grid-cols-3 items-center gap-10  ">
           <div
             onClick={() => {
-              navigate(`/rp/${data[1]?.id || data[1]?.nid}`);
+              navigate(`${RESOURCE_PERSON}${data[1]?.id || data[1]?.nid}`);
             }}
             className="w-full h-full flex flex-col space-y-3 pt-[5px]  overflow-hidden text-white"
           >
@@ -38,7 +38,7 @@ const LecturerMobileChart = ({ data }) => {
 
           <div
             onClick={() => {
-              navigate(`/rp/${data[0]?.id || data[0]?.nid}`);
+              navigate(`${RESOURCE_PERSON}${data[0]?.id || data[0]?.nid}`);
             }}
             className="w-[105%] h-full flex flex-col space-y-3 overflow-hidden text-white"
           >
@@ -62,7 +62,7 @@ const LecturerMobileChart = ({ data }) => {
           </div>
           <div
             onClick={() => {
-              navigate(`/rp/${data[2]?.id || data[2]?.nid}`);
+              navigate(`${RESOURCE_PERSON}${data[2]?.id || data[2]?.nid}`);
             }}
             className="w-full h-full flex flex-col space-y-3 pt-[5px] overflow-hidden text-white"
           >
@@ -93,7 +93,7 @@ const LecturerMobileChart = ({ data }) => {
           return (
             <div
               onClick={() => {
-                navigate(`/rp/${id || nid}`);
+                navigate(`${RESOURCE_PERSON}${id || nid}`);
               }}
               key={idx}
               className="w-[90%]"

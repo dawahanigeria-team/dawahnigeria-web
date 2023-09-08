@@ -42,6 +42,7 @@ import {
   getCount,
   getPack,
 } from "../../Redux/Actions/ActionCreators";
+import { LECTURE } from "../../utils/routes/constants";
 import { AudioContext } from "../../App";
 
 const PlaylistDetail = () => {
@@ -226,7 +227,7 @@ const PlaylistDetail = () => {
   //play all audio files
   const playAll = () => {
     if (window.innerWidth <= 615) {
-      navigate(`/l/${data[0]?.nid}`);
+      navigate(`${LECTURE}${data[0]?.nid}`);
     } else {
       dispatch(getaudioId(data[0]?.nid));
     }
@@ -597,7 +598,7 @@ const PlaylistDetail = () => {
                               title={lectitle || title}
                               lecturer={rpname || rp}
                               image={lec_img || img}
-                              url={`/l/${nid}`}
+                              url={`${LECTURE}${nid}`}
                               rpid={rp_id}
                               Title={Title || lectitle || title}
                               share={share}
@@ -621,7 +622,7 @@ const PlaylistDetail = () => {
                               title={lectitle || title}
                               lecturer={rpname || rp}
                               image={lec_img || img}
-                              url={`/l/${nid}`}
+                              url={`${LECTURE}${nid}`}
                               Title={Title || lectitle || title}
                               rpname={rpname || rp}
                               cats={cats}
@@ -649,7 +650,7 @@ const PlaylistDetail = () => {
                               title={lectitle || title}
                               lecturer={rpname || rp}
                               image={lec_img || img}
-                              url={`/l/${nid}`}
+                              url={`${LECTURE}${nid}`}
                               Title={Title || lectitle || title}
                               rpname={rpname || rp}
                               cats={cats}
@@ -673,7 +674,7 @@ const PlaylistDetail = () => {
                               title={lectitle || title}
                               lecturer={rpname || rp}
                               image={lec_img}
-                              url={`/l/${nid}`}
+                              url={`${LECTURE}${nid}`}
                               Title={Title || lectitle || title}
                               rpname={rpname || rp}
                               cats={cats}
