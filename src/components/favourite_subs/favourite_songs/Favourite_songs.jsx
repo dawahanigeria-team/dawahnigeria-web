@@ -96,7 +96,7 @@ const Favourite_songs = ({ setCount1 }) => {
         <div className="favsongs_img_wrap">
           <img src={empty} alt="empty" />
           <p className="favsongs_text">
-            You haven’t added any song.
+            You haven’t added any audio.
           </p>
           <button
           onClick={() => {
@@ -107,7 +107,7 @@ const Favourite_songs = ({ setCount1 }) => {
               navigate("/auth/login")
             }
           }}
-          className="favsongs_button">Discover more songs</button>
+          className="favsongs_button">Discover more audios</button>
         </div>
       )}
 
@@ -169,7 +169,7 @@ const Favourite_songs = ({ setCount1 }) => {
                       views={views}
                       currentUser={currentUser}
                       favorites={favorites}
-                      navName={"favorite songs"}
+                      navName={"favorite audio"}
                       navLink={"/favorite"}
                       controlData={myFavSong}
                     />
@@ -192,7 +192,7 @@ const Favourite_songs = ({ setCount1 }) => {
                       nid={nid}
                       favorites={favorites}
                       currentUser={currentUser}
-                      navName={"favorite songs"}
+                      navName={"favorite audio"}
                       navLink={"/favorite"}
                       controlData={myFavSong}
                       views={views}
