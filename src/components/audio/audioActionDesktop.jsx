@@ -147,7 +147,7 @@ const AudioActionDesktop = () => {
   //************ */
 
   useEffect(() => {
-    if (playing) {
+    if (playing && !initial) {
       audioRef.current?.play();
       playAnimation.current = requestAnimationFrame(repeat);
     } else {
