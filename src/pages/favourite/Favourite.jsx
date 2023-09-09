@@ -32,7 +32,7 @@ const Favourite = () => {
                   tab === 1 ? "fav_tab_song1_active" : "fav_tab_song1"
                 }`}
               >
-                Songs
+                Lectures
               </p>
               <p
                 className={`${
