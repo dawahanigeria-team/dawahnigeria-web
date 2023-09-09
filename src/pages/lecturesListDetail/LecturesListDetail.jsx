@@ -313,10 +313,10 @@ const LecturesListDetail = () => {
     <Container>
       <div className="leclistdet_wrapper">
         <img
-        ref={leclistdet}
-        id="hero"
+          ref={leclistdet}
+          id="hero"
           className="leclistdet_hero"
-          src={singleData?.img || "https://imagetolink.com/ib/vwea8kukZP.jpeg"}
+          src={singleData?.img || 'https://imagetolink.com/ib/vwea8kukZP.jpeg'}
           alt="audiohero"
         />
         <div className="leclistdet_container">
@@ -330,7 +330,8 @@ const LecturesListDetail = () => {
               className="leclistdet_breadcrumb_first"
             ></p>
             <p className="leclistdet_breadcrumb_second">
-              {singleData?.title.split("-")[2] || singleData?.title}
+              {(singleData?.title && singleData.title.split('-')[2]) ||
+                singleData?.title}
             </p>
           </div>
 
@@ -341,7 +342,7 @@ const LecturesListDetail = () => {
                 className="leclistdet_head_left_img"
                 src={
                   singleData?.img ||
-                  "https://imagetolink.com/ib/AEFQQC1ybX.jpeg"
+                  'https://imagetolink.com/ib/AEFQQC1ybX.jpeg'
                 }
                 ref={leclistdet}
                 id="hero"
@@ -350,7 +351,7 @@ const LecturesListDetail = () => {
             </div>
             <div className="leclistdet_head_right">
               <p className="leclistdet_head_right_head">
-                {singleData?.title.split("-")[2] || singleData?.title}
+                {singleData?.title.split('-')[2] || singleData?.title}
               </p>
               <div className="leclistdet_head_right_text">
                 <div className="rpimage_wrap">
@@ -358,7 +359,7 @@ const LecturesListDetail = () => {
                     <img className="rpimage_sz" src={rpimage || lazy} alt="" />
                   </div>
                   <p className="leclistdet_head_right_text1">
-                    {singleData?.title.split("-")[1] || singleData?.title}
+                    {singleData?.title.split('-')[1] || singleData?.title}
                   </p>
                 </div>
               </div>
@@ -447,7 +448,7 @@ const LecturesListDetail = () => {
           <div className="leclistdet_head_mobile">
             <div
               className={
-                isVisible ? "leclistdet_head_img_none" : "leclistdet_head_img"
+                isVisible ? 'leclistdet_head_img_none' : 'leclistdet_head_img'
               }
             >
               <img
@@ -456,7 +457,7 @@ const LecturesListDetail = () => {
                 id="hero"
                 src={
                   singleData?.img ||
-                  "https://imagetolink.com/ib/vwea8kukZP.jpeg"
+                  'https://imagetolink.com/ib/vwea8kukZP.jpeg'
                 }
                 alt="head"
               />
@@ -486,7 +487,7 @@ const LecturesListDetail = () => {
                   className="album_img_sz"
                   src={
                     singleData?.img ||
-                    "https://imagetolink.com/ib/vwea8kukZP.jpeg"
+                    'https://imagetolink.com/ib/vwea8kukZP.jpeg'
                   }
                   alt=""
                 />
@@ -494,7 +495,7 @@ const LecturesListDetail = () => {
 
               <div className="mob_like">
                 <div className="leclistdet_head_mob_head">
-                  {singleData?.title.split("-")[2] || singleData?.title}
+                  {singleData?.title.split('-')[2] || singleData?.title}
                 </div>
                 <div className="rp_img_name">
                   <span className="likeys_img">
@@ -503,9 +504,8 @@ const LecturesListDetail = () => {
                       ref={leclistdet}
                       id="hero"
                       src={
-                        
                         singleData?.img ||
-                        "https://imagetolink.com/ib/eCnXEHHRos.jpeg"
+                        'https://imagetolink.com/ib/eCnXEHHRos.jpeg'
                       }
                       alt=""
                     />
@@ -515,7 +515,7 @@ const LecturesListDetail = () => {
               </div>
             </div>
             <div className="listrank_and_listblack_wrap">
-              <div className={isVisible ? "listranking_none" : "listranking"}>
+              <div className={isVisible ? 'listranking_none' : 'listranking'}>
                 <div className="icons_mob_listblack">
                   <button
                     onClick={(e) => {
@@ -534,7 +534,9 @@ const LecturesListDetail = () => {
                       <img className="likeys_img_sz" src={lovebold} alt="" />
                     )}
                   </button>
-                  <span className="likeys_text">{formatNumber(sumofFav || 0)}</span>
+                  <span className="likeys_text">
+                    {formatNumber(sumofFav || 0)}
+                  </span>
                 </div>
                 <div
                   onClick={(e) => {
@@ -553,10 +555,13 @@ const LecturesListDetail = () => {
                   <button className="likeys_img">
                     <img className="likeys_img_sz" src={combold} alt="" />
                   </button>
-                  <span className="likeys_text"> {formatNumber(singleData?.comments || 0)}</span>
+                  <span className="likeys_text">
+                    {' '}
+                    {formatNumber(singleData?.comments || 0)}
+                  </span>
                 </div>
               </div>
-              <div className={isVisible ? "headings pb-7" : "headings_none"}>
+              <div className={isVisible ? 'headings pb-7' : 'headings_none'}>
                 <div
                   onClick={() => {
                     navigate(-1);
@@ -575,7 +580,7 @@ const LecturesListDetail = () => {
                     id="hero"
                     src={
                       singleData?.img ||
-                      "https://imagetolink.com/ib/eCnXEHHRos.jpeg"
+                      'https://imagetolink.com/ib/eCnXEHHRos.jpeg'
                     }
                     alt="head"
                   />
@@ -586,8 +591,8 @@ const LecturesListDetail = () => {
                 <div
                   className={
                     isVisible
-                      ? "fixed_icons_listblack p-3"
-                      : "icons_listblack p-3"
+                      ? 'fixed_icons_listblack p-3'
+                      : 'icons_listblack p-3'
                   }
                 >
                   <div id="player" onClick={playAll} className="play_header">
@@ -647,7 +652,7 @@ const LecturesListDetail = () => {
                       share,
                       views,
                       favorites,
-                      comments,
+                      comments
                     },
                     idx
                   ) => {
@@ -670,7 +675,7 @@ const LecturesListDetail = () => {
                               comments={comments}
                               favorites={favorites}
                               nid={nid}
-                              navName={"Back"}
+                              navName={'Back'}
                               navLink={-1}
                               endpoint_url={`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}`}
                               controlData={data}
@@ -693,7 +698,7 @@ const LecturesListDetail = () => {
                               rpid={rp_id}
                               comments={comments}
                               favorites={favorites}
-                              navName={"Back"}
+                              navName={'Back'}
                               navLink={-1}
                               endpoint_url={`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}&lim=10&offset=30&page=`}
                               controlData={data}
@@ -722,7 +727,7 @@ const LecturesListDetail = () => {
                               favorites={favorites}
                               comments={comments}
                               nid={nid}
-                              navName={"Back"}
+                              navName={'Back'}
                               navLink={-1}
                               endpoint_url={`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}`}
                               controlData={data}
@@ -746,7 +751,7 @@ const LecturesListDetail = () => {
                               comments={comments}
                               nid={nid}
                               favorites={favorites}
-                              navName={"Back"}
+                              navName={'Back'}
                               navLink={-1}
                               endpoint_url={`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}&lim=10&offset=30&page=`}
                               controlData={data}
@@ -762,37 +767,29 @@ const LecturesListDetail = () => {
             </div>
           </div>
 
+          <div className="px-3">
+            <SimilarAudio
+              similar={similarAlb}
+              current={id}
+              url={`/a`}
+              type={'album'}
+              endpoint_url={similarUrl}
+              currentPage={1}
+              navtitle={'Album'}
+              heading={`Similar albums by ${
+                singleData?.title.split('-')[1]?.split(' ')[1] || 'lecturer'
+              } ${singleData?.title.split('-')[1]?.split(' ')[2] || ''}`}
+            />
 
-          <div   className="px-3">
-          <SimilarAudio
-          
-          similar={similarAlb}
-          current={id}
-          url={`/a`}
-          type={'album'}
-          endpoint_url={similarUrl}
-          currentPage={1}
-          navtitle={'Album'}
-          heading={`Similar albums by ${
-            singleData?.title.split("-")[1]?.split(" ")[1] || "lecturer"
-          } ${singleData?.title.split("-")[1]?.split(" ")[2] || ""}`}
-        />
-
-        <CommentBox
-  
-          audioComment={audioComment}
-          id={id}
-          type={"album"}
-        />
-
+            <CommentBox audioComment={audioComment} id={id} type={'album'} />
           </div>
-      
-          <div className={isShare ? "share_wrapper" : "hide_share_wrapper"}>
+
+          <div className={isShare ? 'share_wrapper' : 'hide_share_wrapper'}>
             <ShareAudio
               isShare={isShare}
               setisShare={setisShare}
               nid={id}
-              type={"album"}
+              type={'album'}
             />
           </div>
         </div>
