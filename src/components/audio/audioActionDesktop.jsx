@@ -45,37 +45,36 @@ import {
 import Addplaylist from "../../pages/add_playlist/AddPlaylist";
 import { LECTURE, RESOURCE_PERSON } from "../../utils/routes/constants";
 const AudioActionDesktop = () => {
-  const { currentUser, audioId,isrepeat, value, page, count, pack, playing } =
+  const { currentUser, audioId, isrepeat, value, page, count, pack, playing } =
     useSelector((state) => state.user);
   //const [playing, setPlaying] = useState(false);
   const dispatch = useDispatch();
   const rangeRef = useRef();
   const navigate = useNavigate();
-  const { audioRef, setinitial, initial, loading, setLoading } = useContext(AudioContext);
+  const { audioRef, setinitial, initial, loading, setLoading } =
+    useContext(AudioContext);
   // const [value, setValue] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   //const [isRepeat, setisRepeat] = useState(false);
   const playAnimation = useRef();
 
- // const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [getFavs, setgetfavs] = useState([]);
-  const [addFav,] = useState(false);
-  const [isEmpty,] = useState(false);
+  const [addFav] = useState(false);
+  const [isEmpty] = useState(false);
   const [, setIsPrevious] = useState(false);
   const [isShare, setisShare] = useState(false);
   const [isDownload, setisDownload] = useState(false);
 
   const [currentaudio, setcurrentaudio] = useState([]);
-  const [isminimize, setminimize] = useState(false)
-  const [transition, settransition] = useState(true)
+  const [isminimize, setminimize] = useState(false);
+  const [transition, settransition] = useState(true);
 
-
-
-  const getMusic = async (audioId) => {
+  const getMusic = (audioId) => {
     //dispatch(setPlaying(false));
     setLoading(true);
     ///get lecture audio
-    await axios
+    axios
       .get(`/leclistingapi.php?lecid=${audioId}`)
       .then((res) => {
         setcurrentaudio(res.data[0]);
@@ -102,7 +101,6 @@ const AudioActionDesktop = () => {
 
   useEffect(() => {
     if (!audioId) {
-     
       return;
     }
     getMusic(audioId);
@@ -305,7 +303,7 @@ const AudioActionDesktop = () => {
         .then((res) => {
           //console.log(res.data);
           const { audio } = res.data;
-        
+
           setgetfavs(Object.values(audio));
           // const isExist = [Object.values(audio)].includes(nid)
         })
@@ -322,9 +320,9 @@ const AudioActionDesktop = () => {
 
   const addToFav = async () => {
     /// add to favorites
-    if(!audioId) {
-      toast.error('No audio to add to favorites')
-      return
+    if (!audioId) {
+      toast.error("No audio to add to favorites");
+      return;
     }
 
     if (!currentUser?.id) {
@@ -355,191 +353,211 @@ const AudioActionDesktop = () => {
       });
   };
 
- 
-
   ////console.log("range", rangeRef?.current?.value);
   return (
     <>
-    <div className={`fixed bg-black z-[60]  bottom-0 flex items-center gap-4  transform  cursor-pointer ${isminimize ? `w-[220px] h-[60px] bg-black right-0 transition-all duartion-300`:`w-full h-[80px] left-0 right-0`}`}>
-      <div className={isminimize ? "hidden" :"range_progress"}>
-        <span
-          style={{
-            width: `${
-              (value * 100) / audioRef?.current?.duration
-            }%`,
-          }}
-          className="audiodet_bar"
-        ></span>
+      <div
+        className={`fixed bg-black z-[60]  bottom-0 flex items-center gap-4  transform  cursor-pointer ${
+          isminimize
+            ? `w-[220px] h-[60px] bg-black right-0 transition-all duartion-300`
+            : `w-full h-[80px] left-0 right-0`
+        }`}
+      >
+        <div className={isminimize ? "hidden" : "range_progress"}>
+          <span
+            style={{
+              width: `${(value * 100) / audioRef?.current?.duration}%`,
+            }}
+            className="audiodet_bar"
+          ></span>
 
-        <input
-          ref={rangeRef}
-          type="range"
-          min={"0"}
-          max={Math.floor(audioRef.current?.duration)}
-          value={value}
-          onChange={(e) => {
-            handleRange(e.target.value);
+          <input
+            ref={rangeRef}
+            type="range"
+            min={"0"}
+            max={Math.floor(audioRef.current?.duration)}
+            value={value}
+            onChange={(e) => {
+              handleRange(e.target.value);
+            }}
+            className="audiodet_scroll_bar"
+          />
+        </div>
+
+        <audio
+          ref={audioRef}
+          src={currentaudio?.audio}
+          onTimeUpdate={() => {
+            if (audioRef.current && !audioRef.current?.seeking) {
+              dispatch(getValue(audioRef?.current?.currentTime));
+              //handleNextAudio()
+              // //console.log("from update", audioRef.current?.currentTime);
+              // //console.log("to update", Math.floor(audioRef.current?.duration));
+              setIsComplete(
+                Math.floor(audioRef?.current?.currentTime) >=
+                  Math.floor(audioRef?.current?.duration)
+              );
+            }
+
+            if (
+              Math.floor(audioRef.current?.currentTime) >=
+              Math.floor(audioRef.current?.duration)
+            ) {
+              dispatch(setPlaying(false));
+              audioRef?.current?.pause();
+            }
           }}
-          className="audiodet_scroll_bar"
         />
-      </div>
-
-      <audio
-        ref={audioRef}
-        src={currentaudio?.audio}
-        onTimeUpdate={() => {
-          if (audioRef.current && !audioRef.current?.seeking) {
-            dispatch(getValue(audioRef?.current?.currentTime));
-            //handleNextAudio()
-            // //console.log("from update", audioRef.current?.currentTime);
-            // //console.log("to update", Math.floor(audioRef.current?.duration));
-            setIsComplete(
-              Math.floor(audioRef?.current?.currentTime) >=
-                Math.floor(audioRef?.current?.duration)
-            );
-          }
-
-          if (
-            Math.floor(audioRef.current?.currentTime) >=
-            Math.floor(audioRef.current?.duration)
-          ) {
-            dispatch(setPlaying(false));
-            audioRef?.current?.pause();
-          }
-        }}
-      />
-      <div className={`flex items-center relative bg-black text-white w-full ${isminimize ? 'justify-center':'justify-between'}`}>
-        <div className={` items-center gap-[8px] ${isminimize ? 'notvisibles': 'visibles flex'}`}>
-          <div className="w-[60px] h-[60px] rounded-[8px]">
-            <img
-              className="w-full h-full rounded-[8px]"
-              src={currentaudio?.img || lazys}
-              alt="disk"
-            />
-          </div>
-
-          <div className="flex flex-col items-start justify-start ">
-            <div
-              onClick={() => {
-                navigate(`${LECTURE}${audioId}`);
-              }}
-              className="font-semibold text-sm whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px]  lg:max-w-[250px]  xl:max-w-[270px]"
-            >
-              {currentaudio?.title || currentaudio?.Title || "----------------"}
-            </div>
-            <div
-              onClick={(e) => {
-                e.stopPropagation();
-                navigate(`${RESOURCE_PERSON}${currentaudio?.rp_id}`);
-              }}
-              className="font-semibold text-[12px] whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px] lg:max-w-[250px]  xl:max-w-[270px]"
-            >
-              {currentaudio?.rpname || "----------------"}
-            </div>
-          </div>
-        </div>
-
-        <div className="flex gap-4 items-center">
-          <button
-            onClick={handlePreviousAudio}
-            id="player"
-            className="audiodet_play_btn"
-          >
-            <TbPlayerSkipBackFilled className="text-white text-[20px] hover:text-[#ddff2b] " />
-          </button>
-
-          {loading ? (
-            <AudioLoader />
-          ) : (
-            <div onClick={handlePlay} className="flex h-[42px] w-[42px] text-black rounded-full bg-[#ddff2b] justify-center items-center">
-              {!playing ? (
-                <FaPlay id="player" className="text-[22px]" />
-              ) : (
-                <GiPauseButton className="text-[22px]" />
-              )}
-            </div>
-          )}
-          <button
-            onClick={handleNextAudio}
-            id="player"
-            className=""
-          >
-            <TbPlayerSkipForwardFilled className="text-white text-[20px] hover:text-[#ddff2b]" />
-          </button>
-        </div>
-
-        <div className={`cursor-pointer  items-center gap-[1.5rem] ${isminimize ? 'notvisibles' :'visibles hidden md:flex'}`}>
-          <button
-          disabled={!audioId}
-          onClick={() => {
-            dispatch(getRepeat(!isrepeat));
-          }}
-          className="h-[20px] w-[20px]  text-white hover:text-[#ddff2b]">
-           {isrepeat ? <RepeatedIcon/> : <RepeatIcon />}
-          </button>
-          <button
-            onClick={() => {
-              downloading();
-            }}
-            disabled={!audioId}
-            className="h-[20px] w-[20px] hover:text-[#ddff2b]"
-          >
-            <DownloadIcon />
-          </button>
-          <button
-            onClick={() => {
-              addToFav();
-            }}
-            className="h-[20px] w-[20px] "
-            disabled={!audioId}
-          >
-            {getFavs?.includes(parseInt(audioId)) ? (
-              <AddedFavourites />
-            ) : (
-              <AddFavourites />
-            )}
-          </button>
-          <button
-            onClick={() => {
-              shareAudio();
-            }}
-            disabled={!audioId}
-            className="h-[20px] w-[20px]"
-          >
-            <SlShare className="text-white hover:text-[#ddff2b] text-[20px]" />
-          </button>
-          <button
-            onClick={() => {
-              addToPlaylist();
-            }}
-            disabled={!audioId}
-            className="audiodet_play_add hover:text-[#ddff2b]"
-          >
-            <AddplayIcon />
-          </button>
-        </div>
-        <div className={`absolute top-1 right-10 ${isminimize ? 'notvisibles':'visibles'}`}>
-          <p className="text-[13px] text-zinc-500">
-            {playTimingDesktop(
-              audioRef?.current?.currentTime,
-              currentaudio?.duration
-            )}
-          </p>
-        </div>
         <div
-        onClick={() => {
-          setminimize(!isminimize)
-          settransition(!transition)
-        }}
-        className={`w-[30px]  flex items-center bg-zinc-500 justify-center ${isminimize? 'absolute right-0 top-0 h-[60px]':'h-[70px]'}`}>
-          <SlArrowDown className="text-white text-[15px] " />
+          className={`flex items-center relative bg-black text-white w-full ${
+            isminimize ? "justify-center" : "justify-between"
+          }`}
+        >
+          <div
+            className={` items-center gap-[8px] ${
+              isminimize ? "notvisibles" : "visibles flex"
+            }`}
+          >
+            <div className="w-[60px] h-[60px] rounded-[8px]">
+              <img
+                className="w-full h-full rounded-[8px]"
+                src={currentaudio?.img || lazys}
+                alt="disk"
+              />
+            </div>
+
+            <div className="flex flex-col items-start justify-start ">
+              <div
+                onClick={() => {
+                  navigate(`${LECTURE}${audioId}`);
+                }}
+                className="font-semibold text-sm whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px]  lg:max-w-[250px]  xl:max-w-[270px]"
+              >
+                {currentaudio?.title ||
+                  currentaudio?.Title ||
+                  "----------------"}
+              </div>
+              <div
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`${RESOURCE_PERSON}${currentaudio?.rp_id}`);
+                }}
+                className="font-semibold text-[12px] whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px] lg:max-w-[250px]  xl:max-w-[270px]"
+              >
+                {currentaudio?.rpname || "----------------"}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex gap-4 items-center">
+            <button
+              onClick={handlePreviousAudio}
+              id="player"
+              className="audiodet_play_btn"
+            >
+              <TbPlayerSkipBackFilled className="text-white text-[20px] hover:text-[#ddff2b] " />
+            </button>
+
+            {loading ? (
+              <AudioLoader />
+            ) : (
+              <div
+                onClick={handlePlay}
+                className="flex h-[42px] w-[42px] text-black rounded-full bg-[#ddff2b] justify-center items-center"
+              >
+                {!playing ? (
+                  <FaPlay id="player" className="text-[22px]" />
+                ) : (
+                  <GiPauseButton className="text-[22px]" />
+                )}
+              </div>
+            )}
+            <button onClick={handleNextAudio} id="player" className="">
+              <TbPlayerSkipForwardFilled className="text-white text-[20px] hover:text-[#ddff2b]" />
+            </button>
+          </div>
+
+          <div
+            className={`cursor-pointer  items-center gap-[1.5rem] ${
+              isminimize ? "notvisibles" : "visibles hidden md:flex"
+            }`}
+          >
+            <button
+              disabled={!audioId}
+              onClick={() => {
+                dispatch(getRepeat(!isrepeat));
+              }}
+              className="h-[20px] w-[20px]  text-white hover:text-[#ddff2b]"
+            >
+              {isrepeat ? <RepeatedIcon /> : <RepeatIcon />}
+            </button>
+            <button
+              onClick={() => {
+                downloading();
+              }}
+              disabled={!audioId}
+              className="h-[20px] w-[20px] hover:text-[#ddff2b]"
+            >
+              <DownloadIcon />
+            </button>
+            <button
+              onClick={() => {
+                addToFav();
+              }}
+              className="h-[20px] w-[20px] "
+              disabled={!audioId}
+            >
+              {getFavs?.includes(parseInt(audioId)) ? (
+                <AddedFavourites />
+              ) : (
+                <AddFavourites />
+              )}
+            </button>
+            <button
+              onClick={() => {
+                shareAudio();
+              }}
+              disabled={!audioId}
+              className="h-[20px] w-[20px]"
+            >
+              <SlShare className="text-white hover:text-[#ddff2b] text-[20px]" />
+            </button>
+            <button
+              onClick={() => {
+                addToPlaylist();
+              }}
+              disabled={!audioId}
+              className="audiodet_play_add hover:text-[#ddff2b]"
+            >
+              <AddplayIcon />
+            </button>
+          </div>
+          <div
+            className={`absolute top-1 right-10 ${
+              isminimize ? "notvisibles" : "visibles"
+            }`}
+          >
+            <p className="text-[13px] text-zinc-500">
+              {playTimingDesktop(
+                audioRef?.current?.currentTime,
+                currentaudio?.duration
+              )}
+            </p>
+          </div>
+          <div
+            onClick={() => {
+              setminimize(!isminimize);
+              settransition(!transition);
+            }}
+            className={`w-[30px]  flex items-center bg-zinc-500 justify-center ${
+              isminimize ? "absolute right-0 top-0 h-[60px]" : "h-[70px]"
+            }`}
+          >
+            <SlArrowDown className="text-white text-[15px] " />
+          </div>
         </div>
       </div>
-
-    
-      
-    </div>
-    <div className={isShare ? "block" : "hidden"}>
+      <div className={isShare ? "block" : "hidden"}>
         <ShareAudio
           isShare={isShare}
           setisShare={setisShare}
@@ -555,10 +573,9 @@ const AudioActionDesktop = () => {
           nid={audioId}
         />
       </div>
-    <Addplaylist />
+      <Addplaylist />
     </>
   );
 };
 
 export default AudioActionDesktop;
-
