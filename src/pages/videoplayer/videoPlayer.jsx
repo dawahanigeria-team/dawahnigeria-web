@@ -46,12 +46,12 @@ const VideoPlayer = () => {
     axios
       .get(`/video_listingApi.php?id=${id}&action=singleVideo`)
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         setload(true);
         setdata(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, [id]);
 
@@ -65,7 +65,7 @@ const VideoPlayer = () => {
       axios
         .get(`/video_listingApi.php?page=${page}&action=allVideo`)
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           if (page === 1) {
             setLoading(false);
           }
@@ -83,17 +83,17 @@ const VideoPlayer = () => {
           );
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     };
 
     handleRequest();
   }, [page]);
-  console.log(page);
+  //console.log(page);
 
   const handleNextAudio = () => {
     const next = subdata.findIndex((value) => value.id === id);
-    console.log(next);
+    //console.log(next);
     navigate(`${VIDEOS}${subdata[next + 1]?.id}`);
   };
 
@@ -130,11 +130,11 @@ const VideoPlayer = () => {
         }
       )
       .then((res) => {
-        console.log("comment result", res);
+        //console.log("comment result", res);
         setaudioComment(res.data.reverse());
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, [id]);
 
@@ -160,7 +160,7 @@ const VideoPlayer = () => {
       //setsumofFav(favorites)
       if (!currentUser?.id) return;
       if (addFav || (!addFav && lecid)) {
-        //console.log("..........@@@@@@@@@@@@@");
+        ////console.log("..........@@@@@@@@@@@@@");
         await axios
           .get(`/leclisting_favorites.php?user_id=${currentUser?.id}&type=video`, {
             headers: {
@@ -170,14 +170,14 @@ const VideoPlayer = () => {
             },
           })
           .then((res) => {
-          console.log('video favourites', res.data);
+          //console.log('video favourites', res.data);
           //  const { video } = res.data;
            // setgetfavs(Object.values(audio));
            
             // const isExist = [Object.values(audio)].includes(nid)
           })
           .catch((err) => {
-            console.log(err);
+            //console.log(err);
           });
       }
     }
@@ -187,7 +187,7 @@ const VideoPlayer = () => {
 
   const addToFav = async () => {
     /// add to favorites
-    console.log("event clicked");
+    //console.log("event clicked");
     if (!currentUser?.id) {
       toast.error("Login or register to add to favorites");
       navigate("/auth/login")
@@ -207,10 +207,10 @@ const VideoPlayer = () => {
         },
       })
       .then((res) => {
-      //  console.log(res);
+      //  //console.log(res);
         toast.success(res.data.message);
         setdisabled(false);
-       // console.log(addFav);
+       // //console.log(addFav);
        /** if (!getFavs?.includes(id)) {
           setsumofFav(sumofFav + 1);
         } else {
@@ -219,11 +219,11 @@ const VideoPlayer = () => {
       })
 
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
-console.log('video data',data?.share, data?.views, data?.comments)
+//console.log('video data',data?.share, data?.views, data?.comments)
   return (
     <Container>
       <div
@@ -446,7 +446,7 @@ export default VideoPlayer;
                 width="100%"
                 height="100%"
                 onEnded={() => handleNextAudio()}
-                onError={(e) => console.log("onError", e)}
+                onError={(e) => //console.log("onError", e)}
                 fallback={data?.images}
                 light={true}
                 muted={false}

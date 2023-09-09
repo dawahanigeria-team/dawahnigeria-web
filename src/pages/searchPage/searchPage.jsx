@@ -61,26 +61,26 @@ const SearchPage = () => {
         }${albumId?.length !== 0 ? `&album_id=${albumId.toString()}` : ""}`
       )
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         setLoading(false);
         const { display_data, section_data, total_rec_by_section } = res.data;
         dispatch(getSearchData(display_data.mini_result));
         dispatch(getSearchOptions(section_data));
         dispatch(getSearchRecord(total_rec_by_section));
 
-        // console.log(display_data.mini_result)
+        // //console.log(display_data.mini_result)
 
         //onchange("");
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         setLoading(false);
         dispatch(getSearchData([]));
         dispatch(getSearchOptions({}));
       });
   }
 
-  //console.log(languageId, categoryId, lecturerId, albumId);
+  ////console.log(languageId, categoryId, lecturerId, albumId);
 
   useEffect(() => {
     if (text) {

@@ -25,13 +25,13 @@ const Lecturer_playlist = ({ id, setCount3}) => {
       axios
         .get(`/playlistApi.php?action=all_public_playlist_data&rp_id=${id}`)
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           setData(res.data);
           setLoading(false);
           setCount3(data.length);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     };
 
@@ -56,11 +56,11 @@ const Lecturer_playlist = ({ id, setCount3}) => {
           }
         )
         .then((res) => {
-          console.log("comment result", res);
+          //console.log("comment result", res);
           setaudioComment(res.data.reverse());
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
          // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

@@ -79,7 +79,7 @@ const AudioActionDesktop = () => {
       .get(`/leclistingapi.php?lecid=${audioId}`)
       .then((res) => {
         setcurrentaudio(res.data[0]);
-        console.log(res.data);
+        //console.log(res.data);
         dispatch(getcurrentAudioInfo(res.data[0]));
         setLoading(false);
         if (initial) {
@@ -93,10 +93,10 @@ const AudioActionDesktop = () => {
           playAnimation.current = requestAnimationFrame(repeat);
         }
 
-        //  console.log(res.data);
+        //  //console.log(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -177,64 +177,64 @@ const AudioActionDesktop = () => {
   };
   const handleRange = (curr) => {
     dispatch(getValue(curr));
-    //   console.log(rangeRef.current.value);
+    //   //console.log(rangeRef.current.value);
     if (audioRef.current) {
       audioRef.current.currentTime = curr;
     }
   };
 
   const handleNextAudio = () => {
-    // console.log("first count: ", count);
+    // //console.log("first count: ", count);
     setIsPrevious(false);
-    console.log(pack);
+    //console.log(pack);
     const next = pack?.findIndex((value) => {
       return value.nid === parseInt(audioId);
     });
-    console.log(next);
-    // console.log("next count: ", next);
-    // console.log("current diff: ", data?.length - 1 - next);
+    //console.log(next);
+    // //console.log("next count: ", next);
+    // //console.log("current diff: ", data?.length - 1 - next);
     if (!isEmpty && pack?.length - 1 - next <= 2) {
       dispatch(getPage(page + 1));
     }
 
     if (next === pack?.length - 1) {
       dispatch(getaudioId(pack[next]?.nid));
-      console.log("end of track next");
+      //console.log("end of track next");
       dispatch(getCount(next));
     } else if (count < pack?.length - 1) {
-      console.log("working");
+      //console.log("working");
       dispatch(getaudioId(pack[next + 1]?.nid));
-      //console.log("last count: ", count);
+      ////console.log("last count: ", count);
       dispatch(getCount(next + 1));
-      console.log("last count: ", next);
+      //console.log("last count: ", next);
     } else {
       dispatch(getaudioId(pack[0]?.nid));
-      //console.log("last count: ", count);
+      ////console.log("last count: ", count);
       dispatch(getCount(0));
     }
   };
   const handlePreviousAudio = () => {
-    //  console.log("first count: ", count)
+    //  //console.log("first count: ", count)
 
     const prev = pack?.findIndex((value) => {
       return value.nid === parseInt(audioId);
     });
-    console.log("standard: ", pack?.length - 1 - 2);
-    console.log("current diff frm prev: ", pack?.length - 1 - prev);
+    //console.log("standard: ", pack?.length - 1 - 2);
+    //console.log("current diff frm prev: ", pack?.length - 1 - prev);
     if (page > 1 && pack.length - 1 - prev <= pack.length - 1 - 2) {
       setIsPrevious(true);
       dispatch(getPage(page - 1));
     }
 
     // setCount(prev);
-    // console.log("second count: ", count);
+    // //console.log("second count: ", count);
     if (prev === 0) {
       dispatch(getaudioId(pack[prev]?.nid));
       dispatch(getCount(prev));
 
-      console.log("end of track prev");
+      //console.log("end of track prev");
     } else {
-      console.log("third count: ", count);
+      //console.log("third count: ", count);
       dispatch(getaudioId(pack[prev - 1]?.nid));
       dispatch(getCount(prev - 1));
     }
@@ -244,14 +244,14 @@ const AudioActionDesktop = () => {
 
   useEffect(() => {
     if (isrepeat === false && isComplete) {
-      console.log(isComplete);
-      // console.log('@@@@@@@@@@@@@@ data',data.length -1)
+      //console.log(isComplete);
+      // //console.log('@@@@@@@@@@@@@@ data',data.length -1)
 
       const counter = pack?.findIndex((value) => {
         return value.nid === audioId;
       });
 
-      // console.log('@@@@@@@@@@@@@@@ count',count)
+      // //console.log('@@@@@@@@@@@@@@@ count',count)
 
       if (counter === pack.length - 1) {
         dispatch(getaudioId(pack[0].nid));
@@ -264,7 +264,7 @@ const AudioActionDesktop = () => {
 
       return;
     } else {
-      console.log("yeah");
+      //console.log("yeah");
 
       getMusic(audioId);
       dispatch(getValue(0));
@@ -277,7 +277,7 @@ const AudioActionDesktop = () => {
   }, [isComplete]);
 
   const addToPlaylist = () => {
-    console.log("@@@ add playlist clicked");
+    //console.log("@@@ add playlist clicked");
     dispatch(getLecid(audioId));
     dispatch(showaddPlaylist(true));
   };
@@ -290,7 +290,7 @@ const AudioActionDesktop = () => {
   async function fetchFavorites(addFav, audioId) {
     if (!currentUser?.id) return;
     if ((addFav || !addFav) && audioId) {
-      console.log("..........@@@@@@@@@@@@@");
+      //console.log("..........@@@@@@@@@@@@@");
       await axios
         .get(
           `/leclisting_favorites.php?user_id=${currentUser?.id}&type=audio`,
@@ -303,14 +303,14 @@ const AudioActionDesktop = () => {
           }
         )
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           const { audio } = res.data;
         
           setgetfavs(Object.values(audio));
           // const isExist = [Object.values(audio)].includes(nid)
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     }
   }
@@ -345,19 +345,19 @@ const AudioActionDesktop = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         toast.success(res.data.message);
         //setdisabled(false);
       })
 
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
  
 
-  //console.log("range", rangeRef?.current?.value);
+  ////console.log("range", rangeRef?.current?.value);
   return (
     <>
     <div className={`fixed bg-black z-[60]  bottom-0 flex items-center gap-4  transform  cursor-pointer ${isminimize ? `w-[220px] h-[60px] bg-black right-0 transition-all duartion-300`:`w-full h-[80px] left-0 right-0`}`}>
@@ -391,8 +391,8 @@ const AudioActionDesktop = () => {
           if (audioRef.current && !audioRef.current?.seeking) {
             dispatch(getValue(audioRef?.current?.currentTime));
             //handleNextAudio()
-            // console.log("from update", audioRef.current?.currentTime);
-            // console.log("to update", Math.floor(audioRef.current?.duration));
+            // //console.log("from update", audioRef.current?.currentTime);
+            // //console.log("to update", Math.floor(audioRef.current?.duration));
             setIsComplete(
               Math.floor(audioRef?.current?.currentTime) >=
                 Math.floor(audioRef?.current?.duration)

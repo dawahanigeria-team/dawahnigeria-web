@@ -29,7 +29,7 @@ const Trending = () => {
     axios
       .get(`/popular_lec_api.php?langid=6&page=${page}`)
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         if (page === 1) {
           setLoading(false);
         }
@@ -38,11 +38,11 @@ const Trending = () => {
           setIsEmpty(true);
           return;
         }
-       //console.log(_.uniqBy([...res.data], 'nid'))
+       ////console.log(_.uniqBy([...res.data], 'nid'))
         setData((prev) => _.uniqBy([...prev,...res.data], 'nid'));
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
        // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);

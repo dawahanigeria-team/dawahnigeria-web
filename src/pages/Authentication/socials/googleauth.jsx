@@ -9,7 +9,7 @@ function GetGoogleOAuth() {
   
 
 
-  //console.log(socialData)
+  ////console.log(socialData)
   return (
     <div className="w-full relative">
       <GoogleOAuthProvider clientId="498332584921-nghgkmqicq5ijukvrhjljfilsl8mg4n8.apps.googleusercontent.com">
@@ -19,10 +19,10 @@ function GetGoogleOAuth() {
          <GoogleLogin
           
           onSuccess={(credentialResponse) => {
-            console.log(credentialResponse);
+            //console.log(credentialResponse);
             const details = jwt_decode(credentialResponse.credential);
             const { name, email } = details;
-            console.log(details);
+            //console.log(details);
             const payload = {
               action: "register_user",
               is_social: true,
@@ -35,7 +35,7 @@ function GetGoogleOAuth() {
             if (pathname === "/auth/login") {
               const isSocial = true;
 
-              // console.log(payload);
+              // //console.log(payload);
               dispatch(LoginAction(payload, isSocial, navigate, setLoading));
             } else {
               navigate("/auth/selectlanguage", {
@@ -45,10 +45,10 @@ function GetGoogleOAuth() {
               });
             }
 
-            //console.log(credentialResponse);
+            ////console.log(credentialResponse);
           }}
           onError={() => {
-            console.log("Login Failed");
+            //console.log("Login Failed");
           }}
         />
         */}

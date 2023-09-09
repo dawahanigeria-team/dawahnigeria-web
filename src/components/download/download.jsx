@@ -11,7 +11,7 @@ const DownloadAudio = ({ isDownload, setisDownload, nid}) => {
   const [downloadUrl, setdownloadUrl] = useState(null)
   const [data, setdata] = useState()
 
-  //console.log('@@@@@@@ download', nid)
+  ////console.log('@@@@@@@ download', nid)
 
 useEffect(() => {
   if(!nid) {
@@ -27,8 +27,8 @@ useEffect(() => {
     },
   })
     .then((res) => {
-      console.log('from download',res)
-        console.log(res.data)
+      //console.log('from download',res)
+        //console.log(res.data)
        const {data} = res
         setdata(data)
        
@@ -38,19 +38,19 @@ useEffect(() => {
         setmp4Text(`${mp3_size} [MP3]`)
     })
     .catch((err) => {
-        console.log(err)
+        //console.log(err)
     })
 
 },[nid])
 
-//console.log(data)
+////console.log(data)
 
   const selectAMR = () => {
     const {amr_url} = data
     setisMP4(false);
     setisAMR(true);
     setdownloadUrl(amr_url)
-    console.log(amr_url)
+    //console.log(amr_url)
   };
 
   const selectMP4 = () => {

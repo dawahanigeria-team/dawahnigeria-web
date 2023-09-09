@@ -58,14 +58,14 @@ const ResetPassword = () => {
       .then((res) => {
         setLoading(false);
        navigate("/auth/login")
-        console.log(res.data);
+        //console.log(res.data);
         toast.success(res.data.message);
       })
       .catch((err) => {
-        console.log(err.response);
+        //console.log(err.response);
         setLoading(false);
 
-        console.log(err.response.data);
+        //console.log(err.response.data);
         toast.error(err.response.data.message);
       });
   };

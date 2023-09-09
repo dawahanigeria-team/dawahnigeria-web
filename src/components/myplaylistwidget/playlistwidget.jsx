@@ -67,7 +67,7 @@ useEffect(() => {
   async function fetchFavorites(addFav, lecid) {
     if (!currentUser?.id) return;
     if (addFav || (!addFav && lecid)) {
-      console.log("..........@@@@@@@@@@@@@");
+      //console.log("..........@@@@@@@@@@@@@");
       await axios
         .get(
           `/leclisting_favorites.php?user_id=${currentUser?.id}&type=audio`,
@@ -80,13 +80,13 @@ useEffect(() => {
           }
         )
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           const { audio } = res.data;
           setgetfavs(Object.values(audio));
           // const isExist = [Object.values(audio)].includes(nid)
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     }
   }
@@ -114,7 +114,7 @@ useEffect(() => {
         },
       })
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         toast.success(res.data.message);
         setdisabled(false);
         if (!getFavs?.includes(lecid)) {
@@ -126,7 +126,7 @@ useEffect(() => {
       })
 
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 

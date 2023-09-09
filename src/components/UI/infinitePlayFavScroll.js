@@ -2,12 +2,12 @@
 //add page + 10
 function infinitePlayFavScroll (node, observer, page, setPage, isEmpty) {
   if(isEmpty) return;
-  console.log(node);
+  //console.log(node);
   if (observer.current) observer.current.disconnect();
   observer.current = new IntersectionObserver(
     (entries) => {
       if (entries[0].isIntersecting) {
-        console.log("visible");
+        //console.log("visible");
         setTimeout(() => {
           setPage(page + 10);
         }, 2000);

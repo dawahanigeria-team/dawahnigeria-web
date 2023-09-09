@@ -36,11 +36,11 @@ const SignupForm = () => {
     axios
       .get(`/all_lang_api.php`)
       .then((res) => {
-        //console.log(res.data)
+        ////console.log(res.data)
         setLangData(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, []);
 
@@ -63,7 +63,7 @@ const SignupForm = () => {
       language: langid,
     };
 
-    console.log(validateData);
+    //console.log(validateData);
     for (let i in validateData) {
       if (validateData[i] === "") {
         toast.error(`${i} cannot be empty`);
@@ -95,7 +95,7 @@ const SignupForm = () => {
         password: password
     }
    
-    console.log(payload)
+    //console.log(payload)
     dispatch(registration(payload,isSocial, getId, navigate, setLoading))
     //toast.success("Signup successful");
   };
@@ -104,7 +104,7 @@ const SignupForm = () => {
   
   const { email, password, name, confirm_password } = data;
 
-  console.log(data);
+  //console.log(data);
   return (
     <div className="signupform_wrapper">
       <form

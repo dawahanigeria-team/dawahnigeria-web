@@ -30,7 +30,7 @@ const User = (state = initailState, action) => {
         currentUser: action.payload,
       };
     case type.GET_TYPE:
-      console.log("GET_TYPE", action.payload);
+      //console.log("GET_TYPE", action.payload);
       return {
         ...state,
         type: action.payload,

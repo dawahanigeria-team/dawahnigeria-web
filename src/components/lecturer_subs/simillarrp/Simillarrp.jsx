@@ -28,7 +28,7 @@ const Simillarrp = ({langid}) => {
         `https://www.dawahbox.com/mongo/api/all_rps_api.php?offset=30&lim=10&page=${page}&langid=${langid}`
       )
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         if (page === 1) {
           setLoading(false);
         }
@@ -40,7 +40,7 @@ const Simillarrp = ({langid}) => {
         setData((prev) => _.uniqBy([...prev, ...res.data], 'id'));
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
        // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, langid]);

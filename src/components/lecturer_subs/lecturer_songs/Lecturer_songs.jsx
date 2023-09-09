@@ -19,7 +19,7 @@ const Lecturer_songs = ({ id, setCount1 }) => {
   const [comment, setComment] = useState();
   const [audioComment, setaudioComment] = useState();
 
-  console.log("rp id", id);
+  //console.log("rp id", id);
   useEffect(() => {
     setCount1(data.length);
      // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -37,7 +37,7 @@ const Lecturer_songs = ({ id, setCount1 }) => {
        
         )
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           if (page === 1) {
             setLoading(false);
           }
@@ -50,7 +50,7 @@ const Lecturer_songs = ({ id, setCount1 }) => {
           setData((prev) => _.uniqBy([...prev, ...res.data], "nid"));
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     };
 
@@ -78,11 +78,11 @@ const Lecturer_songs = ({ id, setCount1 }) => {
         }
       )
       .then((res) => {
-        console.log("comment result", res);
+        //console.log("comment result", res);
         setaudioComment(res.data.reverse());
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
        // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -90,7 +90,7 @@ const Lecturer_songs = ({ id, setCount1 }) => {
   const postComment = () => {
     if (!currentUser?.id) return;
     if (comment === "") return;
-    console.log(comment);
+    //console.log(comment);
     const payload = {
       user_id: currentUser?.id,
       item_id: id,
@@ -106,11 +106,11 @@ const Lecturer_songs = ({ id, setCount1 }) => {
         },
       })
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         setComment("");
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 

@@ -34,19 +34,19 @@ const Playlists = () => {
       axios
         .get(`https://dawahnigeria.com/dawahcast/dboxapi/catjson2`)
         .then((res) => {
-          //console.log(res.data);
+          ////console.log(res.data);
           setCategories([...category, ...res.data.rp?.slice(0, 15)]);
           // setLoading(false);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
 
       //get all langyages
       axios
         .get(`https://dawahnigeria.com/dawahcast/dboxapi/langjson`)
         .then((res) => {
-          //console.log(res.data.rp);
+          ////console.log(res.data.rp);
           setLanguages([...language, ...res.data.rp]);
         });
     }
@@ -58,7 +58,7 @@ const Playlists = () => {
   }, [data]);
 
   useEffect(() => {
-    //console.log(initialCatid, catid);
+    ////console.log(initialCatid, catid);
     const handleRequest = () => {
       /**
         if (initialLangid !== langid || initialCatid !== catid) {
@@ -70,7 +70,7 @@ const Playlists = () => {
       axios
         .get(`/playlistApi.php?action=all_public_playlist_data`)
         .then((res) => {
-          console.log("playlists", res.data);
+          //console.log("playlists", res.data);
 
           setLoading(false);
           /**
@@ -86,13 +86,13 @@ const Playlists = () => {
           setData((prev) => _.uniqBy([...prev, ...res.data], "id"));
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     };
 
     handleRequest();
   }, [catid, langid, page]);
-  // console.log(filter);
+  // //console.log(filter);
 
   return (
     <Container>

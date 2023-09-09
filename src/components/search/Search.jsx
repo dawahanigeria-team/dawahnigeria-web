@@ -13,7 +13,7 @@ const Search = () => {
  
 
   const [inputValue, setInputValue] = useState()
-  console.log(inputValue)
+  //console.log(inputValue)
   //const [text, onchange] = useState();
   useEffect(() => {
     if (pathname !== "/search") {

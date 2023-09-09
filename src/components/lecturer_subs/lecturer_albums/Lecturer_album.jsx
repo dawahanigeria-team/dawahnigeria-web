@@ -42,7 +42,7 @@ const Lecturer_album = ({ id, setCount2, rpname, setImg }) => {
         );
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   });
 
@@ -59,7 +59,7 @@ const Lecturer_album = ({ id, setCount2, rpname, setImg }) => {
           }`
         )
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
 
           if (page === 1) {
             setLoading(false);
@@ -73,14 +73,14 @@ const Lecturer_album = ({ id, setCount2, rpname, setImg }) => {
           setData((prev) => _.uniqBy([...prev, ...res.data], "id"));
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     };
 
     handleRequest();
      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rpid, page]);
-  // console.log(setCount2);
+  // //console.log(setCount2);
 
   //////*************handling comment**************** */
 
@@ -99,17 +99,17 @@ const Lecturer_album = ({ id, setCount2, rpname, setImg }) => {
         }
       )
       .then((res) => {
-        console.log("comment result", res);
+        //console.log("comment result", res);
         setaudioComment(res.data.reverse());
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
        // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
-  console.log(data);
+  //console.log(data);
 
 
   return (

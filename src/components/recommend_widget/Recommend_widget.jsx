@@ -6,7 +6,7 @@ import { BiLike } from "react-icons/bi";
 import { HiShare } from "react-icons/hi";
 import { TbMessage2 } from "react-icons/tb";
 const Recommend_widget = ({ img, title, rpname, catsname }) => {
-  // console.log(title.split(" - "));
+  // //console.log(title.split(" - "));
 
     ////not contented but under presssure by DN project manager
 useEffect(() => {

@@ -29,7 +29,7 @@ const New = () => {
     axios
       .get(`/leclistingapi.php?sort=desc&page=${page}`)
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         if (page === 1) {
           setLoading(false);
         }
@@ -42,7 +42,7 @@ const New = () => {
         setData((prev) => _.uniqBy([...prev,...res.data], 'nid'));
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, [page]);
 

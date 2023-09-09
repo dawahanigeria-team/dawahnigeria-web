@@ -33,14 +33,14 @@ const Layout = () => {
       (window.innerWidth > 890 ? 2 : 1)
     );
   });
-  console.log(playing);
-  console.log(currentAudioInfo);
+  //console.log(playing);
+  //console.log(currentAudioInfo);
   useEffect(() => {
     localStorage.setItem("navControl", JSON.stringify(res));
     const handleResize = () => {
       if (window.innerWidth <= 890) {
         setRes(1);
-        //console.log(window.innerWidth)
+        ////console.log(window.innerWidth)
       } else {
         setRes(2);
       }

@@ -55,13 +55,13 @@ function More() {
   const { currentUser } = useSelector((state) => state.user);
   const { setinitial } = useContext(AudioContext);
 
-  console.log(type);
+  //console.log(type);
 
-  console.log(id);
+  //console.log(id);
 
   useEffect(() => {
     if (!endpoint_url) {
-      console.log("No endpoint");
+      //console.log("No endpoint");
       setData(currentdata);
       setLoading(false);
       return;
@@ -79,14 +79,14 @@ function More() {
             setLoading(false);
           })
           .catch((err) => {
-            console.log(err);
+            //console.log(err);
           });
         return;
       } else {
         axios
           .get(`${endpoint_url}${currentPage}`)
           .then((res) => {
-            console.log(res);
+            //console.log(res);
             if (page === 1) {
               setLoading(false);
             }
@@ -98,14 +98,14 @@ function More() {
             setData((prev) => _.uniqBy([...prev, ...res.data], "nid"));
           })
           .catch((err) => {
-            console.log(err);
+            //console.log(err);
           });
       }
     }
     fetchData();
   }, [page]);
 
-  console.log(data);
+  //console.log(data);
 
   const lastElement = useCallback(
     (node) => {

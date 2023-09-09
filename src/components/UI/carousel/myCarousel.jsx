@@ -15,7 +15,7 @@ const MyCarousel = ({ images }) => {
   }, [currentIndex, images.length]);
 
  
-  //console.log(currentIndex);
+  ////console.log(currentIndex);
   return (
     <div className="w-full group h-full relative items-end justify-end px-[5] flex cursor-pointer">
       <div className="w-full hidden inset-0 group-hover:flex justify-between items-center h-fit m-auto z-[30] absolute">

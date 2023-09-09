@@ -11,14 +11,14 @@ const CommentBox  = ({id,audioComment, type}) => {
  const navigate = useNavigate()
   const {currentUser} = useSelector((state) => state.user)
 
-  console.log(type)
+  //console.log(type)
   const postComment = () => {
     if (!currentUser?.id) 
     { navigate("/auth/login")
     toast.error("Login or register to comment");
     return;}
     if (comment === "") return;
-    console.log(comment);
+    //console.log(comment);
     const payload = {
       user_id: currentUser?.id,
       item_id: id,
@@ -35,11 +35,11 @@ const CommentBox  = ({id,audioComment, type}) => {
         },
       })
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         setComment("");
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 

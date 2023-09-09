@@ -36,7 +36,7 @@ const Recommend1 = () => {
       axios
         .get(`/leclisting_cat_api.php?langid=6&catid=${catid}&page=${page}`)
         .then((res) => {
-          console.log(res.data)
+          //console.log(res.data)
           if (page === 1) {
             setLoading(false);
           }
@@ -50,13 +50,13 @@ const Recommend1 = () => {
           setNextPageLoad(false);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
 
     };
-    // console.log("hold line 40", hold);
+    // //console.log("hold line 40", hold);
 
-    // console.log("data line 42: ", data);
+    // //console.log("data line 42: ", data);
 
     handleRequest();
      // eslint-disable-next-line react-hooks/exhaustive-deps

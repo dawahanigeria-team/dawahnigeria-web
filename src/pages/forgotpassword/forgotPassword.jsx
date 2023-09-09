@@ -33,11 +33,11 @@ const ForgotPassword = () => {
       .then((res) => {
         setLoading(false);
         setreset(true);
-        console.log(res.data);
+        //console.log(res.data);
         toast.success(res.data.message);
       })
       .catch((err) => {
-        console.log(err.response);
+        //console.log(err.response);
         setLoading(false);
         
         toast.error('User with the provided email does not exist');

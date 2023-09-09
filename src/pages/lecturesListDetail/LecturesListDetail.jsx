@@ -73,12 +73,12 @@ const LecturesListDetail = () => {
     useaxios
       .get(`/albumlisting_multi_nid_api.php?id=${id}`)
       .then((res) => {
-        console.log("single data @@@@@@@@@", res);
+        //console.log("single data @@@@@@@@@", res);
         setsingleData(res.data[0]);
         setsumofFav(res.data[0]?.favorites || 0);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, [id]);
 
@@ -99,11 +99,11 @@ const LecturesListDetail = () => {
         }
       )
       .then((res) => {
-        console.log("comment result", res);
+        //console.log("comment result", res);
         setaudioComment(res.data.reverse());
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, [id]);
 
@@ -112,16 +112,16 @@ const LecturesListDetail = () => {
     axios
       .get(`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}`)
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         setLoading(false);
         setrpname(res.data[0]?.rp);
         setrpImg(res.data[0]?.rp_image);
-        console.log(typeof res.data);
+        //console.log(typeof res.data);
 
         setData(_.uniqBy(res.data, "nid"));
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   }, [id]);
 
@@ -131,7 +131,7 @@ const LecturesListDetail = () => {
   async function fetchFavorites(addFav, aid) {
     if (!currentUser?.id) return;
     if (addFav || (!addFav && aid)) {
-      console.log("...ALBUM.......@@@@@@@@@@@@@");
+      //console.log("...ALBUM.......@@@@@@@@@@@@@");
       await useaxios
         .get(
           `/leclisting_favorites.php?user_id=${currentUser?.id}&type=album`,
@@ -144,13 +144,13 @@ const LecturesListDetail = () => {
           }
         )
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           const { album } = res.data;
           setgetfavs(album);
           // const isExist = [Object.values(audio)].includes(id)
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     }
   }
@@ -161,7 +161,7 @@ const LecturesListDetail = () => {
   const addToFav = async (e, aid) => {
     /// add to favorites
     e.stopPropagation();
-    console.log("event clicked");
+    //console.log("event clicked");
     if (!currentUser?.id) {
       toast.error("Login or register to add to favorites");
       return;
@@ -180,10 +180,10 @@ const LecturesListDetail = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         toast.success(res.data.message);
         setdisabled(false);
-        console.log(addFav);
+        //console.log(addFav);
         if (!getFavs?.includes(parseInt(aid))) {
           setsumofFav(sumofFav + 1);
         } else {
@@ -192,7 +192,7 @@ const LecturesListDetail = () => {
       })
 
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -200,7 +200,7 @@ const LecturesListDetail = () => {
   const firstElement = useCallback((node) => {
     observeEl.current = new IntersectionObserver((entries) => {
       if (!entries[0].isIntersecting) {
-        console.log("not visible");
+        //console.log("not visible");
         setIsVisible(true);
       } else {
         setIsVisible(false);
@@ -222,11 +222,11 @@ const LecturesListDetail = () => {
 
     [page]
   );
-  console.log("current page", page);
+  //console.log("current page", page);
 
    */
 
-  console.log(data);
+  //console.log(data);
   //play all audio files
   const playAll = () => {
     if (window.innerWidth <= 615) {
@@ -242,7 +242,7 @@ const LecturesListDetail = () => {
   ///**** share album ******** */
 
   const shareAlbum = (e) => {
-    console.log("album id", id);
+    //console.log("album id", id);
     e.stopPropagation();
     if (!currentUser?.id) {
       toast.error("Log in or register to share audio");
@@ -258,18 +258,18 @@ const LecturesListDetail = () => {
       axios
         .get("https://dawahnigeria.com/dawahcast/dboxapi/rpjson")
         .then(async (res) => {
-          console.log(res.data.rp);
+          //console.log(res.data.rp);
           const datas = res.data.rp;
           //setrpData(datas)
           const rpnameArray = datas.map((rp) => rp.name);
-          console.log("my rp", rpnames);
+          //console.log("my rp", rpnames);
           const isPresent = rpnameArray.includes(rpnames);
-          console.log("is rp present is", isPresent);
+          //console.log("is rp present is", isPresent);
           const page = 1;
           if (isPresent) {
             const rpindex = rpnameArray.indexOf(rpnames);
 
-            console.log(datas[rpindex]?.id);
+            //console.log(datas[rpindex]?.id);
             // navigate(`/rp/${rpData[rpindex]?.id}`)
 
             useaxios
@@ -277,14 +277,14 @@ const LecturesListDetail = () => {
                 `/albumlisting_rp.php?offset=30&lim=10&page=${page}&rpid=${datas[rpindex]?.id}`
               )
               .then((res) => {
-                console.log(res);
+                //console.log(res);
                 setsimilarAlb(res.data);
                 setsimilarUrl(`/albumlisting_rp.php?offset=30&lim=10&rpid=${datas[rpindex]?.id}&page=`)
               });
           }
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     }
   }, [rpnames]);
@@ -313,10 +313,10 @@ const LecturesListDetail = () => {
     <Container>
       <div className="leclistdet_wrapper">
         <img
-        ref={leclistdet}
-        id="hero"
+          ref={leclistdet}
+          id="hero"
           className="leclistdet_hero"
-          src={singleData?.img || "https://imagetolink.com/ib/vwea8kukZP.jpeg"}
+          src={singleData?.img || 'https://imagetolink.com/ib/vwea8kukZP.jpeg'}
           alt="audiohero"
         />
         <div className="leclistdet_container">
@@ -330,7 +330,8 @@ const LecturesListDetail = () => {
               className="leclistdet_breadcrumb_first"
             ></p>
             <p className="leclistdet_breadcrumb_second">
-              {singleData?.title.split("-")[2] || singleData?.title}
+              {(singleData?.title && singleData.title.split('-')[2]) ||
+                singleData?.title}
             </p>
           </div>
 
@@ -341,7 +342,7 @@ const LecturesListDetail = () => {
                 className="leclistdet_head_left_img"
                 src={
                   singleData?.img ||
-                  "https://imagetolink.com/ib/AEFQQC1ybX.jpeg"
+                  'https://imagetolink.com/ib/AEFQQC1ybX.jpeg'
                 }
                 ref={leclistdet}
                 id="hero"
@@ -350,7 +351,7 @@ const LecturesListDetail = () => {
             </div>
             <div className="leclistdet_head_right">
               <p className="leclistdet_head_right_head">
-                {singleData?.title.split("-")[2] || singleData?.title}
+                {singleData?.title.split('-')[2] || singleData?.title}
               </p>
               <div className="leclistdet_head_right_text">
                 <div className="rpimage_wrap">
@@ -358,7 +359,7 @@ const LecturesListDetail = () => {
                     <img className="rpimage_sz" src={rpimage || lazy} alt="" />
                   </div>
                   <p className="leclistdet_head_right_text1">
-                    {singleData?.title.split("-")[1] || singleData?.title}
+                    {singleData?.title.split('-')[1] || singleData?.title}
                   </p>
                 </div>
               </div>
@@ -447,7 +448,7 @@ const LecturesListDetail = () => {
           <div className="leclistdet_head_mobile">
             <div
               className={
-                isVisible ? "leclistdet_head_img_none" : "leclistdet_head_img"
+                isVisible ? 'leclistdet_head_img_none' : 'leclistdet_head_img'
               }
             >
               <img
@@ -456,7 +457,7 @@ const LecturesListDetail = () => {
                 id="hero"
                 src={
                   singleData?.img ||
-                  "https://imagetolink.com/ib/vwea8kukZP.jpeg"
+                  'https://imagetolink.com/ib/vwea8kukZP.jpeg'
                 }
                 alt="head"
               />
@@ -486,7 +487,7 @@ const LecturesListDetail = () => {
                   className="album_img_sz"
                   src={
                     singleData?.img ||
-                    "https://imagetolink.com/ib/vwea8kukZP.jpeg"
+                    'https://imagetolink.com/ib/vwea8kukZP.jpeg'
                   }
                   alt=""
                 />
@@ -494,7 +495,7 @@ const LecturesListDetail = () => {
 
               <div className="mob_like">
                 <div className="leclistdet_head_mob_head">
-                  {singleData?.title.split("-")[2] || singleData?.title}
+                  {singleData?.title.split('-')[2] || singleData?.title}
                 </div>
                 <div className="rp_img_name">
                   <span className="likeys_img">
@@ -503,9 +504,8 @@ const LecturesListDetail = () => {
                       ref={leclistdet}
                       id="hero"
                       src={
-                        
                         singleData?.img ||
-                        "https://imagetolink.com/ib/eCnXEHHRos.jpeg"
+                        'https://imagetolink.com/ib/eCnXEHHRos.jpeg'
                       }
                       alt=""
                     />
@@ -515,7 +515,7 @@ const LecturesListDetail = () => {
               </div>
             </div>
             <div className="listrank_and_listblack_wrap">
-              <div className={isVisible ? "listranking_none" : "listranking"}>
+              <div className={isVisible ? 'listranking_none' : 'listranking'}>
                 <div className="icons_mob_listblack">
                   <button
                     onClick={(e) => {
@@ -534,7 +534,9 @@ const LecturesListDetail = () => {
                       <img className="likeys_img_sz" src={lovebold} alt="" />
                     )}
                   </button>
-                  <span className="likeys_text">{formatNumber(sumofFav || 0)}</span>
+                  <span className="likeys_text">
+                    {formatNumber(sumofFav || 0)}
+                  </span>
                 </div>
                 <div
                   onClick={(e) => {
@@ -553,10 +555,13 @@ const LecturesListDetail = () => {
                   <button className="likeys_img">
                     <img className="likeys_img_sz" src={combold} alt="" />
                   </button>
-                  <span className="likeys_text"> {formatNumber(singleData?.comments || 0)}</span>
+                  <span className="likeys_text">
+                    {' '}
+                    {formatNumber(singleData?.comments || 0)}
+                  </span>
                 </div>
               </div>
-              <div className={isVisible ? "headings pb-7" : "headings_none"}>
+              <div className={isVisible ? 'headings pb-7' : 'headings_none'}>
                 <div
                   onClick={() => {
                     navigate(-1);
@@ -575,7 +580,7 @@ const LecturesListDetail = () => {
                     id="hero"
                     src={
                       singleData?.img ||
-                      "https://imagetolink.com/ib/eCnXEHHRos.jpeg"
+                      'https://imagetolink.com/ib/eCnXEHHRos.jpeg'
                     }
                     alt="head"
                   />
@@ -586,8 +591,8 @@ const LecturesListDetail = () => {
                 <div
                   className={
                     isVisible
-                      ? "fixed_icons_listblack p-3"
-                      : "icons_listblack p-3"
+                      ? 'fixed_icons_listblack p-3'
+                      : 'icons_listblack p-3'
                   }
                 >
                   <div id="player" onClick={playAll} className="play_header">
@@ -647,7 +652,7 @@ const LecturesListDetail = () => {
                       share,
                       views,
                       favorites,
-                      comments,
+                      comments
                     },
                     idx
                   ) => {
@@ -670,7 +675,7 @@ const LecturesListDetail = () => {
                               comments={comments}
                               favorites={favorites}
                               nid={nid}
-                              navName={"Back"}
+                              navName={'Back'}
                               navLink={-1}
                               endpoint_url={`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}`}
                               controlData={data}
@@ -693,7 +698,7 @@ const LecturesListDetail = () => {
                               rpid={rp_id}
                               comments={comments}
                               favorites={favorites}
-                              navName={"Back"}
+                              navName={'Back'}
                               navLink={-1}
                               endpoint_url={`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}&lim=10&offset=30&page=`}
                               controlData={data}
@@ -722,7 +727,7 @@ const LecturesListDetail = () => {
                               favorites={favorites}
                               comments={comments}
                               nid={nid}
-                              navName={"Back"}
+                              navName={'Back'}
                               navLink={-1}
                               endpoint_url={`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}`}
                               controlData={data}
@@ -746,7 +751,7 @@ const LecturesListDetail = () => {
                               comments={comments}
                               nid={nid}
                               favorites={favorites}
-                              navName={"Back"}
+                              navName={'Back'}
                               navLink={-1}
                               endpoint_url={`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}&lim=10&offset=30&page=`}
                               controlData={data}
@@ -762,37 +767,29 @@ const LecturesListDetail = () => {
             </div>
           </div>
 
+          <div className="px-3">
+            <SimilarAudio
+              similar={similarAlb}
+              current={id}
+              url={`/a`}
+              type={'album'}
+              endpoint_url={similarUrl}
+              currentPage={1}
+              navtitle={'Album'}
+              heading={`Similar albums by ${
+                singleData?.title.split('-')[1]?.split(' ')[1] || 'lecturer'
+              } ${singleData?.title.split('-')[1]?.split(' ')[2] || ''}`}
+            />
 
-          <div   className="px-3">
-          <SimilarAudio
-          
-          similar={similarAlb}
-          current={id}
-          url={`/a`}
-          type={'album'}
-          endpoint_url={similarUrl}
-          currentPage={1}
-          navtitle={'Album'}
-          heading={`Similar albums by ${
-            singleData?.title.split("-")[1]?.split(" ")[1] || "lecturer"
-          } ${singleData?.title.split("-")[1]?.split(" ")[2] || ""}`}
-        />
-
-        <CommentBox
-  
-          audioComment={audioComment}
-          id={id}
-          type={"album"}
-        />
-
+            <CommentBox audioComment={audioComment} id={id} type={'album'} />
           </div>
-      
-          <div className={isShare ? "share_wrapper" : "hide_share_wrapper"}>
+
+          <div className={isShare ? 'share_wrapper' : 'hide_share_wrapper'}>
             <ShareAudio
               isShare={isShare}
               setisShare={setisShare}
               nid={id}
-              type={"album"}
+              type={'album'}
             />
           </div>
         </div>
