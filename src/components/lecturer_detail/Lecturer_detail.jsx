@@ -294,7 +294,7 @@ const LecturerDetail = () => {
                     tab === 1 ? "lecdet_tab_song1_active" : "lecdet_tab_song1"
                   }`}
                 >
-                  Songs
+                  Audio
                 </p>
                 <p
                   className={`${
@@ -509,7 +509,7 @@ const LecturerDetail = () => {
                       : "mobile_lecdet_tab_song1"
                   }`}
                 >
-                  Songs
+                  Audio
                 </p>
                 <p
                   className={`${
