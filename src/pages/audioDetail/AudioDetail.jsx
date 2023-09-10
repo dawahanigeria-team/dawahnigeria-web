@@ -14,7 +14,7 @@ import { CiPlay1 } from "react-icons/ci";
 import back from "../../assets/svg/back.svg";
 import foward from "../../assets/svg/foward.svg";
 import logo from "../../assets/png/dn logo.png";
-import { BsPause} from "react-icons/bs";
+import { BsPause } from "react-icons/bs";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { BiMessageMinus } from "react-icons/bi";
 import { RiDownload2Fill, RiPlayListFill } from "react-icons/ri";
@@ -58,7 +58,7 @@ import {
   setPlaying,
   getPage,
   getRepeat,
-  getValue
+  getValue,
 } from "../../Redux/Actions/ActionCreators";
 import { LECTURE } from "../../utils/routes/constants";
 import plus from "../../../src/assets/svg/plus.svg";
@@ -77,14 +77,14 @@ const AudioDetail = () => {
     playing,
     count,
     pack,
-    isrepeat
+    isrepeat,
   } = useSelector((state) => state.user);
   const navigate = useNavigate();
-  const {state} = useLocation()
+  const { state } = useLocation();
   const [more, setMore] = useState(0);
   const [play, setPlay] = useState(0);
   const [moreOption, setmoreOption] = useState(false);
-  const { audioRef , setinitial, loading } = useContext(AudioContext);
+  const { audioRef, setinitial, loading } = useContext(AudioContext);
   //const [music, setMusic] = useState(0);
   const [data, setData] = useState([]);
   const slide = useRef();
@@ -92,7 +92,7 @@ const AudioDetail = () => {
   const [subdata, setSubData] = useState([]);
   const [currentaudio, setcurrentaudio] = useState([]);
   const [curUser, setCurUser] = useState(currentUser || null);
-  const [iscurrents, setcurrents] = useState(false)
+  const [iscurrents, setcurrents] = useState(false);
   //const audioRef = useRef();
   const rangeRef = useRef();
   //const [page, getPage] = useState(currentPage);
@@ -120,7 +120,7 @@ const AudioDetail = () => {
   const [isdisabled, setdisabled] = useState(false);
   const [getFavs, setgetfavs] = useState([]);
   const [sumofFav, setsumofFav] = useState(0);
-  const [isShare, setisShare] = useState(false)
+  const [isShare, setisShare] = useState(false);
   const [comment, setComment] = useState("");
   const [noOfComments, setNoOfComments] = useState("");
 
@@ -134,7 +134,7 @@ const AudioDetail = () => {
    */
 
   const getMusic = async (id) => {
-    if (state?.layout) return
+    if (state?.layout) return;
     if (window.innerWidth <= 615) {
       dispatch(getaudioId(id));
     } else {
@@ -153,12 +153,10 @@ const AudioDetail = () => {
     getMusic(id);
   }, [id, audioId]);
 
-
-
   const handlePlay = () => {
     if (playing) {
       dispatch(setPlaying(!playing));
-      //audioRef.current?.pause(); 
+      //audioRef.current?.pause();
       //cancelAnimationFrame(playAnimation.current);
     } else {
       dispatch(setPlaying(!playing));
@@ -180,35 +178,34 @@ const AudioDetail = () => {
     // //console.log("first count: ", count);
     setIsPrevious(false);
     //console.log(pack);
- 
-     const next = pack?.findIndex((value) => {
+
+    const next = pack?.findIndex((value) => {
       return value.nid === parseInt(id);
-    })
-  
-     //console.log("first count: ", next);
+    });
+
+    //console.log("first count: ", next);
     // //console.log("current diff: ", data?.length - 1 - next);
     if (!isEmpty && pack?.length - 1 - next <= 2) {
       dispatch(getPage(page + 1));
     }
 
     if (next === pack?.length - 1) {
-      navigate(`${LECTURE}${pack[next]?.nid}`)
-   
+      navigate(`${LECTURE}${pack[next]?.nid}`);
+
       //console.log("@@@@@@@@@@ end of track next");
       dispatch(getCount(next));
     } else if (count < pack?.length - 1) {
       //console.log("@@@@@@@@@@@ working");
-      navigate(`${LECTURE}${pack[next + 1]?.nid}`)
-     
+      navigate(`${LECTURE}${pack[next + 1]?.nid}`);
+
       dispatch(getCount(next + 1));
       //console.log("@@@@@@ last count: ", next);
     } else {
+      navigate(`${LECTURE}${pack[0]?.id}`);
 
-      navigate(`${LECTURE}${pack[0]?.id}`)
-    
-     dispatch(getCount(0));
+      dispatch(getCount(0));
     }
-    setinitial (false)
+    setinitial(false);
   };
   const handlePreviousAudio = () => {
     //  //console.log("first count: ", count);
@@ -226,18 +223,18 @@ const AudioDetail = () => {
     // getCount(prev);
     // //console.log("second count: ", count);
     if (prev === 0) {
-    navigate(`${LECTURE}${pack[prev]?.nid}`)
+      navigate(`${LECTURE}${pack[prev]?.nid}`);
       //dispatch(getaudioId(pack[prev]?.nid));
       dispatch(getCount(prev));
 
       //console.log("end of track prev");
     } else {
       //console.log("third count: ", count);
-      navigate(`${LECTURE}${pack[prev -  1]?.nid}`)
+      navigate(`${LECTURE}${pack[prev - 1]?.nid}`);
       //dispatch(getaudioId(pack[prev - 1]?.nid));
       dispatch(getCount(prev - 1));
     }
-    setinitial (false)
+    setinitial(false);
     //audioRef.current?.currentTime = 0;
   };
 
@@ -278,6 +275,7 @@ const AudioDetail = () => {
 
   const selectAMR = () => {
     const { amr_url } = downloaddata;
+    if (!amr_url) return;
     setisMP4(false);
     setisAMR(true);
     setdownloadUrl(amr_url);
@@ -286,6 +284,7 @@ const AudioDetail = () => {
 
   const selectMP4 = () => {
     const { mp3_url } = downloaddata;
+    if (!mp3_url) return;
     setisMP4(true);
     setisAMR(false);
     setdownloadUrl(mp3_url);
@@ -296,8 +295,6 @@ const AudioDetail = () => {
     toast.success("Downloading...");
     window.open(downloadUrl, "_blank");
   };
-
-
 
   //console.log("data", data);
 
@@ -316,7 +313,7 @@ const AudioDetail = () => {
           },
         })
         .then((res) => {
-        //  //console.log(res.data);
+          //  //console.log(res.data);
           const { audio } = res.data;
           setgetfavs(Object.values(audio));
           // const isExist = [Object.values(audio)].includes(nid)
@@ -335,7 +332,6 @@ const AudioDetail = () => {
     e.stopPropagation();
     //console.log("event clicked");
     if (!curUser?.id) {
-      
       toast.error("Login or register to add to favorites");
       return;
     }
@@ -353,10 +349,10 @@ const AudioDetail = () => {
         },
       })
       .then((res) => {
-      //  //console.log(res);
+        //  //console.log(res);
         toast.success(res.data.message);
         setdisabled(false);
-       // //console.log(addFav);
+        // //console.log(addFav);
         if (!getFavs?.includes(parseInt(lecid))) {
           setsumofFav(sumofFav + 1);
         } else {
@@ -373,9 +369,8 @@ const AudioDetail = () => {
 
   useEffect(() => {
     if (!curUser?.id) {
-     
       return;
-    } 
+    }
 
     axios
       .get(
@@ -399,7 +394,7 @@ const AudioDetail = () => {
 
   const postComment = () => {
     if (!curUser?.id) {
-      navigate("/auth/login")
+      navigate("/auth/login");
       toast.error("Login or register to comment");
       return;
     }
@@ -429,19 +424,17 @@ const AudioDetail = () => {
       });
   };
 
-  ///scrolll to view 
+  ///scrolll to view
   useEffect(() => {
     //console.log(isComment)
     if (isComment) {
-      
       window.scrollTo({
-        top:900,
-        left:0, 
-        behavior:'smooth'
-        })
+        top: 900,
+        left: 0,
+        behavior: "smooth",
+      });
     }
-
-  },[isComment])
+  }, [isComment]);
 
   ///////******************/ Similar audios ***********///////////
 
@@ -514,9 +507,9 @@ const AudioDetail = () => {
               `/leclisting_rp.php?page=${page}&lim=10&offset=30&rpid=${data[rpindex]?.id}`
             )
             .then((res) => {
-             // //console.log(res);
+              // //console.log(res);
               setSimilarAudio(res.data);
-             // dispatch(getPack(res.data));
+              // dispatch(getPack(res.data));
             })
             .catch((err) => {
               //console.log(err);
@@ -529,16 +522,13 @@ const AudioDetail = () => {
   }, [currentAudioInfo?.rpname]);
 
   const shareAudio = () => {
-  
     if (!currentUser?.id) {
       toast.error("Log in or register to share audio");
       return;
     }
-    setisShare(!isShare)
+    setisShare(!isShare);
     //setNidValue(nid)
-  }
-
-
+  };
 
   ////*********************************************************** */
 
@@ -599,11 +589,11 @@ const AudioDetail = () => {
 
               <div className="audiodetail_head_right_actions_wrap">
                 <div
-                id="player"
+                  id="player"
                   onClick={() => {
                     dispatch(setPlaying(!playing));
                     dispatch(getaudioId(id));
-                    setinitial (false)
+                    setinitial(false);
                     ///this is not coming with audio pack
                   }}
                   className="audiodetail_play"
@@ -646,10 +636,11 @@ const AudioDetail = () => {
                   </p>
                 </div>
                 <div
-                onClick={() => {
-                  shareAudio();
-                }}
-                className="audiodetail_share">
+                  onClick={() => {
+                    shareAudio();
+                  }}
+                  className="audiodetail_share"
+                >
                   <img
                     src={sharebig}
                     alt=""
@@ -698,8 +689,7 @@ const AudioDetail = () => {
             <div className="audiodetail_info_wrap">
               <div className="audiodetail_info_name">Date of Release: </div>
               <div className="audiodetail_info_value">
-                {currentAudioInfo?.post_date?.split('-')[0] ||
-                  "no date"}
+                {currentAudioInfo?.post_date?.split("-")[0] || "no date"}
               </div>
             </div>
           </div>
@@ -753,22 +743,22 @@ const AudioDetail = () => {
               {/* <div className="audiores_scroll_bar"></div> */}
               <div className="range_progress">
                 <span
-                 style={{width: `${value * 100/audioRef?.current?.duration}%`}}
-                className="audiodet_bar">
-
-                </span>
-              <input
-              ref={rangeRef}
-                type="range"
-                min={"0"}
-                max={Math.floor(audioRef?.current?.duration)}
-                value={value}
-                onChange={(e) => {
-                  handleRange(e.target.value);
-                }}
-                className=""
-              />
-
+                  style={{
+                    width: `${(value * 100) / audioRef?.current?.duration}%`,
+                  }}
+                  className="audiodet_bar"
+                ></span>
+                <input
+                  ref={rangeRef}
+                  type="range"
+                  min={"0"}
+                  max={Math.floor(audioRef?.current?.duration)}
+                  value={value}
+                  onChange={(e) => {
+                    handleRange(e.target.value);
+                  }}
+                  className=""
+                />
               </div>
               <p className="audiores_scroll_stop">
                 {currentAudioInfo?.duration}
@@ -795,15 +785,19 @@ const AudioDetail = () => {
                 >
                   <TbPlayerSkipBackFilled className="audiores_play_back" />
                 </button>
-               {loading ? <div className="w-[40px] h-[40px]">
-                <Loader/>
-               </div> : <div onClick={handlePlay} className="audiores_play_start">
-                  {!playing ? (
-                    <FaPlay className="audiores_play_start_icon" />
-                  ) : (
-                    <GiPauseButton className="audiores_play_start_icon" />
-                  )}
-                </div>}
+                {loading ? (
+                  <div className="w-[40px] h-[40px]">
+                    <Loader />
+                  </div>
+                ) : (
+                  <div onClick={handlePlay} className="audiores_play_start">
+                    {!playing ? (
+                      <FaPlay className="audiores_play_start_icon" />
+                    ) : (
+                      <GiPauseButton className="audiores_play_start_icon" />
+                    )}
+                  </div>
+                )}
                 <button
                   disabled={count === pack?.length - 1}
                   className="audiores_button"
@@ -815,11 +809,11 @@ const AudioDetail = () => {
                 </button>
               </div>
               <div
-              onClick={() => {
-                setcurrents(!iscurrents)
-              }}
+                onClick={() => {
+                  setcurrents(!iscurrents);
+                }}
               >
-              <RiPlayListFill className="audiores_play_control_list" />
+                <RiPlayListFill className="audiores_play_control_list" />
               </div>
             </div>
             <div className="audiores_actions">
@@ -850,8 +844,6 @@ const AudioDetail = () => {
               <BiMessageMinus
                 onClick={() => {
                   setIsComment(!isComment);
-               
-                  
                 }}
                 className={
                   isComment ? "audiores_comment_active" : "audiores_comment"
@@ -867,16 +859,18 @@ const AudioDetail = () => {
                 <SlOptionsVertical className="audiores_option" />
                 <div
                   className={
-                    moreOption ? "left-[-70px]  absolute min-w-max h-fit" : "hidden"
+                    moreOption
+                      ? "left-[-70px]  absolute min-w-max h-fit"
+                      : "hidden"
                   }
                 >
-
-<span
-              onClick={(e) => {
-                e.stopPropagation()
-                setmoreOption(!moreOption);
-              }}
-              className="fixed inset-0 bg-none z-[90] w-full h-full"></span>
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setmoreOption(!moreOption);
+                    }}
+                    className="fixed inset-0 bg-none z-[90] w-full h-full"
+                  ></span>
                   <div
                     onClick={(e) => {
                       e.stopPropagation();
@@ -884,17 +878,18 @@ const AudioDetail = () => {
                     }}
                     className="bg-black z-[200] relative rounded-sm space-y-2 p-1 font-light text-[12px] text-white"
                   >
-                    <span 
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      shareAudio()
-                    }}
-                    className="flex w-full items-center space-x-2">
+                    <span
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        shareAudio();
+                      }}
+                      className="flex w-full items-center space-x-2"
+                    >
                       <span className=" w-3 h-3 ">
-                    <img className="w-full h-full" src={sharebig} alt="" />
-                  </span>
-                  <span className="">Share</span>
-                </span>
+                        <img className="w-full h-full" src={sharebig} alt="" />
+                      </span>
+                      <span className="">Share</span>
+                    </span>
 
                     <span
                       onClick={(e) => {
@@ -903,11 +898,11 @@ const AudioDetail = () => {
                       }}
                       className="flex w-full items-center space-x-2"
                     >
-                     <span className="w-3 h-3">
-                    <img className="w-full h-full" src={plus} alt="" />
-                  </span>
-                  <span className="">Add to playlist</span>
-                </span>
+                      <span className="w-3 h-3">
+                        <img className="w-full h-full" src={plus} alt="" />
+                      </span>
+                      <span className="">Add to playlist</span>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -926,8 +921,7 @@ const AudioDetail = () => {
                 <div className="audiodetail_info_wrap_mob">
                   <p className="audiodetail_info_name_mob">Date of Release: </p>
                   <p className="audiodetail_info_value_mob">
-                  {currentAudioInfo?.post_date?.split('-')[0] ||
-                  "no date"}
+                    {currentAudioInfo?.post_date?.split("-")[0] || "no date"}
                   </p>
                 </div>
               </div>
@@ -960,7 +954,6 @@ const AudioDetail = () => {
               </div>
             </div>
           </div>
-    
         </div>
 
         <div className="similarWidget_wrapper px-4">
@@ -976,10 +969,9 @@ const AudioDetail = () => {
                     } ${currentaudio?.rpname?.split(" ")[1]}`,
                     id: "",
                     img: "",
-                    type:'lectures',
-                    navtitle:'Similar Audio',
-                    currentdata:similarAudio
-                 
+                    type: "lectures",
+                    navtitle: "Similar Audio",
+                    currentdata: similarAudio,
                   },
                 });
               }}
@@ -1018,16 +1010,16 @@ const AudioDetail = () => {
                       className="similarWidget_album_item"
                       onClick={() => {
                         navigate(`${LECTURE}${id}`);
-                        
+
                         // setendpUrl(similarAudioUrl);
-                        dispatch(getPack(null))
-                       dispatch(getPage(1));
+                        dispatch(getPack(null));
+                        dispatch(getPage(1));
                         dispatch(getaudioId(nid));
                         dispatch(getCount(idx));
                         dispatch(getPack(similarAudio));
-                        
+
                         setCurUser(currentUser);
-                        window.location.reload()
+                        window.location.reload();
                       }}
                       key={idx + 1}
                     >
@@ -1171,11 +1163,19 @@ const AudioDetail = () => {
           </div>
         </div>
 
-        <div className={isShare ? 'share_wrapper' : 'hide_share_wrapper'}>
-<ShareAudio isShare={isShare} setisShare={setisShare} nid={id || audioId} type={'audio'} />
-
-</div>
-        <CurrentPlayData datas={pack} iscurrents={iscurrents} setcurrents={setcurrents}/>
+        <div className={isShare ? "share_wrapper" : "hide_share_wrapper"}>
+          <ShareAudio
+            isShare={isShare}
+            setisShare={setisShare}
+            nid={id || audioId}
+            type={"audio"}
+          />
+        </div>
+        <CurrentPlayData
+          datas={pack}
+          iscurrents={iscurrents}
+          setcurrents={setcurrents}
+        />
       </div>
     </Container>
   );
