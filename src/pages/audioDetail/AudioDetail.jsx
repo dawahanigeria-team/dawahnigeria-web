@@ -274,8 +274,8 @@ const AudioDetail = () => {
   ////console.log(data)
 
   const selectAMR = () => {
-    const { amr_url } = downloaddata;
-    if (!amr_url) return;
+    const amr_url = downloaddata?.amr_url;
+    if (amr_url) return;
     setisMP4(false);
     setisAMR(true);
     setdownloadUrl(amr_url);
@@ -283,7 +283,7 @@ const AudioDetail = () => {
   };
 
   const selectMP4 = () => {
-    const { mp3_url } = downloaddata;
+    const mp3_url = downloaddata?.mp3_url;
     if (!mp3_url) return;
     setisMP4(true);
     setisAMR(false);
