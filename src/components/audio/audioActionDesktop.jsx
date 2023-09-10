@@ -156,12 +156,14 @@ const AudioActionDesktop = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playing]);
+
+  
   const handlePlay = () => {
     setinitial(false);
     if (playing) {
-      dispatch(setPlaying(!playing));
+      dispatch(setPlaying(false));
     } else {
-      dispatch(setPlaying(!playing));
+      dispatch(setPlaying(true));
     }
   };
 
