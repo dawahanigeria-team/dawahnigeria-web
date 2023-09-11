@@ -42,7 +42,7 @@ const Lecturers = () => {
     function getLang() {
       //get all langyages
       axios
-        .get(`https://dawahnigeria.com/dawahcast/dboxapi/langjson`)
+        .get(`https://backend.dawahnigeria.com/dboxapi/langjson`)
         .then((res) => {
           ////console.log(res.data.rp);
           setLanguages([...language, ...res.data.rp]);

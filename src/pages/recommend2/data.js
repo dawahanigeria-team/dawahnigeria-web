@@ -11,7 +11,7 @@ export const recommended2Data = [
     rpname: "Shaykh Muhammad Bin Uthman (Kano)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Shaykh%20Muhammad%20Bin%20Uthman%20%28Kano%29/backlog%201435/ASK%20THE%20SHIEKHS/Bn-Uthman_Ask-the-shykh_dawahnigeria.com%20%286%29.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/790.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/790.jpg",
     downloads: 0,
     views: 0,
   },
@@ -27,7 +27,7 @@ export const recommended2Data = [
     rpname: "Shaykh Umar Dada Paiko (Niger)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Shaykh%20Umar%20Dada%20Paiko%20%28Niger%29/Explanation%20of%20Saheeh%20Bukhari%20Series%20(12%20lectures,%20English)/Questions-&-Answers_Ustaadh-Umar-Paiko_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/494.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/494.jpg",
     downloads: 0,
     views: 0,
   },
@@ -44,7 +44,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh Abdul Ganiy Jum'ah (Lagos)/Miscellanous/Q & A_ on Tafseer-Q02-vs-141-143_(Halqah-January-1-2017-English)_Ustadh-AbdGhaniy-Jumah_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/555.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/555.jpg",
     downloads: 0,
     views: 0,
   },
@@ -61,7 +61,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustaz%20AbdGhaniy%20Jum'ah%20(Lagos)/Albayena%20li%20Hadith/Q%20&%20A_%20on%20Al-Arbaeen_(Hadith%203)%20(Halqah-12-2-2017)English_Ustadh-AbdGhaniyy-Jumah_dawahnigeria.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/759.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/759.jpg",
     downloads: 0,
     views: 0,
   },
@@ -78,7 +78,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh Abdul Ganiy Jum'ah (Lagos)/Miscellanous/Q & A_ on Tafseer-Q02-vs-144-145_(Halqah-Febuary-5-2017-English)_Ustadh-AbdGhaniy-Jumah_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/149.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/149.jpg",
     downloads: 0,
     views: 0,
   },
@@ -95,7 +95,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh Abdul Ganiy Jum'ah (Lagos)/Miscellanous/Q & A_ on Chapter_Of_Dhihar & Kafarah (Halqah-January-22-2017)English_Ustadh-AbdGhaniyy-Jumah_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/696.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/696.jpg",
     downloads: 0,
     views: 0,
   },
@@ -112,7 +112,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh Abdul Ganiy Jum'ah (Lagos)/Miscellanous/Q & A_ on Chapter_Of_Talaq, Iila ,Dhihar & Kafarah (Halqah-January-29-2017)English_Ustadh-AbdGhaniyy-Jumah_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/555.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/555.jpg",
     downloads: 0,
     views: 0,
   },
@@ -129,7 +129,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Explanation%20of%20Arbaeen%2040%20Hadith/Q%20%26%20A%20-Al-Arbaeen_%28Hadith%206%20%26%207%29%20%287-09-2017%29Eng_Ust-AbdGhaniy.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/160.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/160.jpg",
     downloads: 0,
     views: 0,
   },
@@ -145,7 +145,7 @@ export const recommended2Data = [
     rpname: "Ustadh Sa'eed Hamzah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Sa%27eed%20Hamzah%20%28Lagos%29%20%20%20/misc/Ustaz-Sa%27eed-Hamzah_Qustion%20And%20Answer%20[Eng].mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/579.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/579.jpg",
     downloads: 0,
     views: 0,
   },
@@ -162,7 +162,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Public/Ustadh%20Ghani%20Jumua_Q%26A%20On%20Contemporary%20Muslim%20Home%20%28Eng%29_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/545.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/545.jpg",
     downloads: 0,
     views: 0,
   },
@@ -178,7 +178,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Fiqh%20Bay%27u%20%2C%20Solat%20%26%20Adhkaa/Ustaz-AbdGhaniy-Jum%27ah_Solat-and-Adhkaa-02_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/145.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/145.jpg",
     downloads: 0,
     views: 1,
   },
@@ -195,7 +195,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Backlog%201435/Fiqh/Ustadh%20AbdulGaniyy%20Jummu%27a_fiqh%20Islamic-Jurispudences-on-trading%20%28YRB%29_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/490.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/490.jpg",
     downloads: 0,
     views: 0,
   },
@@ -212,7 +212,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Backlog%201435/umdah2/Ustadh-AbdulGhani-Jumat_Umdatul-Ahkaam_Ar-riba_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/187.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/187.jpg",
     downloads: 0,
     views: 0,
   },
@@ -229,7 +229,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Backlog%201435/umdah2/Ustadh-AbdulGhani-Jumat_Umdatul-Ahkaam_Rulings-On-Trading-01_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/598.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/598.jpg",
     downloads: 0,
     views: 0,
   },
@@ -246,7 +246,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Backlog%201435/umdah2/Ustadh-AbdulGhani-Jumat_Umdatul-Ahkaam_Rulings-On-Trading-04_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/560.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/560.jpg",
     downloads: 0,
     views: 0,
   },
@@ -263,7 +263,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Backlog%201435/umdah2/Ustadh-AbdulGhani-Jumat_Umdatul-Ahkaam_Rulings-On-Trading-09_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/433.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/433.jpg",
     downloads: 0,
     views: 0,
   },
@@ -280,7 +280,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Backlog%201435/Umdatul%20Ahkaam/Ustadh%20AbdulGaniyy%20Jummu'a_umdatul-ahkam-KitaabulBuyu'Hadith%20291_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/638.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/638.jpg",
     downloads: 0,
     views: 0,
   },
@@ -297,7 +297,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Backlog%201435/umdah2/Ustadh-AbdulGhani-Jumat_Umdatul-Ahkaam_Rulings-On-Trading-05_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/510.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/510.jpg",
     downloads: 0,
     views: 0,
   },
@@ -314,7 +314,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Backlog%201435/umdah2/Ustadh-AbdulGhani-Jumat_Umdatul-Ahkaam_Rulings-On-Trading-06_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/476.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/476.jpg",
     downloads: 0,
     views: 0,
   },
@@ -331,7 +331,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Backlog%201435/umdah2/Ustadh-AbdulGhani-Jumat_Umdatul-Ahkaam_Rulings-On-Trading-08_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/500.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/500.jpg",
     downloads: 0,
     views: 0,
   },
@@ -348,7 +348,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Backlog%201435/umdah2/Ustadh-AbdulGhani-Jumat_Umdatul-Ahkaam_Rulings-On-Trading-10_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/799.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/799.jpg",
     downloads: 0,
     views: 0,
   },
@@ -365,7 +365,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Backlog%201435/Umdatul%20Ahkaam/Ustadh-AbdulGaniyy-Jummu%27a_umdatul-ahkam%28kitaabul-buyu%2CHadith%20285%29_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/135.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/135.jpg",
     downloads: 0,
     views: 0,
   },
@@ -382,7 +382,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Backlog%201435/umdah2/Ustadh-AbdulGhani-Jumat_Umdatul-Ahkaam_Rulings-On-Trading-03_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/510.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/510.jpg",
     downloads: 0,
     views: 0,
   },
@@ -399,7 +399,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Backlog%201435/umdah2/Ustadh-AbdulGhani-Jumat_Umdatul-Ahkaam_Rulings-On-Trading-07_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/713.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/713.jpg",
     downloads: 0,
     views: 0,
   },
@@ -416,7 +416,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Backlog%201435/Umdatul%20Ahkaam/Ustadh%20AbdulGaniyy%20Jummu'a_umdatul-ahkam%20Kitaabul-buyu'-Hadith-283_dawahnigeria.com%20.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/125.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/125.jpg",
     downloads: 0,
     views: 0,
   },
@@ -433,7 +433,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Backlog%201435/Umdatul%20Ahkaam/Ustadh%20AbdulGaniyy%20Jummu'a_Kitaabul-buyu'WILL_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/272.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/272.jpg",
     downloads: 0,
     views: 0,
   },
@@ -450,7 +450,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Backlog%201435/umdah2/Ustadh-AbdulGhani-Jumat_Umdatul-Ahkaam_Questions&Answers-on-trading01_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/591.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/591.jpg",
     downloads: 0,
     views: 0,
   },
@@ -467,7 +467,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Backlog%201435/umdah2/Ustadh-AbdulGhani-Jumat_Umdatul-Ahkaam_Rulings-On-Trading-02_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/695.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/695.jpg",
     downloads: 0,
     views: 0,
   },
@@ -484,7 +484,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Khutbah%20Jumuah/Ustadh%20AbdulGhani%20Jumat_Halqoh%20-%20Islamic%20Ethics%20Of%20Business%20(21-04-19)%20(Yoruba)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/638.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/638.jpg",
     downloads: 0,
     views: 0,
   },
@@ -501,7 +501,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustadh%20Abdul%20Ganiy%20Jum'ah%20(Lagos)/Manhaj%20As-Saalikeen/Ustadh%20Abdul%20Ganiyy%20Jum'ah_Manhaj-As-Saalikeen%20-%20Financial%20Transaction%203%20(03-09-20)%20(English)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/139.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/139.jpg",
     downloads: 0,
     views: 0,
   },
@@ -518,7 +518,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Explanation%20of%20Sherihu%20Bulughul-Maraam/Ustaz%20Abdulghnani%20Jumah_Sharihu-Bulugu-Moromi%20Inheritance%20%2801-03-15%29%20%28English%29%20_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/247.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/247.jpg",
     downloads: 0,
     views: 0,
   },
@@ -535,7 +535,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Backlog%201435/umdah2/Ustadh-AbdulGhani-Jumat_Umdatul-Ahkaam_Prohibition-of-men-putting-on-gold-wears_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/549.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/549.jpg",
     downloads: 0,
     views: 0,
   },
@@ -552,7 +552,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Explanation%20of%20Risallah%20Babul/Ustadh%20AbdGhaniyy%20Jumu%27a_Explanation-of-Ar-Risaalah%20-Adornment%20and%20Dressing%201%20%28July-6-17%29%20%28Eng%29_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/701.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/701.jpg",
     downloads: 0,
     views: 0,
   },
@@ -569,7 +569,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Explanation%20of%20Risallah%20Babul/Ustadh%20AbdulGaniy%20Jumah_Adornment%20And%20Dressing%204%20%28English%29_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/226.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/226.jpg",
     downloads: 0,
     views: 0,
   },
@@ -586,7 +586,7 @@ export const recommended2Data = [
     rpname: "Ustadh Sa'eed Hamzah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Sa%27eed%20Hamzah%20%28Lagos%29%20%20%20/Usuul%20Eeman/Ustaadh%20Sa'eed%20Hamzah_Usul%20Al-Eemaan%20The%20Oneness%20Of%20Allah%2019%20Eng%20(17-8-17)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/795.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/795.jpg",
     downloads: 0,
     views: 0,
   },
@@ -603,7 +603,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Miscellanous/Ustadh%20Ghaniy%20Jumua_Inheritance%20In%20Islam%2010%20Eng%20%2823-11-17%29_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/484.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/484.jpg",
     downloads: 0,
     views: 0,
   },
@@ -620,7 +620,7 @@ export const recommended2Data = [
     rpname: "Ustadh Sirnucy Larfiagy (Ilorin)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Sirnucy%20Larfiagy%20%28Ilorin%29/khutbah%202017/Ustadh%20Sirnucy%20Larfiagy%20-%20Khutbah%20Jumua%20-%20The%20Evils%20Of%20Sins%20-%20DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/102.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/102.jpg",
     downloads: 0,
     views: 0,
   },
@@ -636,7 +636,7 @@ export const recommended2Data = [
     rpname: "Ustadh Sirnucy Larfiagy (Ilorin)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Sirnucy%20Larfiagy%20%28Ilorin%29/Misc/Ustadh%20Sirnucy%20Larfiagy%20-%20My%20Friends%20My%20Success%20-%20dawahnigeria.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/753.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/753.jpg",
     downloads: 0,
     views: 0,
   },
@@ -653,7 +653,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Miscellanous/Ustadh%20AbdulGhaniy%20Jumua_Law%20Of%20Inheritnace%202_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/610.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/610.jpg",
     downloads: 0,
     views: 0,
   },
@@ -670,7 +670,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abu Rayyan Uthman (Ilorin)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustadh%20Abu%20Rayyan%20Uthman%20(Ilorin)/Halqoh/Ustadh%20Abu%20Rayyan%20AbdulHameed%20Uthman_Halqoh%20-%20Is%20It%20A%20Change%20or%20Chain%20Life%20After%20School%20(27-07-19)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/698.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/698.jpg",
     downloads: 0,
     views: 0,
   },
@@ -687,7 +687,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustadh Abdul Ganiy Jum'ah (Lagos)/Manhaj As-Saalikeen/Ustadh AbdulGhani Jumat_Halqoh - Explanation Of The Book Manhaj As Saalikeen Sujud As Sahw 02 (29-08-19) (English)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/218.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/218.jpg",
     downloads: 0,
     views: 0,
   },
@@ -704,7 +704,7 @@ export const recommended2Data = [
     rpname: "Dr Muhammad Kabiru Haruna (Gombe)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Halqoh/Ustadh%20AbdulGaniy%20Jumah_Halqoh%20-%20Good%20Character%20-%20(17-11-19)%20(Yoruba)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/502.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/502.jpg",
     downloads: 0,
     views: 0,
   },
@@ -721,7 +721,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abu Rayyan Uthman (Ilorin)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustadh%20Abu%20Rayyan%20Uthman%20(Ilorin)/Khutubah%20Jumuah/Ustadh%20Abu%20Rayyan%20AbdulHameed_Khutubah%20Jumuah%20-%20Hastiness%20-%20(6-12-19)%20(Yoruba)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/128.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/128.jpg",
     downloads: 0,
     views: 0,
   },
@@ -738,7 +738,7 @@ export const recommended2Data = [
     rpname: "Ustadh Kabir Al Asfar (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustadh%20Kabir%20Al%20Asfar/Misc/Ustadh%20Abdul%20Kabir%20Al-Asfar_Public%20Lecture%20-%20Mcan%20Oyo%20State%20-%20Surviving%20the%20Tides%20Q&A%20-%20(01-03-20)%20(English)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/143.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/143.jpg",
     downloads: 0,
     views: 0,
   },
@@ -755,7 +755,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustadh Abdul Ganiy Jum'ah (Lagos)/Sahihul Bukhari//Ustadh Abdul Ganiy Jum'ah_Sahih Al Bukhari -Kindness to Parents - 2 (31-01-20)- (Yoruba)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/459.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/459.jpg",
     downloads: 0,
     views: 0,
   },
@@ -772,7 +772,7 @@ export const recommended2Data = [
     rpname: "Shaykh Abdullahi Abu Jabir Penabdul",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Shaykh%20Abdullahi%20Jabir%20Penabdul%20(North)/Halqoh/Ustadh%20Abdullah%20Penabdul_Malaysia%20-%20Significance%20of%20helping%20one%20Another%20-%20(25-09-20)%20(English)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/109.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/109.jpg",
     downloads: 0,
     views: 0,
   },
@@ -790,7 +790,7 @@ export const recommended2Data = [
     rpname: "Shaykh Abdullahi Abu Jabir Penabdul",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Shaykh%20Abdullahi%20Jabir%20Penabdul%20(North)/WeFM%20Program/Shaykh%20AbudLlah%20Penabdul_WeFm%20-%20Religious%20Tolerance%20003%20-%20(Nov.2020)%20(English)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/450.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/450.jpg",
     downloads: 0,
     views: 0,
   },
@@ -807,7 +807,7 @@ export const recommended2Data = [
     rpname: "Shaykh Abdullahi Abu Jabir Penabdul",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Shaykh%20Abdullahi%20Jabir%20Penabdul%20(North)/WeFM%20Program/Shaykh%20AbudLlah%20Penabdul_WeFm%20-%20Religious%20Tolerance%20001%20-%20(Nov.2020)%20(English)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/194.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/194.jpg",
     downloads: 0,
     views: 0,
   },
@@ -824,7 +824,7 @@ export const recommended2Data = [
     rpname: "Shaykh Abdullahi Abu Jabir Penabdul",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Shaykh%20Abdullahi%20Jabir%20Penabdul%20(North)/WeFM%20Program/Shaykh%20AbudLlah%20Penabdul_WeFm%20-%20Religious%20Tolerance%20002%20-%20(Nov.2020)%20(English)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/501.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/501.jpg",
     downloads: 0,
     views: 0,
   },
@@ -841,7 +841,7 @@ export const recommended2Data = [
     rpname: "Prof. Abdur-Razzaaq Abdul Majeed Alaro (Ilorin)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Prof.%20Abdur-Razzaaq%20Alaro%20(Ilorin)/Halqoh/Prof.%20Abdur-Razzaaq%20Abdul%20Majeed%20Alaro_Halqoh%20-%20A%20Dinstinct%20Muslim%20Identity%20(25-11-22)%20(English)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/750.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/750.jpg",
     downloads: 0,
     views: 0,
   },
@@ -858,7 +858,7 @@ export const recommended2Data = [
     rpname: "Ustadh Sa'eed Hamzah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Sa%27eed%20Hamzah%20%28Lagos%29%20%20%20/Halqah/Ustaz-Sa'eed-Hamzah_Wages-of-Being-Devoted-2(Feb-21-2016-Eng)_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/616.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/616.jpg",
     downloads: 0,
     views: 0,
   },
@@ -874,7 +874,7 @@ export const recommended2Data = [
     rpname: "Ustadh Rasheed Haashim (Ibadan)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Rasheed%20Haashim%20%28Ibadan%29/General%20Lectures/Heart-Diseases(Eng)_Ustadh-Rasheed-Haashim_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/127.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/127.jpg",
     downloads: 0,
     views: 0,
   },
@@ -891,7 +891,7 @@ export const recommended2Data = [
     rpname: "Ustadh Sa'eed Hamzah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Sa%27eed%20Hamzah%20%28Lagos%29%20%20%20/Halqah/Ustaz-Sa'eed-Hamzah_Wages-of-Being-Devoted-1(Feb-21-2016-Eng)_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/707.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/707.jpg",
     downloads: 0,
     views: 0,
   },
@@ -908,7 +908,7 @@ export const recommended2Data = [
     rpname: "Shaykh Ahmad Sa'ad (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Ahmad%20Sa'aad/Shaykh%20Ahamd%20Sa'd_Gentleness%20And%20Kindness%20In%20Qur'aan%203;159_[Eng].mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/435.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/435.jpg",
     downloads: 0,
     views: 0,
   },
@@ -925,7 +925,7 @@ export const recommended2Data = [
     rpname: "Shaykh Ahmad Sa'ad (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Ahmad%20Sa%27aad/Shaykh%20Ahamd%20Sa%27d_Tafseer%20On%20Goodness%20To%20Parent%20Q17%3B23-24_[Eng].mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/591.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/591.jpg",
     downloads: 0,
     views: 0,
   },
@@ -942,7 +942,7 @@ export const recommended2Data = [
     rpname: "Shaykh Ahmad Sa'ad (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Ahmad%20Sa%27aad/Shaykh%20Ahamd%20Sa%27d_Tafseer%20On%20Shirk%20Qur%27aan%2017%3B22-23_[Eng].mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/462.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/462.jpg",
     downloads: 0,
     views: 0,
   },
@@ -958,7 +958,7 @@ export const recommended2Data = [
     rpname: "Shaykh Ahmad Sa'ad (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Ahmad%20Sa'aad/Shaykh%20Ahamd%20Sa'd_Preparation%20For%20Ramadhaan_[Eng].mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/145.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/145.jpg",
     downloads: 0,
     views: 0,
   },
@@ -974,7 +974,7 @@ export const recommended2Data = [
     rpname: "Shaykh Ahmad Sa'ad (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Ahmad%20Sa'aad/Tafseer/Shaykh%20Ahamd%20Sa'd_Associating%20Partners%20With%20Allaah_[Eng].mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/174.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/174.jpg",
     downloads: 0,
     views: 0,
   },
@@ -991,7 +991,7 @@ export const recommended2Data = [
     rpname: "Shaykh Ahmad Sa'ad (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Ahmad%20Sa%27aad/Shaykh%20Ahamd%20Sa%27d_Tafseer%20On%20Goodness%20To%20Parent%20Q17%3B23-24_[Eng].mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/222.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/222.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1008,7 +1008,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Tafseer/Ustadh%20AbdulGhani%20Jumat_Halqoh%20Tafseer%20[Q23vs111-118]%20(03-06-18)%20(Yoruba)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/158.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/158.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1025,7 +1025,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Tafseer/Ustadh%20AbdulGhani%20Jumat_Halqoh%20Tafseer%20[Q49vs10]%20(02-03-19)%20(Yoruba)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/743.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/743.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1042,7 +1042,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Tafseer/Ustadh%20AbdulGhani%20Jumat_Halqoh%20Tafseer%20[Q25vs63-67]%20(24-08-19)%20(Yoruba)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/253.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/253.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1058,7 +1058,7 @@ export const recommended2Data = [
     rpname: "Ustadh Rasheed Haashim (Ibadan)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Rasheed%20Haashim%20%28Ibadan%29/General%20Lectures/Sujuudus-Sahwee-English_Ustaadh-Rasheed-Haasim_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/561.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/561.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1075,7 +1075,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Backlog%201435/Umdah/Ustaddh%20AbdulGhaniyy%20Jumu%27a_Fiqh-Lessons-on-Witr-Solah-01_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/625.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/625.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1092,7 +1092,7 @@ export const recommended2Data = [
     rpname: "Ustadh Sa'eed Hamzah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustadh%20Sa%27eed%20Hamzah%20%28Lagos%29%20%20%20/Fiqhul-Muyassar-Eng/Ustaz-Sa'eed-Hamzah_Al-Fiqh-Al-Muyassar(Times-when-supererogatory-Salahs-are-avoidable)[Eng]_dawahnigeria.com.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/748.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/748.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1108,7 +1108,7 @@ export const recommended2Data = [
     rpname: "Shaykh Yusuf Ariyibi (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Shaykh%20Yusuf%20Ariyibi%20%28Lagos%29/Shaykh%20Yusuf%20%20Aribi%20[Solat][Eng].mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/250.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/250.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1124,7 +1124,7 @@ export const recommended2Data = [
     rpname: "Ustaadh Mas'ud Sa'ad (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustaadh%20Mas'ud%20Sa'ad%20(Lagos)/Shaykh%20Mus'ud%20Sa'd_Voluntary%20Salaah%202%20(Eng)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/533.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/533.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1140,7 +1140,7 @@ export const recommended2Data = [
     rpname: "Ustaadh Mas'ud Sa'ad (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustaadh%20Mas'ud%20Sa'ad%20(Lagos)/Shaykh%20Mus'ud%20Sa'd_Voluntary%20Salaah%203%20(Eng)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/197.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/197.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1156,7 +1156,7 @@ export const recommended2Data = [
     rpname: "Ustaadh Mas'ud Sa'ad (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustaadh%20Mas'ud%20Sa'ad%20(Lagos)/Shaykh%20Mus'ud%20Sa'd_Voluntary%20Salaah%201%20(Eng)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/799.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/799.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1172,7 +1172,7 @@ export const recommended2Data = [
     rpname: "Shaykh Yusuf Ariyibi (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Shaykh%20Yusuf%20Ariyibi%20%28Lagos%29/Shaykh%20Yusuf%20%20Aribi%20[Nawafi%20Solat][Eng].mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/260.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/260.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1188,7 +1188,7 @@ export const recommended2Data = [
     rpname: "Ustaadh Mas'ud Sa'ad (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustaadh%20Mas'ud%20Sa'ad%20(Lagos)/Shaykh%20Mus'ud%20Sa'd_Sujood%20Sahw%20&%20%20Tilaawah%20(Eng)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/144.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/144.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1204,7 +1204,7 @@ export const recommended2Data = [
     rpname: "Ustaadh Mas'ud Sa'ad (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustaadh%20Mas'ud%20Sa'ad%20(Lagos)/Shaykh%20Mus'ud%20Sa'd_Voluntary%20Salaah%201%20(Eng)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/389.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/389.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1220,7 +1220,7 @@ export const recommended2Data = [
     rpname: "Ustaadh Mas'ud Sa'ad (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustaadh%20Mas'ud%20Sa'ad%20(Lagos)/Shaykh%20Mus'ud%20Sa'd_Voluntary%20Salaah%202%20(Eng)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/779.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/779.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1236,7 +1236,7 @@ export const recommended2Data = [
     rpname: "Ustaadh Mas'ud Sa'ad (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures/Ustaadh%20Mas'ud%20Sa'ad%20(Lagos)/Shaykh%20Mus'ud%20Sa'd_Voluntary%20Salaah%203%20(Eng)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/118.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/118.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1253,7 +1253,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustadh Abdul Ganiy Jum'ah (Lagos)/Manhaj As-Saalikeen//Ustadh Abdul Ganiy Jum'ah_Manhaj As-Saalikeen- Eid Salat 2 - (30-01-20)- (Yoruba)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/127.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/127.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1270,7 +1270,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abu Rayyan Uthman (Ilorin)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustadh%20Abu%20Rayyan%20Uthman%20(Ilorin)/Halqoh/Ustadh%20Abu%20Rayyan%20AbulHameed%20Uthman_Halqoh%20-Things%20that%20invalidates%20Solah%20-%20(Yoruba)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/648.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/648.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1286,7 +1286,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abu Rayyan Uthman (Ilorin)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustadh%20Abu%20Rayyan%20Uthman%20(Ilorin)/Halqoh/Ustadh%20Abu%20Rayyan%20AbulHameed%20Uthman_Halqoh%20-Tayammum%20-%20(Yoruba)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/160.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/160.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1303,7 +1303,7 @@ export const recommended2Data = [
     rpname: "Shaykh Umar Dada Paiko (Niger)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustaz%20Umar%20Paiko%20(Niger)/Sahihul%20Bukhariy/Shaykh%20Umar%20Dada%20Paiko_Sahih%20Al%20Bukhari%20-%20Kitaabus%20Solaat%20Hadith%20395%20(04-08-21)%20(Yoruba)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/690.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/690.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1320,7 +1320,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abdul Ganiy Jum'ah (Lagos)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustadh%20Abdul%20Ganiy%20Jum%27ah%20%28Lagos%29/Halqoh/Ustadh%20AbdulGhani%20Jumat_Halqoh%20-%20Causes%20Of%20The%20Deviation%20Of%20The%20Youth%20And%20Their%20Solutions%20(30-06-19)%20(Yoruba)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/537.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/537.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1337,7 +1337,7 @@ export const recommended2Data = [
     rpname: "Ustadh Abu Rayyan Uthman (Ilorin)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustadh%20Abu%20Rayyan%20Uthman%20(Ilorin)/Khutubah%20Jumuah/Ustadh%20Abu%20Rayyan%20AbdulHameed_Khutubah%20Jumuah%20-%20Hastiness%20-%20(6-12-19)%20(Yoruba)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/128.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/128.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1354,7 +1354,7 @@ export const recommended2Data = [
     rpname: "Shaykh Idris Abdullah Al-Madaneey (Lokoja)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Shaykh%20Idris%20Abdullah%20Al-Madaneey%20(Lokoja)/Aqeedatut%20Tawheed/Ustadh%20Idris%20Almadani_Karatun%20Sharhu%20Aqeedatut%20Tawheed%20(13-09-20)%20(English)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/567.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/567.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1371,7 +1371,7 @@ export const recommended2Data = [
     rpname: "Shaykh Umar Dada Paiko (Niger)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustaz%20Umar%20Paiko%20(Niger)/Aqeedah/Shaykh%20Umar%20Dada%20Paiko_Halqoh%20-%20Al-Aqeedatul-Waasitiyyah%20Ep%2005-%20(Engliah)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/267.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/267.jpg",
     downloads: 0,
     views: 1,
   },
@@ -1388,7 +1388,7 @@ export const recommended2Data = [
     rpname: "Shaykh Umar Dada Paiko (Niger)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustaz%20Umar%20Paiko%20(Niger)/Aqeedah/Shaykh%20Umar%20Dada%20Paiko_Halqoh%20-%20Al-Aqeedatul-Waasitiyyah%20Ep%2005-%20(Engliah)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/588.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/588.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1405,7 +1405,7 @@ export const recommended2Data = [
     rpname: "Shaykh Umar Dada Paiko (Niger)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustaz%20Umar%20Paiko%20(Niger)/Aqeedah/Shaykh%20Umar%20Dada%20Paiko_Halqoh%20-%20Al-Aqeedatul-Waasitiyyah%20Ep%2004%20-%20(Engliah)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/719.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/719.jpg",
     downloads: 0,
     views: 4,
   },
@@ -1422,7 +1422,7 @@ export const recommended2Data = [
     rpname: "Shaykh Umar Dada Paiko (Niger)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustaz%20Umar%20Paiko%20(Niger)/Aqeedah/Shaykh%20Umar%20Dada%20Paiko_Halqoh%20-%20Al-Aqeedatul-Waasitiyyah%20Ep%2003%20-%20(Engliah)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/756.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/756.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1439,7 +1439,7 @@ export const recommended2Data = [
     rpname: "Shaykh Umar Dada Paiko (Niger)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustaz%20Umar%20Paiko%20(Niger)/Aqeedah/Shaykh%20Umar%20Paiko_Halqoh%20-%20Sharh%20Aqeedatul%20Wasitiyyah%20008%20-%20(English)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/472.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/472.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1456,7 +1456,7 @@ export const recommended2Data = [
     rpname: "Shaykh Umar Dada Paiko (Niger)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustaz%20Umar%20Paiko%20(Niger)/Aqeedah/Shaykh%20Umar%20Paiko_Halqoh%20-%20Aqeedatul%20Waasitiyah%20-%20Episode%20006%20-%20(English)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/100-300_full/144.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/100-300_full/144.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1473,7 +1473,7 @@ export const recommended2Data = [
     rpname: "Shaykh Umar Dada Paiko (Niger)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustaz%20Umar%20Paiko%20(Niger)/Aqeedah/Shaykh%20Umar%20Paiko_Halqoh%20-%20Aqeedatul%20Waasitiyah%20-%20Episode%20007%20-%20(English)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/733.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/600-800/733.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1490,7 +1490,7 @@ export const recommended2Data = [
     rpname: "Shaykh Abdullahi Abu Jabir Penabdul",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Shaykh%20Abdullahi%20Jabir%20Penabdul%20(North)/Usoolu%20Thalatha/Shaykh%20Abdullah%20Penabdul_Usool%20ath-Thalatha%20Lesson%2027%20%20-%20The%20love%20between%20believers%20(08-11-20)%20(English)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/514.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/514.jpg",
     downloads: 0,
     views: 0,
   },
@@ -1507,7 +1507,7 @@ export const recommended2Data = [
     rpname: "Shaykh Umar Dada Paiko (Niger)",
     audio:
       "https://media.dawahnigeria.com/dnlectures2/Ustaz%20Umar%20Paiko%20(Niger)/Aqeedah/Shaykh%20Umar%20Paiko_Halqoh%20-%20Aqeedatul%20Wasitiyyah%20Episode%2011%20%20(24-11-20)%20(English)_DN.mp3",
-    img: "https://dawahnigeria.com/dawahcast/sites/default/files/2-3/578.jpg",
+    img: "https://backend.dawahnigeria.com/sites/default/files/2-3/578.jpg",
     downloads: 0,
     views: 0,
   },
