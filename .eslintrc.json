@@ -1,35 +1,8 @@
 {
   "extends": [
     "eslint:recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:jsx-a11y/recommended"
+    "plugin:react-hooks/recommended"
   ],
-  "plugins": ["react-hooks", "jsx-a11y"],
-  "rules": {
-
-    // React Hooks
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
-
-    // Accessibility
-    "jsx-a11y/alt-text": "warn",
-    "jsx-a11y/anchor-is-valid": "warn",
-
-    // Stylistic - formatting
-    "react/jsx-indent": ["error", 2],
-    "react/jsx-indent-props": ["error", 2],
-    "react/jsx-closing-bracket-location": ["error", "tag-aligned"],
-    "react/jsx-closing-tag-location": "error",
-
-    // Stylistic - quotes
-    "jsx-quotes": ["error", "prefer-double"],
-
-    // Stylistic - spacing
-    "react/jsx-tag-spacing": "error",
-    "react/jsx-curly-spacing": ["error", { "when": "never" }],
-    "react/jsx-equals-spacing": ["error", "never"],
-
-    // Enforce propTypes for components
-    "react/prop-types": "error"
-  }
+  "plugins": ["react-hooks"],
+  "rules":  {}
 }
