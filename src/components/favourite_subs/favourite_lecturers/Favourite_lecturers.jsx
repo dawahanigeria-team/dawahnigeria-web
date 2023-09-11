@@ -8,7 +8,7 @@ import axios from "../../../utils/useAxios";
 import { useNavigate } from "react-router-dom";
 import infinitePlayFavScroll from "../../UI/infinitePlayFavScroll";
 import LecturersWidget from "../../lecturersWidget/LecturersWidget";
-import { RESOURCE_PERSON } from "../../../utils/routes/constants";
+import { LECTURERS, RESOURCE_PERSON } from "../../../utils/routes/constants";
 const Favourite_lecturers = () => {
   const {currentUser} = useSelector((state) => state.user)
   const [loading, setLoading] = useState(false);
@@ -95,7 +95,7 @@ const Favourite_lecturers = () => {
         <button
         onClick={() =>{
           if(currentUser?.id) {
-            navigate("/lecturers")
+            navigate(LECTURERS)
           }
           else {
             navigate("/auth/login")

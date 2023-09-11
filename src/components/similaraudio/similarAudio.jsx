@@ -5,6 +5,7 @@ import foward from "../../assets/svg/foward.svg";
 import { FiChevronsRight } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import LandingWidget from "../landingWidget/LandingWidget";
+import { MORE } from "../../utils/routes/constants";
 
 const SimilarAudio = ({similar, heading,endpoint_url, currentPage, current,navtitle,type, url}) => {
     const slide = useRef()
@@ -75,7 +76,7 @@ const SimilarAudio = ({similar, heading,endpoint_url, currentPage, current,navti
               </p>
               <div
                 onClick={() => {
-                  navigate("/more", {
+                  navigate(MORE, {
                     state: {
                       name: "",
                       heading: heading,

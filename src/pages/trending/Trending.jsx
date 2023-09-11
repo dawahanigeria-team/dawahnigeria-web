@@ -8,7 +8,7 @@ import infiniteScroll from "../../components/UI/infiniteScroll";
 import pmobile from "../../../src/assets/svg/playmobile.svg";
 import axios from "../../utils/useAxios";
 import Loader from "../../components/UI/loader/loader";
-import { LECTURE } from "../../utils/routes/constants";
+import { LECTURE, NEW, TRENDING } from "../../utils/routes/constants";
 
 import _ from "lodash"
 const Trending = () => {
@@ -79,7 +79,7 @@ const Trending = () => {
             currentPage: 1,
             idx: 0,
             nid: data[0].nid,
-            nav1: { title: "playAll", link: "/new" },
+            nav1: { title: "playAll", link: NEW },
           },
         });
       };
@@ -142,7 +142,7 @@ const Trending = () => {
                       views={views}
 
                       navName={"Trending"}
-                      navLink={"/trending"}
+                      navLink={TRENDING}
                       controlData={data}
                     />
                   </div>
@@ -169,7 +169,7 @@ const Trending = () => {
                       cats={cats}
                       nid={nid}
                       navName={"Trending"}
-                      navLink={"/trending"}
+                      navLink={TRENDING}
                       controlData={data}
                       views={views}
                     />
@@ -238,7 +238,7 @@ const Trending = () => {
                       cats={cats}
                       nid={nid}
                       navName={"Trending"}
-                      navLink={"/trending"}
+                      navLink={TRENDING}
                       controlData={data}
                       views={views}
                       share={share}
@@ -268,7 +268,7 @@ const Trending = () => {
                       cats={cats}
                       nid={nid}
                       navName={"Trending"}
-                      navLink={"/trending"}
+                      navLink={TRENDING}
                       controlData={data}
                       views={views}
                       share={share}

@@ -60,7 +60,7 @@ import {
   getRepeat,
   getValue,
 } from "../../Redux/Actions/ActionCreators";
-import { LECTURE } from "../../utils/routes/constants";
+import { LECTURE, MORE } from "../../utils/routes/constants";
 import plus from "../../../src/assets/svg/plus.svg";
 import CurrentPlayData from "../../components/currentData/currentPlayData";
 import Loader from "../../components/UI/loader/loader";
@@ -961,7 +961,7 @@ const AudioDetail = () => {
             <p className="similarWidget_top_heading">{"Similar Audio"}</p>
             <div
               onClick={() => {
-                navigate("/more", {
+                navigate(MORE, {
                   state: {
                     name: "",
                     heading: `Similar Audios by ${

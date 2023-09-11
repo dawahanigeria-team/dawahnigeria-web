@@ -4,7 +4,7 @@ import Container from "../../components/container/Container";
 import AlbumWidget from "../../components/albumWidget/AlbumWidget";
 import { recommended2Data } from "./data";
 import axios from "axios";
-import { LECTURE } from "../../utils/routes/constants";
+import { LECTURE, RECO2 } from "../../utils/routes/constants";
 import { useNavigate } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import { useSelector } from "react-redux";
@@ -47,7 +47,7 @@ const Recommend2 = () => {
                       currentUser,
                       nid,
                       controlData: recommended2Data,
-                      nav1: { title: "Podcast", link: "/recommend2" },
+                      nav1: { title: "Podcast", link: RECO2 },
                     },
                   });
                 }}

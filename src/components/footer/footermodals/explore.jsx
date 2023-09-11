@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { MdNavigateNext } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { CHARTS, LECTURERS, NEW, TRENDING, VIDEO } from "../../../utils/routes/constants";
 const Explore = () => {
   const [isShow, setshow] = useState(false);
   return (
@@ -21,12 +22,12 @@ const Explore = () => {
         </div>
       </div>
       <div className={`min-[450px]:block space-y-4 ${isShow ? "max-[450px]:block" : "max-[450px]:hidden"}`}>
-        <Link className="block" to="/lecturers">Rp</Link>
+        <Link className="block" to={LECTURERS}>Rp</Link>
         
-        <Link className="block" to="/trending">Trendings Lectures</Link>
-        <Link className="block" to="/new">New Lectures</Link>
-        <Link className="block" to="/chart">Charts</Link>
-        <Link className="block" to="/videos">Videos</Link>
+        <Link className="block" to={TRENDING}>Trendings Lectures</Link>
+        <Link className="block" to={NEW}>New Lectures</Link>
+        <Link className="block" to={CHARTS}>Charts</Link>
+        <Link className="block" to={VIDEO}>Videos</Link>
       </div>
     </div>
   );

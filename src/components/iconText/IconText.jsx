@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { showaddPlaylist } from "../../Redux/Actions/ActionCreators";
+import { CHARTS, FAVOURITE, GENRES, HOME, LECTURERS, MYPLAYLIIST, NEW, PLAY, RECO1, RECO2, TRENDING, VIDEO } from "../../utils/routes/constants";
 const IconText = ({ icon, link, name, id}) => {
 
   const location = useLocation();
@@ -16,31 +17,31 @@ const IconText = ({ icon, link, name, id}) => {
   useEffect(() => {
 
 
-    if (location.pathname.includes("/home")) {
+    if (location.pathname.includes(HOME)) {
       setActive(0);
-    } else if (location.pathname === "/") {
+    } else if (location.pathname === "/dawahcast") {
       setActive(0);
-    } else if (location.pathname.includes("/genres")) {
+    } else if (location.pathname.includes(GENRES)) {
       setActive(7);
-    } else if (location.pathname.includes("/recommend2")) {
+    } else if (location.pathname.includes(RECO2)) {
       setActive(12);
-    } else if (location.pathname.includes("/recommend1")) {
+    } else if (location.pathname.includes(RECO1)) {
       setActive(11);
-    } else if (location.pathname.includes("/lecturers")) {
+    } else if (location.pathname.includes(LECTURERS)) {
       setActive(3);
-    } else if (location.pathname.includes("/videos")) {
+    } else if (location.pathname.includes(VIDEO)) {
       setActive(4);
-    } else if (location.pathname.includes("/playlists")) {
+    } else if (location.pathname.includes(PLAY)) {
       setActive(5);
-    } else if (location.pathname.includes("/charts")) {
+    } else if (location.pathname.includes(CHARTS)) {
       setActive(6);
-    } else if (location.pathname.includes("/trending")) {
+    } else if (location.pathname.includes(TRENDING)) {
       setActive(1);
-    } else if (location.pathname.includes("/new")) {
+    } else if (location.pathname.includes(NEW)) {
       setActive(2);
-    } else if (location.pathname.includes("/favourite")) {
+    } else if (location.pathname.includes(FAVOURITE)) {
       setActive(9);
-    } else if (location.pathname.includes("/myplaylist")) {
+    } else if (location.pathname.includes(MYPLAYLIIST)) {
       setActive(10);
     }
 
