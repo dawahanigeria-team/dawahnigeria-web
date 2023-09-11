@@ -6,10 +6,13 @@
     "plugin:jsx-a11y/recommended"
   ],
 
-  "plugins": ["react", "react-hooks", "jsx-a11y"],
+  "plugins": ["react", "react-hooks", "jsx-a11y", "html"],
   "parserOptions": {
     "sourceType": "module",
     "ecmaVersion": 2018
+  },
+  "env": {
+    "browser": true
   },
   "rules": {
     // React
@@ -38,7 +41,10 @@
     "react/jsx-curly-spacing": ["error", { "when": "never" }],
     "react/jsx-equals-spacing": ["error", "never"],
 
-    // Enforce propTypes for components
-    "react/prop-types": "error"
+    // Avoid Enforce propTypes for components
+    "react/prop-types": "off",
+
+    // Avoid Enforce Optional Chaining
+    "no-unsafe-optional-chaining": "warn"
   }
 }
