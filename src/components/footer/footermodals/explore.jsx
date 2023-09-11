@@ -20,13 +20,27 @@ const Explore = () => {
           />
         </div>
       </div>
-      <div className={`min-[450px]:block space-y-4 ${isShow ? "max-[450px]:block" : "max-[450px]:hidden"}`}>
-        <Link className="block" to="/lecturers">Rp</Link>
-        
-        <Link className="block" to="/trending">Trendings Lectures</Link>
-        <Link className="block" to="/new">New Lectures</Link>
-        <Link className="block" to="/chart">Charts</Link>
-        <Link className="block" to="/videos">Videos</Link>
+      <div
+        className={`min-[450px]:block space-y-4 ${
+          isShow ? "max-[450px]:block" : "max-[450px]:hidden"
+        }`}
+      >
+        <Link className="block" to="/lecturers">
+          Rp
+        </Link>
+
+        <Link className="block" to="/trending">
+          Trendings Lectures
+        </Link>
+        <Link className="block" to="/new">
+          New Lectures
+        </Link>
+        <Link className="block" to="/chart">
+          Charts
+        </Link>
+        <Link className="block" to="/videos">
+          Videos
+        </Link>
       </div>
     </div>
   );

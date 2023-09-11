@@ -190,8 +190,6 @@ function List({
     dispatch(showaddPlaylist(true));
   };
 
-
-
   /**
    * 
      // get all lecturers and  id
@@ -350,13 +348,13 @@ function List({
                   e.stopPropagation();
                   if (rpid) {
                     navigate(`${RESOURCE_PERSON}${rpid}`);
-                  } 
+                  }
                 }}
                 className="tr2_text"
               >
-                <div className="text_child hover:text-gray-400">{`${lecturer?.split(" ")[0]} ${
-                  lecturer?.split(" ")[1]
-                }`}</div>
+                <div className="text_child hover:text-gray-400">{`${
+                  lecturer?.split(" ")[0]
+                } ${lecturer?.split(" ")[1]}`}</div>
               </div>
 
               <div className="tr2_likeys">
@@ -423,19 +421,25 @@ function List({
                 </button>
                 <span className="likeys_text">{formatNumber(views)}</span>
               </div>
-              <div className={audioId === nid ? "absolute w-full h-fit inset-0 m-auto": "hidden"}>
-              <AudioWave />
+              <div
+                className={
+                  audioId === nid
+                    ? "absolute w-full h-fit inset-0 m-auto"
+                    : "hidden"
+                }
+              >
+                <AudioWave />
               </div>
             </div>
             <div className="wrap_text">
               <div className="title_wrap">
                 <Marquee pauseOnHover={true}>
-                <div className="texta">{title}</div>
+                  <div className="texta">{title}</div>
                 </Marquee>
               </div>
               <div className="lect_name_wrap">
                 <Marquee pauseOnHover={true}>
-                <div className="textb">{lecturer}</div>
+                  <div className="textb">{lecturer}</div>
                 </Marquee>
               </div>
               <div className="likey_wrap">
@@ -500,45 +504,49 @@ function List({
               className="likeys_img_left"
             >
               <img className="likeys_img_sz_left" src={dot} alt="" />
-             
-              <div className={more ? " left-[-100px] absolute min-w-max h-fit" : "hidden"}>
-               
-              <span
-              onClick={(e) => {
-                e.stopPropagation()
-                setMore(!more)
-              }}
-              className="fixed inset-0 bg-none z-[90] w-full h-full"></span>
-              <div
-              onClick={(e) => {
-                e.stopPropagation()
-              }}
-              className="bg-black z-[200] relative rounded-sm space-y-2 p-1">
-              <span
-                  onClick={(e) => {
-                    shareAudio(e, nid);
-                  }}
-                  className=" flex w-full items-center space-x-2"
-                >
-                  <span className=" w-3 h-3 ">
-                    <img className="w-full h-full" src={sharebig} alt="" />
-                  </span>
-                  <span className="">Share</span>
-                </span>
 
+              <div
+                className={
+                  more ? " left-[-100px] absolute min-w-max h-fit" : "hidden"
+                }
+              >
                 <span
                   onClick={(e) => {
-                    addToPlaylist(e, nid);
+                    e.stopPropagation();
+                    setMore(!more);
                   }}
-                  className="flex w-full items-center space-x-2"
+                  className="fixed inset-0 bg-none z-[90] w-full h-full"
+                ></span>
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                  className="bg-black z-[200] relative rounded-sm space-y-2 p-1"
                 >
-                  <span className="w-3 h-3">
-                    <img className="w-full h-full" src={plus} alt="" />
+                  <span
+                    onClick={(e) => {
+                      shareAudio(e, nid);
+                    }}
+                    className=" flex w-full items-center space-x-2"
+                  >
+                    <span className=" w-3 h-3 ">
+                      <img className="w-full h-full" src={sharebig} alt="" />
+                    </span>
+                    <span className="">Share</span>
                   </span>
-                  <span className="">Add to playlist</span>
-                </span>
-              </div>
-        
+
+                  <span
+                    onClick={(e) => {
+                      addToPlaylist(e, nid);
+                    }}
+                    className="flex w-full items-center space-x-2"
+                  >
+                    <span className="w-3 h-3">
+                      <img className="w-full h-full" src={plus} alt="" />
+                    </span>
+                    <span className="">Add to playlist</span>
+                  </span>
+                </div>
               </div>
             </span>
           </div>

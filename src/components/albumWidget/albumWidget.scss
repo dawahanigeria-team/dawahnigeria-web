@@ -5,14 +5,13 @@
   //width: 12.5rem;
   //height: 14.313rem;
   overflow-x: hidden;
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
 
   border-radius: 6px;
   @media screen and (max-width: 615px) {
     width: 100%;
     height: 100%;
-   
   }
   .album_container .album_play_super_wrap .album_play_wrapper {
     display: none;
@@ -20,30 +19,30 @@
 
   .album_container:hover .album_play_super_wrap {
     width: 100%;
-    height:100%;
+    height: 100%;
     border-radius: 6px;
-    inset:0;
+    inset: 0;
     position: absolute;
     transition-timing-function: ease-in;
     transition: 0.3s;
     transform: translateY(0);
-    background:rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     .album_play_wrapper {
       position: absolute;
-      width:fit-content;
-      height:fit-content;
+      width: fit-content;
+      height: fit-content;
       display: block;
-      top:0;
-      bottom:0;
-      left:0;
-      right:0;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
       border-radius: 6px;
-     
-      margin:auto;
-      
+
+      margin: auto;
+
       .album_play {
         cursor: pointer;
-  
+
         transition-timing-function: ease-in;
         transition: 0.3s;
         transform: translateY(0);
@@ -61,32 +60,32 @@
         }
       }
     }
-  } 
+  }
   .album_playing {
     width: 100%;
-    height:100%;
+    height: 100%;
     border-radius: 8px;
     position: absolute;
-    inset:0;
+    inset: 0;
     transition-timing-function: ease-in;
     transition: 0.3s;
     transform: translateY(0);
-    background:rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     .album_playing_wrapper {
       position: absolute;
-      width:fit-content;
-      height:fit-content;
+      width: fit-content;
+      height: fit-content;
       display: block;
-      top:0;
-      bottom:0;
-      left:0;
-      right:0;
-     
-      margin:auto;
-      
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+
+      margin: auto;
+
       .album_play {
         cursor: pointer;
-  
+
         transition-timing-function: ease-in;
         transition: 0.3s;
         transform: translateY(0);
@@ -98,15 +97,14 @@
         flex-direction: row;
         align-items: center;
         justify-content: center;
-      
       }
     }
-  } 
+  }
   .album_container {
     width: 100%;
     height: 100%;
     //overflow: hidden;
-    
+
     border-radius: 6px;
     position: relative;
     @media screen and (max-width: 600px) {
@@ -115,19 +113,19 @@
     }
     .album_img {
       width: 100%;
-  
+
       height: 100%;
       .album_background_image {
         position: absolute;
         width: 100%;
-  
+
         height: 100%;
         top: 0;
         left: 0;
         border-radius: 6px;
       }
     }
-   
+
     .album_overlay {
       position: absolute;
       bottom: 0;
@@ -208,7 +206,7 @@
     white-space: nowrap;
     max-width: 12rem;
     //overflow: hidden;
-    padding-left:3%;
+    padding-left: 3%;
     @media screen and (max-width: 600px) {
       font-size: 12px;
       max-width: 150px;

@@ -10,17 +10,16 @@ import axios from "../../utils/useAxios";
 import Loader from "../../components/UI/loader/loader";
 import { LECTURE } from "../../utils/routes/constants";
 
-import _ from "lodash"
+import _ from "lodash";
 const Trending = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const observer = useRef();
-  const observerMobile = useRef()
+  const observerMobile = useRef();
   const [isEmpty, setIsEmpty] = useState(false);
   const [nextPageLoad, setNextPageLoad] = useState(false);
   const [page, setPage] = useState(1);
-  
 
   useEffect(() => {
     if (page > 1) {
@@ -38,16 +37,15 @@ const Trending = () => {
           setIsEmpty(true);
           return;
         }
-       ////console.log(_.uniqBy([...res.data], 'nid'))
-        setData((prev) => _.uniqBy([...prev,...res.data], 'nid'));
+        ////console.log(_.uniqBy([...res.data], 'nid'))
+        setData((prev) => _.uniqBy([...prev, ...res.data], "nid"));
       })
       .catch((err) => {
         //console.log(err);
       });
-       // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
-  
   const lastElement = useCallback(
     (node) => {
       if (isEmpty) return;
@@ -66,24 +64,18 @@ const Trending = () => {
     [page]
   );
 
-
-
-
-      //play all audio files
-      const playAll = () => {
-    
-
-        navigate(`${LECTURE}${data[0]?.nid}`, {
-          state: {
-            endpoint_url: `/popular_lec_api.php?langid=6&page=`,
-            currentPage: 1,
-            idx: 0,
-            nid: data[0].nid,
-            nav1: { title: "playAll", link: "/new" },
-          },
-        });
-      };
-  
+  //play all audio files
+  const playAll = () => {
+    navigate(`${LECTURE}${data[0]?.nid}`, {
+      state: {
+        endpoint_url: `/popular_lec_api.php?langid=6&page=`,
+        currentPage: 1,
+        idx: 0,
+        nid: data[0].nid,
+        nav1: { title: "playAll", link: "/new" },
+      },
+    });
+  };
 
   return (
     <Container>
@@ -115,76 +107,78 @@ const Trending = () => {
         {!loading && (
           <div className="table">
             {data.map(
-              ({ Title, rpname, img, cats, nid, views,favorites,rp_id, duration }, idx) => {
-               
-               if (data.length === idx + 1) {
-                return (
-                  <div
-                  ref={lastElement}
-                  key={idx} className="">
-                    <List
-                   
-                      key={idx}
-                      id={idx}
-                      image={img}
-                      favorites={favorites}
-                      duration={duration}
-                      title={Title}
-                      lecturer={rpname}
-                      rpid={rp_id}
-                      url={`${LECTURE}${nid}`}
-                      Title={Title}
-                      rpname={rpname}
-                      endpoint_url={"/popular_lec_api.php?langid=6&page="}
-                      currentPage={page}
-                      cats={cats}
-                      nid={nid}
-                      views={views}
-
-                      navName={"Trending"}
-                      navLink={"/trending"}
-                      controlData={data}
-                    />
-                  </div>
-                );
-
-               }
-               else {
-                return (
-                  <div key={idx} className="">
-                    <List
-                      key={idx}
-                      id={idx}
-                      image={img}
-                      duration={duration}
-                      favorites={favorites}
-                      title={Title}
-                      lecturer={rpname}
-                      rpid={rp_id}
-                      url={`${LECTURE}${nid}`}
-                      Title={Title}
-                      rpname={rpname}
-                      endpoint_url={"/popular_lec_api.php?langid=6&page="}
-                      currentPage={page}
-                      cats={cats}
-                      nid={nid}
-                      navName={"Trending"}
-                      navLink={"/trending"}
-                      controlData={data}
-                      views={views}
-                    />
-                  </div>
-                );
-
-               }
-            
+              (
+                {
+                  Title,
+                  rpname,
+                  img,
+                  cats,
+                  nid,
+                  views,
+                  favorites,
+                  rp_id,
+                  duration,
+                },
+                idx
+              ) => {
+                if (data.length === idx + 1) {
+                  return (
+                    <div ref={lastElement} key={idx} className="">
+                      <List
+                        key={idx}
+                        id={idx}
+                        image={img}
+                        favorites={favorites}
+                        duration={duration}
+                        title={Title}
+                        lecturer={rpname}
+                        rpid={rp_id}
+                        url={`${LECTURE}${nid}`}
+                        Title={Title}
+                        rpname={rpname}
+                        endpoint_url={"/popular_lec_api.php?langid=6&page="}
+                        currentPage={page}
+                        cats={cats}
+                        nid={nid}
+                        views={views}
+                        navName={"Trending"}
+                        navLink={"/trending"}
+                        controlData={data}
+                      />
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div key={idx} className="">
+                      <List
+                        key={idx}
+                        id={idx}
+                        image={img}
+                        duration={duration}
+                        favorites={favorites}
+                        title={Title}
+                        lecturer={rpname}
+                        rpid={rp_id}
+                        url={`${LECTURE}${nid}`}
+                        Title={Title}
+                        rpname={rpname}
+                        endpoint_url={"/popular_lec_api.php?langid=6&page="}
+                        currentPage={page}
+                        cats={cats}
+                        nid={nid}
+                        navName={"Trending"}
+                        navLink={"/trending"}
+                        controlData={data}
+                        views={views}
+                      />
+                    </div>
+                  );
+                }
               }
             )}
-            
-
           </div>
         )}
-         {nextPageLoad && (
+        {nextPageLoad && (
           <div className="load_m">
             <div className="loads">
               <Loader />
@@ -193,15 +187,16 @@ const Trending = () => {
         )}
         {/*************** moobile **********/}
         <div className="mobile_lists">
-          <div 
-          onClick={playAll}
-          className="header pb-2 border-b border-zinc-500 w-full">
-           <div className="w-fit h-fit border p-1 rounded-full items-center flex justify-center">
-           <div className="w-3 h-3  ">
-              <img className="w-full h-full" src={pmobile}  alt="" />
+          <div
+            onClick={playAll}
+            className="header pb-2 border-b border-zinc-500 w-full"
+          >
+            <div className="w-fit h-fit border p-1 rounded-full items-center flex justify-center">
+              <div className="w-3 h-3  ">
+                <img className="w-full h-full" src={pmobile} alt="" />
+              </div>
             </div>
-           </div>
-           
+
             <p className="">Play All</p>
           </div>
           <div className="bg-none h-1 w-1"></div>
@@ -213,82 +208,94 @@ const Trending = () => {
             </div>
           )}
           {!loading &&
-            data.map(({ Title, rpname, img, cats, rp_id, favorites, nid,views,comments, duration, share }, idx) => {
-              
-              if (data.length === idx + 1) {
-                return (
-                  <div
-                  ref={lastElementMobile}
-                  key={idx} className="each_mobile_list">
-                    <List
+            data.map(
+              (
+                {
+                  Title,
+                  rpname,
+                  img,
+                  cats,
+                  rp_id,
+                  favorites,
+                  nid,
+                  views,
+                  comments,
+                  duration,
+                  share,
+                },
+                idx
+              ) => {
+                if (data.length === idx + 1) {
+                  return (
+                    <div
+                      ref={lastElementMobile}
                       key={idx}
-                      id={idx}
-                      duration={duration}
-                      image={img}
-                      title={Title}
-                      lecturer={rpname}
-                      favorites={favorites}
-                      comments={comments}
-                      rpid={rp_id}
-                      url={`${LECTURE}${nid}`}
-                      Title={Title}
-                      rpname={rpname}
-                      endpoint_url={"/popular_lec_api.php?langid=6&page="}
-                      currentPage={page}
-                      cats={cats}
-                      nid={nid}
-                      navName={"Trending"}
-                      navLink={"/trending"}
-                      controlData={data}
-                      views={views}
-                      share={share}
-                    />
-                  </div>
-                );
-
+                      className="each_mobile_list"
+                    >
+                      <List
+                        key={idx}
+                        id={idx}
+                        duration={duration}
+                        image={img}
+                        title={Title}
+                        lecturer={rpname}
+                        favorites={favorites}
+                        comments={comments}
+                        rpid={rp_id}
+                        url={`${LECTURE}${nid}`}
+                        Title={Title}
+                        rpname={rpname}
+                        endpoint_url={"/popular_lec_api.php?langid=6&page="}
+                        currentPage={page}
+                        cats={cats}
+                        nid={nid}
+                        navName={"Trending"}
+                        navLink={"/trending"}
+                        controlData={data}
+                        views={views}
+                        share={share}
+                      />
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div key={idx} className="each_mobile_list">
+                      <List
+                        key={idx}
+                        id={idx}
+                        duration={duration}
+                        image={img}
+                        title={Title}
+                        lecturer={rpname}
+                        favorites={favorites}
+                        comments={comments}
+                        rpid={rp_id}
+                        url={`${LECTURE}${nid}`}
+                        Title={Title}
+                        rpname={rpname}
+                        endpoint_url={"/popular_lec_api.php?langid=6&page="}
+                        currentPage={page}
+                        cats={cats}
+                        nid={nid}
+                        navName={"Trending"}
+                        navLink={"/trending"}
+                        controlData={data}
+                        views={views}
+                        share={share}
+                      />
+                    </div>
+                  );
+                }
               }
-              else {
-                return (
-                  <div key={idx} className="each_mobile_list">
-                    <List
-                      key={idx}
-                      id={idx}
-                      duration={duration}
-                      image={img}
-                      title={Title}
-                      lecturer={rpname}
-                      favorites={favorites}
-                      comments={comments}
-                      rpid={rp_id}
-                      url={`${LECTURE}${nid}`}
-                      Title={Title}
-                      rpname={rpname}
-                      endpoint_url={"/popular_lec_api.php?langid=6&page="}
-                      currentPage={page}
-                      cats={cats}
-                      nid={nid}
-                      navName={"Trending"}
-                      navLink={"/trending"}
-                      controlData={data}
-                      views={views}
-                      share={share}
-                    />
-                  </div>
-                );
-
-              }
-        
-            })}
-               {nextPageLoad && (
-          <div className="load_m">
-            <div className="loads">
-              <Loader />
+            )}
+          {nextPageLoad && (
+            <div className="load_m">
+              <div className="loads">
+                <Loader />
+              </div>
             </div>
-          </div>
-        )}
+          )}
         </div>
-
-        
       </div>
     </Container>
   );

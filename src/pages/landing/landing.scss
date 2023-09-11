@@ -6,34 +6,31 @@
   padding: 1% 2% 2% 2%;
   @media screen and (max-width: 615px) {
     padding: 2% 2% 2% 2%;
-  
+
     //margin-top:6%;
   }
 
   .carousel {
-    width:100%;
+    width: 100%;
     //height:40%;
-    @media screen and (max-width:615px) {
-      display:none;
+    @media screen and (max-width: 615px) {
+      display: none;
     }
-  
-  
   }
 
   .landing_carousel {
-    width:96vw;
-    height:162px;
+    width: 96vw;
+    height: 162px;
     //border-radius:3px ;
-    @media screen and (min-width:615px) {
-      display:none;
+    @media screen and (min-width: 615px) {
+      display: none;
     }
-    margin-top:42px;
-    margin-bottom:8px;
+    margin-top: 42px;
+    margin-bottom: 8px;
     .landing_carousel_img {
-      width:100%;
-        border-radius: 3px;
-        height:162px;
-      
+      width: 100%;
+      border-radius: 3px;
+      height: 162px;
     }
     .slick-prev:before,
     .slick-next:before {
@@ -44,8 +41,8 @@
       bottom: 11px;
       li {
         margin: 0px 0px;
-        width:16px;
-        height:16px;
+        width: 16px;
+        height: 16px;
       }
       li button:before {
         color: white;
@@ -53,9 +50,8 @@
     }
   }
   .landing_options {
-  
-      padding: 0rem  0.1rem 0rem 0.1rem;
-    
+    padding: 0rem 0.1rem 0rem 0.1rem;
+
     //margin-top:1.8rem;
     .slick-prev:before,
     .slick-next:before {

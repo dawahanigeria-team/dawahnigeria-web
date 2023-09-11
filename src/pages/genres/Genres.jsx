@@ -7,12 +7,10 @@ import axios from "../../utils/useAxios";
 import Loader from "../../components/UI/loader/loader";
 import GenreWidget from "./genreWidget";
 
-
 const Genres = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     function getCategories() {
@@ -26,20 +24,14 @@ const Genres = () => {
         .catch((err) => {
           //console.log(err);
         });
-
-   
     }
     getCategories();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
-
-
-  const showMore  = ( id,) => {
-      
-      navigate(`/genres/${id}`)
-  }
+  const showMore = (id) => {
+    navigate(`/genres/${id}`);
+  };
 
   return (
     <Container>
@@ -62,17 +54,12 @@ const Genres = () => {
               return (
                 <div
                   onClick={() => {
-                    
-                    showMore(id)
-                    
+                    showMore(id);
                   }}
                   key={idx + 1}
                   className=""
                 >
-                 <GenreWidget
-                 img={img}
-                 name={name}
-                 />
+                  <GenreWidget img={img} name={name} />
                 </div>
               );
             })}
@@ -83,4 +70,3 @@ const Genres = () => {
 };
 
 export default Genres;
-

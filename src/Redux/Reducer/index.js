@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
 import User from "./user";
-import Search from "./search"
+import Search from "./search";
 const appReducer = combineReducers({
   user: User,
-  search: Search
+  search: Search,
 });
 
 const rootReducer = (state, action) => {

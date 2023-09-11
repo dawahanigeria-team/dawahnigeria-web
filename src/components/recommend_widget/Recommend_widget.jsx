@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import "./recommendwidget.scss";
 import Rec1_circle from "../../assets/png/recommend_circle.png";
 import Rec1_rect from "../../assets/png/recommend_rect.png";
@@ -8,19 +8,25 @@ import { TbMessage2 } from "react-icons/tb";
 const Recommend_widget = ({ img, title, rpname, catsname }) => {
   // //console.log(title.split(" - "));
 
-    ////not contented but under presssure by DN project manager
-useEffect(() => {
-  const lazy  = document.querySelectorAll('#recommend')
-  lazy.forEach((im) => {
-    const newurl = im.getAttribute('src-data')
-    im.src = newurl 
-  })
-},[])
+  ////not contented but under presssure by DN project manager
+  useEffect(() => {
+    const lazy = document.querySelectorAll("#recommend");
+    lazy.forEach((im) => {
+      const newurl = im.getAttribute("src-data");
+      im.src = newurl;
+    });
+  }, []);
 
   return (
     <div className="recwid_wrapper">
       <div className="recwid_left">
-        <img className="recwid_left_img" id="recommend" src-data={img} src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"} alt="rect_circle" />
+        <img
+          className="recwid_left_img"
+          id="recommend"
+          src-data={img}
+          src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"}
+          alt="rect_circle"
+        />
       </div>
       <div className="recwid_right_wrapper">
         <div className="recwid_right">
@@ -46,7 +52,13 @@ useEffect(() => {
         </div>
 
         <div className="recwid_right_img">
-          <img className="rec_img_sz" id="recommend" src-data={img} src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"} alt="Rec1rect" />
+          <img
+            className="rec_img_sz"
+            id="recommend"
+            src-data={img}
+            src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"}
+            alt="Rec1rect"
+          />
         </div>
       </div>
     </div>

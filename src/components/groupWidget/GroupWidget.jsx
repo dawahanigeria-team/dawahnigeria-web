@@ -3,13 +3,13 @@ import "./groupWidget.scss";
 import LandingWidget from "../landingWidget/LandingWidget";
 import { FiChevronsRight } from "react-icons/fi";
 import LecturersWidget from "../lecturersWidget/LecturersWidget";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import back from "../../assets/svg/back.svg";
 import foward from "../../assets/svg/foward.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { AudioContext } from "../../App";
-import {  settings3, settings4 } from "./settings";
+import { settings3, settings4 } from "./settings";
 import {
   getType,
   getaudioData,
@@ -23,7 +23,12 @@ import LecturerMobileChart from "./chartUIs/lecturersMobileChart";
 import LectureMobileChart from "./chartUIs/lectureMobileChart";
 import AlbumMobileChart from "./chartUIs/albumMobileChart";
 import GenreMobileLecturer from "../../pages/genredetail/genreMobileLecturer";
-import { ALBUMS, LECTURE, PLAYLISTS, RESOURCE_PERSON } from "../../utils/routes/constants";
+import {
+  ALBUMS,
+  LECTURE,
+  PLAYLISTS,
+  RESOURCE_PERSON,
+} from "../../utils/routes/constants";
 
 const GroupWidget = ({
   data,
@@ -57,7 +62,7 @@ const GroupWidget = ({
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size]);
 
   ////console.log(data);
@@ -89,7 +94,6 @@ const GroupWidget = ({
 
   useEffect(() => {
     function scrollEl() {
-    
       //console.log("Slide");
       if (slide.current.scrollLeft === 0) {
         setisprev(false);
@@ -110,7 +114,7 @@ const GroupWidget = ({
     slide.current?.addEventListener("scroll", scrollEl);
 
     return () => slide.current?.removeEventListener("scroll", scrollEl);
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slide.current?.scrollLeft]);
 
   /**
@@ -183,7 +187,8 @@ const GroupWidget = ({
                   idx
                 ) => {
                   return (
-                    <Link to={isrecent ? `${ALBUMS}${nid}`: `${LECTURE}${nid}`}
+                    <Link
+                      to={isrecent ? `${ALBUMS}${nid}` : `${LECTURE}${nid}`}
                       id={idx}
                       name={nid}
                       className="groupWidget_album_item"
@@ -206,7 +211,7 @@ const GroupWidget = ({
                             })
                           );
                         } else {
-                         // navigate(`/l/${nid}`);
+                          // navigate(`/l/${nid}`);
                           if (window.innerWidth <= 615) {
                             dispatch(getPack(null));
                             dispatch(getPage(currentPage));
@@ -270,13 +275,14 @@ const GroupWidget = ({
                 ) => {
                   return (
                     <>
-                      <Link to={`${LECTURE}${nid || id}`}
+                      <Link
+                        to={`${LECTURE}${nid || id}`}
                         id={idx}
                         className={`groupWidget_album_item  ${
                           styling ? "relative max-[615px]:hidden" : ""
                         }`}
                         onClick={() => {
-                         // navigate(`/l/${nid || id}`);
+                          // navigate(`/l/${nid || id}`);
                           if (window.innerWidth <= 615) {
                             dispatch(getPack(null));
                             dispatch(getPage(currentPage));
@@ -387,7 +393,8 @@ const GroupWidget = ({
                   idx
                 ) => {
                   return (
-                    <Link to={`${ALBUMS}${id || nid}`}
+                    <Link
+                      to={`${ALBUMS}${id || nid}`}
                       id={idx}
                       className={`groupWidget_album_item  ${
                         styling ? "relative max-[615px]:hidden" : ""
@@ -459,11 +466,12 @@ const GroupWidget = ({
                   idx
                 ) => {
                   return (
-                    <Link to={`${PLAYLISTS}${id || nid}`}
+                    <Link
+                      to={`${PLAYLISTS}${id || nid}`}
                       id={idx}
                       className="groupWidget_album_item"
                       onClick={() => {
-                       // navigate(`/pl/${id || nid}`);
+                        // navigate(`/pl/${id || nid}`);
                       }}
                       key={idx + 1}
                     >
@@ -492,7 +500,11 @@ const GroupWidget = ({
           <div className="w-full overflow-x-auto flex items-center space-x-4 h-full">
             {data.map(({ img, name, id, nid }, idx) => {
               return (
-                <Link to={`${RESOURCE_PERSON}${id || nid}`} key={idx} className="">
+                <Link
+                  to={`${RESOURCE_PERSON}${id || nid}`}
+                  key={idx}
+                  className=""
+                >
                   <GenreMobileLecturer img={img} rp={name} />
                 </Link>
               );
@@ -511,7 +523,9 @@ const GroupWidget = ({
           </div>
           <div
             ref={slide}
-            className={`overflow_auto_wrapper_lect ${nav1.title === 'Genres' ?'hidden':''} min-[615px]:space-x-20 `}
+            className={`overflow_auto_wrapper_lect ${
+              nav1.title === "Genres" ? "hidden" : ""
+            } min-[615px]:space-x-20 `}
           >
             {data.map(
               (
@@ -534,10 +548,11 @@ const GroupWidget = ({
               ) => {
                 return (
                   <>
-                    <Link to={`${RESOURCE_PERSON}${id || nid}`}
+                    <Link
+                      to={`${RESOURCE_PERSON}${id || nid}`}
                       className="max-[615px]:hidden relative"
                       onClick={() => {
-                       // navigate(`${RESOURCE_PERSON}${id || nid}`);
+                        // navigate(`${RESOURCE_PERSON}${id || nid}`);
                       }}
                       key={idx + 1}
                     >
@@ -559,7 +574,6 @@ const GroupWidget = ({
                         <span>{idx + 1}</span>
                       </div>
                     </Link>
-                   
                   </>
                 );
               }

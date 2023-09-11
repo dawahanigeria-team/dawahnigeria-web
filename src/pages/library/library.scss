@@ -1,94 +1,88 @@
-@media screen and (max-width:500px) {
-    .lib_wrapper {
-        margin-top:3em;
-        padding:2%;
+@media screen and (max-width: 500px) {
+  .lib_wrapper {
+    margin-top: 3em;
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 3em;
+
+    .lib_header_link {
+      width: 100%;
+      padding: 2%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 1rem;
+      background: #ddff2b;
+      border-radius: 8px;
+      .lib_img_wrap {
+        width: 50px;
+        height: 50px;
+        .lib_img_wrap_sz {
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      .user_name {
         display: flex;
         flex-direction: column;
-        width: 100%;
-        gap:3em;
-
-        .lib_header_link {
-            width:100%;
-            padding:2%;
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items:center;
-            gap: 1rem;
-            background: #DDFF2B;
-            border-radius: 8px;
-            .lib_img_wrap {
-                width:50px;
-                height:50px;
-                .lib_img_wrap_sz {
-                    width:100%;
-                    height:100%;
-                }
-            }
-
-            .user_name {
-                display: flex;
-                flex-direction: column;
-                gap:6px;
-                align-items: flex-start;
-                color:#222222;
-                font-size:14px;
-                font-family:"Poppins";
-                font-weight: 400;
-                .name {
-                    text-transform: capitalize;
-                }
-                .social_name {
-                    font-size:12px;
-                }
-                
-            }
-
-            .no_user {
-                display: flex;
-                align-items: flex-start;
-                color:#222222;
-                font-size:14px;
-                font-family:"Poppins";
-                font-weight: 400;
-                .reg_sign {
-                    margin-right: 3px;
-            }
-            }
+        gap: 6px;
+        align-items: flex-start;
+        color: #222222;
+        font-size: 14px;
+        font-family: "Poppins";
+        font-weight: 400;
+        .name {
+          text-transform: capitalize;
         }
-
-        .flex_wrapp {
-            display:flex;
-            flex-direction: column;
-            gap:2rem;
-            width:100%;
-            justify-content: flex-start;
-            align-items: flex-start;
-            color:#AEAEAE;
-            font-size:14px;
-                font-family:"Poppins";
-                font-weight: 400;
-            .mini_wrapper {
-                display: flex;
-                flex-direction: row;
-                gap:1rem;
-                align-items: center;
-                justify-content: flex-start;
-                .img_wrap {
-                    width:40px;
-                    height: 40px;
-
-                    .img_wrap_sz {
-                        width:100%;
-                        height:100%;
-
-                    }
-                }
-
-            }
-
+        .social_name {
+          font-size: 12px;
         }
+      }
 
+      .no_user {
+        display: flex;
+        align-items: flex-start;
+        color: #222222;
+        font-size: 14px;
+        font-family: "Poppins";
+        font-weight: 400;
+        .reg_sign {
+          margin-right: 3px;
+        }
+      }
     }
 
+    .flex_wrapp {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      width: 100%;
+      justify-content: flex-start;
+      align-items: flex-start;
+      color: #aeaeae;
+      font-size: 14px;
+      font-family: "Poppins";
+      font-weight: 400;
+      .mini_wrapper {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        align-items: center;
+        justify-content: flex-start;
+        .img_wrap {
+          width: 40px;
+          height: 40px;
+
+          .img_wrap_sz {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
 }

@@ -4,18 +4,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { showaddPlaylist } from "../../Redux/Actions/ActionCreators";
-const IconText = ({ icon, link, name, id}) => {
-
+const IconText = ({ icon, link, name, id }) => {
   const location = useLocation();
   const [active, setActive] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {addplaylist} = useSelector((state) => state.user)
+  const { addplaylist } = useSelector((state) => state.user);
 
   //console.log(addplaylist)
   useEffect(() => {
-
-
     if (location.pathname.includes("/home")) {
       setActive(0);
     } else if (location.pathname === "/") {
@@ -44,27 +41,24 @@ const IconText = ({ icon, link, name, id}) => {
       setActive(10);
     }
 
-     if (addplaylist) {
+    if (addplaylist) {
       setActive(8);
       //dispatch(showaddPlaylist(true))
-    } 
-    
+    }
   });
   return (
-    <Link to={link}
-    onClick={() => {
-
-      navigate(link)
-      if (id === 8) {
-        dispatch(showaddPlaylist(true))
-        //console.log('8')
-      }
-    }}
-      
+    <Link
+      to={link}
+      onClick={() => {
+        navigate(link);
+        if (id === 8) {
+          dispatch(showaddPlaylist(true));
+          //console.log('8')
+        }
+      }}
       className={`icontext_link ${active === id ? "icontext_active" : ""}`}
     >
       <div
-      
         className={`icontext_icon ${
           active === id ? "icontext_active_icon" : ""
         }`}

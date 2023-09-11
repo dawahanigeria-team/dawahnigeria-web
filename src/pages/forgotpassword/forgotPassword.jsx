@@ -12,7 +12,7 @@ const ForgotPassword = () => {
   const [isreset, setreset] = useState(false);
 
   const handleSubmit = () => {
-    if (email === ""|| email === undefined) {
+    if (email === "" || email === undefined) {
       toast.error("Email is required");
       return;
     }
@@ -39,8 +39,8 @@ const ForgotPassword = () => {
       .catch((err) => {
         //console.log(err.response);
         setLoading(false);
-        
-        toast.error('User with the provided email does not exist');
+
+        toast.error("User with the provided email does not exist");
       });
   };
 
@@ -63,8 +63,10 @@ const ForgotPassword = () => {
           }
         >
           <div className="w-full text-[#d4d4d4] mb-[4rem] items-start flex justify-start flex-col text-lg min-[615px]:text-2xl">
-          <div>  Forgot Password</div>
-          <div className="text-[12px]">Enter you email address to get a verification code</div>
+            <div> Forgot Password</div>
+            <div className="text-[12px]">
+              Enter you email address to get a verification code
+            </div>
           </div>
           <div className="w-full space-y-3">
             <input

@@ -22,22 +22,22 @@
   grid-column: span 6 / span 6;
 }
 @mixin mobile_tab_text {
-  @media screen and (max-width:615px) {
+  @media screen and (max-width: 615px) {
     font-size: 13px;
-   font-weight:400;
+    font-weight: 400;
   }
 }
 @mixin mobile_tab_text_align {
-  @media screen and (max-width:615px) {
+  @media screen and (max-width: 615px) {
     display: flex;
     flex-direction: row;
     align-items: center;
   }
 }
 @mixin mobile_tab_activetext {
-  @media screen and (max-width:615px) {
-    font-size:15px;
-    font-weight:500;
+  @media screen and (max-width: 615px) {
+    font-size: 15px;
+    font-weight: 500;
   }
 }
 @mixin tab_text {
@@ -71,18 +71,18 @@
   color: #868686;
 }
 @mixin hide_for_mobile {
-  @media screen and (max-width:615px) {
+  @media screen and (max-width: 615px) {
     display: none;
   }
 }
 @mixin hide_for_desktop {
-  @media screen and (min-width:615px) {
+  @media screen and (min-width: 615px) {
     display: none;
   }
 }
 @mixin font_mobile {
-  @media screen and (max-width:615px) {
-    font-size:14px;
+  @media screen and (max-width: 615px) {
+    font-size: 14px;
   }
 }
 
@@ -91,41 +91,39 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  @media screen and (max-width:615px) {
+  @media screen and (max-width: 615px) {
     align-items: unset;
     //padding-top:13px;
-    width:100%;
+    width: 100%;
   }
   .lecdet_header_link {
-
     width: 100%;
-    position:fixed;
-    left:0;
-    right:0;
+    position: fixed;
+    left: 0;
+    right: 0;
     z-index: 10;
     font-size: 14px;
     font-weight: 400;
-    padding:unset;
-    background:none;
-    opacity:1;
+    padding: unset;
+    background: none;
+    opacity: 1;
     transition: opacity 250ms ease-in;
 
-    .header_bg{
-      
-      position:absolute;
-      width:100%;
-      height:53px;
-      z-index:-1;
-      object-fit:contain;
-      inset:0;
+    .header_bg {
+      position: absolute;
+      width: 100%;
+      height: 53px;
+      z-index: -1;
+      object-fit: contain;
+      inset: 0;
       .img {
-        width:100%;
-        height:100%;
+        width: 100%;
+        height: 100%;
       }
     }
   }
   .lecdet_header_link_none {
-    opacity:0;
+    opacity: 0;
     .header_bg {
       display: none;
     }
@@ -136,19 +134,19 @@
     left: 0px;
     width: 100%;
     filter: blur(200px);
-    height:10%;
+    height: 10%;
     @media screen and (max-width: 1096px) {
-      height:12%;
-     }
+      height: 12%;
+    }
     z-index: 0;
     @include hide_for_mobile;
   }
   .lecdet_container {
     z-index: 1;
-    padding:2%;
+    padding: 2%;
     width: 100%;
-    @media screen and (max-width:615px) {
-      padding:0px;
+    @media screen and (max-width: 615px) {
+      padding: 0px;
     }
     // ----------- Bread Crumbs --------------
     .lecdet_breadcrumb {
@@ -194,7 +192,7 @@
         flex-direction: column;
         align-items: flex-start;
       }
-     @include hide_for_mobile;
+      @include hide_for_mobile;
 
       .lecdet_head_left {
         display: flex;
@@ -206,21 +204,18 @@
         height: 240px;
         border-radius: 50%;
         overflow: hidden;
-      //  transform: rotate(180deg);
-        
+        //  transform: rotate(180deg);
+
         @media screen and (max-width: 1132px) {
           margin-bottom: 1rem;
         }
-     
+
         .lecdet_head_left_img {
           width: 100%;
           height: 100%;
-      
         }
-       
-       
       }
-     
+
       .lecdet_head_right {
         display: flex;
         flex-direction: column;
@@ -239,17 +234,17 @@
           line-height: 26px;
           color: #ffffff;
           //max-width: 350px;
-          @media screen and (max-width:600px) {
+          @media screen and (max-width: 600px) {
             width: 100%;
-            font-size:15px;
-            line-height:18px;
+            font-size: 15px;
+            line-height: 18px;
           }
         }
         .lecdet_head_right_text {
           display: flex;
           flex-direction: column;
-         align-items: flex-start;
-         
+          align-items: flex-start;
+
           gap: 0.1rem;
           .lecdet_head_right_text1 {
             margin: unset;
@@ -259,9 +254,9 @@
             font-size: 16px;
             line-height: 20px;
             color: #d4d4d4;
-            @media screen and (max-width:600px) {
+            @media screen and (max-width: 600px) {
               margin-top: 0.5rem;
-              font-size:14px;
+              font-size: 14px;
               line-height: 16px;
             }
           }
@@ -273,10 +268,10 @@
             font-size: 16px;
             line-height: 20px;
             color: #d4d4d4;
-            @media screen and (max-width:600px) {
+            @media screen and (max-width: 600px) {
               margin-top: 0.5rem;
               font-size: 14px;
-            line-height: 16px;
+              line-height: 16px;
             }
           }
         }
@@ -315,24 +310,24 @@
               background-color: #ffffff2d;
             }
             .fav_btn {
-              background:none;
-              margin:0;
+              background: none;
+              margin: 0;
               border: 0;
               .lecdet_fav_icon {
                 font-size: 25px;
-                
-                @media screen and (max-width:600px) {
-                  font-size:20px;
+
+                @media screen and (max-width: 600px) {
+                  font-size: 20px;
                 }
                 color: #cfcfcf;
               }
               .lecdet_fav_icon_active {
                 font-size: 25px;
-                
-                @media screen and (max-width:600px) {
-                  font-size:20px;
+
+                @media screen and (max-width: 600px) {
+                  font-size: 20px;
                 }
-                color:#ddff2b;
+                color: #ddff2b;
               }
             }
             .lecdet_fav_text {
@@ -341,8 +336,8 @@
               font-weight: 400;
               font-size: 14px;
               line-height: 24px;
-              @media screen and (max-width:600px) {
-                font-size:12px;
+              @media screen and (max-width: 600px) {
+                font-size: 12px;
                 line-height: 20px;
               }
               color: #cfcfcf;
@@ -356,17 +351,17 @@
               background-color: #ffffff2d;
             }
             .fav_btn {
-              background:none;
-              margin:0;
+              background: none;
+              margin: 0;
               border: 0;
-            .lecdet_share_icon {
-              font-size: 25px;
-              @media screen and (max-width:600px) {
-                font-size:20px;
+              .lecdet_share_icon {
+                font-size: 25px;
+                @media screen and (max-width: 600px) {
+                  font-size: 20px;
+                }
+                color: #cfcfcf;
               }
-              color: #cfcfcf;
             }
-          }
             .lecdet_share_text {
               font-family: "Nunito Sans";
               font-style: normal;
@@ -375,8 +370,8 @@
               line-height: 24px;
               color: #cfcfcf;
               margin: unset;
-              @media screen and (max-width:600px) {
-                font-size:12px;
+              @media screen and (max-width: 600px) {
+                font-size: 12px;
                 line-height: 20px;
               }
             }
@@ -389,8 +384,8 @@
             }
             .lecdet_comment_icon {
               font-size: 25px;
-              @media screen and (max-width:600px) {
-                font-size:20px;
+              @media screen and (max-width: 600px) {
+                font-size: 20px;
               }
               color: #cfcfcf;
             }
@@ -400,8 +395,8 @@
               font-weight: 400;
               font-size: 14px;
               line-height: 24px;
-              @media screen and (max-width:600px) {
-                font-size:12px;
+              @media screen and (max-width: 600px) {
+                font-size: 12px;
                 line-height: 20px;
               }
               color: #cfcfcf;
@@ -416,8 +411,8 @@
             }
             .lecdet_download_icon {
               font-size: 25px;
-              @media screen and (max-width:600px) {
-                font-size:20px;
+              @media screen and (max-width: 600px) {
+                font-size: 20px;
               }
               color: #cfcfcf;
             }
@@ -426,58 +421,54 @@
       }
     }
 
-
     //----------mobile ----------
     .lecdet_head_mobile {
       @include hide_for_desktop;
       position: fixed;
-      width:98%;
-      top:58px;
-      left:0;
-      right:0;
-      @media screen and (max-width:615px) {
-        width:100%;
+      width: 98%;
+      top: 58px;
+      left: 0;
+      right: 0;
+      @media screen and (max-width: 615px) {
+        width: 100%;
       }
       .lecdet_head_img {
-        width:100%;
-        height:250px;
-        position:relative;
+        width: 100%;
+        height: 250px;
+        position: relative;
         .lecdet_head_img_sz {
-          width:100%;
-          height:100%;
-          object-fit:cover;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
           //filter:blur(80px);
         }
-
       }
       .lecdet_head_img_none {
-        display:none;
+        display: none;
       }
 
       .lectdet_min_wrap {
         position: absolute;
-        width:100%;
+        width: 100%;
         height: 100%;
-        top:0;
-        left:0;
-        padding:0 3%;
+        top: 0;
+        left: 0;
+        padding: 0 3%;
         background: none;
-        color:white;
+        color: white;
         display: flex;
         flex-direction: column;
 
         .mob_arrow {
-          width:28px;
-          height:28px;
+          width: 28px;
+          height: 28px;
           margin-bottom: 2rem;
           .mob_arrow_sz {
-            width:100%;
-            height:100%;
+            width: 100%;
+            height: 100%;
           }
         }
-       
       }
-
     }
     // ----------- Section1 ends --------------
     // ----------- Section2 --------------
@@ -507,7 +498,6 @@
           .lecdet_tab_song1 {
             @include tab_text;
             margin: unset;
-            
           }
           .lecdet_tab_song1_active {
             @include tab_activetext;
@@ -642,60 +632,56 @@
 
     .mobile_lecdet_tab_wrap {
       position: relative;
-      margin-top:5em;
-      
-      color:white;
-      font-size:14px;
-      width:100%;
+      margin-top: 5em;
+
+      color: white;
+      font-size: 14px;
+      width: 100%;
       @include hide_for_desktop;
       .mob_txt {
         display: flex;
         flex-direction: column;
         color: white;
-          font-size: 14px;
-          padding:0 3%;
-          align-items: flex-start;
-          font-family: "Poppins";
-          margin-bottom:13%;
+        font-size: 14px;
+        padding: 0 3%;
+        align-items: flex-start;
+        font-family: "Poppins";
+        margin-bottom: 13%;
         .lecdet_head_mob_head {
-        
         }
         .mob_like {
           display: flex;
           flex-direction: row;
-          
+
           .likeys_img {
-            width:14px;
-            height:14px;
-           
-           .likeys_img_sz {
-            width:14px;
-            height:14px;
-          }
+            width: 14px;
+            height: 14px;
+
+            .likeys_img_sz {
+              width: 14px;
+              height: 14px;
+            }
           }
           .likeys_text {
-            padding-left:3px;
+            padding-left: 3px;
             font-size: 12px;
           }
-
         }
-       
-
       }
       .rank_and_black_wrap {
-        width:100%;
+        width: 100%;
         position: relative;
-        max-height:159px;
+        max-height: 159px;
         .ranking {
-          display:flex;
+          display: flex;
           flex-direction: row;
           align-items: center;
           width: 100%;
           font-family: "Poppins";
           justify-content: space-around;
-          background:rgba(0,0,0,0.3);
-          padding:0;
-          height:70px;
+          background: rgba(0, 0, 0, 0.3);
+          padding: 0;
+          height: 70px;
           opacity: 1;
           //position: relative;
           border-top-right-radius: 24px;
@@ -704,13 +690,13 @@
             display: flex;
             flex-direction: column;
             .num_rank {
-              font-size:20px;
+              font-size: 20px;
               font-weight: 600;
               margin-bottom: 0px;
             }
             .text_rank {
-              font-size:10px;
-              color:#AEAEAE;
+              font-size: 10px;
+              color: #aeaeae;
             }
           }
         }
@@ -718,364 +704,347 @@
           opacity: 0;
           transition: opacity 250ms ease-out;
         }
-        
-      .headings {
-        width: 100%;
-        font-family: "Poppins";
-      
-        top:52px;
-        background:rgba(0,0,0,1);
-        height:fit-content;
-        opacity: 1;
-        //position: relative;
-       // border-top-right-radius: 24px;
-       // border-top-left-radius: 24px;
-        position:fixed;
-        padding-top: 7px;
-        width:100%;
-        color:white;
-        display: flex;
-        z-index: 10;
-        flex-direction:row;
-        justify-content: space-between;
-        align-items: center;
-        transition: opacity 250ms ease-in;
 
-        .fixed_mob_arrow {
-          width:28px;
-          height:28px;
-          //margin-bottom: 2rem;
-          .fixed_mob_arrow_sz {
-            width:100%;
-            height:100%;
-          }
-        }
-        .fixed_text {
-          color:white;
+        .headings {
+          width: 100%;
+          font-family: "Poppins";
 
-          font-weight: 500;
-        }
-        .fixed_bg_none {
-          width:28px;
-          height:28px;
-          background: none;
-        }
+          top: 52px;
+          background: rgba(0, 0, 0, 1);
+          height: fit-content;
+          opacity: 1;
+          //position: relative;
+          // border-top-right-radius: 24px;
+          // border-top-left-radius: 24px;
+          position: fixed;
+          padding-top: 7px;
+          width: 100%;
+          color: white;
+          display: flex;
+          z-index: 10;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          transition: opacity 250ms ease-in;
 
-    .header_bg{
-      
-      position:absolute;
-      width:100%;
-      height:53px;
-      z-index:1;
-     
-      inset:0;
-      .img {
-        width:100%;
-        height:100%;
-        opacity:1;
-        object-fit:cover;
-        filter:blur(80px);
-      }
-    }
-       
-      }
-      .headings_none {
-        opacity: 0;
-        display:none;
-
-      }
-
-    }
-
-  }
-        .blacks {
-          @include hide_for_desktop;
-          width:100%;
-          background: #0D0D0D;
-          border-top-right-radius: 24px;
-          border-top-left-radius: 24px;
-          position: relative;
-          right:0;
-          left:0;
-          height: 100%;
-          top:-1.8em;
-          overflow: hidden;
-          
-          .icons_black {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-around;
-            padding:2%;
-            background:#0D0D0D;
-            border-bottom: 1px solid gray;
-           
-            .icons_mob_black {
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              font-family: "Poppins";
-              .likeys_img {
-                width:18px;
-                height:17px;
-                background: none;
-                    border:0;
-                    margin-right:6px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-               .likeys_img_sz {
-                width:18px;
-                height:17px;
-              }
-              }
-              .likeys_text {
-                padding-left:3px;
-                font-size: 14px;
-                color:#AEAEAE;
-                
-              }
-              
-            }
-  
-          }
-          .fixed_icons_black {
-            position: fixed;
-            top:94px;
-            width:100%;
-            border-top-right-radius: 24px;
-            border-top-left-radius: 24px;
-            z-index:10;
-            background:#0D0D0D;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-around;
-            padding:2%;
-            border-bottom: 1px solid gray;
-            .icons_mob_black {
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              font-family: "Poppins";
-              .likeys_img {
-                width:18px;
-                height:17px;
-                background: none;
-                border:0;
-                margin-right:6px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-               .likeys_img_sz {
-                width:18px;
-                height:17px;
-              }
-              }
-              .likeys_text {
-                padding-left:3px;
-                font-size: 14px;
-                color:#AEAEAE;
-                
-              }
-              
+          .fixed_mob_arrow {
+            width: 28px;
+            height: 28px;
+            //margin-bottom: 2rem;
+            .fixed_mob_arrow_sz {
+              width: 100%;
+              height: 100%;
             }
           }
-          .descript {
-            font-size:14px;
-            color:white;
-            font-family:"Poppins";
-            padding:4% 3% 3% 5%;
+          .fixed_text {
+            color: white;
+
+            font-weight: 500;
           }
-          .mobile_lecdet_tab {
-            display:flex;
-            margin-top: 0.6rem;
-            font-family: "Poppins";
-            font-size: 14px;
+          .fixed_bg_none {
+            width: 28px;
+            height: 28px;
+            background: none;
+          }
+
+          .header_bg {
+            position: absolute;
             width: 100%;
-            color:white;
-            overflow-x: auto;
-            flex-direction: row;
-            padding:0% 3%;
-            gap:1rem;
+            height: 53px;
+            z-index: 1;
+
+            inset: 0;
+            .img {
+              width: 100%;
+              height: 100%;
+              opacity: 1;
+              object-fit: cover;
+              filter: blur(80px);
+            }
+          }
+        }
+        .headings_none {
+          opacity: 0;
+          display: none;
+        }
+      }
+    }
+    .blacks {
+      @include hide_for_desktop;
+      width: 100%;
+      background: #0d0d0d;
+      border-top-right-radius: 24px;
+      border-top-left-radius: 24px;
+      position: relative;
+      right: 0;
+      left: 0;
+      height: 100%;
+      top: -1.8em;
+      overflow: hidden;
+
+      .icons_black {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        padding: 2%;
+        background: #0d0d0d;
+        border-bottom: 1px solid gray;
+
+        .icons_mob_black {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          font-family: "Poppins";
+          .likeys_img {
+            width: 18px;
+            height: 17px;
+            background: none;
+            border: 0;
+            margin-right: 6px;
+            display: flex;
             align-items: center;
-            //justify-content: space-around;
-
-            .mobile_lecdet_tab_song {
-             @include mobile_tab_text_align;
-              .lecdet_tab_song1 {
-               @include mobile_tab_text;
-                margin: unset;
-                
-              }
-              .mobile_lecdet_tab_song1_active {
-               @include mobile_tab_activetext;
-                position: relative;
-                &::after {
-                  content: "";
-                  position: absolute;
-                  bottom: -0.3rem;
-                  left: 12px;
-                  background-color: #ddff2b;
-                  border-radius: 50px;
-                  width: 2rem;
-                  height: 0.25rem;
-                }
-              }
-              .mobile_lecdet_tab_song2_active {
-               @include mobile_tab_activetext;
-              }
-              .mobile_lecdet_tab_song2 {
-                @include mobile_tab_text;
-                margin: unset;
-              }
-            }
-
-            .mobile_lecdet_tab_album {
-              @include mobile_tab_text_align;
-              .mobile_lecdet_tab_album1 {
-                @include mobile_tab_text;
-                margin: unset;
-              }
-              .mobile_lecdet_tab_album1_active {
-                @include mobile_tab_activetext;
-                position: relative;
-                &::after {
-                  content: "";
-                  position: absolute;
-                  bottom: -0.3rem;
-                  left: 12px;
-                  background-color: #ddff2b;
-                  border-radius: 50px;
-                  width: 2rem;
-                  height: 0.25rem;
-                }
-              }
-              .mobile_lecdet_tab_album2_active {
-                @include mobile_tab_activetext;
-              }
-              .mobile_lecdet_tab_album2 {
-                @include mobile_tab_text;
-                margin: unset;
-              }
-            }
-            .mobile_lecdet_tab_playlist {
-              @include mobile_tab_text_align;
-              .lecdet_tab_playlist1 {
-                @include mobile_tab_text;
-                margin: unset;
-              }
-              .mobile_lecdet_tab_playlist1_active {
-                @include mobile_tab_activetext;
-                position: relative;
-                &::after {
-                  content: "";
-                  position: absolute;
-                  bottom: -0.3rem;
-                  left: 12px;
-                  background-color: #ddff2b;
-                  border-radius: 50px;
-                  width: 2rem;
-                  height: 0.25rem;
-                }
-              }
-              .mobile_lecdet_tab_playlist2_active {
-                @include mobile_tab_activetext;
-              }
-              .mobile_lecdet_tab_playlist2 {
-                @include mobile_tab_text;
-                margin: unset;
-              }
-            }
-            .mobile_lecdet_tab_video {
-              @include mobile_tab_text_align;
-              .mobile_lecdet_tab_video1 {
-                @include mobile_tab_text;
-                margin: unset;
-              }
-              .mobile_lecdet_tab_video1_active {
-                @include mobile_tab_activetext;
-                position: relative;
-                &::after {
-                  content: "";
-                  position: absolute;
-                  bottom: -0.3rem;
-                  left: 13px;
-                  background-color: #ddff2b;
-                  border-radius: 50px;
-                  width: 2rem;
-                  height: 0.25rem;
-                }
-              }
-            }
-
-    
-            .mobile_lecdet_tab_simrp {
-              @include mobile_tab_text_align;
-               .lecdet_tab_simrp1 {
-                @include mobile_tab_text;
-                 margin: unset;
-                 
-               }
-               .mobile_lecdet_tab_simrp1_active {
-                @include mobile_tab_activetext;
-                 position: relative;
-                 &::after {
-                   content: "";
-                   position: absolute;
-                   bottom: -0.3rem;
-                   left: 12px;
-                   background-color: #ddff2b;
-                   border-radius: 50px;
-                   width: 2rem;
-                   height: 0.25rem;
-                 }
-               }
-               .mobile_lecdet_tab_simrp2_active {
-                @include mobile_tab_activetext;
-                padding-left: 2px;
-               }
-               .mobile_lecdet_tab_simrp2 {
-                 @include mobile_tab_text;
-                 padding-left: 2px;
-                 margin: unset;
-               }
-             }
-
-          }
-
-          .set_choice {
-            padding:3%;
-            color:white;
-            font-family: "Poppins";
-            font-size: 15px;
-            .nums {
-              color:#868686;
-              padding-left:3px;
+            justify-content: center;
+            .likeys_img_sz {
+              width: 18px;
+              height: 17px;
             }
           }
-          .mobile_color_vid {
-            background: #0D0D0D;
-            padding:3%;
-            @include hide_for_desktop;
+          .likeys_text {
+            padding-left: 3px;
+            font-size: 14px;
+            color: #aeaeae;
+          }
+        }
+      }
+      .fixed_icons_black {
+        position: fixed;
+        top: 94px;
+        width: 100%;
+        border-top-right-radius: 24px;
+        border-top-left-radius: 24px;
+        z-index: 10;
+        background: #0d0d0d;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        padding: 2%;
+        border-bottom: 1px solid gray;
+        .icons_mob_black {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          font-family: "Poppins";
+          .likeys_img {
+            width: 18px;
+            height: 17px;
+            background: none;
+            border: 0;
+            margin-right: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .likeys_img_sz {
+              width: 18px;
+              height: 17px;
+            }
+          }
+          .likeys_text {
+            padding-left: 3px;
+            font-size: 14px;
+            color: #aeaeae;
+          }
+        }
+      }
+      .descript {
+        font-size: 14px;
+        color: white;
+        font-family: "Poppins";
+        padding: 4% 3% 3% 5%;
+      }
+      .mobile_lecdet_tab {
+        display: flex;
+        margin-top: 0.6rem;
+        font-family: "Poppins";
+        font-size: 14px;
+        width: 100%;
+        color: white;
+        overflow-x: auto;
+        flex-direction: row;
+        padding: 0% 3%;
+        gap: 1rem;
+        align-items: center;
+        //justify-content: space-around;
+
+        .mobile_lecdet_tab_song {
+          @include mobile_tab_text_align;
+          .lecdet_tab_song1 {
+            @include mobile_tab_text;
+            margin: unset;
+          }
+          .mobile_lecdet_tab_song1_active {
+            @include mobile_tab_activetext;
+            position: relative;
+            &::after {
+              content: "";
+              position: absolute;
+              bottom: -0.3rem;
+              left: 12px;
+              background-color: #ddff2b;
+              border-radius: 50px;
+              width: 2rem;
+              height: 0.25rem;
+            }
+          }
+          .mobile_lecdet_tab_song2_active {
+            @include mobile_tab_activetext;
+          }
+          .mobile_lecdet_tab_song2 {
+            @include mobile_tab_text;
+            margin: unset;
           }
         }
 
-       
-  
+        .mobile_lecdet_tab_album {
+          @include mobile_tab_text_align;
+          .mobile_lecdet_tab_album1 {
+            @include mobile_tab_text;
+            margin: unset;
+          }
+          .mobile_lecdet_tab_album1_active {
+            @include mobile_tab_activetext;
+            position: relative;
+            &::after {
+              content: "";
+              position: absolute;
+              bottom: -0.3rem;
+              left: 12px;
+              background-color: #ddff2b;
+              border-radius: 50px;
+              width: 2rem;
+              height: 0.25rem;
+            }
+          }
+          .mobile_lecdet_tab_album2_active {
+            @include mobile_tab_activetext;
+          }
+          .mobile_lecdet_tab_album2 {
+            @include mobile_tab_text;
+            margin: unset;
+          }
+        }
+        .mobile_lecdet_tab_playlist {
+          @include mobile_tab_text_align;
+          .lecdet_tab_playlist1 {
+            @include mobile_tab_text;
+            margin: unset;
+          }
+          .mobile_lecdet_tab_playlist1_active {
+            @include mobile_tab_activetext;
+            position: relative;
+            &::after {
+              content: "";
+              position: absolute;
+              bottom: -0.3rem;
+              left: 12px;
+              background-color: #ddff2b;
+              border-radius: 50px;
+              width: 2rem;
+              height: 0.25rem;
+            }
+          }
+          .mobile_lecdet_tab_playlist2_active {
+            @include mobile_tab_activetext;
+          }
+          .mobile_lecdet_tab_playlist2 {
+            @include mobile_tab_text;
+            margin: unset;
+          }
+        }
+        .mobile_lecdet_tab_video {
+          @include mobile_tab_text_align;
+          .mobile_lecdet_tab_video1 {
+            @include mobile_tab_text;
+            margin: unset;
+          }
+          .mobile_lecdet_tab_video1_active {
+            @include mobile_tab_activetext;
+            position: relative;
+            &::after {
+              content: "";
+              position: absolute;
+              bottom: -0.3rem;
+              left: 13px;
+              background-color: #ddff2b;
+              border-radius: 50px;
+              width: 2rem;
+              height: 0.25rem;
+            }
+          }
+        }
+
+        .mobile_lecdet_tab_simrp {
+          @include mobile_tab_text_align;
+          .lecdet_tab_simrp1 {
+            @include mobile_tab_text;
+            margin: unset;
+          }
+          .mobile_lecdet_tab_simrp1_active {
+            @include mobile_tab_activetext;
+            position: relative;
+            &::after {
+              content: "";
+              position: absolute;
+              bottom: -0.3rem;
+              left: 12px;
+              background-color: #ddff2b;
+              border-radius: 50px;
+              width: 2rem;
+              height: 0.25rem;
+            }
+          }
+          .mobile_lecdet_tab_simrp2_active {
+            @include mobile_tab_activetext;
+            padding-left: 2px;
+          }
+          .mobile_lecdet_tab_simrp2 {
+            @include mobile_tab_text;
+            padding-left: 2px;
+            margin: unset;
+          }
+        }
+      }
+
+      .set_choice {
+        padding: 3%;
+        color: white;
+        font-family: "Poppins";
+        font-size: 15px;
+        .nums {
+          color: #868686;
+          padding-left: 3px;
+        }
+      }
+      .mobile_color_vid {
+        background: #0d0d0d;
+        padding: 3%;
+        @include hide_for_desktop;
+      }
+    }
+
     // ----------- Section2 ends --------------
-  
+
     .desktop_color_vid {
       @include hide_for_mobile;
-      width:100%;
-        //background: #0D0D0D;
-        //padding:3%;
-        //position: relative;
-        //@media screen and (min-width:615px) {
-          //background:none;
-       // }
+      width: 100%;
+      //background: #0D0D0D;
+      //padding:3%;
+      //position: relative;
+      //@media screen and (min-width:615px) {
+      //background:none;
+      // }
     }
-  
   }
   .share_wrapper {
     display: block;

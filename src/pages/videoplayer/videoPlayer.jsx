@@ -100,7 +100,7 @@ const VideoPlayer = () => {
   const shareAudio = (e) => {
     e.stopPropagation();
     if (!currentUser?.id) {
-      navigate("/auth/login")
+      navigate("/auth/login");
       toast.error("Log in or register to share audio");
       return;
     }
@@ -112,9 +112,8 @@ const VideoPlayer = () => {
 
   useEffect(() => {
     if (!currentUser?.id) {
-     
       return;
-    };
+    }
 
     axios
       .get(
@@ -150,47 +149,47 @@ const VideoPlayer = () => {
     width: "100%",
     playerVars: {
       autoplay: 1,
-      
     },
   };
 
-
-    /////get users favorites
-    async function fetchFavorites(addFav, lecid) {
-      //setsumofFav(favorites)
-      if (!currentUser?.id) return;
-      if (addFav || (!addFav && lecid)) {
-        ////console.log("..........@@@@@@@@@@@@@");
-        await axios
-          .get(`/leclisting_favorites.php?user_id=${currentUser?.id}&type=video`, {
+  /////get users favorites
+  async function fetchFavorites(addFav, lecid) {
+    //setsumofFav(favorites)
+    if (!currentUser?.id) return;
+    if (addFav || (!addFav && lecid)) {
+      ////console.log("..........@@@@@@@@@@@@@");
+      await axios
+        .get(
+          `/leclisting_favorites.php?user_id=${currentUser?.id}&type=video`,
+          {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
               "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
             },
-          })
-          .then((res) => {
+          }
+        )
+        .then((res) => {
           //console.log('video favourites', res.data);
           //  const { video } = res.data;
-           // setgetfavs(Object.values(audio));
-           
-            // const isExist = [Object.values(audio)].includes(nid)
-          })
-          .catch((err) => {
-            //console.log(err);
-          });
-      }
+          // setgetfavs(Object.values(audio));
+          // const isExist = [Object.values(audio)].includes(nid)
+        })
+        .catch((err) => {
+          //console.log(err);
+        });
     }
-    useEffect(() => {
-      fetchFavorites(addFav, id);
-    }, [addFav, id]);
+  }
+  useEffect(() => {
+    fetchFavorites(addFav, id);
+  }, [addFav, id]);
 
   const addToFav = async () => {
     /// add to favorites
     //console.log("event clicked");
     if (!currentUser?.id) {
       toast.error("Login or register to add to favorites");
-      navigate("/auth/login")
+      navigate("/auth/login");
       return;
     }
     const payload = {
@@ -207,11 +206,11 @@ const VideoPlayer = () => {
         },
       })
       .then((res) => {
-      //  //console.log(res);
+        //  //console.log(res);
         toast.success(res.data.message);
         setdisabled(false);
-       // //console.log(addFav);
-       /** if (!getFavs?.includes(id)) {
+        // //console.log(addFav);
+        /** if (!getFavs?.includes(id)) {
           setsumofFav(sumofFav + 1);
         } else {
           setsumofFav(sumofFav - 1);
@@ -223,12 +222,10 @@ const VideoPlayer = () => {
       });
   };
 
-//console.log('video data',data?.share, data?.views, data?.comments)
+  //console.log('video data',data?.share, data?.views, data?.comments)
   return (
     <Container>
-      <div
-        className="w-full boom min-[615px]:px-4 pt-3 pb-20 h-full text-sm min-[615px]:text-[15px]"
-      >
+      <div className="w-full boom min-[615px]:px-4 pt-3 pb-20 h-full text-sm min-[615px]:text-[15px]">
         <div className="my-3 max-[615px]:hidden text-sm text-white space-x-2 flex items-center">
           <HiOutlineArrowLongLeft
             onClick={() => {
@@ -292,11 +289,12 @@ const VideoPlayer = () => {
 
             <div className="w-full xl:flex hidden mt-2 text-gray-400 pr-6  min-[615px]:text-sm  space-x-20 justify-end items-center">
               <button
-              onClick={() => {
-                addToFav()
-              }}
-              disabled={isdisabled}
-              className="flex items-center cursor-pointer space-x-2">
+                onClick={() => {
+                  addToFav();
+                }}
+                disabled={isdisabled}
+                className="flex items-center cursor-pointer space-x-2"
+              >
                 <MdOutlineFavoriteBorder className="text-[25px]" />
                 <span>{formatNumber(data?.favourites || 0)}</span>
               </button>
@@ -343,12 +341,13 @@ const VideoPlayer = () => {
             </div>
 
             <div className="w-full xl:hidden flex text-gray-400 text-[12px] min-[615px]:text-sm space-x-20 min-[615px]:pl-6 min-[615px]:justify-start justify-center items-center">
-            <button
-              onClick={() => {
-                addToFav()
-              }}
-              disabled={isdisabled}
-              className="flex items-center cursor-pointer space-x-2">
+              <button
+                onClick={() => {
+                  addToFav();
+                }}
+                disabled={isdisabled}
+                className="flex items-center cursor-pointer space-x-2"
+              >
                 <MdOutlineFavoriteBorder className="min-[615px]:text-[25px] text-[22px]" />
                 <span>{formatNumber(data?.favourites || 0)}</span>
               </button>
@@ -382,8 +381,8 @@ const VideoPlayer = () => {
                 <div className="video_widget">
                   {subdata?.map(({ images, id, author, views, title }, idx) => {
                     return (
-                      <Link to={`${VIDEOS}${id}`}
-                       
+                      <Link
+                        to={`${VIDEOS}${id}`}
                         className="min-[615px]:mb-3"
                         key={idx}
                       >

@@ -22,17 +22,16 @@ const My_playlist = () => {
   const [isEmpty, setIsEmpty] = useState(false);
   const [nextPageLoad, setNextPageLoad] = useState(false);
   const [page, setPage] = useState(0);
-  const slide = useRef()
-  const [isprev, setisprev] = useState(false)
-  const [isnext, setisnext] = useState(true)
+  const slide = useRef();
+  const [isprev, setisprev] = useState(false);
+  const [isnext, setisnext] = useState(true);
   const [myFolders, setmyFolders] = useState([]);
   const { currentUser } = useSelector((state) => state.user);
   const [myplaylist, setmyplaylist] = useState([]);
 
-
   // get my playlist
   useEffect(() => {
-    if (!currentUser?.id) return
+    if (!currentUser?.id) return;
     axios
       .get(
         `/playlistApi.php?user_id=${parseInt(
@@ -57,10 +56,10 @@ const My_playlist = () => {
 
   const getPlaylist = (id) => {
     /// user_id = 1, playlist_id = 1, action= playlist_data
-   
-    if (!currentUser?.id) return
-    setLoading(true)
-    setdata([])
+
+    if (!currentUser?.id) return;
+    setLoading(true);
+    setdata([]);
     axios
       .get(
         `/playlistApi.php?user_id=${parseInt(
@@ -76,41 +75,38 @@ const My_playlist = () => {
       )
       .then((res) => {
         //console.log(res.data);
-       // //console.log(res.data.audio);
-        const {audio} = res.data[0];
-       if (audio?.length === 0)  {
-        setLoading(false)
-        toast.error('selected folder is empty')
-        
-        setmyplaylist([]);
-        
-          return
-       }
+        // //console.log(res.data.audio);
+        const { audio } = res.data[0];
+        if (audio?.length === 0) {
+          setLoading(false);
+          toast.error("selected folder is empty");
+
+          setmyplaylist([]);
+
+          return;
+        }
         const audioArr = Object.values(audio);
         //console.log(audioArr.toString());
         //setmyplaylist(res.data);
         //setdata(res.data?.slice(0, 10));
-       
+
         axios
-        .get(`/leclisting_multi_nid_api.php?id=${audioArr.toString()}`)
+          .get(`/leclisting_multi_nid_api.php?id=${audioArr.toString()}`)
 
-        .then((res) => {
-          //console.log(res);
-          if ((res.data === null) || !res.data) {
-            toast.error('selected folder is empty')
-            setmyplaylist([]);
-              return
-          }
-          setmyplaylist(res.data);
-          setLoading(false)
-          setdata(_.uniqBy(res.data?.slice(0, 10), "nid"));
-        })
-        .catch((err) => {
-          //console.log(err);
-        });
-        
-
-        
+          .then((res) => {
+            //console.log(res);
+            if (res.data === null || !res.data) {
+              toast.error("selected folder is empty");
+              setmyplaylist([]);
+              return;
+            }
+            setmyplaylist(res.data);
+            setLoading(false);
+            setdata(_.uniqBy(res.data?.slice(0, 10), "nid"));
+          })
+          .catch((err) => {
+            //console.log(err);
+          });
       })
       .catch((err) => {
         //console.log(err);
@@ -139,57 +135,55 @@ const My_playlist = () => {
     [page]
   );
 
-    //get lectures from the same lecturers
-    function prev() {
-      // e.stopPropagation()
-  
-      ////console.log('window.scrollWidth')
-      //console.log(slide.current.scrollLeft);
-      //console.log(slide.current.scrollWidth);
-      //console.log(slide.current.offsetWidth);
-      slide.current.scrollBy({
-        left: -slide.current.scrollWidth / 10,
-        behavior: "smooth",
-      });
-    }
-  
-    function next() {
-      //e.stopPropagation()
-      ////console.log('window.scrollWidth')
-  
-      //console.log(slide.current.scrollWidth);
-      //console.log(slide.current.offsetWidth);
-      slide.current.scrollBy({
-        left: slide.current.scrollWidth / 10,
-        behavior: "smooth",
-      });
-    }
-  
-    useEffect(() => {
-      function scrollEl() {
-        ////console.log("Slide")
-        if (slide.current.scrollLeft === 0) {
-          setisprev(false);
-        } else {
-          setisprev(true);
-        }
-  
-        if (
-          slide.current.scrollLeft + slide.current.offsetWidth >=
-          slide.current.scrollWidth
-        ) {
-          setisnext(false);
-        } else {
-          setisnext(true);
-        }
+  //get lectures from the same lecturers
+  function prev() {
+    // e.stopPropagation()
+
+    ////console.log('window.scrollWidth')
+    //console.log(slide.current.scrollLeft);
+    //console.log(slide.current.scrollWidth);
+    //console.log(slide.current.offsetWidth);
+    slide.current.scrollBy({
+      left: -slide.current.scrollWidth / 10,
+      behavior: "smooth",
+    });
+  }
+
+  function next() {
+    //e.stopPropagation()
+    ////console.log('window.scrollWidth')
+
+    //console.log(slide.current.scrollWidth);
+    //console.log(slide.current.offsetWidth);
+    slide.current.scrollBy({
+      left: slide.current.scrollWidth / 10,
+      behavior: "smooth",
+    });
+  }
+
+  useEffect(() => {
+    function scrollEl() {
+      ////console.log("Slide")
+      if (slide.current.scrollLeft === 0) {
+        setisprev(false);
+      } else {
+        setisprev(true);
       }
-  
-      slide.current?.addEventListener("scroll", scrollEl);
-  
-      return () => slide.current?.removeEventListener("scroll", scrollEl);
-    }, [slide.current?.scrollLeft]);
 
+      if (
+        slide.current.scrollLeft + slide.current.offsetWidth >=
+        slide.current.scrollWidth
+      ) {
+        setisnext(false);
+      } else {
+        setisnext(true);
+      }
+    }
 
+    slide.current?.addEventListener("scroll", scrollEl);
+
+    return () => slide.current?.removeEventListener("scroll", scrollEl);
+  }, [slide.current?.scrollLeft]);
 
   //console.log(data);
   return (
@@ -210,8 +204,8 @@ const My_playlist = () => {
         )}
 
         <div className="overflow_hidden_wrapper_p">
-        <div className={isprev ? "prev" : "prev_none"} onClick={prev}>
-            <img  src-data={back} src={back} alt="back" />
+          <div className={isprev ? "prev" : "prev_none"} onClick={prev}>
+            <img src-data={back} src={back} alt="back" />
           </div>
           <div className={isnext ? "next" : "next_none"} onClick={next}>
             <img src={foward} src-data={foward} alt="foward" />
@@ -226,7 +220,12 @@ const My_playlist = () => {
                   }}
                   key={idx + 1}
                 >
-                  <LandingWidget key={idx} views={views || 0} categories={name} img={"https://imagetolink.com/ib/CQZFhVqz5o.jpeg"} />
+                  <LandingWidget
+                    key={idx}
+                    views={views || 0}
+                    categories={name}
+                    img={"https://imagetolink.com/ib/CQZFhVqz5o.jpeg"}
+                  />
                 </div>
               );
             })}
@@ -261,7 +260,7 @@ const My_playlist = () => {
             </div>
           </div>
         )}
-        {!loading && myplaylist.length !== 0&& (
+        {!loading && myplaylist.length !== 0 && (
           <div className="table">
             {data?.map(
               (
