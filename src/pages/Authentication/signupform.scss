@@ -14,7 +14,7 @@
   font-weight: 400;
   font-size: 15.5294px;
   @media screen and (max-width: 600px) {
-    font-size:14px;
+    font-size: 14px;
   }
   line-height: 1%;
   color: white;
@@ -24,7 +24,7 @@
     font-weight: 400;
     font-size: 15.5294px;
     @media screen and (max-width: 600px) {
-      font-size:14px;
+      font-size: 14px;
     }
     line-height: 1%;
     color: #5e5e5e;
@@ -45,7 +45,7 @@
   font-weight: 400;
   font-size: 15.5294px;
   @media screen and (max-width: 600px) {
-    font-size:14px;
+    font-size: 14px;
   }
   line-height: 1%;
   color: white;
@@ -55,7 +55,7 @@
     font-weight: 400;
     font-size: 15.5294px;
     @media screen and (max-width: 600px) {
-      font-size:14px;
+      font-size: 14px;
     }
     line-height: 1%;
     color: #5e5e5e;
@@ -76,12 +76,11 @@
   font-style: normal;
   font-weight: 400;
   font-size: 15.5294px;
-  color:#070707;
+  color: #070707;
   @media screen and (max-width: 600px) {
-    font-size:14px;
+    font-size: 14px;
   }
   line-height: 1%;
-
 }
 
 .signupform_wrapper {
@@ -94,7 +93,7 @@
     .signupform_fullname {
       @include input_style;
       padding-left: 1rem;
-      margin-bottom:3%;
+      margin-bottom: 3%;
       @media screen and (max-width: 600px) {
         margin-bottom: 5%;
       }
@@ -102,7 +101,7 @@
     .signupform_name {
       @include input_style;
       padding-left: 1rem;
-      margin-bottom:3%;
+      margin-bottom: 3%;
       @media screen and (max-width: 600px) {
         margin-bottom: 5%;
       }
@@ -112,54 +111,49 @@
       border-bottom-right-radius: 0px;
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
-      
     }
     .bb {
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
-
     }
     .signupform_lang {
       @include lang_style;
       padding-left: 1rem;
-      margin-bottom:3%;
+      margin-bottom: 3%;
       position: relative;
       @media screen and (max-width: 600px) {
         margin-bottom: 5%;
       }
       .selected_lang {
         position: absolute;
-
       }
       .selected_lang_none {
         position: absolute;
         color: #5e5e5e;
-        
       }
       .selected_lang_drop {
-       width:100.3%;
+        width: 100.3%;
         position: absolute;
-        top:46px;
-        left:-1px;
+        top: 46px;
+        left: -1px;
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
         border-top: 0px;
-        border:1px solid white;
+        border: 1px solid white;
         background: white;
 
         .drops {
-          width:100%;
+          width: 100%;
           @include dropdown_style;
-          padding:0% 3%;
-
+          padding: 0% 3%;
         }
         .dw {
           background: white;
         }
         .dg {
-          background:rgba(245,245,245,0.8);
+          background: rgba(245, 245, 245, 0.8);
         }
       }
     }
@@ -183,7 +177,7 @@
         padding-left: 1rem;
         color: white;
         @media screen and (max-width: 600px) {
-          font-size:14px;
+          font-size: 14px;
         }
       }
       .signupform_password_icon_show_wrap,
@@ -217,9 +211,9 @@
         line-height: 22px;
         padding-left: 1rem;
         color: white;
-        
+
         @media screen and (max-width: 600px) {
-          font-size:14px;
+          font-size: 14px;
         }
       }
       .signupform_confpassword_icon_show_wrap,
@@ -235,7 +229,7 @@
           font-size: 20px;
           cursor: pointer;
           @media screen and (max-width: 600px) {
-            font-size:15px;
+            font-size: 15px;
           }
         }
       }
@@ -255,7 +249,7 @@
         gap: unset;
         width: 100%;
       }
-     
+
       .signupform_male {
         display: flex;
         flex-direction: row;
@@ -285,7 +279,7 @@
           font-style: normal;
           font-weight: 400;
           font-size: 16px;
-          
+
           line-height: 22px;
           color: #d4d4d4;
           margin: unset;
@@ -340,7 +334,7 @@
       font-weight: 500;
       font-size: 18px;
       @media screen and (max-width: 600px) {
-        font-size:15px;
+        font-size: 15px;
       }
       line-height: 26px;
       letter-spacing: 0.279529px;
@@ -396,8 +390,7 @@
       font-style: normal;
       font-weight: 400;
       font-size: 17px;
-     
-      
+
       @media screen and (min-height: 700px) {
         margin-top: 15%;
       }
@@ -405,7 +398,7 @@
         margin-top: 25%;
       }
       @media screen and (max-width: 600px) {
-        font-size:13px;
+        font-size: 13px;
       }
 
       line-height: 1%;
@@ -420,25 +413,21 @@
       justify-content: center;
       gap: 2rem;
       width: 100%;
-      
-    
-     
+
       @media screen and (max-width: 450px) {
-        bottom:80px;
-        position:absolute;
-        left:0;
-        right:0;
+        bottom: 80px;
+        position: absolute;
+        left: 0;
+        right: 0;
       }
       * {
         cursor: pointer;
-       
       }
-     
     }
     .zindex {
       z-index: -1;
       @media screen and (max-width: 450px) {
-        z-index:0;
+        z-index: 0;
       }
     }
   }

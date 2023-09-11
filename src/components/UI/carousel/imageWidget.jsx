@@ -7,9 +7,9 @@ const ImageWidget = ({ image }) => {
       const newurl = im.getAttribute("src-data");
       im.src = newurl;
 
-      im.addEventListener('error', () => {
-        im.src= "https://imagetolink.com/ib/zEDqstnOit.jpeg"
-      })
+      im.addEventListener("error", () => {
+        im.src = "https://imagetolink.com/ib/zEDqstnOit.jpeg";
+      });
     });
   }, []);
   return (

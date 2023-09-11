@@ -5,7 +5,6 @@ import { RESOURCE_PERSON } from "../../../utils/routes/constants";
 const LecturerMobileChart = ({ data }) => {
   const navigate = useNavigate();
 
-
   return (
     <div>
       <div className="w-[95%] mx-auto">
@@ -19,8 +18,11 @@ const LecturerMobileChart = ({ data }) => {
             <div className="w-full relative h-[90px] rounded-full">
               <img
                 className="rounded-full w-full h-full"
-                
-                src={data[1]?.img || data[1]?.lec_img || "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"}
+                src={
+                  data[1]?.img ||
+                  data[1]?.lec_img ||
+                  "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"
+                }
                 alt=""
               />
 
@@ -45,8 +47,11 @@ const LecturerMobileChart = ({ data }) => {
             <div className="w-full relative h-[100px] rounded-full">
               <img
                 className="rounded-full w-full h-full"
-                
-                src={data[0]?.img || data[0]?.lec_img || "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"}
+                src={
+                  data[0]?.img ||
+                  data[0]?.lec_img ||
+                  "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"
+                }
                 alt=""
               />
               <div className="w-full h-[20px]   text-[12px] inset-x-0 absolute bottom-[-5px] flex items-center justify-center">
@@ -69,8 +74,11 @@ const LecturerMobileChart = ({ data }) => {
             <div className="w-full relative h-[80px] rounded-full">
               <img
                 className="rounded-full w-full h-full"
-                src={data[2]?.img || data[2]?.lec_img || "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"}
-                
+                src={
+                  data[2]?.img ||
+                  data[2]?.lec_img ||
+                  "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"
+                }
                 alt=""
               />
 
@@ -97,9 +105,12 @@ const LecturerMobileChart = ({ data }) => {
               }}
               key={idx}
               className="w-[90%]"
-              
             >
-            <LecturersChartWidget img={lec_img || img} name={name} idx={idx}/>
+              <LecturersChartWidget
+                img={lec_img || img}
+                name={name}
+                idx={idx}
+              />
             </div>
           );
         })}

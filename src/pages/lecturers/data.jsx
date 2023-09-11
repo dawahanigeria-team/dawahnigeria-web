@@ -48,7 +48,6 @@ export const language = [
     name: "All",
     id: "",
   },
-
 ];
 
 export const alphabet = [

@@ -9,9 +9,10 @@ import { toast } from "react-hot-toast";
 import axios from "../../utils/useAxios";
 import Loader from "../../components/UI/loader/loader";
 
-
 const Addplaylist = () => {
-  const { addplaylist, currentUser, lecid } = useSelector((state) => state.user);
+  const { addplaylist, currentUser, lecid } = useSelector(
+    (state) => state.user
+  );
   const dispatch = useDispatch();
   const [seltype, setseltype] = useState("");
   const [isShow, setisShow] = useState(true);
@@ -19,15 +20,13 @@ const Addplaylist = () => {
   const [title, setTitle] = useState("");
   const [myFolders, setmyFolders] = useState([]);
   const [loading, setLoading] = useState(false);
- 
 
-//console.log(lecid)
+  //console.log(lecid)
 
   const hidePlaylist = (e) => {
     e.stopPropagation();
     dispatch(showaddPlaylist(false));
   };
-
 
   // //console.log(user.id)
   const setType = [
@@ -41,7 +40,7 @@ const Addplaylist = () => {
 
   const submit = () => {
     if (!currentUser?.id) {
-      return
+      return;
     }
 
     const validateData = {
@@ -94,7 +93,7 @@ const Addplaylist = () => {
 
   useEffect(() => {
     //get folders
-    if (isShow &&   currentUser?.id) {
+    if (isShow && currentUser?.id) {
       axios
         .get(
           `/playlistApi.php?user_id=${parseInt(
@@ -133,7 +132,7 @@ const Addplaylist = () => {
     };
 
     //console.log(payload)
-   // if(payload) return
+    // if(payload) return
     axios
       .post(`/playlistApi.php`, payload, {
         headers: {
@@ -144,7 +143,7 @@ const Addplaylist = () => {
       })
       .then((res) => {
         //console.log(res);
-        toast.success(res.data.message)
+        toast.success(res.data.message);
         dispatch(showaddPlaylist(false));
       })
       .catch((err) => {
@@ -174,7 +173,7 @@ const Addplaylist = () => {
             }}
             className="close_image"
           >
-            <img className="close_img_sz"  src={cloase} alt="" />
+            <img className="close_img_sz" src={cloase} alt="" />
           </div>
           <div className="cur_small_wrapper">
             <div className="create_play">
@@ -195,15 +194,15 @@ const Addplaylist = () => {
             {myFolders?.map(({ name, is_private, id }, index) => {
               return (
                 <div
-                onClick={() => {addSong(id)}}
-                className="created_play"
-                key={index}
+                  onClick={() => {
+                    addSong(id);
+                  }}
+                  className="created_play"
+                  key={index}
                 >
                   {myFolders.length !== 0 && (
-                    <div 
-                    
-                    className="created_folder_icon">
-                      <img  className="img_sz" src={playfolder} alt=" " />
+                    <div className="created_folder_icon">
+                      <img className="img_sz" src={playfolder} alt=" " />
                     </div>
                   )}
 
@@ -230,7 +229,7 @@ const Addplaylist = () => {
             }}
             className="close_image"
           >
-            <img className="close_img_sz"  src={cloase} alt="" />
+            <img className="close_img_sz" src={cloase} alt="" />
           </div>
 
           <input

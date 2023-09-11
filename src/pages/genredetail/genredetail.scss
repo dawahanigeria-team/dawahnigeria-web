@@ -1,47 +1,42 @@
 .genredet_wrapper {
-   
-    width:100%;
-    height:100%;
-    @media screen and (max-width:600px) {
-      
+  width: 100%;
+  height: 100%;
+  @media screen and (max-width: 600px) {
+  }
+
+  .genredet_header_link {
+    width: 100%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    padding: unset;
+    z-index: 10;
+    background: #090909;
+  }
+
+  .desktop_heading {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    font-size: 14px;
+    color: white;
+    //padding-left: 2%;
+
+    margin-bottom: 2%;
+    gap: 2px;
+    font-family: "Poppins";
+    .grey {
+      color: rgba(255, 255, 255, 0.6);
     }
-
-    .genredet_header_link {
-        width: 100%;
-        position:fixed;
-        left:0;
-        right:0;
-        padding:unset;
-        z-index: 10;
-        background:#090909;
-
+    .white {
+      color: #fff;
     }
-
-    .desktop_heading {
-        width:100%;
-        display: flex;
-        align-items: center;
-        justify-content: start;
-        font-size: 14px;
-        color:white;
-        //padding-left: 2%;
-      
-        margin-bottom:2%;
-        gap:2px;
-        font-family: "Poppins";
-        .grey {
-          color:rgba(255,255,255,0.6)
-        }
-        .white {
-          color:#fff;
-        }
-        .arrows {
-          font-size:25px;
-        }
-        @media screen and (max-width:615px) {
-          display: none;
-        }
-      }
+    .arrows {
+      font-size: 25px;
+    }
+    @media screen and (max-width: 615px) {
+      display: none;
+    }
+  }
 }
-
-

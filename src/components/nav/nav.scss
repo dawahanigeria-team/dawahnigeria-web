@@ -1,18 +1,18 @@
 @mixin nav_alignment {
-  position:fixed;
+  position: fixed;
   top: 0px;
   left: 0px;
-  right:0px;
+  right: 0px;
 
   //width: 100%;
   z-index: 15;
- // background:#030303;
+  // background:#030303;
   height: fit-content;
-  padding:1%;
+  padding: 1%;
   @media screen and (max-width: 615px) {
-    padding:2%;
-    width:100%;
-    right:0;
+    padding: 2%;
+    width: 100%;
+    right: 0;
   }
 }
 
@@ -21,10 +21,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content:space-between;
+  justify-content: space-between;
   background: #090909;
   mix-blend-mode: normal;
-  
+
   //border: 1px solid rgba(205, 205, 205, 0.1);
   .nav_wrapper {
     display: flex;
@@ -34,8 +34,8 @@
     width: 100%;
     .nav_logo {
       display: flex;
-      flex-direction:row;
-      gap:1rem;
+      flex-direction: row;
+      gap: 1rem;
       align-items: center;
       .nav_res_hamburger {
         display: none;
@@ -43,40 +43,35 @@
         @media screen and (max-width: 890px) {
           display: block;
           color: #cfcfcf;
-          font-size:2rem;
-          
+          font-size: 2rem;
         }
       }
       .nav_logo {
-        
         //display: none;
-        width:35px;
-        height:35px;
+        width: 35px;
+        height: 35px;
         @media screen and (max-width: 890px) {
           display: block;
           width: 45%;
-          height:40px;
+          height: 40px;
         }
         .logo_img {
-          width:100%;
-          height:100%;
+          width: 100%;
+          height: 100%;
         }
       }
     }
-   
+
     .hide {
-      width:100px;
-      height:1px;
+      width: 100px;
+      height: 1px;
       background: none;
       @media screen and (max-width: 690px) {
         display: none;
       }
     }
     .nav_search {
-    
-
       @media screen and (max-width: 1273px) {
-        
       }
       @media screen and (max-width: 690px) {
         display: none;
@@ -85,15 +80,14 @@
     .nav_download {
       display: flex;
       position: absolute;
-      right:10px;
+      right: 10px;
       flex-direction: row;
       align-items: center;
       justify-content: flex-end;
-      gap:1rem;
+      gap: 1rem;
       @media screen and (max-width: 1273px) {
-        
       }
-     
+
       @media screen and (max-width: 1035px) {
         display: none;
       }
@@ -110,7 +104,7 @@
         color: #cfcfcf;
         justify-content: center;
         align-items: center;
-        padding:4px 8px;
+        padding: 4px 8px;
         border: 1px solid #cfcfcf;
         border-radius: 32px;
         cursor: pointer;
@@ -122,7 +116,6 @@
           margin-right: 2rem;
         }
       }
-     
     }
   }
   .nav_search2 {
@@ -131,15 +124,14 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      padding:3% 1.5%;
+      padding: 3% 1.5%;
       width: 100%;
     }
   }
   .nav_search2_hide {
     display: none;
     @media screen and (max-width: 600px) {
-      display:none;
+      display: none;
     }
-   
   }
 }

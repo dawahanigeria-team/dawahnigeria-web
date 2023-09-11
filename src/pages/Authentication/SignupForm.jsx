@@ -15,8 +15,8 @@ import Loader from "../../components/UI/loader/loader";
 import { registration } from "../../Redux/Actions/ActionCreators";
 
 const SignupForm = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [show, setShow] = useState("password");
   const [show2, setShow2] = useState("password");
   const [isdrop, setisdrop] = useState(false);
@@ -82,26 +82,24 @@ const SignupForm = () => {
     }
 
     const payload = {
-      "action":"register_user",
-      "username": name,
-      "email":email,
-      "password":password,
-      "languageId": langid
+      action: "register_user",
+      username: name,
+      email: email,
+      password: password,
+      languageId: langid,
     };
 
     const getId = {
-        action: "login_user",
-        email_or_username: email,
-        password: password
-    }
-   
+      action: "login_user",
+      email_or_username: email,
+      password: password,
+    };
+
     //console.log(payload)
-    dispatch(registration(payload,isSocial, getId, navigate, setLoading))
+    dispatch(registration(payload, isSocial, getId, navigate, setLoading));
     //toast.success("Signup successful");
   };
 
-
-  
   const { email, password, name, confirm_password } = data;
 
   //console.log(data);
@@ -111,129 +109,130 @@ const SignupForm = () => {
         onSubmit={(e) => {
           handleSubmit(e);
         }}
-        style={{height:`${Math.floor(0.7 * window.innerHeight)}px`}}
+        style={{ height: `${Math.floor(0.7 * window.innerHeight)}px` }}
         className="signupform_form"
       >
         <div className="w-full">
-        <input
-          onChange={(e) => {
-            handleInput(e);
-          }}
-          type="text"
-          name="text"
-          placeholder="Username"
-          required
-          value={name}
-          id="name"
-          className="signupform_fullname"
-        />
-        <input
-          onChange={(e) => {
-            handleInput(e);
-          }}
-          type="email"
-          name="email"
-          placeholder="Email Address"
-          required
-          value={email}
-          id="email"
-          className="signupform_name"
-        />
-       
-        <div className="signupform_password_wrap">
           <input
             onChange={(e) => {
               handleInput(e);
             }}
-            type={show}
-            placeholder="Password"
-            name="password"
+            type="text"
+            name="text"
+            placeholder="Username"
             required
-            value={password}
-            id="password"
-            className="signupform_password"
+            value={name}
+            id="name"
+            className="signupform_fullname"
           />
-          {show === "password" && (
-            <div className="signupform_password_icon_show_wrap">
-              <AiFillEye
-                onClick={() => setShow("text")}
-                className="signupform_password_icon_show"
-              />
-            </div>
-          )}
-          {show !== "password" && (
-            <div className="signupform_password_icon_hide_wrap">
-              <AiFillEyeInvisible
-                onClick={() => setShow("password")}
-                className="signupform_password_icon_hide"
-              />
-            </div>
-          )}
-        </div>
-        <div className="signupform_confpassword_wrap">
           <input
             onChange={(e) => {
               handleInput(e);
             }}
-            type={show2}
-            placeholder="Confirm Password"
-            name="confirm_password"
+            type="email"
+            name="email"
+            placeholder="Email Address"
             required
-            value={confirm_password}
-            id="confirm_password"
-            className="signupform_confpassword"
+            value={email}
+            id="email"
+            className="signupform_name"
           />
-          {show2 === "password" && (
-            <div className="signupform_confpassword_icon_show_wrap">
-              <AiFillEye
-                onClick={() => setShow2("text")}
-                className="signupform_confpassword_icon_show"
-              />
-            </div>
-          )}
-          {show2 !== "password" && (
-            <div className="signupform_confpassword_icon_hide_wrap">
-              <AiFillEyeInvisible
-                onClick={() => setShow2("password")}
-                className="signupform_confpassword_icon_hide"
-              />
-            </div>
-          )}
-        </div>
-        <div
-          onClick={() => {
-            setisdrop(!isdrop);
-          }}
-          className={isdrop ? "signupform_lang rbb z-[20]" : "signupform_lang bb"}
-        >
-          <span className={lang ? "selected_lang" : "selected_lang_none"}>
-            {lang || "-select a language-"}
-          </span>
-          {isdrop && (
-            <div className="selected_lang_drop h-[200px] overflow-hidden">
-              <div className="overflow-y-auto w-full h-full">
-              {langData.map(({ name, id }, index) => {
-                return (
-                  <div
-                    key={index}
-                    onClick={() => {
-                      setlangid(id);
-                      setLang(name);
-                      setisdrop(!isdrop);
-                    }}
-                    className="drops"
-                  >
-                    {name}
-                  </div>
-                );
-              })}
-              </div>
-          
-            </div>
-          )}
-        </div>
 
-        {/**
+          <div className="signupform_password_wrap">
+            <input
+              onChange={(e) => {
+                handleInput(e);
+              }}
+              type={show}
+              placeholder="Password"
+              name="password"
+              required
+              value={password}
+              id="password"
+              className="signupform_password"
+            />
+            {show === "password" && (
+              <div className="signupform_password_icon_show_wrap">
+                <AiFillEye
+                  onClick={() => setShow("text")}
+                  className="signupform_password_icon_show"
+                />
+              </div>
+            )}
+            {show !== "password" && (
+              <div className="signupform_password_icon_hide_wrap">
+                <AiFillEyeInvisible
+                  onClick={() => setShow("password")}
+                  className="signupform_password_icon_hide"
+                />
+              </div>
+            )}
+          </div>
+          <div className="signupform_confpassword_wrap">
+            <input
+              onChange={(e) => {
+                handleInput(e);
+              }}
+              type={show2}
+              placeholder="Confirm Password"
+              name="confirm_password"
+              required
+              value={confirm_password}
+              id="confirm_password"
+              className="signupform_confpassword"
+            />
+            {show2 === "password" && (
+              <div className="signupform_confpassword_icon_show_wrap">
+                <AiFillEye
+                  onClick={() => setShow2("text")}
+                  className="signupform_confpassword_icon_show"
+                />
+              </div>
+            )}
+            {show2 !== "password" && (
+              <div className="signupform_confpassword_icon_hide_wrap">
+                <AiFillEyeInvisible
+                  onClick={() => setShow2("password")}
+                  className="signupform_confpassword_icon_hide"
+                />
+              </div>
+            )}
+          </div>
+          <div
+            onClick={() => {
+              setisdrop(!isdrop);
+            }}
+            className={
+              isdrop ? "signupform_lang rbb z-[20]" : "signupform_lang bb"
+            }
+          >
+            <span className={lang ? "selected_lang" : "selected_lang_none"}>
+              {lang || "-select a language-"}
+            </span>
+            {isdrop && (
+              <div className="selected_lang_drop h-[200px] overflow-hidden">
+                <div className="overflow-y-auto w-full h-full">
+                  {langData.map(({ name, id }, index) => {
+                    return (
+                      <div
+                        key={index}
+                        onClick={() => {
+                          setlangid(id);
+                          setLang(name);
+                          setisdrop(!isdrop);
+                        }}
+                        className="drops"
+                      >
+                        {name}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/**
          <div className="signupform_gender_wrap">
           <div className="signupform_male">
             <div
@@ -273,46 +272,43 @@ const SignupForm = () => {
          
          */}
 
-        <button className="signupform_button">
-          {loading ? <Loader /> : <span>Sign up</span>}
-        </button>
-        <div className="signupform_terms">
-          <div
-            onClick={() => {
-              setTerms(!terms);
-            }}
-            className={`signupform_terms_button ${
-              terms
-                ? "signupform_terms_button_active"
-                : "signupform_terms_button_inactive"
-            }`}
-          ></div>
-          <div className="signupform_terms_text">
-            <p className="signupform_terms_text1">
-              I have read and accept the{" "}
-            </p>
-            <p className="signupform_terms_text2">Terms and Condition</p>
+          <button className="signupform_button">
+            {loading ? <Loader /> : <span>Sign up</span>}
+          </button>
+          <div className="signupform_terms">
+            <div
+              onClick={() => {
+                setTerms(!terms);
+              }}
+              className={`signupform_terms_button ${
+                terms
+                  ? "signupform_terms_button_active"
+                  : "signupform_terms_button_inactive"
+              }`}
+            ></div>
+            <div className="signupform_terms_text">
+              <p className="signupform_terms_text1">
+                I have read and accept the{" "}
+              </p>
+              <p className="signupform_terms_text2">Terms and Condition</p>
+            </div>
           </div>
         </div>
 
-        </div>
-        
         <span className="signupform_or">- or -</span>
         <div className="login_socials inset-x-0 flex items-center w-full mx-auto h-fit">
-        <div className="hidden">
-          <GetFacebookAuth data={data} setData={setData} />
-        </div>
+          <div className="hidden">
+            <GetFacebookAuth data={data} setData={setData} />
+          </div>
 
-        <div
-       
-        className="hidden w-[45px] h-[45px]">
-          <img className="w-full h-full" src={twitter} alt="twitter" />
-        </div>
+          <div className="hidden w-[45px] h-[45px]">
+            <img className="w-full h-full" src={twitter} alt="twitter" />
+          </div>
 
-        <div className="z-[1] w-full">
-          <GetGoogleOAuth data={data} setData={setData} />
+          <div className="z-[1] w-full">
+            <GetGoogleOAuth data={data} setData={setData} />
+          </div>
         </div>
-      </div>
       </form>
     </div>
   );

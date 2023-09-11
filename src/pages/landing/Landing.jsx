@@ -91,7 +91,7 @@ const Landing = () => {
               axios
                 .get(`/albumlisting_multi_nid_api.php?id=${recArr.toString()}`)
                 .then((res) => {
-                   //console.log("I am the new guy", res);
+                  //console.log("I am the new guy", res);
                   setRecent(res.data?.slice(0, 10));
                 })
                 .catch((err) => {
@@ -194,15 +194,11 @@ const Landing = () => {
 
         <Slider className="landing_carousel landing_space" {...settings}>
           {images?.map((image, index) => {
-                return (
-                  <div   key={index} className="landing_carousel_img">
-                        <MobileImageWidget image={image} className="" />
-                  </div>
-              
-                )
-            
-              
-          
+            return (
+              <div key={index} className="landing_carousel_img">
+                <MobileImageWidget image={image} className="" />
+              </div>
+            );
           })}
         </Slider>
         <Slider className="landing_options" {...settings1}>
@@ -259,8 +255,7 @@ const Landing = () => {
             data={ramadan}
             heading="Ramadan Tafsir"
             type={"lectures"}
-            currentPage={''}
-          
+            currentPage={""}
             nav1={{ title: "Home", link: "/home" }}
           />
         </div>
@@ -269,8 +264,7 @@ const Landing = () => {
             data={quran}
             heading="Quran Recitations"
             type={"lectures"}
-            
-            currentPage={''}
+            currentPage={""}
             nav1={{ title: "Home", link: "/home" }}
           />
         </div>

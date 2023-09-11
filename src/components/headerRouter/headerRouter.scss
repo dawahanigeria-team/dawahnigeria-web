@@ -1,7 +1,7 @@
 .hroute_title_res_wrap {
   //background:#090909;
   margin-bottom: 2px;
-  width:100%;
+  width: 100%;
   @media screen and (min-width: 600px) {
     display: none;
   }
@@ -11,7 +11,7 @@
   justify-content: space-between;
   margin-bottom: 4%;
   @media screen and (max-width: 615px) {
-    margin-bottom:3%;
+    margin-bottom: 3%;
   }
   justify-content: space-between;
   .hroute_title_res_icon {
@@ -30,11 +30,11 @@
     @media screen and (max-width: 615px) {
       font-size: 17px;
     }
-   // grid-column: span 2;
+    // grid-column: span 2;
     //margin-left: 1.5rem;
   }
   .hides {
-    width:40px;
+    width: 40px;
     background: none;
   }
 }

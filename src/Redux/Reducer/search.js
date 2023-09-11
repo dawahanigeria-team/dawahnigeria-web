@@ -1,13 +1,10 @@
 import * as type from "../Actions/Types";
 
 const initailState = {
-  searchRecord:"",
- 
-  searchData:[],
-  searchOptions:{},
+  searchRecord: "",
 
- 
-
+  searchData: [],
+  searchOptions: {},
 };
 const Search = (state = initailState, action) => {
   switch (action.type) {
@@ -16,17 +13,16 @@ const Search = (state = initailState, action) => {
         ...state,
         searchRecord: action.payload,
       };
-      case type.GET_SEARCH_DATA:
+    case type.GET_SEARCH_DATA:
       return {
         ...state,
         searchData: action.payload,
       };
-      case type.GET_SEARCH_OPTIONS:
-        return {
-          ...state,
-          searchOptions: action.payload,
-        };
-  
+    case type.GET_SEARCH_OPTIONS:
+      return {
+        ...state,
+        searchOptions: action.payload,
+      };
 
     default:
       return state;

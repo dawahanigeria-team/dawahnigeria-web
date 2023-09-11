@@ -299,9 +299,7 @@ const PlaylistDetail = () => {
             </div>
             <div className="leclistdet_head_right">
               <p className="leclistdet_head_right_head">{singleData?.name}</p>
-              <div className="leclistdet_head_right_text">
-           
-              </div>
+              <div className="leclistdet_head_right_text"></div>
 
               <div className="leclistdet_head_right_actions_wrap">
                 <button
@@ -489,7 +487,10 @@ const PlaylistDetail = () => {
                   <button className="likeys_img">
                     <img className="likeys_img_sz" src={combold} alt="" />
                   </button>
-                  <span className="likeys_text"> {formatNumber(singleData?.comments || 0)}</span>
+                  <span className="likeys_text">
+                    {" "}
+                    {formatNumber(singleData?.comments || 0)}
+                  </span>
                 </div>
               </div>
               <div className={isVisible ? "headings pb-7" : "headings_none"}>
@@ -562,11 +563,14 @@ const PlaylistDetail = () => {
                 </div>
               </div>
             )}
-           {!loading && listdetail?.length == 0 && <div className="text-gray-200 no_playlist flex items-center justify-center w-full h-[200px]">
-          <span>-- no lecture in playlist --</span>
-      </div>}
+            {!loading && listdetail?.length == 0 && (
+              <div className="text-gray-200 no_playlist flex items-center justify-center w-full h-[200px]">
+                <span>-- no lecture in playlist --</span>
+              </div>
+            )}
             <div className="lecsong_content">
-              {!loading && listdetail?.length !== 0 &&
+              {!loading &&
+                listdetail?.length !== 0 &&
                 data?.map(
                   (
                     {
@@ -702,11 +706,10 @@ const PlaylistDetail = () => {
           <div className="px-3">
             <SimilarAudio
               similar={similarPlaylist}
-
               current={id}
               url={`/pl`}
-              type={'playlist'}
-              navtitle={'Playlist'}
+              type={"playlist"}
+              navtitle={"Playlist"}
               heading={`Similar Playlist`}
             />
 

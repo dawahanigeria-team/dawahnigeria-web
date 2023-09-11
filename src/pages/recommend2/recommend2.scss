@@ -1,66 +1,66 @@
 .recommend2_wrapper {
   padding: 4% 2% 2% 2%;
-  display:grid;
-  grid-template-columns:repeat(4, auto);
+  display: grid;
+  grid-template-columns: repeat(4, auto);
   width: 100%;
-  gap:2rem;
+  gap: 2rem;
   @media screen and (max-width: 1060px) {
     justify-content: center;
-   //display:grid;
-   grid-template-columns:repeat(4, auto);
-   gap:2rem;
-   margin-top: 2rem;
- }
- @media screen and (max-width: 890px) {
-  justify-content: center;
- //display:grid;
- grid-template-columns:repeat(4, auto);
- gap:2rem;
- margin-top: 2rem;
-}
-@media screen and (max-width: 768px) {
-grid-template-columns:repeat(3, auto);
-gap:2rem;
-margin-top: 2rem;
-}
+    //display:grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  @media screen and (max-width: 890px) {
+    justify-content: center;
+    //display:grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  @media screen and (max-width: 768px) {
+    grid-template-columns: repeat(3, auto);
+    gap: 2rem;
+    margin-top: 2rem;
+  }
 
   @media screen and (max-width: 600px) {
-     justify-content: center;
-    display:grid;
+    justify-content: center;
+    display: grid;
     padding: 0% 2% 2% 2%;
-    grid-template-columns:repeat(2,auto);
-    gap:1rem;
+    grid-template-columns: repeat(2, auto);
+    gap: 1rem;
     margin-top: 4rem;
   }
- 
+
   .recommended2_album_wrap {
     cursor: pointer;
-    width:200px;
-    height:220px;
+    width: 200px;
+    height: 220px;
     @media screen and (max-width: 1238px) {
-      width:165px;
-      height:175px;
+      width: 165px;
+      height: 175px;
     }
     @media screen and (max-width: 1060px) {
-      width:140px;
-      height:150px;
+      width: 140px;
+      height: 150px;
     }
     @media screen and (max-width: 890px) {
-      width:160px;
-      height:170px;
-   }
-   @media screen and (max-width: 768px) {
-    width:165px;
-    height:175px;
- }
+      width: 160px;
+      height: 170px;
+    }
+    @media screen and (max-width: 768px) {
+      width: 165px;
+      height: 175px;
+    }
   }
 }
 .recommend2_header_link {
   width: 100%;
-  position:fixed;
-  left:0;
-  right:0;
+  position: fixed;
+  left: 0;
+  right: 0;
   z-index: 10;
-  padding:unset;
-  background:#090909;
+  padding: unset;
+  background: #090909;
 }

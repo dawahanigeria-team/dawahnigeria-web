@@ -4,7 +4,7 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 21px;
-  margin-bottom:0.5rem;
+  margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
   color: #d4d4d4;
@@ -14,43 +14,42 @@
   flex-direction: column;
   align-items: flex-start;
 }
-@media screen and (max-width:600px) {
-  
+@media screen and (max-width: 600px) {
   ::-webkit-scrollbar {
     display: none;
   }
   .sidenav_wrapper:hover::-webkit-scrollbar {
-  display: none;
-}
-.sidenav_wrapper:focus::-webkit-scrollbar {
-  display: none;
-}
-.sidenav_wrapper:hover::-moz-scrollbar {
-  display: none;
-}
-.sidenav_wrapper:focus::-moz-scrollbar {
-  display: none;
-}
+    display: none;
+  }
+  .sidenav_wrapper:focus::-webkit-scrollbar {
+    display: none;
+  }
+  .sidenav_wrapper:hover::-moz-scrollbar {
+    display: none;
+  }
+  .sidenav_wrapper:focus::-moz-scrollbar {
+    display: none;
+  }
 }
 
 .sidenav_wrapper:hover::-webkit-scrollbar {
-    display:block;
+  display: block;
 }
 
 .sidenav_wrapper::-webkit-scrollbar {
   width: 5px;
   height: 18px;
-  display:none;
+  display: none;
 }
 
 .sidenav_wrapper:hover::-moz-scrollbar {
-  display:block;
+  display: block;
 }
 
 .sidenav_wrapper::-moz-scrollbar {
-width: 5px;
-height: 18px;
-display:none;
+  width: 5px;
+  height: 18px;
+  display: none;
 }
 
 .sidenav_wrapper::-webkit-scrollbar-thumb {
@@ -73,20 +72,17 @@ display:none;
   background-color: rgba(244, 245, 234, 0.5);
 }
 
-
-
 .sidenav_wrapper {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 1.5rem 2rem;
-  height:100vh;
+  height: 100vh;
   z-index: 100;
-  width:240px;
-  padding-bottom:90px;
-  overflow-y:auto;
+  width: 240px;
+  padding-bottom: 90px;
+  overflow-y: auto;
   background: #030303;
-
 
   .sidenav_logo {
     margin-bottom: 1rem;
@@ -95,13 +91,13 @@ display:none;
     }
   }
   .logout {
-    display:flex;
-    width:100%;
+    display: flex;
+    width: 100%;
     justify-content: flex-end;
     align-items: flex-end;
     margin-bottom: 0.5rem;
     .logout_btn {
-      padding:1%;
+      padding: 1%;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -119,11 +115,11 @@ display:none;
     }
   }
   .sidenav_auth {
-    display:grid;
+    display: grid;
     grid-template-columns: repeat(5, auto);
     align-items: center;
     margin-bottom: 1.5rem;
-    
+
     .sidenav_avatar {
       width: 35px;
       height: 35px;
@@ -168,8 +164,6 @@ display:none;
         color: #d6ff00;
       }
     }
-
-
   }
   .sidenav_lectures {
     @include section_layouts;
@@ -199,6 +193,4 @@ display:none;
       @include section_headers;
     }
   }
-
-  
 }

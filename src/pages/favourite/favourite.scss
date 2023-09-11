@@ -12,8 +12,8 @@
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
-  @media screen and (max-width:600px) {
-    font-size:14px;
+  @media screen and (max-width: 600px) {
+    font-size: 14px;
   }
   line-height: 30px;
   color: #aeaeae;
@@ -29,8 +29,8 @@
   font-style: normal;
   font-weight: 800;
   font-size: 21px;
-  @media screen and (max-width:600px) {
-    font-size:17px;
+  @media screen and (max-width: 600px) {
+    font-size: 17px;
   }
   line-height: 30px;
   color: #ffffff;
@@ -46,22 +46,22 @@
 
 .fav_wrapper {
   padding: 4% 2% 2% 2%;
-  @media screen and (max-width:600px) {
-    padding:0% 2% 2% 2%;
+  @media screen and (max-width: 600px) {
+    padding: 0% 2% 2% 2%;
   }
   .fav_header_link {
     width: 100%;
-    position:fixed;
-    left:0;
-    right:0;
+    position: fixed;
+    left: 0;
+    right: 0;
     z-index: 10;
-    padding:unset;
-    background:#090909;
+    padding: unset;
+    background: #090909;
   }
   .fav_tab_wrap {
     overflow-x: scroll;
-    @media screen and (max-width:615px) {
-      padding-top:1rem;
+    @media screen and (max-width: 615px) {
+      padding-top: 1rem;
     }
     &::-webkit-scrollbar {
       display: none;
@@ -74,16 +74,16 @@
       grid-template-columns: repeat(13, minmax(0, 1fr));
       justify-items: center;
       gap: 1rem;
-  
+
       width: 60%;
       // border-bottom: 1px solid #5e5e5e;
       @media screen and (max-width: 1400px) {
         width: 600px;
       }
-      @media screen and (max-width:600px) {
-        gap:0.5rem;
-        margin-top:2.5rem;
-        width:450px;
+      @media screen and (max-width: 600px) {
+        gap: 0.5rem;
+        margin-top: 2.5rem;
+        width: 450px;
       }
       .fav_tab_song {
         @include tab_text_align;

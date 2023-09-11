@@ -29,7 +29,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { AudioContext } from "../../App";
 import LecturersWidget from "../lecturersWidget/LecturersWidget";
 import GenreMobileLecturer from "../../pages/genredetail/genreMobileLecturer";
-import { LECTURE, ALBUMS, RESOURCE_PERSON,PLAYLISTS } from "../../utils/routes/constants";
+import {
+  LECTURE,
+  ALBUMS,
+  RESOURCE_PERSON,
+  PLAYLISTS,
+} from "../../utils/routes/constants";
 function More() {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
@@ -70,7 +75,7 @@ function More() {
       if (page > 1) {
         setNextPageLoad(true);
       }
-      if (type === "playlist" && navtitle === "Charts" ) {
+      if (type === "playlist" && navtitle === "Charts") {
         axios
           .get(endpoint_url)
           .then((res) => {
@@ -383,7 +388,11 @@ function More() {
                 if (data.length === idx + 1) {
                   return (
                     <Link
-                      to={endpoint_url ? `${LECTURE}${nid || id}` : `${ALBUMS}${nid || id}`}
+                      to={
+                        endpoint_url
+                          ? `${LECTURE}${nid || id}`
+                          : `${ALBUMS}${nid || id}`
+                      }
                       onClick={() => {
                         if (endpoint_url && window.innerWidth <= 615) {
                           dispatch(getPack(null));
@@ -414,7 +423,11 @@ function More() {
                 } else {
                   return (
                     <Link
-                      to={endpoint_url ? `${LECTURE}${nid || id}` : `${ALBUMS}${nid || id}`}
+                      to={
+                        endpoint_url
+                          ? `${LECTURE}${nid || id}`
+                          : `${ALBUMS}${nid || id}`
+                      }
                       onClick={() => {
                         if (endpoint_url && window.innerWidth <= 615) {
                           dispatch(getPack(null));
@@ -488,7 +501,11 @@ function More() {
                   );
                 } else {
                   return (
-                    <Link to={`${RESOURCE_PERSON}${id}`} key={idx} className="lecturers_item">
+                    <Link
+                      to={`${RESOURCE_PERSON}${id}`}
+                      key={idx}
+                      className="lecturers_item"
+                    >
                       <LecturersWidget
                         img={img}
                         views={views}
