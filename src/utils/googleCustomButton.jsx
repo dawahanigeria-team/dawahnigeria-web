@@ -13,8 +13,6 @@ const GoogleCustomButton = () => {
 
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      //console.log(tokenResponse);
-      //console.log(tokenResponse.access_token);
       axios
         .get("https://www.googleapis.com/oauth2/v3/userinfo", {
           headers: {
@@ -22,7 +20,6 @@ const GoogleCustomButton = () => {
           },
         })
         .then((res) => {
-          //console.log(res.data);
           const { email, name } = res.data;
           const payload = {
             action: "register_user",

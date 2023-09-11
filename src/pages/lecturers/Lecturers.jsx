@@ -33,7 +33,7 @@ const Lecturers = () => {
   const [typeName, setTypeName] = useState("");
   const [alpha, setAlphabet] = useState("");
   const [initialAlpha, setinitialAlpha] = useState();
-  const [lectId, setlectId] = useState()
+  const [lectId, setlectId] = useState();
 
   //console.log(langid);
   //console.log(typeName);
@@ -44,21 +44,20 @@ const Lecturers = () => {
       axios
         .get(`https://backend.dawahnigeria.com/dboxapi/langjson`)
         .then((res) => {
-          ////console.log(res.data.rp);
-          setLanguages([...language, ...res.data.rp]);
+          if (res.data.rp) setLanguages([...language, ...res.data.rp]);
         });
     }
     getLang();
   }, []);
-
+  console.log({ languages });
   useEffect(() => {
     setData3(data);
     //console.log(data);
   }, [data]);
 
   useEffect(() => {
-    if (typeName === 'name' && active !== 'All') {
-      return 
+    if (typeName === "name" && active !== "All") {
+      return;
     }
     if (isEmpty) return;
     const handleRequest = () => {
@@ -74,8 +73,8 @@ const Lecturers = () => {
       axios
         .get(
           `https://www.dawahbox.com/mongo/api/all_rps_api.php?offset=30&lim=10&page=${page}${`${
-            langid? `&langid=${langid}` : ""
-          }`}${`${alpha && alpha !== 'Hot' ? `&alpha=${alpha}` : ""}`}`
+            langid ? `&langid=${langid}` : ""
+          }`}${`${alpha && alpha !== "Hot" ? `&alpha=${alpha}` : ""}`}`
         )
         .then((res) => {
           //console.log(res.data);
@@ -116,14 +115,17 @@ const Lecturers = () => {
   //console.log(data);
 
   useEffect(() => {
-    if (typeName !== 'name' && active === 'All') {
-      return 
+    if (typeName !== "name" && active === "All") {
+      return;
     }
-  axios.get(`https://www.dawahbox.com/mongo/api/rplisting_multi_nid_api.php?id=${lectId}`)
+    axios
+      .get(
+        `https://www.dawahbox.com/mongo/api/rplisting_multi_nid_api.php?id=${lectId}`
+      )
       .then((res) => {
         //console.log(res.data[0])
-      })
-  },[lectId])
+      });
+  }, [lectId]);
 
   const lastElement = useCallback(
     (node) => {
@@ -168,7 +170,7 @@ const Lecturers = () => {
                   setActive={setActive}
                   title={name}
                   setlectId={setlectId}
-                 lecid={id}
+                  lecid={id}
                   setIsEmpty={setIsEmpty}
                   setTypeName={setTypeName}
                   action="name"
@@ -240,10 +242,7 @@ const Lecturers = () => {
           </div>
         )}
         <div className="lecturers_widget">
-       
-          {!loading && 
-          
-          
+          {!loading &&
             filter.map(
               (
                 {
@@ -262,17 +261,15 @@ const Lecturers = () => {
               ) => {
                 if (filter.length === idx + 1) {
                   return (
-                    <Link to={`${RESOURCE_PERSON}${id}`}
+                    <Link
+                      to={`${RESOURCE_PERSON}${id}`}
                       key={idx}
-                    
                       className="lecturers_item"
                       ref={lastElement}
                     >
                       <LecturersWidget
                         key={idx}
-                        img={
-                          img
-                        }
+                        img={img}
                         views={views}
                         favorites={favorites}
                         rp={rp || name || rpname}
@@ -281,24 +278,20 @@ const Lecturers = () => {
                         views={views}
                         key={idx}
                         rp={name}
-                        img={
-                          img 
-                        }
+                        img={img}
                       />
                     </Link>
                   );
                 } else {
                   return (
-                    <Link to={`${RESOURCE_PERSON}${id}`}
+                    <Link
+                      to={`${RESOURCE_PERSON}${id}`}
                       key={idx}
-                   
                       className="lecturers_item"
                     >
                       <LecturersWidget
                         key={idx}
-                        img={
-                          img 
-                        }
+                        img={img}
                         views={views}
                         rp={rp || name || rpname}
                       />
@@ -306,9 +299,7 @@ const Lecturers = () => {
                         views={views}
                         key={idx}
                         rp={name}
-                        img={
-                          img
-                        }
+                        img={img}
                       />
                     </Link>
                   );

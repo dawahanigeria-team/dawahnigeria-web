@@ -21,14 +21,11 @@ const Add_playlist = () => {
   const [loading, setLoading] = useState(false);
  
 
-//console.log(lecid)
-
   const hidePlaylist = (e) => {
     e.stopPropagation();
     dispatch(showaddPlaylist(false));
   };
 
-  // //console.log(user.id)
   const setType = [
     { id: 0, type: "Set as public" },
     { id: 1, type: "Set as private" },

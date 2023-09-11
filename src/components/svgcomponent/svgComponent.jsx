@@ -37,13 +37,7 @@ export const AddplayIcon = () => {
       viewBox="0 0 20 20"
       version="1.1"
     >
-      <g
-        id="控件"
-        
-        strokeWidth="1"
-        fill="none"
-        fillRule="evenodd"
-      >
+      <g id="控件" strokeWidth="1" fill="none" fillRule="evenodd">
         <g id="play-bar_nar" transform="translate(-1269.000000, -36.000000)">
           <g id="player-bar">
             <g id="play-bar">
@@ -75,62 +69,116 @@ export const AddplayIcon = () => {
 
 export const RepeatIcon = () => {
   return (
- 
-<svg width="21px" height="21px" viewBox="0 0 21 21"  version="1.1" >
- 
-    <g id="Symbols" stroke="none" className="stroke"    strokeWidth="1" fill="none" fillRule="evenodd" strokeLineCap="round" strokeLineJoin="round">
-        <g id="btn/music-player/Play-style/loop" >
-            <g id="编组" transform="translate(0.500000, 1.500000)">
-                <path d="M1.55981168,-8.8817842e-16 L0,1.91536613 L6,1.91536613 C10.1421356,1.91536613 13.5,5.06831882 13.5,8.95768307 C13.5,11.4541695 12.1165472,13.6472516 10.0302412,14.897863" id="矩形" transform="translate(6.750000, 7.448932) scale(-1, 1) translate(-6.750000, -7.448932) "></path>
-                <path d="M8.05981168,3 L6.5,4.91536613 L12.5,4.91536613 C16.6421356,4.91536613 20,8.06831882 20,11.9576831 C20,14.4541695 18.6165472,16.6472516 16.5302412,17.897863" id="矩形" transform="translate(13.250000, 10.448932) scale(1, -1) translate(-13.250000, -10.448932) "></path>
-            </g>
+    <svg width="21px" height="21px" viewBox="0 0 21 21" version="1.1">
+      <g
+        id="Symbols"
+        stroke="none"
+        className="stroke"
+        strokeWidth="1"
+        fill="none"
+        fillRule="evenodd"
+        strokeLineCap="round"
+        strokeLinejoin="round"
+      >
+        <g id="btn/music-player/Play-style/loop">
+          <g id="编组" transform="translate(0.500000, 1.500000)">
+            <path
+              d="M1.55981168,-8.8817842e-16 L0,1.91536613 L6,1.91536613 C10.1421356,1.91536613 13.5,5.06831882 13.5,8.95768307 C13.5,11.4541695 12.1165472,13.6472516 10.0302412,14.897863"
+              id="矩形"
+              transform="translate(6.750000, 7.448932) scale(-1, 1) translate(-6.750000, -7.448932) "
+            ></path>
+            <path
+              d="M8.05981168,3 L6.5,4.91536613 L12.5,4.91536613 C16.6421356,4.91536613 20,8.06831882 20,11.9576831 C20,14.4541695 18.6165472,16.6472516 16.5302412,17.897863"
+              id="矩形"
+              transform="translate(13.250000, 10.448932) scale(1, -1) translate(-13.250000, -10.448932) "
+            ></path>
+          </g>
         </g>
-    </g>
-</svg>
-  )
-}
+      </g>
+    </svg>
+  );
+};
 
 export const RepeatedIcon = () => {
   return (
- 
-<svg width="21px" height="21px" viewBox="0 0 21 21"  version="1.1" >
- 
-    <g id="Symbols" stroke="none"     strokeWidth="1" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLineJoin="round">
-        <g id="btn/music-player/Play-style/loop" >
-            <g id="编组" transform="translate(0.500000, 1.500000)" stroke="#ddff2e">
-                <path d="M1.55981168,-8.8817842e-16 L0,1.91536613 L6,1.91536613 C10.1421356,1.91536613 13.5,5.06831882 13.5,8.95768307 C13.5,11.4541695 12.1165472,13.6472516 10.0302412,14.897863" id="矩形" transform="translate(6.750000, 7.448932) scale(-1, 1) translate(-6.750000, -7.448932) "></path>
-                <path d="M8.05981168,3 L6.5,4.91536613 L12.5,4.91536613 C16.6421356,4.91536613 20,8.06831882 20,11.9576831 C20,14.4541695 18.6165472,16.6472516 16.5302412,17.897863" id="矩形" transform="translate(13.250000, 10.448932) scale(1, -1) translate(-13.250000, -10.448932) "></path>
-            </g>
+    <svg width="21px" height="21px" viewBox="0 0 21 21" version="1.1">
+      <g
+        id="Symbols"
+        stroke="none"
+        strokeWidth="1"
+        fill="none"
+        fillRule="evenodd"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <g id="btn/music-player/Play-style/loop">
+          <g
+            id="编组"
+            transform="translate(0.500000, 1.500000)"
+            stroke="#ddff2e"
+          >
+            <path
+              d="M1.55981168,-8.8817842e-16 L0,1.91536613 L6,1.91536613 C10.1421356,1.91536613 13.5,5.06831882 13.5,8.95768307 C13.5,11.4541695 12.1165472,13.6472516 10.0302412,14.897863"
+              id="矩形"
+              transform="translate(6.750000, 7.448932) scale(-1, 1) translate(-6.750000, -7.448932) "
+            ></path>
+            <path
+              d="M8.05981168,3 L6.5,4.91536613 L12.5,4.91536613 C16.6421356,4.91536613 20,8.06831882 20,11.9576831 C20,14.4541695 18.6165472,16.6472516 16.5302412,17.897863"
+              id="矩形"
+              transform="translate(13.250000, 10.448932) scale(1, -1) translate(-13.250000, -10.448932) "
+            ></path>
+          </g>
         </g>
-    </g>
-</svg>
-  )
-}
+      </g>
+    </svg>
+  );
+};
 
 export const AddFavourites = () => {
   return (
-   
-<svg width="20px"  height="20px" viewBox="0 0 20 20" version="1.1" fill="#ddff2b" >
-   
-    <g id="Symbols" stroke="none" strokeWidth="1" className="stroke" fill="none" fillRule="evenodd">
-        <g id="btn/全屏播放/收藏/default" >
-            <path d="M18.2967189,9.187261 L10.8984636,18.8575017 C10.0698919,19.7141661 9.91348598,19.7141661 9.08491431,18.8575017 L1.70312279,9.187261 C0.959728516,8.05747565 0.543336643,6.74410976 0.5,5.39242125 C0.5,2.84078962 2.46298981,0.50031658 5.2491689,0.50031658 C7.22767266,0.50031658 8.78571667,1.56149142 9.9983378,2.81957878 C11.2733313,1.63430473 12.7709026,0.5 14.7506728,0.5 C17.5368519,0.5 19.5,2.84047304 19.5,5.39210467 C19.5093731,6.75240787 19.088236,8.08085166 18.2967189,9.187261 Z" id="收藏"></path>
+    <svg
+      width="20px"
+      height="20px"
+      viewBox="0 0 20 20"
+      version="1.1"
+      fill="#ddff2b"
+    >
+      <g
+        id="Symbols"
+        stroke="none"
+        strokeWidth="1"
+        className="stroke"
+        fill="none"
+        fillRule="evenodd"
+      >
+        <g id="btn/全屏播放/收藏/default">
+          <path
+            d="M18.2967189,9.187261 L10.8984636,18.8575017 C10.0698919,19.7141661 9.91348598,19.7141661 9.08491431,18.8575017 L1.70312279,9.187261 C0.959728516,8.05747565 0.543336643,6.74410976 0.5,5.39242125 C0.5,2.84078962 2.46298981,0.50031658 5.2491689,0.50031658 C7.22767266,0.50031658 8.78571667,1.56149142 9.9983378,2.81957878 C11.2733313,1.63430473 12.7709026,0.5 14.7506728,0.5 C17.5368519,0.5 19.5,2.84047304 19.5,5.39210467 C19.5093731,6.75240787 19.088236,8.08085166 18.2967189,9.187261 Z"
+            id="收藏"
+          ></path>
         </g>
-    </g>
-</svg>
-  )
-}
+      </g>
+    </svg>
+  );
+};
 
 export const AddedFavourites = () => {
   return (
-   
-<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" >
-   
-    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="btn/全屏播放/收藏/default" stroke="#ddff2b" >
-            <path d="M18.2967189,9.187261 L10.8984636,18.8575017 C10.0698919,19.7141661 9.91348598,19.7141661 9.08491431,18.8575017 L1.70312279,9.187261 C0.959728516,8.05747565 0.543336643,6.74410976 0.5,5.39242125 C0.5,2.84078962 2.46298981,0.50031658 5.2491689,0.50031658 C7.22767266,0.50031658 8.78571667,1.56149142 9.9983378,2.81957878 C11.2733313,1.63430473 12.7709026,0.5 14.7506728,0.5 C17.5368519,0.5 19.5,2.84047304 19.5,5.39210467 C19.5093731,6.75240787 19.088236,8.08085166 18.2967189,9.187261 Z" id="收藏"></path>
+    <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1">
+      <g
+        id="Symbols"
+        stroke="none"
+        stroke-width="1"
+        fill="none"
+        fill-rule="evenodd"
+      >
+        <g id="btn/全屏播放/收藏/default" stroke="#ddff2b">
+          <path
+            d="M18.2967189,9.187261 L10.8984636,18.8575017 C10.0698919,19.7141661 9.91348598,19.7141661 9.08491431,18.8575017 L1.70312279,9.187261 C0.959728516,8.05747565 0.543336643,6.74410976 0.5,5.39242125 C0.5,2.84078962 2.46298981,0.50031658 5.2491689,0.50031658 C7.22767266,0.50031658 8.78571667,1.56149142 9.9983378,2.81957878 C11.2733313,1.63430473 12.7709026,0.5 14.7506728,0.5 C17.5368519,0.5 19.5,2.84047304 19.5,5.39210467 C19.5093731,6.75240787 19.088236,8.08085166 18.2967189,9.187261 Z"
+            id="收藏"
+          ></path>
         </g>
-    </g>
-</svg>
-  )
-}
+      </g>
+    </svg>
+  );
+};
