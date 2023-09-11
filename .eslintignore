@@ -1,0 +1,8 @@
+node_module
+postcss.config.js
+tailwind.config.js
+package*
+build
+public
+*lock
+reportWebVitals.js
