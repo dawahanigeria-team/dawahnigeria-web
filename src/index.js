@@ -12,8 +12,8 @@ import { PersistGate } from "redux-persist/integration/react";
 import { composeWithDevTools } from "redux-devtools-extension";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
-import { BrowserRouter as Router } from "react-router-dom";
-import Scrolltotop from "./components/UI/scrollToTop";
+// import { BrowserRouter as Router } from "react-router-dom";
+// import Scrolltotop from "./components/UI/scrollToTop";
 
 //import InfiniteScroll from "./components/UI/infiniteScroll";
 
