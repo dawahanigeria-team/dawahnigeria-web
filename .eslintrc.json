@@ -5,7 +5,12 @@
     "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended"
   ],
+
   "plugins": ["react", "react-hooks", "jsx-a11y"],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 2018
+  },
   "rules": {
     // React
     "react/jsx-uses-react": "error",
