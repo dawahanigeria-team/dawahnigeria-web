@@ -198,7 +198,7 @@ function List({
   useEffect(() => {
     //all lecturers
     axios
-      .get("https://dawahnigeria.com/dawahcast/dboxapi/rpjson")
+      .get("https://backend.dawahnigeria.com/dboxapi/rpjson")
       .then((res) => {
         //console.log(res.data.rp);
         const data = res.data.rp;

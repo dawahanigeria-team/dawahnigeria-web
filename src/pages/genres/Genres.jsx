@@ -17,7 +17,7 @@ const Genres = () => {
   useEffect(() => {
     function getCategories() {
       axios
-        .get(`https://dawahnigeria.com/dawahcast/dboxapi/catjson2`)
+        .get(`https://backend.dawahnigeria.com/dboxapi/catjson2`)
         .then((res) => {
           //console.log(res.data);
           setData(res.data.rp);
