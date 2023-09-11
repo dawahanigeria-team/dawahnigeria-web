@@ -47,7 +47,7 @@ const Playlists = () => {
         .get(`https://dawahnigeria.com/dawahcast/dboxapi/langjson`)
         .then((res) => {
           ////console.log(res.data.rp);
-          setLanguages([...language, ...res.data.rp]);
+          if (res.data.rp) setLanguages([...language, ...res.data.rp]);
         });
     }
     getCatAndLang();

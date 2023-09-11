@@ -156,12 +156,13 @@ const AudioActionDesktop = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playing]);
+
   const handlePlay = () => {
     setinitial(false);
     if (playing) {
-      dispatch(setPlaying(!playing));
+      dispatch(setPlaying(false));
     } else {
-      dispatch(setPlaying(!playing));
+      dispatch(setPlaying(true));
     }
   };
 
@@ -252,7 +253,7 @@ const AudioActionDesktop = () => {
       // //console.log('@@@@@@@@@@@@@@@ count',count)
 
       if (counter === pack.length - 1) {
-        dispatch(getaudioId(pack[0].nid));
+        dispatch(getaudioId(pack[0]?.nid));
         dispatch(getCount(0));
       } else {
         handleNextAudio();
