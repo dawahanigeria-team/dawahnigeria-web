@@ -43,7 +43,7 @@ const LecturerDetail = () => {
   const [singleData, setsingleData] = useState([]);
 
   const [, setImg] = useState(
-    "https://dawahnigeria.com/dawahcast/sites/default/files/600-800/700.jpg"
+    "https://backend.dawahnigeria.com/sites/default/files/600-800/700.jpg"
   );
 
   useEffect(() => {

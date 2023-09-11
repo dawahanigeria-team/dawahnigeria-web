@@ -252,7 +252,7 @@ const LecturesListDetail = () => {
     //all lecturers
     if (rpnames) {
       axios
-        .get("https://dawahnigeria.com/dawahcast/dboxapi/rpjson")
+        .get("https://backend.dawahnigeria.com/dboxapi/rpjson")
         .then(async (res) => {
           //console.log(res.data.rp);
           const datas = res.data.rp;

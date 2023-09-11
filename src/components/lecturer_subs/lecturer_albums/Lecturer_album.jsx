@@ -28,7 +28,7 @@ const Lecturer_album = ({ id, setCount2, rpname, setImg }) => {
 
   useEffect(() => {
     axios
-      .get("https://dawahnigeria.com/dawahcast/dboxapi/rpjson")
+      .get("https://backend.dawahnigeria.com/dboxapi/rpjson")
       .then((res) => {
         setRpid(
           res.data.rp.filter((value) => {
