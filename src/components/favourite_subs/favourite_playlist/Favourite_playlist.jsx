@@ -8,7 +8,7 @@ import _ from "lodash";
 import axios from "../../../utils/useAxios";
 import { useNavigate } from "react-router-dom";
 import infinitePlayFavScroll from "../../UI/infinitePlayFavScroll";
-import { PLAYLISTS } from "../../../utils/routes/constants";
+import { PLAYLISTS,PLAY } from "../../../utils/routes/constants";
 
 const Favourite_playlist = ({setCount3}) => {
   const {currentUser} = useSelector((state) => state.user)
@@ -103,7 +103,7 @@ const Favourite_playlist = ({setCount3}) => {
         <button
         onClick={() => {
           if(currentUser?.id) {
-            navigate("/playlists")
+            navigate(PLAY)
           }
           else {
             navigate("/auth/login")

@@ -2,7 +2,7 @@ import React from "react";
 //import { useLocation } from "react-router-dom";
 
 function infiniteScroll(node, observer, page, setPage, isEmpty) {
-  if(isEmpty) return;
+  if (isEmpty) return;
   //console.log(node);
   if (observer.current) observer.current.disconnect();
   observer.current = new IntersectionObserver(

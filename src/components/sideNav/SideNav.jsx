@@ -9,6 +9,7 @@ import { RiAwardFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import SearchOptions from "../../pages/searchPage/searchOptions";
+import { RECO1, RECO2, SEARCH } from "../../utils/routes/constants";
 
 const SideNav = ({ res, handleSideBar }) => {
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ const SideNav = ({ res, handleSideBar }) => {
           <div className="user_name">{currentUser?.username?.split(" ")[0] || currentUser?.username}</div>
         )}
       </div>
-    {pathname !== "/search" && <div>
+    {pathname !== SEARCH && <div>
         <div className="sidenav_lectures">
           <h1 className="sidenav_lectures_header">Lectures</h1>
           {lectures.map(({ icon, id, link, name }) => {
@@ -101,7 +102,7 @@ const SideNav = ({ res, handleSideBar }) => {
           <IconText
             icon={<RiAwardFill className="icon0 icon" />}
             id={11}
-            link={"/recommend1"}
+            link={RECO1}
             name={"Recommended"}
             group={"buzz"}
           />
@@ -111,7 +112,7 @@ const SideNav = ({ res, handleSideBar }) => {
           <IconText
             icon={<RiAwardFill className="icon0 icon" />}
             id={12}
-            link={"/recommend2"}
+            link={RECO2}
             name={"Recommended"}
             group={"podcast"}
           />

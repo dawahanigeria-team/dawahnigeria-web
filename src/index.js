@@ -15,7 +15,6 @@ import thunk from "redux-thunk";
 import { BrowserRouter as Router } from "react-router-dom";
 import Scrolltotop from "./components/UI/scrollToTop";
 
-
 //import InfiniteScroll from "./components/UI/infiniteScroll";
 
 const persistConfig = {
@@ -37,17 +36,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <>
-  
-   
-  <Provider store={store}>
+    <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-     
         <App />
       </PersistGate>
     </Provider>
-
-  
-    
   </>
 );
 

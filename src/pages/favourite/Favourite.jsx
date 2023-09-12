@@ -10,8 +10,8 @@ import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 const Favourite = () => {
   const [tab, setTab] = useState(1);
   const [count2, setCount2] = useState(0);
-  const [count1,setCount1] = useState(0)
-  const [count3,setCount3] = useState(0)
+  const [count1, setCount1] = useState(0);
+  const [count3, setCount3] = useState(0);
 
   return (
     <Container>
@@ -94,15 +94,9 @@ const Favourite = () => {
             </div>
           </div>
         </div>
-        {tab === 1 && <Favourite_songs
-        setCount1={setCount1}
-         />}
-        {tab === 2 && <Favourite_album 
-        setCount2={setCount2}
-        />}
-        {tab === 3 && <Favourite_playlist
-        setCount3={setCount3}
-        />}
+        {tab === 1 && <Favourite_songs setCount1={setCount1} />}
+        {tab === 2 && <Favourite_album setCount2={setCount2} />}
+        {tab === 3 && <Favourite_playlist setCount3={setCount3} />}
         {tab === 4 && <Favourite_lecturers />}
       </div>
     </Container>

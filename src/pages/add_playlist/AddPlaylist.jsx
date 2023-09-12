@@ -9,9 +9,10 @@ import { toast } from "react-hot-toast";
 import axios from "../../utils/useAxios";
 import Loader from "../../components/UI/loader/loader";
 
-
 const Add_playlist = () => {
-  const { addplaylist, currentUser, lecid } = useSelector((state) => state.user);
+  const { addplaylist, currentUser, lecid } = useSelector(
+    (state) => state.user
+  );
   const dispatch = useDispatch();
   const [seltype, setseltype] = useState("");
   const [isShow, setisShow] = useState(true);
@@ -19,7 +20,6 @@ const Add_playlist = () => {
   const [title, setTitle] = useState("");
   const [myFolders, setmyFolders] = useState([]);
   const [loading, setLoading] = useState(false);
- 
 
   const hidePlaylist = (e) => {
     e.stopPropagation();
@@ -38,7 +38,7 @@ const Add_playlist = () => {
   const submit = () => {
     if (!currentUser?.id) {
       toast.error(`Sign in is required to add playlist`);
-      return
+      return;
     }
     const validateData = {
       title,
@@ -77,7 +77,7 @@ const Add_playlist = () => {
         },
       })
       .then((res) => {
-        toast.success('lecture added to playlist')
+        toast.success("lecture added to playlist");
         //toast.success(message);
         setLoading(false);
         setisShow(true);
@@ -118,9 +118,9 @@ const Add_playlist = () => {
   //console.log(myFolders);
 
   const addSong = (id) => {
-    if(!currentUser?.id) {
+    if (!currentUser?.id) {
       toast.error(`Sign in is required to add playlist`);
-      return
+      return;
     }
     const payload = {
       user_id: parseInt(currentUser?.id),
@@ -129,9 +129,8 @@ const Add_playlist = () => {
       action: "add_playlist_audio",
     };
 
-
     //console.log(payload)
-   // if(payload) return
+    // if(payload) return
     axios
       .post(`/playlistApi.php`, payload, {
         headers: {
@@ -142,7 +141,7 @@ const Add_playlist = () => {
       })
       .then((res) => {
         //console.log(res);
-        toast.success(res.data.message)
+        toast.success(res.data.message);
         dispatch(showaddPlaylist(false));
       })
       .catch((err) => {
@@ -172,7 +171,12 @@ const Add_playlist = () => {
             }}
             className="close_image"
           >
-            <img className="close_img_sz" src={cloase} src-data={cloase}  alt="" />
+            <img
+              className="close_img_sz"
+              src={cloase}
+              src-data={cloase}
+              alt=""
+            />
           </div>
           <div className="cur_small_wrapper">
             <div className="create_play">
@@ -183,7 +187,12 @@ const Add_playlist = () => {
                 className="create_icon_wrap"
               >
                 <div className="create_folder_icon">
-                  <img className="img_sz"  src-data={createplay} src={createplay} alt=" " />
+                  <img
+                    className="img_sz"
+                    src-data={createplay}
+                    src={createplay}
+                    alt=" "
+                  />
                 </div>
               </div>
 
@@ -193,15 +202,20 @@ const Add_playlist = () => {
             {myFolders?.map(({ name, is_private, id }, index) => {
               return (
                 <div
-                onClick={() => {addSong(id)}}
-                className="created_play"
-                key={index}
+                  onClick={() => {
+                    addSong(id);
+                  }}
+                  className="created_play"
+                  key={index}
                 >
                   {myFolders.length !== 0 && (
-                    <div 
-                    
-                    className="created_folder_icon">
-                      <img className="img_sz" src={playfolder} src-data={playfolder} alt=" " />
+                    <div className="created_folder_icon">
+                      <img
+                        className="img_sz"
+                        src={playfolder}
+                        src-data={playfolder}
+                        alt=" "
+                      />
                     </div>
                   )}
 
@@ -228,7 +242,12 @@ const Add_playlist = () => {
             }}
             className="close_image"
           >
-            <img className="close_img_sz" src={cloase} src-data={cloase} alt="" />
+            <img
+              className="close_img_sz"
+              src={cloase}
+              src-data={cloase}
+              alt=""
+            />
           </div>
 
           <input

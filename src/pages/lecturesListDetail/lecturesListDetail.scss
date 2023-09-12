@@ -28,18 +28,18 @@
 }
 
 @mixin hide_for_mobile {
-  @media screen and (max-width:615px) {
+  @media screen and (max-width: 615px) {
     display: none;
   }
 }
 @mixin hide_for_desktop {
-  @media screen and (min-width:615px) {
+  @media screen and (min-width: 615px) {
     display: none;
   }
 }
 @mixin font_mobile {
-  @media screen and (max-width:615px) {
-    font-size:14px;
+  @media screen and (max-width: 615px) {
+    font-size: 14px;
   }
 }
 
@@ -48,41 +48,39 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  @media screen and (max-width:615px) {
+  @media screen and (max-width: 615px) {
     align-items: unset;
     //padding-top:13px;
-    width:100%;
+    width: 100%;
   }
   .leclistdet_header_link {
-
     width: 100%;
-    position:fixed;
-    left:0;
-    right:0;
+    position: fixed;
+    left: 0;
+    right: 0;
     z-index: 10;
     font-size: 14px;
     font-weight: 400;
-    padding:unset;
-    background:none;
-    opacity:1;
+    padding: unset;
+    background: none;
+    opacity: 1;
     transition: opacity 250ms ease-in;
 
-    .header_bg{
-      
-      position:absolute;
-      width:100%;
-      height:62px;
-      z-index:-1;
-      object-fit:contain;
-      inset:0;
+    .header_bg {
+      position: absolute;
+      width: 100%;
+      height: 62px;
+      z-index: -1;
+      object-fit: contain;
+      inset: 0;
       .img {
-        width:100%;
-        height:100%;
+        width: 100%;
+        height: 100%;
       }
     }
   }
   .leclistdet_header_link_none {
-    opacity:0;
+    opacity: 0;
     .header_bg {
       display: none;
     }
@@ -93,18 +91,18 @@
     left: 0px;
     width: 100%;
     filter: blur(200px);
-    height:12%;
+    height: 12%;
     @media screen and (max-width: 1096px) {
-      height:20%;
-     }
+      height: 20%;
+    }
     @include hide_for_mobile;
   }
   .leclistdet_container {
     z-index: 1;
-    padding:2%;
+    padding: 2%;
     width: 100%;
-    @media screen and (max-width:615px) {
-      padding:0px;
+    @media screen and (max-width: 615px) {
+      padding: 0px;
     }
     // ----------- Bread Crumbs --------------
     .leclistdet_breadcrumb {
@@ -150,7 +148,7 @@
         flex-direction: column;
         align-items: flex-start;
       }
-     @include hide_for_mobile;
+      @include hide_for_mobile;
 
       .leclistdet_head_left {
         display: flex;
@@ -162,20 +160,17 @@
         height: 240px;
         border-radius: 8px;
         overflow: hidden;
-        
+
         @media screen and (max-width: 1132px) {
           margin-bottom: 1rem;
         }
-     
+
         .leclistdet_head_left_img {
           width: 100%;
           height: 100%;
-          
         }
-       
-       
       }
-     
+
       .leclistdet_head_right {
         display: flex;
         flex-direction: column;
@@ -194,36 +189,35 @@
           line-height: 26px;
           color: #ffffff;
           //max-width: 350px;
-          @media screen and (max-width:600px) {
+          @media screen and (max-width: 600px) {
             width: 100%;
-            font-size:15px;
-            line-height:18px;
+            font-size: 15px;
+            line-height: 18px;
           }
         }
         .leclistdet_head_right_text {
           display: flex;
           flex-direction: column;
-         align-items: flex-start;
-         
+          align-items: flex-start;
+
           gap: 0.3rem;
-          margin-bottom:4px;
+          margin-bottom: 4px;
           .rpimage_wrap {
             display: flex;
             flex-direction: row;
-            gap:5px;
+            gap: 5px;
             align-items: center;
             justify-content: flex-start;
             .rpimage_circle {
-              width:25px;
-              height:25px;
+              width: 25px;
+              height: 25px;
               border-radius: 50%;
               .rpimage_sz {
-                width:25px;
-                height:25px;
-                border-radius:50%;
-
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
               }
-             }
+            }
             .leclistdet_head_right_text1 {
               margin: unset;
               font-family: "Nunito Sans";
@@ -231,15 +225,14 @@
               font-size: 14px;
               line-height: 20px;
               color: #d4d4d4;
-              @media screen and (max-width:600px) {
+              @media screen and (max-width: 600px) {
                 margin-top: 0.5rem;
-                font-size:14px;
-              font-weight: 400;
+                font-size: 14px;
+                font-weight: 400;
                 line-height: 16px;
               }
             }
           }
-     
         }
 
         .leclistdet_head_right_actions_wrap {
@@ -253,21 +246,21 @@
           }
           .leclistdet_play {
             background: #ddff2b;
-           
-            border:0;
-  height: 38px;
-  border-radius: 4px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap:0.6rem;
-  width:120px;
-  cursor: pointer;
+
+            border: 0;
+            height: 38px;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            width: 120px;
+            cursor: pointer;
             .leclistdet_play_icon {
               font-size: 25px;
               color: #000000;
-              font-weight:200;
+              font-weight: 200;
             }
             .leclistdet_play_text {
               font-family: "Nunito Sans";
@@ -287,24 +280,24 @@
               background-color: #ffffff2d;
             }
             .fav_btn {
-              background:none;
-              margin:0;
+              background: none;
+              margin: 0;
               border: 0;
               .leclistdet_fav_icon {
                 font-size: 25px;
-                
-                @media screen and (max-width:600px) {
-                  font-size:20px;
+
+                @media screen and (max-width: 600px) {
+                  font-size: 20px;
                 }
                 color: #cfcfcf;
               }
               .leclistdet_fav_icon_active {
                 font-size: 25px;
-                
-                @media screen and (max-width:600px) {
-                  font-size:20px;
+
+                @media screen and (max-width: 600px) {
+                  font-size: 20px;
                 }
-                color:#ddff2b;
+                color: #ddff2b;
               }
             }
             .leclistdet_fav_text {
@@ -313,8 +306,8 @@
               font-weight: 400;
               font-size: 14px;
               line-height: 24px;
-              @media screen and (max-width:615px) {
-                font-size:12px;
+              @media screen and (max-width: 615px) {
+                font-size: 12px;
                 line-height: 20px;
               }
               color: #cfcfcf;
@@ -329,8 +322,8 @@
             }
             .leclistdet_share_icon {
               font-size: 25px;
-              @media screen and (max-width:615px) {
-                font-size:20px;
+              @media screen and (max-width: 615px) {
+                font-size: 20px;
               }
               color: #cfcfcf;
             }
@@ -342,8 +335,8 @@
               line-height: 24px;
               color: #cfcfcf;
               margin: unset;
-              @media screen and (max-width:600px) {
-                font-size:12px;
+              @media screen and (max-width: 600px) {
+                font-size: 12px;
                 line-height: 20px;
               }
             }
@@ -356,8 +349,8 @@
             }
             .leclistdet_comment_icon {
               font-size: 25px;
-              @media screen and (max-width:615px) {
-                font-size:20px;
+              @media screen and (max-width: 615px) {
+                font-size: 20px;
               }
               color: #cfcfcf;
             }
@@ -367,8 +360,8 @@
               font-weight: 400;
               font-size: 14px;
               line-height: 24px;
-              @media screen and (max-width:615px) {
-                font-size:12px;
+              @media screen and (max-width: 615px) {
+                font-size: 12px;
                 line-height: 20px;
               }
               color: #cfcfcf;
@@ -377,23 +370,23 @@
           }
           .leclistdet_download {
             background-color: #ffffff17;
-            width:fit-content;
-  height: 38px;
-  border-radius: 4px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+            width: fit-content;
+            height: 38px;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
 
-  justify-content: center;
-padding:0rem 1rem;
-  cursor: pointer;
+            justify-content: center;
+            padding: 0rem 1rem;
+            cursor: pointer;
             &:hover {
               background-color: #ffffff2d;
             }
             .leclistdet_download_icon {
               font-size: 25px;
-              @media screen and (max-width:615px) {
-                font-size:20px;
+              @media screen and (max-width: 615px) {
+                font-size: 20px;
               }
               color: #cfcfcf;
             }
@@ -401,7 +394,7 @@ padding:0rem 1rem;
         }
       }
     }
-   
+
     .leclistdet_head_right_text2 {
       margin: unset;
       @include hide_for_mobile;
@@ -412,13 +405,13 @@ padding:0rem 1rem;
       line-height: 20px;
 
       color: #d4d4d4;
-      @media screen and (max-width:600px) {
+      @media screen and (max-width: 600px) {
         margin-top: 0.5rem;
         font-size: 14px;
-      line-height: 16px;
+        line-height: 16px;
       }
       .braces {
-        color:#868686;
+        color: #868686;
         margin-left: 3px;
         .braces_text {
           color: #d4d4d4;
@@ -430,140 +423,131 @@ padding:0rem 1rem;
     .leclistdet_head_mobile {
       @include hide_for_desktop;
       position: fixed;
-      width:98%;
-      top:65px;
-      left:0;
-      right:0;
-      @media screen and (max-width:450px) {
-        width:100%;
+      width: 98%;
+      top: 65px;
+      left: 0;
+      right: 0;
+      @media screen and (max-width: 450px) {
+        width: 100%;
       }
       .leclistdet_head_img {
-        width:100%;
-        height:250px;
-        position:relative;
+        width: 100%;
+        height: 250px;
+        position: relative;
         .leclistdet_head_img_sz {
-          width:100%;
-          height:50%;
-          object-fit:cover;
-          filter:blur(80px)
+          width: 100%;
+          height: 50%;
+          object-fit: cover;
+          filter: blur(80px);
         }
-
       }
       .leclistdet_head_img_none {
-        display:none;
+        display: none;
       }
 
       .leclistdet_min_wrap {
         position: absolute;
-        width:100%;
+        width: 100%;
         height: 100%;
-        top:0;
-        left:0;
-        padding:0 3%;
+        top: 0;
+        left: 0;
+        padding: 0 3%;
         background: none;
-        color:white;
+        color: white;
         display: flex;
         flex-direction: column;
 
         .mob_arrow {
-          width:28px;
-          height:28px;
+          width: 28px;
+          height: 28px;
           margin-bottom: 2rem;
           .mob_arrow_sz {
-            width:100%;
-            height:100%;
+            width: 100%;
+            height: 100%;
           }
         }
-       
       }
-
     }
     // ----------- Section1 ends --------------
     // ----------- Section2 --------------
 
-    
     //----------------mobile --------
 
     .mobile_leclistdet_tab_wrap {
       position: relative;
-      margin-top:5em;
-      
-      color:white;
-      font-size:14px;
-      width:100%;
+      margin-top: 5em;
+
+      color: white;
+      font-size: 14px;
+      width: 100%;
       @include hide_for_desktop;
       .mob_txt {
         display: grid;
-       // flex-direction: row;
-       grid-template-columns: repeat(2, auto);
+        // flex-direction: row;
+        grid-template-columns: repeat(2, auto);
         color: white;
-          font-size: 14px;
-          padding:0 3%;
-          align-items: center;
-          justify-content: flex-start;
-          font-family: "Poppins";
-          margin-bottom:10%;
-          .album_img {
-            width:100px;
-            height:100px;
-            margin-right:1.5rem;
-            border-radius: 4px;
-           
-           .album_img_sz {
-            width:100%;
-            height:100%;
+        font-size: 14px;
+        padding: 0 3%;
+        align-items: center;
+        justify-content: flex-start;
+        font-family: "Poppins";
+        margin-bottom: 10%;
+        .album_img {
+          width: 100px;
+          height: 100px;
+          margin-right: 1.5rem;
+          border-radius: 4px;
+
+          .album_img_sz {
+            width: 100%;
+            height: 100%;
             border-radius: 4px;
           }
-          }
-        
+        }
+
         .mob_like {
           display: flex;
           flex-direction: column;
-          color:white;
-          gap:1rem;
+          color: white;
+          gap: 1rem;
           font-family: "Poppins";
           font-size: 14px;
-         
+
           .rp_img_name {
             display: flex;
             flex-direction: row;
             .likeys_img {
-              width:20px;
-              height:20px;
+              width: 20px;
+              height: 20px;
               border-radius: 50%;
-             
-             .likeys_img_sz {
-              width:20px;
-              height:20px;
-              border-radius: 50%;
-            }
+
+              .likeys_img_sz {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+              }
             }
             .likeys_text {
-              padding-left:4px;
+              padding-left: 4px;
               font-size: 12px;
             }
-
           }
-       
-
         }
-       
-
       }
       .listrank_and_listblack_wrap {
-        width:100%;
+        width: 100%;
         position: relative;
-        max-height:105px;
+        max-height: 105px;
         .listranking {
-          display:flex;
+          display: flex;
           flex-direction: row;
           align-items: center;
           width: 100%;
           font-family: "Poppins";
           justify-content: space-around;
-          background:rgba(0,0,0,0.3);
-          padding:0% 2%;
-          height:65px;
+          background: rgba(0, 0, 0, 0.3);
+          padding: 0% 2%;
+          height: 65px;
           opacity: 1;
           //position: relative;
           border-top-right-radius: 24px;
@@ -574,136 +558,130 @@ padding:0rem 1rem;
             align-items: center;
             font-family: "Poppins";
             .likeys_img {
-              width:18px;
-              height:17px;
+              width: 18px;
+              height: 17px;
               background: none;
-              border:0;
-              margin-right:6px;
+              border: 0;
+              margin-right: 6px;
               display: flex;
               align-items: center;
               justify-content: center;
-             
-             .likeys_img_sz {
-              width:18px;
-              height:17px;
-            }
+
+              .likeys_img_sz {
+                width: 18px;
+                height: 17px;
+              }
             }
             .likeys_text {
-              padding-left:3px;
+              padding-left: 3px;
               font-size: 14px;
-              color:#AEAEAE;
-              
+              color: #aeaeae;
             }
-            
           }
         }
         .listranking_none {
           opacity: 0;
           transition: opacity 250ms ease-out;
         }
-        
-      .headings {
-        width: 100%;
-        font-family: "Poppins";
-        position:fixed;
-        top:52px;
-        background:rgba(0,0,0,1);
-        height:fit-content;
-        opacity: 1;
-        //position: relative;
-        //border-top-right-radius: 24px;
-        //border-top-left-radius: 24px;
-        width:100%;
-        color:white;
-        display: flex;
-        z-index: 10;
-        padding-top:7px;
-        flex-direction:row;
-        justify-content: space-between;
-        align-items: center;
-        transition: opacity 250ms ease-in;
 
-        .fixed_mob_arrow {
-          width:28px;
-          height:28px;
-          //margin-bottom: 2rem;
-          .fixed_mob_arrow_sz {
-            width:100%;
-            height:100%;
-            
+        .headings {
+          width: 100%;
+          font-family: "Poppins";
+          position: fixed;
+          top: 52px;
+          background: rgba(0, 0, 0, 1);
+          height: fit-content;
+          opacity: 1;
+          //position: relative;
+          //border-top-right-radius: 24px;
+          //border-top-left-radius: 24px;
+          width: 100%;
+          color: white;
+          display: flex;
+          z-index: 10;
+          padding-top: 7px;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          transition: opacity 250ms ease-in;
+
+          .fixed_mob_arrow {
+            width: 28px;
+            height: 28px;
+            //margin-bottom: 2rem;
+            .fixed_mob_arrow_sz {
+              width: 100%;
+              height: 100%;
+            }
+          }
+          .fixed_text {
+            color: white;
+            font-weight: 600;
+          }
+          .fixed_bg_none {
+            width: 28px;
+            height: 28px;
+            background: none;
+          }
+
+          .header_bg {
+            position: absolute;
+            width: 100%;
+            height: 53px;
+            z-index: -1;
+
+            inset: 0;
+            .img {
+              width: 100%;
+              height: 70%;
+              opacity: 1;
+              object-fit: cover;
+              filter: blur(30px);
+            }
           }
         }
-        .fixed_text {
-          color:white;
-          font-weight: 600;
+        .headings_none {
+          opacity: 0;
+          display: none;
         }
-        .fixed_bg_none {
-          width:28px;
-          height:28px;
-          background: none;
-        }
-
-    .header_bg{
-      
-      position:absolute;
-      width:100%;
-      height:53px;
-      z-index:-1;
-      
-      inset:0;
-      .img {
-        width:100%;
-        height:70%;
-        opacity:1;
-        object-fit:cover;
-        filter:blur(30px);
-      }
-    }
-       
-      }
-      .headings_none {
-        opacity: 0;
-        display:none;
-
-      }
         .listblacks {
-          width:100%;
-          background: #0D0D0D;
+          width: 100%;
+          background: #0d0d0d;
           border-top-right-radius: 24px;
           border-top-left-radius: 24px;
           position: relative;
-          right:0;
-          left:0;
+          right: 0;
+          left: 0;
           height: 100%;
-          top:-0.8em;
+          top: -0.8em;
           overflow: hidden;
-          
+
           .icons_listblack {
             display: flex;
             flex-direction: row;
             align-items: center;
             font-family: "Poppins";
-            justify-content:flex-start;
+            justify-content: flex-start;
             //padding:1% 2%;
-            background:#0D0D0D;
+            background: #0d0d0d;
             border-bottom: 1px solid gray;
-           
+
             .play_header {
               display: flex;
-              gap:0.5em;
+              gap: 0.5em;
               align-items: center;
               .play_img_size {
-                 border: 1px solid #CFCFCF;
-                 border-radius: 50%;
-                 padding: 2%;
-                 width:20px;
-                 height:20px;
-                 display:flex;
-                 align-items: center;
-                 justify-content: center;
+                border: 1px solid #cfcfcf;
+                border-radius: 50%;
+                padding: 2%;
+                width: 20px;
+                height: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 .play_img_size_sm {
                   width: 100%;
-                  height:100%;
+                  height: 100%;
                   padding-left: 3px;
                   padding-right: 2px;
                 }
@@ -713,40 +691,39 @@ padding:0rem 1rem;
                 font-weight: 500;
               }
             }
-  
           }
           .fixed_icons_listblack {
             position: fixed;
-            top:90px;
-            width:100%;
+            top: 90px;
+            width: 100%;
             font-family: "Poppins";
             border-top-right-radius: 24px;
             border-top-left-radius: 24px;
-            z-index:10;
-            background:#0D0D0D;
+            z-index: 10;
+            background: #0d0d0d;
             display: flex;
             flex-direction: row;
             align-items: center;
-            justify-content:flex-start;
+            justify-content: flex-start;
             //padding:1% 2%;
             border-bottom: 1px solid gray;
             .play_header {
               display: flex;
-              gap:0.5em;
+              gap: 0.5em;
               align-items: center;
               justify-content: center;
               .play_img_size {
-                 border: 1px solid #CFCFCF;
-                 border-radius: 50%;
-                 width:20px;
-                 height:20px;
-                 display:flex;
-                 padding: 2%;
-                 align-items: center;
-                 justify-content: center;
+                border: 1px solid #cfcfcf;
+                border-radius: 50%;
+                width: 20px;
+                height: 20px;
+                display: flex;
+                padding: 2%;
+                align-items: center;
+                justify-content: center;
                 .play_img_size_sm {
                   width: 100%;
-                  height:100%;
+                  height: 100%;
                   padding-left: 3px;
                   padding-right: 2px;
                 }
@@ -758,41 +735,38 @@ padding:0rem 1rem;
             }
           }
           .descript {
-            font-size:14px;
-            color:white;
-            font-family:"Poppins";
-            padding:4% 3% 3% 5%;
+            font-size: 14px;
+            color: white;
+            font-family: "Poppins";
+            padding: 4% 3% 3% 5%;
           }
-        
+
           .mobile_color_vid {
-            background: #0D0D0D;
-            padding:3%;
+            background: #0d0d0d;
+            padding: 3%;
             @include hide_for_desktop;
           }
         }
-
-       
       }
-
     }
     // ----------- Section2 ends --------------
-  
+
     .desktop_color_vid {
       @include hide_for_mobile;
-        //background: #0D0D0D;
-        //padding:3%;
-        //position: relative;
-        //@media screen and (min-width:615px) {
-          //background:none;
-       // }
+      //background: #0D0D0D;
+      //padding:3%;
+      //position: relative;
+      //@media screen and (min-width:615px) {
+      //background:none;
+      // }
     }
 
     .lecsong_wrapper {
       padding: 1rem 0rem 3rem;
-      @media screen and (max-width:615px) {
-        background:#0D0D0D;
-        position:relative;
-        padding:1rem 0rem 1.5rem;
+      @media screen and (max-width: 615px) {
+        background: #0d0d0d;
+        position: relative;
+        padding: 1rem 0rem 1.5rem;
       }
       .lecsong_title_res_wrap {
         @media screen and (min-width: 1221px) {
@@ -818,13 +792,13 @@ padding:0rem 1rem;
         }
       }
       .lect_title_wrap {
-        font-weight:600;
+        font-weight: 600;
         @media screen and (max-width: 600px) {
           display: none;
         }
         display: flex;
         //gap: 1rem;
-       // grid-template-columns: repeat(11, minmax(0, 1fr));
+        // grid-template-columns: repeat(11, minmax(0, 1fr));
         justify-items: flex-start;
         width: 100%;
         margin-bottom: 2rem;
@@ -839,8 +813,8 @@ padding:0rem 1rem;
           display: flex;
           flex-direction: row;
           align-items: center;
-          width:50%;
-         // grid-column: span 5 / span 5;
+          width: 50%;
+          // grid-column: span 5 / span 5;
           * {
             @include title_text;
             margin: unset;
@@ -852,69 +826,62 @@ padding:0rem 1rem;
           }
         }
         .lect_title2 {
-         /// grid-column: span 2 / span 2;
-         width:40%;
-         display: flex;
-         align-items: start;
-         justify-content: flex-start;
+          /// grid-column: span 2 / span 2;
+          width: 40%;
+          display: flex;
+          align-items: start;
+          justify-content: flex-start;
         }
-       
+
         .lect_title4 {
-         // grid-column: span 2 / span 2;
-         display: flex;
-         align-items: start;
-         justify-content: flex-start;
+          // grid-column: span 2 / span 2;
+          display: flex;
+          align-items: start;
+          justify-content: flex-start;
         }
       }
       .loads {
-        width:100%;
-        height:400px;
+        width: 100%;
+        height: 400px;
         position: relative;
         //justify-content: last baseline;
         .load {
-          width:100%;
-          height:50%;
+          width: 100%;
+          height: 50%;
           position: absolute;
           inset: 0;
-    
-          margin:auto auto;
-    
+
+          margin: auto auto;
         }
-      
-        
       }
 
-    .lecsong_content {
-      display: flex;
-      flex-direction: column;
-      gap: 0rem;
-      width:100%;
-      .lecsong_content_item {
-        cursor: pointer;
-        .desktops_item {
-          @media screen and (max-width:615px) {
-            display:none;
+      .lecsong_content {
+        display: flex;
+        flex-direction: column;
+        gap: 0rem;
+        width: 100%;
+        .lecsong_content_item {
+          cursor: pointer;
+          .desktops_item {
+            @media screen and (max-width: 615px) {
+              display: none;
+            }
+          }
+          .mobile_item {
+            font-size: 14px;
+            color: white;
+            width: 100%;
+            font-family: "Poppins";
+            padding: 0%;
+            border-bottom: 1px solid #999999;
+            margin-bottom: 3px;
+            @media screen and (min-width: 615px) {
+              display: none;
+            }
           }
         }
-        .mobile_item {
-          font-size:14px;
-          color:white;
-          width:100%;
-          font-family: "Poppins";
-          padding:0%;
-          border-bottom:1px solid #999999;
-          margin-bottom: 3px;
-          @media screen and (min-width:615px) {
-            display:none;
-          }
-       
-        }
-      
-      
       }
     }
-    }
-  
   }
 
   .share_wrapper {

@@ -8,9 +8,9 @@ import { useNavigate } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import infiniteScroll from "../../components/UI/infiniteScroll";
 import Loader from "../../components/UI/loader/loader";
-import axios from "../../utils/useAxios"
+import axios from "../../utils/useAxios";
 import { useSelector } from "react-redux";
-import { LECTURE } from "../../utils/routes/constants";
+import { LECTURE, RECO1 } from "../../utils/routes/constants";
 const Recommend1 = () => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState([]);
@@ -23,7 +23,7 @@ const Recommend1 = () => {
   const [typeName, setTypeName] = useState();
   const [loading, setLoading] = useState(true);
   const observer = useRef();
-  const {currentUser} = useSelector((state)=> state.user)
+  const { currentUser } = useSelector((state) => state.user);
   const [page, setPage] = useState(1);
   const [isEmpty, setIsEmpty] = useState(false);
   const [nextPageLoad, setNextPageLoad] = useState(false);
@@ -52,14 +52,13 @@ const Recommend1 = () => {
         .catch((err) => {
           //console.log(err);
         });
-
     };
     // //console.log("hold line 40", hold);
 
     // //console.log("data line 42: ", data);
 
     handleRequest();
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [catid, page]);
 
   const lastElement = useCallback(
@@ -67,7 +66,7 @@ const Recommend1 = () => {
       if (isEmpty) return;
       infiniteScroll(node, observer, page, setPage);
     },
- // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [page]
   );
 
@@ -133,7 +132,7 @@ const Recommend1 = () => {
                         enpoint_url: `/leclisting_cat_api.php?langid=6&catid=${catid}&page=`,
                         currentPage: page,
                         controlData: filter,
-                        nav1: { title: "Buzz", link: "/recommend1" },
+                        nav1: { title: "Buzz", link: RECO1 },
                       },
                     });
                   }}
@@ -166,7 +165,7 @@ const Recommend1 = () => {
                         endpoint_url: `/leclisting_cat_api.php?langid=6&catid=${catid}&page=`,
                         currentPage: page,
                         controlData: filter,
-                        nav1: { title: "Buzz", link: "/recommend1" },
+                        nav1: { title: "Buzz", link: RECO1 },
                       },
                     });
                   }}
@@ -186,12 +185,12 @@ const Recommend1 = () => {
           })}
         </div>
         {nextPageLoad && (
-        <div className="load_m">
-          <div className="loads">
-            <Loader />
+          <div className="load_m">
+            <div className="loads">
+              <Loader />
+            </div>
           </div>
-        </div>
-      )}
+        )}
       </div>
     </Container>
   );

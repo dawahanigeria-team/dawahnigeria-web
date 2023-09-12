@@ -8,7 +8,7 @@ import _ from "lodash";
 import axios from "../../../utils/useAxios";
 import { useNavigate } from "react-router-dom";
 import infinitePlayFavScroll from "../../UI/infinitePlayFavScroll";
-import { ALBUMS } from "../../../utils/routes/constants";
+import { ALBUMS, CHARTS } from "../../../utils/routes/constants";
 
 const Favourite_album = ({setCount2}) => {
   const {currentUser} = useSelector((state) => state.user)
@@ -106,7 +106,7 @@ const Favourite_album = ({setCount2}) => {
         <button 
         onClick={() => {
           if(currentUser?.id) {
-            navigate("/charts")
+            navigate(CHARTS)
           }
           else {
             navigate("/auth/login")

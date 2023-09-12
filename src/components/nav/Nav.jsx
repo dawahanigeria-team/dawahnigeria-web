@@ -11,7 +11,7 @@ import { NavContext } from "../layout/Layout";
 const Nav = () => {
   const navigate = useNavigate;
   const location = useLocation();
-  const {setRes, setisOpen } = useContext(NavContext);
+  const { setRes, setisOpen } = useContext(NavContext);
   const handleSideBar = () => {
     setRes(1);
     /**
@@ -51,7 +51,7 @@ const Nav = () => {
         <div className="hide"></div>
         <div className="nav_download">
           <div className="nav_download1">
-            <img src={googleplay}  alt="apple" />
+            <img src={googleplay} alt="apple" />
           </div>
           <div className="nav_download2">
             {" "}

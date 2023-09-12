@@ -3,23 +3,22 @@ import { Link } from "react-router-dom";
 import LectChartWidget from "./chartWidgets/lectChartWidget";
 import { ALBUMS } from "../../../utils/routes/constants";
 const AlbumMobileChart = ({ data }) => {
- 
-
-  
-
   return (
     <div>
       <div className="w-[95%] mx-auto">
         <div className="top3 grid grid-cols-3 items-center gap-10  ">
-          <Link to={`${ALBUMS}${data[1]?.id || data[1]?.nid}`}
-           
+          <Link
+            to={`${ALBUMS}${data[1]?.id || data[1]?.nid}`}
             className="w-full h-full flex flex-col space-y-3 pt-[5px]  overflow-hidden text-white"
           >
             <div className="w-full relative h-[90px] rounded-md">
               <img
                 className="rounded-md w-full h-full"
-                
-                src={data[1]?.img || data[1]?.lec_img || "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"}
+                src={
+                  data[1]?.img ||
+                  data[1]?.lec_img ||
+                  "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"
+                }
                 alt=""
               />
 
@@ -35,15 +34,18 @@ const AlbumMobileChart = ({ data }) => {
             </div>
           </Link>
 
-          <Link to={`${ALBUMS}${data[0]?.id || data[0]?.nid}`}
-           
+          <Link
+            to={`${ALBUMS}${data[0]?.id || data[0]?.nid}`}
             className="w-[105%] h-full flex flex-col space-y-3 overflow-hidden text-white"
           >
             <div className="w-full relative h-[100px] rounded-md">
               <img
                 className="rounded-md w-full h-full"
-        
-                src={data[0]?.img || data[0]?.lec_img || "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"}
+                src={
+                  data[0]?.img ||
+                  data[0]?.lec_img ||
+                  "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"
+                }
                 alt=""
               />
               <div className="w-full h-[20px]   text-[12px] inset-x-0 absolute bottom-[-5px] flex items-center justify-center">
@@ -57,14 +59,18 @@ const AlbumMobileChart = ({ data }) => {
               {data[0]?.name}
             </div>
           </Link>
-          <Link to={`${ALBUMS}${data[2]?.id || data[2]?.nid}`}
+          <Link
+            to={`${ALBUMS}${data[2]?.id || data[2]?.nid}`}
             className="w-full h-full flex flex-col space-y-3 pt-[5px] overflow-hidden text-white"
           >
             <div className="w-full relative h-[80px] rounded-md">
               <img
                 className="rounded-md w-full h-full"
-                
-                src={data[2]?.img || data[2]?.lec_img || "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"}
+                src={
+                  data[2]?.img ||
+                  data[2]?.lec_img ||
+                  "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"
+                }
                 alt=""
               />
 
@@ -85,13 +91,8 @@ const AlbumMobileChart = ({ data }) => {
       <div className="flex flex-col w-full mt-4 space-y-2 justify-end items-end">
         {data?.slice(3).map(({ lec_img, id, img, nid, name }, idx) => {
           return (
-            <Link to={`${ALBUMS}${id || nid}`}
-             
-              key={idx}
-              className="w-[90%]"
-             
-            >
-             <LectChartWidget name={name} img={img || lec_img} idx={idx} />
+            <Link to={`${ALBUMS}${id || nid}`} key={idx} className="w-[90%]">
+              <LectChartWidget name={name} img={img || lec_img} idx={idx} />
             </Link>
           );
         })}

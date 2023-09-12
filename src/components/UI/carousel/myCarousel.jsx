@@ -14,7 +14,6 @@ const MyCarousel = ({ images }) => {
     return () => clearInterval(interval);
   }, [currentIndex, images.length]);
 
- 
   ////console.log(currentIndex);
   return (
     <div className="w-full group h-full relative items-end justify-end px-[5] flex cursor-pointer">
@@ -42,12 +41,12 @@ const MyCarousel = ({ images }) => {
             <div
               className={` transform ease h-full w-full duration-500 opacity-0 absolute left-0  shadow-xl ${
                 currentIndex % images.length === index ? "active " : ""
-              } ${(currentIndex + 1) % images.length === index ? " preactive" : ""} ${
-                (currentIndex + 2) % images.length === index ? "third " : ""
-              } 
+              } ${
+                (currentIndex + 1) % images.length === index ? " preactive" : ""
+              } ${(currentIndex + 2) % images.length === index ? "third " : ""} 
               `}
             >
-             <ImageWidget image={image} />
+              <ImageWidget image={image} />
             </div>
 
             <div className="w-full flex items-center z-[12]   justify-center space-x-1 absolute bottom-7 inset-x-0">
@@ -69,4 +68,3 @@ const MyCarousel = ({ images }) => {
 };
 
 export default MyCarousel;
-

@@ -1,11 +1,8 @@
 @mixin scroll_mobile {
-  @media screen and (max-width:870px) {
-    display:flex;
-    flex-wrap:nowrap;
-
-    
+  @media screen and (max-width: 870px) {
+    display: flex;
+    flex-wrap: nowrap;
   }
-
 }
 .lecturers_filter::-webkit-scrollbar {
   display: none;
@@ -18,35 +15,35 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width:100%;
+  width: 100%;
   overflow: hidden;
   @media screen and (max-width: 600px) {
     padding: 0% 3% 1% 3%;
   }
   .lecturers_head_link {
     width: 100%;
-    position:fixed;
-    left:0;
-    right:0;
-    padding:unset;
-    background:#090909;
+    position: fixed;
+    left: 0;
+    right: 0;
+    padding: unset;
+    background: #090909;
   }
   .lecturers_filter {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width:100%;
-    
-    @media screen and (max-width:870px) {
-      width:105%;
-      padding-right:5%;
-      overflow-x:scroll;
-    scroll-behavior: smooth;
+    width: 100%;
+
+    @media screen and (max-width: 870px) {
+      width: 105%;
+      padding-right: 5%;
+      overflow-x: scroll;
+      scroll-behavior: smooth;
     }
-    @media screen and (max-width:615px) {
-      padding-top:58px;
+    @media screen and (max-width: 615px) {
+      padding-top: 58px;
     }
-    
+
     .lecturers_filter_name {
       display: flex;
       flex-direction: row;
@@ -75,44 +72,40 @@
     }
   }
   .load_desktop {
-    width:100%;
-    height:100px;
+    width: 100%;
+    height: 100px;
     position: relative;
     @media screen and (max-width: 615px) {
-      height:400px;
+      height: 400px;
     }
     .load {
-      width:100%;
-      height:50%;
+      width: 100%;
+      height: 50%;
       position: absolute;
       inset: 0;
 
-      margin:minmax(0,1fr) minmax(0,1fr);
-
+      margin: minmax(0, 1fr) minmax(0, 1fr);
     }
-  
-    
   }
   .lecturers_widget {
     display: grid;
-    width:100%;
-    grid-template-columns: repeat(5, minmax(0,1fr));
+    width: 100%;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     @media screen and (max-width: 1238px) {
-      grid-template-columns: repeat(4, minmax(0,1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 2rem;
     }
     @media screen and (max-width: 1010px) {
-    
       gap: 3rem;
     }
     @media screen and (max-width: 768px) {
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap:1em;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1em;
     }
     @media screen and (max-width: 650px) {
-      gap:0.5em;
+      gap: 0.5em;
     }
-    
+
     @media screen and (max-width: 512px) {
       // justify-content: center;
     }
@@ -123,8 +116,8 @@
     flex-wrap: wrap;
     margin-top: 3rem;
     @media screen and (max-width: 615px) {
-      grid-template-columns: repeat(1, minmax(0,1fr));
-      gap:1.5rem;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: 1.5rem;
     }
     .lecturers_item {
       cursor: pointer;
@@ -132,10 +125,10 @@
   }
 
   .load_m {
-    display:flex;
-    width:100%;
+    display: flex;
+    width: 100%;
     justify-content: center;
     align-items: center;
-    height:100px;
+    height: 100px;
   }
 }

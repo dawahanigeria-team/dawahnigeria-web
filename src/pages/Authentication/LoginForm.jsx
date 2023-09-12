@@ -54,12 +54,10 @@ const LoginForm = () => {
     };
     const isSocial = false;
     //console.log(payload);
-    dispatch(LoginAction(payload,isSocial, navigate, setLoading));
+    dispatch(LoginAction(payload, isSocial, navigate, setLoading));
 
     //toast.success("Login successful");
   };
-
-  
 
   const { email, password } = data;
   return (
@@ -68,89 +66,89 @@ const LoginForm = () => {
         onSubmit={(e) => {
           handleSubmit(e);
         }}
-        style={{height:`${Math.floor(0.7 * window.innerHeight)}px`}}
+        style={{ height: `${Math.floor(0.7 * window.innerHeight)}px` }}
         className="loginform_form"
       >
         <div className="w-full">
-        <input
-          onChange={(e) => {
-            handleInput(e);
-          }}
-          type="email"
-          name="email"
-          placeholder="Email Address"
-          required
-          value={email}
-          id="email"
-          className="loginform_name"
-        />
-        <div className="loginform_password_wrap">
           <input
             onChange={(e) => {
               handleInput(e);
             }}
-            type={show}
-            placeholder="Password"
-            name="password"
+            type="email"
+            name="email"
+            placeholder="Email Address"
             required
-            value={password}
-            id="password"
-            className="loginform_password"
+            value={email}
+            id="email"
+            className="loginform_name"
           />
-          {show === "password" && (
-            <div className="loginform_password_icon_show_wrap">
-              <AiFillEye
-                onClick={() => setShow("text")}
-                className="loginform_password_icon_show"
-              />
-            </div>
-          )}
-          {show !== "password" && (
-            <div className="loginform_password_icon_hide_wrap">
-              <AiFillEyeInvisible
-                onClick={() => setShow("password")}
-                className="loginform_password_icon_hide"
-              />
-            </div>
-          )}
+          <div className="loginform_password_wrap">
+            <input
+              onChange={(e) => {
+                handleInput(e);
+              }}
+              type={show}
+              placeholder="Password"
+              name="password"
+              required
+              value={password}
+              id="password"
+              className="loginform_password"
+            />
+            {show === "password" && (
+              <div className="loginform_password_icon_show_wrap">
+                <AiFillEye
+                  onClick={() => setShow("text")}
+                  className="loginform_password_icon_show"
+                />
+              </div>
+            )}
+            {show !== "password" && (
+              <div className="loginform_password_icon_hide_wrap">
+                <AiFillEyeInvisible
+                  onClick={() => setShow("password")}
+                  className="loginform_password_icon_hide"
+                />
+              </div>
+            )}
+          </div>
+          <div className="loginform_forgot_wrap">
+            <p
+              onClick={() => {
+                navigate("/forgot-password");
+              }}
+              className="loginform_forgot"
+            >
+              Forgot password?
+            </p>
+          </div>
+          <button className="loginform_button">
+            {" "}
+            {loading ? <Loader /> : <span>Log in</span>}
+          </button>
         </div>
-        <div
-        
-        className="loginform_forgot_wrap">
-          <p
-          onClick={() => {
-            navigate("/forgot-password")
-          }}
-          className="loginform_forgot">Forgot password?</p>
-        </div>
-        <button className="loginform_button">
-          {" "}
-          {loading ? <Loader /> : <span>Log in</span>}
-        </button>
 
-        </div>
-    
         <span className="loginform_or">- or -</span>
 
         <div className=" login_socials inset-x-0 w-full items-center mx-auto h-fit">
-        <div className="hidden">
-          <GetFacebookAuth data={data} setData={setData} />
-        </div>
+          <div className="hidden">
+            <GetFacebookAuth data={data} setData={setData} />
+          </div>
 
-        <div
-        onClick={() => {
-          toast.error('Feature not yet availabe')
-        }}
-        className="hidden w-[45px] h-[45px]">
-          <img className="w-full h-full" src={twitter} alt="twitter" />
-        </div>
+          <div
+            onClick={() => {
+              toast.error("Feature not yet availabe");
+            }}
+            className="hidden w-[45px] h-[45px]"
+          >
+            <img className="w-full h-full" src={twitter} alt="twitter" />
+          </div>
 
-        <div className="z-[1] w-full">
-          <GetGoogleOAuth data={data} setData={setData} />
+          <div className="z-[1] w-full">
+            <GetGoogleOAuth data={data} setData={setData} />
+          </div>
         </div>
-      </div>
       </form>
-    
     </div>
   );
 };

@@ -1,56 +1,53 @@
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./lecturersWidget.scss";
 import { FiHeadphones } from "react-icons/fi";
 
 import { formatNumber } from "../UI/formatter";
 
 const LecturersWidget = ({ img, rp, views, styling }) => {
-//const lazy = useRef()
-
+  //const lazy = useRef()
 
   ////not contented but under presssure by DN project manager
   useEffect(() => {
-    const lazy  = document.querySelectorAll('#lect')
-    function lazyImages () {
+    const lazy = document.querySelectorAll("#lect");
+    function lazyImages() {
       lazy.forEach((im) => {
-        const newurl = im.getAttribute('src-data')
-        im.src = newurl 
+        const newurl = im.getAttribute("src-data");
+        im.src = newurl;
 
-        im.addEventListener('error', () => {
-          im.src = "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"
-        })
-      })
+        im.addEventListener("error", () => {
+          im.src = "https://imagetolink.com/ib/kk8U1nb2nR.jpeg";
+        });
+      });
     }
-  
-  
-    lazyImages()
-   
-  },[])
-  
 
+    lazyImages();
+  }, []);
 
   return (
     <>
-   
-    <div className="lecturerWidget_wrapper ">
+      <div className="lecturerWidget_wrapper ">
         <div className="lecturerWidget_circle">
-       <img  className="lecturerWidget_img" id="lect" src-data={img} src={"https://imagetolink.com/ib/kk8U1nb2nR.jpeg"} alt="circleImg" />
-     
+          <img
+            className="lecturerWidget_img"
+            id="lect"
+            src-data={img}
+            src={"https://imagetolink.com/ib/kk8U1nb2nR.jpeg"}
+            alt="circleImg"
+          />
         </div>
         <p className="lecturerWidget_text">
           {rp ? `${rp.split(" ")[0]} ${rp.split(" ")[1]}` : "undefined"}
         </p>
-        <p className="lecturerWidget_texthover">
-          {rp}
-        </p>
-        <div className={!styling ? "lecturerWidget_views_wrapper": 'hidden'}>
+        <p className="lecturerWidget_texthover">{rp}</p>
+        <div className={!styling ? "lecturerWidget_views_wrapper" : "hidden"}>
           <FiHeadphones className="lecturerWidget_views_icon" />
-          <p className="lecturerWidget_views_text">{formatNumber(parseInt(views) || 0)}</p>
+          <p className="lecturerWidget_views_text">
+            {formatNumber(parseInt(views) || 0)}
+          </p>
         </div>
       </div>
 
-    
-     
       {/* ------
       <div className="lecwidres_wrapper">
         <div className="lecwidres_img_wrap">
@@ -67,7 +64,7 @@ const LecturersWidget = ({ img, rp, views, styling }) => {
       </div>
       
       -----------responsive lecturer widget----------------- */}
-      
+
       {/* -----------------responsive lecturer widget Ends----------------- */}
     </>
   );

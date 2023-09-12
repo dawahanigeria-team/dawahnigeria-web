@@ -9,7 +9,7 @@
 
 .favsongs_wrapper {
   padding: 4% 2% 4% 2%;
-  @media screen and (max-width:600px) {
+  @media screen and (max-width: 600px) {
     padding: 3% 2% 4% 2%;
   }
   display: flex;
@@ -26,8 +26,8 @@
       font-style: normal;
       font-weight: 400;
       font-size: 16px;
-      @media screen and (max-width:600px) {
-        font-size:14px;
+      @media screen and (max-width: 600px) {
+        font-size: 14px;
       }
       line-height: 24px;
       color: #ffffff;
@@ -58,7 +58,7 @@
     }
     display: flex;
     //gap: 1rem;
-   // grid-template-columns: repeat(11, minmax(0, 1fr));
+    // grid-template-columns: repeat(11, minmax(0, 1fr));
     justify-items: flex-start;
     width: 100%;
     margin-bottom: 2rem;
@@ -73,8 +73,8 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      width:50%;
-     // grid-column: span 5 / span 5;
+      width: 50%;
+      // grid-column: span 5 / span 5;
       * {
         @include title_text;
         margin: unset;
@@ -86,53 +86,45 @@
       }
     }
     .tend_title2 {
-     /// grid-column: span 2 / span 2;
-     width:40%;
-     display: flex;
-     align-items: start;
-     justify-content: flex-start;
+      /// grid-column: span 2 / span 2;
+      width: 40%;
+      display: flex;
+      align-items: start;
+      justify-content: flex-start;
     }
-   
+
     .tend_title4 {
-     // grid-column: span 2 / span 2;
-     display: flex;
-     align-items: start;
-     justify-content: flex-start;
+      // grid-column: span 2 / span 2;
+      display: flex;
+      align-items: start;
+      justify-content: flex-start;
     }
   }
   .load_desktop {
-    width:100%;
-    height:400px;
+    width: 100%;
+    height: 400px;
     position: relative;
-    
+
     .load {
-      width:100%;
-      height:50%;
+      width: 100%;
+      height: 50%;
       position: absolute;
       inset: 0;
 
-      margin:auto auto;
-
+      margin: auto auto;
     }
-  
-    
   }
   .table {
-    
-    
-      color: #E0E0E0;
-      font-family:"Poppins";
-      width:100%;
-      font-size:14px;
-      border-collapse: collapse;
-     
-      
+    color: #e0e0e0;
+    font-family: "Poppins";
+    width: 100%;
+    font-size: 14px;
+    border-collapse: collapse;
   }
-  
 
   .load_m {
     display: flex;
-    width:100%;
+    width: 100%;
     align-items: center;
     justify-content: center;
   }

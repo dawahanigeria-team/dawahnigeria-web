@@ -12,7 +12,7 @@ import { LECTURE } from "../../../utils/routes/constants";
 const Lecturer_songs = ({ id, setCount1 }) => {
   const { currentUser } = useSelector((state) => state.user);
   const [data, setData] = useState([]);
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [isEmpty, setIsEmpty] = useState(false);
   const [nextPageLoad, setNextPageLoad] = useState(false);
@@ -22,20 +22,16 @@ const Lecturer_songs = ({ id, setCount1 }) => {
   //console.log("rp id", id);
   useEffect(() => {
     setCount1(data.length);
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  
   useEffect(() => {
     const handleRequest = () => {
       if (page > 1) {
         setNextPageLoad(true);
       }
       axios
-        .get(
-          `/leclisting_rp.php?page=${page}&rpid=${parseInt(id)}`
-       
-        )
+        .get(`/leclisting_rp.php?page=${page}&rpid=${parseInt(id)}`)
         .then((res) => {
           //console.log(res.data);
           if (page === 1) {
@@ -55,9 +51,8 @@ const Lecturer_songs = ({ id, setCount1 }) => {
     };
 
     handleRequest();
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ page]);
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
 
   //////*************handling comment**************** */
 
@@ -65,18 +60,13 @@ const Lecturer_songs = ({ id, setCount1 }) => {
     if (!currentUser?.id) return;
 
     axios
-      .get(
-        `/commentApi.php?user_id=${currentUser?.id}&item_id=${
-          id
-        }&type=rp`,
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-          },
-        }
-      )
+      .get(`/commentApi.php?user_id=${currentUser?.id}&item_id=${id}&type=rp`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
+        },
+      })
       .then((res) => {
         //console.log("comment result", res);
         setaudioComment(res.data.reverse());
@@ -84,7 +74,7 @@ const Lecturer_songs = ({ id, setCount1 }) => {
       .catch((err) => {
         //console.log(err);
       });
-       // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const postComment = () => {
@@ -171,9 +161,7 @@ const Lecturer_songs = ({ id, setCount1 }) => {
                       cats={cats}
                       favorites={favorites}
                       nid={nid}
-                      endpoint_url={`/leclisting_rp.php?lim=10&&rpid=${
-                        id
-                      }page=`}
+                      endpoint_url={`/leclisting_rp.php?lim=10&&rpid=${id}page=`}
                       currentPage={page}
                       navName={"Back"}
                       navLink={-1}
@@ -198,9 +186,7 @@ const Lecturer_songs = ({ id, setCount1 }) => {
                       favorites={favorites}
                       navName={"Back"}
                       navLink={-1}
-                      endpoint_url={`/leclisting_rp.php?lim=10&&rpid=${
-                        id
-                      }page=`}
+                      endpoint_url={`/leclisting_rp.php?lim=10&&rpid=${id}page=`}
                       currentPage={page}
                       controlData={data}
                       views={views}

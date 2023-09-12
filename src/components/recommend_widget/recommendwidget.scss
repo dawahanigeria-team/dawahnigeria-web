@@ -11,8 +11,8 @@
   font-size: 20px;
   color: white;
   cursor: pointer;
-  @media screen and (max-width:615px) {
-    font-size:14px;
+  @media screen and (max-width: 615px) {
+    font-size: 14px;
   }
 }
 @mixin action_text {
@@ -22,8 +22,8 @@
   font-size: 16px;
   line-height: 24px;
   color: #868686;
-  @media screen and (max-width:615px) {
-    font-size:12px;
+  @media screen and (max-width: 615px) {
+    font-size: 12px;
   }
 }
 
@@ -42,9 +42,9 @@
   .recwid_left {
     width: 100px;
     height: 100px;
-    @media screen and (max-width:615px) {
-    width: 60px;
-    height: 60px;
+    @media screen and (max-width: 615px) {
+      width: 60px;
+      height: 60px;
     }
     overflow: hidden;
     display: flex;
@@ -58,7 +58,7 @@
     }
   }
   .recwid_right_wrapper {
-    display:flex;
+    display: flex;
     flex-direction: row;
     width: 80%;
     align-items: center;
@@ -115,7 +115,6 @@
         margin: unset;
         max-width: 400px;
         @media screen and (max-width: 657px) {
-         
           font-size: 16px;
         }
       }
@@ -161,23 +160,21 @@
           }
         }
       }
-
     }
 
     .recwid_right_img {
       //position: absolute;
-        
-        width:140px;
-        height:120px;
-        @media screen and (max-width: 1178px) {
-          display: none;
-        }
-  
-        .rec_img_sz {
-          width:100%;
-          height: 100%;
-        }
-       }
-  }
 
+      width: 140px;
+      height: 120px;
+      @media screen and (max-width: 1178px) {
+        display: none;
+      }
+
+      .rec_img_sz {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
 }
