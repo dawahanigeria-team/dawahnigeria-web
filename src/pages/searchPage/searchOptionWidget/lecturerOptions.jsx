@@ -11,18 +11,15 @@ const LecturerOptions = () => {
   //const [selectCategory, setSelectCategory] = useState()
   //const dispatch = useDispatch();
 
-  const handleSelected=(e)=>{
+  const handleSelected = (e) => {
     //console.log(e.target.value)
     if (e.target.checked) {
       setLecturerId((prev) => [...prev, e.target.value]);
     } else {
-      setLecturerId((prev) =>
-        prev.filter((item) => item !== e.target.value)
-      );
+      setLecturerId((prev) => prev.filter((item) => item !== e.target.value));
     }
-  }
+  };
 
-  
   return (
     <div className="flex flex-col text-zinc-400 text-sm font-normal mb-6 w-full space-y-3 h-fit justify-start">
       <div className="flex items-center justify-between">
@@ -45,32 +42,20 @@ const LecturerOptions = () => {
         <div className="space-y-5">
           {searchOptions?.rp?.map(({ name, count, id }, idx) => {
             return (
-                
-                <label
-              
-                key={idx}
-                className="filter-container flex"
-              >
-                 <div className="flex items-center space-x-2">
-                <div
-                
-                  className="hover:text-gray-500 "
-                  
-                >
-                  {name}
+              <label key={idx} className="filter-container flex">
+                <div className="flex items-center space-x-2">
+                  <div className="hover:text-gray-500 ">{name}</div>
+                  <span className="bg-[#ddff2b] text-black rounded-full px-2 py-[1px] text-[10px] min-[615px]:text-[13px]">
+                    {count}
+                  </span>
                 </div>
-                <span className="bg-[#ddff2b] text-black rounded-full px-2 py-[1px] text-[10px] min-[615px]:text-[13px]">
-                  {count}
-                </span>
-              </div>
-                <input 
-                onChange={(e) => handleSelected(e)}
-                type="checkbox"
-                value={id}
+                <input
+                  onChange={(e) => handleSelected(e)}
+                  type="checkbox"
+                  value={id}
                 />
                 <span className="filter-checkmark"></span>
               </label>
-             
             );
           })}
         </div>

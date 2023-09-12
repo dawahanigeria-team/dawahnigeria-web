@@ -1,36 +1,40 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import "./albumWidget.scss";
 import { FiHeadphones } from "react-icons/fi";
 import { formatNumber } from "../UI/formatter";
 import { FaPlay } from "react-icons/fa";
 import { useSelector } from "react-redux";
 const AlbumWidget = ({ categories, img, views, nid }) => {
- const {audioId} = useSelector((state) => state.user)
- 
-   ////not contented but under presssure by DN project manager
-useEffect(() => {
-  function lazyImage () {
-    const lazy  = document.querySelectorAll('#album')
-    lazy.forEach((im) => {
-      const newurl = im.getAttribute('src-data')
-      im.src = newurl 
+  const { audioId } = useSelector((state) => state.user);
 
-      im.addEventListener('error', () => {
-        im.src = 'https://imagetolink.com/ib/CQZFhVqz5o.jpeg'
-      })
-    })
-  }
+  ////not contented but under presssure by DN project manager
+  useEffect(() => {
+    function lazyImage() {
+      const lazy = document.querySelectorAll("#album");
+      lazy.forEach((im) => {
+        const newurl = im.getAttribute("src-data");
+        im.src = newurl;
 
-  lazyImage()
+        im.addEventListener("error", () => {
+          im.src = "https://imagetolink.com/ib/CQZFhVqz5o.jpeg";
+        });
+      });
+    }
 
-},[])
+    lazyImage();
+  }, []);
 
   return (
     <div className="album_wrapper">
       <div className="album_container">
         <div className="album_img">
-        <img src-data={img} id="album" src={"https://imagetolink.com/ib/CQZFhVqz5o.jpeg"} alt="background" className="album_background_image" />
-
+          <img
+            src-data={img}
+            id="album"
+            src={"https://imagetolink.com/ib/CQZFhVqz5o.jpeg"}
+            alt="background"
+            className="album_background_image"
+          />
         </div>
         <div className="album_overlay"></div>
         <p className="album_widget_name">DN</p>
@@ -38,13 +42,19 @@ useEffect(() => {
           <FiHeadphones className="album_listen_icon" />
           <p className="album_listen_text">{formatNumber(views)}</p>
         </div>
-        
-        <div className={audioId === nid ?`album_play_super_wrap hide`: `album_play_super_wrap show`}>
-        <div className="album_play_wrapper">
-        <div className="album_play">
-          <FaPlay className="album_play_icon" />
-        </div>
-        </div>
+
+        <div
+          className={
+            audioId === nid
+              ? `album_play_super_wrap hide`
+              : `album_play_super_wrap show`
+          }
+        >
+          <div className="album_play_wrapper">
+            <div className="album_play">
+              <FaPlay className="album_play_icon" />
+            </div>
+          </div>
         </div>
       </div>
       <p className="album_categories">{categories}</p>

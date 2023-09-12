@@ -9,19 +9,14 @@ const LangOptions = () => {
   const [selectCategory, setSelectCategory] = useState([]);
   const [showmore, setshowmore] = useState(false);
 
-  
   //const dispatch = useDispatch();
   const handleSelected = (e) => {
     //console.log(e.target.value);
     if (e.target.checked) {
       setLanguageId((prev) => [...prev, e.target.value]);
     } else {
-      setLanguageId((prev) =>
-        prev.filter((item) => item !== e.target.value)
-      );
+      setLanguageId((prev) => prev.filter((item) => item !== e.target.value));
     }
-
-   
   };
 
   //console.log(selectCategory);
@@ -47,11 +42,7 @@ const LangOptions = () => {
         <div className="space-y-5">
           {searchOptions?.lang?.map(({ name, count, id }, idx) => {
             return (
-              <label
-            
-                key={idx}
-                className="filter-container flex"
-              >
+              <label key={idx} className="filter-container flex">
                 <div className="flex items-center space-x-2">
                   <div className="hover:text-gray-500 ">{name}</div>
                   <span className="bg-[#ddff2b] text-black rounded-full px-2 py-[1px] text-[10px] min-[615px]:text-[13px]">

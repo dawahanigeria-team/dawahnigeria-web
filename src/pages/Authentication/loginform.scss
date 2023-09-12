@@ -14,7 +14,7 @@
   font-weight: 400;
   font-size: 15.5294px;
   @media screen and (max-width: 600px) {
-    font-size:14px;
+    font-size: 14px;
   }
   line-height: 22px;
   color: white;
@@ -24,7 +24,7 @@
     font-weight: 400;
     font-size: 15.5294px;
     @media screen and (max-width: 600px) {
-      font-size:14px;
+      font-size: 14px;
     }
     line-height: 22px;
     color: #5e5e5e;
@@ -34,7 +34,7 @@
 .loginform_wrapper {
   width: 100%;
   //overflow-y: auto;
- 
+
   .loginform_form {
     display: flex;
     flex-direction: column;
@@ -58,7 +58,7 @@
         font-weight: 400;
         font-size: 15.5294px;
         @media screen and (max-width: 600px) {
-          font-size:14px;
+          font-size: 14px;
         }
         line-height: 22px;
         padding-left: 1rem;
@@ -111,7 +111,7 @@
       font-weight: 500;
       font-size: 18px;
       @media screen and (max-width: 600px) {
-        font-size:15px;
+        font-size: 15px;
       }
       line-height: 26px;
       letter-spacing: 0.279529px;
@@ -122,14 +122,13 @@
       @media screen and (max-width: 700px) {
         margin-bottom: 25%;
       }
-    
     }
     .loginform_or {
       font-family: "Nunito Sans";
       font-style: normal;
       font-weight: 400;
       font-size: 17px;
-     
+
       line-height: 23px;
       color: #d4d4d4;
       align-self: center;
@@ -141,10 +140,9 @@
         margin-top: 28%;
       }
       @media screen and (max-width: 600px) {
-        font-size:13px;
+        font-size: 13px;
       }
     }
-
   }
   .loginform_social_wrap {
     display: flex;
@@ -153,12 +151,12 @@
     justify-content: center;
     gap: 2rem;
     width: 100%;
-    position:absolute;
-    bottom:10px;
-    left:0;
-    right:0;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
     @media screen and (max-width: 600px) {
-      bottom:80px;
+      bottom: 80px;
     }
     * {
       cursor: pointer;
@@ -166,6 +164,6 @@
   }
 
   .show {
-    display:block;
+    display: block;
   }
 }

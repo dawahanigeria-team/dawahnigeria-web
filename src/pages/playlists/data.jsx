@@ -3,7 +3,6 @@ export const category = [
     id: "40217",
     name: "All",
   },
-  
 ];
 
 export const language = [
@@ -11,7 +10,6 @@ export const language = [
     name: "All",
     id: "6",
   },
-  
 ];
 
 export const alphabet = [
@@ -43,5 +41,3 @@ export const alphabet = [
   { alphabet: "Y" },
   { alphabet: "Z" },
 ];
-
-

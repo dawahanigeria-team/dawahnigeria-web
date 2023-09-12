@@ -21,20 +21,20 @@ const FilterButton = ({
   setLangid,
   setCatid,
   setTypeName,
-  setAlphabet
+  setAlphabet,
 }) => {
   useEffect(() => {
     setFilter([...data1, ...data2, ...data3]);
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data1, data2, data3]);
 
   const handleFilter = () => {
     setActive(title);
     //console.log(action)
-    setTypeName(action)
-   
+    setTypeName(action);
+
     if (action === "name") {
-        setlectId(lecid)
+      setlectId(lecid);
       if (title === "All") {
         setData1(data.filter((value) => value.rp || value.name));
       } else {
@@ -46,18 +46,16 @@ const FilterButton = ({
         );
       }
     } else if (action === "language") {
-    
       setLangid(lid);
       //console.log(lid)
-      setIsEmpty(false)
+      setIsEmpty(false);
       if (title === "All") {
-        
         setData2(data.filter((value) => value.lang || value.lang_id));
       } else {
         setData2(data.filter((value) => value.lang || value.lang_id === title));
       }
     } else if (action === "alphabet") {
-        setAlphabet(title)
+      setAlphabet(title);
       if (title === "Hot") {
         setData3(data.filter((value) => value?.title || value?.name));
       } else {
@@ -65,13 +63,14 @@ const FilterButton = ({
         setData2([...reset]);
         setData1([...reset]);
         setData3(
-          data.filter((value) => value?.name?.toLocaleUpperCase().charAt(0) === title)
+          data.filter(
+            (value) => value?.name?.toLocaleUpperCase().charAt(0) === title
+          )
         );
       }
     } else if (action === "categories") {
-    
       setCatid(id);
-      setIsEmpty(false)
+      setIsEmpty(false);
       if (title === "All") {
         setData3(data.filter((value) => value?.cats || value?.categories));
       } else {

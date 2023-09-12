@@ -42,7 +42,6 @@ const LecturerDetail = () => {
   const [getFavs, setgetfavs] = useState([]);
   const [singleData, setsingleData] = useState([]);
 
-
   const [, setImg] = useState(
     "https://backend.dawahnigeria.com/sites/default/files/600-800/700.jpg"
   );
@@ -58,7 +57,7 @@ const LecturerDetail = () => {
       .catch((err) => {
         console.error(err);
       });
-       // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /////get users favorites
@@ -78,7 +77,7 @@ const LecturerDetail = () => {
           //console.log(res.data);
           const { rp } = res.data;
           setgetfavs(rp);
-         /**
+          /**
          const isExist = rp.includes(parseInt(id));
           //console.log(isExist);
           if (isExist) {
@@ -93,7 +92,7 @@ const LecturerDetail = () => {
   }
   useEffect(() => {
     fetchFavorites(addFav, id);
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addFav, id]);
 
   const addToFav = async (e, rpid) => {
@@ -132,7 +131,7 @@ const LecturerDetail = () => {
         //console.log(err);
       });
   };
- // //console.log("fav", getFavs);
+  // //console.log("fav", getFavs);
   /// Get the exiting element
   const firstElement = useCallback((node) => {
     observeEl.current = new IntersectionObserver((entries) => {
@@ -145,8 +144,8 @@ const LecturerDetail = () => {
     });
 
     if (node) observeEl.current.observe(node);
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   ///**** share rp ******** */
 
@@ -174,7 +173,7 @@ const LecturerDetail = () => {
     }
 
     lazyImage();
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -184,7 +183,7 @@ const LecturerDetail = () => {
         img.src = "https://imagetolink.com/ib/9TU6bi2SDs.jpeg";
       });
     });
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -250,7 +249,9 @@ const LecturerDetail = () => {
                     )}
                   </button>
 
-                  <p className="lecdet_fav_text">{formatNumber(sumofFav || 0)}</p>
+                  <p className="lecdet_fav_text">
+                    {formatNumber(sumofFav || 0)}
+                  </p>
                 </div>
                 <div
                   onClick={(e) => {
@@ -344,7 +345,7 @@ const LecturerDetail = () => {
                   }`}
                 >{`(${count3})`}</p>
               </div>
-              
+
               <div
                 onClick={() => {
                   setTab(5);
@@ -469,7 +470,9 @@ const LecturerDetail = () => {
                     <img className="likeys_img_sz" src={lovebold} alt="" />
                   )}
                 </button>
-                <span className="likeys_text">{formatNumber(sumofFav || 0)}</span>
+                <span className="likeys_text">
+                  {formatNumber(sumofFav || 0)}
+                </span>
               </div>
               <div
                 onClick={(e) => {
@@ -567,7 +570,7 @@ const LecturerDetail = () => {
                   }`}
                 >{`(${count3})`}</p>
               </div>
-           
+
               <div
                 onClick={() => {
                   setTab(5);
@@ -632,8 +635,7 @@ const LecturerDetail = () => {
                 />
               )}
 
-
-              {tab === 5 && <Simillarrp langid={singleData?.lang_id}  />}
+              {tab === 5 && <Simillarrp langid={singleData?.lang_id} />}
             </div>
           </div>
 
@@ -666,7 +668,6 @@ const LecturerDetail = () => {
               />
             )}
 
-
             {tab === 5 && <Simillarrp langid={singleData?.lang_id} />}
           </div>
           {/* ------------------------------------ Section 3 ends -------------------------------------- */}
@@ -685,5 +686,3 @@ const LecturerDetail = () => {
 };
 
 export default LecturerDetail;
-
-

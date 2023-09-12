@@ -1,11 +1,17 @@
-import React, { useEffect, useState, createContext, useContext, useRef } from "react";
+import React, {
+  useEffect,
+  useState,
+  createContext,
+  useContext,
+  useRef,
+} from "react";
 import { Outlet } from "react-router-dom";
 import "./layout.scss";
 import SideNav from "../../components/sideNav/SideNav";
 import { BiShareAlt } from "react-icons/bi";
 import ShareAudio from "../shareaudio/shareAudio";
 import { FaHome, FaPlay } from "react-icons/fa";
-import {  MdFavorite } from "react-icons/md";
+import { MdFavorite } from "react-icons/md";
 import { SiApplemusic } from "react-icons/si";
 import { GiPauseButton } from "react-icons/gi";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -18,15 +24,17 @@ import { FAVOURITE, LECTURE, LIBRARY } from "../../utils/routes/constants";
 export const NavContext = createContext();
 
 const Layout = () => {
-  const { currentAudioInfo, playing,audioId, value } = useSelector((state) => state.user);
- // const { image, title, name, audio } = currentAudioInfo;
+  const { currentAudioInfo, playing, audioId, value } = useSelector(
+    (state) => state.user
+  );
+  // const { image, title, name, audio } = currentAudioInfo;
   const navigate = useNavigate();
-  const rangeRef = useRef()
+  const rangeRef = useRef();
   const dispatch = useDispatch();
   const location = useLocation();
-  const [isOpen, setisOpen] = useState(false)
-  const {  audioRef, setinitial } = useContext(AudioContext);
-  const [isShare, setisShare] = useState(false)
+  const [isOpen, setisOpen] = useState(false);
+  const { audioRef, setinitial } = useContext(AudioContext);
+  const [isShare, setisShare] = useState(false);
   const islayout = true;
   const [res, setRes] = useState(() => {
     return (
@@ -48,72 +56,76 @@ const Layout = () => {
     };
     window.addEventListener("load", handleResize);
     window.addEventListener("resize", handleResize);
-    return () => {window.removeEventListener("resize", handleResize)
-    window.removeEventListener("load", handleResize)
-  }
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("load", handleResize);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [res]);
 
   return (
     <div className="layout_wrapper">
       <div
-      onClick={(e) => {
-        e.stopPropagation()
-        setisOpen(false)
-      }}
+        onClick={(e) => {
+          e.stopPropagation();
+          setisOpen(false);
+        }}
         className={`layout_sidenav ${
-          res === 2 ? "layout_sidenav_open" : `layout_sidenav_close let swipeInLeft ${isOpen ? "show":"hide"}`
+          res === 2
+            ? "layout_sidenav_open"
+            : `layout_sidenav_close let swipeInLeft ${isOpen ? "show" : "hide"}`
         }`}
       >
-        <div
-        className="layout_mini"
-         onClick={(e) => e.stopPropagation()}
-        >
-           <SideNav res={res} 
-       
-       />
+        <div className="layout_mini" onClick={(e) => e.stopPropagation()}>
+          <SideNav res={res} />
         </div>
-    
       </div>
-     
+
       <div className={`layout_outlet`}>
         <NavContext.Provider value={{ res, setRes, setisOpen, isOpen }}>
           <Outlet />
         </NavContext.Provider>
       </div>
-       {/**aud desktop   <AudioActionDesktop/>*/}
-    
+      {/**aud desktop   <AudioActionDesktop/>*/}
+
       {/* ----------------Mobile Buttom menue------------------- */}
       <div className="layout_buttom_menue">
-       <div className="layout_buttom_menue1">
-
-        <div className="range_progress">
-          <div
-             style={{width: `${value * 100/audioRef?.current?.duration}%`}}
-          className="audio_mob_bar">
-
+        <div className="layout_buttom_menue1">
+          <div className="range_progress">
+            <div
+              style={{
+                width: `${(value * 100) / audioRef?.current?.duration}%`,
+              }}
+              className="audio_mob_bar"
+            ></div>
+            <input
+              ref={rangeRef}
+              type="range"
+              min={"0"}
+              max={Math.floor(audioRef?.current?.duration)}
+              value={value}
+              className=""
+            />
           </div>
-                <input
-                ref={rangeRef}
-                type="range"
-                min={"0"}
-                max={Math.floor(audioRef?.current?.duration)}
-                value={value}
-                className=""
-              />
 
-        </div>
-     
           <div
-          onClick={() => {
-            navigate(`${LECTURE}${audioId}`, {
-              state: {
-                layout:islayout
+            onClick={() => {
+              navigate(`${LECTURE}${audioId}`, {
+                state: {
+                  layout: islayout,
+                },
+              });
+            }}
+            className="curr_lect_img"
+          >
+            <img
+              className="curr_lect_img_sz"
+              src={
+                currentAudioInfo?.img ||
+                "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"
               }
-            })
-          }}
-          className="curr_lect_img">
-            <img className="curr_lect_img_sz"  src={currentAudioInfo?.img || "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"} alt="disk" />
+              alt="disk"
+            />
           </div>
 
           <marquee
@@ -121,26 +133,25 @@ const Layout = () => {
             loop="5"
             className="layout_buttom_text_wrap"
           >
-            <p className="layout_buttom_text1">{currentAudioInfo?.title || currentAudioInfo?.Title}</p>
+            <p className="layout_buttom_text1">
+              {currentAudioInfo?.title || currentAudioInfo?.Title}
+            </p>
             <p className="layout_buttom_text2">{currentAudioInfo?.rpname}</p>
           </marquee>
-         <div
-         onClick={() => {
-          setisShare(!isShare)
-         }}
-         >
-         <BiShareAlt className="layout_buttom_share" />
-          </div> 
+          <div
+            onClick={() => {
+              setisShare(!isShare);
+            }}
+          >
+            <BiShareAlt className="layout_buttom_share" />
+          </div>
           <div
             onClick={() => {
               if (playing) {
                 dispatch(setPlaying(!playing));
-
-                
               } else {
                 dispatch(setPlaying(!playing));
-                setinitial(false)
-                
+                setinitial(false);
               }
             }}
             className="layout_buttom_play_wrap"
@@ -151,9 +162,8 @@ const Layout = () => {
               <GiPauseButton className="layout_play_icon" />
             )}
           </div>
-        
         </div>
-       
+
         <div className="layout_buttom_menue2">
           <div
             onClick={() => {
@@ -226,17 +236,18 @@ const Layout = () => {
           </div>
         </div>
       </div>
-      <AudioActionDesktop/>
-      {isShare &&  <ShareAudio
+      <AudioActionDesktop />
+      {isShare && (
+        <ShareAudio
           isShare={isShare}
           setisShare={setisShare}
           nid={audioId}
           type={"audio"}
-        />}
+        />
+      )}
       {/* ----------------Mobile Buttom menue ends------------------- */}
     </div>
   );
 };
 
 export default Layout;
-

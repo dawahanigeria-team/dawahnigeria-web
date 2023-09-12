@@ -14,8 +14,6 @@ const initailState = {
   page: 0,
   value: 0,
   isrepeat: false,
- 
-
 };
 const User = (state = initailState, action) => {
   switch (action.type) {
