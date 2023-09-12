@@ -5,7 +5,7 @@ import "./App.css";
 
 import { Toaster } from "react-hot-toast";
 
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes,Navigate } from "react-router-dom";
 import Landing from "./pages/landing/Landing";
 import Layout from "./components/layout/Layout";
 import Genres from "./pages/genres/Genres";
@@ -193,6 +193,9 @@ const App = () => {
                 <Route path={FORGOTPASSWORD} element={<ForgotPassword />} />
                 <Route path={MYPLAYLIIST} element={<Myplaylist />} />
               </Route>
+
+              <Route path="/" element={<Navigate to="/dawahcast" />} />
+              <Route path="/dawahcast" element={<Layout />} />
             </Routes>
           </AudioContext.Provider>
         </SearchContext.Provider>
