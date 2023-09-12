@@ -164,7 +164,7 @@ const App = () => {
                   element={<SelectLanguage />}
                 />
               </Route>
-              <Route path="/dawahcast" element={<Layout />}>
+              <Route path="/" element={<Layout />}>
                 <Route index element={<Landing />} />
                 <Route path={HOME} element={<Landing />} />
                 <Route path={MORE} element={<More />} />
