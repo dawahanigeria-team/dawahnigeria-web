@@ -121,52 +121,49 @@ const getSearchOptions = (data) => {
     payload: data,
   };
 };
-const LoginAction = (loginParams,isSocial, navigate, setLoading) => {
+const LoginAction = (loginParams, isSocial, navigate, setLoading) => {
   return async (dispatch) => {
-  
     if (isSocial) {
       setLoading(true);
       axios
-      .post("https://www.dawahbox.com/mongo/api/user_auth.php", loginParams, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-        },
-      })
-      .then((res) => {
-        //console.log(res.data);
-        dispatch(GetUsersSuccess(res.data));
-        navigate("/");
-        setLoading(false);
-        toast.success("Login successful");
-      })
-    }
-    else {
+        .post("https://www.dawahbox.com/mongo/api/user_auth.php", loginParams, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
+          },
+        })
+        .then((res) => {
+          //console.log(res.data);
+          dispatch(GetUsersSuccess(res.data));
+          navigate("/");
+          setLoading(false);
+          toast.success("Login successful");
+        });
+    } else {
       setLoading(true);
-    axios
-      .post("https://www.dawahbox.com/mongo/api/user_auth.php", loginParams, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-        },
-      })
-      .then((res) => {
-        //console.log(res);
-        const { data } = res;
-        //console.log(data);
-        dispatch(GetUsersSuccess(data));
-        navigate("/");
-        toast.success("Login Successful");
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        //console.log(error.response.data.message);
-        toast.error(error.response.data.message);
-      });
-
+      axios
+        .post("https://www.dawahbox.com/mongo/api/user_auth.php", loginParams, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
+          },
+        })
+        .then((res) => {
+          //console.log(res);
+          const { data } = res;
+          //console.log(data);
+          dispatch(GetUsersSuccess(data));
+          navigate("/");
+          toast.success("Login Successful");
+          setLoading(false);
+        })
+        .catch((error) => {
+          setLoading(false);
+          //console.log(error.response.data.message);
+          toast.error(error.response.data.message);
+        });
     }
   };
 };

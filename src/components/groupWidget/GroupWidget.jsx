@@ -23,7 +23,7 @@ import LecturerMobileChart from "./chartUIs/lecturersMobileChart";
 import LectureMobileChart from "./chartUIs/lectureMobileChart";
 import AlbumMobileChart from "./chartUIs/albumMobileChart";
 import GenreMobileLecturer from "../../pages/genredetail/genreMobileLecturer";
-import { ALBUMS, LECTURE, PLAYLISTS, RESOURCE_PERSON } from "../../utils/routes/constants";
+import { ALBUMS, LECTURE, PLAYLISTS, RESOURCE_PERSON,MORE, TRENDING } from "../../utils/routes/constants";
 
 const GroupWidget = ({
   data,
@@ -124,9 +124,9 @@ const GroupWidget = ({
         <div
           onClick={() => {
             if (heading === "Trending") {
-              navigate("/trending");
+              navigate(TRENDING);
             } else {
-              navigate("/more", {
+              navigate(MORE, {
                 state: {
                   name: "",
                   heading: heading,
@@ -269,7 +269,9 @@ const GroupWidget = ({
                   idx
                 ) => {
                   return (
-                    <>
+                    <div
+                    key={idx}
+                    >
                       <Link to={`${LECTURE}${nid || id}`}
                         id={idx}
                         className={`groupWidget_album_item  ${
@@ -311,7 +313,7 @@ const GroupWidget = ({
                           <span>{idx + 1}</span>
                         </div>
                       </Link>
-                    </>
+                    </div>
                   );
                 }
               )}

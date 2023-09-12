@@ -1,6 +1,6 @@
 .favlec_wrapper {
   padding: 4% 2% 4% 2%;
-  @media screen and (max-width:600px) {
+  @media screen and (max-width: 600px) {
     padding: 0% 2% 4% 2%;
   }
   display: flex;
@@ -42,22 +42,21 @@
 
   .favlecturers_widget {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0,1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     @media screen and (max-width: 1238px) {
-      grid-template-columns: repeat(4, minmax(0,1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
     @media screen and (max-width: 1010px) {
-    
       gap: 3rem;
     }
     @media screen and (max-width: 768px) {
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap:1em;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1em;
     }
     @media screen and (max-width: 650px) {
-      gap:0.5em;
+      gap: 0.5em;
     }
-    
+
     @media screen and (max-width: 512px) {
       // justify-content: center;
     }
@@ -66,10 +65,10 @@
     //justify-content: space-between;
     gap: 4rem;
     flex-wrap: wrap;
-   // margin-top: 3rem;
+    // margin-top: 3rem;
     @media screen and (max-width: 615px) {
-      grid-template-columns: repeat(1, minmax(0,1fr));
-      gap:2rem;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: 2rem;
     }
     .lecturers_item {
       cursor: pointer;
@@ -77,10 +76,10 @@
   }
 
   .load_m {
-    display:flex;
-    width:100%;
+    display: flex;
+    width: 100%;
     justify-content: center;
     align-items: center;
-    height:100px;
+    height: 100px;
   }
 }

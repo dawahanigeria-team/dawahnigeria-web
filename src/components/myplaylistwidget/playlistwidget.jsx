@@ -45,23 +45,22 @@ function MyPlayListWidget({
   const [isdisabled, setdisabled] = useState(false);
   const [getFavs, setgetfavs] = useState([]);
   const [sumofFav, setsumofFav] = useState(favorites || 0);
-  const {currentUser} = useSelector((state) => state.user)
-  const {setinitial} = useContext(AudioContext)
+  const { currentUser } = useSelector((state) => state.user);
+  const { setinitial } = useContext(AudioContext);
   const handleDownload = (e) => {
     e.stopPropagation();
     setisDownload(!isDownload);
     setNidValue(nid);
   };
 
-    ////not contented but under presssure by DN project manager
-useEffect(() => {
-  const lazy  = document.querySelectorAll('#play')
-  lazy.forEach((im) => {
-    const newurl = im.getAttribute('src-data')
-    im.src = newurl 
-  })
-},[])
-
+  ////not contented but under presssure by DN project manager
+  useEffect(() => {
+    const lazy = document.querySelectorAll("#play");
+    lazy.forEach((im) => {
+      const newurl = im.getAttribute("src-data");
+      im.src = newurl;
+    });
+  }, []);
 
   /////get users favorites
   async function fetchFavorites(addFav, lecid) {
@@ -119,8 +118,7 @@ useEffect(() => {
         setdisabled(false);
         if (!getFavs?.includes(lecid)) {
           setsumofFav(sumofFav + 1);
-        } 
-        else {
+        } else {
           setsumofFav(sumofFav - 1);
         }
       })
@@ -136,14 +134,20 @@ useEffect(() => {
         <div
           onClick={() => {
             navigate(url);
-            setinitial(false)
+            setinitial(false);
           }}
           className="play_td"
         >
           <div className="play_tr">
             <p className="num">{id + 1}</p>
             <div className="img_size">
-              <img className="img_size_sm" id="play" src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"} src-data={image} alt="ff" />
+              <img
+                className="img_size_sm"
+                id="play"
+                src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"}
+                src-data={image}
+                alt="ff"
+              />
             </div>
             <div className="trend_lect_data">
               <div className="rel_text">
@@ -167,7 +171,7 @@ useEffect(() => {
                       e.stopPropagation();
                       addToFav(e, nid);
                       setaddFav(!addFav);
-                      fetchFavorites(addFav, nid)
+                      fetchFavorites(addFav, nid);
                       setdisabled(true);
                     }}
                     className="likeys_img"
@@ -234,14 +238,20 @@ useEffect(() => {
         <div
           onClick={() => {
             navigate(url);
-            setinitial(false)
+            setinitial(false);
           }}
           className="play_music_list"
         >
           <div className="play_wrapped_right">
             <div className="wrap_image">
               <div className="img_wr">
-                <img className="img_wrp" id="play" src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"} src-data={image} alt="" />
+                <img
+                  className="img_wrp"
+                  id="play"
+                  src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"}
+                  src-data={image}
+                  alt=""
+                />
               </div>
               <div className="likeys">
                 <span className="likeys_img">
@@ -268,7 +278,7 @@ useEffect(() => {
                     onClick={(e) => {
                       e.stopPropagation();
                       addToFav(e, nid);
-                      fetchFavorites(addFav, nid)
+                      fetchFavorites(addFav, nid);
                       setaddFav(!addFav);
                       setdisabled(true);
                     }}

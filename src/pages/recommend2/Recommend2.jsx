@@ -4,19 +4,17 @@ import Container from "../../components/container/Container";
 import AlbumWidget from "../../components/albumWidget/AlbumWidget";
 import { recommended2Data } from "./data";
 import axios from "axios";
-import { LECTURE } from "../../utils/routes/constants";
+import { LECTURE, RECO2 } from "../../utils/routes/constants";
 import { useNavigate } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import { useSelector } from "react-redux";
 const Recommend2 = () => {
   const [data, setData] = useState([]);
-  const {currentUser} = useSelector((state) => state.user)
+  const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
   useEffect(() => {
     axios
-      .get(
-        "/albumlisting_page_api.php?lim=10&langid=7&page=1"
-      )
+      .get("/albumlisting_page_api.php?lim=10&langid=7&page=1")
       .then((res) => {
         ////console.log(res.data)
         setData(res.data);
@@ -24,7 +22,7 @@ const Recommend2 = () => {
       .catch((err) => {
         //console.log(err);
       });
-       // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // //console.log(r)
   return (
@@ -47,14 +45,19 @@ const Recommend2 = () => {
                       currentUser,
                       nid,
                       controlData: recommended2Data,
-                      nav1: { title: "Podcast", link: "/recommend2" },
+                      nav1: { title: "Podcast", link: RECO2 },
                     },
                   });
                 }}
                 key={idx}
                 className="recommended2_album_wrap"
               >
-                <AlbumWidget key={idx} views={views} categories={cats_name} img={img} />
+                <AlbumWidget
+                  key={idx}
+                  views={views}
+                  categories={cats_name}
+                  img={img}
+                />
               </div>
             );
           }

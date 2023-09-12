@@ -3,7 +3,7 @@ import "./search.scss";
 import { FiSearch } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../App";
-
+import {SEARCH} from "../../utils/routes/constants"
 const Search = () => {
   // const [langid, setLangid] = useState()
   //const [rpId, setrpId] = useState()
@@ -16,14 +16,14 @@ const Search = () => {
   //console.log(inputValue)
   //const [text, onchange] = useState();
   useEffect(() => {
-    if (pathname !== "/search") {
+    if (pathname !== SEARCH) {
         //setText("")
     }
   },[pathname])
 
 const fetchData = () => {
-  if(pathname !== "/search") {
-    navigate("/search")
+  if(pathname !== SEARCH) {
+    navigate(SEARCH)
   }
  setText(inputValue)
 }

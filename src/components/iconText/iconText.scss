@@ -22,8 +22,8 @@
   flex-direction: row;
   align-items: center;
   text-decoration: none;
-  .icontext_icon{
-    margin-top:3px;
+  .icontext_icon {
+    margin-top: 3px;
   }
   &:hover {
     .icontext_icon {
@@ -39,7 +39,7 @@
     .icon {
       color: #aeaeae;
       font-size: 16px;
-      margin-bottom:1rem;
+      margin-bottom: 1rem;
     }
   }
   .icontext_name {
@@ -47,7 +47,7 @@
     font-family: "Nunito Sans";
     font-style: normal;
     font-weight: 400;
-    margin-bottom:1rem;
+    margin-bottom: 1rem;
     font-size: 14px;
     line-height: 21px;
     align-items: center;

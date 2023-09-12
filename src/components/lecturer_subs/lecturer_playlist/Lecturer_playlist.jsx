@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import AlbumWidget from "../../../components/albumWidget/AlbumWidget";
 import axios from "../../../utils/useAxios";
 import "./lecturerplaylist.scss";
@@ -8,15 +8,15 @@ import Loader from "../../UI/loader/loader";
 import CommentBox from "../../comment/comment";
 import { useSelector } from "react-redux";
 import { PLAYLISTS } from "../../../utils/routes/constants";
-const Lecturer_playlist = ({ id, setCount3}) => {
+const Lecturer_playlist = ({ id, setCount3 }) => {
   const [data, setData] = useState([]);
-  const {currentUser} = useSelector((state) => state.user)
-  const [audioComment, setaudioComment] = useState()
+  const { currentUser } = useSelector((state) => state.user);
+  const [audioComment, setaudioComment] = useState();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setCount3(data.length);
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   useEffect(() => {
@@ -36,35 +36,31 @@ const Lecturer_playlist = ({ id, setCount3}) => {
     };
 
     handleRequest();
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-    //////*************handling comment**************** */
+  //////*************handling comment**************** */
 
-    useEffect(() => {
-      if (!currentUser?.id) return;
-  
-      axios
-        .get(
-          `/commentApi.php?user_id=${currentUser?.id}&item_id=${id}&type=rp`,
-          {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-            },
-          }
-        )
-        .then((res) => {
-          //console.log("comment result", res);
-          setaudioComment(res.data.reverse());
-        })
-        .catch((err) => {
-          //console.log(err);
-        });
-         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-  
+  useEffect(() => {
+    if (!currentUser?.id) return;
+
+    axios
+      .get(`/commentApi.php?user_id=${currentUser?.id}&item_id=${id}&type=rp`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
+        },
+      })
+      .then((res) => {
+        //console.log("comment result", res);
+        setaudioComment(res.data.reverse());
+      })
+      .catch((err) => {
+        //console.log(err);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -85,11 +81,10 @@ const Lecturer_playlist = ({ id, setCount3}) => {
           data.length !== 0 &&
           data.map(({ name, id, views, lec_img }, idx) => {
             return (
-              <Link to={`${PLAYLISTS}${id}`}
+              <Link
+                to={`${PLAYLISTS}${id}`}
                 className="lecplaylist_item "
-                onClick={() => {
-                  
-                }}
+                onClick={() => {}}
                 key={idx + 1}
               >
                 <AlbumWidget
@@ -104,9 +99,7 @@ const Lecturer_playlist = ({ id, setCount3}) => {
       </div>
 
       <div className="lecplaylist_comments">
-        <CommentBox
-        audioComment={audioComment} id={id} type={'rp'}
-        />
+        <CommentBox audioComment={audioComment} id={id} type={"rp"} />
       </div>
     </>
   );

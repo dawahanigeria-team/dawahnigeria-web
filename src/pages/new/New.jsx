@@ -9,7 +9,7 @@ import axios from "../../utils/useAxios";
 import Loader from "../../components/UI/loader/loader";
 import infiniteScroll from "../../components/UI/infiniteScroll";
 import _ from "lodash"
-import { LECTURE } from "../../utils/routes/constants";
+import { LECTURE, TRENDING, NEW } from "../../utils/routes/constants";
 import { useNavigate } from "react-router-dom";
 const New = () => {
   const [data, setData] = useState([]);
@@ -76,7 +76,7 @@ const New = () => {
           currentPage: 1,
           idx: 0,
           nid: data[0].nid,
-          nav1: { title: "playAll", link: "/new" },
+          nav1: { title: "playAll", link: NEW },
         },
       });
     };
@@ -140,7 +140,7 @@ const New = () => {
                       cats={cats}
                       nid={nid}
                       navName={"Trending"}
-                      navLink={"/trending"}
+                      navLink={TRENDING}
                       controlData={data}
                       views={views}
                       share={share}
@@ -171,7 +171,7 @@ const New = () => {
                       cats={cats}
                       nid={nid}
                       navName={"New"}
-                      navLink={"/new"}
+                      navLink={NEW}
                       controlData={data}
                       views={views}
                       share={share}
@@ -241,7 +241,7 @@ const New = () => {
                       rpid={rp_id}
                       nid={nid}
                       navName={"Trending"}
-                      navLink={"/trending"}
+                      navLink={TRENDING}
                       controlData={data}
                       views={views}
                     />
@@ -270,7 +270,7 @@ const New = () => {
                       cats={cats}
                       nid={nid}
                       navName={"Trending"}
-                      navLink={"/trending"}
+                      navLink={TRENDING}
                       controlData={data}
                       views={views}
                     />

@@ -19,6 +19,7 @@ import {
   getSearchOptions,
   getSearchRecord,
 } from "../../Redux/Actions/ActionCreators";
+import { SEARCH } from "../../utils/routes/constants";
 const SearchPage = () => {
   const { albumId, lecturerId, text, languageId, categoryId } =
     useContext(SearchContext);
@@ -101,7 +102,7 @@ const SearchPage = () => {
               navigate(-1);
             }}
             className={
-              pathname === "/search"
+              pathname === SEARCH
                 ? "text-[30px] text-white"
                 : "text-[30px] text-gray-400"
             }

@@ -1,93 +1,87 @@
 .fixed_download_wrapper {
-    width:100%;
-    height:100%;
-    top:0;
-    display: block;
-    bottom:0;
-    left:0;
-    font-family: "Poppins";
-    right:0;
-    z-index: 100;
-    position: fixed;
-   
-    background:rgba(0,0,0,0.6);
-    .audiodownload_hero {
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 100%;
-        z-index: 0;
-      }
+  width: 100%;
+  height: 100%;
+  top: 0;
+  display: block;
+  bottom: 0;
+  left: 0;
+  font-family: "Poppins";
+  right: 0;
+  z-index: 100;
+  position: fixed;
 
-    .small_wrapper {
-        position: absolute;
-        margin:auto;
-        height:fit-content;
-        inset:0;
-        width:50%;
-        display: flex;
-        flex-direction: column;
+  background: rgba(0, 0, 0, 0.6);
+  .audiodownload_hero {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    z-index: 0;
+  }
 
-        border-radius: 8px;
-        background:#1E1E1E;
-        color:#CFCFCF;
-        padding:1% 0% 2% 0%;
-        font-size:16px;
-       
-        @media screen and (max-width:615px) {
-            font-size:14px;
-            width:80%;
-        }
-       
-            .download_text {
-                width:100%;
-                padding:0% 4% 3% 4%;
-            
-                border-bottom:1px solid#353535;
-            
-            }
-            .download_size {
-                width:100%;
-                padding:3% 4%;
-                border-bottom:1px solid#353535;
-                background:#1E1E1E
-            }
-            .download_amr {
-                width:100%;
-                padding:3% 4%;
-                color:#030303;
-                 background: #DDFF2B;
-            }
-            .download_mp4 {
-                width:100%;
-                padding:3% 4%;
-                color:#030303;
-                background: #DDFF2B;
-            }
-            .download_btn {
-                width:98%;
-                padding:2%;
-                margin:1rem auto 0 auto;
-                color:#030303;
-                display: flex;
-                font-size:16px;
-                justify-content: center;
-                align-items: center;
-                background: #DDFF2B;
-                border: none;
-                @media screen and (max-width:615px) {
-                    font-size:14px;
-                    
-                }
-                border-radius: 4px;
+  .small_wrapper {
+    position: absolute;
+    margin: auto;
+    height: fit-content;
+    inset: 0;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
 
-            }
+    border-radius: 8px;
+    background: #1e1e1e;
+    color: #cfcfcf;
+    padding: 1% 0% 2% 0%;
+    font-size: 16px;
 
-        
-        
+    @media screen and (max-width: 615px) {
+      font-size: 14px;
+      width: 80%;
     }
+
+    .download_text {
+      width: 100%;
+      padding: 0% 4% 3% 4%;
+
+      border-bottom: 1px solid#353535;
+    }
+    .download_size {
+      width: 100%;
+      padding: 3% 4%;
+      border-bottom: 1px solid#353535;
+      background: #1e1e1e;
+    }
+    .download_amr {
+      width: 100%;
+      padding: 3% 4%;
+      color: #030303;
+      background: #ddff2b;
+    }
+    .download_mp4 {
+      width: 100%;
+      padding: 3% 4%;
+      color: #030303;
+      background: #ddff2b;
+    }
+    .download_btn {
+      width: 98%;
+      padding: 2%;
+      margin: 1rem auto 0 auto;
+      color: #030303;
+      display: flex;
+      font-size: 16px;
+      justify-content: center;
+      align-items: center;
+      background: #ddff2b;
+      border: none;
+      @media screen and (max-width: 615px) {
+        font-size: 14px;
+      }
+      border-radius: 4px;
+    }
+  }
 }
 
 .fixed_download_wrapper_none {
-    display: none;
+  display: none;
 }

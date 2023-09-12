@@ -2,21 +2,19 @@ import React, { useState, useEffect } from "react";
 import "./selectlang.scss";
 import axios from "../.././utils/useAxios";
 import Loader from "../../components/UI/loader/loader";
-import { useLocation,useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { registration } from "../../Redux/Actions/ActionCreators";
 const SelectLanguage = () => {
-    const {state} = useLocation()
-    const navigate = useNavigate()
-    const dispatch  = useDispatch()
+  const { state } = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
   const [langData, setLangData] = useState([]);
   const [langid, setlangid] = useState();
 
-  const [selected, setselected] = useState(false)
-
-
+  const [selected, setselected] = useState(false);
 
   useEffect(() => {
     axios
@@ -30,59 +28,50 @@ const SelectLanguage = () => {
       });
   }, []);
 
-
-
   //social authentication method
   const handleSocialRegister = () => {
     const isSocial = true;
-    const getId = null
-     const payload = {
-        ...state?.payload,
-        languageId:langid
-    }
-
-
-  
+    const getId = null;
+    const payload = {
+      ...state?.payload,
+      languageId: langid,
+    };
 
     ////console.log(payload)
-   
-    dispatch(registration(payload, isSocial,getId, navigate, setLoading))
-    
-  };
-  
 
+    dispatch(registration(payload, isSocial, getId, navigate, setLoading));
+  };
 
   return (
     <div className="signuplang_wrapper">
-        <p className="header">Select a language</p>
-        
-        {langData?.map(({name, id}, index) => {
+      <p className="header">Select a language</p>
 
-            return (
-                <div
-                onClick={() => {
-                    setlangid(id) 
-                    setselected(true)
-                }}
-                key={index}
+      {langData?.map(({ name, id }, index) => {
+        return (
+          <div
+            onClick={() => {
+              setlangid(id);
+              setselected(true);
+            }}
+            key={index}
+            className={
+              selected && id === langid
+                ? "signuplang_name active"
+                : "signuplang_name not_active"
+            }
+          >
+            {name}
+          </div>
+        );
+      })}
 
-                className={selected && id === langid ? "signuplang_name active":"signuplang_name not_active"}>
-                    {name}
-                </div>
-
-            )
-        })}
-       
-          <button
-          disabled={!selected}
-          onClick={handleSocialRegister}
-          className="continue_btn">
-           {!loading ? <span>Continue</span>:<Loader
-          className="loader_size"
-          />} </button>
-          
-        
-    
+      <button
+        disabled={!selected}
+        onClick={handleSocialRegister}
+        className="continue_btn"
+      >
+        {!loading ? <span>Continue</span> : <Loader className="loader_size" />}{" "}
+      </button>
     </div>
   );
 };

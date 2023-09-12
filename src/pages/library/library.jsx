@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import "./library.scss";
 import Container from "../../components/container/Container";
 import avatar from "../../assets/svg/avatar.svg";
@@ -7,6 +7,7 @@ import addplay from "../../assets/svg/addplaylist.svg";
 import fav from "../../assets/svg/fav.svg";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { FAVOURITE, MYPLAYLIIST } from "../../utils/routes/constants";
 
 const Library = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -47,7 +48,7 @@ const Library = () => {
         <div className="flex_wrapp">
           <div
             onClick={() => {
-              navigate("/myplaylist");
+              navigate(MYPLAYLIIST);
             }}
             className="mini_wrapper"
           >
@@ -58,7 +59,7 @@ const Library = () => {
           </div>
           <div
             onClick={() => {
-              navigate("/favourite");
+              navigate(FAVOURITE);
             }}
             className="mini_wrapper"
           >
