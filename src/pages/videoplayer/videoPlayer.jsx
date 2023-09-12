@@ -185,8 +185,7 @@ const VideoPlayer = () => {
   }, [addFav, id]);
 
   const addToFav = async () => {
-    /// add to favorites
-    //console.log("event clicked");
+   
     if (!currentUser?.id) {
       toast.error("Login or register to add to favorites");
       navigate("/auth/login");
