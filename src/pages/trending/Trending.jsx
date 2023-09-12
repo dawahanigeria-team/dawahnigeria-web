@@ -38,7 +38,7 @@ const Trending = () => {
           setIsEmpty(true);
           return;
         }
-       ////console.log(_.uniqBy([...res.data], 'nid'))
+       
         setData((prev) => _.uniqBy([...prev,...res.data], 'nid'));
       })
       .catch((err) => {
