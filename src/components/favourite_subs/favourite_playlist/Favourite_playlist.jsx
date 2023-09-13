@@ -57,7 +57,7 @@ const Favourite_playlist = ({setCount3}) => {
       })
       .catch((err) => {
         //console.log(err)
-      });
+      });})
   }, []);
 
 
@@ -196,6 +196,6 @@ const Favourite_playlist = ({setCount3}) => {
 
     </div>
   );
-};
+}
 
-export default Favourite_playlist;
+export default Favourite_playlist
