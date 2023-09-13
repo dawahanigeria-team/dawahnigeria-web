@@ -5,12 +5,12 @@ const HeadMeta = ({ title}) => {
   return (
     <Helmet>
       <meta charSet="utf-8" />
-      <meta name="description" content="CRA Typescript Starter by C-Hive" />
+      <meta name="description" content="" />
       <meta
         name="keywords"
         content=""
       />
-      <meta name="author" content="C-Hive" />
+      <meta name="author" content="Edawah" />
       <title>{title}</title>
     </Helmet>
   );
