@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import LandingOptions from "../../components/landingOptions/LandingOptions";
 import MyCarousel from "../../components/UI/carousel/myCarousel";
 import MobileImageWidget from "./mobileimagewidget/mobileImageWidget";
+import { GENRES, HOME, CHARTS, TRENDING, NEW, PLAYLISTS, PLAY, VIDEO, LECTURERS } from "../../utils/routes/constants";
 const Landing = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [recent, setRecent] = useState([]);
@@ -91,7 +92,7 @@ const Landing = () => {
               axios
                 .get(`/albumlisting_multi_nid_api.php?id=${recArr.toString()}`)
                 .then((res) => {
-                  //console.log("I am the new guy", res);
+                   //console.log("I am the new guy", res);
                   setRecent(res.data?.slice(0, 10));
                 })
                 .catch((err) => {
@@ -192,37 +193,41 @@ const Landing = () => {
 
         <Slider className="landing_carousel landing_space" {...settings}>
           {images?.map((image, index) => {
-            return (
-              <div key={index} className="landing_carousel_img">
-                <MobileImageWidget image={image} className="" />
-              </div>
-            );
+                return (
+                  <div   key={index} className="landing_carousel_img">
+                        <MobileImageWidget image={image} className="" />
+                  </div>
+              
+                )
+            
+              
+          
           })}
         </Slider>
         <Slider className="landing_options" {...settings1}>
-          <LandingOptions text={"Charts"} img={bchart} link={"/charts"} />
+          <LandingOptions text={"Charts"} img={bchart} link={CHARTS} />
           <LandingOptions
             text={"Lecturers"}
             img={blecturer}
-            link={"/lecturers"}
+            link={LECTURERS}
           />
           <LandingOptions
             text={"Playlists"}
             img={bplaylist}
-            link={"/playlists"}
+            link={PLAY}
           />
           <LandingOptions
             text={"Video"}
             icon={<BsFillPlayBtnFill />}
-            link={"/videos"}
+            link={VIDEO}
           />
-          <LandingOptions text={"Genre"} img={bgenre} link={"/genres"} />
+          <LandingOptions text={"Genre"} img={bgenre} link={GENRES} />
           <LandingOptions
             text={"Trending"}
             img={btrending}
-            link={"/trending"}
+            link={TRENDING}
           />
-          <LandingOptions text={"New"} img={bnew} link={"/new"} />
+          <LandingOptions text={"New"} img={bnew} link={NEW} />
         </Slider>
 
         <div className="landing_recent landing_space my-1 min-[615px]:my-3">
@@ -235,7 +240,7 @@ const Landing = () => {
             currentPage={page}
             previousPlay={curPlay}
             isrecent={isrecent}
-            nav1={{ title: "Home", link: "/home" }}
+            nav1={{ title: "Home", link: HOME }}
           />
         </div>
         <div className="landing_trending landing_space my-1 min-[615px]:my-3">
@@ -245,7 +250,7 @@ const Landing = () => {
             type={"lectures"}
             endpoint_url={"/popular_lec_api.php?langid=8&page="}
             currentPage={page}
-            nav1={{ title: "Home", link: "/home" }}
+            nav1={{ title: "Home", link: HOME }}
           />
         </div>
         <div className="landing_tafsir landing_space my-1 min-[615px]:my-3">
@@ -253,8 +258,9 @@ const Landing = () => {
             data={ramadan}
             heading="Ramadan Tafsir"
             type={"lectures"}
-            currentPage={""}
-            nav1={{ title: "Home", link: "/home" }}
+            currentPage={''}
+          
+            nav1={{ title: "Home", link: HOME }}
           />
         </div>
         <div className="landing_quran landing_space my-1 min-[615px]:my-3">
@@ -262,8 +268,9 @@ const Landing = () => {
             data={quran}
             heading="Quran Recitations"
             type={"lectures"}
-            currentPage={""}
-            nav1={{ title: "Home", link: "/home" }}
+            
+            currentPage={''}
+            nav1={{ title: "Home", link: HOME }}
           />
         </div>
       </div>

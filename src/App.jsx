@@ -5,7 +5,7 @@ import "./App.css";
 
 import { Toaster } from "react-hot-toast";
 
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes,Navigate } from "react-router-dom";
 import Landing from "./pages/landing/Landing";
 import Layout from "./components/layout/Layout";
 import Genres from "./pages/genres/Genres";
@@ -40,6 +40,23 @@ import {
   RESOURCE_PERSON,
   VIDEOS,
   PLAYLISTS,
+  HOME,
+  MYPLAYLIIST,
+  FAVOURITE,
+  MORE,
+  SEARCH,
+  LIBRARY,
+  GENRES,
+  CHARTS,
+  TRENDING,
+  NEW,
+  PLAY,
+  VIDEO,
+  LECTURERS,
+  RECO1,
+  RECO2,
+  DOWNLOAD,
+  FORGOTPASSWORD,
 } from "./utils/routes/constants";
 import ForgotPassword from "./pages/forgotpassword/forgotPassword";
 export const AudioContext = createContext();
@@ -147,24 +164,24 @@ const App = () => {
                   element={<SelectLanguage />}
                 />
               </Route>
-              <Route path="/" element={<Layout />}>
+              <Route path="/dawahcast" element={<Layout />}>
                 <Route index element={<Landing />} />
-                <Route path="/home" element={<Landing />} />
-                <Route path="/more" element={<More />} />
-                <Route path="/search" element={<SearchPage />} />
-                <Route path="/library" element={<Library />} />
-                <Route path="/genres" element={<Genres />} />
-                <Route path="/genres/:id" element={<GenreDetail />} />
-                <Route path="/recommend2" element={<Podcast />} />
-                <Route path="/recommend1" element={<Buzz />} />
-                <Route path="/lecturers" element={<Lecturers />} />
-                <Route path="/videos" element={<Videos />} />
-                <Route path="/playlists" element={<Playlists />} />
-                <Route path="/charts" element={<Charts />} />
-                <Route path="/trending" element={<Trending />} />
-                <Route path="/new" element={<New />} />
+                <Route path={HOME} element={<Landing />} />
+                <Route path={MORE} element={<More />} />
+                <Route path={SEARCH} element={<SearchPage />} />
+                <Route path={LIBRARY} element={<Library />} />
+                <Route path={GENRES} element={<Genres />} />
+                <Route path={`${GENRES}/:id`} element={<GenreDetail />} />
+                <Route path={RECO2} element={<Podcast />} />
+                <Route path={RECO1} element={<Buzz />} />
+                <Route path={LECTURERS} element={<Lecturers />} />
+                <Route path={VIDEO} element={<Videos />} />
+                <Route path={PLAY} element={<Playlists />} />
+                <Route path={CHARTS} element={<Charts />} />
+                <Route path={TRENDING} element={<Trending />} />
+                <Route path={NEW} element={<New />} />
                 <Route path={`${LECTURE}:id`} element={<AudioDetail />} />
-                <Route path="/download" element={<DownloadAudio />} />
+                <Route path={DOWNLOAD} element={<DownloadAudio />} />
                 <Route path={`${PLAYLISTS}:id`} element={<PlaylistDetail />} />
                 <Route
                   path={`${RESOURCE_PERSON}:id`}
@@ -172,10 +189,13 @@ const App = () => {
                 />
                 <Route path={`${ALBUMS}:id`} element={<LecturesListDetail />} />
                 <Route path={`${VIDEOS}:id`} element={<VideoPlayer />} />
-                <Route path="/favourite" element={<Favourite />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/myplaylist" element={<Myplaylist />} />
+                <Route path={FAVOURITE} element={<Favourite />} />
+                <Route path={FORGOTPASSWORD} element={<ForgotPassword />} />
+                <Route path={MYPLAYLIIST} element={<Myplaylist />} />
               </Route>
+
+              <Route path="/" element={<Navigate to="/dawahcast" />} />
+              <Route path="/dawahcast" element={<Layout />} />
             </Routes>
           </AudioContext.Provider>
         </SearchContext.Provider>

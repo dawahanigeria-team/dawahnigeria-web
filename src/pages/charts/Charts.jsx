@@ -5,7 +5,7 @@ import GroupWidget from "../../components/groupWidget/GroupWidget";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import axios from "../../utils/useAxios";
 import { lecturers } from "../lecturers/data";
-
+import {CHARTS} from "../../utils/routes/constants"
 const Charts = () => {
   const [dailylectures, setdailyLectures] = useState([]);
   const [weeklylectures, setweeklyLectures] = useState([]);
@@ -177,7 +177,7 @@ const Charts = () => {
             type={"lectures"}
             styling={isChart}
             navLinking={"/l"}
-            nav1={{ title: "Charts", link: "/charts" }}
+            nav1={{ title: "Charts", link: CHARTS }}
           />
         </div>
         <div className="charts_recent charts_space">
@@ -188,7 +188,7 @@ const Charts = () => {
             type={"lectures"}
             styling={isChart}
             navLinking={"/l"}
-            nav1={{ title: "Charts", link: "/charts" }}
+            nav1={{ title: "Charts", link: CHARTS }}
           />
         </div>
 
@@ -200,7 +200,7 @@ const Charts = () => {
             type={"lectures"}
             styling={isChart}
             navLinking={"/l"}
-            nav1={{ title: "Charts", link: "/charts" }}
+            nav1={{ title: "Charts", link: CHARTS }}
           />
         </div>
 
@@ -212,7 +212,7 @@ const Charts = () => {
             type={"album"}
             styling={isChart}
             navLinking={"/a"}
-            nav1={{ title: "Charts", link: "/charts" }}
+            nav1={{ title: "Charts", link: CHARTS }}
           />
         </div>
         <div className="charts_recent charts_space">
@@ -223,7 +223,7 @@ const Charts = () => {
             type={"album"}
             styling={isChart}
             navLinking={"/a"}
-            nav1={{ title: "Charts", link: "/charts" }}
+            nav1={{ title: "Charts", link: CHARTS }}
           />
         </div>
         <div className="charts_recent charts_space">
@@ -234,7 +234,7 @@ const Charts = () => {
             type={"album"}
             styling={isChart}
             navLinking={"/a"}
-            nav1={{ title: "Charts", link: "/charts" }}
+            nav1={{ title: "Charts", link: CHARTS }}
           />
         </div>
 
@@ -246,7 +246,7 @@ const Charts = () => {
             type={"lecturer"}
             styling={isChart}
             navLinking={"/rp"}
-            nav1={{ title: "Charts", link: "/charts" }}
+            nav1={{ title: "Charts", link: CHARTS }}
           />
         </div>
         <div className="charts_recent charts_space">
@@ -257,7 +257,7 @@ const Charts = () => {
             type={"lecturer"}
             styling={isChart}
             navLinking={"/rp"}
-            nav1={{ title: "Charts", link: "/charts" }}
+            nav1={{ title: "Charts", link: CHARTS }}
           />
         </div>
 
@@ -269,7 +269,7 @@ const Charts = () => {
             type={"lecturer"}
             styling={isChart}
             navLinking={"/l"}
-            nav1={{ title: "Charts", link: "/charts" }}
+            nav1={{ title: "Charts", link: CHARTS }}
           />
         </div>
 
@@ -283,7 +283,7 @@ const Charts = () => {
             currentPage={""}
             endpoint_url={"/playlist_charts_api.php?action=daily"}
             navLinking={"/pl"}
-            nav1={{ title: "Charts", link: "/charts" }}
+            nav1={{ title: "Charts", link: CHARTS }}
           />
         </div>
         <div className="charts_recent charts_space">
@@ -296,7 +296,7 @@ const Charts = () => {
             endpoint_url={"/playlist_charts_api.php?action=weekly"}
             styling={isChart}
             navLinking={"/pl"}
-            nav1={{ title: "Charts", link: "/charts" }}
+            nav1={{ title: "Charts", link: CHARTS }}
           />
         </div>
 
@@ -310,7 +310,7 @@ const Charts = () => {
             currentPage={""}
             endpoint_url={"/playlist_charts_api.php?action=monthly"}
             navLinking={"/pl"}
-            nav1={{ title: "Charts", link: "/charts" }}
+            nav1={{ title: "Charts", link: CHARTS }}
           />
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import Container from "../../components/container/Container";
-import { VIDEOS } from "../../utils/routes/constants";
+import { VIDEO, VIDEOS } from "../../utils/routes/constants";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import { useNavigate, useLocation, useParams, Link } from "react-router-dom";
 import axios from "../../utils/useAxios";
@@ -185,8 +185,7 @@ const VideoPlayer = () => {
   }, [addFav, id]);
 
   const addToFav = async () => {
-    /// add to favorites
-    //console.log("event clicked");
+   
     if (!currentUser?.id) {
       toast.error("Login or register to add to favorites");
       navigate("/auth/login");
@@ -239,7 +238,7 @@ const VideoPlayer = () => {
           />
           <HiOutlineArrowLongRight
             className={
-              pathname === "/videos"
+              pathname === VIDEO
                 ? "text-white text-[22px]"
                 : "text-[22px] text-gray-300"
             }

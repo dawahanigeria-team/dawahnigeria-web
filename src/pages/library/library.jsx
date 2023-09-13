@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./library.scss";
 import Container from "../../components/container/Container";
 import avatar from "../../assets/svg/avatar.svg";
@@ -7,11 +7,14 @@ import addplay from "../../assets/svg/addplaylist.svg";
 import fav from "../../assets/svg/fav.svg";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { FAVOURITE, MYPLAYLIIST } from "../../utils/routes/constants";
 
 const Library = () => {
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
   //const {id, username, email} = currentUser
+
+
 
   //console.log(currentUser);
   return (
@@ -29,22 +32,15 @@ const Library = () => {
           ) : (
             <div className="no_user">
               <span
-                onClick={() => {
-                  navigate("/auth/signup");
-                }}
-                className="reg_sign"
-              >
-                Sign up
-              </span>
-              /
+              onClick={() => {
+                navigate("/auth/signup")
+              }}
+              className="reg_sign">Sign up</span>/
               <span
-                onClick={() => {
-                  navigate("/auth/login");
-                }}
-                className="reg_sign"
-              >
-                Log in
-              </span>
+              onClick={() => {
+                navigate("/auth/login")
+              }}
+              className="reg_sign">Log in</span>
             </div>
           )}
         </div>
@@ -52,18 +48,18 @@ const Library = () => {
         <div className="flex_wrapp">
           <div
             onClick={() => {
-              navigate("/myplaylist");
+              navigate(MYPLAYLIIST);
             }}
             className="mini_wrapper"
           >
             <div className="img_wrap">
-              <img className="img_wrap_sz" src={playlist} alt="" />
+              <img className="img_wrap_sz" src={playlist}  alt="" />
             </div>
             <p>Playlist</p>
           </div>
           <div
             onClick={() => {
-              navigate("/favourite");
+              navigate(FAVOURITE);
             }}
             className="mini_wrapper"
           >

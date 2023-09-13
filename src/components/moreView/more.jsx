@@ -29,12 +29,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AudioContext } from "../../App";
 import LecturersWidget from "../lecturersWidget/LecturersWidget";
 import GenreMobileLecturer from "../../pages/genredetail/genreMobileLecturer";
-import {
-  LECTURE,
-  ALBUMS,
-  RESOURCE_PERSON,
-  PLAYLISTS,
-} from "../../utils/routes/constants";
+import { LECTURE, ALBUMS, RESOURCE_PERSON,PLAYLISTS, MORE } from "../../utils/routes/constants";
 function More() {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
@@ -131,7 +126,7 @@ function More() {
             onClick={() => {
               navigate(-1);
             }}
-            className={pathname === "/more" ? "arrows white" : "arrows grey"}
+            className={pathname === MORE ? "arrows white" : "arrows grey"}
           />
           <HiOutlineArrowLongRight
             className={pathname === "/" ? "arrows white" : "arrows grey"}

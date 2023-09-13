@@ -10,7 +10,7 @@ import infiniteScroll from "../../components/UI/infiniteScroll";
 import Loader from "../../components/UI/loader/loader";
 import axios from "../../utils/useAxios";
 import { useSelector } from "react-redux";
-import { LECTURE } from "../../utils/routes/constants";
+import { LECTURE, RECO1 } from "../../utils/routes/constants";
 const Recommend1 = () => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState([]);
@@ -131,7 +131,7 @@ const Recommend1 = () => {
                         enpoint_url: `/leclisting_cat_api.php?langid=6&catid=${catid}&page=`,
                         currentPage: page,
                         controlData: filter,
-                        nav1: { title: "Buzz", link: "/recommend1" },
+                        nav1: { title: "Buzz", link: RECO1 },
                       },
                     });
                   }}
@@ -164,7 +164,7 @@ const Recommend1 = () => {
                         endpoint_url: `/leclisting_cat_api.php?langid=6&catid=${catid}&page=`,
                         currentPage: page,
                         controlData: filter,
-                        nav1: { title: "Buzz", link: "/recommend1" },
+                        nav1: { title: "Buzz", link: RECO1 },
                       },
                     });
                   }}

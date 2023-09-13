@@ -19,7 +19,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { AudioContext } from "../../App.jsx";
 import AudioActionDesktop from "../audio/audioActionDesktop";
 import { setPlaying } from "../../Redux/Actions/ActionCreators";
-import { LECTURE } from "../../utils/routes/constants";
+import { FAVOURITE, LECTURE, LIBRARY } from "../../utils/routes/constants";
+
 export const NavContext = createContext();
 
 const Layout = () => {
@@ -75,7 +76,7 @@ const Layout = () => {
         }`}
       >
         <div className="layout_mini" onClick={(e) => e.stopPropagation()}>
-          <SideNav res={res} />
+          <SideNav res={res}  setisOpen={setisOpen}/>
         </div>
       </div>
 
@@ -188,20 +189,20 @@ const Layout = () => {
           </div>
           <div
             onClick={() => {
-              navigate("/library");
+              navigate(LIBRARY);
             }}
             className="layout_buttom_menue2_library"
           >
             <SiApplemusic
               className={
-                location.pathname === "/library"
+                location.pathname === LIBRARY
                   ? "layout_buttom_menue2_libraryIcon_active"
                   : "layout_buttom_menue2_libraryIcon"
               }
             />
             <p
               className={
-                location.pathname === "/library"
+                location.pathname === LIBRARY
                   ? "layout_buttom_menue2_libraryText_active"
                   : "layout_buttom_menue2_libraryText"
               }
@@ -211,20 +212,20 @@ const Layout = () => {
           </div>
           <div
             onClick={() => {
-              navigate("/favourite");
+              navigate(FAVOURITE);
             }}
             className="layout_buttom_menue2_favourite"
           >
             <MdFavorite
               className={
-                location.pathname === "/favourite"
+                location.pathname === FAVOURITE
                   ? "layout_buttom_menue2_favouriteIcon_active"
                   : "layout_buttom_menue2_favouriteIcon"
               }
             />
             <p
               className={
-                location.pathname === "/favourite"
+                location.pathname === FAVOURITE
                   ? "layout_buttom_menue2_favouriteText_active"
                   : "layout_buttom_menue2_favouriteText"
               }

@@ -11,55 +11,56 @@ import {
   BsFileEarmarkMusicFill,
   BsFillDiscFill,
 } from "react-icons/bs";
+import { CHARTS, FAVOURITE, GENRES, LECTURERS, MYPLAYLIIST, NEW, PLAY, TRENDING, VIDEO } from "../../utils/routes/constants";
 
 export const lectures = [
   {
     id: 0,
     name: "Home",
     icon: <FaHome className="icon0 icon" />,
-    link: "/",
+    link: "/dawahcast",
   },
   {
     id: 1,
     name: "Trending",
     icon: <AiOutlineLineChart className="icon1 icon" />,
-    link: "/trending",
+    link:TRENDING,
   },
   {
     id: 2,
     name: "New",
     icon: <ImMusic className="icon2 icon" />,
-    link: "/new",
+    link: NEW,
   },
   {
     id: 3,
     name: "Lecturers",
     icon: <MdPerson className="icon3 icon" />,
-    link: "/lecturers",
+    link: LECTURERS,
   },
   {
     id: 4,
     name: "Videos",
     icon: <BsYoutube className="icon4 icon" />,
-    link: "/videos",
+    link: VIDEO,
   },
   {
     id: 5,
     name: "Playlists",
     icon: <BsMusicNoteList className="icon5 icon" />,
-    link: "/playlists",
+    link: PLAY,
   },
   {
     id: 6,
     name: "Charts",
     icon: <TiChartBar className="icon6 icon" />,
-    link: "/charts",
+    link: CHARTS,
   },
   {
     id: 7,
     name: "Genres",
     icon: <BsFileEarmarkMusicFill className="icon7 icon" />,
-    link: "/genres",
+    link: GENRES,
   },
 ];
 export const library = [
@@ -73,12 +74,12 @@ export const library = [
     id: 9,
     name: "Favourites",
     icon: <MdFavorite className="icon1 icon" />,
-    link: "/favourite",
+    link: FAVOURITE,
   },
   {
     id: 10,
     name: "My Playlist",
     icon: <CgUserList className="icon2 icon" />,
-    link: "/myplaylist",
+    link: MYPLAYLIIST,
   },
 ];

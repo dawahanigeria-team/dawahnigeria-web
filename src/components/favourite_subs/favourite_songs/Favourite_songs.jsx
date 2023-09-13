@@ -8,7 +8,7 @@ import axios from "../../../utils/useAxios";
 import { useNavigate } from "react-router-dom";
 import infinitePlayFavScroll from "../../UI/infinitePlayFavScroll";
 import MusicList from "../../miscList/musicList";
-import { LECTURE } from "../../../utils/routes/constants";
+import { LECTURE, NEW } from "../../../utils/routes/constants";
 
 const Favourite_songs = ({ setCount1 }) => {
   const { currentUser } = useSelector((state) => state.user);
@@ -18,32 +18,33 @@ const Favourite_songs = ({ setCount1 }) => {
   const [isEmpty, setIsEmpty] = useState(false);
   const [nextPageLoad, setNextPageLoad] = useState(false);
   const [page, setPage] = useState(0);
-  const [myaud, setmyAud] = useState([]);
+  const [myaud, setmyAud] = useState([])
   const navigate = useNavigate();
   const [myFavSong, setMyFavSong] = useState([]);
 
   useEffect(() => {
     setCount1(data.length);
+
   }, [data]);
 
   useEffect(() => {
     if (!currentUser?.id) return;
     if (page < 1) {
-      setLoading(true);
+      setLoading(true)
     }
     axios
       .get(`/leclisting_favorites.php?user_id=${currentUser?.id}&type=audio`)
       .then((res) => {
         //console.log(res);
-        if (res.data.length === 0) {
-          setmyAud([]);
-          setLoading(false);
+        if(res.data.length === 0) {
+          setmyAud([])
+          setLoading(false)
 
-          return;
+          return
         }
         const { audio } = res.data;
         const audioArr = Object.values(audio);
-        setmyAud(audioArr);
+        setmyAud(audioArr)
         ////console.log(audioArr.toString());
 
         axios
@@ -62,6 +63,7 @@ const Favourite_songs = ({ setCount1 }) => {
       .catch((err) => {
         //console.log(err);
       });
+
   }, []);
 
   useEffect(() => {
@@ -72,10 +74,11 @@ const Favourite_songs = ({ setCount1 }) => {
 
     if (additionalData.length === 0) {
       setIsEmpty(true);
-      return;
+      return
     }
     setNextPageLoad(false);
     setdata((prev) => _.uniqBy([...prev, ...additionalData], "nid"));
+
   }, [page]);
 
   const lastElement = useCallback(
@@ -92,19 +95,19 @@ const Favourite_songs = ({ setCount1 }) => {
       {(!currentUser?.id || myaud?.length === 0) && (
         <div className="favsongs_img_wrap">
           <img src={empty} alt="empty" />
-          <p className="favsongs_text">You haven’t added any audio.</p>
+          <p className="favsongs_text">
+            You haven’t added any audio.
+          </p>
           <button
-            onClick={() => {
-              if (currentUser?.id) {
-                navigate("/new");
-              } else {
-                navigate("/auth/login");
-              }
-            }}
-            className="favsongs_button"
-          >
-            Discover more audios
-          </button>
+          onClick={() => {
+            if(currentUser?.id) {
+              navigate(NEW)
+            }
+            else {
+              navigate("/auth/login")
+            }
+          }}
+          className="favsongs_button">Discover more audios</button>
         </div>
       )}
 
@@ -124,9 +127,11 @@ const Favourite_songs = ({ setCount1 }) => {
         </div>
       )}
       {loading && (
-        <div className="loadd w-full flex justify-center items-center h-[300px]">
-          <Loader />
-        </div>
+     
+          <div className="loadd w-full flex justify-center items-center h-[300px]">
+            <Loader />
+          </div>
+       
       )}
       {!loading && (
         <div className="table">
@@ -200,9 +205,11 @@ const Favourite_songs = ({ setCount1 }) => {
         </div>
       )}
       {nextPageLoad && (
-        <div className=" loade w-full flex justify-center items-center h-[200px]">
-          <Loader />
-        </div>
+      
+          <div className=" loade w-full flex justify-center items-center h-[200px]">
+            <Loader />
+          </div>
+       
       )}
     </div>
   );
