@@ -57,18 +57,13 @@ const GroupWidget = ({
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [size]);
 
   ////console.log(data);
 
   function prev() {
-    // e.stopPropagation()
-
-    ////console.log('window.scrollWidth')
-    //console.log(slide.current.scrollLeft);
-    //console.log(slide.current.scrollWidth);
-    //console.log(slide.current.offsetWidth);
+    
     slide.current.scrollBy({
       left: -slide.current.scrollWidth / 10,
       behavior: "smooth",
@@ -76,11 +71,7 @@ const GroupWidget = ({
   }
 
   function next() {
-    //e.stopPropagation()
-    ////console.log('window.scrollWidth')
-
-    //console.log(slide.current.scrollWidth);
-    //console.log(slide.current.offsetWidth);
+  
     slide.current.scrollBy({
       left: slide.current.scrollWidth / 10,
       behavior: "smooth",
@@ -90,7 +81,7 @@ const GroupWidget = ({
   useEffect(() => {
     function scrollEl() {
     
-      //console.log("Slide");
+     
       if (slide.current.scrollLeft === 0) {
         setisprev(false);
       } else {
@@ -110,7 +101,7 @@ const GroupWidget = ({
     slide.current?.addEventListener("scroll", scrollEl);
 
     return () => slide.current?.removeEventListener("scroll", scrollEl);
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [slide.current?.scrollLeft]);
 
   /**

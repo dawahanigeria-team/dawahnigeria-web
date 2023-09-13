@@ -13,7 +13,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
 import { BrowserRouter as Router } from "react-router-dom";
-import Scrolltotop from "./components/UI/scrollToTop";
+// import Scrolltotop from "./components/UI/scrollToTop";
 
 //import InfiniteScroll from "./components/UI/infiniteScroll";
 
@@ -36,11 +36,13 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <App />
-      </PersistGate>
-    </Provider>
+    <Router>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <App />
+        </PersistGate>
+      </Provider>
+    </Router>
   </>
 );
 

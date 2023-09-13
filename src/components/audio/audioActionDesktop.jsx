@@ -104,7 +104,6 @@ const AudioActionDesktop = () => {
       return;
     }
     getMusic(audioId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [audioId]);
 
   const repeat = useCallback(() => {
@@ -113,13 +112,11 @@ const AudioActionDesktop = () => {
     currentTime = rangeRef?.current?.value;
 
     playAnimation.current = requestAnimationFrame(repeat);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [audioRef, getValue, rangeRef]);
 
   useEffect(() => {
     playAnimation.current = requestAnimationFrame(repeat);
     handleRange(audioRef?.current?.currentTime);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [audioRef, repeat]);
 
   useEffect(() => {
@@ -142,7 +139,6 @@ const AudioActionDesktop = () => {
       }
     }
     postRecent();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [audioId]);
   //************ */
 
@@ -154,7 +150,6 @@ const AudioActionDesktop = () => {
       audioRef.current?.pause();
       cancelAnimationFrame(playAnimation.current);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playing]);
 
   const handlePlay = () => {
@@ -272,7 +267,6 @@ const AudioActionDesktop = () => {
 
       return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isComplete]);
 
   const addToPlaylist = () => {
@@ -315,7 +309,6 @@ const AudioActionDesktop = () => {
   }
   useEffect(() => {
     fetchFavorites(addFav, audioId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addFav, audioId]);
   ///add to favourites
 

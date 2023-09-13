@@ -45,7 +45,6 @@ const SearchPage = () => {
     if (!text) {
       navigate("/");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text]);
 
   function fetchData(languageId, categoryId, lecturerId, albumId) {
@@ -87,7 +86,6 @@ const SearchPage = () => {
     if (text) {
       fetchData(languageId, categoryId, lecturerId, albumId);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [languageId, categoryId, lecturerId, albumId, text]);
 
   return (

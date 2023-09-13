@@ -16,7 +16,6 @@ const Lecturer_playlist = ({ id, setCount3 }) => {
 
   useEffect(() => {
     setCount3(data.length);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   useEffect(() => {
@@ -36,7 +35,6 @@ const Lecturer_playlist = ({ id, setCount3 }) => {
     };
 
     handleRequest();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //////*************handling comment**************** */
@@ -59,7 +57,6 @@ const Lecturer_playlist = ({ id, setCount3 }) => {
       .catch((err) => {
         //console.log(err);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

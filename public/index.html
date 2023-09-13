@@ -28,6 +28,16 @@
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+     <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=%REACT_APP_GA_MEASUREMENT_ID%" >
+    </script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '%REACT_APP_GA_MEASUREMENT_ID%', { send_page_view: false })
+    </script>
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.

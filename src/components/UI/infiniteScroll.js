@@ -1,5 +1,4 @@
-import React from "react";
-//import { useLocation } from "react-router-dom";
+
 
 function infiniteScroll(node, observer, page, setPage, isEmpty) {
   if (isEmpty) return;
