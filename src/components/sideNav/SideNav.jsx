@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useContext} from "react";
 import "./sidenav.scss";
 import Logo from "../../assets/png/dn logo.png";
 import { Link, useLocation } from "react-router-dom";
@@ -10,20 +10,18 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import SearchOptions from "../../pages/searchPage/searchOptions";
 import { RECO1, RECO2, SEARCH } from "../../utils/routes/constants";
+const SideNav = ({ res, handleSideBar, setisOpen }) => {
 
-const SideNav = ({ res, handleSideBar }) => {
   const navigate = useNavigate();
   const {pathname} = useLocation();
   const dispatch = useDispatch()
   const { currentUser } = useSelector((state) => state.user);
- // const { id, username } = currentUser;
-  //console.log(currentUser);
+ 
 
   function handleLogout() {
     dispatch({ type: "LOGOUT" });
     navigate("/");
   }
-
 
 
   return (
@@ -78,6 +76,7 @@ const SideNav = ({ res, handleSideBar }) => {
                 link={link}
                 name={name}
                 group={"lectures"}
+                setisOpen={setisOpen}
               />
             );
           })}
@@ -93,6 +92,7 @@ const SideNav = ({ res, handleSideBar }) => {
                 link={link}
                 name={name}
                 group={"library"}
+                setisOpen={setisOpen}
               />
             );
           })}
@@ -105,6 +105,7 @@ const SideNav = ({ res, handleSideBar }) => {
             link={RECO1}
             name={"Recommended"}
             group={"buzz"}
+            setisOpen={setisOpen}
           />
         </div>
         <div className="sidenav_podcast">
@@ -115,6 +116,7 @@ const SideNav = ({ res, handleSideBar }) => {
             link={RECO2}
             name={"Recommended"}
             group={"podcast"}
+            setisOpen={setisOpen}
           />
         </div>
       </div>}

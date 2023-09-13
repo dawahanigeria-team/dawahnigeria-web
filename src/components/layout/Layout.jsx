@@ -77,7 +77,7 @@ const Layout = () => {
         }`}
       >
         <div className="layout_mini" onClick={(e) => e.stopPropagation()}>
-          <SideNav res={res} />
+          <SideNav res={res}  setisOpen={setisOpen}/>
         </div>
       </div>
 
