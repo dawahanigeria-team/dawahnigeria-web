@@ -18,7 +18,18 @@ import { useSelector } from "react-redux";
 import LandingOptions from "../../components/landingOptions/LandingOptions";
 import MyCarousel from "../../components/UI/carousel/myCarousel";
 import MobileImageWidget from "./mobileimagewidget/mobileImageWidget";
-import { GENRES, HOME, CHARTS, TRENDING, NEW, PLAYLISTS, PLAY, VIDEO, LECTURERS } from "../../utils/routes/constants";
+import {
+  GENRES,
+  HOME,
+  CHARTS,
+  TRENDING,
+  NEW,
+  PLAYLISTS,
+  PLAY,
+  VIDEO,
+  LECTURERS,
+} from "../../utils/routes/constants";
+import HeadMeta from "../../components/head-meta";
 const Landing = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [recent, setRecent] = useState([]);
@@ -92,7 +103,7 @@ const Landing = () => {
               axios
                 .get(`/albumlisting_multi_nid_api.php?id=${recArr.toString()}`)
                 .then((res) => {
-                   //console.log("I am the new guy", res);
+                  //console.log("I am the new guy", res);
                   setRecent(res.data?.slice(0, 10));
                 })
                 .catch((err) => {
@@ -186,6 +197,7 @@ const Landing = () => {
 
   return (
     <Container>
+      <HeadMeta title="DawahNigeria | Home" />
       <div className="landing_wrapper my-5">
         <div className="carousel  h-[250px] min-[950px]:h-[250px] min-[1050px]:h-[250px] min-[1283px]:h-[300px]">
           <MyCarousel images={images} />
@@ -193,40 +205,24 @@ const Landing = () => {
 
         <Slider className="landing_carousel landing_space" {...settings}>
           {images?.map((image, index) => {
-                return (
-                  <div   key={index} className="landing_carousel_img">
-                        <MobileImageWidget image={image} className="" />
-                  </div>
-              
-                )
-            
-              
-          
+            return (
+              <div key={index} className="landing_carousel_img">
+                <MobileImageWidget image={image} className="" />
+              </div>
+            );
           })}
         </Slider>
         <Slider className="landing_options" {...settings1}>
           <LandingOptions text={"Charts"} img={bchart} link={CHARTS} />
-          <LandingOptions
-            text={"Lecturers"}
-            img={blecturer}
-            link={LECTURERS}
-          />
-          <LandingOptions
-            text={"Playlists"}
-            img={bplaylist}
-            link={PLAY}
-          />
+          <LandingOptions text={"Lecturers"} img={blecturer} link={LECTURERS} />
+          <LandingOptions text={"Playlists"} img={bplaylist} link={PLAY} />
           <LandingOptions
             text={"Video"}
             icon={<BsFillPlayBtnFill />}
             link={VIDEO}
           />
           <LandingOptions text={"Genre"} img={bgenre} link={GENRES} />
-          <LandingOptions
-            text={"Trending"}
-            img={btrending}
-            link={TRENDING}
-          />
+          <LandingOptions text={"Trending"} img={btrending} link={TRENDING} />
           <LandingOptions text={"New"} img={bnew} link={NEW} />
         </Slider>
 
@@ -258,8 +254,7 @@ const Landing = () => {
             data={ramadan}
             heading="Ramadan Tafsir"
             type={"lectures"}
-            currentPage={''}
-          
+            currentPage={""}
             nav1={{ title: "Home", link: HOME }}
           />
         </div>
@@ -268,8 +263,7 @@ const Landing = () => {
             data={quran}
             heading="Quran Recitations"
             type={"lectures"}
-            
-            currentPage={''}
+            currentPage={""}
             nav1={{ title: "Home", link: HOME }}
           />
         </div>
