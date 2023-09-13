@@ -24,7 +24,6 @@ const Favourite_album = ({ setCount2 }) => {
 
   useEffect(() => {
     setCount2(data.length);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   useEffect(() => {
@@ -65,8 +64,6 @@ const Favourite_album = ({ setCount2 }) => {
       .catch((err) => {
         //console.log(err)
       });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -80,7 +77,6 @@ const Favourite_album = ({ setCount2 }) => {
     }
     setNextPageLoad(false);
     setdata((prev) => _.uniqBy([...prev, ...additionalData], "nid"));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   const lastElement = useCallback(
@@ -88,7 +84,7 @@ const Favourite_album = ({ setCount2 }) => {
       if (isEmpty) return;
       infinitePlayFavScroll(node, observer, page, setPage);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [page]
   );
 

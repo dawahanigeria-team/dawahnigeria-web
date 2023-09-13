@@ -23,7 +23,6 @@ const Lecturer_album = ({ id, setCount2, rpname, setImg }) => {
 
   useEffect(() => {
     setCount2(data.length);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   useEffect(() => {
@@ -78,7 +77,6 @@ const Lecturer_album = ({ id, setCount2, rpname, setImg }) => {
     };
 
     handleRequest();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rpid, page]);
   // //console.log(setCount2);
 
@@ -102,7 +100,6 @@ const Lecturer_album = ({ id, setCount2, rpname, setImg }) => {
       .catch((err) => {
         //console.log(err);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //console.log(data);

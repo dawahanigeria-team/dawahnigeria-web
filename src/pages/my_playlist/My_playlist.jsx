@@ -131,7 +131,7 @@ const My_playlist = () => {
       if (isEmpty) return;
       infinitePlayFavScroll(node, observer, page, setPage);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [page]
   );
 

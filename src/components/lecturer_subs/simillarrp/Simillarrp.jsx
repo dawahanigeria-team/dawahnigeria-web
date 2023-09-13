@@ -42,7 +42,6 @@ const Simillarrp = ({ langid }) => {
       .catch((err) => {
         //console.log(err);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, langid]);
 
   const lastElement = useCallback(
@@ -52,7 +51,7 @@ const Simillarrp = ({ langid }) => {
       }
       infiniteScroll(node, observer, page, setPage);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [page]
   );
   return (

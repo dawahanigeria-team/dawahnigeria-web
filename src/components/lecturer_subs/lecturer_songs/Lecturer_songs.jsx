@@ -22,7 +22,6 @@ const Lecturer_songs = ({ id, setCount1 }) => {
   //console.log("rp id", id);
   useEffect(() => {
     setCount1(data.length);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   useEffect(() => {
@@ -51,7 +50,6 @@ const Lecturer_songs = ({ id, setCount1 }) => {
     };
 
     handleRequest();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   //////*************handling comment**************** */
@@ -74,7 +72,6 @@ const Lecturer_songs = ({ id, setCount1 }) => {
       .catch((err) => {
         //console.log(err);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const postComment = () => {

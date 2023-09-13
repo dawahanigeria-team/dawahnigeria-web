@@ -43,7 +43,6 @@ const Trending = () => {
       .catch((err) => {
         //console.log(err);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   const lastElement = useCallback(
@@ -51,7 +50,7 @@ const Trending = () => {
       if (isEmpty) return;
       infiniteScroll(node, observer, page, setPage);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [page]
   );
 
@@ -60,7 +59,7 @@ const Trending = () => {
       if (isEmpty) return;
       infiniteScroll(node, observerMobile, page, setPage);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [page]
   );
 
