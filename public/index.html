@@ -30,13 +30,14 @@
     <script src="https://accounts.google.com/gsi/client" async defer></script>
      <script
       async
-      src="https://www.googletagmanager.com/gtag/js?id=%REACT_APP_GA_MEASUREMENT_ID%" >
+      defer
+      src="https://www.googletagmanager.com/gtag/js?id=G-VGHJ94CCWM" >
     </script>
-    <script>
+    <script async>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', '%REACT_APP_GA_MEASUREMENT_ID%', { send_page_view: false })
+      gtag('config', 'G-VGHJ94CCWM', { send_page_view: false })
     </script>
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
