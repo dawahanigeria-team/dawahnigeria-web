@@ -48,6 +48,9 @@ const Playlists = () => {
         .then((res) => {
           ////console.log(res.data.rp);
           if (res.data.rp) setLanguages([...language, ...res.data.rp]);
+        })
+        .catch((err) => {
+          //console.log(err);
         });
     }
     getCatAndLang();
