@@ -1,3 +1,4 @@
+import React from "react";
 import { FaHome } from "react-icons/fa";
 import { AiOutlineLineChart } from "react-icons/ai";
 import { ImMusic } from "react-icons/im";

@@ -80,6 +80,9 @@
   height: 100vh;
   z-index: 100;
   width: 240px;
+  @media screen and (max-width:600px) {
+    width:200px;
+  }
   padding-bottom: 90px;
   overflow-y: auto;
   background: #030303;
@@ -144,6 +147,9 @@
         font-style: normal;
         font-weight: 700;
         font-size: 14px;
+        @media screen and (max-width:600px) {
+          font-size: 12px;
+        }
         line-height: 21px;
         align-items: center;
         color: #d4d4d4;

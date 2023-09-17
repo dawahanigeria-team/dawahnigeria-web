@@ -5,7 +5,12 @@ import "./App.css";
 
 import { Toaster } from "react-hot-toast";
 
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import Landing from "./pages/landing/Landing";
 import Layout from "./components/layout/Layout";
 import Genres from "./pages/genres/Genres";
@@ -59,6 +64,7 @@ import {
   FORGOTPASSWORD,
 } from "./utils/routes/constants";
 import ForgotPassword from "./pages/forgotpassword/forgotPassword";
+import { usePageTracking } from "./utils/tracking";
 export const AudioContext = createContext();
 export const SearchContext = createContext();
 
@@ -78,6 +84,7 @@ Sentry.init({
   replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
 });
 const App = () => {
+  usePageTracking();
   const scroll = useRef();
   const audioRef = useRef();
   const rangeRef = useRef();
@@ -129,74 +136,74 @@ const App = () => {
         />
       </div>
 
-      <Router>
-        <Scrolltotop />
-        <SearchContext.Provider
+      {/* <Router> */}
+      <Scrolltotop />
+      <SearchContext.Provider
+        value={{
+          albumId,
+          setAlbumId,
+          lecturerId,
+          setLecturerId,
+          text,
+          setText,
+          languageId,
+          setLanguageId,
+          categoryId,
+          setCategoryId,
+        }}
+      >
+        <AudioContext.Provider
           value={{
-            albumId,
-            setAlbumId,
-            lecturerId,
-            setLecturerId,
-            text,
-            setText,
-            languageId,
-            setLanguageId,
-            categoryId,
-            setCategoryId,
+            audioRef,
+            rangeRef,
+            initial,
+            setinitial,
+            loading,
+            setLoading,
           }}
         >
-          <AudioContext.Provider
-            value={{
-              audioRef,
-              rangeRef,
-              initial,
-              setinitial,
-              loading,
-              setLoading,
-            }}
-          >
-            <Routes>
-              <Route path="/auth" element={<Auth />}>
-                <Route path="/auth/login" element={<LoginForm />} />
-                <Route path="/auth/signup" element={<SignupForm />} />
-                <Route
-                  path="/auth/selectlanguage"
-                  element={<SelectLanguage />}
-                />
-              </Route>
-              <Route path="/" element={<Layout />}>
-                <Route index element={<Landing />} />
-                <Route path={HOME} element={<Landing />} />
-                <Route path={MORE} element={<More />} />
-                <Route path={SEARCH} element={<SearchPage />} />
-                <Route path={LIBRARY} element={<Library />} />
-                <Route path={GENRES} element={<Genres />} />
-                <Route path={`${GENRES}/:id`} element={<GenreDetail />} />
-                <Route path={RECO2} element={<Podcast />} />
-                <Route path={RECO1} element={<Buzz />} />
-                <Route path={LECTURERS} element={<Lecturers />} />
-                <Route path={VIDEO} element={<Videos />} />
-                <Route path={PLAY} element={<Playlists />} />
-                <Route path={CHARTS} element={<Charts />} />
-                <Route path={TRENDING} element={<Trending />} />
-                <Route path={NEW} element={<New />} />
-                <Route path={`${LECTURE}:id`} element={<AudioDetail />} />
-                <Route path={DOWNLOAD} element={<DownloadAudio />} />
-                <Route path={`${PLAYLISTS}:id`} element={<PlaylistDetail />} />
-                <Route
-                  path={`${RESOURCE_PERSON}:id`}
-                  element={<LecturerDetail />}
-                />
-                <Route path={`${ALBUMS}:id`} element={<LecturesListDetail />} />
-                <Route path={`${VIDEOS}:id`} element={<VideoPlayer />} />
-                <Route path={FAVOURITE} element={<Favourite />} />
-                <Route path={FORGOTPASSWORD} element={<ForgotPassword />} />
-                <Route path={MYPLAYLIIST} element={<Myplaylist />} />
-              </Route>
-            </Routes>
-          </AudioContext.Provider>
-        </SearchContext.Provider>
-      </Router>
+          <Routes>
+            <Route path="/auth" element={<Auth />}>
+              <Route path="/auth/login" element={<LoginForm />} />
+              <Route path="/auth/signup" element={<SignupForm />} />
+              <Route path="/auth/selectlanguage" element={<SelectLanguage />} />
+            </Route>
+            <Route path="/dawahcast" element={<Layout />}>
+              <Route index element={<Landing />} />
+              <Route path={HOME} element={<Landing />} />
+              <Route path={MORE} element={<More />} />
+              <Route path={SEARCH} element={<SearchPage />} />
+              <Route path={LIBRARY} element={<Library />} />
+              <Route path={GENRES} element={<Genres />} />
+              <Route path={`${GENRES}/:id`} element={<GenreDetail />} />
+              <Route path={RECO2} element={<Podcast />} />
+              <Route path={RECO1} element={<Buzz />} />
+              <Route path={LECTURERS} element={<Lecturers />} />
+              <Route path={VIDEO} element={<Videos />} />
+              <Route path={PLAY} element={<Playlists />} />
+              <Route path={CHARTS} element={<Charts />} />
+              <Route path={TRENDING} element={<Trending />} />
+              <Route path={NEW} element={<New />} />
+              <Route path={`${LECTURE}:id`} element={<AudioDetail />} />
+              <Route path={DOWNLOAD} element={<DownloadAudio />} />
+              <Route path={`${PLAYLISTS}:id`} element={<PlaylistDetail />} />
+              <Route
+                path={`${RESOURCE_PERSON}:id`}
+                element={<LecturerDetail />}
+              />
+              <Route path={`${ALBUMS}:id`} element={<LecturesListDetail />} />
+              <Route path={`${VIDEOS}:id`} element={<VideoPlayer />} />
+              <Route path={FAVOURITE} element={<Favourite />} />
+              <Route path={FORGOTPASSWORD} element={<ForgotPassword />} />
+              <Route path={MYPLAYLIIST} element={<Myplaylist />} />
+            </Route>
+
+            <Route path="/" element={<Navigate to="/dawahcast" />} />
+            <Route path="/dawahcast" element={<Layout />} />
+          </Routes>
+        </AudioContext.Provider>
+      </SearchContext.Provider>
+      {/* </Router> */}
     </div>
   );
 };

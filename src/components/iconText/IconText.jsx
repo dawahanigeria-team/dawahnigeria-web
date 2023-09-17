@@ -1,19 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import "./iconText.scss";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { NavContext } from "../layout/Layout";
 import { showaddPlaylist } from "../../Redux/Actions/ActionCreators";
 import { CHARTS, FAVOURITE, GENRES, HOME, LECTURERS, MYPLAYLIIST, NEW, PLAY, RECO1, RECO2, TRENDING, VIDEO } from "../../utils/routes/constants";
-const IconText = ({ icon, link, name, id}) => {
+const IconText = ({ icon, link, name, id, setisOpen}) => {
 
   const location = useLocation();
   const [active, setActive] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+ 
   const {addplaylist} = useSelector((state) => state.user)
 
   //console.log(addplaylist)
+
+
+  function close() {
+  setisOpen(false)
+  }
   useEffect(() => {
 
 
@@ -49,13 +56,15 @@ const IconText = ({ icon, link, name, id}) => {
       setActive(8);
       //dispatch(showaddPlaylist(true))
     } 
+   
     
-  });
+  },[]);
   return (
     <Link to={link}
     onClick={() => {
 
       navigate(link)
+      close()
       if (id === 8) {
         dispatch(showaddPlaylist(true))
         //console.log('8')

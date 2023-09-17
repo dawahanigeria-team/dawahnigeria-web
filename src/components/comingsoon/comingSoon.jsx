@@ -4,6 +4,7 @@ import { GrFormClose } from "react-icons/gr";
 const ComingSoon = ({ comingSoon, setcomingSoon }) => {
   return (
     <div
+      aria-hidden="true"
       onClick={(e) => {
         e.stopPropagation();
         setcomingSoon(!comingSoon);
@@ -11,12 +12,14 @@ const ComingSoon = ({ comingSoon, setcomingSoon }) => {
       className="w-full h-full z-[300] bg-none inset-0 fixed"
     >
       <div
+        aria-hidden="true"
         onClick={(e) => {
           e.stopPropagation();
         }}
         className="absolute inset-0 m-auto bg-[#1E1E1E] py-6 space-y-6  flex-col text-white rounded-md w-[80%] min-[615px]:w-[350px] h-[250px] flex items-center justify-center"
       >
         <div
+          aria-hidden="true"
           onClick={(e) => {
             e.stopPropagation();
             setcomingSoon(!comingSoon);

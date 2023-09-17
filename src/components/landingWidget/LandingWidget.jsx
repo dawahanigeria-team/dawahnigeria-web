@@ -21,7 +21,6 @@ const LandingWidget = ({ categories, img, views, nid, styling }) => {
       });
     }
     lazyImage();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

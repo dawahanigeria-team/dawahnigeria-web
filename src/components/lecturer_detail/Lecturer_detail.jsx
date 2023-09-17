@@ -57,7 +57,6 @@ const LecturerDetail = () => {
       .catch((err) => {
         console.error(err);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /////get users favorites
@@ -92,7 +91,6 @@ const LecturerDetail = () => {
   }
   useEffect(() => {
     fetchFavorites(addFav, id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addFav, id]);
 
   const addToFav = async (e, rpid) => {
@@ -144,7 +142,6 @@ const LecturerDetail = () => {
     });
 
     if (node) observeEl.current.observe(node);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   ///**** share rp ******** */
@@ -173,7 +170,6 @@ const LecturerDetail = () => {
     }
 
     lazyImage();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -183,7 +179,6 @@ const LecturerDetail = () => {
         img.src = "https://imagetolink.com/ib/9TU6bi2SDs.jpeg";
       });
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

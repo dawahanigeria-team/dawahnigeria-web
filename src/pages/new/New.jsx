@@ -51,7 +51,7 @@ const New = () => {
       if (isEmpty) return;
       infiniteScroll(node, observer, page, setPage);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [page]
   );
 
@@ -60,7 +60,7 @@ const New = () => {
       if (isEmpty) return;
       infiniteScroll(node, observerMobile, page, setPage);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [page]
   );
 

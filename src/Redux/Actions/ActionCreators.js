@@ -214,7 +214,7 @@ const registration = (
               setLoading(false);
               toast.success("Registration Successful");
             })
-            .catch((err) => {
+            .catch(() => {
               //console.log(err);
               setLoading(false);
             });

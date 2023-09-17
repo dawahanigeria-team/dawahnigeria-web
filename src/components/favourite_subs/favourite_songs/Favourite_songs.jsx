@@ -24,7 +24,7 @@ const Favourite_songs = ({ setCount1 }) => {
 
   useEffect(() => {
     setCount1(data.length);
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [data]);
 
   useEffect(() => {
@@ -63,7 +63,7 @@ const Favourite_songs = ({ setCount1 }) => {
       .catch((err) => {
         //console.log(err);
       });
-       // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, []);
 
   useEffect(() => {
@@ -78,7 +78,7 @@ const Favourite_songs = ({ setCount1 }) => {
     }
     setNextPageLoad(false);
     setdata((prev) => _.uniqBy([...prev, ...additionalData], "nid"));
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [page]);
 
   const lastElement = useCallback(
@@ -86,7 +86,7 @@ const Favourite_songs = ({ setCount1 }) => {
       if (isEmpty) return;
       infinitePlayFavScroll(node, observer, page, setPage);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [page]
   );
 

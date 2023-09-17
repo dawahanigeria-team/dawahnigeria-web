@@ -94,7 +94,7 @@ const VideoPlayer = () => {
   const handleNextAudio = () => {
     const next = subdata.findIndex((value) => value.id === id);
     //console.log(next);
-    navigate(`${VIDEOS}${subdata[next + 1]?.id}`);
+    navigate(`${VIDEOS}${subdata[next + 1].id}`);
   };
 
   const shareAudio = (e) => {
