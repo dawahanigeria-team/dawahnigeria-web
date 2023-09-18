@@ -70,6 +70,7 @@ export const SearchContext = createContext();
 
 Sentry.init({
   dsn: "https://39f51c39cd7f76985eac0998370570fb@o4505749236875264.ingest.sentry.io/4505764791451648",
+  environment: process.env.NODE_ENV,
   integrations: [
     new Sentry.BrowserTracing({
       // Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled
