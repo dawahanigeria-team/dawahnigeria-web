@@ -188,7 +188,7 @@ const Landing = () => {
 
   return (
     <Container>
-      <div className="landing_wrapper my-5">
+      <div className="landing_wrapper max-[690px]:mt-4 mt-6 mb-5">
         <div className="carousel  h-[250px] min-[950px]:h-[250px] min-[1050px]:h-[250px] min-[1283px]:h-[300px]">
           <MyCarousel images={images} />
         </div>
