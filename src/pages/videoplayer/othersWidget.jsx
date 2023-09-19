@@ -16,7 +16,6 @@ const OthersWidget = ({ images, author, views, title }) => {
     }
 
     lazyImage();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className=" min-[615px]:mb-3 flex cursor-pointer max-[615px]:py-2 min-[615px]:grid grid-cols-8 min-[615px]:gap-[6rem] xl:gap-0 xl:grid-cols-6 items-center space-x-2 ">

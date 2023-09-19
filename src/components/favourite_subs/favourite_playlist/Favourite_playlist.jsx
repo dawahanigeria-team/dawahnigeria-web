@@ -23,7 +23,7 @@ const Favourite_playlist = ({setCount3}) => {
   const [myAlb, setmyAlb] = useState()
   useEffect(() => {
     setCount3(data.length);
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [data]);
  
   useEffect(() => {
@@ -57,17 +57,8 @@ const Favourite_playlist = ({setCount3}) => {
       })
       .catch((err) => {
         //console.log(err)
-      })
-
-    })
-    .catch((err) => {
-      //console.log(err)
-    })
-
- // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
-
-
+      });})
+  }, []);
 
 
   useEffect(() => {
@@ -81,7 +72,7 @@ const Favourite_playlist = ({setCount3}) => {
     }
     setNextPageLoad(false);
     setdata((prev) => _.uniqBy([...prev, ...additionalData], "nid"));
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [page]);
 
   const lastElement = useCallback(
@@ -89,7 +80,7 @@ const Favourite_playlist = ({setCount3}) => {
       if (isEmpty) return;
       infinitePlayFavScroll(node, observer, page, setPage);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [page]
   );
 
@@ -205,6 +196,6 @@ const Favourite_playlist = ({setCount3}) => {
 
     </div>
   );
-};
+}
 
-export default Favourite_playlist;
+export default Favourite_playlist

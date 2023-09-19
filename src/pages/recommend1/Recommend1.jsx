@@ -58,7 +58,6 @@ const Recommend1 = () => {
     // //console.log("data line 42: ", data);
 
     handleRequest();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [catid, page]);
 
   const lastElement = useCallback(
@@ -66,7 +65,7 @@ const Recommend1 = () => {
       if (isEmpty) return;
       infiniteScroll(node, observer, page, setPage);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [page]
   );
 
