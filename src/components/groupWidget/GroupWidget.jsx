@@ -212,7 +212,7 @@ const GroupWidget = ({
                       <LandingWidget
                         key={idx}
                         categories={
-                          title?.split("-")[0] || Title?.split("-")[0] || title
+                         title || Title
                         }
                         img={img || lec_img}
                         views={views || 0}
@@ -283,10 +283,10 @@ const GroupWidget = ({
                         <LandingWidget
                           key={idx}
                           categories={
-                            title?.split("-")[0] ||
-                            Title?.split("-")[0] ||
+                           // title?.split(" - ")[0] ||
+                           // Title?.split(" - ")[0] ||
                             title ||
-                            mp3_title
+                            mp3_title || Title
                           }
                           img={img || lec_img}
                           views={views || 0}
@@ -394,9 +394,9 @@ const GroupWidget = ({
                         key={idx}
                         categories={
                           name ||
-                          title?.split("-")[0] ||
-                          Title?.split("-")[0] ||
-                          title
+                         // title?.split(" - ")[0] ||
+                         // Title?.split(" - ")[0] ||
+                          title || Title
                         }
                         img={img || lec_img}
                         views={views || 0}
@@ -464,9 +464,9 @@ const GroupWidget = ({
                         key={idx}
                         categories={
                           name ||
-                          title?.split("-")[0] ||
-                          Title?.split("-")[0] ||
-                          title
+                         // title?.split(" - ")[0] ||
+                         // Title?.split(" - ")[0] ||
+                          title || Title
                         }
                         img={lec_img}
                         views={views || 0}
