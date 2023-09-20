@@ -1,4 +1,7 @@
 export const formatNumber = (number) => {
+  if (number === 0) {
+    return "0";
+  }
   const suffixes = ["", "k", "M", "B", "T"];
   const suffixNum = Math.floor(Math.log10(number) / 3);
 

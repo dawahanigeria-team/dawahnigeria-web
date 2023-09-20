@@ -169,7 +169,7 @@ const Charts = () => {
           <HeaderRouter title={"Charts"} />
         </div>
 
-        <div className="charts_recent charts_space max-[615px]:pt-[3rem]">
+        <div className="charts_recent charts_space max-[615px]:pt-[4rem]">
           {" "}
           <GroupWidget
             data={dailylectures}

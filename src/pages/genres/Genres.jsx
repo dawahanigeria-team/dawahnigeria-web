@@ -6,6 +6,7 @@ import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import axios from "../../utils/useAxios";
 import Loader from "../../components/UI/loader/loader";
 import GenreWidget from "./genreWidget";
+import { GENRES } from "../../utils/routes/constants";
 
 const Genres = () => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const Genres = () => {
   }, []);
 
   const showMore = (id) => {
-    navigate(`/genres/${id}`);
+    navigate(`${GENRES}/${id}`);
   };
 
   return (

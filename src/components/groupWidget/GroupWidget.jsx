@@ -357,7 +357,7 @@ const GroupWidget = ({
                 styling ? "min-[615px]:space-x-3 space-x-3" : ""
               }`}
             >
-              {data.map(
+               {Array.isArray(data) && data.map(
                 (
                   {
                     img,
@@ -480,7 +480,7 @@ const GroupWidget = ({
       {nav1.title === "Genres" && type === "lecturer" && (
         <div className="w-full h-full overflow-hidden min-[615px]:hidden">
           <div className="w-full overflow-x-auto flex items-center space-x-4 h-full">
-            {data.map(({ img, name, id, nid }, idx) => {
+            {Array.isArray(data) && data.map(({ img, name, id, nid }, idx) => {
               return (
                 <Link
                   to={`${RESOURCE_PERSON}${id || nid}`}
@@ -509,7 +509,7 @@ const GroupWidget = ({
               nav1.title === "Genres" ? "hidden" : ""
             } min-[615px]:space-x-20 `}
           >
-            {data.map(
+            {Array.isArray(data) && data.map(
               (
                 {
                   img,

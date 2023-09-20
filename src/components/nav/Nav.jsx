@@ -65,7 +65,7 @@ const Nav = () => {
       </div>
       <div
         className={
-           "max-[690px]:block hidden mt-2"
+           "max-[615px]:block hidden mt-2"
         }
       >
         <Search />
