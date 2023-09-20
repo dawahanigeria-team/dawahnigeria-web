@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - dev
-env:
-  NODE_ENV: dev 
 
 jobs:
   build:

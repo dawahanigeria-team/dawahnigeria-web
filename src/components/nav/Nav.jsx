@@ -65,7 +65,7 @@ const Nav = () => {
       </div>
       <div
         className={
-           "max-[690px]:block hidden mt-2"
+          location.pathname !== "/" ? "nav_search2_hide" : "nav_search2"
         }
       >
         <Search />
