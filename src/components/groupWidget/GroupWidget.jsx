@@ -57,7 +57,6 @@ const GroupWidget = ({
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size]);
 
   ////console.log(data);
@@ -110,12 +109,7 @@ const GroupWidget = ({
     slide.current?.addEventListener("scroll", scrollEl);
 
     return () => slide.current?.removeEventListener("scroll", scrollEl);
-     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slide.current?.scrollLeft]);
-
-  /**
-   *
-   */
 
   return (
     <div className="groupWidget_wrapper">
