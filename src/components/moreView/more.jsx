@@ -142,7 +142,7 @@ function More() {
         )}
         <div className="more_widget">
           {type === "lectures" &&
-            !loading &&
+            !loading && Array.isArray(data) &&
             data?.map(
               (
                 {
@@ -226,7 +226,7 @@ function More() {
               }
             )}
           {type === "album" &&
-            !loading &&
+            !loading && Array.isArray(data) &&
             data?.map(
               (
                 {
@@ -292,7 +292,7 @@ function More() {
               }
             )}
           {type === "playlist" &&
-            !loading &&
+            !loading && Array.isArray(data) &&
             data.map(
               (
                 {
@@ -361,7 +361,7 @@ function More() {
             )}
 
           {type === "recent" &&
-            !loading &&
+            !loading && Array.isArray(data) &&
             data.map(
               (
                 {
@@ -455,7 +455,7 @@ function More() {
         </div>
         <div className="lecturers_widget">
           {type === "lecturer" &&
-            !loading &&
+            !loading && Array.isArray(data) &&
             data?.map(
               (
                 {

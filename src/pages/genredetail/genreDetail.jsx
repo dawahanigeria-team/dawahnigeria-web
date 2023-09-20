@@ -38,7 +38,7 @@ const GenreDetail = () => {
   //i/genre_api.php?cat_id=40622
   return (
     <Container>
-      <div className="genredet_wrapper">
+      <div className="genredet_wrapper max-[615px]:pt-[10%]">
         <div className="w-full min-[615px]:h-[700px] h-[260px] max-[615px]:brightness-[20%] absolute ">
           <img
             className="w-full h-full bg-cover "

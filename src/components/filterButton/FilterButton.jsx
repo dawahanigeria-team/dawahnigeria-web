@@ -35,13 +35,13 @@ const FilterButton = ({
     if (action === "name") {
       setlectId(lecid);
       if (title === "All") {
-        setData1(data.filter((value) => value.rp || value.name));
-      } else {
+        setData1(Array.isArray(data) && data.filter((value) => value.rp || value.name));
+      } else { 
         let reset = [];
         setData2([...reset]);
         setData3([...reset]);
         setData1(
-          data.filter((value) => (value.rp || value.name).includes(title))
+          Array.isArray(data) && data.filter((value) => (value.rp || value.name).includes(title))
         );
       }
     } else if (action === "language") {
@@ -49,20 +49,20 @@ const FilterButton = ({
       //console.log(lid)
       setIsEmpty(false);
       if (title === "All") {
-        setData2(data.filter((value) => value.lang || value.lang_id));
+        setData2(Array.isArray(data) && data.filter((value) => value.lang || value.lang_id));
       } else {
-        setData2(data.filter((value) => value.lang || value.lang_id === title));
+        setData2(Array.isArray(data) && data.filter((value) => value.lang  === title));
       }
     } else if (action === "alphabet") {
       setAlphabet(title);
       if (title === "Hot") {
-        setData3(data.filter((value) => value?.title || value?.name));
+        setData3(Array.isArray(data) && data.filter((value) => value?.title || value?.name));
       } else {
         let reset = [];
         setData2([...reset]);
         setData1([...reset]);
         setData3(
-          data.filter(
+          Array.isArray(data) &&  data.filter(
             (value) => value?.name?.toLocaleUpperCase().charAt(0) === title
           )
         );
@@ -71,10 +71,10 @@ const FilterButton = ({
       setCatid(id);
       setIsEmpty(false);
       if (title === "All") {
-        setData3(data.filter((value) => value?.cats || value?.categories));
+        setData3(Array.isArray(data) && data.filter((value) => value?.cats || value?.categories));
       } else {
         setData3(
-          data.filter(
+          Array.isArray(data) &&  data.filter(
             (value) =>
               value?.cats?.includes(title) || value?.categories?.includes(title)
           )

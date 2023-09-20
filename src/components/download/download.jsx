@@ -46,6 +46,7 @@ const DownloadAudio = ({ isDownload, setisDownload, nid }) => {
   ////console.log(data)
 
   const selectAMR = () => {
+    if (typeof data !== 'object') return
     const { amr_url } = data;
     setisMP4(false);
     setisAMR(true);
@@ -54,6 +55,7 @@ const DownloadAudio = ({ isDownload, setisDownload, nid }) => {
   };
 
   const selectMP4 = () => {
+    if (typeof data !== 'object') return
     const { mp3_url } = data;
     setisMP4(true);
     setisAMR(false);
