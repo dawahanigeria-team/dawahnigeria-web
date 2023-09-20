@@ -9,7 +9,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { NavContext } from "../layout/Layout";
 
 const Nav = () => {
-  const navigate = useNavigate;
+  const navigate = useNavigate();
   const location = useLocation();
   const { setRes, setisOpen } = useContext(NavContext);
   const handleSideBar = () => {
@@ -65,7 +65,7 @@ const Nav = () => {
       </div>
       <div
         className={
-          location.pathname !== "/" ? "nav_search2_hide" : "nav_search2"
+           "max-[690px]:block hidden mt-2"
         }
       >
         <Search />

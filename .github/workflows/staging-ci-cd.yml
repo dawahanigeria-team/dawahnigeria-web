@@ -5,6 +5,9 @@ on:
     branches:
       - staging
 
+env:
+  NODE_ENV: staging 
+
 jobs:
 
   build:

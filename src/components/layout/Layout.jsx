@@ -60,7 +60,6 @@ const Layout = () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("load", handleResize);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [res]);
 
   return (
@@ -77,7 +76,7 @@ const Layout = () => {
         }`}
       >
         <div className="layout_mini" onClick={(e) => e.stopPropagation()}>
-          <SideNav res={res} />
+          <SideNav res={res}  setisOpen={setisOpen}/>
         </div>
       </div>
 

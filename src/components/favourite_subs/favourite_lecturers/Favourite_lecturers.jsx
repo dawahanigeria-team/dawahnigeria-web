@@ -1,4 +1,4 @@
-import React,{useState, useEffect, useRef, useCallback} from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import "./favourite_lecturers.scss";
 import empty from "../../../assets/png/musicEmptyState.png";
 import { useSelector } from "react-redux";
@@ -10,70 +10,63 @@ import infinitePlayFavScroll from "../../UI/infinitePlayFavScroll";
 import LecturersWidget from "../../lecturersWidget/LecturersWidget";
 import { LECTURERS, RESOURCE_PERSON } from "../../../utils/routes/constants";
 const Favourite_lecturers = () => {
-  const {currentUser} = useSelector((state) => state.user)
+  const { currentUser } = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
   const observer = useRef();
   const [data, setdata] = useState([]);
   const [isEmpty, setIsEmpty] = useState(false);
   const [nextPageLoad, setNextPageLoad] = useState(false);
   const [page, setPage] = useState(0);
-  const navigate = useNavigate()
-  const [myRp, setmyRp] = useState()
-  const [myFavlecturer, setMyFavLecturer] = useState([])
-  
+  const navigate = useNavigate();
+  const [myRp, setmyRp] = useState();
+  const [myFavlecturer, setMyFavLecturer] = useState([]);
+
   useEffect(() => {
-    if (!currentUser?.id) return
+    if (!currentUser?.id) return;
     if (page < 1) {
-      setLoading(true)
+      setLoading(true);
     }
-    axios.get(`/leclisting_favorites.php?user_id=${currentUser?.id}&type=rp`)
-    .then ((res) => {
-      //console.log(res)
-
-      if(res.data.length === 0) {
-        setmyRp([])
-        setLoading(false)
-        return
-      }
-      const {rp} = res.data
-      setmyRp(rp)
-     
-    
-      //console.log(rp.toString());
-
-      axios.get(`/rplisting_multi_nid_api.php?id=${rp.toString()}`)
-
+    axios
+      .get(`/leclisting_favorites.php?user_id=${currentUser?.id}&type=rp`)
       .then((res) => {
         //console.log(res)
-        setMyFavLecturer(res.data)
-        setLoading(false)
-      setdata(_.uniqBy(res.data?.slice(0,10), 'nid'))
-      })
-      .catch((err) => {
-        //console.log(err)
-      })
 
-    })
-    .catch((err) => {
-      //console.log(err)
-    })
+        if (res.data.length === 0) {
+          setmyRp([]);
+          setLoading(false);
+          return;
+        }
+        const { rp } = res.data;
+        setmyRp(rp);
 
- // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+        //console.log(rp.toString());
 
+        axios
+          .get(`/rplisting_multi_nid_api.php?id=${rp.toString()}`)
+
+          .then((res) => {
+            //console.log(res)
+            setMyFavLecturer(res.data);
+            setLoading(false);
+            setdata(_.uniqBy(res.data?.slice(0, 10), "nid"));
+          })
+          .catch((err) => {
+            //console.log(err)
+          });
+      });
+  }, []);
 
   useEffect(() => {
     if (page > 0) {
       setNextPageLoad(true);
     }
     const additionalData = myFavlecturer?.slice(page, page + 10);
-    
+
     if (additionalData.length === 0) {
       setIsEmpty(true);
     }
     setNextPageLoad(false);
     setdata((prev) => _.uniqBy([...prev, ...additionalData], "nid"));
-     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   const lastElement = useCallback(
@@ -81,38 +74,45 @@ const Favourite_lecturers = () => {
       if (isEmpty) return;
       infinitePlayFavScroll(node, observer, page, setPage);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [page]
   );
 
   return (
     <div className="favlec_wrapper">
-   {(!currentUser?.id || myRp?.length === 0 ) &&    <div className="favlec_img_wrap">
-        <img  src={empty} alt="empty" />
-        <p className="favlec_text">
-          You haven’t any lecturer. Add lecturers here.
-        </p>
-        <button
-        onClick={() =>{
-          if(currentUser?.id) {
-            navigate(LECTURERS)
-          }
-          else {
-            navigate("/auth/login")
-          }
-        }}
-        className="favlec_button">Discover more Lecturers</button>
-      
-      </div>}
-      { loading && (
-        
+      {(!currentUser?.id || myRp?.length === 0) && (
+        <div className="favlec_img_wrap">
+          <img src={empty} alt="empty" />
+          <p className="favlec_text">
+            You haven’t any lecturer. Add lecturers here.
+          </p>
+          <button
+            onClick={() => {
+              if (currentUser?.id) {
+                navigate(LECTURERS);
+              } else {
+                navigate("/auth/login");
+              }
+            }}
+            className="favlec_button"
+          >
+            Discover more Lecturers
+          </button>
+        </div>
+      )}
+      {loading && (
         <div className="loadd w-full flex justify-center items-center h-[300px]">
-        <Loader />
-      </div>
-        )}
-       <div className="favlecturers_widget">
-          {myRp?.length !== 0 && !loading &&
-            data.map(({ img, rp, name, rpname,views,favorites, catsname, id }, idx) => {
+          <Loader />
+        </div>
+      )}
+      <div className="favlecturers_widget">
+        {myRp?.length !== 0 &&
+          !loading &&
+          data.map(
+            (
+              { img, rp, name, rpname, views, favorites, catsname, id },
+              idx
+            ) => {
               if (data.length === idx + 1) {
                 return (
                   <div
@@ -149,15 +149,15 @@ const Favourite_lecturers = () => {
                   </div>
                 );
               }
-            })}
-        </div>
+            }
+          )}
+      </div>
 
-        {nextPageLoad && (
-       
-       <div className="loadd w-full flex justify-center items-center h-[200px]">
-       <Loader />
-     </div>
-        )}
+      {nextPageLoad && (
+        <div className="loadd w-full flex justify-center items-center h-[200px]">
+          <Loader />
+        </div>
+      )}
     </div>
   );
 };

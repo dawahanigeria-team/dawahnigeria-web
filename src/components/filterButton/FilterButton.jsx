@@ -25,7 +25,6 @@ const FilterButton = ({
 }) => {
   useEffect(() => {
     setFilter([...data1, ...data2, ...data3]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data1, data2, data3]);
 
   const handleFilter = () => {

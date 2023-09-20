@@ -16,7 +16,6 @@ const LecturersChartWidget = ({ img, idx, name }) => {
     }
 
     lazyImages();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="relative bg-[#202020] px-3 py-2 rounded-[32px] w-full text-white flex space-x-2 items-center">

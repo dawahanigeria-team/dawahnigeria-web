@@ -33,7 +33,6 @@ const GenreDetail = () => {
       .catch((err) => {
         console.error(err);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   //i/genre_api.php?cat_id=40622

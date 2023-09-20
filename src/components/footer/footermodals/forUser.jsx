@@ -13,6 +13,7 @@ const ForUser = () => {
             For Users
           </h2>
           <div
+            aria-hidden="true"
             onClick={() => {
               setshow(!isShow);
             }}
