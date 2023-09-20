@@ -144,7 +144,7 @@ const Lecturer_album = ({ id, setCount2, rpname, setImg }) => {
                   <AlbumWidget
                     key={idx}
                     views={views}
-                    categories={name || name.split("-")[0]}
+                    categories={name.split("-")[0]}
                     img={img || lazyalbum}
                   />
                 </Link>
