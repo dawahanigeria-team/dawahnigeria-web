@@ -40,14 +40,7 @@ const Landing = () => {
   const [isrecent, setisrecent] = useState(false);
   const [images, setimages] = useState([]);
 
-  ////not contented but under presssure by DN project manager
-  useEffect(() => {
-    const lazy = document.querySelectorAll("#carousels");
-    lazy.forEach((im) => {
-      const newurl = im.getAttribute("src-data");
-      im.src = newurl;
-    });
-  }, []);
+
 
   //const images = [banner1, banner2, banner3, banner4, banner1, banner2, banner3, banner4, banner1]
   useEffect(() => {
@@ -198,7 +191,7 @@ const Landing = () => {
   return (
     <Container>
       <HeadMeta title="DawahNigeria | Home" />
-      <div className="landing_wrapper my-5">
+      <div className="landing_wrapper px-[2%] max-[615px]:py-[5%] py-[8%] min-[690px]:py-[2%]">
         <div className="carousel  h-[250px] min-[950px]:h-[250px] min-[1050px]:h-[250px] min-[1283px]:h-[300px]">
           <MyCarousel images={images} />
         </div>

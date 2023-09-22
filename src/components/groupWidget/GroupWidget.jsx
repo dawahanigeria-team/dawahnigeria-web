@@ -59,15 +59,7 @@ const GroupWidget = ({
     return () => window.removeEventListener("resize", handleResize);
   }, [size]);
 
-  ////console.log(data);
-
   function prev() {
-    // e.stopPropagation()
-
-    ////console.log('window.scrollWidth')
-    //console.log(slide.current.scrollLeft);
-    //console.log(slide.current.scrollWidth);
-    //console.log(slide.current.offsetWidth);
     slide.current.scrollBy({
       left: -slide.current.scrollWidth / 10,
       behavior: "smooth",
@@ -75,11 +67,6 @@ const GroupWidget = ({
   }
 
   function next() {
-    //e.stopPropagation()
-    ////console.log('window.scrollWidth')
-
-    //console.log(slide.current.scrollWidth);
-    //console.log(slide.current.offsetWidth);
     slide.current.scrollBy({
       left: slide.current.scrollWidth / 10,
       behavior: "smooth",
@@ -88,9 +75,7 @@ const GroupWidget = ({
 
   useEffect(() => {
     function scrollEl() {
-    
-      //console.log("Slide");
-      if (slide.current.scrollLeft === 0) {
+          if (slide.current.scrollLeft === 0) {
         setisprev(false);
       } else {
         setisprev(true);
@@ -217,9 +202,9 @@ const GroupWidget = ({
                         <LandingWidget
                           key={idx}
                           categories={
-                            title?.split("-")[0] ||
-                            Title?.split("-")[0] ||
-                            title
+                           // title?.split("-")[0] ||
+                           // Title?.split("-")[0] ||
+                            title || Title
                           }
                           img={img || lec_img}
                           views={views || 0}
@@ -248,72 +233,73 @@ const GroupWidget = ({
                 styling ? "min-[615px]:space-x-3 space-x-3" : ""
               }`}
             >
-              {data.map(
-                (
-                  {
-                    img,
-                    lec_img,
-                    categories,
-                    cats,
-                    id,
-                    mp3_title,
-                    title,
-                    Title,
-                    rpname,
-                    nid,
-                    audio,
-                    views,
-                  },
-                  idx
-                ) => {
-                  return (
-                    <div key={idx}>
-                      <Link
-                        to={`${LECTURE}${nid || id}`}
-                        id={idx}
-                        className={`groupWidget_album_item  ${
-                          styling ? "relative max-[615px]:hidden" : ""
-                        }`}
-                        onClick={() => {
-                          // navigate(`/l/${nid || id}`);
-                          if (window.innerWidth <= 615) {
-                            dispatch(getPack(null));
-                            dispatch(getPage(currentPage));
-                            dispatch(getCount(idx));
-                            dispatch(getPack(data));
-                            setinitial(false);
-                          }
-                        }}
-                        key={idx + 1}
-                      >
-                        <LandingWidget
-                          key={idx}
-                          categories={
-                            title?.split("-")[0] ||
-                            Title?.split("-")[0] ||
-                            title ||
-                            mp3_title
-                          }
-                          img={img || lec_img}
-                          views={views || 0}
-                          nid={nid || id}
-                          styling={styling}
-                        />
-                        <div
-                          className={`absolute right-[-14px] bottom-[10px] rounded-full h-[38px] w-[38px] flex justify-center items-center text-white text-xl ${
-                            idx === 2 ? "bg-[#96734a]" : ""
-                          } ${idx === 1 ? "bg-[#76a8d7]" : ""}${
-                            idx === 0 ? "bg-[#ffa736]" : ""
-                          }
-                        ${styling && idx < 3 ? "block" : "hidden"}`}
+              {Array.isArray(data) &&
+                data.map(
+                  (
+                    {
+                      img,
+                      lec_img,
+                      categories,
+                      cats,
+                      id,
+                      mp3_title,
+                      title,
+                      Title,
+                      rpname,
+                      nid,
+                      audio,
+                      views,
+                    },
+                    idx
+                  ) => {
+                    return (
+                      <div key={idx}>
+                        <Link
+                          to={`${LECTURE}${nid || id}`}
+                          id={idx}
+                          className={`groupWidget_album_item  ${
+                            styling ? "relative max-[615px]:hidden" : ""
+                          }`}
+                          onClick={() => {
+                            // navigate(`/l/${nid || id}`);
+                            if (window.innerWidth <= 615) {
+                              dispatch(getPack(null));
+                              dispatch(getPage(currentPage));
+                              dispatch(getCount(idx));
+                              dispatch(getPack(data));
+                              setinitial(false);
+                            }
+                          }}
+                          key={idx + 1}
                         >
-                          <span>{idx + 1}</span>
-                        </div>
-                      </Link>
-                    </div>
-                  );
-                }
-              )}
+                          <LandingWidget
+                            key={idx}
+                            categories={
+                             // title?.split("-")[0] ||
+                              //Title?.split("-")[0] ||
+                              title || Title || 
+                              mp3_title
+                            }
+                            img={img || lec_img}
+                            views={views || 0}
+                            nid={nid || id}
+                            styling={styling}
+                          />
+                          <div
+                            className={`absolute right-[-14px] bottom-[10px] rounded-full h-[38px] w-[38px] flex justify-center items-center text-white text-xl ${
+                              idx === 2 ? "bg-[#96734a]" : ""
+                            } ${idx === 1 ? "bg-[#76a8d7]" : ""}${
+                              idx === 0 ? "bg-[#ffa736]" : ""
+                            }
+                        ${styling && idx < 3 ? "block" : "hidden"}`}
+                          >
+                            <span>{idx + 1}</span>
+                          </div>
+                        </Link>
+                      </div>
+                    );
+                  }
+                )}
             </div>
           </div>
         </div>
@@ -367,7 +353,7 @@ const GroupWidget = ({
                 styling ? "min-[615px]:space-x-3 space-x-3" : ""
               }`}
             >
-              {data.map(
+               {Array.isArray(data) && data.map(
                 (
                   {
                     img,
@@ -401,9 +387,9 @@ const GroupWidget = ({
                         key={idx}
                         categories={
                           name ||
-                          title?.split("-")[0] ||
-                          Title?.split("-")[0] ||
-                          title
+                        //  title?.split("-")[0] ||
+                         // Title?.split("-")[0] ||
+                          title || Title
                         }
                         img={img || lec_img}
                         views={views || 0}
@@ -439,51 +425,50 @@ const GroupWidget = ({
           </div>
           <div ref={slide} className="overflow_auto_wrapper">
             <div className="overflow_auto_after">
-              {data.map(
-                (
-                  {
-                    img,
-                    lec_img,
-                    categories,
-                    cats,
-                    title,
-                    nid,
-                    Title,
-                    rpname,
-                    name,
-                    playlist_img,
-                    id,
-                    audio,
-                    views,
-                  },
-                  idx
-                ) => {
-                  return (
-                    <Link
-                      to={`${PLAYLISTS}${id || nid}`}
-                      id={idx}
-                      className="groupWidget_album_item"
-                      onClick={() => {
-                        // navigate(`/pl/${id || nid}`);
-                      }}
-                      key={idx + 1}
-                    >
-                      <LandingWidget
-                        key={idx}
-                        categories={
-                          name ||
-                          title?.split("-")[0] ||
-                          Title?.split("-")[0] ||
-                          title
-                        }
-                        img={lec_img}
-                        views={views || 0}
-                        nid={id || nid}
-                      />
-                    </Link>
-                  );
-                }
-              )}
+              {Array.isArray(data) &&
+                data.map(
+                  (
+                    {
+                      img,
+                      lec_img,
+                      categories,
+                      cats,
+                      title,
+                      nid,
+                      Title,
+                      rpname,
+                      name,
+                      playlist_img,
+                      id,
+                      audio,
+                      views,
+                    },
+                    idx
+                  ) => {
+                    return (
+                      <Link
+                        to={`${PLAYLISTS}${id || nid}`}
+                        id={idx}
+                        className="groupWidget_album_item"
+                        onClick={() => {}}
+                        key={idx + 1}
+                      >
+                        <LandingWidget
+                          key={idx}
+                          categories={
+                            name || Title ||
+                          //  title?.split("-")[0] ||
+                           // Title?.split("-")[0] ||
+                            title
+                          }
+                          img={lec_img}
+                          views={views || 0}
+                          nid={id || nid}
+                        />
+                      </Link>
+                    );
+                  }
+                )}
             </div>
           </div>
         </div>
@@ -491,7 +476,7 @@ const GroupWidget = ({
       {nav1.title === "Genres" && type === "lecturer" && (
         <div className="w-full h-full overflow-hidden min-[615px]:hidden">
           <div className="w-full overflow-x-auto flex items-center space-x-4 h-full">
-            {data.map(({ img, name, id, nid }, idx) => {
+            {Array.isArray(data) && data.map(({ img, name, id, nid }, idx) => {
               return (
                 <Link
                   to={`${RESOURCE_PERSON}${id || nid}`}
@@ -520,7 +505,7 @@ const GroupWidget = ({
               nav1.title === "Genres" ? "hidden" : ""
             } min-[615px]:space-x-20 `}
           >
-            {data.map(
+            {Array.isArray(data) && data.map(
               (
                 {
                   img,
@@ -580,14 +565,3 @@ const GroupWidget = ({
 
 export default GroupWidget;
 
-// className={`groupWidget_items ${
-//             more ? "groupWidget_open_more" : "groupWidget_close_more"
-//           }`}
-
-/*
-{rp
-            ? `${rp.split(" ")[0]} ${rp.split(" ")[1]} ${rp.split(" ")[2]}`
-            : "undefined"}
-
-
-*/

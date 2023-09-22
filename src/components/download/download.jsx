@@ -46,6 +46,7 @@ const DownloadAudio = ({ isDownload, setisDownload, nid }) => {
   ////console.log(data)
 
   const selectAMR = () => {
+    if (typeof data !== "object" || !data?.amr_url) return;
     const { amr_url } = data;
     setisMP4(false);
     setisAMR(true);
@@ -54,6 +55,7 @@ const DownloadAudio = ({ isDownload, setisDownload, nid }) => {
   };
 
   const selectMP4 = () => {
+    if (typeof data !== "object" || !data?.mp3_url) return;
     const { mp3_url } = data;
     setisMP4(true);
     setisAMR(false);
@@ -87,13 +89,13 @@ const DownloadAudio = ({ isDownload, setisDownload, nid }) => {
           onClick={selectAMR}
           className={isAMR ? "download_amr" : "download_size"}
         >
-          {amrText}
+          {data?.amr_url ? amrText : "--"}
         </div>
         <div
           onClick={selectMP4}
           className={isMP4 ? "download_mp4" : "download_size"}
         >
-          {mp4Text}
+          {data?.mp3_url ? mp4Text : "--"}
         </div>
 
         <button onClick={downloadlect} className="download_btn">

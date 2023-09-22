@@ -240,10 +240,6 @@ const LecturesListDetail = () => {
   const shareAlbum = (e) => {
     //console.log("album id", id);
     e.stopPropagation();
-    if (!currentUser?.id) {
-      toast.error("Log in or register to share audio");
-      return;
-    }
     setisShare(!isShare);
   };
 
@@ -286,17 +282,7 @@ const LecturesListDetail = () => {
         });
     }
   }, [rpnames]);
-  /**
- * 
-   ////not contented but under presssure by DN project manager
-  useEffect(() => {
-    const lazy = document.querySelectorAll("#detail");
-    lazy.forEach((im) => {
-      const newurl = im.getAttribute("src-data");
-      im.src = newurl;
-    });
-  }, []);
- */
+
 
   useEffect(() => {
     leclistdet?.current.addEventListener("error", () => {

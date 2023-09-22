@@ -156,8 +156,11 @@ const Lecturers = () => {
           <div className="lecturers_filter_name">
             {lecturers.map(({ name, id }, idx) => {
               return (
-                <FilterButton
-                  key={idx}
+             <div
+             key={idx}
+             >
+                 <FilterButton
+                 
                   filter={filter}
                   setFilter={setFilter}
                   data1={data1}
@@ -176,14 +179,19 @@ const Lecturers = () => {
                   action="name"
                   data={data}
                 />
+
+             </div>
               );
             })}
           </div>
           <div className="lecturers_filter_language">
             {languages.map(({ name, id }, idx) => {
               return (
-                <FilterButton
-                  key={idx}
+                <div
+                key={idx}
+                >
+                    <FilterButton
+                 
                   filter={filter}
                   setFilter={setFilter}
                   data1={data1}
@@ -202,6 +210,9 @@ const Lecturers = () => {
                   lid={id}
                   setLangid={setLangid}
                 />
+
+                </div>
+              
               );
             })}
           </div>

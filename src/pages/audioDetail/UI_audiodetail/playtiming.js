@@ -1,23 +1,28 @@
-// audio detail
 export const playTimingDesktop = (currentTime, duration) => {
-  if (currentTime === 0) {
-    return `00:00:00/${duration || "00:00:00"}`;
+  if (currentTime === 0 || isNaN(currentTime) || isNaN(duration)) {
+    return `00:00:00/00:00:00`;
   } else {
-    let hours = Math.floor(currentTime / 3600);
-    let minutes = Math.floor((currentTime - hours * 3600) / 60);
-    let seconds = Math.floor(currentTime - hours * 3600 - minutes * 60);
+    let currentHours = Math.floor(currentTime / 3600);
+    let currentMinutes = Math.floor((currentTime % 3600) / 60);
+    let currentSeconds = Math.floor(currentTime % 60);
 
-    if (hours < 10) {
-      hours = "0" + hours;
-    }
-    if (minutes < 10) {
-      minutes = "0" + minutes;
-    }
-    if (seconds < 10) {
-      seconds = "0" + seconds;
-    }
+    let durationHours = Math.floor(duration / 3600);
+    let durationMinutes = Math.floor((duration % 3600) / 60);
+    let durationSeconds = Math.floor(duration % 60);
 
-    return `${hours}:${minutes}:${seconds}/${duration || "00:00:00"}`;
+    const formattedCurrentTime = `${currentHours
+      .toString()
+      .padStart(2, "0")}:${currentMinutes
+      .toString()
+      .padStart(2, "0")}:${currentSeconds.toString().padStart(2, "0")}`;
+
+    const formattedDuration = `${durationHours
+      .toString()
+      .padStart(2, "0")}:${durationMinutes
+      .toString()
+      .padStart(2, "0")}:${durationSeconds.toString().padStart(2, "0")}`;
+
+    return `${formattedCurrentTime}/${formattedDuration}`;
   }
 };
 
@@ -26,37 +31,34 @@ export const playTimingRes = (currentTime) => {
   if (currentTime === 0) {
     return "00:00:00";
   } else {
-    let hours = Math.floor(currentTime / 3600);
-    let minutes = Math.floor((currentTime - hours * 3600) / 60);
-    let seconds = Math.floor(currentTime - hours * 3600 - minutes * 60);
+    let currentHours = Math.floor(currentTime / 3600);
+    let currentMinutes = Math.floor((currentTime % 3600) / 60);
+    let currentSeconds = Math.floor(currentTime % 60);
 
-    if (hours < 10) {
-      hours = "0" + hours;
-    }
-    if (minutes < 10) {
-      minutes = "0" + minutes;
-    }
-    if (seconds < 10) {
-      seconds = "0" + seconds;
-    }
+    const formattedCurrentTime = `${currentHours
+      .toString()
+      .padStart(2, "0")}:${currentMinutes
+      .toString()
+      .padStart(2, "0")}:${currentSeconds.toString().padStart(2, "0")}`;
 
-    return hours + ":" + minutes + ":" + seconds;
+    return `${formattedCurrentTime}`;
   }
 };
 
-/**
+export const durationFormat = (duration) => {
+  if (isNaN(duration)) {
+    return `00:00:00`;
+  } else {
+    let durationHours = Math.floor(duration / 3600);
+    let durationMinutes = Math.floor((duration % 3600) / 60);
+    let durationSeconds = Math.floor(duration % 60);
 
-  <div className="audiodetail_songs">
-           
-            <GroupWidget  heading="More Songs" type="album" />
-          </div>
-          <div className="audiodetail_album">
-            <GroupWidget
-              
-              heading="More from this album"
-              type="album"
-            />
-          </div>
+    const formattedDuration = `${durationHours
+      .toString()
+      .padStart(2, "0")}:${durationMinutes
+      .toString()
+      .padStart(2, "0")}:${durationSeconds.toString().padStart(2, "0")}`;
 
-           <GroupWidget  heading="Similar Songs" type={"album"} />
-*/
+    return `${formattedDuration}`;
+  }
+};
