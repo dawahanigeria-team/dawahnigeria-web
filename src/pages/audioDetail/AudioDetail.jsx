@@ -513,10 +513,6 @@ const AudioDetail = () => {
   }, [currentAudioInfo?.rpname]);
 
   const shareAudio = () => {
-    if (!currentUser?.id) {
-      toast.error("Log in or register to share audio");
-      return;
-    }
     setisShare(!isShare);
     //setNidValue(nid)
   };
