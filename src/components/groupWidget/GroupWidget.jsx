@@ -96,10 +96,6 @@ const GroupWidget = ({
     return () => slide.current?.removeEventListener("scroll", scrollEl);
   }, [slide.current?.scrollLeft]);
 
-  /**
-   *
-   */
-
   return (
     <div className="groupWidget_wrapper">
       <div className="groupWidget_top">

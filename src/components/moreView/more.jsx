@@ -180,8 +180,8 @@ function More() {
                       <AlbumWidget
                         key={idx}
                         categories={
-                         // title?.split("-")[0] ||
-                         // Title?.split("-")[0] ||
+                          title?.split("-")[0] ||
+                          Title?.split("-")[0] ||
                           title ||
                           Title ||
                           mp3_title
@@ -210,8 +210,8 @@ function More() {
                       <AlbumWidget
                         key={idx}
                         categories={
-                         // title?.split("-")[0] ||
-                         // Title?.split("-")[0] ||
+                          title?.split("-")[0] ||
+                          Title?.split("-")[0] ||
                           title ||
                           Title ||
                           mp3_title
@@ -256,9 +256,9 @@ function More() {
                       <AlbumWidget
                         key={idx}
                         categories={
-                         // name?.split("-")[0] ||
-                         // Title?.split("-")[0] ||
-                         name || title ||
+                          name?.split("-")[0] ||
+                          Title?.split("-")[0] ||
+                          title ||
                           Title
                         }
                         img={img || lec_img}
@@ -277,9 +277,9 @@ function More() {
                       <AlbumWidget
                         key={idx}
                         categories={
-                         // name?.split("-")[0] ||
-                         // Title?.split("-")[0] ||
-                         name || title ||
+                          name?.split("-")[0] ||
+                          Title?.split("-")[0] ||
+                          title ||
                           Title
                         }
                         img={img || lec_img}
@@ -322,8 +322,8 @@ function More() {
                       <AlbumWidget
                         key={idx}
                         categories={
-                         // title?.split("-")[0] ||
-                         // Title?.split("-")[0] ||
+                          title?.split("-")[0] ||
+                          Title?.split("-")[0] ||
                           title ||
                           Title ||
                           name
@@ -344,8 +344,8 @@ function More() {
                       <AlbumWidget
                         key={idx}
                         categories={
-                         // title?.split("-")[0] ||
-                         // Title?.split("-")[0] ||
+                          title?.split("-")[0] ||
+                          Title?.split("-")[0] ||
                           title ||
                           Title ||
                           name
@@ -403,8 +403,8 @@ function More() {
                       <AlbumWidget
                         key={idx}
                         categories={
-                         // title?.split("-")[0] ||
-                         // Title?.split("-")[0] ||
+                          title?.split("-")[0] ||
+                          Title?.split("-")[0] ||
                           title ||
                           Title ||
                           name
@@ -437,8 +437,8 @@ function More() {
                       <AlbumWidget
                         key={idx}
                         categories={
-                         // title?.split("-")[0] ||
-                         // Title?.split("-")[0] ||
+                          title?.split("-")[0] ||
+                          Title?.split("-")[0] ||
                           title ||
                           Title ||
                           name
