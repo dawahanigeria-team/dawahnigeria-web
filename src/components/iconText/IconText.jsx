@@ -26,7 +26,7 @@ const IconText = ({ icon, link, name, id, setisOpen}) => {
 
     if (location.pathname.includes(HOME)) {
       setActive(0);
-    } else if (location.pathname === "/dawahcast") {
+    } else if (location.pathname === "/dawahcast/home") {
       setActive(0);
     } else if (location.pathname.includes(GENRES)) {
       setActive(7);

@@ -40,14 +40,7 @@ const Landing = () => {
   const [isrecent, setisrecent] = useState(false);
   const [images, setimages] = useState([]);
 
-  ////not contented but under presssure by DN project manager
-  useEffect(() => {
-    const lazy = document.querySelectorAll("#carousels");
-    lazy.forEach((im) => {
-      const newurl = im.getAttribute("src-data");
-      im.src = newurl;
-    });
-  }, []);
+
 
   //const images = [banner1, banner2, banner3, banner4, banner1, banner2, banner3, banner4, banner1]
   useEffect(() => {

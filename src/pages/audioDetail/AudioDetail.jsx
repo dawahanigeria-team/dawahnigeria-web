@@ -41,7 +41,7 @@ import {
 import Add_playlist from "../add_playlist/AddPlaylist";
 import GroupWidget from "../../components/groupWidget/GroupWidget";
 import Disk from "../../assets/png/Disk_tranparent.png";
-import { playTimingRes } from "./UI_audiodetail/playtiming";
+import { durationFormat, playTimingRes } from "./UI_audiodetail/playtiming";
 import axios from "../../utils/useAxios";
 import _ from "lodash";
 import { useDispatch, useSelector } from "react-redux";
@@ -154,15 +154,15 @@ const AudioDetail = () => {
   }, [id, audioId]);
 
   const handlePlay = () => {
+    dispatch(getaudioId(id));
+    setinitial(false);
     if (playing) {
       dispatch(setPlaying(!playing));
-      //audioRef.current?.pause();
-      //cancelAnimationFrame(playAnimation.current);
+    
     } else {
       dispatch(setPlaying(!playing));
 
-      //audioRef.current?.play();
-      //playAnimation.current = requestAnimationFrame(repeat);
+     
     }
   };
 
@@ -440,12 +440,7 @@ const AudioDetail = () => {
 
   //get lectures from the same lecturers
   function prev() {
-    // e.stopPropagation()
-
-    ////console.log('window.scrollWidth')
-    //console.log(slide.current.scrollLeft);
-    //console.log(slide.current.scrollWidth);
-    //console.log(slide.current.offsetWidth);
+ 
     slide.current.scrollBy({
       left: -slide.current.scrollWidth / 10,
       behavior: "smooth",
@@ -453,11 +448,7 @@ const AudioDetail = () => {
   }
 
   function next() {
-    //e.stopPropagation()
-    ////console.log('window.scrollWidth')
-
-    //console.log(slide.current.scrollWidth);
-    //console.log(slide.current.offsetWidth);
+  
     slide.current.scrollBy({
       left: slide.current.scrollWidth / 10,
       behavior: "smooth",
@@ -581,7 +572,7 @@ const AudioDetail = () => {
                   {currentAudioInfo?.rpname || "unknown"}
                 </p>
                 <p className="audiodetail_head_right_text2">
-                  {currentAudioInfo?.album_name.split("-")[0] ||
+                  {currentAudioInfo?.album_name?.split("-")[0] ||
                     currentAudioInfo?.cats ||
                     "unknown"}
                 </p>
@@ -591,21 +582,16 @@ const AudioDetail = () => {
                 <div
                   id="player"
                   onClick={() => {
-                    dispatch(setPlaying(!playing));
+                   // dispatch(setPlaying(true));
                     dispatch(getaudioId(id));
                     setinitial(false);
                     ///this is not coming with audio pack
                   }}
                   className="audiodetail_play"
                 >
-                  {!playing ? (
                     <CiPlay1 className="audiodetail_play_icon" />
-                  ) : (
-                    <BsPause className="audiodetail_play_icon" />
-                  )}
-
                   <p className="audiodetail_play_text">
-                    {!playing ? "play" : "pause"}
+                    { "play" }
                   </p>
                 </div>
                 <div className="audiodetail_fav">
@@ -761,7 +747,7 @@ const AudioDetail = () => {
                 />
               </div>
               <p className="audiores_scroll_stop">
-                {currentAudioInfo?.duration}
+                {durationFormat(audioRef?.current?.duration)}
               </p>
             </div>
             <div className="audiores_play_control_wrap">

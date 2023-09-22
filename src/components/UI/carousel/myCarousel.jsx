@@ -14,6 +14,8 @@ const MyCarousel = ({ images }) => {
     return () => clearInterval(interval);
   }, [currentIndex, images.length]);
 
+
+  
   ////console.log(currentIndex);
   return (
     <div className="w-full group h-full relative items-end justify-end px-[5] flex cursor-pointer">

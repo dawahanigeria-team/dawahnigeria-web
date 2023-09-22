@@ -286,17 +286,7 @@ const LecturesListDetail = () => {
         });
     }
   }, [rpnames]);
-  /**
- * 
-   ////not contented but under presssure by DN project manager
-  useEffect(() => {
-    const lazy = document.querySelectorAll("#detail");
-    lazy.forEach((im) => {
-      const newurl = im.getAttribute("src-data");
-      im.src = newurl;
-    });
-  }, []);
- */
+
 
   useEffect(() => {
     leclistdet?.current.addEventListener("error", () => {

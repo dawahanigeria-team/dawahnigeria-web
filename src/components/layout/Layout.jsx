@@ -163,7 +163,7 @@ const Layout = () => {
           </div>
         </div>
 
-        <div className="layout_buttom_menue2">
+        <div className="layout_buttom_menue2 px-6 py-2">
           <div
             onClick={() => {
               navigate("/");
