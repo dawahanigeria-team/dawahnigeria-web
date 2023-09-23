@@ -206,9 +206,9 @@ const GroupWidget = ({
                         <LandingWidget
                           key={idx}
                           categories={
-                            title?.split("-")[0] ||
-                            Title?.split("-")[0] ||
-                            title
+                           // title?.split("-")[0] ||
+                           // Title?.split("-")[0] ||
+                            title || Title
                           }
                           img={img || lec_img}
                           views={views || 0}
@@ -279,9 +279,9 @@ const GroupWidget = ({
                           <LandingWidget
                             key={idx}
                             categories={
-                              title?.split("-")[0] ||
-                              Title?.split("-")[0] ||
-                              title ||
+                             // title?.split("-")[0] ||
+                              //Title?.split("-")[0] ||
+                              title || Title || 
                               mp3_title
                             }
                             img={img || lec_img}
@@ -391,9 +391,9 @@ const GroupWidget = ({
                         key={idx}
                         categories={
                           name ||
-                          title?.split("-")[0] ||
-                          Title?.split("-")[0] ||
-                          title
+                        //  title?.split("-")[0] ||
+                         // Title?.split("-")[0] ||
+                          title || Title
                         }
                         img={img || lec_img}
                         views={views || 0}
@@ -460,9 +460,9 @@ const GroupWidget = ({
                         <LandingWidget
                           key={idx}
                           categories={
-                            name ||
-                            title?.split("-")[0] ||
-                            Title?.split("-")[0] ||
+                            name || Title ||
+                          //  title?.split("-")[0] ||
+                           // Title?.split("-")[0] ||
                             title
                           }
                           img={lec_img}
@@ -569,14 +569,3 @@ const GroupWidget = ({
 
 export default GroupWidget;
 
-// className={`groupWidget_items ${
-//             more ? "groupWidget_open_more" : "groupWidget_close_more"
-//           }`}
-
-/*
-{rp
-            ? `${rp.split(" ")[0]} ${rp.split(" ")[1]} ${rp.split(" ")[2]}`
-            : "undefined"}
-
-
-*/

@@ -202,14 +202,16 @@
     font-size: 14px;
     line-height: 21px;
     color: #d4d4d4;
+    text-overflow: ellipsis;
+    width:100%;
     text-shadow: 0px 3px 4px rgba(44, 44, 44, 0.25);
     white-space: nowrap;
-    max-width: 12rem;
-    //overflow: hidden;
+   
+    overflow: hidden;
     padding-left: 3%;
     @media screen and (max-width: 600px) {
       font-size: 12px;
-      max-width: 150px;
+     
     }
   }
 

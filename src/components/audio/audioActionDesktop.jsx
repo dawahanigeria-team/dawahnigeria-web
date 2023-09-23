@@ -53,12 +53,10 @@ const AudioActionDesktop = () => {
   const navigate = useNavigate();
   const { audioRef, setinitial, initial, loading, setLoading } =
     useContext(AudioContext);
-  // const [value, setValue] = useState(0);
+ 
   const [isComplete, setIsComplete] = useState(false);
-  //const [isRepeat, setisRepeat] = useState(false);
   const playAnimation = useRef();
 
-  // const [loading, setLoading] = useState(false);
   const [getFavs, setgetfavs] = useState([]);
   const [addFav] = useState(false);
   const [isEmpty] = useState(false);
@@ -92,7 +90,6 @@ const AudioActionDesktop = () => {
           playAnimation.current = requestAnimationFrame(repeat);
         }
 
-        //  //console.log(res.data);
       })
       .catch((err) => {
         //console.log(err);
