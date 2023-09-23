@@ -99,11 +99,6 @@ const VideoPlayer = () => {
 
   const shareAudio = (e) => {
     e.stopPropagation();
-    if (!currentUser?.id) {
-      navigate("/auth/login");
-      toast.error("Log in or register to share audio");
-      return;
-    }
     setisShare(!isShare);
     //setNidValue(nid)
   };

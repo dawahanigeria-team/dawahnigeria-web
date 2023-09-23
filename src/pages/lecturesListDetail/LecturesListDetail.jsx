@@ -240,10 +240,6 @@ const LecturesListDetail = () => {
   const shareAlbum = (e) => {
     //console.log("album id", id);
     e.stopPropagation();
-    if (!currentUser?.id) {
-      toast.error("Log in or register to share audio");
-      return;
-    }
     setisShare(!isShare);
   };
 
