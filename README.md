@@ -40,8 +40,3 @@ This will start the app on http://localhost:3000
 ## Contributing
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-Let me know if you would like me to expand or modify this draft README.
