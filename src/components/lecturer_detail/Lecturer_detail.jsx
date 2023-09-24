@@ -31,7 +31,7 @@ const LecturerDetail = () => {
   const observeEl = useRef();
   const lecdet = useRef();
   const [isVisible, setIsVisible] = useState(false);
-  const [choice, setChoice] = useState("Songs");
+  const [choice, setChoice] = useState("Audio");
   const [isShare, setisShare] = useState(false);
   const [count1, setCount1] = useState(0);
   const [count2, setCount2] = useState(0);
@@ -148,10 +148,6 @@ const LecturerDetail = () => {
 
   const shareRp = (e) => {
     e.stopPropagation();
-    if (!currentUser?.id) {
-      toast.error("Log in or register to share audio");
-      return;
-    }
     setisShare(!isShare);
   };
 
@@ -496,7 +492,7 @@ const LecturerDetail = () => {
               <div
                 onClick={() => {
                   setTab(1);
-                  setChoice("Songs");
+                  setChoice("Audio");
                 }}
                 className="mobile_lecdet_tab_song"
               >

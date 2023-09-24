@@ -53,12 +53,10 @@ const AudioActionDesktop = () => {
   const navigate = useNavigate();
   const { audioRef, setinitial, initial, loading, setLoading } =
     useContext(AudioContext);
-  // const [value, setValue] = useState(0);
+ 
   const [isComplete, setIsComplete] = useState(false);
-  //const [isRepeat, setisRepeat] = useState(false);
   const playAnimation = useRef();
 
-  // const [loading, setLoading] = useState(false);
   const [getFavs, setgetfavs] = useState([]);
   const [addFav] = useState(false);
   const [isEmpty] = useState(false);
@@ -69,7 +67,7 @@ const AudioActionDesktop = () => {
   const [currentaudio, setcurrentaudio] = useState([]);
   const [isminimize, setminimize] = useState(false);
   const [transition, settransition] = useState(true);
-
+  const [isloaded, setnotloaded] = useState(true)
   const getMusic = (audioId) => {
     //dispatch(setPlaying(false));
     setLoading(true);
@@ -92,7 +90,6 @@ const AudioActionDesktop = () => {
           playAnimation.current = requestAnimationFrame(repeat);
         }
 
-        //  //console.log(res.data);
       })
       .catch((err) => {
         //console.log(err);
@@ -162,12 +159,7 @@ const AudioActionDesktop = () => {
   };
 
   const shareAudio = () => {
-    if (!currentUser?.id) {
-      toast.error("Log in or register to share audio");
-      return;
-    }
     setisShare(!isShare);
-    //setNidValue(nid)
   };
   const handleRange = (curr) => {
     dispatch(getValue(curr));
@@ -178,15 +170,13 @@ const AudioActionDesktop = () => {
   };
 
   const handleNextAudio = () => {
-    // //console.log("first count: ", count);
+   
     setIsPrevious(false);
     //console.log(pack);
     const next = pack?.findIndex((value) => {
       return value.nid === parseInt(audioId);
     });
-    //console.log(next);
-    // //console.log("next count: ", next);
-    // //console.log("current diff: ", data?.length - 1 - next);
+   
     if (!isEmpty && pack?.length - 1 - next <= 2) {
       dispatch(getPage(page + 1));
     }
@@ -213,15 +203,13 @@ const AudioActionDesktop = () => {
     const prev = pack?.findIndex((value) => {
       return value.nid === parseInt(audioId);
     });
-    //console.log("standard: ", pack?.length - 1 - 2);
-    //console.log("current diff frm prev: ", pack?.length - 1 - prev);
+    
     if (page > 1 && pack.length - 1 - prev <= pack.length - 1 - 2) {
       setIsPrevious(true);
       dispatch(getPage(page - 1));
     }
 
-    // setCount(prev);
-    // //console.log("second count: ", count);
+  
     if (prev === 0) {
       dispatch(getaudioId(pack[prev]?.nid));
       dispatch(getCount(prev));
@@ -347,7 +335,13 @@ const AudioActionDesktop = () => {
       });
   };
 
-  ////console.log("range", rangeRef?.current?.value);
+  function handleState() {
+   /// if (!currentaudio?.audio) return
+    setnotloaded(false)
+    console.log('yeas')
+  }
+
+  
   return (
     <>
       <div
@@ -381,6 +375,7 @@ const AudioActionDesktop = () => {
         <audio
           ref={audioRef}
           src={currentaudio?.audio}
+          onLoadedData={handleState}
           onTimeUpdate={() => {
             if (audioRef.current && !audioRef.current?.seeking) {
               dispatch(getValue(audioRef?.current?.currentTime));
@@ -455,16 +450,18 @@ const AudioActionDesktop = () => {
             {loading ? (
               <AudioLoader />
             ) : (
-              <div
+              <button
                 onClick={handlePlay}
-                className="flex h-[42px] w-[42px] text-black rounded-full bg-[#ddff2b] justify-center items-center"
+                disabled={isloaded}
+                className="relative flex h-[42px] w-[42px] text-black rounded-full bg-[#ddff2b] justify-center items-center"
               >
                 {!playing ? (
                   <FaPlay id="player" className="text-[22px]" />
                 ) : (
                   <GiPauseButton className="text-[22px]" />
                 )}
-              </div>
+                {isloaded && <span className="absolute rounded-full inset-0 h-[45px] w-[45px] border-r border-b border-gray-200 animate-spin"></span>}
+              </button>
             )}
             <button onClick={handleNextAudio} id="player" className="">
               <TbPlayerSkipForwardFilled className="text-white text-[20px] hover:text-[#ddff2b]" />
@@ -534,7 +531,7 @@ const AudioActionDesktop = () => {
             <p className="text-[13px] text-zinc-500">
               {playTimingDesktop(
                 audioRef?.current?.currentTime,
-                currentaudio?.duration
+                audioRef?.current?.duration
               )}
             </p>
           </div>

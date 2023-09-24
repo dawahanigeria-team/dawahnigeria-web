@@ -45,7 +45,7 @@
     padding: 2rem 2rem 3rem;
     width: 100%;
     @media screen and (max-width: 690px) {
-      padding: 12% 5% 0% 5%;
+      padding: 13% 5% 0% 5%;
     }
     .audiodetail_breadcrumb {
       display: flex;
@@ -632,8 +632,8 @@
         width: 320px;
         height: 320px;
         @media screen and (max-width: 615px) {
-          width: 80%;
-          height: 265px;
+          width: 65%;
+          height: 180px;
         }
         border-radius: 6px;
         overflow: hidden;

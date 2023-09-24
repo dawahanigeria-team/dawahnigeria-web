@@ -241,10 +241,6 @@ const PlaylistDetail = () => {
   const sharePlaylist = (e) => {
     //console.log("playlist id", id);
     e.stopPropagation();
-    if (!currentUser?.id) {
-      toast.error("Log in or register to share audio");
-      return;
-    }
     setisShare(!isShare);
   };
 
