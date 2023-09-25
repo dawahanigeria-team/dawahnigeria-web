@@ -8,8 +8,7 @@ const LecturerOptions = () => {
   const { setLecturerId } = useContext(SearchContext);
   const { searchOptions } = useSelector((state) => state.search);
   const [showmore, setshowmore] = useState(false);
-  //const [selectCategory, setSelectCategory] = useState()
-  //const dispatch = useDispatch();
+ 
 
   const handleSelected = (e) => {
     //console.log(e.target.value)

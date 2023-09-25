@@ -6,7 +6,6 @@ import { useContext } from "react";
 const LangOptions = () => {
   const { setLanguageId } = useContext(SearchContext);
   const { searchOptions } = useSelector((state) => state.search);
-  const [selectCategory, setSelectCategory] = useState([]);
   const [showmore, setshowmore] = useState(false);
 
   //const dispatch = useDispatch();
