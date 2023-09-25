@@ -25,7 +25,7 @@ const Simillarrp = ({ langid }) => {
     }
     axios
       .get(
-        `https://www.dawahbox.com/mongo/api/all_rps_api.php?offset=30&lim=10&page=${page}&langid=${langid}`
+        `${process.env.REACT_APP_API_BASE_URL}/all_rps_api.php?offset=30&lim=10&page=${page}&langid=${langid}`
       )
       .then((res) => {
         //console.log(res.data);

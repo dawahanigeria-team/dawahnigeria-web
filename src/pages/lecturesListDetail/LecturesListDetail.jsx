@@ -108,7 +108,7 @@ const LecturesListDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/albumapi3.php?aid=${id}`)
       .then((res) => {
         //console.log(res.data);
         setLoading(false);
@@ -248,7 +248,7 @@ const LecturesListDetail = () => {
     //all lecturers
     if (rpnames) {
       axios
-        .get("https://backend.dawahnigeria.com/dboxapi/rpjson")
+        .get(`${process.env.REACT_APP_DBOX_API_URL}/rpjson`)
         .then(async (res) => {
           //console.log(res.data.rp);
           const datas = res.data.rp;
@@ -282,7 +282,6 @@ const LecturesListDetail = () => {
         });
     }
   }, [rpnames]);
-
 
   useEffect(() => {
     leclistdet?.current.addEventListener("error", () => {
@@ -679,7 +678,7 @@ const LecturesListDetail = () => {
                               nid={nid}
                               navName={"Back"}
                               navLink={-1}
-                              endpoint_url={`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}`}
+                              endpoint_url={`${process.env.REACT_APP_API_BASE_URL}/albumapi3.php?aid=${id}`}
                               controlData={data}
                               duration={duration}
                               views={views}
@@ -702,7 +701,7 @@ const LecturesListDetail = () => {
                               favorites={favorites}
                               navName={"Back"}
                               navLink={-1}
-                              endpoint_url={`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}&lim=10&offset=30&page=`}
+                              endpoint_url={`${process.env.REACT_APP_API_BASE_URL}/albumapi3.php?aid=${id}&lim=10&offset=30&page=`}
                               controlData={data}
                               duration={duration}
                               views={views}
@@ -731,7 +730,7 @@ const LecturesListDetail = () => {
                               nid={nid}
                               navName={"Back"}
                               navLink={-1}
-                              endpoint_url={`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}`}
+                              endpoint_url={`${process.env.REACT_APP_API_BASE_URL}/albumapi3.php?aid=${id}`}
                               controlData={data}
                               duration={duration}
                               views={views}
@@ -755,7 +754,7 @@ const LecturesListDetail = () => {
                               favorites={favorites}
                               navName={"Back"}
                               navLink={-1}
-                              endpoint_url={`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}&lim=10&offset=30&page=`}
+                              endpoint_url={`${process.env.REACT_APP_API_BASE_URL}/albumapi3.php?aid=${id}&lim=10&offset=30&page=`}
                               controlData={data}
                               duration={duration}
                               views={views}

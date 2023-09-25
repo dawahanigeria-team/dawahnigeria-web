@@ -609,7 +609,7 @@ const PlaylistDetail = () => {
                               nid={nid}
                               navName={"Back"}
                               navLink={-1}
-                              endpoint_url={`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}`}
+                              endpoint_url={`${process.env.REACT_APP_API_BASE_URL}/albumapi3.php?aid=${id}`}
                               controlData={data}
                               duration={duration}
                               views={views}
@@ -632,7 +632,7 @@ const PlaylistDetail = () => {
                               favorites={favorites}
                               navName={"Back"}
                               navLink={-1}
-                              endpoint_url={`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}&lim=10&offset=30&page=`}
+                              endpoint_url={`${process.env.REACT_APP_API_BASE_URL}/albumapi3.php?aid=${id}&lim=10&offset=30&page=`}
                               controlData={data}
                               duration={duration}
                               views={views}
@@ -661,7 +661,7 @@ const PlaylistDetail = () => {
                               nid={nid}
                               navName={"Back"}
                               navLink={-1}
-                              endpoint_url={`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}`}
+                              endpoint_url={`${process.env.REACT_APP_API_BASE_URL}/albumapi3.php?aid=${id}`}
                               controlData={data}
                               duration={duration}
                               views={views}
@@ -685,7 +685,7 @@ const PlaylistDetail = () => {
                               favorites={favorites}
                               navName={"Back"}
                               navLink={-1}
-                              endpoint_url={`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}&lim=10&offset=30&page=`}
+                              endpoint_url={`${process.env.REACT_APP_API_BASE_URL}/albumapi3.php?aid=${id}&lim=10&offset=30&page=`}
                               controlData={data}
                               duration={duration}
                               views={views}

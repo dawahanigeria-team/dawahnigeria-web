@@ -158,11 +158,8 @@ const AudioDetail = () => {
     setinitial(false);
     if (playing) {
       dispatch(setPlaying(!playing));
-    
     } else {
       dispatch(setPlaying(!playing));
-
-     
     }
   };
 
@@ -440,7 +437,6 @@ const AudioDetail = () => {
 
   //get lectures from the same lecturers
   function prev() {
- 
     slide.current.scrollBy({
       left: -slide.current.scrollWidth / 10,
       behavior: "smooth",
@@ -448,7 +444,6 @@ const AudioDetail = () => {
   }
 
   function next() {
-  
     slide.current.scrollBy({
       left: slide.current.scrollWidth / 10,
       behavior: "smooth",
@@ -482,7 +477,7 @@ const AudioDetail = () => {
   useEffect(() => {
     //all lecturers
     axios
-      .get("https://backend.dawahnigeria.com/dboxapi/rpjson")
+      .get(`${process.env.REACT_APP_DBOX_API_URL}/rpjson`)
       .then((res) => {
         //console.log(res.data.rp);
         const data = res.data.rp;
@@ -578,17 +573,15 @@ const AudioDetail = () => {
                 <div
                   id="player"
                   onClick={() => {
-                   // dispatch(setPlaying(true));
+                    // dispatch(setPlaying(true));
                     dispatch(getaudioId(id));
                     setinitial(false);
                     ///this is not coming with audio pack
                   }}
                   className="audiodetail_play"
                 >
-                    <CiPlay1 className="audiodetail_play_icon" />
-                  <p className="audiodetail_play_text">
-                    { "play" }
-                  </p>
+                  <CiPlay1 className="audiodetail_play_icon" />
+                  <p className="audiodetail_play_text">{"play"}</p>
                 </div>
                 <div className="audiodetail_fav">
                   <button

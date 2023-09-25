@@ -20,7 +20,7 @@ const Lecturer_playlist = ({ id, setCount3 }) => {
 
   useEffect(() => {
     const handleRequest = () => {
-      ///https://dawahbox.com/mongo/api/playlistApi.php?action=all_public_playlist_data&rp_id=39429
+      /// API_BASE_URL/playlistApi.php?action=all_public_playlist_data&rp_id=39429
       axios
         .get(`/playlistApi.php?action=all_public_playlist_data&rp_id=${id}`)
         .then((res) => {

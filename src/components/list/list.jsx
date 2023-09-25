@@ -192,7 +192,7 @@ function List({
   useEffect(() => {
     //all lecturers
     axios
-      .get("https://backend.dawahnigeria.com/dboxapi/rpjson")
+      .get(`${process.env.REACT_APP_DBOX_API_URL}/rpjson`)
       .then((res) => {
         //console.log(res.data.rp);
         const data = res.data.rp;

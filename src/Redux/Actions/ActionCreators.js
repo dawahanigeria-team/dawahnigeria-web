@@ -126,13 +126,17 @@ const LoginAction = (loginParams, isSocial, navigate, setLoading) => {
     if (isSocial) {
       setLoading(true);
       axios
-        .post("https://www.dawahbox.com/mongo/api/user_auth.php", loginParams, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-          },
-        })
+        .post(
+          `${process.env.REACT_APP_API_BASE_URL}/user_auth.php`,
+          loginParams,
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
+            },
+          }
+        )
         .then((res) => {
           //console.log(res.data);
           dispatch(GetUsersSuccess(res.data));
@@ -143,13 +147,17 @@ const LoginAction = (loginParams, isSocial, navigate, setLoading) => {
     } else {
       setLoading(true);
       axios
-        .post("https://www.dawahbox.com/mongo/api/user_auth.php", loginParams, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-          },
-        })
+        .post(
+          `${process.env.REACT_APP_API_BASE_URL}/user_auth.php`,
+          loginParams,
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
+            },
+          }
+        )
         .then((res) => {
           //console.log(res);
           const { data } = res;
@@ -179,7 +187,7 @@ const registration = (
     setLoading(true);
     await axios
       .post(
-        "https://www.dawahbox.com/mongo/api/user_auth.php",
+        `${process.env.REACT_APP_API_BASE_URL}/user_auth.php`,
         registrationParams,
         {
           headers: {
@@ -198,13 +206,17 @@ const registration = (
           toast.success("Registration Successful");
         } else {
           axios
-            .post("https://www.dawahbox.com/mongo/api/user_auth.php", getId, {
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-                "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-              },
-            })
+            .post(
+              `${process.env.REACT_APP_API_BASE_URL}/user_auth.php`,
+              getId,
+              {
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                  "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
+                },
+              }
+            )
             .then((res) => {
               //console.log(res);
               const { data } = res;

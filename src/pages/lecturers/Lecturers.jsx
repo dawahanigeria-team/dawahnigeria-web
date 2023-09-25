@@ -42,7 +42,7 @@ const Lecturers = () => {
     function getLang() {
       //get all langyages
       axios
-        .get(`https://backend.dawahnigeria.com/dboxapi/langjson`)
+        .get(`${process.env.REACT_APP_DBOX_API_URL}/langjson`)
         .then((res) => {
           if (res.data.rp) setLanguages([...language, ...res.data.rp]);
         });
@@ -72,7 +72,7 @@ const Lecturers = () => {
 
       axios
         .get(
-          `https://www.dawahbox.com/mongo/api/all_rps_api.php?offset=30&lim=10&page=${page}${`${
+          `/all_rps_api.php?offset=30&lim=10&page=${page}${`${
             langid ? `&langid=${langid}` : ""
           }`}${`${alpha && alpha !== "Hot" ? `&alpha=${alpha}` : ""}`}`
         )
@@ -120,7 +120,7 @@ const Lecturers = () => {
     }
     axios
       .get(
-        `https://www.dawahbox.com/mongo/api/rplisting_multi_nid_api.php?id=${lectId}`
+        `${process.env.REACT_APP_API_BASE_URL}/rplisting_multi_nid_api.php?id=${lectId}`
       )
       .then((res) => {
         //console.log(res.data[0])
@@ -156,63 +156,54 @@ const Lecturers = () => {
           <div className="lecturers_filter_name">
             {lecturers.map(({ name, id }, idx) => {
               return (
-             <div
-             key={idx}
-             >
-                 <FilterButton
-                 
-                  filter={filter}
-                  setFilter={setFilter}
-                  data1={data1}
-                  setData1={setData1}
-                  data2={data2}
-                  setData2={setData2}
-                  data3={data3}
-                  setData3={setData3}
-                  active={active}
-                  setActive={setActive}
-                  title={name}
-                  setlectId={setlectId}
-                  lecid={id}
-                  setIsEmpty={setIsEmpty}
-                  setTypeName={setTypeName}
-                  action="name"
-                  data={data}
-                />
-
-             </div>
+                <div key={idx}>
+                  <FilterButton
+                    filter={filter}
+                    setFilter={setFilter}
+                    data1={data1}
+                    setData1={setData1}
+                    data2={data2}
+                    setData2={setData2}
+                    data3={data3}
+                    setData3={setData3}
+                    active={active}
+                    setActive={setActive}
+                    title={name}
+                    setlectId={setlectId}
+                    lecid={id}
+                    setIsEmpty={setIsEmpty}
+                    setTypeName={setTypeName}
+                    action="name"
+                    data={data}
+                  />
+                </div>
               );
             })}
           </div>
           <div className="lecturers_filter_language">
             {languages.map(({ name, id }, idx) => {
               return (
-                <div
-                key={idx}
-                >
-                    <FilterButton
-                 
-                  filter={filter}
-                  setFilter={setFilter}
-                  data1={data1}
-                  setData1={setData1}
-                  data2={data2}
-                  setData2={setData2}
-                  data3={data3}
-                  setData3={setData3}
-                  active={active1}
-                  setActive={setActive1}
-                  title={name}
-                  action="language"
-                  data={data}
-                  setIsEmpty={setIsEmpty}
-                  setTypeName={setTypeName}
-                  lid={id}
-                  setLangid={setLangid}
-                />
-
+                <div key={idx}>
+                  <FilterButton
+                    filter={filter}
+                    setFilter={setFilter}
+                    data1={data1}
+                    setData1={setData1}
+                    data2={data2}
+                    setData2={setData2}
+                    data3={data3}
+                    setData3={setData3}
+                    active={active1}
+                    setActive={setActive1}
+                    title={name}
+                    action="language"
+                    data={data}
+                    setIsEmpty={setIsEmpty}
+                    setTypeName={setTypeName}
+                    lid={id}
+                    setLangid={setLangid}
+                  />
                 </div>
-              
               );
             })}
           </div>
