@@ -66,9 +66,6 @@ const Trending = () => {
     [page]
   );
 
-
-
-
       //play all audio files
       const playAll = () => {
     
@@ -83,8 +80,6 @@ const Trending = () => {
           },
         });
       };
-  
-
   return (
     <Container>
       <div className="trend_wrapper">

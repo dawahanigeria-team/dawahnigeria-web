@@ -26,7 +26,6 @@ import pmobile from "../../../src/assets/svg/playmobile.svg";
 import sharebig from "../../../src/assets/svg/boom-share.svg";
 import commentbig from "../../../src/assets/svg/boom-comment.svg";
 import favbig from "../../../src/assets/svg/boom-fav.svg";
-import infiniteScroll from "../../components/UI/infiniteScroll";
 import { formatNumber } from "../../components/UI/formatter";
 import { useSelector, useDispatch } from "react-redux";
 import useaxios from "../../utils/useAxios";
@@ -292,8 +291,6 @@ const LecturesListDetail = () => {
       });
     });
   }, []);
-  // {(singleData?.title && singleData?.title.split('-')[2]) || singleData?.title}
-  // {singleData?.title.split('-')[1] || singleData?.title}
 
   const lectureTitleExtractor = (title, position) => {
     console.log({ title });
@@ -320,12 +317,12 @@ const LecturesListDetail = () => {
           {/* ------------------------------Desktop------ Bread Crumbs -------------------------------------- */}
 
           <div className="leclistdet_breadcrumb">
-            <p
+            <button
               onClick={() => {
                 navigate(-1);
               }}
               className="leclistdet_breadcrumb_first"
-            ></p>
+            >Back/</button>
             <p className="leclistdet_breadcrumb_second">
               {/* {(singleData?.title && singleData.title.split("-")[2]) ||
                 singleData?.title} */}
