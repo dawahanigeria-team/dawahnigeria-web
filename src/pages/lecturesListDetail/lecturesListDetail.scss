@@ -108,7 +108,8 @@
     .leclistdet_breadcrumb {
       display: flex;
       flex-direction: row;
-      align-items: flex-start;
+      align-items: center;
+      justify-content: start;
       gap: 0.3rem;
       @include hide_for_mobile;
       margin-bottom: 3rem;
@@ -460,6 +461,7 @@
         .mob_arrow {
           width: 28px;
           height: 28px;
+          margin-top:2rem;
           margin-bottom: 2rem;
           .mob_arrow_sz {
             width: 100%;
@@ -475,7 +477,7 @@
 
     .mobile_leclistdet_tab_wrap {
       position: relative;
-      margin-top: 5em;
+      margin-top: 6em;
 
       color: white;
       font-size: 14px;
