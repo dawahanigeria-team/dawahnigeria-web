@@ -440,7 +440,6 @@ const AudioDetail = () => {
 
   //get lectures from the same lecturers
   function prev() {
- 
     slide.current.scrollBy({
       left: -slide.current.scrollWidth / 10,
       behavior: "smooth",

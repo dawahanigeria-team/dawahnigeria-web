@@ -1,44 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { toast } from "react-hot-toast";
-import { useLocation } from "react-router-dom";
-import axios from "../../utils/useAxios";
-import { shareAudio, sharingChanels } from "./utils";
+import { useDispatch, useSelector } from "react-redux";
+import { shareLink, shareAudio, sharingChanels } from "./utils";
 
 const ShareAudio = ({ isShare, setisShare, nid, type }) => {
+  const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const [link, setLink] = useState(true);
 
   ///**** share audio ******** */
-  function share() {
-    if (!nid) {
-      toast.error("No audio to be shared");
-      return;
-    }
-    const payload = {
-      user_id: currentUser?.id,
-      item_id: type !== "video" ? parseInt(nid) : nid,
-      type: type,
-    };
-    axios
-      .post(`/shareApi.php`, payload, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-        },
-      })
-      .then((res) => {
-        // setLink(res.data.success);
-      })
-      .catch((err) => {});
-  }
-
   useEffect(() => {
     if (nid) {
       setLink(window.location.href);
     }
   }, [nid]);
+
+  const handleShareAdiolInk = (item) => {
+    shareAudio(item.key, item.link, encodeURIComponent(link));
+    dispatch(shareLink(nid, currentUser?.id, type));
+  };
 
   return (
     <div
@@ -60,10 +39,7 @@ const ShareAudio = ({ isShare, setisShare, nid, type }) => {
                 title={item.key}
                 key={item.key}
                 className="hover:bg-amber-500 rounded-full p-1 flex items-center justify-center cursor-pointer"
-                onClick={() => {
-                  shareAudio(item.key, item.link, encodeURIComponent(link));
-                  share();
-                }}
+                onClick={() => handleShareAdiolInk(item)}
               >
                 {item.icon}
               </span>

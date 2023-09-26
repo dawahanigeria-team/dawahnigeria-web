@@ -6,12 +6,15 @@ import { RiTwitterFill } from "react-icons/ri";
 import { BsLink45Deg } from "react-icons/bs";
 import { toast } from "react-hot-toast";
 import copy from "copy-to-clipboard";
+import axios from "axios";
+import { updateAudioShareCount } from "../../Redux/Actions/ActionCreators";
 
 export const shareAudio = (key, socalLink, linkToShare) => {
   if (key !== "Copy to clipboard") {
     window.open(`${socalLink}${linkToShare}`, "_blank");
     return;
   }
+
   copy(linkToShare);
   toast.success(`successfully copied`);
 };
@@ -53,3 +56,30 @@ export const sharingChanels = [
     ),
   },
 ];
+
+export const shareLink = (id, currentUserId, type) => {
+  return (dispatch) => {
+    dispatch(updateAudioShareCount());
+    if (!id) {
+      toast.error("No audio to be shared");
+      return;
+    }
+    const payload = {
+      user_id: currentUserId,
+      item_id: type !== "video" ? parseInt(id) : id,
+      type: type,
+    };
+    axios
+      .post(`/shareApi.php`, payload, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
+        },
+      })
+      .then((res) => {
+        // setLink(res.data.success);
+      })
+      .catch((err) => {});
+  };
+};
