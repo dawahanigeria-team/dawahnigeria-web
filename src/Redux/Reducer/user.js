@@ -39,10 +39,6 @@ const User = (state = initailState, action) => {
         currentAudioInfo: action.payload,
       };
     case type.UPDATE_AUDIO_SHARE_COUNT:
-      console.log({
-        ...state.currentAudioInfo,
-        share: (state.currentAudioInfo?.share ?? 0) + 1,
-      });
       return {
         ...state,
         currentAudioInfo: {
