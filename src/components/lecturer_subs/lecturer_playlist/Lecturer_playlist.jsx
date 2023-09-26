@@ -20,7 +20,7 @@ const Lecturer_playlist = ({ id, setCount3 }) => {
 
   useEffect(() => {
     const handleRequest = () => {
-      /// API_BASE_URL/playlistApi.php?action=all_public_playlist_data&rp_id=39429
+      /// process.env.REACT_APP_API_BASE_URL/playlistApi.php?action=all_public_playlist_data&rp_id=39429
       axios
         .get(`/playlistApi.php?action=all_public_playlist_data&rp_id=${id}`)
         .then((res) => {

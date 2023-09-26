@@ -184,10 +184,10 @@ function MusicList({
   useEffect(() => {
     //all lecturers
     axios
-      .get(`${process.env.REACT_APP_DBOX_API_URL}/rpjson`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/all_rps_api.php`)
       .then((res) => {
-        //console.log(res.data.rp);
-        const data = res.data.rp;
+        //console.log(res.data);
+        const data = res.data;
         setrpData(data);
         setrpnameArray(data.map((rp) => rp.name));
       })

@@ -16,10 +16,10 @@ const Genres = () => {
   useEffect(() => {
     function getCategories() {
       axios
-        .get(`${process.env.REACT_APP_DBOX_API_URL}/catjson2`)
+        .get(`${process.env.REACT_APP_API_BASE_URL}/allcateg_api.php`)
         .then((res) => {
           //console.log(res.data);
-          setData(res.data.rp);
+          setData(res.data);
           setLoading(false);
         })
         .catch((err) => {

@@ -248,10 +248,10 @@ const LecturesListDetail = () => {
     //all lecturers
     if (rpnames) {
       axios
-        .get(`${process.env.REACT_APP_DBOX_API_URL}/rpjson`)
+        .get(`${process.env.REACT_APP_API_BASE_URL}/all_rps_api.php`)
         .then(async (res) => {
-          //console.log(res.data.rp);
-          const datas = res.data.rp;
+          //console.log(res.data);
+          const datas = res.data;
           //setrpData(datas)
           const rpnameArray = datas.map((rp) => rp.name);
           //console.log("my rp", rpnames);

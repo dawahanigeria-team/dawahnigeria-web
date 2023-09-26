@@ -27,15 +27,15 @@ const Lecturer_album = ({ id, setCount2, rpname, setImg }) => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_DBOX_API_URL}/rpjson`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/all_rps_api.php`)
       .then((res) => {
         setRpid(
-          res.data.rp.filter((value) => {
+          res.data.filter((value) => {
             return value.name === rpname;
           })[0]?.id
         );
         setImg(
-          res.data.rp.filter((value) => {
+          res.data.filter((value) => {
             return value.name === rpname;
           })[0]?.img
         );

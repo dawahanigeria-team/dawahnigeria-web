@@ -42,9 +42,9 @@ const Lecturers = () => {
     function getLang() {
       //get all langyages
       axios
-        .get(`${process.env.REACT_APP_DBOX_API_URL}/langjson`)
+        .get(`${process.env.REACT_APP_API_BASE_URL}/all_lang_api.php`)
         .then((res) => {
-          if (res.data.rp) setLanguages([...language, ...res.data.rp]);
+          if (res.data) setLanguages([...language, ...res.data]);
         });
     }
     getLang();
