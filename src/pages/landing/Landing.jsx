@@ -15,6 +15,7 @@ import bnew from "../../assets/svg/boom-new.svg";
 import bgenre from "../../assets/svg/boom-genre.svg";
 import { BsFillPlayBtnFill } from "react-icons/bs";
 import { useSelector } from "react-redux";
+import useAxios from "axios";
 import LandingOptions from "../../components/landingOptions/LandingOptions";
 import MyCarousel from "../../components/UI/carousel/myCarousel";
 import MobileImageWidget from "./mobileimagewidget/mobileImageWidget";
@@ -39,8 +40,7 @@ const Landing = () => {
   const [quran, setQuran] = useState([]);
   const [isrecent, setisrecent] = useState(false);
   const [images, setimages] = useState([]);
-
-
+  const [specailFeat, setSpecialFeat] = useState([]);
 
   //const images = [banner1, banner2, banner3, banner4, banner1, banner2, banner3, banner4, banner1]
   useEffect(() => {
@@ -58,16 +58,6 @@ const Landing = () => {
   let page = 1;
   useEffect(() => {
     async function fetchData() {
-      //trending
-      await axios
-        .get(`/popular_lec_api.php?langid=8&lim=10&page=${page}`)
-        .then((res) => {
-          setTrending(res.data);
-        })
-        .catch((err) => {
-          //console.log(err);
-        });
-
       if (currentUser?.id) {
         await axios
           .get(`/recentApi.php?user_id=${currentUser?.id}&action=get_recent`)
@@ -121,28 +111,29 @@ const Landing = () => {
           });
       }
 
-      // ramadan 40217
-      await axios
-        .get(`/leclisting_cat_api.php?catid=40217&page=${page}`)
+      await useAxios
+        .post(
+          `${process.env.REACT_APP_API_ADMINISTER_BASE_URL}/spcl_ftr_api.php`,
+          {
+            action: "retrieve_spcl_ftr_data",
+          },
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
+            },
+          }
+        )
         .then((res) => {
-          //console.log(res.data);
-
-          setRamadan(res.data);
+          console.log(res.data);
+          const specialFeatures = res.data?.flatMap((val) => [
+            { name: val.name, more: val.more },
+          ]);
+          setSpecialFeat(specialFeatures);
         })
         .catch((err) => {
-          //console.log(err);
-        });
-
-      //quran and tafseer 40255
-
-      await axios
-        .get(`/leclisting_cat_api.php?catid=40255&page=${page}`)
-        .then((res) => {
-          //console.log(res.data);
-          setQuran(res.data);
-        })
-        .catch((err) => {
-          //console.log(err);
+          console.log(err);
         });
     }
     fetchData();
@@ -232,34 +223,26 @@ const Landing = () => {
             nav1={{ title: "Home", link: HOME }}
           />
         </div>
-        <div className="landing_trending landing_space my-1 min-[615px]:my-3">
-          <GroupWidget
-            data={trending}
-            heading="Trending"
-            type={"lectures"}
-            endpoint_url={"/popular_lec_api.php?langid=8&page="}
-            currentPage={page}
-            nav1={{ title: "Home", link: HOME }}
-          />
-        </div>
-        <div className="landing_tafsir landing_space my-1 min-[615px]:my-3">
-          <GroupWidget
-            data={ramadan}
-            heading="Ramadan Tafsir"
-            type={"lectures"}
-            currentPage={""}
-            nav1={{ title: "Home", link: HOME }}
-          />
-        </div>
-        <div className="landing_quran landing_space my-1 min-[615px]:my-3">
-          <GroupWidget
-            data={quran}
-            heading="Quran Recitations"
-            type={"lectures"}
-            currentPage={""}
-            nav1={{ title: "Home", link: HOME }}
-          />
-        </div>
+
+        {Array.isArray(specailFeat) &&
+          specailFeat?.map(({ name, more }, idx) => {
+            if (Array.isArray(more) && more.length > 0) {
+              return (
+                <div
+                  key={idx}
+                  className="landing_tafsir landing_space my-1 min-[615px]:my-3"
+                >
+                  <GroupWidget
+                    data={more}
+                    heading={name}
+                    type={"lectures"}
+                    currentPage={""}
+                    nav1={{ title: "Home", link: HOME }}
+                  />
+                </div>
+              );
+            }
+          })}
       </div>
     </Container>
   );
