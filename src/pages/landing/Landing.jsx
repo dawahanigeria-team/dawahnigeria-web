@@ -13,6 +13,7 @@ import bplaylist from "../../assets/svg/boom-playlist.svg";
 import btrending from "../../assets/svg/boom-trending.svg";
 import bnew from "../../assets/svg/boom-new.svg";
 import bgenre from "../../assets/svg/boom-genre.svg";
+import quranIcon from "../../assets/svg/quran.svg";
 import { BsFillPlayBtnFill } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import useAxios from "axios";
@@ -29,6 +30,7 @@ import {
   PLAY,
   VIDEO,
   LECTURERS,
+  QURAN,
 } from "../../utils/routes/constants";
 import HeadMeta from "../../components/head-meta";
 const Landing = () => {
@@ -199,6 +201,7 @@ const Landing = () => {
         <Slider className="landing_options" {...settings1}>
           <LandingOptions text={"Charts"} img={bchart} link={CHARTS} />
           <LandingOptions text={"Lecturers"} img={blecturer} link={LECTURERS} />
+          <LandingOptions text={"Quran"} img={quranIcon} link={QURAN} />
           <LandingOptions text={"Playlists"} img={bplaylist} link={PLAY} />
           <LandingOptions
             text={"Video"}

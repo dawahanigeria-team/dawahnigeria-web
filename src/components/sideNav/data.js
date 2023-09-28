@@ -1,5 +1,5 @@
 import React from "react";
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaQuran } from "react-icons/fa";
 import { AiOutlineLineChart } from "react-icons/ai";
 import { ImMusic } from "react-icons/im";
 import { CgUserList } from "react-icons/cg";
@@ -11,7 +11,18 @@ import {
   BsFileEarmarkMusicFill,
   BsFillDiscFill,
 } from "react-icons/bs";
-import { CHARTS, FAVOURITE, GENRES, LECTURERS, MYPLAYLIIST, NEW, PLAY, TRENDING, VIDEO } from "../../utils/routes/constants";
+import {
+  CHARTS,
+  FAVOURITE,
+  GENRES,
+  LECTURERS,
+  MYPLAYLIIST,
+  NEW,
+  PLAY,
+  TRENDING,
+  VIDEO,
+  QURAN,
+} from "../../utils/routes/constants";
 
 export const lectures = [
   {
@@ -24,7 +35,7 @@ export const lectures = [
     id: 1,
     name: "Trending",
     icon: <AiOutlineLineChart className="icon1 icon" />,
-    link:TRENDING,
+    link: TRENDING,
   },
   {
     id: 2,
@@ -37,6 +48,12 @@ export const lectures = [
     name: "Lecturers",
     icon: <MdPerson className="icon3 icon" />,
     link: LECTURERS,
+  },
+  {
+    id: 3,
+    name: "Quran",
+    icon: <FaQuran className="icon" aria-hidden="true" />,
+    link: QURAN,
   },
   {
     id: 4,
