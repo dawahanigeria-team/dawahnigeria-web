@@ -6,7 +6,7 @@ import { RiTwitterFill } from "react-icons/ri";
 import { BsLink45Deg } from "react-icons/bs";
 import { toast } from "react-hot-toast";
 import copy from "copy-to-clipboard";
-import axios from "axios";
+import axios from "../../utils/useAxios";
 import { updateAudioShareCount } from "../../Redux/Actions/ActionCreators";
 
 export const shareAudio = (key, socalLink, linkToShare) => {
