@@ -37,6 +37,7 @@ const getcurrentAudioInfo = (data) => {
     payload: data,
   };
 };
+
 const getaudioData = (data) => {
   return {
     type: type.GET_AUDIO_DATA,
@@ -47,6 +48,12 @@ const getaudioId = (data) => {
   return {
     type: type.GET_AUDIO_ID,
     payload: data,
+  };
+};
+
+const updateAudioShareCount = () => {
+  return {
+    type: type.UPDATE_AUDIO_SHARE_COUNT,
   };
 };
 const getCount = (data) => {
@@ -252,6 +259,7 @@ export {
   getType,
   getcurrentAudioInfo,
   getaudioId,
+  updateAudioShareCount,
   getCount,
   getPack,
   getPage,

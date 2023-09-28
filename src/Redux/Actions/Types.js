@@ -16,6 +16,7 @@ export const SET_PLAYING = "SET_PLAYING";
 export const SHOW_ADD_PLAYLIST = "SHOW_ADD_PLAYLIST";
 export const GET_LECID = "GET_LECID";
 export const GET_AUDIO_ID = "GET_AUDIO_ID";
+export const UPDATE_AUDIO_SHARE_COUNT = "UPDATE_AUDIO_SHARE_COUNT";
 export const GET_AUDIO_DATA = "GET_AUDIO_DATA";
 export const GET_AUDIO_COUNT = "GET_AUDIO_COUNT";
 export const GET_AUDIO_PACK = "GET_AUDIO_PACK";

@@ -71,7 +71,6 @@ const LecturesListDetail = () => {
     useaxios
       .get(`/albumlisting_multi_nid_api.php?id=${id}`)
       .then((res) => {
-        //console.log("single data @@@@@@@@@", res);
         setsingleData(res.data[0]);
         setsumofFav(res.data[0]?.favorites || 0);
       })
