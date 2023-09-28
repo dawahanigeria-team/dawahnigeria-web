@@ -7,9 +7,9 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
     baseURL,
     withCredentials: false,
     headers: {
-      Accept: "*/*",
-      "Access-Control-Allow-Methods": "*",
-      "Access-Control-Allow-Origin": baseURL,
+      // Accept: "*/*",
+      // "Access-Control-Allow-Methods": "*",
+      // "Access-Control-Allow-Origin": baseURL,
     },
   });
 
@@ -62,9 +62,7 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
       try {
         const data = service.get(url);
         const resolvedData = await Promise.resolve(data);
-        const exactData = resolvedData?.data;
-
-        return exactData;
+        return resolvedData;
       } catch (error) {
         console.error(error);
       }

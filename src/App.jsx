@@ -26,6 +26,7 @@ import Videos from "./pages/videos/Videos";
 import Playlists from "./pages/playlists/Playlists";
 import Charts from "./pages/charts/Charts";
 import Trending from "./pages/trending/Trending";
+import Quran from "./pages/quran/Quran";
 import New from "./pages/new/New";
 import Auth from "./pages/Authentication/auth/Auth";
 import LoginForm from "./pages/Authentication/LoginForm";
@@ -61,6 +62,7 @@ import {
   GENRES,
   CHARTS,
   TRENDING,
+  QURAN,
   NEW,
   PLAY,
   VIDEO,
@@ -197,6 +199,7 @@ const App = () => {
                 <Route path={PLAY} element={<Playlists />} />
                 <Route path={CHARTS} element={<Charts />} />
                 <Route path={TRENDING} element={<Trending />} />
+                <Route path={QURAN} element={<Quran />} />
                 <Route path={NEW} element={<New />} />
                 <Route path={`${LECTURE}:id`} element={<AudioDetail />} />
                 <Route path={DOWNLOAD} element={<DownloadAudio />} />

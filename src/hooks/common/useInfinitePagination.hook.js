@@ -1,0 +1,18 @@
+import { useRef, useCallback } from "react";
+import infiniteScroll from "../../components/UI/infiniteScroll";
+import _ from "lodash";
+
+export const useInfiniteScrollPagination = (dataLength = 0, page, setPage) => {
+  const observer = useRef();
+
+  const ref = useCallback(
+    (node) => {
+      if (dataLength === 0) return;
+      infiniteScroll(node, observer, page, setPage);
+    },
+
+    [page]
+  );
+
+  return { ref };
+};
