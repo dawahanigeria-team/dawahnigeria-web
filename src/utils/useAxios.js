@@ -2,7 +2,7 @@ import axios from "axios";
 
 const FetchClient = () => {
   const defaultOptions = {
-    baseURL: "https://www.dawahbox.com/mongo/api",
+    baseURL: process.env.REACT_APP_API_BASE_URL,
   };
 
   // Create instance
@@ -12,5 +12,3 @@ const FetchClient = () => {
 };
 
 export default FetchClient();
-
-
