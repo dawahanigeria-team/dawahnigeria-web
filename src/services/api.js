@@ -1,15 +1,14 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
-// see usage in apiService function defintion below
+// see usage in apiService function definition below
 const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
   const service = axios.create({
     baseURL,
-    withCredentials: false,
     headers: {
-      // Accept: "*/*",
-      // "Access-Control-Allow-Methods": "*",
-      // "Access-Control-Allow-Origin": baseURL,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
     },
   });
 
