@@ -8,8 +8,16 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
     },
+  });
+
+  service.interceptors.request.use((config) => {
+    // Add x-project to the header if the request METHOD is not GET
+    if (config.method !== "get") {
+      config.headers["x-project"] = "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25";
+    }
+
+    return config;
   });
 
   service.interceptors.response.use(
