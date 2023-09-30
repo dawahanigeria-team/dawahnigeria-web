@@ -479,26 +479,23 @@ const AudioDetail = () => {
     axios
       .get(`${process.env.REACT_APP_API_BASE_URL}/all_rps_api.php`)
       .then((res) => {
-        //console.log(res.data);
         const data = res.data;
         const rpArray = data.map((rp) => rp.name);
+        console.clear();
+        console.log("rpArray", rpArray);
         const isPresent = rpArray.includes(currentAudioInfo?.rpname);
-        //console.log("is rp present is", isPresent);
         if (isPresent) {
           const rpindex = rpArray.indexOf(currentAudioInfo?.rpname);
           const page = 1;
-          ////console.log(data[rpindex]?.id);
           axios
             .get(
               `/leclisting_rp.php?page=${page}&lim=10&offset=30&rpid=${data[rpindex]?.id}`
             )
             .then((res) => {
-              // //console.log(res);
               setSimilarAudio(res.data);
-              // dispatch(getPack(res.data));
             })
             .catch((err) => {
-              //console.log(err);
+              console.log(err);
             });
         }
       })
