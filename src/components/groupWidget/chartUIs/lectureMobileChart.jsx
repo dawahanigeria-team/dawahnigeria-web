@@ -32,6 +32,7 @@ const LectureMobileChart = ({ data }) => {
               <img
                 className="rounded-md w-full h-full"
                 src={
+                  data[1]?.mp3_thumbnail ||
                   data[1]?.img ||
                   data[1]?.lec_img ||
                   "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"
@@ -63,6 +64,7 @@ const LectureMobileChart = ({ data }) => {
               <img
                 className="rounded-md w-full h-full"
                 src={
+                  data[0]?.mp3_thumbnail ||
                   data[0]?.img ||
                   data[0]?.lec_img ||
                   "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"
@@ -92,6 +94,7 @@ const LectureMobileChart = ({ data }) => {
               <img
                 className="rounded-md w-full h-full"
                 src={
+                  data[2]?.mp3_thumbnail ||
                   data[2]?.img ||
                   data[2]?.lec_img ||
                   "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"
@@ -114,28 +117,30 @@ const LectureMobileChart = ({ data }) => {
       </div>
 
       <div className="flex flex-col w-full mt-4 space-y-2 justify-end items-end">
-        {data?.slice(3).map(({ mp3_title, id, lec_img, img }, idx) => {
-          return (
-            <Link
-              to={`${LECTURE}${id}`}
-              onClick={() => {
-                dispatch(getPack(null));
+        {data
+          ?.slice(3)
+          .map(({ mp3_title, id, mp3_thumbnail, lec_img, img }, idx) => {
+            return (
+              <Link
+                to={`${LECTURE}${id}`}
+                onClick={() => {
+                  dispatch(getPack(null));
 
-                dispatch(getCount(idx + 4));
-                dispatch(getPack(data));
-                setinitial(false);
-              }}
-              key={idx}
-              className="w-[90%]"
-            >
-              <LectChartWidget
-                name={mp3_title}
-                img={img || lec_img}
-                idx={idx}
-              />
-            </Link>
-          );
-        })}
+                  dispatch(getCount(idx + 4));
+                  dispatch(getPack(data));
+                  setinitial(false);
+                }}
+                key={idx}
+                className="w-[90%]"
+              >
+                <LectChartWidget
+                  name={mp3_title}
+                  img={mp3_thumbnail || img || lec_img}
+                  idx={idx}
+                />
+              </Link>
+            );
+          })}
       </div>
     </div>
   );

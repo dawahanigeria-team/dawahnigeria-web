@@ -204,23 +204,7 @@ const LecturesListDetail = () => {
     if (node) observeEl.current.observe(node);
   }, []);
 
-  /**
-   * 
-    const lastElement = useCallback(
-    (node) => {
-      if (isEmpty) return;
-      if (nav1.title === "Charts") return;
-
-      infiniteScroll(node, observer, page, setPage, isEmpty);
-    },
-
-    [page]
-  );
-  //console.log("current page", page);
-
-   */
-
-  //console.log(data);
+ 
   //play all audio files
   const playAll = () => {
     if (window.innerWidth <= 615) {
@@ -643,6 +627,7 @@ const LecturesListDetail = () => {
                       duration,
                       rpname,
                       lec_img,
+                      mp3_thumbnail,
                       rp_id,
                       cats,
                       nid,
@@ -662,7 +647,7 @@ const LecturesListDetail = () => {
                               id={idx}
                               title={lectitle || title}
                               lecturer={rpname || rp}
-                              image={lec_img || img}
+                              image={mp3_thumbnail || lec_img || img}
                               url={`${LECTURE}${nid}`}
                               rpid={rp_id}
                               Title={Title || lectitle || title}
@@ -686,7 +671,7 @@ const LecturesListDetail = () => {
                               id={idx}
                               title={lectitle || title}
                               lecturer={rpname || rp}
-                              image={lec_img || img}
+                              image={mp3_thumbnail || lec_img || img}
                               url={`${LECTURE}${nid}`}
                               Title={Title || lectitle || title}
                               rpname={rpname || rp}
@@ -714,7 +699,7 @@ const LecturesListDetail = () => {
                               id={idx}
                               title={lectitle || title}
                               lecturer={rpname || rp}
-                              image={lec_img || img}
+                              image={mp3_thumbnail || lec_img || img}
                               url={`${LECTURE}${nid}`}
                               Title={Title || lectitle || title}
                               rpname={rpname || rp}
@@ -738,7 +723,7 @@ const LecturesListDetail = () => {
                               id={idx}
                               title={lectitle || title}
                               lecturer={rpname || rp}
-                              image={lec_img}
+                              image={mp3_thumbnail || lec_img}
                               url={`${LECTURE}${nid}`}
                               Title={Title || lectitle || title}
                               rpname={rpname || rp}
