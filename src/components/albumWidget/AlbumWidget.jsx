@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 const AlbumWidget = ({ categories, img, views, nid }) => {
   const { audioId } = useSelector((state) => state.user);
 
-  ////not contented but under presssure by DN project manager
+  ////
   useEffect(() => {
     function lazyImage() {
       const lazy = document.querySelectorAll("#album");

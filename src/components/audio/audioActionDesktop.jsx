@@ -79,13 +79,16 @@ const AudioActionDesktop = () => {
         //console.log(res.data);
         dispatch(getcurrentAudioInfo(res.data[0]));
         setLoading(false);
+        console.log('@@@@@@@@@@@ def')
         if (initial) {
           dispatch(setPlaying(false));
           audioRef.current?.pause();
+           console.log('@@@@@@@@@@@ pause')
           cancelAnimationFrame(playAnimation.current);
         } else {
           dispatch(setPlaying(true));
           // audioRef.current?.pause()
+          console.log('@@@@@@@@@@@ playing')
           audioRef.current?.play();
           playAnimation.current = requestAnimationFrame(repeat);
         }
@@ -170,8 +173,10 @@ const AudioActionDesktop = () => {
   };
 
   const handleNextAudio = () => {
-   
+    setinitial(false)
     setIsPrevious(false);
+    dispatch(setPlaying(false));
+    setnotloaded(true)
     //console.log(pack);
     const next = pack?.findIndex((value) => {
       return value.nid === parseInt(audioId);
@@ -199,7 +204,9 @@ const AudioActionDesktop = () => {
   };
   const handlePreviousAudio = () => {
     //  //console.log("first count: ", count)
-
+    setinitial(false)
+    setnotloaded(true)
+    dispatch(setPlaying(false));
     const prev = pack?.findIndex((value) => {
       return value.nid === parseInt(audioId);
     });
@@ -338,7 +345,7 @@ const AudioActionDesktop = () => {
   function handleState() {
    /// if (!currentaudio?.audio) return
     setnotloaded(false)
-    console.log('yeas')
+  
   }
 
   
