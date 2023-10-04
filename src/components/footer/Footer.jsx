@@ -16,7 +16,7 @@ import Company from "./footermodals/company";
 import { useState } from "react";
 import ComingSoon from "../comingsoon/comingSoon";
 const Footer = () => {
-  const [comingSoon, setcomingSoon] = useState(false);
+  const [showComingSoon, setShowComingSoon] = useState(false);
   return (
     <>
       <div className="footer_wrapper  text-[#868686] text-sm px-8 pt-8 max-[500px]:pb-[9rem] pb-24">
@@ -30,22 +30,28 @@ const Footer = () => {
 
           <div className="flex space-y-2 sm:col-span-2 flex-col justify-start items-start">
             <div className=" w-full flex items-center space-x-2">
-              <img
-                onClick={() => {
-                  setcomingSoon(!comingSoon);
+              <Link
+                to={process.env.REACT_APP_APPLE_STORE_URL}
+                aria-label="Download app on Applestore"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.nativeEvent.stopImmediatePropagation();
+                  setShowComingSoon((prev) => !prev);
                 }}
-                className="cursor-pointer"
-                src={apple}
-                alt=""
-              />
-              <img
-                onClick={() => {
-                  setcomingSoon(!comingSoon);
+              >
+                <img className="cursor-pointer" src={apple} alt="" />
+              </Link>
+              <Link
+                to={process.env.REACT_APP_GOOGLE_PLAY_URL}
+                aria-label="Download app on Google play"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.nativeEvent.stopImmediatePropagation();
+                  setShowComingSoon((prev) => !prev);
                 }}
-                className="cursor-pointer"
-                src={googleplay}
-                alt=""
-              />
+              >
+                <img className="cursor-pointer" src={googleplay} alt="" />
+              </Link>
             </div>
             <div className="flex items-center space-x-6 py-3 w-full ">
               <div className="group">
@@ -91,8 +97,11 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      {comingSoon && (
-        <ComingSoon comingSoon={comingSoon} setcomingSoon={setcomingSoon} />
+      {showComingSoon && (
+        <ComingSoon
+          comingSoon={showComingSoon}
+          setcomingSoon={setShowComingSoon}
+        />
       )}
     </>
   );

@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { MdNavigateNext } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { SearchContext } from "../../../App";
 import { useContext } from "react";
 const CatOptions = () => {
   const { searchOptions } = useSelector((state) => state.search);
   const [showmore, setshowmore] = useState(false);
   const { setCategoryId } = useContext(SearchContext);
-  //const [selectCategory, setSelectCategory] = useState();
-  //const dispatch = useDispatch();
+
   const handleSelected = (e) => {
     //console.log(e.target.value);
     if (e.target.checked) {

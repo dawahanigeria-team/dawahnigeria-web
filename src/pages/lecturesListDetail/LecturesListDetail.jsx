@@ -26,7 +26,6 @@ import pmobile from "../../../src/assets/svg/playmobile.svg";
 import sharebig from "../../../src/assets/svg/boom-share.svg";
 import commentbig from "../../../src/assets/svg/boom-comment.svg";
 import favbig from "../../../src/assets/svg/boom-fav.svg";
-import infiniteScroll from "../../components/UI/infiniteScroll";
 import { formatNumber } from "../../components/UI/formatter";
 import { useSelector, useDispatch } from "react-redux";
 import useaxios from "../../utils/useAxios";
@@ -72,7 +71,6 @@ const LecturesListDetail = () => {
     useaxios
       .get(`/albumlisting_multi_nid_api.php?id=${id}`)
       .then((res) => {
-        //console.log("single data @@@@@@@@@", res);
         setsingleData(res.data[0]);
         setsumofFav(res.data[0]?.favorites || 0);
       })
@@ -108,7 +106,7 @@ const LecturesListDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}`)
+      .get(`${process.env.REACT_APP_API_BASE_URL}/albumapi3.php?aid=${id}`)
       .then((res) => {
         //console.log(res.data);
         setLoading(false);
@@ -206,23 +204,7 @@ const LecturesListDetail = () => {
     if (node) observeEl.current.observe(node);
   }, []);
 
-  /**
-   * 
-    const lastElement = useCallback(
-    (node) => {
-      if (isEmpty) return;
-      if (nav1.title === "Charts") return;
-
-      infiniteScroll(node, observer, page, setPage, isEmpty);
-    },
-
-    [page]
-  );
-  //console.log("current page", page);
-
-   */
-
-  //console.log(data);
+ 
   //play all audio files
   const playAll = () => {
     if (window.innerWidth <= 615) {
@@ -248,10 +230,10 @@ const LecturesListDetail = () => {
     //all lecturers
     if (rpnames) {
       axios
-        .get("https://backend.dawahnigeria.com/dboxapi/rpjson")
+        .get(`${process.env.REACT_APP_API_BASE_URL}/all_rps_api.php`)
         .then(async (res) => {
-          //console.log(res.data.rp);
-          const datas = res.data.rp;
+          //console.log(res.data);
+          const datas = res.data;
           //setrpData(datas)
           const rpnameArray = datas.map((rp) => rp.name);
           //console.log("my rp", rpnames);
@@ -283,7 +265,6 @@ const LecturesListDetail = () => {
     }
   }, [rpnames]);
 
-
   useEffect(() => {
     leclistdet?.current.addEventListener("error", () => {
       const imgs = document.querySelectorAll("#hero");
@@ -292,8 +273,6 @@ const LecturesListDetail = () => {
       });
     });
   }, []);
-  // {(singleData?.title && singleData?.title.split('-')[2]) || singleData?.title}
-  // {singleData?.title.split('-')[1] || singleData?.title}
 
   const lectureTitleExtractor = (title, position) => {
     console.log({ title });
@@ -320,12 +299,12 @@ const LecturesListDetail = () => {
           {/* ------------------------------Desktop------ Bread Crumbs -------------------------------------- */}
 
           <div className="leclistdet_breadcrumb">
-            <p
+            <button
               onClick={() => {
                 navigate(-1);
               }}
               className="leclistdet_breadcrumb_first"
-            ></p>
+            >Back/</button>
             <p className="leclistdet_breadcrumb_second">
               {/* {(singleData?.title && singleData.title.split("-")[2]) ||
                 singleData?.title} */}
@@ -648,6 +627,7 @@ const LecturesListDetail = () => {
                       duration,
                       rpname,
                       lec_img,
+                      mp3_thumbnail,
                       rp_id,
                       cats,
                       nid,
@@ -667,7 +647,7 @@ const LecturesListDetail = () => {
                               id={idx}
                               title={lectitle || title}
                               lecturer={rpname || rp}
-                              image={lec_img || img}
+                              image={mp3_thumbnail || lec_img || img}
                               url={`${LECTURE}${nid}`}
                               rpid={rp_id}
                               Title={Title || lectitle || title}
@@ -679,7 +659,7 @@ const LecturesListDetail = () => {
                               nid={nid}
                               navName={"Back"}
                               navLink={-1}
-                              endpoint_url={`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}`}
+                              endpoint_url={`${process.env.REACT_APP_API_BASE_URL}/albumapi3.php?aid=${id}`}
                               controlData={data}
                               duration={duration}
                               views={views}
@@ -691,7 +671,7 @@ const LecturesListDetail = () => {
                               id={idx}
                               title={lectitle || title}
                               lecturer={rpname || rp}
-                              image={lec_img || img}
+                              image={mp3_thumbnail || lec_img || img}
                               url={`${LECTURE}${nid}`}
                               Title={Title || lectitle || title}
                               rpname={rpname || rp}
@@ -702,7 +682,7 @@ const LecturesListDetail = () => {
                               favorites={favorites}
                               navName={"Back"}
                               navLink={-1}
-                              endpoint_url={`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}&lim=10&offset=30&page=`}
+                              endpoint_url={`${process.env.REACT_APP_API_BASE_URL}/albumapi3.php?aid=${id}&lim=10&offset=30&page=`}
                               controlData={data}
                               duration={duration}
                               views={views}
@@ -719,7 +699,7 @@ const LecturesListDetail = () => {
                               id={idx}
                               title={lectitle || title}
                               lecturer={rpname || rp}
-                              image={lec_img || img}
+                              image={mp3_thumbnail || lec_img || img}
                               url={`${LECTURE}${nid}`}
                               Title={Title || lectitle || title}
                               rpname={rpname || rp}
@@ -731,7 +711,7 @@ const LecturesListDetail = () => {
                               nid={nid}
                               navName={"Back"}
                               navLink={-1}
-                              endpoint_url={`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}`}
+                              endpoint_url={`${process.env.REACT_APP_API_BASE_URL}/albumapi3.php?aid=${id}`}
                               controlData={data}
                               duration={duration}
                               views={views}
@@ -743,7 +723,7 @@ const LecturesListDetail = () => {
                               id={idx}
                               title={lectitle || title}
                               lecturer={rpname || rp}
-                              image={lec_img}
+                              image={mp3_thumbnail || lec_img}
                               url={`${LECTURE}${nid}`}
                               Title={Title || lectitle || title}
                               rpname={rpname || rp}
@@ -755,7 +735,7 @@ const LecturesListDetail = () => {
                               favorites={favorites}
                               navName={"Back"}
                               navLink={-1}
-                              endpoint_url={`https://www.dawahbox.com/mongo/api/albumapi3.php?aid=${id}&lim=10&offset=30&page=`}
+                              endpoint_url={`${process.env.REACT_APP_API_BASE_URL}/albumapi3.php?aid=${id}&lim=10&offset=30&page=`}
                               controlData={data}
                               duration={duration}
                               views={views}

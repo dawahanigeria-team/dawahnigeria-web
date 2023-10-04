@@ -4,7 +4,7 @@ import Container from "../../components/container/Container";
 import FilterButton from "../../components/filterButton/FilterButton";
 import { lecturers, language, alphabet } from "./data";
 import LecturersWidget from "../../components/lecturersWidget/LecturersWidget";
-import axios from "axios";
+import axios from "../../utils/useAxios"
 import LecturerMobileWidget from "../../components/lecturersWidget/LecturerMobileWidget";
 import { Link, useNavigate } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
@@ -42,9 +42,9 @@ const Lecturers = () => {
     function getLang() {
       //get all langyages
       axios
-        .get(`https://backend.dawahnigeria.com/dboxapi/langjson`)
+        .get(`/all_lang_api.php`)
         .then((res) => {
-          if (res.data.rp) setLanguages([...language, ...res.data.rp]);
+          if (res.data) setLanguages([...language, ...res.data]);
         });
     }
     getLang();
@@ -72,14 +72,14 @@ const Lecturers = () => {
 
       axios
         .get(
-          `https://www.dawahbox.com/mongo/api/all_rps_api.php?offset=30&lim=10&page=${page}${`${
+          `/all_rps_api.php?offset=30&lim=10&page=${page}${`${
             langid ? `&langid=${langid}` : ""
           }`}${`${alpha && alpha !== "Hot" ? `&alpha=${alpha}` : ""}`}`
         )
         .then((res) => {
           //console.log(res.data);
           if (res.data.length === 0) return;
-          const data = res.data.filter((a) => a.name !== null);
+          const data = res.data.filter((a) => a.name !== null || !!a.name);
           setLoading(false);
 
           setNextPageLoad(false);
@@ -120,7 +120,7 @@ const Lecturers = () => {
     }
     axios
       .get(
-        `https://www.dawahbox.com/mongo/api/rplisting_multi_nid_api.php?id=${lectId}`
+        `/rplisting_multi_nid_api.php?id=${lectId}`
       )
       .then((res) => {
         //console.log(res.data[0])
@@ -156,63 +156,54 @@ const Lecturers = () => {
           <div className="lecturers_filter_name">
             {lecturers.map(({ name, id }, idx) => {
               return (
-             <div
-             key={idx}
-             >
-                 <FilterButton
-                 
-                  filter={filter}
-                  setFilter={setFilter}
-                  data1={data1}
-                  setData1={setData1}
-                  data2={data2}
-                  setData2={setData2}
-                  data3={data3}
-                  setData3={setData3}
-                  active={active}
-                  setActive={setActive}
-                  title={name}
-                  setlectId={setlectId}
-                  lecid={id}
-                  setIsEmpty={setIsEmpty}
-                  setTypeName={setTypeName}
-                  action="name"
-                  data={data}
-                />
-
-             </div>
+                <div key={idx}>
+                  <FilterButton
+                    filter={filter}
+                    setFilter={setFilter}
+                    data1={data1}
+                    setData1={setData1}
+                    data2={data2}
+                    setData2={setData2}
+                    data3={data3}
+                    setData3={setData3}
+                    active={active}
+                    setActive={setActive}
+                    title={name}
+                    setlectId={setlectId}
+                    lecid={id}
+                    setIsEmpty={setIsEmpty}
+                    setTypeName={setTypeName}
+                    action="name"
+                    data={data}
+                  />
+                </div>
               );
             })}
           </div>
           <div className="lecturers_filter_language">
             {languages.map(({ name, id }, idx) => {
               return (
-                <div
-                key={idx}
-                >
-                    <FilterButton
-                 
-                  filter={filter}
-                  setFilter={setFilter}
-                  data1={data1}
-                  setData1={setData1}
-                  data2={data2}
-                  setData2={setData2}
-                  data3={data3}
-                  setData3={setData3}
-                  active={active1}
-                  setActive={setActive1}
-                  title={name}
-                  action="language"
-                  data={data}
-                  setIsEmpty={setIsEmpty}
-                  setTypeName={setTypeName}
-                  lid={id}
-                  setLangid={setLangid}
-                />
-
+                <div key={idx}>
+                  <FilterButton
+                    filter={filter}
+                    setFilter={setFilter}
+                    data1={data1}
+                    setData1={setData1}
+                    data2={data2}
+                    setData2={setData2}
+                    data3={data3}
+                    setData3={setData3}
+                    active={active1}
+                    setActive={setActive1}
+                    title={name}
+                    action="language"
+                    data={data}
+                    setIsEmpty={setIsEmpty}
+                    setTypeName={setTypeName}
+                    lid={id}
+                    setLangid={setLangid}
+                  />
                 </div>
-              
               );
             })}
           </div>

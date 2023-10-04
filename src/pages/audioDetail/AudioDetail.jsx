@@ -21,8 +21,7 @@ import { RiDownload2Fill, RiPlayListFill } from "react-icons/ri";
 import { FiChevronsRight } from "react-icons/fi";
 import { FaPlay } from "react-icons/fa";
 import { toast } from "react-hot-toast";
-import { SlEmotsmile, SlOptionsVertical, SlArrowDown } from "react-icons/sl";
-import { GoDiffAdded } from "react-icons/go";
+import { SlEmotsmile, SlOptionsVertical } from "react-icons/sl";
 import { GiPauseButton } from "react-icons/gi";
 import pmobile from "../../../src/assets/svg/playmobile.svg";
 import sharebig from "../../../src/assets/svg/boom-share.svg";
@@ -158,11 +157,8 @@ const AudioDetail = () => {
     setinitial(false);
     if (playing) {
       dispatch(setPlaying(!playing));
-    
     } else {
       dispatch(setPlaying(!playing));
-
-     
     }
   };
 
@@ -177,6 +173,7 @@ const AudioDetail = () => {
   const handleNextAudio = () => {
     // //console.log("first count: ", count);
     setIsPrevious(false);
+    dispatch(setPlaying(false));
     //console.log(pack);
 
     const next = pack?.findIndex((value) => {
@@ -209,12 +206,11 @@ const AudioDetail = () => {
   };
   const handlePreviousAudio = () => {
     //  //console.log("first count: ", count);
-
+    dispatch(setPlaying(false));
     const prev = pack?.findIndex((value) => {
       return value.nid === parseInt(id);
     });
-    //console.log("standard: ", pack?.length - 1 - 2);
-    //console.log("current diff frm prev: ", pack?.length - 1 - prev);
+   
     if (page > 1 && pack.length - 1 - prev <= pack.length - 1 - 2) {
       setIsPrevious(true);
       dispatch(getPage(page - 1));
@@ -440,7 +436,6 @@ const AudioDetail = () => {
 
   //get lectures from the same lecturers
   function prev() {
- 
     slide.current.scrollBy({
       left: -slide.current.scrollWidth / 10,
       behavior: "smooth",
@@ -448,7 +443,6 @@ const AudioDetail = () => {
   }
 
   function next() {
-  
     slide.current.scrollBy({
       left: slide.current.scrollWidth / 10,
       behavior: "smooth",
@@ -482,10 +476,10 @@ const AudioDetail = () => {
   useEffect(() => {
     //all lecturers
     axios
-      .get("https://backend.dawahnigeria.com/dboxapi/rpjson")
+      .get(`${process.env.REACT_APP_API_BASE_URL}/all_rps_api.php`)
       .then((res) => {
-        //console.log(res.data.rp);
-        const data = res.data.rp;
+        //console.log(res.data);
+        const data = res.data;
         const rpArray = data.map((rp) => rp.name);
         const isPresent = rpArray.includes(currentAudioInfo?.rpname);
         //console.log("is rp present is", isPresent);
@@ -578,17 +572,15 @@ const AudioDetail = () => {
                 <div
                   id="player"
                   onClick={() => {
-                   // dispatch(setPlaying(true));
+                     dispatch(setPlaying(false));
                     dispatch(getaudioId(id));
                     setinitial(false);
                     ///this is not coming with audio pack
                   }}
                   className="audiodetail_play"
                 >
-                    <CiPlay1 className="audiodetail_play_icon" />
-                  <p className="audiodetail_play_text">
-                    { "play" }
-                  </p>
+                  <CiPlay1 className="audiodetail_play_icon" />
+                  <p className="audiodetail_play_text">{"play"}</p>
                 </div>
                 <div className="audiodetail_fav">
                   <button

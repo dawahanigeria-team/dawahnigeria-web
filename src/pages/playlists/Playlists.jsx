@@ -32,10 +32,10 @@ const Playlists = () => {
     //get all categories
     function getCatAndLang() {
       axios
-        .get(`https://backend.dawahnigeria.com/dboxapi/catjson2`)
+        .get(`${process.env.REACT_APP_API_BASE_URL}/allcateg_api.php`)
         .then((res) => {
           ////console.log(res.data);
-          setCategories([...category, ...res.data.rp?.slice(0, 15)]);
+          setCategories([...category, ...res.data?.slice(0, 15)]);
           // setLoading(false);
         })
         .catch((err) => {
@@ -44,10 +44,10 @@ const Playlists = () => {
 
       //get all langyages
       axios
-        .get(`https://backend.dawahnigeria.com/dboxapi/langjson`)
+        .get(`${process.env.REACT_APP_API_BASE_URL}/all_lang_api.php`)
         .then((res) => {
-          ////console.log(res.data.rp);
-          if (res.data.rp) setLanguages([...language, ...res.data.rp]);
+          ////console.log(res.data);
+          if (res.data) setLanguages([...language, ...res.data]);
         })
         .catch((err) => {
           //console.log(err);

@@ -21,6 +21,7 @@ import { toast } from "react-hot-toast";
 import { LECTURE, RESOURCE_PERSON } from "../../utils/routes/constants";
 import {
   getaudioData,
+  setPlaying,
   getaudioId,
   showaddPlaylist,
   getLecid,
@@ -192,10 +193,10 @@ function List({
   useEffect(() => {
     //all lecturers
     axios
-      .get("https://backend.dawahnigeria.com/dboxapi/rpjson")
+      .get(`${process.env.REACT_APP_API_BASE_URL}/all_rps_api.php`)
       .then((res) => {
-        //console.log(res.data.rp);
-        const data = res.data.rp;
+        //console.log(res.data);
+        const data = res.data;
         setrpData(data);
         setrpnameArray(data.map((rp) => rp.name));
       })
@@ -240,6 +241,7 @@ function List({
             dispatch(getCount(id));
             dispatch(getPack(null));
             dispatch(getaudioId(nid));
+            dispatch(setPlaying(false))
             dispatch(getPack(controlData));
             dispatch(getPage(currentPage));
             setinitial(false);

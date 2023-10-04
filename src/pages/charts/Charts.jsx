@@ -5,7 +5,7 @@ import GroupWidget from "../../components/groupWidget/GroupWidget";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import axios from "../../utils/useAxios";
 import { lecturers } from "../lecturers/data";
-import {CHARTS} from "../../utils/routes/constants"
+import { CHARTS } from "../../utils/routes/constants";
 const Charts = () => {
   const [dailylectures, setdailyLectures] = useState([]);
   const [weeklylectures, setweeklyLectures] = useState([]);
@@ -21,7 +21,7 @@ const Charts = () => {
   const [monthlyPlaylist, setmonthlyPlaylist] = useState([]);
   const isChart = true;
   useEffect(() => {
-    //daily lectures https://www.dawahbox.com/mongo/api/leclisting_charts_api.php?action=weekly
+    //daily lectures /leclisting_charts_api.php?action=weekly
     axios
       .get("/leclisting_charts_api.php?action=daily")
       .then((res) => {
@@ -54,7 +54,7 @@ const Charts = () => {
       .catch((err) => {
         //console.log(err)
       });
-    //monthly  https://www.dawahbox.com/mongo/api/albumlisting_charts_api.php?action=daily
+    //monthly  /albumlisting_charts_api.php?action=daily
 
     // daily album
     axios
@@ -89,7 +89,7 @@ const Charts = () => {
       .catch((err) => {
         //console.log(err)
       });
-    // https://www.dawahbox.com/mongo/api/rplisting_charts_api.php?action=daily
+    // /rplisting_charts_api.php?action=daily
 
     //daily lecturers
     axios
@@ -124,9 +124,9 @@ const Charts = () => {
         //console.log(err)
       });
 
-    //weekly album  https://www.dawahbox.com/mongo/api/playlist_charts_api.php?action=daily
+    //weekly album  /playlist_charts_api.php?action=daily
 
-    // https://www.dawahbox.com/mongo/api/albumlisting_charts_api.php?action=daily
+    // /albumlisting_charts_api.php?action=daily
 
     //daily plalist
     axios
