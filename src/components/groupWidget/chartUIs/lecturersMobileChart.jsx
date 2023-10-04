@@ -19,6 +19,7 @@ const LecturerMobileChart = ({ data }) => {
               <img
                 className="rounded-full w-full h-full"
                 src={
+                  data[1]?.rp_thumbnail ||
                   data[1]?.img ||
                   data[1]?.lec_img ||
                   "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"
@@ -48,6 +49,7 @@ const LecturerMobileChart = ({ data }) => {
               <img
                 className="rounded-full w-full h-full"
                 src={
+                  data[0]?.rp_thumbnail ||
                   data[0]?.img ||
                   data[0]?.lec_img ||
                   "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"
@@ -75,6 +77,7 @@ const LecturerMobileChart = ({ data }) => {
               <img
                 className="rounded-full w-full h-full"
                 src={
+                  data[2]?.rp_thumbnail ||
                   data[2]?.img ||
                   data[2]?.lec_img ||
                   "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"
@@ -97,7 +100,7 @@ const LecturerMobileChart = ({ data }) => {
       </div>
 
       <div className="flex flex-col w-full mt-4 space-y-2 justify-end items-end">
-        {data?.slice(3).map(({ lec_img, id, img, nid, name }, idx) => {
+        {data?.slice(3).map(({ rp_thumbnail, id, img, nid, name }, idx) => {
           return (
             <div
               onClick={() => {
@@ -107,7 +110,7 @@ const LecturerMobileChart = ({ data }) => {
               className="w-[90%]"
             >
               <LecturersChartWidget
-                img={lec_img || img}
+                img={rp_thumbnail || img}
                 name={name}
                 idx={idx}
               />

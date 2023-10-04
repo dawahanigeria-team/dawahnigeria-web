@@ -115,6 +115,7 @@ const New = () => {
                   img,
                   cats,
                   nid,
+                  mp3_thumbnail,
                   comments,
                   favorites,
                   rp_id,
@@ -130,7 +131,7 @@ const New = () => {
                       <MusicList
                         key={idx}
                         id={idx}
-                        image={img}
+                        image={mp3_thumbnail || img}
                         comments={comments}
                         favorites={favorites}
                         duration={duration}
@@ -160,7 +161,7 @@ const New = () => {
                       <MusicList
                         key={idx}
                         id={idx}
-                        image={img}
+                        image={mp3_thumbnail || img}
                         comments={comments}
                         duration={duration}
                         title={Title}
@@ -222,6 +223,7 @@ const New = () => {
                   Title,
                   rpname,
                   img,
+                  mp3_thumbnail,
                   comments,
                   rp_id,
                   cats,
@@ -243,7 +245,7 @@ const New = () => {
                         key={idx}
                         id={idx}
                         duration={duration}
-                        image={img}
+                        image={mp3_thumbnail || img}
                         title={Title}
                         lecturer={rpname}
                         favorites={favorites}
@@ -270,7 +272,7 @@ const New = () => {
                         key={idx}
                         id={idx}
                         duration={duration}
-                        image={img}
+                        image={mp3_thumbnail || img}
                         title={Title}
                         lecturer={rpname}
                         comments={comments}
