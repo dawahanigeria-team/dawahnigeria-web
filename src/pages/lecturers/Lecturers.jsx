@@ -79,7 +79,7 @@ const Lecturers = () => {
         .then((res) => {
           //console.log(res.data);
           if (res.data.length === 0) return;
-          const data = res.data.filter((a) => a.name !== null);
+          const data = res.data.filter((a) => a.name !== null || !!a.name);
           setLoading(false);
 
           setNextPageLoad(false);
