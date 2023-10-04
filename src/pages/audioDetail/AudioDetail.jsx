@@ -572,7 +572,7 @@ const AudioDetail = () => {
                 <div
                   id="player"
                   onClick={() => {
-                    // dispatch(setPlaying(true));
+                     dispatch(setPlaying(false));
                     dispatch(getaudioId(id));
                     setinitial(false);
                     ///this is not coming with audio pack
