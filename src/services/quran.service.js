@@ -2,6 +2,8 @@ import { apiService } from "./api";
 
 // api requests pertaining to qurans
 export const quranApi = {
-  allQurans: async (page) =>
-    await apiService().get(`/leclisting_keywords_api.php?key=73&page=${page}`),
+  getQuranAlbums: async (page, limit = 20) =>
+    await apiService().get(
+      `/dn_quran_api.php?action=get_quran_album&page=${page}&limit=${limit}`
+    ),
 };

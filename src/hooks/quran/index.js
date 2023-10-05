@@ -1,1 +1,1 @@
-export * from "./useQurans.hook";
+export * from "./useQuranAlbums.hook";

@@ -11,7 +11,7 @@ export const useInfiniteScrollPagination = (dataLength = 0, page, setPage) => {
       infiniteScroll(node, observer, page, setPage);
     },
 
-    [page]
+    [page, dataLength]
   );
 
   return { ref };
