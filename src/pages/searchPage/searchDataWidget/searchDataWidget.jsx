@@ -7,6 +7,7 @@ const SearchDataWidget = ({
   mp3_title,
   mp3_duration,
   cat_name,
+  date,
   id,
 }) => {
   useEffect(() => {
@@ -46,6 +47,7 @@ const SearchDataWidget = ({
         <div className="max-[615px]:whitespace-nowrap max-[615px]:text-ellipsis max-[615px]:overflow-hidden w-full">
           {mp3_description?.split("/")[0]}
         </div>
+        <p>{`Date: ${date}`}</p>
       </div>
       <div className="max-[615px]:hidden">{mp3_duration}</div>
     </Link>

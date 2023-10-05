@@ -88,7 +88,7 @@ const Landing = () => {
               axios
                 .get(`/albumlisting_multi_nid_api.php?id=${recArr.toString()}`)
                 .then((res) => {
-                  //console.log("I am the new guy", res);
+                
                   setRecent(res.data?.slice(0, 10));
                 })
                 .catch((err) => {

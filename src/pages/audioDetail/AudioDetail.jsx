@@ -21,8 +21,7 @@ import { RiDownload2Fill, RiPlayListFill } from "react-icons/ri";
 import { FiChevronsRight } from "react-icons/fi";
 import { FaPlay } from "react-icons/fa";
 import { toast } from "react-hot-toast";
-import { SlEmotsmile, SlOptionsVertical, SlArrowDown } from "react-icons/sl";
-import { GoDiffAdded } from "react-icons/go";
+import { SlEmotsmile, SlOptionsVertical } from "react-icons/sl";
 import { GiPauseButton } from "react-icons/gi";
 import pmobile from "../../../src/assets/svg/playmobile.svg";
 import sharebig from "../../../src/assets/svg/boom-share.svg";
@@ -174,6 +173,7 @@ const AudioDetail = () => {
   const handleNextAudio = () => {
     // //console.log("first count: ", count);
     setIsPrevious(false);
+    dispatch(setPlaying(false));
     //console.log(pack);
 
     const next = pack?.findIndex((value) => {
@@ -206,12 +206,11 @@ const AudioDetail = () => {
   };
   const handlePreviousAudio = () => {
     //  //console.log("first count: ", count);
-
+    dispatch(setPlaying(false));
     const prev = pack?.findIndex((value) => {
       return value.nid === parseInt(id);
     });
-    //console.log("standard: ", pack?.length - 1 - 2);
-    //console.log("current diff frm prev: ", pack?.length - 1 - prev);
+   
     if (page > 1 && pack.length - 1 - prev <= pack.length - 1 - 2) {
       setIsPrevious(true);
       dispatch(getPage(page - 1));
@@ -570,7 +569,7 @@ const AudioDetail = () => {
                 <div
                   id="player"
                   onClick={() => {
-                    // dispatch(setPlaying(true));
+                     dispatch(setPlaying(false));
                     dispatch(getaudioId(id));
                     setinitial(false);
                     ///this is not coming with audio pack

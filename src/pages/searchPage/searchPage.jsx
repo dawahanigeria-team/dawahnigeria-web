@@ -32,13 +32,6 @@ const SearchPage = () => {
 
   const handleSideBar = () => {
     setRes(1);
-    /**
-    if (res === 1) {
-      setRes(2);
-    } else {
-      setRes(1);
-    }
-   */
     setisOpen(true);
   };
   useEffect(() => {
@@ -150,6 +143,7 @@ const SearchPage = () => {
                   mp3_title,
                   mp3_description,
                   mp3_duration,
+                  updated_date,
                   id,
                 },
                 idx
@@ -158,8 +152,9 @@ const SearchPage = () => {
                   <div key={idx}>
                     <SearchDataWidget
                       id={id}
-                      lec_img={lec_img}
+                      lec_img={ lec_img}
                       cat_name={cat_name}
+                      date={updated_date}
                       mp3_title={mp3_title}
                       mp3_description={mp3_description}
                       mp3_duration={mp3_duration}
