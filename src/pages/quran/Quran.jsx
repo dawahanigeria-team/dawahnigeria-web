@@ -40,7 +40,7 @@ const Playlists = () => {
           </div>
         )}
         <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-5 mt-10 md:mt-0">
-          {albums?.map(({ alb_thumbnail, id, name, views }, idx) => {
+          {albums?.map(({ img, alb_thumbnail, id, name, views }, idx) => {
             return (
               <Link
                 key={idx + 1}
@@ -55,7 +55,7 @@ const Playlists = () => {
                   key={idx}
                   views={views}
                   categories={name}
-                  img={alb_thumbnail}
+                  img={img || alb_thumbnail}
                 />
               </Link>
             );

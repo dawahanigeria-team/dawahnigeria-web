@@ -50,31 +50,31 @@ export const lectures = [
     link: LECTURERS,
   },
   {
-    id: 3,
+    id: 4,
     name: "Quran",
     icon: <FaQuran className="icon" aria-hidden="true" />,
     link: QURAN,
   },
   {
-    id: 4,
+    id: 5,
     name: "Videos",
     icon: <BsYoutube className="icon4 icon" />,
     link: VIDEO,
   },
   {
-    id: 5,
+    id: 6,
     name: "Playlists",
     icon: <BsMusicNoteList className="icon5 icon" />,
     link: PLAY,
   },
   {
-    id: 6,
+    id: 7,
     name: "Charts",
     icon: <TiChartBar className="icon6 icon" />,
     link: CHARTS,
   },
   {
-    id: 7,
+    id: 8,
     name: "Genres",
     icon: <BsFileEarmarkMusicFill className="icon7 icon" />,
     link: GENRES,
@@ -82,19 +82,19 @@ export const lectures = [
 ];
 export const library = [
   {
-    id: 8,
+    id: 9,
     name: "Add Playlist",
     icon: <BsFillDiscFill className="icon0 icon" />,
     //link:,
   },
   {
-    id: 9,
+    id: 10,
     name: "Favourites",
     icon: <MdFavorite className="icon1 icon" />,
     link: FAVOURITE,
   },
   {
-    id: 10,
+    id: 11,
     name: "My Playlist",
     icon: <CgUserList className="icon2 icon" />,
     link: MYPLAYLIIST,
