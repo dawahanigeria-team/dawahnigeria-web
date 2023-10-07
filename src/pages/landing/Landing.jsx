@@ -43,38 +43,6 @@ const Landing = () => {
     recentlyviewed: [],
   });
   const page = 1;
-
-  useEffect(() => {
-    Promise.all([
-      landingPageApis.getSliderImages(),
-      landingPageApis.getSpecialFeaturesLectures(),
-      landingPageApis.getRecentlyPosted(),
-      landingPageApis.getRecentlyViewed(
-        currentUser?.id,
-        page,
-        setisrecent,
-        setcurPlay
-      ),
-    ])
-      .then((response) => {
-        const specialFeatures = response[1].flatMap((val) => [
-          { name: val.name, more: val.more },
-        ]);
-        setlandingpagedata({
-          images: response[0],
-          specailFeat: specialFeatures,
-          recentlyposted: response[2].slice(0, 10),
-          recentlyviewed: response[3].slice(0, 10),
-        });
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  //console.log(isrecent, curPlay);
-
   const settings = {
     dots: true,
     infinite: true,
@@ -114,6 +82,43 @@ const Landing = () => {
       },
     ],
   };
+
+useEffect(() => {
+  const fetchLandingPageData = async () => {
+    try {
+      const [
+        sliderImages,
+        specialFeaturesLectures,
+        recentlyPosted,
+        recentlyViewed,
+      ] = await Promise.all([
+        landingPageApis.getSliderImages(),
+        landingPageApis.getSpecialFeaturesLectures(),
+        landingPageApis.getRecentlyPosted(),
+        landingPageApis.getRecentlyViewed(currentUser?.id, page),
+      ]);
+
+      const specialFeatures = specialFeaturesLectures.flatMap((val) => [
+        { name: val.name, more: val.more },
+      ]);
+
+      setlandingpagedata({
+        images: sliderImages,
+        specailFeat: specialFeatures,
+        recentlyposted: recentlyPosted.slice(0, 10),
+        recentlyviewed: recentlyViewed.slice(0, 10),
+      });
+
+      setisrecent(true);
+      setcurPlay(recentlyViewed);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  fetchLandingPageData();
+}, []);
+  
 
   return (
     <Container>
@@ -174,24 +179,22 @@ const Landing = () => {
         </div>
 
         {Array.isArray(landingpagedata?.specailFeat) &&
-          landingpagedata?.specailFeat?.map(({ name, more }, idx) => {
-            if (Array.isArray(more) && more.length > 0) {
-              return (
-                <div
-                  key={idx}
-                  className="landing_tafsir landing_space my-1 min-[615px]:my-3"
-                >
-                  <GroupWidget
-                    data={more}
-                    heading={name}
-                    type={"lectures"}
-                    currentPage={""}
-                    nav1={{ title: "Home", link: HOME }}
-                  />
-                </div>
-              );
-            }
-          })}
+          landingpagedata?.specailFeat
+            ?.filter(({ more }) => Array.isArray(more) && more.length > 0)
+            .map(({ name, more }, idx) => (
+              <div
+                key={name}
+                className="landing_tafsir landing_space my-1 min-[615px]:my-3"
+              >
+                <GroupWidget
+                  data={more}
+                  heading={name}
+                  type={"lectures"}
+                  currentPage={""}
+                  nav1={{ title: "Home", link: HOME }}
+                />
+              </div>
+            ))}
       </div>
     </Container>
   );
