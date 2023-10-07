@@ -53,7 +53,7 @@ const AudioActionDesktop = () => {
   const navigate = useNavigate();
   const { audioRef, setinitial, initial, loading, setLoading } =
     useContext(AudioContext);
- 
+
   const [isComplete, setIsComplete] = useState(false);
   const playAnimation = useRef();
 
@@ -67,7 +67,7 @@ const AudioActionDesktop = () => {
   const [currentaudio, setcurrentaudio] = useState([]);
   const [isminimize, setminimize] = useState(false);
   const [transition, settransition] = useState(true);
-  const [isloaded, setnotloaded] = useState(true)
+  const [isloaded, setnotloaded] = useState(true);
   const getMusic = (audioId) => {
     //dispatch(setPlaying(false));
     setLoading(true);
@@ -79,20 +79,19 @@ const AudioActionDesktop = () => {
         //console.log(res.data);
         dispatch(getcurrentAudioInfo(res.data[0]));
         setLoading(false);
-        console.log('@@@@@@@@@@@ def')
+        console.log("@@@@@@@@@@@ def");
         if (initial) {
           dispatch(setPlaying(false));
           audioRef.current?.pause();
-           console.log('@@@@@@@@@@@ pause')
+          console.log("@@@@@@@@@@@ pause");
           cancelAnimationFrame(playAnimation.current);
         } else {
           dispatch(setPlaying(true));
           // audioRef.current?.pause()
-          console.log('@@@@@@@@@@@ playing')
+          console.log("@@@@@@@@@@@ playing");
           audioRef.current?.play();
           playAnimation.current = requestAnimationFrame(repeat);
         }
-
       })
       .catch((err) => {
         //console.log(err);
@@ -177,15 +176,15 @@ const AudioActionDesktop = () => {
   };
 
   const handleNextAudio = () => {
-    setinitial(false)
+    setinitial(false);
     setIsPrevious(false);
     dispatch(setPlaying(false));
-    setnotloaded(true)
+    setnotloaded(true);
     //console.log(pack);
     const next = pack?.findIndex((value) => {
       return value.nid === parseInt(audioId);
     });
-   
+
     if (!isEmpty && pack?.length - 1 - next <= 2) {
       dispatch(getPage(page + 1));
     }
@@ -208,19 +207,18 @@ const AudioActionDesktop = () => {
   };
   const handlePreviousAudio = () => {
     //  //console.log("first count: ", count)
-    setinitial(false)
-    setnotloaded(true)
+    setinitial(false);
+    setnotloaded(true);
     dispatch(setPlaying(false));
     const prev = pack?.findIndex((value) => {
       return value.nid === parseInt(audioId);
     });
-    
+
     if (page > 1 && pack.length - 1 - prev <= pack.length - 1 - 2) {
       setIsPrevious(true);
       dispatch(getPage(page - 1));
     }
 
-  
     if (prev === 0) {
       dispatch(getaudioId(pack[prev]?.nid));
       dispatch(getCount(prev));
@@ -347,12 +345,10 @@ const AudioActionDesktop = () => {
   };
 
   function handleState() {
-   /// if (!currentaudio?.audio) return
-    setnotloaded(false)
-  
+    /// if (!currentaudio?.audio) return
+    setnotloaded(false);
   }
 
-  
   return (
     <>
       <div
@@ -471,7 +467,9 @@ const AudioActionDesktop = () => {
                 ) : (
                   <GiPauseButton className="text-[22px]" />
                 )}
-                {isloaded && <span className="absolute rounded-full inset-0 h-[45px] w-[45px] border-r border-b border-gray-200 animate-spin"></span>}
+                {isloaded && (
+                  <span className="absolute rounded-full inset-0 h-[45px] w-[45px] border-r border-b border-gray-200 animate-spin"></span>
+                )}
               </button>
             )}
             <button onClick={handleNextAudio} id="player" className="">
