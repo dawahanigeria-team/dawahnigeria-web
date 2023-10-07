@@ -156,8 +156,12 @@ const AudioActionDesktop = () => {
     setinitial(false);
     if (playing) {
       dispatch(setPlaying(false));
+      audioRef.current?.pause(); // Pause the audio
     } else {
       dispatch(setPlaying(true));
+      audioRef.current
+        ?.play()
+        .catch((error) => console.log("Play was not allowed:", error)); // Play the audio
     }
   };
 
