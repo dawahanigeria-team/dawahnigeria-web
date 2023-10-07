@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { quranApi } from "../../services";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
-import _ from "lodash";
 
 export const useQuranAlbums = (page = 1) => {
   const [cummulatedData, setCummulatedData] = useState([]);
@@ -23,7 +22,7 @@ export const useQuranAlbums = (page = 1) => {
           return;
         }
 
-        setCummulatedData((prev) => _.uniqBy([...prev, ...data], "id"));
+        setCummulatedData((prev) => [...prev, ...data]);
       },
       onError: (error) => {
         setIsLoadingNextPage(false);

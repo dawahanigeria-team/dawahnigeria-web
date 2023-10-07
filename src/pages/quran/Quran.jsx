@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import "./quran.scss";
+import { useState } from "react";
 import Container from "../../components/container/Container";
-import AlbumWidget from "../../components/albumWidget/AlbumWidget";
+import QuranAlbum from "../../components/quranAlbum/QuranAlbum";
 import { Link } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import Loader from "../../components/UI/loader/loader";
-import _ from "lodash";
 import { ALBUMS } from "../../utils/routes/constants";
 import { useInfiniteScrollPagination, useQuranAlbums } from "../../hooks";
+import "./quran.scss";
 
 const Playlists = () => {
   const [page, setPage] = useState(1);
@@ -29,7 +28,7 @@ const Playlists = () => {
     <Container>
       <div className="playlist_wrapper">
         <div className="play_header_link">
-          <HeaderRouter title={"Playlist"} />
+          <HeaderRouter title={"Quran"} />
         </div>
 
         {/* show loader for first page  */}
@@ -40,20 +39,19 @@ const Playlists = () => {
             </div>
           </div>
         )}
-        <div className="playlist_widget">
+        <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-5 mt-10 md:mt-0">
           {albums?.map(({ alb_thumbnail, id, name, views }, idx) => {
             return (
               <Link
                 key={idx + 1}
                 to={`${ALBUMS}${id}`}
-                className="playlist_lists_items"
                 ref={
-                  albums?.length === idx + 1 && !isLastPage
+                  idx === albums.length - 1 && !isLastPage
                     ? infiniteScrollRef
                     : null
                 }
               >
-                <AlbumWidget
+                <QuranAlbum
                   key={idx}
                   views={views}
                   categories={name}
