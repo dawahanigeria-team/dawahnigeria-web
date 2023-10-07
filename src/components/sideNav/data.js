@@ -50,7 +50,7 @@ export const lectures = [
     link: LECTURERS,
   },
   {
-    id: 3,
+    id: 4,
     name: "Quran",
     icon: <FaQuran className="icon" aria-hidden="true" />,
     link: QURAN,

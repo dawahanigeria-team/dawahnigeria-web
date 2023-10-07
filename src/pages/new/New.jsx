@@ -15,28 +15,19 @@ const New = () => {
   const [data, setData] = useState([]);
   const [drop, setDrop] = useState("");
   const [loading, setLoading] = useState(true);
-  const observer = useRef();
-  const observerMobile = useRef();
-  const [isEmpty, setIsEmpty] = useState(false);
-  const [nextPageLoad, setNextPageLoad] = useState(false);
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const navigate = useNavigate();
   useEffect(() => {
-    if (page > 1) {
-      setNextPageLoad(true);
-    }
+    setLoading(true);
 
     axios
-      .get(`/leclistingapi.php?sort=desc&page=${page}`)
+      .get(
+        `${process.env.REACT_APP_DEV_API_BASE_URL}/leclisting_recent.php?&action=get_recent_audio&page=${page}`
+      )
       .then((res) => {
         //console.log(res.data);
         if (page === 1) {
           setLoading(false);
-        }
-        setNextPageLoad(false);
-        if (res.data.length === 0) {
-          setIsEmpty(true);
-          return;
         }
 
         setData((prev) => _.uniqBy([...prev, ...res.data], "nid"));
@@ -45,24 +36,6 @@ const New = () => {
         //console.log(err);
       });
   }, [page]);
-
-  const lastElement = useCallback(
-    (node) => {
-      if (isEmpty) return;
-      infiniteScroll(node, observer, page, setPage);
-    },
-
-    [page]
-  );
-
-  const lastElementMobile = useCallback(
-    (node) => {
-      if (isEmpty) return;
-      infiniteScroll(node, observerMobile, page, setPage);
-    },
-
-    [page]
-  );
 
   //play all audio files
   const playAll = () => {
@@ -120,81 +93,47 @@ const New = () => {
                   favorites,
                   rp_id,
                   duration,
+                  mp3_duration,
+                  mp3_title,
                   share,
                   views,
                 },
                 idx
               ) => {
-                if (data.length === idx + 1) {
-                  return (
-                    <div ref={lastElement} key={idx} className="">
-                      <MusicList
-                        key={idx}
-                        id={idx}
-                        image={mp3_thumbnail || img}
-                        comments={comments}
-                        favorites={favorites}
-                        duration={duration}
-                        title={Title}
-                        lecturer={rpname}
-                        drop={drop}
-                        setDrop={setDrop}
-                        url={`${LECTURE}${nid}`}
-                        Title={Title}
-                        rpid={rp_id}
-                        rpname={rpname}
-                        endpoint_url={"/leclistingapi.php?sort=desc&page="}
-                        currentPage={page}
-                        cats={cats}
-                        nid={nid}
-                        navName={"Trending"}
-                        navLink={TRENDING}
-                        controlData={data}
-                        views={views}
-                        share={share}
-                      />
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div key={idx} className="">
-                      <MusicList
-                        key={idx}
-                        id={idx}
-                        image={mp3_thumbnail || img}
-                        comments={comments}
-                        duration={duration}
-                        title={Title}
-                        lecturer={rpname}
-                        favorites={favorites}
-                        rpid={rp_id}
-                        url={`${LECTURE}${nid}`}
-                        Title={Title}
-                        rpname={rpname}
-                        endpoint_url={"/leclistingapi.php?sort=desc&page="}
-                        currentPage={page}
-                        cats={cats}
-                        nid={nid}
-                        navName={"New"}
-                        navLink={NEW}
-                        controlData={data}
-                        views={views}
-                        share={share}
-                      />
-                    </div>
-                  );
-                }
+                return (
+                  <div key={idx} className="">
+                    <MusicList
+                      key={idx}
+                      id={idx}
+                      image={mp3_thumbnail || img}
+                      comments={comments}
+                      favorites={favorites}
+                      duration={mp3_duration || duration}
+                      title={mp3_title || Title}
+                      lecturer={rpname}
+                      drop={drop}
+                      setDrop={setDrop}
+                      url={`${LECTURE}${nid}`}
+                      Title={mp3_title || Title}
+                      rpid={rp_id}
+                      rpname={rpname}
+                      endpoint_url={"/leclistingapi.php?sort=desc&page="}
+                      currentPage={page}
+                      cats={cats}
+                      nid={nid}
+                      navName={"Trending"}
+                      navLink={TRENDING}
+                      controlData={data}
+                      views={views}
+                      share={share}
+                    />
+                  </div>
+                );
               }
             )}
           </div>
         )}
-        {nextPageLoad && (
-          <div className="load_m">
-            <div className="loads">
-              <Loader />
-            </div>
-          </div>
-        )}
+
         {/*************** moobile **********/}
         <div className="mobile_lists">
           <div
@@ -226,6 +165,7 @@ const New = () => {
                   mp3_thumbnail,
                   comments,
                   rp_id,
+                  mp3_title,
                   cats,
                   favorites,
                   nid,
@@ -234,74 +174,34 @@ const New = () => {
                 },
                 idx
               ) => {
-                if (data.length === idx + 1) {
-                  return (
-                    <div
-                      ref={lastElementMobile}
+                return (
+                  <div key={idx} className="each_mobile_list">
+                    <MusicList
                       key={idx}
-                      className="each_mobile_list"
-                    >
-                      <MusicList
-                        key={idx}
-                        id={idx}
-                        duration={duration}
-                        image={mp3_thumbnail || img}
-                        title={Title}
-                        lecturer={rpname}
-                        favorites={favorites}
-                        comments={comments}
-                        url={`${LECTURE}${nid}`}
-                        Title={Title}
-                        rpname={rpname}
-                        endpoint_url={"/leclistingapi.php?sort=desc&page="}
-                        currentPage={page}
-                        cats={cats}
-                        rpid={rp_id}
-                        nid={nid}
-                        navName={"Trending"}
-                        navLink={TRENDING}
-                        controlData={data}
-                        views={views}
-                      />
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div key={idx} className="each_mobile_list">
-                      <MusicList
-                        key={idx}
-                        id={idx}
-                        duration={duration}
-                        image={mp3_thumbnail || img}
-                        title={Title}
-                        lecturer={rpname}
-                        comments={comments}
-                        rpid={rp_id}
-                        url={`${LECTURE}${nid}`}
-                        Title={Title}
-                        favorites={favorites}
-                        rpname={rpname}
-                        endpoint_url={"/leclistingapi.php?sort=desc&page="}
-                        currentPage={page}
-                        cats={cats}
-                        nid={nid}
-                        navName={"Trending"}
-                        navLink={TRENDING}
-                        controlData={data}
-                        views={views}
-                      />
-                    </div>
-                  );
-                }
+                      id={idx}
+                      duration={duration}
+                      image={mp3_thumbnail || img}
+                      title={mp3_title || Title}
+                      lecturer={rpname}
+                      favorites={favorites}
+                      comments={comments}
+                      url={`${LECTURE}${nid}`}
+                      Title={mp3_title || Title}
+                      rpname={rpname}
+                      endpoint_url={"/leclistingapi.php?sort=desc&page="}
+                      currentPage={page}
+                      cats={cats}
+                      rpid={rp_id}
+                      nid={nid}
+                      navName={"Trending"}
+                      navLink={TRENDING}
+                      controlData={data}
+                      views={views}
+                    />
+                  </div>
+                );
               }
             )}
-          {nextPageLoad && (
-            <div className="load_m">
-              <div className="loads">
-                <Loader />
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </Container>

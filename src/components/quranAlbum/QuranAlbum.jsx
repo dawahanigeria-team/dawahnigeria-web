@@ -24,12 +24,13 @@ const QuranAlbum = ({ categories, img, views }) => {
               ref={imageRef}
             />
           </div>
-          <div className="absolute bottom-3 left-3 flex gap-x-1 items-center">
+          <div className="absolute z-[2] bottom-3 left-3 flex gap-x-1 items-center">
             <FiHeadphones />
             <span>{formattedViews}</span>
           </div>
 
           {/* overlay */}
+          <div className="gradientbg"></div>
           <div className="absolute bg-black/50 left-0 top-0 h-full w-full flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             <div className="flex items-center justify-center h-16 w-16 rounded-full bg-[#222222]/70">
               <FaPlay className="text-[#cfcfcf] text-3xl" />
