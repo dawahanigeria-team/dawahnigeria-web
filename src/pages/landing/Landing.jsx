@@ -95,7 +95,7 @@ useEffect(() => {
         landingPageApis.getSliderImages(),
         landingPageApis.getSpecialFeaturesLectures(),
         landingPageApis.getRecentlyPosted(),
-        landingPageApis.getRecentlyViewed(currentUser?.id, page),
+        landingPageApis.getRecentlyViewed(currentUser?.id, page,setisrecent, setcurPlay),
       ]);
 
       const specialFeatures = specialFeaturesLectures.flatMap((val) => [
@@ -109,8 +109,8 @@ useEffect(() => {
         recentlyviewed: recentlyViewed.slice(0, 10),
       });
 
-      setisrecent(true);
-      setcurPlay(recentlyViewed);
+     // setisrecent(true);
+     // setcurPlay(recentlyViewed);
     } catch (error) {
       console.error(error);
     }
