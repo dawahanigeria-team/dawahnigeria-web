@@ -3,7 +3,7 @@ import "./recommend2.scss";
 import Container from "../../components/container/Container";
 import AlbumWidget from "../../components/albumWidget/AlbumWidget";
 import { recommended2Data } from "./data";
-import axios from "axios";
+import axios from "../../utils/useAxios";
 import { LECTURE, RECO2 } from "../../utils/routes/constants";
 import { useNavigate } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
