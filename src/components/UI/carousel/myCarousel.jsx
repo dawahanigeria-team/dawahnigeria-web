@@ -39,7 +39,7 @@ const MyCarousel = ({ images }) => {
       {images.map((image, index) => {
         return (
           <div
-          key={index}
+          key={image}
           className=" absolute left-0 top-0 w-[73%] h-[250px] min-[950px]:h-[250px] min-[1050px]:h-[250px] min-[1283px]:h-[300px] ">
             <div
               className={` transform ease h-full w-full duration-500 opacity-0 absolute left-0  shadow-xl ${
@@ -56,7 +56,7 @@ const MyCarousel = ({ images }) => {
               {images.map((img, index) => {
                 return (
                   <span
-                  key={index}
+                  key={img}
                     className={`rounded-[50%] h-[4px] w-[4px] ${
                       currentIndex === index ? "bg-white" : "bg-gray-400"
                     }`}
