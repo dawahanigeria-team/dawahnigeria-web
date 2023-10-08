@@ -5,6 +5,7 @@
   "dependencies": {
     "@react-oauth/google": "^0.11.0",
     "@sentry/react": "^7.68.0",
+    "@tanstack/react-query": "^4.35.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -56,6 +57,7 @@
     ]
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^4.34.1",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.24",
     "sass": "^1.63.3",
