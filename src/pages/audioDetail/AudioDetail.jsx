@@ -141,7 +141,7 @@ const AudioDetail = () => {
       axios
         .get(`/leclistingapi.php?lecid=${id}`)
         .then((res) => {
-          //console.log(res);
+          console.log("Audio response", res.data[0]);
           dispatch(getcurrentAudioInfo(res.data[0]));
         })
         .catch((err) => {
@@ -607,7 +607,7 @@ const AudioDetail = () => {
                   </button>
 
                   <p className="audiodetail_fav_text">
-                    {formatNumber(currentaudio?.favorites || 0)}
+                    {formatNumber(currentAudioInfo?.favorites || 0)}
                   </p>
                 </div>
                 <div
@@ -622,7 +622,7 @@ const AudioDetail = () => {
                     className="audiodetail_share_icon"
                   />
                   <p className="audiodetail_share_text">
-                    {formatNumber(currentaudio?.share || 0)}
+                    {formatNumber(currentAudioInfo?.share || 0)}
                   </p>
                 </div>
                 <div className="audiodetail_comment">

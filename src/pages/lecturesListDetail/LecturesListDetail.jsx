@@ -49,7 +49,7 @@ const LecturesListDetail = () => {
   const dispatch = useDispatch();
   const [similarAlb, setsimilarAlb] = useState([]);
   const [data, setData] = useState([]);
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, sharedAlbum } = useSelector((state) => state.user);
   const observeEl = useRef();
   const leclistdet = useRef();
   const { setinitial } = useContext(AudioContext);
@@ -66,6 +66,16 @@ const LecturesListDetail = () => {
   const [similarUrl, setsimilarUrl] = useState();
   const [rpnames, setrpname] = useState([]);
   const [audioComment, setaudioComment] = useState();
+
+  useEffect(() => {
+    // if (sharedAlbum !== 0) {
+    console.log({ sharedAlbum });
+    setsingleData((prev) => {
+      console.log({ prevShareCount: prev });
+      return { ...prev, share: prev?.share + 1 };
+    });
+    // }
+  }, [sharedAlbum]);
 
   useEffect(() => {
     useaxios
@@ -204,24 +214,6 @@ const LecturesListDetail = () => {
     if (node) observeEl.current.observe(node);
   }, []);
 
-  /**
-   * 
-    const lastElement = useCallback(
-    (node) => {
-      if (isEmpty) return;
-      if (nav1.title === "Charts") return;
-
-      infiniteScroll(node, observer, page, setPage, isEmpty);
-    },
-
-    [page]
-  );
-  //console.log("current page", page);
-
-   */
-
-  //console.log(data);
-  //play all audio files
   const playAll = () => {
     if (window.innerWidth <= 615) {
       navigate(`${LECTURE}${data[0]?.nid}`);
@@ -320,7 +312,9 @@ const LecturesListDetail = () => {
                 navigate(-1);
               }}
               className="leclistdet_breadcrumb_first"
-            >Back/</button>
+            >
+              Back/
+            </button>
             <p className="leclistdet_breadcrumb_second">
               {/* {(singleData?.title && singleData.title.split("-")[2]) ||
                 singleData?.title} */}

@@ -14,6 +14,7 @@ const initailState = {
   page: 0,
   value: 0,
   isrepeat: false,
+  sharedAlbum: 0,
 };
 const User = (state = initailState, action) => {
   switch (action.type) {
@@ -45,6 +46,7 @@ const User = (state = initailState, action) => {
           ...state.currentAudioInfo,
           share: (state.currentAudioInfo?.share ?? 0) + 1,
         },
+        sharedAlbum: state.sharedAlbum + 1,
       };
     case type.SET_PLAYING:
       return {
