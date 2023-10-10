@@ -5,46 +5,29 @@ import MusicList from "../../components/miscList/musicList";
 //import { useNavigate } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import pmobile from "../../../src/assets/svg/playmobile.svg";
-import axios from "../../utils/useAxios";
 import Loader from "../../components/UI/loader/loader";
-import infiniteScroll from "../../components/UI/infiniteScroll";
 import _ from "lodash";
 import { LECTURE, TRENDING, NEW } from "../../utils/routes/constants";
 import { useNavigate } from "react-router-dom";
+import { useQueryGetRequest } from "../../hooks/getqueries";
+import { newApi } from "../../services";
 const New = () => {
-  const [data, setData] = useState([]);
-  const [drop, setDrop] = useState("");
-  const [loading, setLoading] = useState(true);
   const [page] = useState(1);
+  const [drop,setDrop] = useState(false)
   const navigate = useNavigate();
-  useEffect(() => {
-    setLoading(true);
+  const  queryParam = {page}
+  const { isLoading,querieddata } = useQueryGetRequest(
+    "new",
+    queryParam,
+    newApi.getNewLectures
+  );
 
-    axios
-      .get(
-        `${process.env.REACT_APP_DEV_API_BASE_URL}/leclisting_recent.php?&action=get_recent_audio&page=${page}`
-      )
-      .then((res) => {
-        //console.log(res.data);
-        if (page === 1) {
-          setLoading(false);
-        }
-
-        setData((prev) => _.uniqBy([...prev, ...res.data], "nid"));
-      })
-      .catch((err) => {
-        //console.log(err);
-      });
-  }, [page]);
-
-  //play all audio files
+  //play all audio filesF
   const playAll = () => {
-    navigate(`${LECTURE}${data[0?.nid]}`, {
+    navigate(`${LECTURE}${querieddata[0?.nid]}`, {
       state: {
-        endpoint_url: `/popular_lec_api.php?langid=6&page=`,
-        currentPage: 1,
         idx: 0,
-        nid: data[0].nid,
+        nid: querieddata[0].nid,
         nav1: { title: "playAll", link: NEW },
       },
     });
@@ -71,16 +54,16 @@ const New = () => {
             <span>Time</span>
           </p>
         </div>
-        {loading && (
+        {isLoading && (
           <div className="load_desktop">
             <div className="load">
               <Loader />
             </div>
           </div>
         )}
-        {!loading && (
+        {!isLoading && (
           <div className="table">
-            {data.map(
+            {querieddata.map(
               (
                 {
                   Title,
@@ -117,13 +100,12 @@ const New = () => {
                       Title={mp3_title || Title}
                       rpid={rp_id}
                       rpname={rpname}
-                      endpoint_url={"/leclistingapi.php?sort=desc&page="}
                       currentPage={page}
                       cats={cats}
                       nid={nid}
                       navName={"Trending"}
                       navLink={TRENDING}
-                      controlData={data}
+                      controlData={querieddata}
                       views={views}
                       share={share}
                     />
@@ -148,15 +130,15 @@ const New = () => {
             <p className="">Play All</p>
           </div>
           <div className="bg-none h-1 w-1"></div>
-          {loading && (
+          {isLoading && (
             <div className="load_mobile">
               <div className="loads">
                 <Loader />
               </div>
             </div>
           )}
-          {!loading &&
-            data.map(
+          {!isLoading &&
+            querieddata.map(
               (
                 {
                   Title,
@@ -188,14 +170,13 @@ const New = () => {
                       url={`${LECTURE}${nid}`}
                       Title={mp3_title || Title}
                       rpname={rpname}
-                      endpoint_url={"/leclistingapi.php?sort=desc&page="}
                       currentPage={page}
                       cats={cats}
                       rpid={rp_id}
                       nid={nid}
                       navName={"Trending"}
                       navLink={TRENDING}
-                      controlData={data}
+                      controlData={querieddata}
                       views={views}
                     />
                   </div>
