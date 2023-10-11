@@ -4,7 +4,6 @@ import "slick-carousel/slick/slick-theme.css";
 import "./landing.scss";
 import Container from "../../components/container/Container";
 import GroupWidget from "../../components/groupWidget/GroupWidget";
-import axios from "../../utils/useAxios";
 import Slider from "react-slick";
 import bchart from "../../assets/svg/boom-chart.svg";
 import blecturer from "../../assets/svg/boom-lecturer.svg";
@@ -12,9 +11,9 @@ import bplaylist from "../../assets/svg/boom-playlist.svg";
 import btrending from "../../assets/svg/boom-trending.svg";
 import bnew from "../../assets/svg/boom-new.svg";
 import bgenre from "../../assets/svg/boom-genre.svg";
+import quranIcon from "../../assets/svg/quran.svg";
 import { BsFillPlayBtnFill } from "react-icons/bs";
 import { useSelector } from "react-redux";
-import useAxios from "axios";
 import LandingOptions from "../../components/landingOptions/LandingOptions";
 import MyCarousel from "../../components/UI/carousel/myCarousel";
 import MobileImageWidget from "./mobileimagewidget/mobileImageWidget";
@@ -30,136 +29,117 @@ import {
   PLAY,
   VIDEO,
   LECTURERS,
+  QURAN,
 } from "../../utils/routes/constants";
+import { landingPageApis } from "../../services";
 import HeadMeta from "../../components/head-meta";
 import RowSkeletonContainer from "../../components/skeletion/skeleton.container";
 const Landing = () => {
   const { currentUser } = useSelector((state) => state.user);
-  const [recent, setRecent] = useState([]);
   const [curPlay, setcurPlay] = useState([]);
-  const [isSpecialFeatLoading, setIsSpecialFeatLoading] = useState(false);
   const [isrecent, setisrecent] = useState(false);
-  const [images, setimages] = useState([]);
-  const [specailFeat, setSpecialFeat] = useState([]);
-
-  //const images = [banner1, banner2, banner3, banner4, banner1, banner2, banner3, banner4, banner1]
-  useEffect(() => {
-    axios
-      .get(`/slider_image.php`)
-      .then((res) => {
-        setimages(res.data);
-        //console.log(res);
-      })
-      .catch((err) => {
-        //console.log(err);
-      });
-  }, []);
-
-  const fetSpecialFeat = () => {
-    setIsSpecialFeatLoading(true);
-    useAxios
-      .post(
-        `${process.env.REACT_APP_API_ADMINISTER_BASE_URL}/spcl_ftr_api.php`,
-        {
-          action: "retrieve_spcl_ftr_data",
+  const [landingpagedata, setlandingpagedata] = useState({
+    images: [],
+    specailFeat: [],
+    recentlyposted: [],
+    recentlyviewed: [],
+  });
+  const page = 1;
+  const settings = {
+    dots: true,
+    infinite: true,
+    autoplay: true,
+    fade: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    prevArrow: false,
+    nextArrow: false,
+  };
+  const settings1 = {
+    dots: false,
+    infinite: false,
+    autoplay: false,
+    fade: false,
+    speed: 500,
+    slidesToShow: 6,
+    swipeToSlide: true,
+    slidesToScroll: 1,
+    prevArrow: false,
+    nextArrow: false,
+    responsive: [
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 6,
+          slidesToScroll: 1,
         },
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-          },
-        }
-      )
-      .then((res) => {
-        setIsSpecialFeatLoading(false);
-        const specialFeatures = res.data?.flatMap((val) => [
-          { name: val.name, more: val.more },
-        ]);
-        setSpecialFeat(specialFeatures);
-      })
-      .catch((err) => {
-        setIsSpecialFeatLoading(false);
-
-        console.log(err);
-      });
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
-  let page = 1;
   useEffect(() => {
-    function fetchData() {
-      setisrecent(true);
-      if (currentUser?.id) {
-        axios
-          .get(`/recentApi.php?user_id=${currentUser?.id}&action=get_recent`)
-          .then((res) => {
-            if (res.data?.length === 0) {
-              //recent
-              setisrecent(false);
-              axios
-                .get(`/leclisting_lang.php?langid=6&page=${page}`)
-                .then((res) => {
-                  setRecent(res.data?.slice(0, 10));
-                  // //console.log("trending: ", res.data);
-                })
-                .catch((err) => {
-                  //console.log(err);
-                });
-            } else {
-              const { data } = res.data[0];
-              setcurPlay(Object.values(data));
-              const recArr = Object.keys(data);
-              setisrecent(true);
-              //console.log(recArr);
+    const fetchLandingPageData = async () => {
+      try {
+        const [
+          sliderImages,
+          specialFeaturesLectures,
+          //   recentlyPosted,
+          recentlyViewed,
+        ] = await Promise.all([
+          landingPageApis.getSliderImages(),
+          landingPageApis.getSpecialFeaturesLectures(),
+          //  landingPageApis.getRecentlyPosted(),
+          landingPageApis.getRecentlyViewed(
+            currentUser?.id,
+            page,
+            setisrecent,
+            setcurPlay
+          ),
+        ]);
 
-              axios
-                .get(`/albumlisting_multi_nid_api.php?id=${recArr.toString()}`)
-                .then((res) => {
-                  //console.log("I am the new guy", res);
-                  setRecent(res.data?.slice(0, 10));
-                })
-                .catch((err) => {
-                  //console.log(err);
-                });
-            }
-          })
-          .catch((err) => {
-            //console.log(err);
-          });
-      } else {
-        //recent
-        axios
-          .get(`/leclisting_lang.php?langid=6&page=${page}`)
-          .then((res) => {
-            setisrecent(false);
-            setRecent(res.data?.slice(0, 10));
-            // //console.log("trending: ", res.data);
-          })
-          .catch((err) => {
-            setisrecent(false);
-            //console.log(err);
-          });
+        const specialFeatures = specialFeaturesLectures.flatMap((val) => [
+          { name: val.name, more: val.more },
+        ]);
+
+        setlandingpagedata({
+          images: sliderImages,
+          specailFeat: specialFeatures,
+          // recentlyposted: recentlyPosted.slice(0, 10),
+          recentlyviewed: recentlyViewed.slice(0, 10),
+        });
+
+        // setisrecent(true);
+        // setcurPlay(recentlyViewed);
+      } catch (error) {
+        console.error(error);
       }
-    }
+    };
 
-    fetSpecialFeat();
-    fetchData();
+    fetchLandingPageData();
   }, []);
 
   return (
     <Container>
       <HeadMeta title="DawahNigeria | Home" />
       <div className="landing_wrapper px-[2%] max-[615px]:py-[5%] py-[8%] min-[690px]:py-[2%]">
-        {images.length > 1 ? (
+        {landingpagedata?.images.length > 1 ? (
           <>
             <div className="carousel  h-[250px] min-[950px]:h-[250px] min-[1050px]:h-[250px] min-[1283px]:h-[300px]">
-              <MyCarousel images={images} />
+              <MyCarousel images={landingpagedata?.images} />
             </div>
 
             <Slider className="landing_carousel landing_space" {...settings}>
-              {images?.map((image, index) => {
+              {landingpagedata?.images?.map((image, index) => {
                 return (
-                  <div key={index} className="landing_carousel_img">
+                  <div key={image} className="landing_carousel_img">
                     <MobileImageWidget image={image} className="" />
                   </div>
                 );
@@ -172,6 +152,7 @@ const Landing = () => {
                 img={blecturer}
                 link={LECTURERS}
               />
+              <LandingOptions text={"Quran"} img={quranIcon} link={QURAN} />
               <LandingOptions text={"Playlists"} img={bplaylist} link={PLAY} />
               <LandingOptions
                 text={"Video"}
@@ -191,16 +172,21 @@ const Landing = () => {
           <CarouselSkeleton />
         )}
 
-        {recent && !isrecent ? (
+        <div className="landing_recent landing_space my-1 min-[615px]:my-3">
+          <RowSkeletonContainer />
+        </div>
+
+        {landingpagedata?.recentlyviewed ? (
           <div className="landing_recent landing_space my-1 min-[615px]:my-3">
+            {" "}
             <GroupWidget
-              data={recent}
-              heading="Recent"
-              type={"recent"}
-              endpoint_url={"/leclisting_lang.php?langid=6&page="}
+              data={landingpagedata?.recentlyviewed}
+              heading="Recently Posted"
+              type={"lectures"}
+              endpoint_url={"/leclisting_recent.php&page="}
               currentPage={page}
               previousPlay={curPlay}
-              isrecent={isrecent}
+              isrecentpost={true}
               nav1={{ title: "Home", link: HOME }}
             />
           </div>
@@ -210,26 +196,26 @@ const Landing = () => {
           </div>
         )}
 
-        {Array.isArray(specailFeat) &&
-          specailFeat?.map(({ name, more }, idx) => {
-            if (Array.isArray(more) && more.length > 0) {
-              return (
-                <div
-                  key={idx}
-                  className="landing_tafsir landing_space my-1 min-[615px]:my-3"
-                >
-                  <GroupWidget
-                    data={more}
-                    heading={name}
-                    type={"lectures"}
-                    currentPage={""}
-                    nav1={{ title: "Home", link: HOME }}
-                  />
-                </div>
-              );
-            }
-          })}
-        {isSpecialFeatLoading &&
+        {Array.isArray(landingpagedata?.specailFeat) &&
+          landingpagedata?.specailFeat
+            ?.filter(({ more }) => Array.isArray(more) && more.length > 0)
+            .map(({ name, more }, idx) => (
+              <div
+                key={name}
+                className="landing_tafsir landing_space my-1 min-[615px]:my-3"
+              >
+                <GroupWidget
+                  data={more}
+                  heading={name}
+                  type={"lectures"}
+                  currentPage={""}
+                  nav1={{ title: "Home", link: HOME }}
+                />
+              </div>
+            ))}
+
+        {Array.isArray(landingpagedata?.specailFeat) &&
+          landingpagedata?.specailFeat.length === 0 &&
           Array(10)
             .fill(undefined)
             .map((_, i) => (

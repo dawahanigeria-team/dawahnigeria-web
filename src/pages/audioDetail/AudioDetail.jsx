@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  useCallback,
-  useContext,
-} from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import "./audiodetail.scss";
 import AudioActionDesktop from "../../components/audio/audioActionDesktop";
 import Container from "../../components/container/Container";
@@ -21,13 +15,11 @@ import { RiDownload2Fill, RiPlayListFill } from "react-icons/ri";
 import { FiChevronsRight } from "react-icons/fi";
 import { FaPlay } from "react-icons/fa";
 import { toast } from "react-hot-toast";
-import { SlEmotsmile, SlOptionsVertical, SlArrowDown } from "react-icons/sl";
-import { GoDiffAdded } from "react-icons/go";
+import { SlEmotsmile, SlOptionsVertical } from "react-icons/sl";
 import { GiPauseButton } from "react-icons/gi";
 import pmobile from "../../../src/assets/svg/playmobile.svg";
 import sharebig from "../../../src/assets/svg/boom-share.svg";
 import commentbig from "../../../src/assets/svg/boom-comment.svg";
-import downbig from "../../../src/assets/svg/boom-download.svg";
 import favbig from "../../../src/assets/svg/boom-fav.svg";
 import { formatNumber } from "../../components/UI/formatter";
 import { AudioContext } from "../../App.jsx";
@@ -64,6 +56,7 @@ import { LECTURE, MORE } from "../../utils/routes/constants";
 import plus from "../../../src/assets/svg/plus.svg";
 import CurrentPlayData from "../../components/currentData/currentPlayData";
 import Loader from "../../components/UI/loader/loader";
+import { AudioDetailsDownloadModal } from "../../components/audioDetailsDownloadModal/AudioDetailsDownloadModal";
 const AudioDetail = () => {
   const { id } = useParams();
   const {
@@ -106,13 +99,7 @@ const AudioDetail = () => {
   //const [count, getCount] = useState(idx || id);
   const [isEmpty, setIsEmpty] = useState(false);
   const [isPrevious, setIsPrevious] = useState(false);
-  const [isAMR, setisAMR] = useState(false);
-  const [isMP4, setisMP4] = useState(false);
-  const [amrText, setamrText] = useState("--");
-  const [mp4Text, setmp4Text] = useState("--");
-  const [downloadUrl, setdownloadUrl] = useState(null);
-  const [downloaddata, setdownloaddata] = useState();
-  const [isDownload, setisDownload] = useState(false);
+  const [isAddedToFavorite, setisAddedToFavorite] = useState(false);
   const playAnimation = useRef();
   const [similarAudio, setSimilarAudio] = useState([]);
   const [similarAudioUrl, setSimilarAudioUrl] = useState("");
@@ -174,6 +161,7 @@ const AudioDetail = () => {
   const handleNextAudio = () => {
     // //console.log("first count: ", count);
     setIsPrevious(false);
+    dispatch(setPlaying(false));
     //console.log(pack);
 
     const next = pack?.findIndex((value) => {
@@ -206,12 +194,11 @@ const AudioDetail = () => {
   };
   const handlePreviousAudio = () => {
     //  //console.log("first count: ", count);
-
+    dispatch(setPlaying(false));
     const prev = pack?.findIndex((value) => {
       return value.nid === parseInt(id);
     });
-    //console.log("standard: ", pack?.length - 1 - 2);
-    //console.log("current diff frm prev: ", pack?.length - 1 - prev);
+
     if (page > 1 && pack.length - 1 - prev <= pack.length - 1 - 2) {
       setIsPrevious(true);
       dispatch(getPage(page - 1));
@@ -242,58 +229,6 @@ const AudioDetail = () => {
     dispatch(showaddPlaylist(true));
     dispatch(getLecid(lecid));
   };
-
-  ////////*********download************///// ///
-  useEffect(() => {
-    const payload = { lecid: currentAudioInfo?.nid };
-    axios
-      .post(`/download_api.php`, payload, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-        },
-      })
-      .then((res) => {
-        //console.log("from download audio detailed", res.data);
-        const { data } = res;
-        setdownloaddata(data);
-        const { amr_size, mp3_size } = data;
-
-        setamrText(`${amr_size} [AMR]`);
-        setmp4Text(`${mp3_size} [MP3]`);
-      })
-      .catch((err) => {
-        //console.log(err);
-      });
-  }, [id, audioId]);
-
-  ////console.log(data)
-
-  const selectAMR = () => {
-    const amr_url = downloaddata?.amr_url;
-    if (amr_url) return;
-    setisMP4(false);
-    setisAMR(true);
-    setdownloadUrl(amr_url);
-    //console.log(amr_url);
-  };
-
-  const selectMP4 = () => {
-    const mp3_url = downloaddata?.mp3_url;
-    if (!mp3_url) return;
-    setisMP4(true);
-    setisAMR(false);
-    setdownloadUrl(mp3_url);
-  };
-
-  const downloadlect = () => {
-    if (!downloadUrl) return;
-    toast.success("Downloading...");
-    window.open(downloadUrl, "_blank");
-  };
-
-  //console.log("data", data);
 
   /////get users favorites
   async function fetchFavorites(addFav, lecid) {
@@ -479,26 +414,23 @@ const AudioDetail = () => {
     axios
       .get(`${process.env.REACT_APP_API_BASE_URL}/all_rps_api.php`)
       .then((res) => {
-        //console.log(res.data);
         const data = res.data;
         const rpArray = data.map((rp) => rp.name);
+        console.clear();
+        console.log("rpArray", rpArray);
         const isPresent = rpArray.includes(currentAudioInfo?.rpname);
-        //console.log("is rp present is", isPresent);
         if (isPresent) {
           const rpindex = rpArray.indexOf(currentAudioInfo?.rpname);
           const page = 1;
-          ////console.log(data[rpindex]?.id);
           axios
             .get(
               `/leclisting_rp.php?page=${page}&lim=10&offset=30&rpid=${data[rpindex]?.id}`
             )
             .then((res) => {
-              // //console.log(res);
               setSimilarAudio(res.data);
-              // dispatch(getPack(res.data));
             })
             .catch((err) => {
-              //console.log(err);
+              console.log(err);
             });
         }
       })
@@ -573,7 +505,7 @@ const AudioDetail = () => {
                 <div
                   id="player"
                   onClick={() => {
-                    // dispatch(setPlaying(true));
+                    dispatch(setPlaying(false));
                     dispatch(getaudioId(id));
                     setinitial(false);
                     ///this is not coming with audio pack
@@ -633,21 +565,10 @@ const AudioDetail = () => {
                   />
                   <p className="audiodetail_comment_text">44</p>
                 </div>
-                <div
-                  onClick={() => {
-                    setisDownload(!isDownload);
-                  }}
-                  className="audiodetail_download"
-                >
-                  <img
-                    src={downbig}
-                    alt=""
-                    className="audiodetail_download_icon"
-                  />
-                  <p className="audiodetail_download_text">
-                    {formatNumber(currentAudioInfo?.downloads) || 0}
-                  </p>
-                </div>
+                <AudioDetailsDownloadModal
+                  downloads={currentAudioInfo?.downloads}
+                  nid={currentAudioInfo.nid}
+                />
               </div>
             </div>
           </div>
@@ -794,7 +715,7 @@ const AudioDetail = () => {
             <div className="audiores_actions">
               <RiDownload2Fill
                 onClick={() => {
-                  setisDownload(!isDownload);
+                  setisAddedToFavorite((prev) => !prev);
                 }}
                 className="audiores_download"
               />
@@ -809,7 +730,7 @@ const AudioDetail = () => {
                 className="fav_btn"
                 disabled={isdisabled}
               >
-                {getFavs?.includes(parseInt(id)) ? (
+                {getFavs?.includes(parseInt(id)) || isAddedToFavorite ? (
                   <MdFavorite className="audiores_fav_active" />
                 ) : (
                   <MdFavoriteBorder className="audiores_fav" />
@@ -1107,36 +1028,8 @@ const AudioDetail = () => {
             })}
           </div>
         </div>
-        {/* ----------------------- audio download --------------------- */}
 
         <Add_playlist />
-
-        <div
-          onClick={() => {
-            setisDownload(!isDownload);
-          }}
-          className={isDownload ? "fixed_wrapper" : "fixed_wrapper_none"}
-        >
-          <div className="small_wrapper" onClick={(e) => e.stopPropagation()}>
-            <div className="download_text">Select to download</div>
-            <div
-              onClick={selectAMR}
-              className={isAMR ? "download_amr" : "download_size"}
-            >
-              {amrText}
-            </div>
-            <div
-              onClick={selectMP4}
-              className={isMP4 ? "download_mp4" : "download_size"}
-            >
-              {mp4Text}
-            </div>
-
-            <button onClick={downloadlect} className="download_btn">
-              <span>Download</span>
-            </button>
-          </div>
-        </div>
 
         <div className={isShare ? "share_wrapper" : "hide_share_wrapper"}>
           <ShareAudio

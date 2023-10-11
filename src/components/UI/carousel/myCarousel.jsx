@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./carousel.css";
-import mobile4 from "../../../assets/png/mobileslide/mobile4.png";
 import { MdNavigateBefore } from "react-icons/md";
 import { MdNavigateNext } from "react-icons/md";
 import ImageWidget from "./imageWidget";

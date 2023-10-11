@@ -1,0 +1,33 @@
+.playlist_wrapper {
+  padding: 6% 2% 2% 2%;
+  @media screen and (max-width: 615px) {
+    padding: 11% 2% 2% 2%;
+  }
+  .play_header_link {
+    width: 100%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    padding: unset;
+    z-index: 10;
+    background: #090909;
+  }
+
+  .load_desktop {
+    width: 100%;
+    height: 300px;
+    position: relative;
+    .load {
+      width: 100%;
+      height: 50%;
+      position: absolute;
+      inset: 0;
+
+      margin: auto auto;
+    }
+  }
+  .mgt {
+    margin-top: 3em;
+  }
+
+}

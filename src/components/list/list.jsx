@@ -21,6 +21,7 @@ import { toast } from "react-hot-toast";
 import { LECTURE, RESOURCE_PERSON } from "../../utils/routes/constants";
 import {
   getaudioData,
+  setPlaying,
   getaudioId,
   showaddPlaylist,
   getLecid,
@@ -240,6 +241,7 @@ function List({
             dispatch(getCount(id));
             dispatch(getPack(null));
             dispatch(getaudioId(nid));
+            dispatch(setPlaying(false))
             dispatch(getPack(controlData));
             dispatch(getPage(currentPage));
             setinitial(false);

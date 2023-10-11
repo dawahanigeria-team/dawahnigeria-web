@@ -25,4 +25,6 @@ const RowSkeletonContainer = () => {
   );
 };
 
-export default React.memo(RowSkeletonContainer);
+export default RowSkeletonContainer;
+
+// export default React.memo(RowSkeletonContainer);

@@ -4,7 +4,7 @@ import Container from "../../components/container/Container";
 import FilterButton from "../../components/filterButton/FilterButton";
 import { lecturers, language, alphabet } from "./data";
 import LecturersWidget from "../../components/lecturersWidget/LecturersWidget";
-import axios from "axios";
+import axios from "../../utils/useAxios";
 import LecturerMobileWidget from "../../components/lecturersWidget/LecturerMobileWidget";
 import { Link, useNavigate } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
@@ -41,11 +41,9 @@ const Lecturers = () => {
   useEffect(() => {
     function getLang() {
       //get all langyages
-      axios
-        .get(`${process.env.REACT_APP_API_BASE_URL}/all_lang_api.php`)
-        .then((res) => {
-          if (res.data) setLanguages([...language, ...res.data]);
-        });
+      axios.get(`/all_lang_api.php`).then((res) => {
+        if (res.data) setLanguages([...language, ...res.data]);
+      });
     }
     getLang();
   }, []);
@@ -79,7 +77,7 @@ const Lecturers = () => {
         .then((res) => {
           //console.log(res.data);
           if (res.data.length === 0) return;
-          const data = res.data.filter((a) => a.name !== null);
+          const data = res.data.filter((a) => a.name !== null || !!a.name);
           setLoading(false);
 
           setNextPageLoad(false);
@@ -118,13 +116,9 @@ const Lecturers = () => {
     if (typeName !== "name" && active === "All") {
       return;
     }
-    axios
-      .get(
-        `${process.env.REACT_APP_API_BASE_URL}/rplisting_multi_nid_api.php?id=${lectId}`
-      )
-      .then((res) => {
-        //console.log(res.data[0])
-      });
+    axios.get(`/rplisting_multi_nid_api.php?id=${lectId}`).then((res) => {
+      //console.log(res.data[0])
+    });
   }, [lectId]);
 
   const lastElement = useCallback(
