@@ -172,10 +172,6 @@ const Landing = () => {
           <CarouselSkeleton />
         )}
 
-        <div className="landing_recent landing_space my-1 min-[615px]:my-3">
-          <RowSkeletonContainer />
-        </div>
-
         {landingpagedata?.recentlyviewed ? (
           <div className="landing_recent landing_space my-1 min-[615px]:my-3">
             {" "}
