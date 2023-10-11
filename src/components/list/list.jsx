@@ -4,7 +4,6 @@ import imge from "../../../src/assets/png/genre/1.png";
 import love from "../../../src/assets/svg/love-d.svg";
 import comment from "../../../src/assets/svg/com-d.svg";
 import headpmobile from "../../../src/assets/svg/headpmobile.svg";
-import download from "../../../src/assets/svg/boom-download.svg";
 import sharesvg from "../../../src/assets/svg/share-d.svg";
 import adfav from "../../../src/assets/svg/adfav.svg";
 import sharebig from "../../../src/assets/svg/boom-share.svg";
@@ -15,7 +14,6 @@ import dot from "../../../src/assets/svg/threedot.svg";
 import { SlShare } from "react-icons/sl";
 import dmobile from "../../../src/assets/svg/boom-download.svg";
 import { useNavigate } from "react-router-dom";
-import DownloadAudio from "../download/download";
 import Add_playlist from "../../pages/add_playlist/AddPlaylist";
 import { toast } from "react-hot-toast";
 import { LECTURE, RESOURCE_PERSON } from "../../utils/routes/constants";
@@ -41,6 +39,7 @@ import {
 } from "../svgcomponent/svgComponent";
 import ShareAudio from "../shareaudio/shareAudio";
 import Marquee from "react-fast-marquee";
+import { AudioDownloadModal } from "../audioDownloadModal/AudioDownloadModal";
 
 function List({
   lecturer,
@@ -71,8 +70,6 @@ function List({
   );
 
   const [more, setMore] = useState(false);
-  const [isDownload, setisDownload] = useState(false);
-  const [nidValue, setNidValue] = useState();
   const [sumofFav, setsumofFav] = useState(favorites || 0);
   const [addFav, setaddFav] = useState(false);
   const [isdisabled, setdisabled] = useState(false);
@@ -106,11 +103,6 @@ function List({
     e.stopPropagation();
     setisShare(!isShare);
     //setNidValue(nid)
-  };
-  const handleDownload = (e) => {
-    e.stopPropagation();
-    setisDownload(!isDownload);
-    setNidValue(nid);
   };
 
   /////get users favorites
@@ -241,7 +233,7 @@ function List({
             dispatch(getCount(id));
             dispatch(getPack(null));
             dispatch(getaudioId(nid));
-            dispatch(setPlaying(false))
+            dispatch(setPlaying(false));
             dispatch(getPack(controlData));
             dispatch(getPage(currentPage));
             setinitial(false);
@@ -372,14 +364,12 @@ function List({
                 >
                   <SlShare className="" />
                 </span>
-                <span
-                  onClick={(e) => {
-                    handleDownload(e);
-                  }}
+
+                <AudioDownloadModal
+                  nid={nid}
                   className="likeys_img"
-                >
-                  <DownloadIcon />
-                </span>
+                  triggerInnerChild={<DownloadIcon />}
+                />
               </div>
             </div>
           </div>
@@ -485,14 +475,13 @@ function List({
           </div>
 
           <div className="wrap_left">
-            <span
-              onClick={(e) => {
-                handleDownload(e);
-              }}
+            <AudioDownloadModal
+              nid={nid}
               className="likeys_img_left"
-            >
-              <img className="likeys_img_sz_left" src={dmobile} alt="" />
-            </span>
+              triggerInnerChild={
+                <img className="likeys_img_sz_left" src={dmobile} alt="" />
+              }
+            />
 
             <span
               onClick={(e) => {
@@ -552,18 +541,6 @@ function List({
       </div>
 
       <Add_playlist />
-
-      {nidValue && (
-        <div
-          className={isDownload ? "download_wrapper" : "hide_download_wrapper"}
-        >
-          <DownloadAudio
-            setisDownload={setisDownload}
-            isDownload={isDownload}
-            nid={nidValue}
-          />
-        </div>
-      )}
 
       <div className={isShare ? "share_wrapper" : "hide_share_wrapper"}>
         <ShareAudio
