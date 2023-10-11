@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import "./landingWidget.scss";
 import { FiHeadphones } from "react-icons/fi";
 import { FaPlay } from "react-icons/fa";
 import { formatNumber } from "../UI/formatter";
-import { useSelector } from "react-redux";
-const LandingWidget = ({ categories, img, views, nid, styling }) => {
-  const { audioId } = useSelector((state) => state.user);
+const LandingWidget = ({ categories, img, views, styling }) => {
+  const formattedViews = useMemo(() => formatNumber(views), [views])
+  
 
   ////not contented but under presssure by DN project manager
   useEffect(() => {
@@ -25,40 +25,44 @@ const LandingWidget = ({ categories, img, views, nid, styling }) => {
 
   return (
     <div
-      className={`landing_album_wrapper space-y-2 ${
-        styling ? "h-[10.5rem] w-[9.5rem]" : "h-[11.5rem] w-[10.313rem]"
+      className={`flex flex-col justify-start items-start space-y-2 ${
+        styling
+          ? "w-[150px]  sm:h-fit sm:w-[12rem]"
+          : "w-[150px]  h-fit sm:w-[13.5rem]"
       }`}
     >
-      <div className="landing_album_container">
+      <div className="group w-full h-full relative rounded-md">
         <img
           src-data={img}
           id="song"
           src={"https://imagetolink.com/ib/TnDGh8F6J0.jpeg"}
           alt="background"
-          className="landing_album_background_image"
+          className="w-full h-full rounded-md"
         />
-        <div className="landing_album_overlay"></div>
-        <p className="landing_album_widget_name">DN</p>
-        <div className={!styling ? "landing_album_listen_wrapper" : "hidden"}>
-          <FiHeadphones className="landing_album_listen_icon" />
-          <p className="landing_album_listen_text">{formatNumber(views)}</p>
-        </div>
-
+        <div className="gradientbg"></div>
+        <p className="font-bold text-base text-black name_abs absolute top-4 sm:top-2 right-2  sm:text-2xl">
+          DN
+        </p>
         <div
           className={
-            audioId === nid
-              ? `landing_play_super_wrap hide`
-              : `landing_play_super_wrap show`
+            !styling ? "absolute bottom-2 left-2 flex items-center" : "hidden"
           }
         >
-          <div className="landing_play_wrapper">
-            <div className="landing_play">
-              <FaPlay className="landing_play_icon" />
-            </div>
+          <FiHeadphones className="text-[22px] text-[#d4d4d4]" />
+          <p className="ml-2 text-xs text-[#d4d4d4] boom sm:text-base whitespace-nowrap w-full text-ellipsis overflow-hidden">
+            {formattedViews}
+          </p>
+        </div>
+
+        <div className="absolute rounded-md bg-black/50 left-0 top-0 h-full w-full flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <div className="flex items-center justify-center h-16 w-16 rounded-full bg-[#222222]/70">
+            <FaPlay className="text-[#cfcfcf] text-3xl" />
           </div>
         </div>
       </div>
-      <p className="landing_album_categories">{categories}</p>
+      <p className="text-xs sm:text-sm w-full  line-clamp-2  pl-[3%] shadow text-[#d4d4d4] ">
+        {categories}
+      </p>
     </div>
   );
 };
