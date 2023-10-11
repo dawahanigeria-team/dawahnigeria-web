@@ -6,6 +6,7 @@ const FilterButton = ({
   setData1,
   data2,
   setData2,
+  setActiveId,
   data3,
   setData3,
   title,
@@ -35,8 +36,10 @@ const FilterButton = ({
     if (action === "name") {
       setlectId(lecid);
       if (title === "All") {
+       
         setData1(Array.isArray(data) && data.filter((value) => value.rp || value.name));
       } else { 
+       
         let reset = [];
         setData2([...reset]);
         setData3([...reset]);
@@ -47,13 +50,17 @@ const FilterButton = ({
     } else if (action === "language") {
       setLangid(lid);
       //console.log(lid)
-      setIsEmpty(false);
+      //setIsEmpty(false);
+      setlectId(null);
+      setActiveId("All");
       if (title === "All") {
         setData2(Array.isArray(data) && data.filter((value) => value.lang || value.lang_id));
       } else {
         setData2(Array.isArray(data) && data.filter((value) => value.lang  === title));
       }
     } else if (action === "alphabet") {
+      setActiveId("All");
+      setlectId(null);
       setAlphabet(title);
       if (title === "Hot") {
         setData3(Array.isArray(data) && data.filter((value) => value?.title || value?.name));
@@ -69,7 +76,7 @@ const FilterButton = ({
       }
     } else if (action === "categories") {
       setCatid(id);
-      setIsEmpty(false);
+      //setIsEmpty(false);
       if (title === "All") {
         setData3(Array.isArray(data) && data.filter((value) => value?.cats || value?.categories));
       } else {

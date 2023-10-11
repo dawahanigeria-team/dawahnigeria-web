@@ -77,7 +77,7 @@ export const RepeatIcon = () => {
         strokeWidth="1"
         fill="none"
         fillRule="evenodd"
-        strokeLineCap="round"
+        strokeLinecap="round"
         strokeLinejoin="round"
       >
         <g id="btn/music-player/Play-style/loop">

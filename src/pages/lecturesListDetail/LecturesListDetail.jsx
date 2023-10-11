@@ -328,8 +328,7 @@ const LecturesListDetail = () => {
             </div>
             <div className="leclistdet_head_right">
               <p className="leclistdet_head_right_head">
-                {/* {(singleData?.title && singleData?.title.split("-")[2]) ||
-                  singleData?.title} */}
+        
                 {lectureTitleExtractor(singleData?.title, 2)}
               </p>
               <div className="leclistdet_head_right_text">
@@ -339,7 +338,7 @@ const LecturesListDetail = () => {
                   </div>
                   <p className="leclistdet_head_right_text1">
                     {lectureTitleExtractor(singleData?.title, 1)}
-                    {/* {singleData?.title.split("-")[1] || singleData?.title} */}
+                 
                   </p>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./lecturerMobileWidget.scss";
 
-const LecturerMobileWidget = ({ img, rp, views }) => {
+const LecturerMobileWidget = ({ img, rp, }) => {
   useEffect(() => {
     function lazyImages() {
       const lazy = document.querySelectorAll("#lect");
