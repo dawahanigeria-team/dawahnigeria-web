@@ -89,12 +89,12 @@ useEffect(() => {
       const [
         sliderImages,
         specialFeaturesLectures,
-        recentlyPosted,
+     //   recentlyPosted,
         recentlyViewed,
       ] = await Promise.all([
         landingPageApis.getSliderImages(),
         landingPageApis.getSpecialFeaturesLectures(),
-        landingPageApis.getRecentlyPosted(),
+      //  landingPageApis.getRecentlyPosted(),
         landingPageApis.getRecentlyViewed(currentUser?.id, page,setisrecent, setcurPlay),
       ]);
 
@@ -105,8 +105,8 @@ useEffect(() => {
       setlandingpagedata({
         images: sliderImages,
         specailFeat: specialFeatures,
-        recentlyposted: recentlyPosted.slice(0, 10),
-        recentlyviewed: recentlyViewed.slice(0, 10),
+       // recentlyposted: recentlyPosted.slice(0, 10),
+        recentlyviewed: recentlyViewed.slice(0,10),
       });
 
      // setisrecent(true);
@@ -154,7 +154,7 @@ useEffect(() => {
         <div className="landing_recent landing_space my-1 min-[615px]:my-3">
           {" "}
           <GroupWidget
-            data={landingpagedata?.recentlyposted}
+            data={landingpagedata?.recentlyviewed}
             heading="Recently Posted"
             type={"lectures"}
             endpoint_url={"/leclisting_recent.php&page="}
