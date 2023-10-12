@@ -1,62 +1,41 @@
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, { useState } from "react";
 import "./simillarrp.scss";
-//import SimrpWidget from "../../simrpWidget/SimrpWidget";
-import axios from "../../../utils/useAxios";
-import infiniteScroll from "../../UI/infiniteScroll";
+
 import LecturersWidget from "../../lecturersWidget/LecturersWidget";
 import { Link, useNavigate } from "react-router-dom";
 import { RESOURCE_PERSON } from "../../../utils/routes/constants";
 import Loader from "../../UI/loader/loader";
 import _ from "lodash";
+import { useInfiniteScrollPagination } from "../../../hooks";
 import GenreMobileLecturer from "../../../pages/genredetail/genreMobileLecturer";
+import { lecturersApi } from "../../../services";
+import { useLecturersHook } from "../../../hooks/lecturers/useLecturers.hook";
 const Simillarrp = ({ langid }) => {
-  const navigate = useNavigate();
-  const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(true);
-  const [isEmpty, setIsEmpty] = useState(false);
-  const [nextPageLoad, setNextPageLoad] = useState(false);
-  const observer = useRef();
+
   const issimilarrp = true;
+  const queryParam = { page, langid };
 
-  useEffect(() => {
-    if (page > 1) {
-      setNextPageLoad(true);
-    }
-    axios
-      .get(
-        `${process.env.REACT_APP_API_BASE_URL}/all_rps_api.php?offset=30&lim=10&page=${page}&langid=${langid}`
-      )
-      .then((res) => {
-        //console.log(res.data);
-        if (page === 1) {
-          setLoading(false);
-        }
-        setNextPageLoad(false);
-        if (res.data.length === 0) {
-          setIsEmpty(true);
-          return;
-        }
-        setData((prev) => _.uniqBy([...prev, ...res.data], "id"));
-      })
-      .catch((err) => {
-        //console.log(err);
-      });
-  }, [page, langid]);
+  const { isLoading, isLoadingNextPage, isLastPage, querieddata } =
+    useLecturersHook(
+      "lecturers",
+      queryParam,
+      lecturersApi.getLecturers,
+      setPage
+  
+    );
 
-  const lastElement = useCallback(
-    (node) => {
-      if (isEmpty) {
-        return;
-      }
-      infiniteScroll(node, observer, page, setPage);
-    },
+    //console.log('query data',querieddata)
 
-    [page]
+  const { ref: infiniteScrollRef } = useInfiniteScrollPagination(
+    querieddata?.length,
+    page,
+    setPage
   );
+
   return (
     <div>
-      {loading && (
+      {isLoading && !isLoadingNextPage && (
         <div className="load_desktop">
           <div className="load">
             <Loader />
@@ -64,55 +43,34 @@ const Simillarrp = ({ langid }) => {
         </div>
       )}
       <div className="simrp_wrapper">
-        {!loading &&
-          data.map(({ img, name, views, id }, idx) => {
-            if (data.length === idx + 1) {
-              return (
-                <Link
-                  to={`${RESOURCE_PERSON}${id}`}
-                  className="lecturers_item"
-                  ref={lastElement}
-                >
-                  <LecturersWidget
-                    views={views}
-                    img={img || "https://imagetolink.com/ib/a3qzKSu0SB.jpeg"}
-                    rp={name}
-                  />
-                  <GenreMobileLecturer
-                    views={views}
-                    styling={issimilarrp}
-                    rp={name}
-                    img={img || "https://imagetolink.com/ib/a3qzKSu0SB.jpeg"}
-                  />
-                </Link>
-              );
-            } else {
-              return (
-                <Link
-                  to={`${RESOURCE_PERSON}${id}`}
-                  key={idx}
-                  onClick={() => {
-                    navigate(`${RESOURCE_PERSON}${id}`);
-                  }}
-                  className="lecturers_item"
-                >
-                  <LecturersWidget
-                    views={views}
-                    img={img || "https://imagetolink.com/ib/a3qzKSu0SB.jpeg"}
-                    rp={name}
-                  />
-                  <GenreMobileLecturer
-                    views={views}
-                    styling={issimilarrp}
-                    rp={name}
-                    img={img || "https://imagetolink.com/ib/a3qzKSu0SB.jpeg"}
-                  />
-                </Link>
-              );
-            }
+        {Array.isArray(querieddata) &&
+          querieddata?.map(({ img, name, views, id }, idx) => {
+            return (
+              <Link
+                ref={
+                  idx === querieddata.length - 1 && !isLastPage
+                    ? infiniteScrollRef
+                    : null
+                }
+                to={`${RESOURCE_PERSON}${id}`}
+                className="lecturers_item"
+              >
+                <LecturersWidget
+                  views={views}
+                  img={img || "https://imagetolink.com/ib/a3qzKSu0SB.jpeg"}
+                  rp={name}
+                />
+                <GenreMobileLecturer
+                  views={views}
+                  styling={issimilarrp}
+                  rp={name}
+                  img={img || "https://imagetolink.com/ib/a3qzKSu0SB.jpeg"}
+                />
+              </Link>
+            );
           })}
       </div>
-      {nextPageLoad && (
+      {isLoadingNextPage && (
         <div className="load_m">
           <div className="loads">
             <Loader />

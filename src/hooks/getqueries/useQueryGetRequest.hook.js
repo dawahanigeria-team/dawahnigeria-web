@@ -38,6 +38,8 @@ export const useQueryGetRequest = (
 
   // handles when page changes
   useEffect(() => {
+    
+    if (!queryParam.page) return // return if the query param is not page
     if (queryParam.page !== 1 && !hasReachedLastPage) {
       setIsLoadingNextPage(true);
     }

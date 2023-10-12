@@ -65,7 +65,8 @@ const LecturesListDetail = () => {
   const [getFavs, setgetfavs] = useState([]);
   const [similarUrl, setsimilarUrl] = useState();
   const [rpnames, setrpname] = useState([]);
-  const [audioComment, setaudioComment] = useState();
+  const [audioComment, setaudioComment] = useState('');
+  
 
   useEffect(() => {
     useaxios

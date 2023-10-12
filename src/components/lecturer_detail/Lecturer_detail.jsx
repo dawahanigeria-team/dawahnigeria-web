@@ -22,6 +22,8 @@ import { toast } from "react-hot-toast";
 import axios from "../../utils/useAxios";
 import lazy from "../../assets/png/lazyrps.jpeg";
 import ShareAudio from "../shareaudio/shareAudio";
+import { useQueryGetRequest } from "../../hooks/getqueries";
+import { lecturerDetailApi } from "../../services";
 
 const LecturerDetail = () => {
   const { id } = useParams();
@@ -40,24 +42,15 @@ const LecturerDetail = () => {
   const [addFav, setaddFav] = useState(false);
   const [isdisabled, setdisabled] = useState(false);
   const [getFavs, setgetfavs] = useState([]);
-  const [singleData, setsingleData] = useState([]);
+  const queryParam = {id}
 
   const [, setImg] = useState(
     "https://backend.dawahnigeria.com/sites/default/files/600-800/700.jpg"
   );
 
-  useEffect(() => {
-    axios
-      .get(`/rplisting_multi_nid_api.php?id=${id}`)
-      .then((res) => {
-        //console.log(`@@@@ rp `, res.data[0]);
-        setsingleData(res.data[0]);
-        setsumofFav(res.data[0]?.favorites);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
+
+
+  const {querieddata} = useQueryGetRequest("lecturer-detail",queryParam, lecturerDetailApi.getLecturerById )
 
   /////get users favorites
   async function fetchFavorites(addFav, rpid) {
@@ -184,7 +177,7 @@ const LecturerDetail = () => {
           ref={lecdet}
           id="hero"
           className="lecdet_hero"
-          src={singleData?.img || "https://imagetolink.com/ib/9TU6bi2SDs.jpeg"}
+          src={querieddata[0]?.img || "https://imagetolink.com/ib/9TU6bi2SDs.jpeg"}
           alt="audiohero"
         />
         <div className="lecdet_container">
@@ -200,7 +193,7 @@ const LecturerDetail = () => {
               {`${"Back"}/`}
             </p>
             <p className="lecdet_breadcrumb_second">
-              {singleData?.name || singleData?.name}
+              {querieddata[0]?.name || querieddata[0]?.name}
             </p>
           </div>
 
@@ -211,13 +204,13 @@ const LecturerDetail = () => {
                 ref={lecdet}
                 id="hero"
                 className="lecdet_head_left_img"
-                src={singleData?.img || lazy}
+                src={querieddata[0]?.img || lazy}
                 alt="head"
               />
             </div>
             <div className="lecdet_head_right">
               <p className="lecdet_head_right_head">
-                {singleData?.name || singleData?.name}
+                {querieddata[0]?.name || querieddata[0]?.name}
               </p>
 
               <div className="lecdet_head_right_actions_wrap">
@@ -241,7 +234,7 @@ const LecturerDetail = () => {
                   </button>
 
                   <p className="lecdet_fav_text">
-                    {formatNumber(sumofFav || 0)}
+                    {formatNumber(querieddata[0]?.favorites || 0)}
                   </p>
                 </div>
                 <div
@@ -255,7 +248,7 @@ const LecturerDetail = () => {
                   </button>
 
                   <p className="lecdet_share_text">
-                    {formatNumber(singleData?.share || 0)}
+                    {formatNumber(querieddata[0]?.share || 0)}
                   </p>
                 </div>
                 <div className="lecdet_comment">
@@ -265,7 +258,7 @@ const LecturerDetail = () => {
                     className="lecdet_comment_icon"
                   />
                   <p className="lecdet_comment_text">
-                    {formatNumber(singleData?.comments || 0)}
+                    {formatNumber(querieddata[0]?.comments || 0)}
                   </p>
                 </div>
               </div>
@@ -365,7 +358,7 @@ const LecturerDetail = () => {
                 id="hero"
                 className="lecdet_head_img_sz"
                 src={
-                  singleData?.img ||
+                  querieddata[0]?.img ||
                   "https://imagetolink.com/ib/9TU6bi2SDs.jpeg"
                 }
                 alt="head"
@@ -389,13 +382,13 @@ const LecturerDetail = () => {
 
           <div className="mobile_lecdet_tab_wrap">
             <div ref={firstElement} className="mob_txt">
-              <div className="lecdet_head_mob_head">{singleData?.name}</div>
+              <div className="lecdet_head_mob_head">{querieddata[0]?.name}</div>
               <div className="mob_like">
                 <span className="likeys_img">
                   <img className="likeys_img_sz" src={headpmobile} alt="" />
                 </span>
                 <span className="likeys_text">
-                  {formatNumber(singleData?.views || 0)}
+                  {formatNumber(querieddata[0]?.views || 0)}
                 </span>
               </div>
             </div>
@@ -420,10 +413,10 @@ const LecturerDetail = () => {
                   <img className="fixed_mob_arrow_sz" src={arrow} alt="hun" />
                 </div>
                 <div className="fixed_text text-center ">{`${
-                  singleData?.name?.split(" ")[0] || ""
-                } ${singleData?.name?.split(" ")[1]} ${
-                  singleData?.name?.split(" ")[2] || ""
-                } ${singleData?.name?.split(" ")[3] || ""}`}</div>
+                  querieddata[0]?.name?.split(" ")[0] || ""
+                } ${querieddata[0]?.name?.split(" ")[1]} ${
+                  querieddata[0]?.name?.split(" ")[2] || ""
+                } ${querieddata[0]?.name?.split(" ")[3] || ""}`}</div>
 
                 <div className="fixed_bg_none"></div>
                 <div className="header_bg">
@@ -432,7 +425,7 @@ const LecturerDetail = () => {
                     ref={lecdet}
                     id="hero"
                     src={
-                      singleData?.img ||
+                      querieddata[0]?.img ||
                       "https://imagetolink.com/ib/9TU6bi2SDs.jpeg"
                     }
                     alt="head"
@@ -475,7 +468,7 @@ const LecturerDetail = () => {
                   <img className="likeys_img_sz" src={sharebold} alt="" />
                 </button>
                 <span className="likeys_text">
-                  {formatNumber(singleData?.share || 0)}
+                  {formatNumber(querieddata[0]?.share || 0)}
                 </span>
               </div>
               <div className="icons_mob_black">
@@ -483,7 +476,7 @@ const LecturerDetail = () => {
                   <img className="likeys_img_sz" src={combold} alt="" />
                 </button>
                 <span className="likeys_text">
-                  {formatNumber(singleData?.comments || 0)}
+                  {formatNumber(querieddata[0]?.comments || 0)}
                 </span>
               </div>
             </div>
@@ -600,7 +593,7 @@ const LecturerDetail = () => {
             <div className="mobile_color_vid">
               {tab === 1 && (
                 <LecturerSongs
-                  rpname={singleData?.name}
+                  rpname={querieddata[0]?.name}
                   id={id}
                   setCount1={setCount1}
                   count1={count1}
@@ -609,7 +602,7 @@ const LecturerDetail = () => {
               )}
               {tab === 2 && (
                 <LecturerAlbum
-                  rpname={singleData?.name}
+                  rpname={querieddata[0]?.name}
                   id={id}
                   setCount2={setCount2}
                   count2={count2}
@@ -618,7 +611,7 @@ const LecturerDetail = () => {
               )}
               {tab === 3 && (
                 <LecturerPlaylist
-                  rpname={singleData?.name}
+                  rpname={querieddata[0]?.name}
                   id={id}
                   setCount3={setCount3}
                   count3={count3}
@@ -626,7 +619,7 @@ const LecturerDetail = () => {
                 />
               )}
 
-              {tab === 5 && <Simillarrp langid={singleData?.lang_id} />}
+              {tab === 5 && <Simillarrp langid={querieddata[0]?.lang_id} />}
             </div>
           </div>
 
@@ -635,7 +628,7 @@ const LecturerDetail = () => {
           <div className="desktop_color_vid">
             {tab === 1 && (
               <LecturerSongs
-                rpname={singleData?.name}
+                rpname={querieddata[0]?.name}
                 id={id}
                 setCount1={setCount1}
                 count1={count1}
@@ -643,8 +636,8 @@ const LecturerDetail = () => {
             )}
             {tab === 2 && (
               <LecturerAlbum
-                rpname={singleData?.name}
-                rpImg={singleData?.img}
+                rpname={querieddata[0]?.name}
+                rpImg={querieddata[0]?.img}
                 id={id}
                 setCount2={setCount2}
                 count2={count2}
@@ -652,14 +645,14 @@ const LecturerDetail = () => {
             )}
             {tab === 3 && (
               <LecturerPlaylist
-                rpname={singleData?.name}
+                rpname={querieddata[0]?.name}
                 id={id}
                 setCount3={setCount3}
                 count3={count3}
               />
             )}
 
-            {tab === 5 && <Simillarrp langid={singleData?.lang_id} />}
+            {tab === 5 && <Simillarrp langid={querieddata[0]?.lang_id} />}
           </div>
           {/* ------------------------------------ Section 3 ends -------------------------------------- */}
         </div>

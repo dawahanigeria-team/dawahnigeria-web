@@ -187,50 +187,7 @@ function List({
     dispatch(showaddPlaylist(true));
   };
 
-  /**
-   * 
-     // get all lecturers and  id
-  useEffect(() => {
-    //all lecturers
-    axios
-      .get(`${process.env.REACT_APP_API_BASE_URL}/all_rps_api.php`)
-      .then((res) => {
-        //console.log(res.data);
-        const data = res.data;
-        setrpData(data);
-        setrpnameArray(data.map((rp) => rp.name));
-      })
-      .catch((err) => {
-        //console.log(err);
-      });
-  }, []);
-  const lecturerDetail = (lecturer) => {
-    const isPresent = rpnameArray.includes(lecturer);
-    //console.log("is rp present is", isPresent);
-    if (isPresent) {
-      const rpindex = rpnameArray.indexOf(lecturer);
 
-      //console.log(rpData[rpindex]?.id);
-      navigate(`${RESOURCE_PERSON}${rpData[rpindex]?.id}`);
-    }
-  };
-
-    navigate(url, {
-              state: {
-                title: Title,
-                rpname,
-                image,
-                endpoint_url,
-                currentPage,
-                currentUser,
-                id,
-                cats,
-                nid,
-                controlData,
-                nav1: { title: navName, link: navLink },
-              },
-            });
-   */
 
   //console.log(getFavs);
   return (
