@@ -92,7 +92,7 @@ const AlbumMobileChart = ({ data }) => {
       </div>
 
       <div className="flex flex-col w-full mt-4 space-y-2 justify-end items-end">
-        {data
+        {Array.isArray(data) && data
           ?.slice(3)
           .map(({ alb_thumbnail, lec_img, id, img, nid, name }, idx) => {
             return (

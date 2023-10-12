@@ -5,6 +5,20 @@ import { RESOURCE_PERSON } from "../../../utils/routes/constants";
 const LecturerMobileChart = ({ data }) => {
   const navigate = useNavigate();
 
+  const image =
+    (Array.isArray(data) && data[0]?.rp_thumbnail) ||
+    (data && data[0]?.img) ||
+    (data && data[0]?.lec_img);
+
+  const image2 =
+    (Array.isArray(data) && data[1] && data[1]?.rp_thumbnail) ||
+    data[1]?.img ||
+    data[1]?.lec_img;
+
+  const image3 =
+    (Array.isArray(data) && data[2]?.rp_thumbnail) ||
+    data[2]?.img ||
+    data[2]?.lec_img;
   return (
     <div>
       <div className="w-[95%] mx-auto">
@@ -18,12 +32,7 @@ const LecturerMobileChart = ({ data }) => {
             <div className="w-full relative h-[90px] rounded-full">
               <img
                 className="rounded-full w-full h-full"
-                src={
-                  data[1]?.rp_thumbnail ||
-                  data[1]?.img ||
-                  data[1]?.lec_img ||
-                  "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"
-                }
+                src={image2 || "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"}
                 alt=""
               />
 
@@ -35,7 +44,7 @@ const LecturerMobileChart = ({ data }) => {
               </div>
             </div>
             <div className="overflow-hidden text-[13px] w-[95px] text-ellipsis whitespace-nowrap">
-              {data[1]?.name}
+              {Array.isArray(data) && data[1]?.name}
             </div>
           </div>
 
@@ -48,12 +57,7 @@ const LecturerMobileChart = ({ data }) => {
             <div className="w-full relative h-[100px] rounded-full">
               <img
                 className="rounded-full w-full h-full"
-                src={
-                  data[0]?.rp_thumbnail ||
-                  data[0]?.img ||
-                  data[0]?.lec_img ||
-                  "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"
-                }
+                src={image || "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"}
                 alt=""
               />
               <div className="w-full h-[20px]   text-[12px] inset-x-0 absolute bottom-[-5px] flex items-center justify-center">
@@ -64,7 +68,7 @@ const LecturerMobileChart = ({ data }) => {
               </div>
             </div>
             <div className="overflow-hidden w-[85px] text-[13px] text-ellipsis whitespace-nowrap">
-              {data[0]?.name}
+              {Array.isArray(data) && data[0]?.name}
             </div>
           </div>
           <div
@@ -76,12 +80,7 @@ const LecturerMobileChart = ({ data }) => {
             <div className="w-full relative h-[80px] rounded-full">
               <img
                 className="rounded-full w-full h-full"
-                src={
-                  data[2]?.rp_thumbnail ||
-                  data[2]?.img ||
-                  data[2]?.lec_img ||
-                  "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"
-                }
+                src={image3 || "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"}
                 alt=""
               />
 
@@ -93,30 +92,31 @@ const LecturerMobileChart = ({ data }) => {
               </div>
             </div>
             <div className="overflow-hidden w-[95px] text-[13px] text-ellipsis whitespace-nowrap">
-              {data[2]?.mp3_title}
+              {Array.isArray(data) && data[2]?.mp3_title}
             </div>
           </div>
         </div>
       </div>
 
       <div className="flex flex-col w-full mt-4 space-y-2 justify-end items-end">
-        {data?.slice(3).map(({ rp_thumbnail, id, img, nid, name }, idx) => {
-          return (
-            <div
-              onClick={() => {
-                navigate(`${RESOURCE_PERSON}${id || nid}`);
-              }}
-              key={idx}
-              className="w-[90%]"
-            >
-              <LecturersChartWidget
-                img={rp_thumbnail || img}
-                name={name}
-                idx={idx}
-              />
-            </div>
-          );
-        })}
+        {Array.isArray(data) &&
+          data?.slice(3).map(({ rp_thumbnail, id, img, nid, name }, idx) => {
+            return (
+              <div
+                onClick={() => {
+                  navigate(`${RESOURCE_PERSON}${id || nid}`);
+                }}
+                key={idx}
+                className="w-[90%]"
+              >
+                <LecturersChartWidget
+                  img={rp_thumbnail || img}
+                  name={name}
+                  idx={idx}
+                />
+              </div>
+            );
+          })}
       </div>
     </div>
   );

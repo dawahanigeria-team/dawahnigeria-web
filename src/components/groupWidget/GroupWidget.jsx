@@ -304,7 +304,7 @@ const GroupWidget = ({
           </div>
         </div>
       )}
-      {type === "lectures" && (
+      {type === "lectures" && nav1.title === "Charts" && (
         <div
           className={
             styling
@@ -312,11 +312,11 @@ const GroupWidget = ({
               : "hidden"
           }
         >
-          <LectureMobileChart data={data} />
+          <LectureMobileChart data={ data} />
         </div>
       )}
 
-      {type === "album" && (
+      {type === "album" && nav1.title === "Charts" && (
         <div
           className={
             styling
@@ -324,11 +324,11 @@ const GroupWidget = ({
               : "hidden"
           }
         >
-          <AlbumMobileChart data={data} />
+          <AlbumMobileChart data={ data} />
         </div>
       )}
 
-      {type === "lecturer" && (
+      {type === "lecturer" && nav1.title === "Charts" && (
         <div
           className={
             styling
@@ -336,7 +336,7 @@ const GroupWidget = ({
               : "hidden"
           }
         >
-          <LecturerMobileChart data={data} />
+          <LecturerMobileChart data={Array.isArray(data) && data} />
         </div>
       )}
       {type === "album" && (
@@ -384,7 +384,7 @@ const GroupWidget = ({
                       key={idx + 1}
                     >
                       <LandingWidget
-                        key={idx}
+                        key={nid}
                         categories={
                           name ||
                         //  title?.split("-")[0] ||
@@ -454,7 +454,7 @@ const GroupWidget = ({
                         key={idx + 1}
                       >
                         <LandingWidget
-                          key={idx}
+                          key={nid}
                           categories={
                             name || Title ||
                           //  title?.split("-")[0] ||
@@ -480,7 +480,7 @@ const GroupWidget = ({
               return (
                 <Link
                   to={`${RESOURCE_PERSON}${id || nid}`}
-                  key={idx}
+                  key={name}
                   className=""
                 >
                   <GenreMobileLecturer img={img} rp={name} />

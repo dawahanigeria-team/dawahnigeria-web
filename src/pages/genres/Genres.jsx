@@ -3,31 +3,20 @@ import "./genres.scss";
 import Container from "../../components/container/Container";
 import { useNavigate } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
-import axios from "../../utils/useAxios";
 import Loader from "../../components/UI/loader/loader";
 import GenreWidget from "./genreWidget";
 import { GENRES } from "../../utils/routes/constants";
+import { genresApi } from "../../services";
+import { useQueryGetRequest } from "../../hooks/getqueries";
 
 const Genres = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    function getCategories() {
-      axios
-        .get(`${process.env.REACT_APP_API_BASE_URL}/allcateg_api.php`)
-        .then((res) => {
-          //console.log(res.data);
-          setData(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          //console.log(err);
-        });
-    }
-    getCategories();
-  }, []);
+  const queryParam = {}
+  const { querieddata, isLoading } = useQueryGetRequest(
+    "genres",
+    queryParam,
+    genresApi.getCategories
+  );
 
   const showMore = (id) => {
     navigate(`${GENRES}/${id}`);
@@ -40,7 +29,7 @@ const Genres = () => {
           <HeaderRouter title={"Genres"} />
         </div>
 
-        {loading && (
+        {isLoading && (
           <div className="load_x">
             <div className="load_y">
               <Loader />
@@ -49,8 +38,9 @@ const Genres = () => {
         )}
 
         <div className="genre_lists">
-          {!loading &&
-            data.map(({ img, name, id }, idx) => {
+          {!isLoading &&
+            Array.isArray(querieddata) &&
+            querieddata.map(({ img, name, id }, idx) => {
               return (
                 <div
                   onClick={() => {
