@@ -283,11 +283,7 @@ const GroupWidget = ({
                         >
                           <LandingWidget
                             key={idx}
-                            categories={
-                              // title?.split("-")[0] ||
-                              //Title?.split("-")[0] ||
-                              title || Title || mp3_title
-                            }
+                            categories={title || Title || mp3_title}
                             img={img || lec_img}
                             views={views || 0}
                             nid={nid || id}
@@ -387,20 +383,12 @@ const GroupWidget = ({
                         className={`groupWidget_album_item  ${
                           styling ? "relative max-[615px]:hidden" : ""
                         }`}
-                        onClick={() => {
-                          //navigate(`/a/${id || nid}`);
-                        }}
+                        onClick={() => {}}
                         key={idx + 1}
                       >
                         <LandingWidget
                           key={idx}
-                          categories={
-                            name ||
-                            //  title?.split("-")[0] ||
-                            // Title?.split("-")[0] ||
-                            title ||
-                            Title
-                          }
+                          categories={name || title || Title}
                           img={img || lec_img}
                           views={views || 0}
                           nid={id || nid}
