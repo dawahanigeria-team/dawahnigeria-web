@@ -28,4 +28,6 @@ export const lecturersApi = {
     await apiService().get(`/rplisting_multi_nid_api.php?id=${lectId}`),
 
   getLanguages: async () => await apiService().get(`/all_lang_api.php`),
+      getCategories: async () => await apiService().get(`/allcateg_api.php`)
+
 };

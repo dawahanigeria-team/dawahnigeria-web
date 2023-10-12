@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import _ from "lodash";
 export const useQueryGetRequest = (keyName, queryParam = {}, queryFunction) => {
-  const [querieddata, setQueriedData] = useState(null);
+  const [querieddata, setQueriedData] = useState([]);
   const [isLoadingNextPage, setIsLoadingNextPage] = useState(false);
   const [hasReachedLastPage, setHasReachedLastPage] = useState(false);
 

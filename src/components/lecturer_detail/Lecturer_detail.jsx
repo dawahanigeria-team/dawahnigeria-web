@@ -144,7 +144,7 @@ const LecturerDetail = () => {
     setisShare(!isShare);
   };
 
-  ////not contented but under presssure by DN project manager
+  ///////
   useEffect(() => {
     function lazyImage() {
       const lazy = document.querySelectorAll("#lecdet");
@@ -162,17 +162,20 @@ const LecturerDetail = () => {
   }, []);
 
   useEffect(() => {
-    lecdet?.current.addEventListener("error", () => {
-      const imgs = document.querySelectorAll("#hero");
-      imgs.forEach((img) => {
-        img.src = "https://imagetolink.com/ib/9TU6bi2SDs.jpeg";
+    if (lecdet.current) {
+      lecdet?.current.addEventListener("error", () => {
+        const imgs = document.querySelectorAll("#hero");
+        imgs.forEach((img) => {
+          img.src = "https://imagetolink.com/ib/9TU6bi2SDs.jpeg";
+        });
       });
-    });
-  }, []);
+    }
+  
+  }, [lecdet.current]);
 
   return (
     <Container>
-      <div className="lecdet_wrapper">
+      {Array.isArray(querieddata) && <div className="lecdet_wrapper">
         <img
           ref={lecdet}
           id="hero"
@@ -664,7 +667,7 @@ const LecturerDetail = () => {
             type={"rp"}
           />
         </div>
-      </div>
+      </div>}
     </Container>
   );
 };
