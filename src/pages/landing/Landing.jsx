@@ -139,7 +139,7 @@ const Landing = () => {
             <Slider className="landing_carousel landing_space" {...settings}>
               {landingpagedata?.images?.map((image, index) => {
                 return (
-                  <div key={image} className="landing_carousel_img">
+                  <div key={index} className="landing_carousel_img">
                     <MobileImageWidget image={image} className="" />
                   </div>
                 );
