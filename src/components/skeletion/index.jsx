@@ -13,6 +13,4 @@ const CardSkeleton = () => {
   );
 };
 
-
-
-export default React.memo(CardSkeleton);
+export default CardSkeleton;

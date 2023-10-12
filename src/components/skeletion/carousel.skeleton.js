@@ -10,4 +10,4 @@ const CarouselSeleton = () => {
   );
 };
 
-export default React.memo(CarouselSeleton);
+export default CarouselSeleton;
