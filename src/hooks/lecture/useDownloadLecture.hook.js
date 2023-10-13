@@ -7,7 +7,7 @@ export const useDownloadLecture = (lecid) => {
   const { isLoading, data, error } = useQuery(
     ["lecture", "download", lecid],
     () => {
-      const payload = { lecid };
+      const payload = { lecid: Number(lecid) };
       return lectureApi.downloadFile(payload);
     },
     {

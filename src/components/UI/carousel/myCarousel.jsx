@@ -8,13 +8,11 @@ const MyCarousel = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images?.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, [currentIndex, images.length]);
+  }, [currentIndex, images?.length]);
 
-
-  
   ////console.log(currentIndex);
   return (
     <div className="w-full group h-full relative items-end justify-end px-[5] flex cursor-pointer">
@@ -36,37 +34,43 @@ const MyCarousel = ({ images }) => {
           <MdNavigateNext className="text-white text-[40px]" />
         </div>
       </div>
-      {images.map((image, index) => {
-        return (
-          <div
-          key={image}
-          className=" absolute left-0 top-0 w-[73%] h-[250px] min-[950px]:h-[250px] min-[1050px]:h-[250px] min-[1283px]:h-[300px] ">
+      {images &&
+        images.map((image, index) => {
+          return (
             <div
-              className={` transform ease h-full w-full duration-500 opacity-0 absolute left-0  shadow-xl ${
-                currentIndex % images.length === index ? "active " : ""
-              } ${
-                (currentIndex + 1) % images.length === index ? " preactive" : ""
-              } ${(currentIndex + 2) % images.length === index ? "third " : ""} 
-              `}
+              key={index}
+              className=" absolute left-0 top-0 w-[73%] h-[250px] min-[950px]:h-[250px] min-[1050px]:h-[250px] min-[1283px]:h-[300px] "
             >
-              <ImageWidget image={image} />
-            </div>
+              <div
+                className={` transform ease h-full w-full duration-500 opacity-0 absolute left-0  shadow-xl ${
+                  currentIndex % images.length === index ? "active " : ""
+                } ${
+                  (currentIndex + 1) % images.length === index
+                    ? " preactive"
+                    : ""
+                } ${
+                  (currentIndex + 2) % images.length === index ? "third " : ""
+                } 
+              `}
+              >
+                <ImageWidget image={image} />
+              </div>
 
-            <div className="w-full flex items-center z-[12]   justify-center space-x-1 absolute bottom-7 inset-x-0">
-              {images.map((img, index) => {
-                return (
-                  <span
-                  key={img}
-                    className={`rounded-[50%] h-[4px] w-[4px] ${
-                      currentIndex === index ? "bg-white" : "bg-gray-400"
-                    }`}
-                  ></span>
-                );
-              })}
+              <div className="w-full flex items-center z-[12]   justify-center space-x-1 absolute bottom-7 inset-x-0">
+                {images.map((img, index) => {
+                  return (
+                    <span
+                      key={index}
+                      className={`rounded-[50%] h-[4px] w-[4px] ${
+                        currentIndex === index ? "bg-white" : "bg-gray-400"
+                      }`}
+                    ></span>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
     </div>
   );
 };

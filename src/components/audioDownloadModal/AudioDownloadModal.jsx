@@ -6,7 +6,12 @@ import { useDownloadLecture } from "../../hooks";
 import { FaCheckCircle } from "react-icons/fa";
 import Loader from "../UI/loader/loader";
 
-export const AudioDetailsDownloadModal = ({ downloads, nid }) => {
+export const AudioDownloadModal = ({
+  downloads,
+  nid,
+  triggerInnerChild,
+  className = "",
+}) => {
   const [showModal, setShowModal] = useState();
   const [selectedFormat, setSelectedFormat] = useState("mp3");
 
@@ -24,23 +29,30 @@ export const AudioDetailsDownloadModal = ({ downloads, nid }) => {
     ],
     []
   );
-
   return (
-    <>
-      {/* trigger button  */}
+    <div
+      onClick={(e) => {
+        // preventing parent element from receiving click event from any of the children
+        e.stopPropagation();
+      }}
+    >
+      {/* Trigger button */}
       <button
-        onClick={() => {
-          setShowModal(true);
-        }}
-        className="audiodetail_download"
+        onClick={() => setShowModal(true)}
         aria-label="Download audio"
+        className={className}
       >
-        <img src={downbig} alt="" className="audiodetail_download_icon" />
-        <p className="audiodetail_download_text">
-          {formatNumber(downloads) || 0}
-        </p>
+        {triggerInnerChild ? (
+          triggerInnerChild
+        ) : (
+          <div className="audiodetail_download">
+            <img src={downbig} alt="" className="audiodetail_download_icon" />
+            <p className="audiodetail_download_text">
+              {formatNumber(downloads) || 0}
+            </p>
+          </div>
+        )}
       </button>
-
       {/* modal  */}
       <Modal
         show={showModal}
@@ -93,6 +105,6 @@ export const AudioDetailsDownloadModal = ({ downloads, nid }) => {
           </form>
         )}
       </Modal>
-    </>
+    </div>
   );
 };
