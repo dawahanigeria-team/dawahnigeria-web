@@ -33,7 +33,6 @@ import {
 import { playTimingDesktop } from "../../pages/audioDetail/UI_audiodetail/playtiming";
 import AudioLoader from "../UI/audioLoader/audioLoader";
 import { AudioContext } from "../../App";
-import DownloadAudio from "../download/download";
 import {
   AddFavourites,
   AddedFavourites,
@@ -44,6 +43,7 @@ import {
 } from "../svgcomponent/svgComponent";
 import Addplaylist from "../../pages/add_playlist/AddPlaylist";
 import { LECTURE, RESOURCE_PERSON } from "../../utils/routes/constants";
+import { AudioDownloadModal } from "../audioDownloadModal/AudioDownloadModal";
 const AudioActionDesktop = () => {
   const { currentUser, audioId, isrepeat, value, page, count, pack, playing } =
     useSelector((state) => state.user);
@@ -62,7 +62,6 @@ const AudioActionDesktop = () => {
   const [isEmpty] = useState(false);
   const [, setIsPrevious] = useState(false);
   const [isShare, setisShare] = useState(false);
-  const [isDownload, setisDownload] = useState(false);
 
   const [currentaudio, setcurrentaudio] = useState([]);
   const [isminimize, setminimize] = useState(false);
@@ -270,10 +269,6 @@ const AudioActionDesktop = () => {
     //console.log("@@@ add playlist clicked");
     dispatch(getLecid(audioId));
     dispatch(showaddPlaylist(true));
-  };
-
-  const downloading = () => {
-    setisDownload(!isDownload);
   };
 
   /////get users favorites
@@ -491,15 +486,12 @@ const AudioActionDesktop = () => {
             >
               {isrepeat ? <RepeatedIcon /> : <RepeatIcon />}
             </button>
-            <button
-              onClick={() => {
-                downloading();
-              }}
-              disabled={!audioId}
+
+            <AudioDownloadModal
+              nid={audioId}
               className="h-[20px] w-[20px] hover:text-[#ddff2b]"
-            >
-              <DownloadIcon />
-            </button>
+              triggerInnerChild={<DownloadIcon />}
+            />
             <button
               onClick={() => {
                 addToFav();
@@ -566,13 +558,6 @@ const AudioActionDesktop = () => {
         />
       </div>
 
-      <div className={isDownload ? `block` : `hidden`}>
-        <DownloadAudio
-          isDownload={isDownload}
-          setisDownload={setisDownload}
-          nid={audioId}
-        />
-      </div>
       <Addplaylist />
     </>
   );

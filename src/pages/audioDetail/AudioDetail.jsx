@@ -56,7 +56,7 @@ import { LECTURE, MORE } from "../../utils/routes/constants";
 import plus from "../../../src/assets/svg/plus.svg";
 import CurrentPlayData from "../../components/currentData/currentPlayData";
 import Loader from "../../components/UI/loader/loader";
-import { AudioDetailsDownloadModal } from "../../components/audioDetailsDownloadModal/AudioDetailsDownloadModal";
+import { AudioDownloadModal } from "../../components/audioDownloadModal/AudioDownloadModal";
 const AudioDetail = () => {
   const { id } = useParams();
   const {
@@ -128,7 +128,7 @@ const AudioDetail = () => {
       axios
         .get(`/leclistingapi.php?lecid=${id}`)
         .then((res) => {
-          //console.log(res);
+          console.log("Audio response", res.data[0]);
           dispatch(getcurrentAudioInfo(res.data[0]));
         })
         .catch((err) => {
@@ -539,7 +539,7 @@ const AudioDetail = () => {
                   </button>
 
                   <p className="audiodetail_fav_text">
-                    {formatNumber(currentaudio?.favorites || 0)}
+                    {formatNumber(currentAudioInfo?.favorites || 0)}
                   </p>
                 </div>
                 <div
@@ -554,7 +554,7 @@ const AudioDetail = () => {
                     className="audiodetail_share_icon"
                   />
                   <p className="audiodetail_share_text">
-                    {formatNumber(currentaudio?.share || 0)}
+                    {formatNumber(currentAudioInfo?.share || 0)}
                   </p>
                 </div>
                 <div className="audiodetail_comment">
@@ -565,7 +565,7 @@ const AudioDetail = () => {
                   />
                   <p className="audiodetail_comment_text">44</p>
                 </div>
-                <AudioDetailsDownloadModal
+                <AudioDownloadModal
                   downloads={currentAudioInfo?.downloads}
                   nid={currentAudioInfo.nid}
                 />
@@ -713,11 +713,12 @@ const AudioDetail = () => {
               </div>
             </div>
             <div className="audiores_actions">
-              <RiDownload2Fill
-                onClick={() => {
-                  setisAddedToFavorite((prev) => !prev);
-                }}
-                className="audiores_download"
+              <AudioDownloadModal
+                downloads={currentAudioInfo?.downloads}
+                nid={currentAudioInfo.nid}
+                triggerInnerChild={
+                  <RiDownload2Fill className="audiores_download" />
+                }
               />
               <button
                 onClick={(e) => {

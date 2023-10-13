@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 import ReactModal from "react-modal";
 
 export const Modal = ({
@@ -54,25 +55,38 @@ export const Modal = ({
       <div className="relative w-auto mx-auto cursor-default">
         {/*content*/}
         <div
-          className={`border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-[#1E1E1E] outline-none focus:outline-none w-[94vw] md:w-[60vw] xl:w-[30vw]  p-4 md:p-10 ${className} `}
+          className={`border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-[#1E1E1E] outline-none focus:outline-none w-[95vw] md:w-[60vw] xl:w-[30vw]  p-4 md:p-10 ${className} `}
         >
           {/*header*/}
-          {(modalTitle || modalDescription) && (
-            <div className="flex items-start justify-start pb-3  rounded-t whitespace-normal">
-              <div>
-                {modalTitle && (
-                  <h3 className="text-xl font-semibold text-white flex justify-center items-start flex-col gap-2">
-                    <span>{modalTitle}</span>
-                  </h3>
-                )}
-                {modalDescription && (
-                  <p className="text-xs text-gray-200 font-light">
-                    {modalDescription}
-                  </p>
-                )}
+          <div className="relative">
+            {(modalTitle || modalDescription) && (
+              <div className="flex items-start justify-start pb-3  rounded-t whitespace-normal">
+                <div>
+                  {modalTitle && (
+                    <h3 className="text-xl font-semibold text-white flex justify-center items-start flex-col gap-2">
+                      <span>{modalTitle}</span>
+                    </h3>
+                  )}
+                  {modalDescription && (
+                    <p className="text-xs text-gray-200 font-light">
+                      {modalDescription}
+                    </p>
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            )}
+
+            <button
+              aria-label="close modal"
+              className="absolute top-1 right-1"
+              onClick={closeModal}
+            >
+              <AiOutlineCloseCircle
+                className="text-primary-500 text-2xl"
+                aria-hidden="true"
+              />
+            </button>
+          </div>
           {/*body*/}
           <div className="relative pt-2 flex flex-wrap flex-col whitespace-normal">
             {children}
