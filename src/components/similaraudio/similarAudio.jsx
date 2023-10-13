@@ -64,7 +64,7 @@ const SimilarAudio = ({similar, heading,endpoint_url, currentPage, current,navti
     slide.current?.addEventListener("scroll", scrollEl);
 
     return () => slide.current?.removeEventListener("scroll", scrollEl);
-  }, [slide.current?.scrollLeft]);
+  }, []);
 
 
 

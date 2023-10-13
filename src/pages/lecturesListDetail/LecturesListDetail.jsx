@@ -48,7 +48,7 @@ const LecturesListDetail = () => {
   const dispatch = useDispatch();
   const [similarAlb, setsimilarAlb] = useState([]);
   const [data, setData] = useState([]);
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, sharedAlbum } = useSelector((state) => state.user);
   const observeEl = useRef();
   const leclistdet = useRef();
   const { setinitial } = useContext(AudioContext);
@@ -65,6 +65,15 @@ const LecturesListDetail = () => {
   const [similarUrl, setsimilarUrl] = useState();
   const [rpnames, setrpname] = useState([]);
   const [audioComment, setaudioComment] = useState();
+
+  useEffect(() => {
+    // if (sharedAlbum !== 0) {
+    setsingleData((prev) => {
+      console.log({ prevShareCount: prev });
+      return { ...prev, share: prev?.share + 1 };
+    });
+    // }
+  }, [sharedAlbum]);
 
   useEffect(() => {
     useaxios
