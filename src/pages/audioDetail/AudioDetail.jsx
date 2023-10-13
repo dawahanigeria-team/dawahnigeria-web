@@ -59,10 +59,13 @@ import {
   getRepeat,
   getValue,
 } from "../../Redux/Actions/ActionCreators";
+import { useSimilarAudioHook } from "../../hooks";
 import { LECTURE, MORE } from "../../utils/routes/constants";
 import plus from "../../../src/assets/svg/plus.svg";
 import CurrentPlayData from "../../components/currentData/currentPlayData";
 import Loader from "../../components/UI/loader/loader";
+import { useAudioHook } from "../../hooks";
+import { audioDetailApi } from "../../services";
 const AudioDetail = () => {
   const { id } = useParams();
   const {
@@ -81,28 +84,18 @@ const AudioDetail = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const [more, setMore] = useState(0);
-  const [play, setPlay] = useState(0);
   const [moreOption, setmoreOption] = useState(false);
   const { audioRef, setinitial, loading } = useContext(AudioContext);
-  //const [music, setMusic] = useState(0);
-  const [data, setData] = useState([]);
   const slide = useRef();
   const [audioComment, setaudioComment] = useState();
   const [subdata, setSubData] = useState([]);
   const [currentaudio, setcurrentaudio] = useState([]);
   const [curUser, setCurUser] = useState(currentUser || null);
   const [iscurrents, setcurrents] = useState(false);
-  //const audioRef = useRef();
   const rangeRef = useRef();
-  //const [page, getPage] = useState(currentPage);
-  //  const [endpUrl, setendpUrl] = useState(endpoint_url);
   const [isprev, setisprev] = useState(false);
   const [isnext, setisnext] = useState(true);
-  //const [isrepeat, getRepeat] = useState(false);
-  const [isComplete, setIsComplete] = useState(false);
   const [isComment, setIsComment] = useState(false);
-  //const [nidValue, setNidValue] = useState(nid);
-  //const [count, getCount] = useState(idx || id);
   const [isEmpty, setIsEmpty] = useState(false);
   const [isPrevious, setIsPrevious] = useState(false);
   const [isAMR, setisAMR] = useState(false);
@@ -121,37 +114,13 @@ const AudioDetail = () => {
   const [sumofFav, setsumofFav] = useState(0);
   const [isShare, setisShare] = useState(false);
   const [comment, setComment] = useState("");
-  const [noOfComments, setNoOfComments] = useState("");
-
   const dispatch = useDispatch();
-  //console.log("count: ", count);
-  //console.log("controlData: ", id);
 
-  //console.log("currentPage", page);
-  /**
-   
-   */
+  useAudioHook(id);
+  const keyParam = { id: currentAudioInfo?.rp_id, page: 1 };
+  const { querieddata: similarAudios } = useSimilarAudioHook(keyParam);
 
-  const getMusic = async (id) => {
-    if (state?.layout) return;
-    if (window.innerWidth <= 615) {
-      dispatch(getaudioId(id));
-    } else {
-      axios
-        .get(`/leclistingapi.php?lecid=${id}`)
-        .then((res) => {
-          //console.log(res);
-          dispatch(getcurrentAudioInfo(res.data[0]));
-        })
-        .catch((err) => {
-          //console.log(err);
-        });
-    }
-  };
-  useEffect(() => {
-    getMusic(id);
-  }, [id, audioId]);
-
+  console.log(similarAudios);
   const handlePlay = () => {
     dispatch(getaudioId(id));
     setinitial(false);
@@ -164,24 +133,20 @@ const AudioDetail = () => {
 
   const handleRange = (curr) => {
     dispatch(getValue(curr));
-    //   //console.log(rangeRef.current.value);
+
     if (audioRef.current) {
       audioRef.current.currentTime = curr;
     }
   };
 
   const handleNextAudio = () => {
-    // //console.log("first count: ", count);
     setIsPrevious(false);
     dispatch(setPlaying(false));
-    //console.log(pack);
 
     const next = pack?.findIndex((value) => {
       return value.nid === parseInt(id);
     });
 
-    //console.log("first count: ", next);
-    // //console.log("current diff: ", data?.length - 1 - next);
     if (!isEmpty && pack?.length - 1 - next <= 2) {
       dispatch(getPage(page + 1));
     }
@@ -189,10 +154,8 @@ const AudioDetail = () => {
     if (next === pack?.length - 1) {
       navigate(`${LECTURE}${pack[next]?.nid}`);
 
-      //console.log("@@@@@@@@@@ end of track next");
       dispatch(getCount(next));
     } else if (count < pack?.length - 1) {
-      //console.log("@@@@@@@@@@@ working");
       navigate(`${LECTURE}${pack[next + 1]?.nid}`);
 
       dispatch(getCount(next + 1));
@@ -210,24 +173,19 @@ const AudioDetail = () => {
     const prev = pack?.findIndex((value) => {
       return value.nid === parseInt(id);
     });
-   
+
     if (page > 1 && pack.length - 1 - prev <= pack.length - 1 - 2) {
       setIsPrevious(true);
       dispatch(getPage(page - 1));
     }
 
-    // getCount(prev);
-    // //console.log("second count: ", count);
     if (prev === 0) {
       navigate(`${LECTURE}${pack[prev]?.nid}`);
-      //dispatch(getaudioId(pack[prev]?.nid));
-      dispatch(getCount(prev));
 
-      //console.log("end of track prev");
+      dispatch(getCount(prev));
     } else {
-      //console.log("third count: ", count);
       navigate(`${LECTURE}${pack[prev - 1]?.nid}`);
-      //dispatch(getaudioId(pack[prev - 1]?.nid));
+
       dispatch(getCount(prev - 1));
     }
     setinitial(false);
@@ -473,36 +431,6 @@ const AudioDetail = () => {
     return () => slide.current?.removeEventListener("scroll", scrollEl);
   }, [slide.current?.scrollLeft]);
 
-  useEffect(() => {
-    //all lecturers
-    axios
-      .get(`${process.env.REACT_APP_API_BASE_URL}/all_rps_api.php`)
-      .then((res) => {
-        const data = res.data;
-        const rpArray = data.map((rp) => rp.name);
-        console.clear();
-        console.log("rpArray", rpArray);
-        const isPresent = rpArray.includes(currentAudioInfo?.rpname);
-        if (isPresent) {
-          const rpindex = rpArray.indexOf(currentAudioInfo?.rpname);
-          const page = 1;
-          axios
-            .get(
-              `/leclisting_rp.php?page=${page}&lim=10&offset=30&rpid=${data[rpindex]?.id}`
-            )
-            .then((res) => {
-              setSimilarAudio(res.data);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-      })
-      .catch((err) => {
-        //console.log(err);
-      });
-  }, [currentAudioInfo?.rpname]);
-
   const shareAudio = () => {
     setisShare(!isShare);
     //setNidValue(nid)
@@ -569,7 +497,7 @@ const AudioDetail = () => {
                 <div
                   id="player"
                   onClick={() => {
-                     dispatch(setPlaying(false));
+                    dispatch(setPlaying(false));
                     dispatch(getaudioId(id));
                     setinitial(false);
                     ///this is not coming with audio pack
@@ -935,14 +863,12 @@ const AudioDetail = () => {
                 navigate(MORE, {
                   state: {
                     name: "",
-                    heading: `Similar Audios by ${
-                      currentaudio?.rpname?.split(" ")[0]
-                    } ${currentaudio?.rpname?.split(" ")[1]}`,
+                    heading: `Similar Audios by ${currentAudioInfo?.rpname}`,
                     id: "",
                     img: "",
                     type: "lectures",
                     navtitle: "Similar Audio",
-                    currentdata: similarAudio,
+                    currentdata: similarAudios,
                   },
                 });
               }}
@@ -960,50 +886,51 @@ const AudioDetail = () => {
               <img src={foward} alt="foward" />
             </div>
             <div ref={slide} className="overflow_auto_wrapper">
-              {similarAudio.map(
-                (
-                  {
-                    img,
-                    lec_img,
-                    categories,
-                    cats,
-                    title,
-                    Title,
-                    rpname,
-                    nid,
-                    audio,
-                    views,
-                  },
-                  idx
-                ) => {
-                  return (
-                    <div
-                      className="similarWidget_album_item"
-                      onClick={() => {
-                        navigate(`${LECTURE}${id}`);
+              {Array.isArray(similarAudios) &&
+                similarAudios.map(
+                  (
+                    {
+                      img,
+                      lec_img,
+                      categories,
+                      cats,
+                      title,
+                      Title,
+                      rpname,
+                      nid,
+                      audio,
+                      views,
+                    },
+                    idx
+                  ) => {
+                    return (
+                      <div
+                        className="similarWidget_album_item"
+                        onClick={() => {
+                          navigate(`${LECTURE}${id}`);
 
-                        // setendpUrl(similarAudioUrl);
-                        dispatch(getPack(null));
-                        dispatch(getPage(1));
-                        dispatch(getaudioId(nid));
-                        dispatch(getCount(idx));
-                        dispatch(getPack(similarAudio));
+                          // setendpUrl(similarAudioUrl);
+                          dispatch(getPack(null));
+                          dispatch(getPage(1));
+                          dispatch(getaudioId(nid));
+                          dispatch(getCount(idx));
+                          dispatch(getPack(similarAudio));
 
-                        setCurUser(currentUser);
-                        window.location.reload();
-                      }}
-                      key={idx + 1}
-                    >
-                      <LandingWidget
-                        key={idx}
-                        categories={categories || cats}
-                        img={img || lec_img}
-                        views={views}
-                      />
-                    </div>
-                  );
-                }
-              )}
+                          setCurUser(currentUser);
+                          window.location.reload();
+                        }}
+                        key={idx + 1}
+                      >
+                        <LandingWidget
+                          key={idx}
+                          categories={categories || cats}
+                          img={img || lec_img}
+                          views={views}
+                        />
+                      </div>
+                    );
+                  }
+                )}
             </div>
           </div>
         </div>

@@ -129,9 +129,8 @@ const Landing = () => {
               data={recentlyPosted?.data}
               heading="Recently Posted"
               type={"lectures"}
-              endpoint_url={"/leclisting_recent.php&page="}
+              endpoint_url={"/leclisting_recent.php?&action=get_recent_audio&page="}
               currentPage={page}
-              previousPlay={curPlay}
               isrecentpost={true}
               nav1={{ title: "Home", link: HOME }}
             />
