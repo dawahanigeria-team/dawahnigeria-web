@@ -24,7 +24,7 @@ const IconText = ({ icon, link, name, id, setisOpen }) => {
       setActive(0);
     } else if (location.pathname === "/dawahcast") {
       setActive(0);
-    } else if (location.pathname.includes("genres")) {
+    } else if (location.pathname.includes("charts")) {
       setActive(7);
     } else if (location.pathname.includes("recommend2")) {
       setActive(12);
@@ -32,24 +32,27 @@ const IconText = ({ icon, link, name, id, setisOpen }) => {
       setActive(11);
     } else if (location.pathname.includes("lecturers")) {
       setActive(3);
-    } else if (location.pathname.includes("videos")) {
+    } else if (location.pathname.includes("recitations")) {
       setActive(4);
-    } else if (location.pathname.includes("playlists")) {
+    } else if (location.pathname.includes("videos")) {
       setActive(5);
-    } else if (location.pathname.includes("charts")) {
+    } else if (location.pathname.includes("playlists")) {
       setActive(6);
     } else if (location.pathname.includes("trending")) {
       setActive(1);
     } else if (location.pathname.includes("new")) {
       setActive(2);
     } else if (location.pathname.includes("favourite")) {
-      setActive(9);
-    } else if (location.pathname.includes("myplaylist")) {
       setActive(10);
+    } else if (location.pathname.includes("myplaylist")) {
+      setActive(11);
+    }
+    else if (location.pathname.includes("genres")) {
+      setActive(8);
     }
 
     if (addplaylist) {
-      setActive(8);
+      setActive(9);
       //dispatch(showaddPlaylist(true))
     }
   }, [location.pathname]);
@@ -59,7 +62,7 @@ const IconText = ({ icon, link, name, id, setisOpen }) => {
       onClick={() => {
         navigate(link);
         close();
-        if (id === 8) {
+        if (id === 9) {
           dispatch(showaddPlaylist(true));
           //console.log('8')
         }

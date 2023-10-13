@@ -40,7 +40,7 @@ export const useMoreViewHook = (keyParam, currentdata) => {
 
   useEffect(() => {
     if (keyParam.endpoint_url) return;
-    // console.log('sorry, I am here')
+    
     setquerydata(currentdata);
     setHasReachedLastPage(true);
   }, [keyParam.endpoint_url]);
