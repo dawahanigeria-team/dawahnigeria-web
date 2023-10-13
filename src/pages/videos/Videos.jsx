@@ -110,6 +110,7 @@ const Videos = () => {
                 { images, id, favourites, author, views, title, duration },
                 idx
               ) => {
+                console.log({ images });
                 if (data.length === idx + 1) {
                   return (
                     <div

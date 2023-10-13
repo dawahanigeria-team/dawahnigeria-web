@@ -111,6 +111,7 @@ const Trending = () => {
             {data.map(
               (
                 {
+                  mp3_thumbnail,
                   Title,
                   rpname,
                   img,
@@ -129,7 +130,7 @@ const Trending = () => {
                       <List
                         key={idx}
                         id={idx}
-                        image={img}
+                        image={mp3_thumbnail || img}
                         favorites={favorites}
                         duration={duration}
                         title={Title}
@@ -155,7 +156,7 @@ const Trending = () => {
                       <List
                         key={idx}
                         id={idx}
-                        image={img}
+                        image={mp3_thumbnail || img}
                         duration={duration}
                         favorites={favorites}
                         title={Title}
@@ -213,6 +214,7 @@ const Trending = () => {
             data.map(
               (
                 {
+                  mp3_thumbnail,
                   Title,
                   rpname,
                   img,
@@ -238,7 +240,7 @@ const Trending = () => {
                         key={idx}
                         id={idx}
                         duration={duration}
-                        image={img}
+                        image={mp3_thumbnail || img}
                         title={Title}
                         lecturer={rpname}
                         favorites={favorites}
@@ -266,7 +268,7 @@ const Trending = () => {
                         key={idx}
                         id={idx}
                         duration={duration}
-                        image={img}
+                        image={mp3_thumbnail || img}
                         title={Title}
                         lecturer={rpname}
                         favorites={favorites}

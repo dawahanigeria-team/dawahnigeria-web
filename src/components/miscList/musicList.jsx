@@ -26,6 +26,7 @@ import {
   getaudioId,
   showaddPlaylist,
   getLecid,
+  setPlaying,
   getCount,
   getPack,
   getPage,
@@ -237,6 +238,7 @@ function MusicList({
             setinitial(false);
             dispatch(getCount(id));
             dispatch(getaudioId(nid));
+            dispatch(setPlaying(false))
             dispatch(getPack(null));
             dispatch(getPage(currentPage));
             dispatch(getPack(controlData));

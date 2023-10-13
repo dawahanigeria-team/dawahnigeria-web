@@ -17,12 +17,19 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 20
+          cache: 'yarn'
 
       - name: Install dependencies
         run: yarn install
 
       - name: Build React app
         run: yarn build
+        env:
+            REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
+            REACT_APP_API_ADMINISTER_BASE_URL: ${{ secrets.REACT_APP_API_ADMINISTER_BASE_URL }}
+            REACT_APP_DEV_API_BASE_URL: ${{secrets.REACT_APP_DEV_API_BASE_URL}}
+            REACT_APP_GOOGLE_PLAY_URL: ${{ secrets.GOOGLE_PLAY_URL }}
+            REACT_APP_APPLE_STORE_URL: ${{ secrets.APPLE_STORE_URL}}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1

@@ -15,6 +15,7 @@ const AlbumMobileChart = ({ data }) => {
               <img
                 className="rounded-md w-full h-full"
                 src={
+                  data[1]?.alb_thumbnail ||
                   data[1]?.img ||
                   data[1]?.lec_img ||
                   "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"
@@ -42,6 +43,7 @@ const AlbumMobileChart = ({ data }) => {
               <img
                 className="rounded-md w-full h-full"
                 src={
+                  data[0]?.alb_thumbnail ||
                   data[0]?.img ||
                   data[0]?.lec_img ||
                   "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"
@@ -67,6 +69,7 @@ const AlbumMobileChart = ({ data }) => {
               <img
                 className="rounded-md w-full h-full"
                 src={
+                  data[2]?.alb_thumbnail ||
                   data[2]?.img ||
                   data[2]?.lec_img ||
                   "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"
@@ -89,13 +92,19 @@ const AlbumMobileChart = ({ data }) => {
       </div>
 
       <div className="flex flex-col w-full mt-4 space-y-2 justify-end items-end">
-        {data?.slice(3).map(({ lec_img, id, img, nid, name }, idx) => {
-          return (
-            <Link to={`${ALBUMS}${id || nid}`} key={idx} className="w-[90%]">
-              <LectChartWidget name={name} img={img || lec_img} idx={idx} />
-            </Link>
-          );
-        })}
+        {data
+          ?.slice(3)
+          .map(({ alb_thumbnail, lec_img, id, img, nid, name }, idx) => {
+            return (
+              <Link to={`${ALBUMS}${id || nid}`} key={idx} className="w-[90%]">
+                <LectChartWidget
+                  name={name}
+                  img={alb_thumbnail || img || lec_img}
+                  idx={idx}
+                />
+              </Link>
+            );
+          })}
       </div>
     </div>
   );
