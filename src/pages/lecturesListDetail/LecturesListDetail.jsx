@@ -214,7 +214,6 @@ const LecturesListDetail = () => {
     if (node) observeEl.current.observe(node);
   }, []);
 
- 
   //play all audio files
   const playAll = () => {
     if (window.innerWidth <= 615) {
@@ -299,7 +298,7 @@ const LecturesListDetail = () => {
     <Container>
       <HeadMeta
         title={`${
-          singleData?.name || "Album"
+          lectureTitleExtractor(singleData?.title, 2) || "Album"
         } on Dawah Nigeria - Home of islamic resources`}
       />
       <div className="leclistdet_wrapper">

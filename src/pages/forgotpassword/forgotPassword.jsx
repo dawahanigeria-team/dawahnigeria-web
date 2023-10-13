@@ -46,6 +46,9 @@ const ForgotPassword = () => {
 
   return (
     <div className="w-full z-[100] h-full fixed bg-black inset-0">
+      <HeadMeta
+        title={`Forgot password -  Dawah Nigeria, home of islamic resources`}
+      />
       <div className="bg-[#353535] m-auto h-full inset-0 absolute w-full min-[615px]:w-[600px]">
         <div
           onClick={() => {
