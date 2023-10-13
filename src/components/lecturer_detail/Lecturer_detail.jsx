@@ -22,6 +22,7 @@ import { toast } from "react-hot-toast";
 import axios from "../../utils/useAxios";
 import lazy from "../../assets/png/lazyrps.jpeg";
 import ShareAudio from "../shareaudio/shareAudio";
+import HeadMeta from "../head-meta";
 
 const LecturerDetail = () => {
   const { id } = useParams();
@@ -179,6 +180,11 @@ const LecturerDetail = () => {
 
   return (
     <Container>
+      <HeadMeta
+        title={`${
+          singleData?.name || "Lecturer"
+        } on Dawah Nigeria - Home of islamic resources`}
+      />
       <div className="lecdet_wrapper">
         <img
           ref={lecdet}

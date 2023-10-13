@@ -8,6 +8,7 @@ import { MdNavigateBefore } from "react-icons/md";
 import { VscArrowLeft, VscArrowRight } from "react-icons/vsc";
 
 import GroupWidget from "../../components/groupWidget/GroupWidget";
+import HeadMeta from "../../components/head-meta";
 const GenreDetail = () => {
   const { id } = useParams();
   const [lectures, setLectures] = useState([]);
@@ -38,6 +39,11 @@ const GenreDetail = () => {
   //i/genre_api.php?cat_id=40622
   return (
     <Container>
+      <HeadMeta
+        title={`${
+          catDetail?.[0]?.name || ""
+        } - Islamic resources on Dawah Nigeria`}
+      />
       <div className="genredet_wrapper max-[615px]:pt-[10%]">
         <div className="w-full min-[615px]:h-[700px] h-[260px] max-[615px]:brightness-[20%] absolute ">
           <img

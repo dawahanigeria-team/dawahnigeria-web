@@ -12,6 +12,7 @@ import Loader from "../../components/UI/loader/loader";
 import infiniteScroll from "../../components/UI/infiniteScroll";
 import { RESOURCE_PERSON } from "../../utils/routes/constants";
 import _ from "lodash";
+import HeadMeta from "../../components/head-meta";
 const Lecturers = () => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState([]);
@@ -72,7 +73,9 @@ const Lecturers = () => {
 
       axios
         .get(
-          `/all_rps_api.php?offset=30&lim=10&page=${page}${`${
+          `${
+            process.env.REACT_APP_API_BASE_URL
+          }/all_rps_api.php?offset=30&lim=10&page=${page}${`${
             langid ? `&langid=${langid}` : ""
           }`}${`${alpha && alpha !== "Hot" ? `&alpha=${alpha}` : ""}`}`
         )
@@ -148,6 +151,7 @@ const Lecturers = () => {
 
   return (
     <Container>
+      <HeadMeta title={`Lecturers - Get islamic resources on Dawah Nigeria`} />
       <div className="lecturers_wrapper">
         <div className="lecturers_head_link max-[615px]:border-b border-zinc-700">
           <HeaderRouter title={"Lecturer"} />

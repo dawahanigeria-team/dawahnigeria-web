@@ -43,6 +43,7 @@ import {
 } from "../../Redux/Actions/ActionCreators";
 import { AudioContext } from "../../App";
 import { LECTURE } from "../../utils/routes/constants";
+import HeadMeta from "../../components/head-meta";
 const LecturesListDetail = () => {
   const { id } = useParams();
   const { state } = useLocation();
@@ -303,6 +304,11 @@ const LecturesListDetail = () => {
   };
   return (
     <Container>
+      <HeadMeta
+        title={`${
+          singleData?.name || "Album"
+        } on Dawah Nigeria - Home of islamic resources`}
+      />
       <div className="leclistdet_wrapper">
         <img
           ref={leclistdet}
@@ -320,7 +326,9 @@ const LecturesListDetail = () => {
                 navigate(-1);
               }}
               className="leclistdet_breadcrumb_first"
-            >Back/</button>
+            >
+              Back/
+            </button>
             <p className="leclistdet_breadcrumb_second">
               {/* {(singleData?.title && singleData.title.split("-")[2]) ||
                 singleData?.title} */}

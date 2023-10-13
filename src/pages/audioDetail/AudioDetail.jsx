@@ -64,6 +64,7 @@ import { LECTURE, MORE } from "../../utils/routes/constants";
 import plus from "../../../src/assets/svg/plus.svg";
 import CurrentPlayData from "../../components/currentData/currentPlayData";
 import Loader from "../../components/UI/loader/loader";
+import HeadMeta from "../../components/head-meta";
 const AudioDetail = () => {
   const { id } = useParams();
   const {
@@ -516,6 +517,13 @@ const AudioDetail = () => {
 
   return (
     <Container>
+      <HeadMeta
+        title={`${
+          currentAudioInfo?.title?.split("-")[0] ||
+          currentAudioInfo?.Title ||
+          "Audio"
+        } on Dawah Nigeria - Home of islamic resources`}
+      />
       <div className="audiodetail_wrapper">
         <img
           className="audiodetail_hero"

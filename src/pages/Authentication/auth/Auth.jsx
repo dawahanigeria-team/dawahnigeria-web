@@ -4,6 +4,7 @@ import loginHero from "../../../assets/png/loginheroimg.png";
 import Logo from "../../../assets/svg/close.svg";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import HeadMeta from "../../../components/head-meta";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const Login = () => {
 
   return (
     <div className="auth_wrapper">
+      <HeadMeta title="Sign in to Dawah Nigeria | Home of Islamic resources" />
       <div className="auth_container">
         <img
           className="auth_hero_image"
