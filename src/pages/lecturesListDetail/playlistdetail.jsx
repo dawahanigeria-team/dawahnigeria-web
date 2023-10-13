@@ -12,7 +12,6 @@ import adfav from "../../../src/assets/svg/adfav.svg";
 import combold from "../../assets/svg/combold.svg";
 import lovebold from "../../assets/svg/lovebold.svg";
 import { CiPlay1 } from "react-icons/ci";
-import download from "../../../src/assets/svg/boom-download.svg";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import "./lecturesListDetail.scss";
 import { MdFavorite } from "react-icons/md";
@@ -228,13 +227,13 @@ const PlaylistDetail = () => {
                   />
                   <p className="leclistdet_comment_text">{formatNumber(0)}</p>
                 </div>
-                <div className="leclistdet_download">
+                {/* <div className="leclistdet_download">
                   <img
                     src={download}
                     alt=""
                     className="leclistdet_download_icon"
                   />
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

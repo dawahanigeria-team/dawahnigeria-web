@@ -72,7 +72,7 @@ const SimilarAudio = ({
     slide.current?.addEventListener("scroll", scrollEl);
 
     return () => slide.current?.removeEventListener("scroll", scrollEl);
-  }, [slide.current?.scrollLeft]);
+  }, []);
 
   return (
     <div className="similarWidget_wrapper">

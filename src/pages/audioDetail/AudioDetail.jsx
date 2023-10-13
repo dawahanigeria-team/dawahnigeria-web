@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  useCallback,
-  useContext,
-} from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import "./audiodetail.scss";
 import AudioActionDesktop from "../../components/audio/audioActionDesktop";
 import Container from "../../components/container/Container";
@@ -26,7 +20,6 @@ import { GiPauseButton } from "react-icons/gi";
 import pmobile from "../../../src/assets/svg/playmobile.svg";
 import sharebig from "../../../src/assets/svg/boom-share.svg";
 import commentbig from "../../../src/assets/svg/boom-comment.svg";
-import downbig from "../../../src/assets/svg/boom-download.svg";
 import favbig from "../../../src/assets/svg/boom-fav.svg";
 import { formatNumber } from "../../components/UI/formatter";
 import { AudioContext } from "../../App.jsx";
@@ -64,9 +57,12 @@ import { LECTURE, MORE } from "../../utils/routes/constants";
 import plus from "../../../src/assets/svg/plus.svg";
 import CurrentPlayData from "../../components/currentData/currentPlayData";
 import Loader from "../../components/UI/loader/loader";
+
 import { useAudioHook } from "../../hooks";
 import { audioDetailApi } from "../../services";
 import { DesktopFavoriteButton } from "../../components/UI/favoritebuttons/desktopfavoriteButtons";
+import { AudioDownloadModal } from "../../components/audioDownloadModal/AudioDownloadModal";
+
 const AudioDetail = () => {
   const { id } = useParams();
   const {
@@ -99,13 +95,7 @@ const AudioDetail = () => {
   const [isComment, setIsComment] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
   const [isPrevious, setIsPrevious] = useState(false);
-  const [isAMR, setisAMR] = useState(false);
-  const [isMP4, setisMP4] = useState(false);
-  const [amrText, setamrText] = useState("--");
-  const [mp4Text, setmp4Text] = useState("--");
-  const [downloadUrl, setdownloadUrl] = useState(null);
-  const [downloaddata, setdownloaddata] = useState();
-  const [isDownload, setisDownload] = useState(false);
+  const [isAddedToFavorite, setisAddedToFavorite] = useState(false);
   const playAnimation = useRef();
   const [similarAudio, setSimilarAudio] = useState([]);
   const [similarAudioUrl, setSimilarAudioUrl] = useState("");
@@ -116,6 +106,7 @@ const AudioDetail = () => {
   const [isShare, setisShare] = useState(false);
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
+
 
   const { refetch } = useAudioHook(id);
   const keyParam = { id: currentAudioInfo?.rp_id, page: 1 };
@@ -200,58 +191,6 @@ const AudioDetail = () => {
     dispatch(showaddPlaylist(true));
     dispatch(getLecid(lecid));
   };
-
-  ////////*********download************///// ///
-  useEffect(() => {
-    const payload = { lecid: currentAudioInfo?.nid };
-    axios
-      .post(`/download_api.php`, payload, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-        },
-      })
-      .then((res) => {
-        //console.log("from download audio detailed", res.data);
-        const { data } = res;
-        setdownloaddata(data);
-        const { amr_size, mp3_size } = data;
-
-        setamrText(`${amr_size} [AMR]`);
-        setmp4Text(`${mp3_size} [MP3]`);
-      })
-      .catch((err) => {
-        //console.log(err);
-      });
-  }, [id, audioId]);
-
-  ////console.log(data)
-
-  const selectAMR = () => {
-    const amr_url = downloaddata?.amr_url;
-    if (amr_url) return;
-    setisMP4(false);
-    setisAMR(true);
-    setdownloadUrl(amr_url);
-    //console.log(amr_url);
-  };
-
-  const selectMP4 = () => {
-    const mp3_url = downloaddata?.mp3_url;
-    if (!mp3_url) return;
-    setisMP4(true);
-    setisAMR(false);
-    setdownloadUrl(mp3_url);
-  };
-
-  const downloadlect = () => {
-    if (!downloadUrl) return;
-    toast.success("Downloading...");
-    window.open(downloadUrl, "_blank");
-  };
-
-  //console.log("data", data);
 
   /////get users favorites
   async function fetchFavorites(addFav, lecid) {
@@ -508,12 +447,14 @@ const AudioDetail = () => {
                   <CiPlay1 className="audiodetail_play_icon" />
                   <p className="audiodetail_play_text">{"play"}</p>
                 </div>
+
                 <DesktopFavoriteButton
                   favorites={currentAudioInfo?.favorites}
                   id={id}
                   type={"audio"}
                   refetch={refetch}
                 />
+
                 <div
                   onClick={() => {
                     shareAudio();
@@ -539,21 +480,10 @@ const AudioDetail = () => {
                     {formatNumber(currentAudioInfo?.comment || 0)}
                   </p>
                 </div>
-                <div
-                  onClick={() => {
-                    setisDownload(!isDownload);
-                  }}
-                  className="audiodetail_download"
-                >
-                  <img
-                    src={downbig}
-                    alt=""
-                    className="audiodetail_download_icon"
-                  />
-                  <p className="audiodetail_download_text">
-                    {formatNumber(currentAudioInfo?.downloads) || 0}
-                  </p>
-                </div>
+                <AudioDownloadModal
+                  downloads={currentAudioInfo?.downloads}
+                  nid={currentAudioInfo.nid}
+                />
               </div>
             </div>
           </div>
@@ -698,11 +628,12 @@ const AudioDetail = () => {
               </div>
             </div>
             <div className="audiores_actions">
-              <RiDownload2Fill
-                onClick={() => {
-                  setisDownload(!isDownload);
-                }}
-                className="audiores_download"
+              <AudioDownloadModal
+                downloads={currentAudioInfo?.downloads}
+                nid={currentAudioInfo.nid}
+                triggerInnerChild={
+                  <RiDownload2Fill className="audiores_download" />
+                }
               />
               <button
                 onClick={(e) => {
@@ -715,7 +646,7 @@ const AudioDetail = () => {
                 className="fav_btn"
                 disabled={isdisabled}
               >
-                {getFavs?.includes(parseInt(id)) ? (
+                {getFavs?.includes(parseInt(id)) || isAddedToFavorite ? (
                   <MdFavorite className="audiores_fav_active" />
                 ) : (
                   <MdFavoriteBorder className="audiores_fav" />
@@ -1012,36 +943,8 @@ const AudioDetail = () => {
             })}
           </div>
         </div>
-        {/* ----------------------- audio download --------------------- */}
 
         <Add_playlist />
-
-        <div
-          onClick={() => {
-            setisDownload(!isDownload);
-          }}
-          className={isDownload ? "fixed_wrapper" : "fixed_wrapper_none"}
-        >
-          <div className="small_wrapper" onClick={(e) => e.stopPropagation()}>
-            <div className="download_text">Select to download</div>
-            <div
-              onClick={selectAMR}
-              className={isAMR ? "download_amr" : "download_size"}
-            >
-              {amrText}
-            </div>
-            <div
-              onClick={selectMP4}
-              className={isMP4 ? "download_mp4" : "download_size"}
-            >
-              {mp4Text}
-            </div>
-
-            <button onClick={downloadlect} className="download_btn">
-              <span>Download</span>
-            </button>
-          </div>
-        </div>
 
         <div className={isShare ? "share_wrapper" : "hide_share_wrapper"}>
           <ShareAudio

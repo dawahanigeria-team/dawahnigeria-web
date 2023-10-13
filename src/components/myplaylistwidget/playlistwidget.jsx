@@ -12,13 +12,13 @@ import headp from "../../../src/assets/svg/headphone.svg";
 import dot from "../../../src/assets/svg/threedot.svg";
 import dmobile from "../../../src/assets/svg/downloadmobile.svg";
 import { useNavigate } from "react-router-dom";
-import DownloadAudio from "../download/download";
 import { formatNumber } from "../UI/formatter";
 import adfav from "../../../src/assets/svg/adfav.svg";
 import { toast } from "react-hot-toast";
 import { AudioContext } from "../../App";
 import { useSelector } from "react-redux";
 import axios from "../../utils/useAxios";
+import { AudioDownloadModal } from "../audioDownloadModal/AudioDownloadModal";
 function MyPlayListWidget({
   lecturer,
   id,
@@ -39,19 +39,12 @@ function MyPlayListWidget({
 }) {
   const navigate = useNavigate();
   const [more, setMore] = useState(false);
-  const [isDownload, setisDownload] = useState(false);
-  const [nidValue, setNidValue] = useState();
   const [addFav, setaddFav] = useState(false);
   const [isdisabled, setdisabled] = useState(false);
   const [getFavs, setgetfavs] = useState([]);
   const [sumofFav, setsumofFav] = useState(favorites || 0);
   const { currentUser } = useSelector((state) => state.user);
   const { setinitial } = useContext(AudioContext);
-  const handleDownload = (e) => {
-    e.stopPropagation();
-    setisDownload(!isDownload);
-    setNidValue(nid);
-  };
 
   ////not contented but under presssure by DN project manager
   useEffect(() => {
@@ -211,14 +204,14 @@ function MyPlayListWidget({
               </div>
 
               <div className="tr2_likeys">
-                <span
-                  onClick={(e) => {
-                    handleDownload(e);
-                  }}
+                <AudioDownloadModal
+                  nid={nid}
                   className="likeys_img"
-                >
-                  <img className="likeys_img_sz" src={download} alt="" />
-                </span>
+                  triggerInnerChild={
+                    <img className="likeys_img_sz" src={download} alt="" />
+                  }
+                />
+
                 <span className="likeys_img">
                   <img className="likeys_img_sz" src={sharebig} alt="" />
                 </span>
@@ -312,14 +305,13 @@ function MyPlayListWidget({
           </div>
 
           <div className="play_wrap_left">
-            <span
-              onClick={(e) => {
-                handleDownload(e);
-              }}
+            <AudioDownloadModal
+              nid={nid}
               className="likeys_img_left"
-            >
-              <img className="likeys_img_sz_left" src={dmobile} alt="" />
-            </span>
+              triggerInnerChild={
+                <img className="likeys_img_sz_left" src={dmobile} alt="" />
+              }
+            />
 
             <span
               onClick={(e) => {
@@ -341,18 +333,6 @@ function MyPlayListWidget({
           </div>
         </div>
       </div>
-
-      {nidValue && (
-        <div
-          className={isDownload ? "download_wrapper" : "hide_download_wrapper"}
-        >
-          <DownloadAudio
-            setisDownload={setisDownload}
-            isDownload={isDownload}
-            nid={nidValue}
-          />
-        </div>
-      )}
     </div>
   );
 }

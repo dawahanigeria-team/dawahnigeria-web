@@ -3,13 +3,13 @@ import "./groupWidget.scss";
 import LandingWidget from "../landingWidget/LandingWidget";
 import { FiChevronsRight } from "react-icons/fi";
 import LecturersWidget from "../lecturersWidget/LecturersWidget";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import back from "../../assets/svg/back.svg";
 import foward from "../../assets/svg/foward.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { AudioContext } from "../../App";
-import {  settings3, settings4 } from "./settings";
+import { settings3, settings4 } from "./settings";
 import {
   getType,
   getaudioData,
@@ -23,7 +23,14 @@ import LecturerMobileChart from "./chartUIs/lecturersMobileChart";
 import LectureMobileChart from "./chartUIs/lectureMobileChart";
 import AlbumMobileChart from "./chartUIs/albumMobileChart";
 import GenreMobileLecturer from "../../pages/genredetail/genreMobileLecturer";
-import { ALBUMS, LECTURE, PLAYLISTS, RESOURCE_PERSON,MORE, TRENDING } from "../../utils/routes/constants";
+import {
+  ALBUMS,
+  LECTURE,
+  PLAYLISTS,
+  RESOURCE_PERSON,
+  MORE,
+  TRENDING,
+} from "../../utils/routes/constants";
 
 const GroupWidget = ({
   data,
@@ -75,7 +82,7 @@ const GroupWidget = ({
 
   useEffect(() => {
     function scrollEl() {
-          if (slide.current.scrollLeft === 0) {
+      if (slide.current.scrollLeft === 0) {
         setisprev(false);
       } else {
         setisprev(true);
@@ -98,42 +105,44 @@ const GroupWidget = ({
 
   return (
     <div className="groupWidget_wrapper">
-      <div className="groupWidget_top">
-        <p className="groupWidget_top_heading">{heading}</p>
-        <div
-          onClick={() => {
-            if (heading === "Trending") {
-              navigate(TRENDING);
-            } else {
-              navigate(MORE, {
-                state: {
-                  name: "",
-                  heading: heading,
-                  id: "",
-                  img: "",
-                  type,
-                  currentdata: data,
-                  endpoint_url: endpoint_url || "",
-                  currentPage: currentPage || "",
-                  navtitle: nav1.title || "",
-                },
-              });
-            }
+      {Array.isArray(data) && data.length > 0 && (
+        <div className="groupWidget_top">
+          <p className="groupWidget_top_heading">{heading}</p>
+          <div
+            onClick={() => {
+              if (heading === "Trending") {
+                navigate(TRENDING);
+              } else {
+                navigate(MORE, {
+                  state: {
+                    name: "",
+                    heading: heading,
+                    id: "",
+                    img: "",
+                    type,
+                    currentdata: data,
+                    endpoint_url: endpoint_url || "",
+                    currentPage: currentPage || "",
+                    navtitle: nav1.title || "",
+                  },
+                });
+              }
 
-            dispatch(getType(heading));
-          }}
-          className={
-            styling && endpoint_url
-              ? "flex text-[#d6ff00] text-[15px] items-center"
-              : `flex text-[#d6ff00] text-[15px] items-center ${
-                  nav1.title === "Charts" ? "max-[615px]:hidden" : ""
-                }  `
-          }
-        >
-          <p className="cursor-pointer">more</p>
-          <FiChevronsRight className=" cursor-pointer text-[20px] pt-1" />
+              dispatch(getType(heading));
+            }}
+            className={
+              styling && endpoint_url
+                ? "flex text-[#d6ff00] text-[15px] items-center"
+                : `flex text-[#d6ff00] text-[15px] items-center ${
+                    nav1.title === "Charts" ? "max-[615px]:hidden" : ""
+                  }  `
+            }
+          >
+            <p className="cursor-pointer">more</p>
+            <FiChevronsRight className=" cursor-pointer text-[20px] pt-1" />
+          </div>
         </div>
-      </div>
+      )}
 
       {type === "recent" && (
         <div className="overflow_hidden_wrapper">
@@ -202,8 +211,8 @@ const GroupWidget = ({
                         <LandingWidget
                           key={idx}
                           categories={
-                           // title?.split("-")[0] ||
-                           // Title?.split("-")[0] ||
+                            // title?.split("-")[0] ||
+                            // Title?.split("-")[0] ||
                             title || Title
                           }
                           img={img || lec_img}
@@ -274,12 +283,7 @@ const GroupWidget = ({
                         >
                           <LandingWidget
                             key={idx}
-                            categories={
-                             // title?.split("-")[0] ||
-                              //Title?.split("-")[0] ||
-                              title || Title || 
-                              mp3_title
-                            }
+                            categories={title || Title || mp3_title}
                             img={img || lec_img}
                             views={views || 0}
                             nid={nid || id}
@@ -353,63 +357,59 @@ const GroupWidget = ({
                 styling ? "min-[615px]:space-x-3 space-x-3" : ""
               }`}
             >
-               {Array.isArray(data) && data.map(
-                (
-                  {
-                    img,
-                    lec_img,
-                    categories,
-                    cats,
-                    title,
-                    nid,
-                    Title,
-                    rpname,
-                    name,
-                    id,
-                    audio,
-                    views,
-                  },
-                  idx
-                ) => {
-                  return (
-                    <Link
-                      to={`${ALBUMS}${id || nid}`}
-                      id={idx}
-                      className={`groupWidget_album_item  ${
-                        styling ? "relative max-[615px]:hidden" : ""
-                      }`}
-                      onClick={() => {
-                        //navigate(`/a/${id || nid}`);
-                      }}
-                      key={idx + 1}
-                    >
-                      <LandingWidget
-                        key={nid}
-                        categories={
-                          name ||
-                        //  title?.split("-")[0] ||
-                         // Title?.split("-")[0] ||
-                          title || Title
-                        }
-                        img={img || lec_img}
-                        views={views || 0}
-                        nid={id || nid}
-                        styling={styling}
-                      />
-                      <div
-                        className={`absolute right-[-14px] bottom-[10px] rounded-full h-[38px] w-[38px] flex justify-center items-center text-white text-xl ${
-                          idx === 2 ? "bg-[#96734a]" : ""
-                        } ${idx === 1 ? "bg-[#76a8d7]" : ""}${
-                          idx === 0 ? "bg-[#ffa736]" : ""
-                        }
-                        ${styling && idx < 3 ? "block" : "hidden"}`}
+
+              {Array.isArray(data) &&
+                data.map(
+                  (
+                    {
+                      img,
+                      lec_img,
+                      categories,
+                      cats,
+                      title,
+                      nid,
+                      Title,
+                      rpname,
+                      name,
+                      id,
+                      audio,
+                      views,
+                    },
+                    idx
+                  ) => {
+                    return (
+                      <Link
+                        to={`${ALBUMS}${id || nid}`}
+                        id={idx}
+                        className={`groupWidget_album_item  ${
+                          styling ? "relative max-[615px]:hidden" : ""
+                        }`}
+                        onClick={() => {}}
+                        key={idx + 1}
+
                       >
-                        <span>{idx + 1}</span>
-                      </div>
-                    </Link>
-                  );
-                }
-              )}
+                        <LandingWidget
+                          key={idx}
+                          categories={name || title || Title}
+                          img={img || lec_img}
+                          views={views || 0}
+                          nid={id || nid}
+                          styling={styling}
+                        />
+                        <div
+                          className={`absolute right-[-14px] bottom-[10px] rounded-full h-[38px] w-[38px] flex justify-center items-center text-white text-xl ${
+                            idx === 2 ? "bg-[#96734a]" : ""
+                          } ${idx === 1 ? "bg-[#76a8d7]" : ""}${
+                            idx === 0 ? "bg-[#ffa736]" : ""
+                          }
+                        ${styling && idx < 3 ? "block" : "hidden"}`}
+                        >
+                          <span>{idx + 1}</span>
+                        </div>
+                      </Link>
+                    );
+                  }
+                )}
             </div>
           </div>
         </div>
@@ -456,9 +456,10 @@ const GroupWidget = ({
                         <LandingWidget
                           key={nid}
                           categories={
-                            name || Title ||
-                          //  title?.split("-")[0] ||
-                           // Title?.split("-")[0] ||
+                            name ||
+                            Title ||
+                            //  title?.split("-")[0] ||
+                            // Title?.split("-")[0] ||
                             title
                           }
                           img={lec_img}
@@ -476,6 +477,7 @@ const GroupWidget = ({
       {nav1.title === "Genres" && type === "lecturer" && (
         <div className="w-full h-full overflow-hidden min-[615px]:hidden">
           <div className="w-full overflow-x-auto flex items-center space-x-4 h-full">
+
             {Array.isArray(data) && data.map(({ img, name, id, nid }, idx) => {
               return (
                 <Link
@@ -487,6 +489,7 @@ const GroupWidget = ({
                 </Link>
               );
             })}
+
           </div>
         </div>
       )}
@@ -505,57 +508,58 @@ const GroupWidget = ({
               nav1.title === "Genres" ? "hidden" : ""
             } min-[615px]:space-x-20 `}
           >
-            {Array.isArray(data) && data.map(
-              (
-                {
-                  img,
-                  lec_img,
-                  categories,
-                  cats,
-                  title,
-                  Title,
-                  views,
-                  name,
-                  nid,
-                  id,
-                  audio,
+            {Array.isArray(data) &&
+              data.map(
+                (
+                  {
+                    img,
+                    lec_img,
+                    categories,
+                    cats,
+                    title,
+                    Title,
+                    views,
+                    name,
+                    nid,
+                    id,
+                    audio,
 
-                  favorites,
-                },
-                idx
-              ) => {
-                return (
-                  <>
-                    <Link
-                      to={`${RESOURCE_PERSON}${id || nid}`}
-                      className="max-[615px]:hidden relative"
-                      onClick={() => {
-                        // navigate(`${RESOURCE_PERSON}${id || nid}`);
-                      }}
-                      key={idx + 1}
-                    >
-                      <LecturersWidget
-                        views={views}
-                        key={idx}
-                        rp={name}
-                        img={img}
-                        styling={styling}
-                      />
-                      <div
-                        className={`absolute right-[-18px] bottom-[100px] rounded-full h-[38px] w-[38px] flex justify-center items-center text-white text-xl ${
-                          idx === 2 ? "bg-[#96734a]" : ""
-                        } ${idx === 1 ? "bg-[#76a8d7]" : ""}${
-                          idx === 0 ? "bg-[#ffa736]" : ""
-                        }
-                        ${styling && idx < 3 ? "block" : "hidden"}`}
+                    favorites,
+                  },
+                  idx
+                ) => {
+                  return (
+                    <>
+                      <Link
+                        to={`${RESOURCE_PERSON}${id || nid}`}
+                        className="max-[615px]:hidden relative"
+                        onClick={() => {
+                          // navigate(`${RESOURCE_PERSON}${id || nid}`);
+                        }}
+                        key={idx + 1}
                       >
-                        <span>{idx + 1}</span>
-                      </div>
-                    </Link>
-                  </>
-                );
-              }
-            )}
+                        <LecturersWidget
+                          views={views}
+                          key={idx}
+                          rp={name}
+                          img={img}
+                          styling={styling}
+                        />
+                        <div
+                          className={`absolute right-[-18px] bottom-[100px] rounded-full h-[38px] w-[38px] flex justify-center items-center text-white text-xl ${
+                            idx === 2 ? "bg-[#96734a]" : ""
+                          } ${idx === 1 ? "bg-[#76a8d7]" : ""}${
+                            idx === 0 ? "bg-[#ffa736]" : ""
+                          }
+                        ${styling && idx < 3 ? "block" : "hidden"}`}
+                        >
+                          <span>{idx + 1}</span>
+                        </div>
+                      </Link>
+                    </>
+                  );
+                }
+              )}
           </div>
         </div>
       )}
@@ -564,4 +568,3 @@ const GroupWidget = ({
 };
 
 export default GroupWidget;
-

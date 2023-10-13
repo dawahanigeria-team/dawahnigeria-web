@@ -13,7 +13,6 @@ import adfav from "../../../src/assets/svg/adfav.svg";
 import combold from "../../assets/svg/combold.svg";
 import lovebold from "../../assets/svg/lovebold.svg";
 import { CiPlay1 } from "react-icons/ci";
-import download from "../../../src/assets/svg/boom-download.svg";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import "./lecturesListDetail.scss";
 import { MdFavorite } from "react-icons/md";
@@ -48,7 +47,9 @@ const LecturesListDetail = () => {
   const { id } = useParams();
   const { state } = useLocation();
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((state) => state.user);
+  const [similarAlb, setsimilarAlb] = useState([]);
+  const [data, setData] = useState([]);
+  const { currentUser, sharedAlbum } = useSelector((state) => state.user);
   const observeEl = useRef();
   const leclistdet = useRef();
   const { setinitial } = useContext(AudioContext);
@@ -78,6 +79,20 @@ const LecturesListDetail = () => {
     keyParam,
     lectureListDetailApi.getSimilarAlbums
   );
+  const [similarUrl, setsimilarUrl] = useState();
+  const [rpnames, setrpname] = useState([]);
+  const [audioComment, setaudioComment] = useState();
+
+  useEffect(() => {
+    // if (sharedAlbum !== 0) {
+    setsingleData((prev) => {
+      console.log({ prevShareCount: prev });
+      return { ...prev, share: prev?.share + 1 };
+    });
+    // }
+  }, [sharedAlbum]);
+
+
 
   //////*************handling comment**************** */
 
@@ -160,6 +175,7 @@ const LecturesListDetail = () => {
   };
   return (
     <Container>
+
       {Array.isArray(querieddata) && (
         <div className="leclistdet_wrapper">
           <img
@@ -233,6 +249,7 @@ const LecturesListDetail = () => {
                     <CiPlay1 className="leclistdet_play_icon" />
                     <p className="leclistdet_play_text">Play All</p>
                   </button>
+
                   <DesktopFavoriteButton
                     favorites={querieddata[0]?.favorites}
                     id={id}
@@ -272,6 +289,7 @@ const LecturesListDetail = () => {
                     />
                   </div>
                 </div>
+
               </div>
             </div>
             <p className="leclistdet_head_right_text2">

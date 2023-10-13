@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import "./landing.scss";
 import Container from "../../components/container/Container";
 import GroupWidget from "../../components/groupWidget/GroupWidget";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import bchart from "../../assets/svg/boom-chart.svg";
 import blecturer from "../../assets/svg/boom-lecturer.svg";
-
 import bplaylist from "../../assets/svg/boom-playlist.svg";
 import btrending from "../../assets/svg/boom-trending.svg";
 import bnew from "../../assets/svg/boom-new.svg";
@@ -18,6 +17,8 @@ import { useSelector } from "react-redux";
 import LandingOptions from "../../components/landingOptions/LandingOptions";
 import MyCarousel from "../../components/UI/carousel/myCarousel";
 import MobileImageWidget from "./mobileimagewidget/mobileImageWidget";
+import { settings, settings1 } from "./utils";
+import CarouselSkeleton from "../../components/skeletion/carousel.skeleton";
 import {
   GENRES,
   HOME,
@@ -32,6 +33,9 @@ import {
 } from "../../utils/routes/constants";
 import HeadMeta from "../../components/head-meta";
 import { useLandingPageHook } from "../../hooks/landing";
+
+import RowSkeletonContainer from "../../components/skeletion/skeleton.container";
+
 const Landing = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [curPlay, setcurPlay] = useState([]);
@@ -78,6 +82,7 @@ const Landing = () => {
     ],
   };
 
+
   const [sliders, recentlyPosted, specialFeatures, recentlyviewed] =
     useLandingPageHook();
 
@@ -85,10 +90,14 @@ const Landing = () => {
     { name: val.name, more: val.more },
   ]);
 
+
   return (
     <Container>
       <HeadMeta title="DawahNigeria | Home" />
       <div className="landing_wrapper px-[2%] max-[615px]:py-[5%] py-[8%] min-[690px]:py-[2%]">
+
+        {sliders?.data?.images.length > 1 ? (
+          <>
         <div className="carousel  h-[250px] min-[950px]:h-[250px] min-[1050px]:h-[250px] min-[1283px]:h-[300px]">
           <MyCarousel images={sliders?.data} />
         </div>
@@ -116,11 +125,15 @@ const Landing = () => {
           <LandingOptions text={"Trending"} img={btrending} link={TRENDING} />
           <LandingOptions text={"New"} img={bnew} link={NEW} />
         </Slider>
+        </>
+        ) : (
+          <CarouselSkeleton />
+        )}
         {recentlyPosted?.isSuccess && Array.isArray(recentlyPosted?.data) && (
           <div className="landing_recent landing_space my-1 min-[615px]:my-3">
             {" "}
             <GroupWidget
-              data={recentlyPosted?.data}
+              data={recentlyPosted?.data.slice(0,10)}
               heading="Recently Posted"
               type={"lectures"}
               endpoint_url={
@@ -131,6 +144,7 @@ const Landing = () => {
               nav1={{ title: "Home", link: HOME }}
             />
           </div>
+
         )}
         {recentlyviewed?.isSuccess && Array.isArray(recentlyviewed?.data) && (
           <div className="landing_recent landing_space my-1 min-[615px]:my-3">
@@ -145,6 +159,11 @@ const Landing = () => {
               isrecent={isrecent}
               nav1={{ title: "Home", link: HOME }}
             />
+
+        ) : (
+          <div className="landing_recent landing_space my-1 min-[615px]:my-3">
+            <RowSkeletonContainer />
+
           </div>
         )}
 
@@ -163,6 +182,19 @@ const Landing = () => {
                   currentPage={""}
                   nav1={{ title: "Home", link: HOME }}
                 />
+              </div>
+            ))}
+
+        {Array.isArray(landingpagedata?.specailFeat) &&
+          landingpagedata?.specailFeat.length === 0 &&
+          Array(10)
+            .fill(undefined)
+            .map((_, i) => (
+              <div
+                key={i}
+                className="landing_recent landing_space my-1 min-[615px]:my-3"
+              >
+                <RowSkeletonContainer />
               </div>
             ))}
       </div>

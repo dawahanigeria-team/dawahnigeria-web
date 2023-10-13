@@ -73,12 +73,14 @@ const Videos = () => {
         )}
         {
           <div className="video_widget">
+
             {Array.isArray(querieddata) &&
               querieddata?.map(
                 (
                   { images, id, favourites, author, views, title, duration },
                   idx
                 ) => {
+
                   return (
                     <div
                       ref={

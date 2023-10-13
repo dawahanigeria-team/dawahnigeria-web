@@ -9,7 +9,7 @@ export const landingPageApis = {
       payload: { action: "retrieve_spcl_ftr_data" },
     }),
   getRecentlyPosted: async (page = 1) =>
-    await apiService(process.env.REACT_APP_DEV_API_BASE_URL).get(
+    await apiService().get(
       `/leclisting_recent.php?&action=get_recent_audio&page=${page}`
     ),
   getRecentlyViewed: async ({id, page = 1, setisrecent, setcurPlay}) => {

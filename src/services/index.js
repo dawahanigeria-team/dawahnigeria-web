@@ -13,3 +13,4 @@ export * from "./video.service"
 export * from "./audiodetail.service"
 export * from "./more.service"
 export * from "./favorite.service"
+export * from "./lecture.service";

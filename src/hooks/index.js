@@ -7,3 +7,5 @@ export * from "./playlists/";
 export * from "./audio/"
 export * from "./moreview/"
 export * from "./favorites/"
+export * from "./lecture/";
+

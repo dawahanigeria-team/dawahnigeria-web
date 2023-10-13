@@ -114,10 +114,12 @@ const LectureMobileChart = ({ data }) => {
         {Array.isArray(data) &&
           data
             ?.slice(3)
+
             .map(({ mp3_title, nid, img }, idx) => {
               return (
                 <Link
                   to={`${LECTURE}${nid}`}
+
                   onClick={() => {
                     dispatch(getPack(null));
 
@@ -130,7 +132,9 @@ const LectureMobileChart = ({ data }) => {
                 >
                   <LectChartWidget
                     name={mp3_title}
+
                     img={img}
+
                     idx={idx}
                   />
                 </Link>

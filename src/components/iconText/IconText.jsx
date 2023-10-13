@@ -30,7 +30,9 @@ const IconText = ({ icon, link, name, id, setisOpen }) => {
       setActive(11);
     } else if (location.pathname.includes("lecturers")) {
       setActive(3);
+
     } else if (location.pathname.includes("recitations")) {
+
       setActive(4);
     } else if (location.pathname.includes("videos")) {
       setActive(5);
