@@ -5,6 +5,7 @@ import axios from "../../utils/useAxios";
 import { toast } from "react-hot-toast";
 import Loader from "../../components/UI/loader/loader";
 import ResetPassword from "./resetpassword/resetPassword";
+import HeadMeta from "../../components/head-meta";
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState();
