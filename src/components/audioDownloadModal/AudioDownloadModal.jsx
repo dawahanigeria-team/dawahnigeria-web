@@ -30,12 +30,15 @@ export const AudioDownloadModal = ({
     []
   );
   return (
-    <>
-      {/* trigger button  */}
+    <div
+      onClick={(e) => {
+        // preventing parent element from receiving click event from any of the children
+        e.stopPropagation();
+      }}
+    >
+      {/* Trigger button */}
       <button
-        onClick={() => {
-          setShowModal(true);
-        }}
+        onClick={() => setShowModal(true)}
         aria-label="Download audio"
         className={className}
       >
@@ -50,7 +53,6 @@ export const AudioDownloadModal = ({
           </div>
         )}
       </button>
-
       {/* modal  */}
       <Modal
         show={showModal}
@@ -103,6 +105,6 @@ export const AudioDownloadModal = ({
           </form>
         )}
       </Modal>
-    </>
+    </div>
   );
 };

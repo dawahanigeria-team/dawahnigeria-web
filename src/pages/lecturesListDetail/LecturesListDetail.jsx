@@ -14,7 +14,6 @@ import adfav from "../../../src/assets/svg/adfav.svg";
 import combold from "../../assets/svg/combold.svg";
 import lovebold from "../../assets/svg/lovebold.svg";
 import { CiPlay1 } from "react-icons/ci";
-import download from "../../../src/assets/svg/boom-download.svg";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import "./lecturesListDetail.scss";
 import audioHero from "../../assets/png/detialPagehero.png";
@@ -204,7 +203,6 @@ const LecturesListDetail = () => {
     if (node) observeEl.current.observe(node);
   }, []);
 
- 
   //play all audio files
   const playAll = () => {
     if (window.innerWidth <= 615) {
@@ -304,7 +302,9 @@ const LecturesListDetail = () => {
                 navigate(-1);
               }}
               className="leclistdet_breadcrumb_first"
-            >Back/</button>
+            >
+              Back/
+            </button>
             <p className="leclistdet_breadcrumb_second">
               {/* {(singleData?.title && singleData.title.split("-")[2]) ||
                 singleData?.title} */}
@@ -407,13 +407,13 @@ const LecturesListDetail = () => {
                     {formatNumber(singleData?.comments || 0)}
                   </p>
                 </div>
-                <div className="leclistdet_download">
+                {/* <div className="leclistdet_download">
                   <img
                     src={download}
                     alt=""
                     className="leclistdet_download_icon"
                   />
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

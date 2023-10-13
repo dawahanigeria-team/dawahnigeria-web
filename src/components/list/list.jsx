@@ -13,7 +13,7 @@ import pmobile from "../../../src/assets/svg/playmobile.svg";
 import dot from "../../../src/assets/svg/threedot.svg";
 import { SlShare } from "react-icons/sl";
 import dmobile from "../../../src/assets/svg/boom-download.svg";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Add_playlist from "../../pages/add_playlist/AddPlaylist";
 import { toast } from "react-hot-toast";
 import { LECTURE, RESOURCE_PERSON } from "../../utils/routes/constants";
@@ -246,6 +246,7 @@ function List({
         >
           <div className="tr">
             <p className={audioId === nid ? "num hide" : "num"}>{id + 1}</p>
+
             <div className={audioId === nid ? " hide" : "plays"}>
               <img className="play_sz" src={pmobile} alt="" />
             </div>
@@ -333,37 +334,32 @@ function List({
           </div>
           <div className="tr2">
             <div className="tr2_real_wrap">
-              <div
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (rpid) {
-                    navigate(`${RESOURCE_PERSON}${rpid}`);
-                  }
-                }}
+              <Link
+                to={rpid ? `${RESOURCE_PERSON}${rpid}` : "#"}
                 className="tr2_text"
               >
                 <div className="text_child hover:text-gray-400">{`${
                   lecturer?.split(" ")[0]
                 } ${lecturer?.split(" ")[1]}`}</div>
-              </div>
+              </Link>
 
               <div className="tr2_likeys">
-                <span
+                <button
                   onClick={(e) => {
                     addToPlaylist(e, nid);
                   }}
                   className="likeys_img"
                 >
                   <AddplayIcon />
-                </span>
-                <span
+                </button>
+                <button
                   onClick={(e) => {
                     shareAudio(e);
                   }}
                   className="likeys_img"
                 >
                   <SlShare className="" />
-                </span>
+                </button>
 
                 <AudioDownloadModal
                   nid={nid}

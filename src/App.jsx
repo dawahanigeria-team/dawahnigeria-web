@@ -38,7 +38,6 @@ import Favourite from "./pages/favourite/Favourite";
 import Myplaylist from "./pages/my_playlist/My_playlist";
 import LecturesListDetail from "./pages/lecturesListDetail/LecturesListDetail";
 import More from "./components/moreView/more";
-import DownloadAudio from "./components/download/download";
 import Library from "./pages/library/library";
 import SelectLanguage from "./pages/Authentication/selectLanguage";
 import Scrolltotop from "./components/UI/scrollToTop";
@@ -202,7 +201,6 @@ const App = () => {
                 <Route path={QURAN} element={<Quran />} />
                 <Route path={NEW} element={<New />} />
                 <Route path={`${LECTURE}:id`} element={<AudioDetail />} />
-                <Route path={DOWNLOAD} element={<DownloadAudio />} />
                 <Route path={`${PLAYLISTS}:id`} element={<PlaylistDetail />} />
                 <Route
                   path={`${RESOURCE_PERSON}:id`}
