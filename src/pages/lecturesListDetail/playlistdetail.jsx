@@ -43,6 +43,7 @@ import {
 } from "../../Redux/Actions/ActionCreators";
 import { LECTURE } from "../../utils/routes/constants";
 import { AudioContext } from "../../App";
+import HeadMeta from "../../components/head-meta";
 
 const PlaylistDetail = () => {
   const { id } = useParams();
@@ -261,6 +262,11 @@ const PlaylistDetail = () => {
 
   return (
     <Container>
+      <HeadMeta
+        title={`${
+          singleData?.name || "Playlist"
+        } on Dawah Nigeria - Home of islamic resources`}
+      />
       <div className="leclistdet_wrapper">
         <img
           className="leclistdet_hero"

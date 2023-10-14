@@ -21,6 +21,7 @@ import { toast } from "react-hot-toast";
 import YouTube from "react-youtube";
 import { formatNumber } from "../../components/UI/formatter";
 import { FaClosedCaptioning } from "react-icons/fa";
+import HeadMeta from "../../components/head-meta";
 
 const VideoPlayer = () => {
   const { pathname } = useLocation();
@@ -180,7 +181,6 @@ const VideoPlayer = () => {
   }, [addFav, id]);
 
   const addToFav = async () => {
-   
     if (!currentUser?.id) {
       toast.error("Login or register to add to favorites");
       navigate("/auth/login");
@@ -219,6 +219,11 @@ const VideoPlayer = () => {
   //console.log('video data',data?.share, data?.views, data?.comments)
   return (
     <Container>
+      <HeadMeta
+        title={`${
+          data?.title || "Video"
+        } on Dawah Nigeria - Home of islamic resources`}
+      />
       <div className="w-full boom min-[615px]:px-4 pt-3 pb-20 h-full text-sm min-[615px]:text-[15px]">
         <div className="my-3 max-[615px]:hidden text-sm text-white space-x-2 flex items-center">
           <HiOutlineArrowLongLeft

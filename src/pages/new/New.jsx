@@ -11,6 +11,7 @@ import infiniteScroll from "../../components/UI/infiniteScroll";
 import _ from "lodash";
 import { LECTURE, TRENDING, NEW } from "../../utils/routes/constants";
 import { useNavigate } from "react-router-dom";
+import HeadMeta from "../../components/head-meta";
 const New = () => {
   const [data, setData] = useState([]);
   const [drop, setDrop] = useState("");
@@ -53,6 +54,9 @@ const New = () => {
   //const newData = data.filter((a) => a.duration !== "0");
   return (
     <Container>
+      <HeadMeta
+        title={`New resources on Dawah Nigeria - Home of islamic contents`}
+      />
       <div className="new_wrapper">
         <div className="new_header_link max-[615px]:border-b border-zinc-700">
           <HeaderRouter title={"New"} />

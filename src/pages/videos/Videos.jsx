@@ -11,6 +11,7 @@ import Loader from "../../components/UI/loader/loader";
 import infiniteScroll from "../../components/UI/infiniteScroll";
 import _ from "lodash";
 import { VIDEOS } from "../../utils/routes/constants";
+import HeadMeta from "../../components/head-meta";
 const Videos = () => {
   const navigate = useNavigate();
   const observer = useRef();
@@ -66,6 +67,7 @@ const Videos = () => {
   );
   return (
     <Container>
+      <HeadMeta title={`Videos - Get islamic resources on Dawah Nigeria`} />
       <div className="video_wrapper">
         <div className="vid_header_link  max-[615px]:border-b border-zinc-700">
           <HeaderRouter title={"Videos"} />

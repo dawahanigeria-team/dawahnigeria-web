@@ -5,6 +5,7 @@ import Loader from "../../components/UI/loader/loader";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { registration } from "../../Redux/Actions/ActionCreators";
+import HeadMeta from "../../components/head-meta";
 const SelectLanguage = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ const SelectLanguage = () => {
 
   return (
     <div className="signuplang_wrapper">
+      <HeadMeta title="Select language |  Dawah Nigeria, home of Islamic resources" />
       <p className="header">Select a language</p>
 
       {langData?.map(({ name, id }, index) => {

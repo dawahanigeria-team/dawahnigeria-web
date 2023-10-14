@@ -448,6 +448,13 @@ const AudioDetail = () => {
 
   return (
     <Container>
+      <HeadMeta
+        title={`${
+          currentAudioInfo?.title?.split("-")[0] ||
+          currentAudioInfo?.Title ||
+          "Audio"
+        } on Dawah Nigeria - Home of islamic resources`}
+      />
       <div className="audiodetail_wrapper">
         <img
           className="audiodetail_hero"

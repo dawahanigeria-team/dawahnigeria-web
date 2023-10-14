@@ -29,7 +29,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { AudioContext } from "../../App";
 import LecturersWidget from "../lecturersWidget/LecturersWidget";
 import GenreMobileLecturer from "../../pages/genredetail/genreMobileLecturer";
-import { LECTURE, ALBUMS, RESOURCE_PERSON,PLAYLISTS, MORE } from "../../utils/routes/constants";
+import {
+  LECTURE,
+  ALBUMS,
+  RESOURCE_PERSON,
+  PLAYLISTS,
+  MORE,
+} from "../../utils/routes/constants";
+import HeadMeta from "../head-meta";
 function More() {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
@@ -117,6 +124,7 @@ function More() {
   );
   return (
     <Container>
+      <HeadMeta title={`${heading ?? "Islamic"} resources on Dawah Nigeria `} />
       <div className="more_wrapper">
         <div className="more_wrap_link max-[615px]:border-b border-zinc-700">
           <HeaderRouter title={heading} />
@@ -142,7 +150,8 @@ function More() {
         )}
         <div className="more_widget">
           {type === "lectures" &&
-            !loading && Array.isArray(data) &&
+            !loading &&
+            Array.isArray(data) &&
             data?.map(
               (
                 {
@@ -226,7 +235,8 @@ function More() {
               }
             )}
           {type === "album" &&
-            !loading && Array.isArray(data) &&
+            !loading &&
+            Array.isArray(data) &&
             data?.map(
               (
                 {
@@ -292,7 +302,8 @@ function More() {
               }
             )}
           {type === "playlist" &&
-            !loading && Array.isArray(data) &&
+            !loading &&
+            Array.isArray(data) &&
             data.map(
               (
                 {
@@ -361,7 +372,8 @@ function More() {
             )}
 
           {type === "recent" &&
-            !loading && Array.isArray(data) &&
+            !loading &&
+            Array.isArray(data) &&
             data.map(
               (
                 {
@@ -455,7 +467,8 @@ function More() {
         </div>
         <div className="lecturers_widget">
           {type === "lecturer" &&
-            !loading && Array.isArray(data) &&
+            !loading &&
+            Array.isArray(data) &&
             data?.map(
               (
                 {

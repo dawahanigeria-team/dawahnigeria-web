@@ -11,6 +11,7 @@ import Loader from "../../components/UI/loader/loader";
 import { LECTURE, NEW, TRENDING } from "../../utils/routes/constants";
 
 import _ from "lodash";
+import HeadMeta from "../../components/head-meta";
 const Trending = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
@@ -77,6 +78,9 @@ const Trending = () => {
   };
   return (
     <Container>
+      <HeadMeta
+        title={`Trending resources on Dawah Nigeria - Home of islamic contents`}
+      />
       <div className="trend_wrapper">
         <div className="trend_header_link max-[615px]:border-b border-zinc-700">
           <HeaderRouter title={"Trending"} />
