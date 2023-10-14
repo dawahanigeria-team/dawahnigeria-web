@@ -56,8 +56,7 @@ import { LECTURE, MORE } from "../../utils/routes/constants";
 import plus from "../../../src/assets/svg/plus.svg";
 import CurrentPlayData from "../../components/currentData/currentPlayData";
 import Loader from "../../components/UI/loader/loader";
-import { AudioDetailsDownloadModal } from "../../components/audioDetailsDownloadModal/AudioDetailsDownloadModal";
-import HeadMeta from "../../components/head-meta";
+import { AudioDownloadModal } from "../../components/audioDownloadModal/AudioDownloadModal";
 const AudioDetail = () => {
   const { id } = useParams();
   const {
@@ -573,7 +572,7 @@ const AudioDetail = () => {
                   />
                   <p className="audiodetail_comment_text">44</p>
                 </div>
-                <AudioDetailsDownloadModal
+                <AudioDownloadModal
                   downloads={currentAudioInfo?.downloads}
                   nid={currentAudioInfo.nid}
                 />
@@ -721,11 +720,12 @@ const AudioDetail = () => {
               </div>
             </div>
             <div className="audiores_actions">
-              <RiDownload2Fill
-                onClick={() => {
-                  setisAddedToFavorite((prev) => !prev);
-                }}
-                className="audiores_download"
+              <AudioDownloadModal
+                downloads={currentAudioInfo?.downloads}
+                nid={currentAudioInfo.nid}
+                triggerInnerChild={
+                  <RiDownload2Fill className="audiores_download" />
+                }
               />
               <button
                 onClick={(e) => {
