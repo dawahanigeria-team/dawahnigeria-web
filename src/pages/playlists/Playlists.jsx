@@ -9,8 +9,12 @@ import Loader from "../../components/UI/loader/loader";
 import axios from "../../utils/useAxios";
 import _ from "lodash";
 import { PLAYLISTS } from "../../utils/routes/constants";
+
 import { useCategoriesHook, useLanguagesHook } from "../../hooks/lecturers";
 import { useAllPlaylistHook } from "../../hooks/playlists";
+
+import HeadMeta from "../../components/head-meta";
+
 const Playlists = () => {
   const [filter, setFilter] = useState([]);
   const [data1, setData1] = useState([]);
@@ -30,6 +34,7 @@ const Playlists = () => {
 
   return (
     <Container>
+      <HeadMeta title={`Playlists - Get islamic resources on Dawah Nigeria`} />
       <div className="playlist_wrapper">
         <div className="play_header_link">
           <HeaderRouter title={"Playlist"} />

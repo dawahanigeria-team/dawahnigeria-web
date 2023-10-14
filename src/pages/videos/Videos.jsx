@@ -10,7 +10,11 @@ import Loader from "../../components/UI/loader/loader";
 import { useInfiniteScrollPagination } from "../../hooks";
 import { useQueryGetRequest } from "../../hooks/getqueries";
 import { VIDEOS } from "../../utils/routes/constants";
+
 import { videoApis } from "../../services";
+
+import HeadMeta from "../../components/head-meta";
+
 const Videos = () => {
   const navigate = useNavigate();
 
@@ -36,6 +40,7 @@ const Videos = () => {
 
   return (
     <Container>
+      <HeadMeta title={`Videos - Get islamic resources on Dawah Nigeria`} />
       <div className="video_wrapper">
         <div className="vid_header_link  max-[615px]:border-b border-zinc-700">
           <HeaderRouter title={"Videos"} />

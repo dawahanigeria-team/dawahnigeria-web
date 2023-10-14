@@ -8,17 +8,17 @@ import fav from "../../assets/svg/fav.svg";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FAVOURITE, MYPLAYLIIST } from "../../utils/routes/constants";
+import HeadMeta from "../../components/head-meta";
 
 const Library = () => {
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
   //const {id, username, email} = currentUser
 
-
-
   //console.log(currentUser);
   return (
     <Container>
+      <HeadMeta title={`Library - Islamic resources on Dawah Nigeria `} />
       <div className="lib_wrapper">
         <div className="lib_header_link">
           <div className="lib_img_wrap">
@@ -32,15 +32,22 @@ const Library = () => {
           ) : (
             <div className="no_user">
               <span
-              onClick={() => {
-                navigate("/auth/signup")
-              }}
-              className="reg_sign">Sign up</span>/
+                onClick={() => {
+                  navigate("/auth/signup");
+                }}
+                className="reg_sign"
+              >
+                Sign up
+              </span>
+              /
               <span
-              onClick={() => {
-                navigate("/auth/login")
-              }}
-              className="reg_sign">Log in</span>
+                onClick={() => {
+                  navigate("/auth/login");
+                }}
+                className="reg_sign"
+              >
+                Log in
+              </span>
             </div>
           )}
         </div>
@@ -53,7 +60,7 @@ const Library = () => {
             className="mini_wrapper"
           >
             <div className="img_wrap">
-              <img className="img_wrap_sz" src={playlist}  alt="" />
+              <img className="img_wrap_sz" src={playlist} alt="" />
             </div>
             <p>Playlist</p>
           </div>

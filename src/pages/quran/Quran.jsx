@@ -7,6 +7,7 @@ import Loader from "../../components/UI/loader/loader";
 import { ALBUMS } from "../../utils/routes/constants";
 import { useInfiniteScrollPagination, useQuranAlbums } from "../../hooks";
 import "./quran.scss";
+import HeadMeta from "../../components/head-meta";
 
 const Playlists = () => {
   const [page, setPage] = useState(1);
@@ -26,6 +27,9 @@ const Playlists = () => {
 
   return (
     <Container>
+      <HeadMeta
+        title={`Quran recitations on Dawah Nigeria - Home of islamic resources`}
+      />
       <div className="playlist_wrapper">
         <div className="play_header_link">
           <HeaderRouter title={"Quran"} />

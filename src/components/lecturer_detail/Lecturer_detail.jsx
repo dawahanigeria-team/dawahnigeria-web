@@ -21,6 +21,9 @@ import { lecturerDetailApi } from "../../services";
 import { DesktopFavoriteButton } from "../UI/favoritebuttons/desktopfavoriteButtons";
 import { MobileFavoriteButton } from "../UI/favoritebuttons/mobilefavoriteButton";
 
+import HeadMeta from "../head-meta";
+
+
 const LecturerDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -96,7 +99,13 @@ const LecturerDetail = () => {
 
   return (
     <Container>
-      {Array.isArray(querieddata) && (
+
+      <HeadMeta
+        title={`${
+          singleData?.name || "Lecturer"
+        } on Dawah Nigeria - Home of islamic resources`}
+      />
+        {Array.isArray(querieddata) && (
         <div className="lecdet_wrapper">
           <img
             ref={lecdet}
@@ -108,8 +117,9 @@ const LecturerDetail = () => {
             }
             alt="audiohero"
           />
-          <div className="lecdet_container">
-            {/* ------------------------------Desktop------ Bread Crumbs -------------------------------------- */}
+     
+        <div className="lecdet_container">
+          {/* ------------------------------Desktop------ Bread Crumbs -------------------------------------- */}
 
             <div className="lecdet_breadcrumb">
               <p

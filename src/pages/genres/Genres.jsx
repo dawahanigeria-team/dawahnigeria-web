@@ -6,8 +6,12 @@ import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import Loader from "../../components/UI/loader/loader";
 import GenreWidget from "./genreWidget";
 import { GENRES } from "../../utils/routes/constants";
+
 import { genresApi } from "../../services";
 import { useQueryGetRequest } from "../../hooks/getqueries";
+
+import HeadMeta from "../../components/head-meta";
+
 
 const Genres = () => {
   const navigate = useNavigate();
@@ -24,6 +28,7 @@ const Genres = () => {
 
   return (
     <Container>
+      <HeadMeta title={`Genres of islamic resources on Dawah Nigeria `} />
       <div className="genre_wrapper">
         <div className="genre_header_link max-[615px]:border-b border-zinc-700">
           <HeaderRouter title={"Genres"} />

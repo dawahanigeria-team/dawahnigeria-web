@@ -5,6 +5,7 @@ import GroupWidget from "../../components/groupWidget/GroupWidget";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import axios from "../../utils/useAxios";
 import { CHARTS } from "../../utils/routes/constants";
+
 import DailyLectures from "../../components/charts/dailyLectures";
 import WeeklyLectures from "../../components/charts/weeklyLecures";
 import MonthlyLectures from "../../components/charts/monthlyLectures";
@@ -17,10 +18,13 @@ import MonthlyRps from "../../components/charts/monthlyRps";
 import DailyPlaylists from "../../components/charts/dailyPlaylists";
 import WeeklyPlaylists from "../../components/charts/weeklyPlaylists";
 import MonthlyPlaylists from "../../components/charts/monthlyPlaylists";
+import HeadMeta from "../../components/head-meta";
+
 const Charts = () => {
 
   return (
     <Container>
+      <HeadMeta title={`Charts - Get islamic resources on Dawah Nigeria`} />
       <div className="charts_wrapper">
         <div className="charts_header_route max-[615px]:border-b border-zinc-700">
           <HeaderRouter title={"Charts"} />

@@ -15,6 +15,7 @@ import _ from "lodash";
 import playfolder from "../../assets/svg/folder.svg";
 import { toast } from "react-hot-toast";
 import MusicList from "../../components/miscList/musicList";
+import HeadMeta from "../../components/head-meta";
 const My_playlist = () => {
   const [loading, setLoading] = useState(false);
   const observer = useRef();
@@ -188,6 +189,9 @@ const My_playlist = () => {
   //console.log(data);
   return (
     <Container>
+      <HeadMeta
+        title={`My playlist on Dawah Nigeria - Home of islamic resources`}
+      />
       <div className="myplay_wrapper">
         <div className="myplay_header_link">
           <HeaderRouter title={"My Playlist"} />
@@ -197,7 +201,8 @@ const My_playlist = () => {
           <div className="myplay_img_wrap">
             <img src-data={empty} src={empty} alt="empty" />
             <p className="myplay_text">
-              You haven’t created any playlists. Create your own playlists here.
+              You haven&apos;t created any playlists. Create your own playlists
+              here.
             </p>
             <button className="myplay_button">Add Playlist</button>
           </div>

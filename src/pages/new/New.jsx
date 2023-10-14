@@ -11,6 +11,9 @@ import { LECTURE, TRENDING, NEW } from "../../utils/routes/constants";
 import { useNavigate } from "react-router-dom";
 import { useQueryGetRequest } from "../../hooks/getqueries";
 import { newApi } from "../../services";
+
+import HeadMeta from "../../components/head-meta";
+
 const New = () => {
   const [page] = useState(1);
   const [drop,setDrop] = useState(false)
@@ -36,6 +39,9 @@ const New = () => {
   //const newData = data.filter((a) => a.duration !== "0");
   return (
     <Container>
+      <HeadMeta
+        title={`New resources on Dawah Nigeria - Home of islamic contents`}
+      />
       <div className="new_wrapper">
         <div className="new_header_link max-[615px]:border-b border-zinc-700">
           <HeaderRouter title={"New"} />

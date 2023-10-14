@@ -11,6 +11,8 @@ import { useInfiniteScrollPagination } from "../../hooks";
 import _ from "lodash";
 import { useQueryGetRequest } from "../../hooks/getqueries";
 import { trendingApi } from "../../services/trending.service";
+import HeadMeta from "../../components/head-meta";
+
 const Trending = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
@@ -50,6 +52,9 @@ const Trending = () => {
   };
   return (
     <Container>
+      <HeadMeta
+        title={`Trending resources on Dawah Nigeria - Home of islamic contents`}
+      />
       <div className="trend_wrapper">
         <div className="trend_header_link max-[615px]:border-b border-zinc-700">
           <HeaderRouter title={"Trending"} />

@@ -39,10 +39,14 @@ import {
 } from "../../Redux/Actions/ActionCreators";
 import { AudioContext } from "../../App";
 import { LECTURE } from "../../utils/routes/constants";
+
 import { useQueryGetRequest } from "../../hooks/getqueries";
 import { lectureListDetailApi } from "../../services";
 import { DesktopFavoriteButton } from "../../components/UI/favoritebuttons/desktopfavoriteButtons";
 import { MobileFavoriteButton } from "../../components/UI/favoritebuttons/mobilefavoriteButton";
+
+import HeadMeta from "../../components/head-meta";
+
 const LecturesListDetail = () => {
   const { id } = useParams();
   const { state } = useLocation();
@@ -172,6 +176,13 @@ const LecturesListDetail = () => {
   };
   return (
     <Container>
+
+      <HeadMeta
+        title={`${
+          lectureTitleExtractor(singleData?.title, 2) || "Album"
+        } on Dawah Nigeria - Home of islamic resources`}
+      />
+ 
 
       {Array.isArray(querieddata) && (
         <div className="leclistdet_wrapper">

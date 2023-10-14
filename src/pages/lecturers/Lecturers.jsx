@@ -13,6 +13,8 @@ import { useInfiniteScrollPagination } from "../../hooks";
 import { useLecturersHook } from "../../hooks/lecturers/useLecturers.hook";
 import { lecturersApi } from "../../services";
 import { useLanguagesHook } from "../../hooks/lecturers/useLanguage.hook";
+import HeadMeta from "../../components/head-meta";
+
 const Lecturers = () => {
   //const [data, setData] = useState([]);
   const [filter, setFilter] = useState([]);
@@ -42,9 +44,11 @@ const Lecturers = () => {
 
   const {data} = useLanguagesHook()
   useEffect(() => {
+
     setData3(querieddata);
    
   }, [querieddata]);
+
 
 
   //console.log(data);
@@ -57,6 +61,7 @@ const Lecturers = () => {
 
   return (
     <Container>
+      <HeadMeta title={`Lecturers - Get islamic resources on Dawah Nigeria`} />
       <div className="lecturers_wrapper">
         <div className="lecturers_head_link max-[615px]:border-b border-zinc-700">
           <HeaderRouter title={"Lecturer"} />

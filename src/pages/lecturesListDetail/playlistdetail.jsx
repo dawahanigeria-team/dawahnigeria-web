@@ -43,6 +43,9 @@ import { useAllPlaylistHook, usePlaylistLectures } from "../../hooks/playlists";
 import { DesktopFavoriteButton } from "../../components/UI/favoritebuttons/desktopfavoriteButtons";
 import { MobileFavoriteButton } from "../../components/UI/favoritebuttons/mobilefavoriteButton";
 
+import HeadMeta from "../../components/head-meta";
+
+
 const PlaylistDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -148,6 +151,11 @@ const PlaylistDetail = () => {
 
   return (
     <Container>
+      <HeadMeta
+        title={`${
+          singleData?.name || "Playlist"
+        } on Dawah Nigeria - Home of islamic resources`}
+      />
       <div className="leclistdet_wrapper">
         <img
           className="leclistdet_hero"

@@ -93,7 +93,7 @@ const Landing = () => {
 
   return (
     <Container>
-      <HeadMeta title="DawahNigeria | Home" />
+      <HeadMeta title="Welcome to Dawah Nigeria - Home of Islamic resources" />
       <div className="landing_wrapper px-[2%] max-[615px]:py-[5%] py-[8%] min-[690px]:py-[2%]">
 
         {sliders?.data?.length > 1 ? (

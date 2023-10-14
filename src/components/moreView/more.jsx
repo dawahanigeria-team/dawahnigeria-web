@@ -37,7 +37,11 @@ import {
   PLAYLISTS,
   MORE,
 } from "../../utils/routes/constants";
+
 import { useMoreViewHook } from "../../hooks";
+
+import HeadMeta from "../head-meta";
+
 function More() {
   const dispatch = useDispatch();
 
@@ -78,6 +82,7 @@ function More() {
 
   return (
     <Container>
+      <HeadMeta title={`${heading ?? "Islamic"} resources on Dawah Nigeria `} />
       <div className="more_wrapper">
         <div className="more_wrap_link max-[615px]:border-b border-zinc-700">
           <HeaderRouter title={heading} />
@@ -103,6 +108,7 @@ function More() {
           */}
         <div className="more_widget">
           {type === "lectures" &&
+
             Array.isArray(data) &&
             data?.map(
               (
@@ -159,6 +165,7 @@ function More() {
               }
             )}
           {type === "album" &&
+
             Array.isArray(data) &&
             data?.map(
               (
@@ -201,6 +208,7 @@ function More() {
               }
             )}
           {type === "playlist" &&
+
             Array.isArray(data) &&
             data.map(
               (
@@ -250,6 +258,7 @@ function More() {
             )}
 
           {type === "recent" &&
+
             Array.isArray(data) &&
             data.map(
               (
@@ -307,6 +316,7 @@ function More() {
         </div>
         <div className="lecturers_widget">
           {type === "lecturer" &&
+
             Array.isArray(data) &&
             data?.map(
               (
