@@ -207,7 +207,7 @@
               }
             }
           }
-          .audiodetail_fav {
+          .leclistdet_fav {
             background-color: #ffffff17;
             @include button_style;
             &:hover {
@@ -217,7 +217,7 @@
               background: none;
               margin: 0;
               border: 0;
-              .audiodetail_fav_icon {
+              .leclistdet_fav_icon {
                 font-size: 25px;
 
                 @media screen and (max-width: 615px) {
@@ -225,7 +225,7 @@
                 }
                 color: #cfcfcf;
               }
-              .audiodetail_fav_icon_active {
+              .leclistdet_fav_icon_active {
                 font-size: 25px;
 
                 @media screen and (max-width: 615px) {
@@ -234,7 +234,7 @@
                 color: #ddff2b;
               }
             }
-            .audiodetail_fav_text {
+            .leclistdet_fav_text {
               font-family: "Nunito Sans";
               font-style: normal;
               font-weight: 400;

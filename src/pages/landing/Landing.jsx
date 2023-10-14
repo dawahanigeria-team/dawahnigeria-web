@@ -30,19 +30,13 @@ import {
   LECTURERS,
   QURAN,
 } from "../../utils/routes/constants";
-import { landingPageApis } from "../../services";
 import HeadMeta from "../../components/head-meta";
 import { useLandingPageHook } from "../../hooks/landing";
 const Landing = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [curPlay, setcurPlay] = useState([]);
   const [isrecent, setisrecent] = useState(false);
-  const [landingpagedata, setlandingpagedata] = useState({
-    images: [],
-    specailFeat: [],
-    recentlyposted: [],
-    recentlyviewed: [],
-  });
+  const id = currentUser?.id;
   const page = 1;
   const settings = {
     dots: true,
@@ -129,7 +123,9 @@ const Landing = () => {
               data={recentlyPosted?.data}
               heading="Recently Posted"
               type={"lectures"}
-              endpoint_url={"/leclisting_recent.php?&action=get_recent_audio&page="}
+              endpoint_url={
+                "/leclisting_recent.php?&action=get_recent_audio&page="
+              }
               currentPage={page}
               isrecentpost={true}
               nav1={{ title: "Home", link: HOME }}

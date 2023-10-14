@@ -41,6 +41,8 @@ import { LECTURE } from "../../utils/routes/constants";
 import { AudioContext } from "../../App";
 import { playlistdetailApi } from "../../services/playlistdetail.service";
 import { useAllPlaylistHook, usePlaylistLectures } from "../../hooks/playlists";
+import { DesktopFavoriteButton } from "../../components/UI/favoritebuttons/desktopfavoriteButtons";
+import { MobileFavoriteButton } from "../../components/UI/favoritebuttons/mobilefavoriteButton";
 
 const PlaylistDetail = () => {
   const { id } = useParams();
@@ -49,17 +51,14 @@ const PlaylistDetail = () => {
   const { currentUser } = useSelector((state) => state.user);
   const observeEl = useRef();
   const { setinitial } = useContext(AudioContext);
-  const [sumofFav, setsumofFav] = useState();
   const [isShare, setisShare] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
-  const [addFav, setaddFav] = useState(false);
-  const [isdisabled, setdisabled] = useState(false);
-  const [getFavs, setgetfavs] = useState([]);
+
   const [audioComment, setaudioComment] = useState();
   const queryParam = { id };
 
-  const { querieddata , isLoading} = useQueryGetRequest(
+  const { querieddata , isLoading, refetch} = useQueryGetRequest(
     "playlist-details",
     queryParam,
     playlistdetailApi.getPlaylistData
@@ -103,74 +102,7 @@ const PlaylistDetail = () => {
       });
   }, [id]);
 
-  /////get users favorites
-  async function fetchFavorites(addFav) {
-    if (!currentUser?.id) return;
-    if (addFav || (!addFav && id)) {
-      //console.log("...ALBUM.......@@@@@@@@@@@@@");
-      await useaxios
-        .get(
-          `/leclisting_favorites.php?user_id=${currentUser?.id}&type=playlist`,
-          {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-            },
-          }
-        )
-        .then((res) => {
-          //console.log(res.data);
-          const { playlist } = res.data;
-          setgetfavs(playlist);
-          // const isExist = [Object.values(audio)].includes(id)
-        })
-        .catch((err) => {
-          //console.log(err);
-        });
-    }
-  }
-  useEffect(() => {
-    fetchFavorites(addFav, parseInt(id));
-  }, [addFav, id]);
 
-  const addToFav = async (e) => {
-    /// add to favorites
-    e.stopPropagation();
-    //console.log("event clicked");
-    if (!currentUser?.id) {
-      toast.error("Login or register to add to favorites");
-      return;
-    }
-    const payload = {
-      user_id: currentUser?.id,
-      item_id: parseInt(id),
-      type: "playlist",
-    };
-    await useaxios
-      .post(`/leclisting_favorites.php`, payload, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-        },
-      })
-      .then((res) => {
-        //console.log(res);
-        toast.success(res.data.message);
-        setdisabled(false);
-        //console.log(addFav);
-        if (!getFavs?.includes(parseInt(id))) {
-          setsumofFav(sumofFav + 1);
-        } else {
-          setsumofFav(sumofFav - 1);
-        }
-      })
-
-      .catch((err) => {
-        //console.log(err);
-      });
-  };
 
   /// Get the exiting element
   const firstElement = useCallback((node) => {
@@ -189,12 +121,12 @@ const PlaylistDetail = () => {
   //play all audio files
   const playAll = () => {
     if (window.innerWidth <= 615) {
-      navigate(`${LECTURE}${data[0]?.nid}`);
+      navigate(`${LECTURE}${querieddata[0]?.nid}`);
     } else {
-      dispatch(getaudioId(data[0]?.nid));
+      dispatch(getaudioId(querieddata[0]?.nid));
     }
     dispatch(getCount(0));
-    dispatch(getPack(data));
+    dispatch(getPack(querieddata));
     setinitial(false);
   };
 
@@ -269,31 +201,12 @@ const PlaylistDetail = () => {
                   <CiPlay1 className="leclistdet_play_icon" />
                   <p className="leclistdet_play_text">Play All</p>
                 </button>
-                <div className="leclistdet_fav">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      addToFav(e);
-                      fetchFavorites(addFav);
-                      setaddFav(!addFav);
-                      setdisabled(true);
-                    }}
-                    className="fav_btn"
-                    disabled={isdisabled}
-                  >
-                    {getFavs?.includes(id) ? (
-                      <MdFavorite className="leclistdet_fav_icon_active" />
-                    ) : (
-                      <img
-                        src={favbig}
-                        alt=""
-                        className="leclistdet_fav_icon"
-                      />
-                    )}
-                  </button>
-
-                  <p className="leclistdet_fav_text">{formatNumber(0)}</p>
-                </div>
+                <DesktopFavoriteButton
+                favorites={querieddata[0]?.favorites}
+                id={id}
+                type={"playlist"}
+                refetch={refetch}
+               />
                 <div
                   onClick={(e) => {
                     sharePlaylist(e, id);
@@ -401,26 +314,12 @@ const PlaylistDetail = () => {
             </div>
             <div className="listrank_and_listblack_wrap">
               <div className={isVisible ? "listranking_none" : "listranking"}>
-                <div className="icons_mob_listblack">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      addToFav(e);
-                      fetchFavorites(addFav);
-                      setaddFav(!addFav);
-                      setdisabled(true);
-                    }}
-                    className="likeys_img"
-                    disabled={isdisabled}
-                  >
-                    {getFavs?.includes(id) ? (
-                      <img className="likeys_img_sz" src={adfav} alt="" />
-                    ) : (
-                      <img className="likeys_img_sz" src={lovebold} alt="" />
-                    )}
-                  </button>
-                  <span className="likeys_text">{formatNumber(0)}</span>
-                </div>
+              <MobileFavoriteButton
+                favorites={querieddata[0]?.favorites}
+                id={id}
+                type={"playlist"}
+                refetch={refetch}
+               />
                 <div
                   onClick={(e) => {
                     sharePlaylist(e);

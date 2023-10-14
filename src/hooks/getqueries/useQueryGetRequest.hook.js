@@ -7,7 +7,7 @@ export const useQueryGetRequest = (keyName, queryParam = {}, queryFunction) => {
   const [isLoadingNextPage, setIsLoadingNextPage] = useState(false);
   const [hasReachedLastPage, setHasReachedLastPage] = useState(false);
 
-  const { isLoading, data, error } = useQuery(
+  const { isLoading, data, error, refetch } = useQuery(
     [keyName, queryParam],
     () => queryFunction(queryParam),
     {
@@ -49,5 +49,6 @@ export const useQueryGetRequest = (keyName, queryParam = {}, queryFunction) => {
     error,
     data,
     querieddata,
+    refetch
   };
 };

@@ -42,6 +42,8 @@ import { AudioContext } from "../../App";
 import { LECTURE } from "../../utils/routes/constants";
 import { useQueryGetRequest } from "../../hooks/getqueries";
 import { lectureListDetailApi } from "../../services";
+import { DesktopFavoriteButton } from "../../components/UI/favoritebuttons/desktopfavoriteButtons";
+import { MobileFavoriteButton } from "../../components/UI/favoritebuttons/mobilefavoriteButton";
 const LecturesListDetail = () => {
   const { id } = useParams();
   const { state } = useLocation();
@@ -61,18 +63,16 @@ const LecturesListDetail = () => {
   const queryParam = { id };
   const keyParam = { id, page: 1 };
 
-  const { querieddata } = useQueryGetRequest(
+  const { querieddata, refetch } = useQueryGetRequest(
     "albumdetails",
     queryParam,
     lectureListDetailApi.getAlbumDetail
   );
-
   const { querieddata: albumlectures, isLoading } = useQueryGetRequest(
     "albumlectures",
     queryParam,
     lectureListDetailApi.getAlbumLectures
   );
-
   const { querieddata: similarAlbums } = useQueryGetRequest(
     "similarRpAlbums",
     keyParam,
@@ -103,75 +103,6 @@ const LecturesListDetail = () => {
         //console.log(err);
       });
   }, [id]);
-
-  /////get users favorites
-  async function fetchFavorites(addFav, aid) {
-    if (!currentUser?.id) return;
-    if (addFav || (!addFav && aid)) {
-      //console.log("...ALBUM.......@@@@@@@@@@@@@");
-      await useaxios
-        .get(
-          `/leclisting_favorites.php?user_id=${currentUser?.id}&type=album`,
-          {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-            },
-          }
-        )
-        .then((res) => {
-          //console.log(res.data);
-          const { album } = res.data;
-          setgetfavs(album);
-          // const isExist = [Object.values(audio)].includes(id)
-        })
-        .catch((err) => {
-          //console.log(err);
-        });
-    }
-  }
-  useEffect(() => {
-    fetchFavorites(addFav, id);
-  }, [addFav, id]);
-
-  const addToFav = async (e, aid) => {
-    /// add to favorites
-    e.stopPropagation();
-    //console.log("event clicked");
-    if (!currentUser?.id) {
-      toast.error("Login or register to add to favorites");
-      return;
-    }
-    const payload = {
-      user_id: currentUser?.id,
-      item_id: aid,
-      type: "album",
-    };
-    await useaxios
-      .post(`/leclisting_favorites.php`, payload, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-        },
-      })
-      .then((res) => {
-        //console.log(res);
-        toast.success(res.data.message);
-        setdisabled(false);
-        //console.log(addFav);
-        if (!getFavs?.includes(parseInt(aid))) {
-          setsumofFav(sumofFav + 1);
-        } else {
-          setsumofFav(sumofFav - 1);
-        }
-      })
-
-      .catch((err) => {
-        //console.log(err);
-      });
-  };
 
   /// Get the exiting element
   const firstElement = useCallback((node) => {
@@ -217,7 +148,7 @@ const LecturesListDetail = () => {
   }, []);
 
   const lectureTitleExtractor = (title, position) => {
-   // console.log({ title });
+    // console.log({ title });
     if (!title) return;
     if (title && title.includes("-")) {
       const titleArray = title.split("-");
@@ -302,33 +233,12 @@ const LecturesListDetail = () => {
                     <CiPlay1 className="leclistdet_play_icon" />
                     <p className="leclistdet_play_text">Play All</p>
                   </button>
-                  <div className="leclistdet_fav">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        addToFav(e, id);
-                        fetchFavorites(addFav, id);
-                        setaddFav(!addFav);
-                        setdisabled(true);
-                      }}
-                      className="fav_btn"
-                      disabled={isdisabled}
-                    >
-                      {getFavs?.includes(parseInt(id)) ? (
-                        <MdFavorite className="leclistdet_fav_icon_active" />
-                      ) : (
-                        <img
-                          src={favbig}
-                          alt=""
-                          className="leclistdet_fav_icon"
-                        />
-                      )}
-                    </button>
-
-                    <p className="leclistdet_fav_text">
-                      {formatNumber(querieddata[0]?.favorites || 0)}
-                    </p>
-                  </div>
+                  <DesktopFavoriteButton
+                    favorites={querieddata[0]?.favorites}
+                    id={id}
+                    type={"album"}
+                    refetch={refetch}
+                  />
                   <div
                     onClick={(e) => {
                       shareAlbum(e, id);
@@ -445,28 +355,12 @@ const LecturesListDetail = () => {
               </div>
               <div className="listrank_and_listblack_wrap">
                 <div className={isVisible ? "listranking_none" : "listranking"}>
-                  <div className="icons_mob_listblack">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        addToFav(e, id);
-                        fetchFavorites(addFav, id);
-                        setaddFav(!addFav);
-                        setdisabled(true);
-                      }}
-                      className="likeys_img"
-                      disabled={isdisabled}
-                    >
-                      {getFavs?.includes(parseInt(id)) ? (
-                        <img className="likeys_img_sz" src={adfav} alt="" />
-                      ) : (
-                        <img className="likeys_img_sz" src={lovebold} alt="" />
-                      )}
-                    </button>
-                    <span className="likeys_text">
-                      {formatNumber(querieddata[0]?.favorites || 0)}
-                    </span>
-                  </div>
+                  <MobileFavoriteButton
+                    favorites={querieddata[0]?.favorites}
+                    id={id}
+                    type={"album"}
+                    refetch={refetch}
+                  />
                   <div
                     onClick={(e) => {
                       shareAlbum(e);

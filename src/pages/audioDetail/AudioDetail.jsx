@@ -66,6 +66,7 @@ import CurrentPlayData from "../../components/currentData/currentPlayData";
 import Loader from "../../components/UI/loader/loader";
 import { useAudioHook } from "../../hooks";
 import { audioDetailApi } from "../../services";
+import { DesktopFavoriteButton } from "../../components/UI/favoritebuttons/desktopfavoriteButtons";
 const AudioDetail = () => {
   const { id } = useParams();
   const {
@@ -116,7 +117,7 @@ const AudioDetail = () => {
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
 
-  useAudioHook(id);
+  const { refetch } = useAudioHook(id);
   const keyParam = { id: currentAudioInfo?.rp_id, page: 1 };
   const { querieddata: similarAudios } = useSimilarAudioHook(keyParam);
 
@@ -507,33 +508,12 @@ const AudioDetail = () => {
                   <CiPlay1 className="audiodetail_play_icon" />
                   <p className="audiodetail_play_text">{"play"}</p>
                 </div>
-                <div className="audiodetail_fav">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      addToFav(e, audioId);
-                      fetchFavorites(addFav, audioId);
-                      setaddFav(!addFav);
-                      setdisabled(true);
-                    }}
-                    className="fav_btn"
-                    disabled={isdisabled}
-                  >
-                    {getFavs?.includes(parseInt(id || audioId)) ? (
-                      <MdFavorite className="audiodetail_fav_icon_active" />
-                    ) : (
-                      <img
-                        src={favbig}
-                        alt=""
-                        className="audiodetail_fav_icon"
-                      />
-                    )}
-                  </button>
-
-                  <p className="audiodetail_fav_text">
-                    {formatNumber(currentaudio?.favorites || 0)}
-                  </p>
-                </div>
+                <DesktopFavoriteButton
+                  favorites={currentAudioInfo?.favorites}
+                  id={id}
+                  type={"audio"}
+                  refetch={refetch}
+                />
                 <div
                   onClick={() => {
                     shareAudio();
@@ -546,7 +526,7 @@ const AudioDetail = () => {
                     className="audiodetail_share_icon"
                   />
                   <p className="audiodetail_share_text">
-                    {formatNumber(currentaudio?.share || 0)}
+                    {formatNumber(currentAudioInfo?.share || 0)}
                   </p>
                 </div>
                 <div className="audiodetail_comment">
@@ -555,7 +535,9 @@ const AudioDetail = () => {
                     alt=""
                     className="audiodetail_comment_icon"
                   />
-                  <p className="audiodetail_comment_text">44</p>
+                  <p className="audiodetail_comment_text">
+                    {formatNumber(currentAudioInfo?.comment || 0)}
+                  </p>
                 </div>
                 <div
                   onClick={() => {

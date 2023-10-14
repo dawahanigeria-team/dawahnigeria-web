@@ -1,0 +1,76 @@
+import React, { useMemo, useState } from "react";
+import { MdFavorite } from "react-icons/md";
+import favbig from "../../../assets/svg/boom-fav.svg";
+import { formatNumber } from "../formatter";
+import { useAddFavoritesHook, useFetchFavoritesHook } from "../../../hooks";
+import { useSelector } from "react-redux";
+import toast, { LoaderIcon } from "react-hot-toast";
+export function DesktopFavoriteButton({ favorites, id, type, refetch }) {
+  const [isdisabled, setdisabled] = useState(false);
+
+  const { currentUser } = useSelector((state) => state.user);
+  const [isLoading, setLoading] = useState(false);
+  const formatFavorite = useMemo(
+    () => formatNumber(favorites || 0),
+    [favorites]
+  );
+
+  const keyParam = { id: currentUser?.id, type };
+  const { favoriteCount } = useFetchFavoritesHook(keyParam);
+
+  /////get users favorites
+
+  const { mutate: addToFavorite } = useAddFavoritesHook();
+
+  const addToFav = async (e) => {
+    e.stopPropagation();
+    if (!currentUser?.id) {
+      toast.error("Login or register to add to favorites");
+      return;
+    }
+    setLoading(true);
+    const payload = {
+      user_id: currentUser?.id,
+      item_id: parseInt(id),
+      type,
+    };
+    addToFavorite(payload, {
+      onSuccess: (data) => {
+        //  console.log("response", data);
+        toast.success(data.message);
+        refetch();
+        setdisabled(false);
+        setLoading(false);
+      },
+      onError: (error) => {
+        console.log("error", error);
+      },
+    });
+  };
+
+  return (
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        addToFav(e);
+        setdisabled(true);
+      }}
+      disabled={isdisabled}
+      className="leclistdet_fav"
+    >
+      <button className="fav_btn">
+        {favoriteCount.album?.includes(parseInt(id)) ? (
+          <MdFavorite className="leclistdet_fav_icon_active" />
+        ) : (
+          <img src={favbig} alt="" className="leclistdet_fav_icon" />
+        )}
+      </button>
+
+      {isLoading ? (
+        <LoaderIcon className="text-sm animate-spin" />
+      ) : (
+        <p className="leclistdet_fav_text">{formatFavorite}</p>
+      )}
+    </button>
+  );
+}

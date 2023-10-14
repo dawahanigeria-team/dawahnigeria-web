@@ -13,9 +13,7 @@ const IconText = ({ icon, link, name, id, setisOpen }) => {
   const navigate = useNavigate();
 
   const { addplaylist } = useSelector((state) => state.user);
-
-  //console.log(addplaylist)
-
+  
   function close() {
     setisOpen(false);
   }
