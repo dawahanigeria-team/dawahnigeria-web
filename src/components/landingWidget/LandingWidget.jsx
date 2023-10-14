@@ -7,7 +7,7 @@ const LandingWidget = ({ categories, img, views, styling }) => {
   const formattedViews = useMemo(() => formatNumber(views), [views])
   
 
-  ////not contented but under presssure by DN project manager
+  ////
   useEffect(() => {
     function lazyImage() {
       const lazy = document.querySelectorAll("#song");
@@ -27,11 +27,11 @@ const LandingWidget = ({ categories, img, views, styling }) => {
     <div
       className={`flex flex-col justify-start items-start space-y-2 ${
         styling
-          ? "w-[150px]  sm:h-fit sm:w-[12rem]"
+          ? "w-[150px] h-fit sm:w-[12rem]"
           : "w-[150px]  h-fit sm:w-[13.5rem]"
       }`}
     >
-      <div className="group w-full h-full relative rounded-md">
+      <div className="group w-full h-[115px] sm:h-[165px] relative rounded-md">
         <img
           src-data={img}
           id="song"

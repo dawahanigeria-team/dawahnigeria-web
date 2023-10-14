@@ -10,8 +10,6 @@ import { SlShare } from "react-icons/sl";
 import dmobile from "../../../src/assets/svg/boom-download.svg";
 import { useNavigate } from "react-router-dom";
 
-import DownloadAudio from "../download/download";
-
 import Add_playlist from "../../pages/add_playlist/AddPlaylist";
 import ShareAudio from "../shareaudio/shareAudio";
 import { toast } from "react-hot-toast";

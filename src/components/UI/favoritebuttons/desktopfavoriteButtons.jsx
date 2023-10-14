@@ -59,7 +59,7 @@ export function DesktopFavoriteButton({ favorites, id, type, refetch }) {
       className="leclistdet_fav"
     >
       <button className="fav_btn">
-        {favoriteCount.album?.includes(parseInt(id)) ? (
+        {favoriteCount[type]?.includes(parseInt(id)) ? (
           <MdFavorite className="leclistdet_fav_icon_active" />
         ) : (
           <img src={favbig} alt="" className="leclistdet_fav_icon" />

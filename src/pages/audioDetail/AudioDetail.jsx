@@ -3,7 +3,7 @@ import "./audiodetail.scss";
 import AudioActionDesktop from "../../components/audio/audioActionDesktop";
 import Container from "../../components/container/Container";
 import audioHero from "../../assets/png/detialPagehero.png";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
 import { CiPlay1 } from "react-icons/ci";
 import back from "../../assets/svg/back.svg";
 import foward from "../../assets/svg/foward.svg";
@@ -53,7 +53,7 @@ import {
   getValue,
 } from "../../Redux/Actions/ActionCreators";
 import { useSimilarAudioHook } from "../../hooks";
-import { LECTURE, MORE } from "../../utils/routes/constants";
+import { GENRES, LECTURE, MORE } from "../../utils/routes/constants";
 import plus from "../../../src/assets/svg/plus.svg";
 import CurrentPlayData from "../../components/currentData/currentPlayData";
 import Loader from "../../components/UI/loader/loader";
@@ -493,9 +493,9 @@ const AudioDetail = () => {
           <div className="audiodetail_info">
             <div className="audiodetail_info_wrap">
               <div className="audiodetail_info_name">Genre: </div>
-              <div className="audiodetail_info_value">
+              <Link to={`${GENRES}/${parseInt(currentAudioInfo?.cat_id.toString())}`} className="audiodetail_info_value">
                 {currentAudioInfo?.cats || "unknown"}
-              </div>
+              </Link>
             </div>
             <div className="audiodetail_info_wrap">
               <div className="audiodetail_info_name">Date of Release: </div>
@@ -726,9 +726,9 @@ const AudioDetail = () => {
                 <p className="audiodetail_info_mob_head">Information</p>
                 <div className="audiodetail_info_wrap_mob">
                   <p className="audiodetail_info_name_mob">Genre: </p>
-                  <p className="audiodetail_info_value_mob">
+                  <Link to={`${GENRES}/${parseInt(currentAudioInfo?.cat_id.toString())}`} className="audiodetail_info_value_mob">
                     {currentAudioInfo?.cats || "unknown"}
-                  </p>
+                  </Link>
                 </div>
                 <div className="audiodetail_info_wrap_mob">
                   <p className="audiodetail_info_name_mob">Date of Release: </p>

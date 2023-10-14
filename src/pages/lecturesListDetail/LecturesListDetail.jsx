@@ -57,10 +57,9 @@ const LecturesListDetail = () => {
   const [isShare, setisShare] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
-  const [addFav, setaddFav] = useState(false);
-  const [isdisabled, setdisabled] = useState(false);
-  const [getFavs, setgetfavs] = useState([]);
-  const [audioComment, setaudioComment] = useState("");
+  const [audioComment, setaudioComment] = useState();
+
+
   const queryParam = { id };
   const keyParam = { id, page: 1 };
 
@@ -79,9 +78,7 @@ const LecturesListDetail = () => {
     keyParam,
     lectureListDetailApi.getSimilarAlbums
   );
-  const [similarUrl, setsimilarUrl] = useState();
-  const [rpnames, setrpname] = useState([]);
-  const [audioComment, setaudioComment] = useState();
+
 
   useEffect(() => {
     // if (sharedAlbum !== 0) {

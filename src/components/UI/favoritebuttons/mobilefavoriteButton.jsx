@@ -59,7 +59,7 @@ export function MobileFavoriteButton({ favorites, id, type, refetch }) {
       className="icons_mob_listblack"
     >
       <button className="likeys_img">
-        {favoriteCount.album?.includes(parseInt(id)) ? (
+        {favoriteCount[type]?.includes(parseInt(id)) ? (
           <img className="likeys_img_sz" src={adfav} alt="" />
         ) : (
           <img className="likeys_img_sz" src={lovebold} alt="" />

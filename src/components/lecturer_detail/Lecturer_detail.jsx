@@ -371,7 +371,7 @@ const LecturerDetail = () => {
                   onClick={(e) => {
                     shareRp(e, id);
                   }}
-                  className="icons_mob_black"
+                  className="icons_mob_listblack"
                 >
                   <button className="likeys_img">
                     <img className="likeys_img_sz" src={sharebold} alt="" />
@@ -380,7 +380,7 @@ const LecturerDetail = () => {
                     {formatNumber(querieddata[0]?.share || 0)}
                   </span>
                 </div>
-                <div className="icons_mob_black">
+                <div className="icons_mob_listblack">
                   <button className="likeys_img">
                     <img className="likeys_img_sz" src={combold} alt="" />
                   </button>

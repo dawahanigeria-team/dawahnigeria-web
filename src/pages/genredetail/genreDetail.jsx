@@ -29,7 +29,7 @@ const GenreDetail = () => {
           <img
             className="w-full h-full bg-cover "
             src={
-              typeof querieddata === "object" && querieddata?.category_details[0]?.img ||
+              querieddata?.category_details && querieddata?.category_details[0]?.img ||
               "https://imagetolink.com/ib/HSWijBu8Pn.jpeg"
             }
             alt=""
@@ -59,18 +59,25 @@ const GenreDetail = () => {
                 className={pathname === "/" ? "arrows white" : "arrows grey"}
               />
               <span className="grey">{"Genre"}</span>/ <span></span>
-              {typeof querieddata === "object" && querieddata?.category_details[0]?.name}
+              {querieddata?.category_details && querieddata?.category_details[0]?.name}
             </div>
 
             <div className="w-full h-fit m-auto absolute inset-0 flex items-center justify-center">
               <span className="text-lg min-[615px]:text-3xl font-semibold text-white">
-                {typeof querieddata === "object" && querieddata?.category_details[0]?.name}
+                {querieddata?.category_details && querieddata?.category_details[0]?.name}
               </span>
             </div>
           </div>
         </div>
 
         <div className="genre_items w-full min-[615px]:relative pb-10 min-[615px]:space-y-4 space-y-3 px-4">
+         
+        <GroupWidget
+            data={querieddata?.audio}
+            heading="Lectures"
+            type={"lectures"}
+            nav1={{ title: "Genres" }}
+          />
           <GroupWidget
             data={querieddata?.rp}
             heading="Lecturers"
@@ -84,12 +91,7 @@ const GenreDetail = () => {
             type={"album"}
             nav1={{ title: "Genres" }}
           />
-          <GroupWidget
-            data={querieddata?.audio}
-            heading="Lectures"
-            type={"lectures"}
-            nav1={{ title: "Genres" }}
-          />
+        
         </div>
       </div>
     </Container>

@@ -96,7 +96,7 @@ const Landing = () => {
       <HeadMeta title="DawahNigeria | Home" />
       <div className="landing_wrapper px-[2%] max-[615px]:py-[5%] py-[8%] min-[690px]:py-[2%]">
 
-        {sliders?.data?.images.length > 1 ? (
+        {sliders?.data?.length > 1 ? (
           <>
         <div className="carousel  h-[250px] min-[950px]:h-[250px] min-[1050px]:h-[250px] min-[1283px]:h-[300px]">
           <MyCarousel images={sliders?.data} />
@@ -146,7 +146,8 @@ const Landing = () => {
           </div>
 
         )}
-        {recentlyviewed?.isSuccess && Array.isArray(recentlyviewed?.data) && (
+        {recentlyviewed?.isSuccess &&  
+        (Array.isArray(recentlyviewed?.data) ? (
           <div className="landing_recent landing_space my-1 min-[615px]:my-3">
             {" "}
             <GroupWidget
@@ -159,13 +160,13 @@ const Landing = () => {
               isrecent={isrecent}
               nav1={{ title: "Home", link: HOME }}
             />
-
+          </div>
         ) : (
           <div className="landing_recent landing_space my-1 min-[615px]:my-3">
             <RowSkeletonContainer />
 
-          </div>
-        )}
+          </div>))
+        }
 
         {Array.isArray(specialFeat) &&
           specialFeat
@@ -185,8 +186,8 @@ const Landing = () => {
               </div>
             ))}
 
-        {Array.isArray(landingpagedata?.specailFeat) &&
-          landingpagedata?.specailFeat.length === 0 &&
+        {Array.isArray(specialFeat) &&
+          specialFeat.length === 0 &&
           Array(10)
             .fill(undefined)
             .map((_, i) => (
