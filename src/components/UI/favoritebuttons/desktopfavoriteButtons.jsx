@@ -16,7 +16,7 @@ export function DesktopFavoriteButton({ favorites, id, type, refetch }) {
   );
 
   const keyParam = { id: currentUser?.id, type };
-  const { favoriteCount } = useFetchFavoritesHook(keyParam);
+  const { favoriteCount, refetch:refetchFavorite } = useFetchFavoritesHook(keyParam);
 
   /////get users favorites
 
@@ -38,7 +38,8 @@ export function DesktopFavoriteButton({ favorites, id, type, refetch }) {
       onSuccess: (data) => {
         //  console.log("response", data);
         toast.success(data.message);
-        refetch();
+        refetch(); //refetch favorite count
+        refetchFavorite()  // refetch all favorite
         setdisabled(false);
         setLoading(false);
       },

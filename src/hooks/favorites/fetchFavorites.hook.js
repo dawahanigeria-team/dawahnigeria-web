@@ -22,6 +22,7 @@ export const useFetchFavoritesHook = (keyParam) => {
 
   return {
     favoriteCount: getFavsCount,
-    refetchData: refetch()
+    refetch
+   
   };
 };
