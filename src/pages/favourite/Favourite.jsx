@@ -6,6 +6,7 @@ import Favourite_songs from "../../components/favourite_subs/favourite_songs/Fav
 import Favourite_playlist from "../../components/favourite_subs/favourite_playlist/Favourite_playlist";
 import Favourite_lecturers from "../../components/favourite_subs/favourite_lecturers/Favourite_lecturers";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
+import HeadMeta from "../../components/head-meta";
 
 const Favourite = () => {
   const [tab, setTab] = useState(1);
@@ -15,6 +16,9 @@ const Favourite = () => {
 
   return (
     <Container>
+      <HeadMeta
+        title={`Favorite resources on Dawah Nigeria - Home of islamic resources`}
+      />
       <div className="fav_wrapper">
         <div className="fav_header_link">
           <HeaderRouter title={"Favourites"} />

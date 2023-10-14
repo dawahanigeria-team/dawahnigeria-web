@@ -3,7 +3,7 @@ import "./audiodetail.scss";
 import AudioActionDesktop from "../../components/audio/audioActionDesktop";
 import Container from "../../components/container/Container";
 import audioHero from "../../assets/png/detialPagehero.png";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
 import { CiPlay1 } from "react-icons/ci";
 import back from "../../assets/svg/back.svg";
 import foward from "../../assets/svg/foward.svg";
@@ -52,11 +52,18 @@ import {
   getRepeat,
   getValue,
 } from "../../Redux/Actions/ActionCreators";
-import { LECTURE, MORE } from "../../utils/routes/constants";
+import { useSimilarAudioHook } from "../../hooks";
+import { GENRES, LECTURE, MORE } from "../../utils/routes/constants";
 import plus from "../../../src/assets/svg/plus.svg";
 import CurrentPlayData from "../../components/currentData/currentPlayData";
 import Loader from "../../components/UI/loader/loader";
+
+import { useAudioHook } from "../../hooks";
+import { audioDetailApi } from "../../services";
+import { DesktopFavoriteButton } from "../../components/UI/favoritebuttons/desktopfavoriteButtons";
 import { AudioDownloadModal } from "../../components/audioDownloadModal/AudioDownloadModal";
+import HeadMeta from "../../components/head-meta";
+
 const AudioDetail = () => {
   const { id } = useParams();
   const {
@@ -75,28 +82,18 @@ const AudioDetail = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const [more, setMore] = useState(0);
-  const [play, setPlay] = useState(0);
   const [moreOption, setmoreOption] = useState(false);
   const { audioRef, setinitial, loading } = useContext(AudioContext);
-  //const [music, setMusic] = useState(0);
-  const [data, setData] = useState([]);
   const slide = useRef();
   const [audioComment, setaudioComment] = useState();
   const [subdata, setSubData] = useState([]);
   const [currentaudio, setcurrentaudio] = useState([]);
   const [curUser, setCurUser] = useState(currentUser || null);
   const [iscurrents, setcurrents] = useState(false);
-  //const audioRef = useRef();
   const rangeRef = useRef();
-  //const [page, getPage] = useState(currentPage);
-  //  const [endpUrl, setendpUrl] = useState(endpoint_url);
   const [isprev, setisprev] = useState(false);
   const [isnext, setisnext] = useState(true);
-  //const [isrepeat, getRepeat] = useState(false);
-  const [isComplete, setIsComplete] = useState(false);
   const [isComment, setIsComment] = useState(false);
-  //const [nidValue, setNidValue] = useState(nid);
-  //const [count, getCount] = useState(idx || id);
   const [isEmpty, setIsEmpty] = useState(false);
   const [isPrevious, setIsPrevious] = useState(false);
   const [isAddedToFavorite, setisAddedToFavorite] = useState(false);
@@ -109,37 +106,17 @@ const AudioDetail = () => {
   const [sumofFav, setsumofFav] = useState(0);
   const [isShare, setisShare] = useState(false);
   const [comment, setComment] = useState("");
-  const [noOfComments, setNoOfComments] = useState("");
-
   const dispatch = useDispatch();
-  //console.log("count: ", count);
-  //console.log("controlData: ", id);
+
 
   //console.log("currentPage", page);
-  /**
-   
-   */
 
-  const getMusic = async (id) => {
-    if (state?.layout) return;
-    if (window.innerWidth <= 615) {
-      dispatch(getaudioId(id));
-    } else {
-      axios
-        .get(`/leclistingapi.php?lecid=${id}`)
-        .then((res) => {
-          console.log("Audio response", res.data[0]);
-          dispatch(getcurrentAudioInfo(res.data[0]));
-        })
-        .catch((err) => {
-          //console.log(err);
-        });
-    }
-  };
-  useEffect(() => {
-    getMusic(id);
-  }, [id, audioId]);
 
+  const { refetch } = useAudioHook(id);
+  const keyParam = { id: currentAudioInfo?.rp_id, page: 1 };
+  const { querieddata: similarAudios } = useSimilarAudioHook(keyParam);
+
+  console.log(similarAudios);
   const handlePlay = () => {
     dispatch(getaudioId(id));
     setinitial(false);
@@ -152,24 +129,20 @@ const AudioDetail = () => {
 
   const handleRange = (curr) => {
     dispatch(getValue(curr));
-    //   //console.log(rangeRef.current.value);
+
     if (audioRef.current) {
       audioRef.current.currentTime = curr;
     }
   };
 
   const handleNextAudio = () => {
-    // //console.log("first count: ", count);
     setIsPrevious(false);
     dispatch(setPlaying(false));
-    //console.log(pack);
 
     const next = pack?.findIndex((value) => {
       return value.nid === parseInt(id);
     });
 
-    //console.log("first count: ", next);
-    // //console.log("current diff: ", data?.length - 1 - next);
     if (!isEmpty && pack?.length - 1 - next <= 2) {
       dispatch(getPage(page + 1));
     }
@@ -177,10 +150,8 @@ const AudioDetail = () => {
     if (next === pack?.length - 1) {
       navigate(`${LECTURE}${pack[next]?.nid}`);
 
-      //console.log("@@@@@@@@@@ end of track next");
       dispatch(getCount(next));
     } else if (count < pack?.length - 1) {
-      //console.log("@@@@@@@@@@@ working");
       navigate(`${LECTURE}${pack[next + 1]?.nid}`);
 
       dispatch(getCount(next + 1));
@@ -204,18 +175,13 @@ const AudioDetail = () => {
       dispatch(getPage(page - 1));
     }
 
-    // getCount(prev);
-    // //console.log("second count: ", count);
     if (prev === 0) {
       navigate(`${LECTURE}${pack[prev]?.nid}`);
-      //dispatch(getaudioId(pack[prev]?.nid));
-      dispatch(getCount(prev));
 
-      //console.log("end of track prev");
+      dispatch(getCount(prev));
     } else {
-      //console.log("third count: ", count);
       navigate(`${LECTURE}${pack[prev - 1]?.nid}`);
-      //dispatch(getaudioId(pack[prev - 1]?.nid));
+
       dispatch(getCount(prev - 1));
     }
     setinitial(false);
@@ -409,36 +375,6 @@ const AudioDetail = () => {
     return () => slide.current?.removeEventListener("scroll", scrollEl);
   }, [slide.current?.scrollLeft]);
 
-  useEffect(() => {
-    //all lecturers
-    axios
-      .get(`${process.env.REACT_APP_API_BASE_URL}/all_rps_api.php`)
-      .then((res) => {
-        const data = res.data;
-        const rpArray = data.map((rp) => rp.name);
-        console.clear();
-        console.log("rpArray", rpArray);
-        const isPresent = rpArray.includes(currentAudioInfo?.rpname);
-        if (isPresent) {
-          const rpindex = rpArray.indexOf(currentAudioInfo?.rpname);
-          const page = 1;
-          axios
-            .get(
-              `/leclisting_rp.php?page=${page}&lim=10&offset=30&rpid=${data[rpindex]?.id}`
-            )
-            .then((res) => {
-              setSimilarAudio(res.data);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-      })
-      .catch((err) => {
-        //console.log(err);
-      });
-  }, [currentAudioInfo?.rpname]);
-
   const shareAudio = () => {
     setisShare(!isShare);
     //setNidValue(nid)
@@ -448,6 +384,13 @@ const AudioDetail = () => {
 
   return (
     <Container>
+      <HeadMeta
+        title={`${
+          currentAudioInfo?.title?.split("-")[0] ||
+          currentAudioInfo?.Title ||
+          "Audio"
+        } on Dawah Nigeria - Home of islamic resources`}
+      />
       <div className="audiodetail_wrapper">
         <img
           className="audiodetail_hero"
@@ -515,33 +458,14 @@ const AudioDetail = () => {
                   <CiPlay1 className="audiodetail_play_icon" />
                   <p className="audiodetail_play_text">{"play"}</p>
                 </div>
-                <div className="audiodetail_fav">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      addToFav(e, audioId);
-                      fetchFavorites(addFav, audioId);
-                      setaddFav(!addFav);
-                      setdisabled(true);
-                    }}
-                    className="fav_btn"
-                    disabled={isdisabled}
-                  >
-                    {getFavs?.includes(parseInt(id || audioId)) ? (
-                      <MdFavorite className="audiodetail_fav_icon_active" />
-                    ) : (
-                      <img
-                        src={favbig}
-                        alt=""
-                        className="audiodetail_fav_icon"
-                      />
-                    )}
-                  </button>
 
-                  <p className="audiodetail_fav_text">
-                    {formatNumber(currentAudioInfo?.favorites || 0)}
-                  </p>
-                </div>
+                <DesktopFavoriteButton
+                  favorites={currentAudioInfo?.favorites}
+                  id={id}
+                  type={"audio"}
+                  refetch={refetch}
+                />
+
                 <div
                   onClick={() => {
                     shareAudio();
@@ -563,7 +487,9 @@ const AudioDetail = () => {
                     alt=""
                     className="audiodetail_comment_icon"
                   />
-                  <p className="audiodetail_comment_text">44</p>
+                  <p className="audiodetail_comment_text">
+                    {formatNumber(currentAudioInfo?.comment || 0)}
+                  </p>
                 </div>
                 <AudioDownloadModal
                   downloads={currentAudioInfo?.downloads}
@@ -578,9 +504,9 @@ const AudioDetail = () => {
           <div className="audiodetail_info">
             <div className="audiodetail_info_wrap">
               <div className="audiodetail_info_name">Genre: </div>
-              <div className="audiodetail_info_value">
+              <Link to={`${GENRES}/${parseInt(currentAudioInfo?.cat_id.toString())}`} className="audiodetail_info_value hover:text-[#ddff2b] hover:underline">
                 {currentAudioInfo?.cats || "unknown"}
-              </div>
+              </Link>
             </div>
             <div className="audiodetail_info_wrap">
               <div className="audiodetail_info_name">Date of Release: </div>
@@ -811,9 +737,9 @@ const AudioDetail = () => {
                 <p className="audiodetail_info_mob_head">Information</p>
                 <div className="audiodetail_info_wrap_mob">
                   <p className="audiodetail_info_name_mob">Genre: </p>
-                  <p className="audiodetail_info_value_mob">
+                  <Link to={`${GENRES}/${parseInt(currentAudioInfo?.cat_id.toString())}`} className="audiodetail_info_value_mob hover:text-[#ddff2b] hover:underline">
                     {currentAudioInfo?.cats || "unknown"}
-                  </p>
+                  </Link>
                 </div>
                 <div className="audiodetail_info_wrap_mob">
                   <p className="audiodetail_info_name_mob">Date of Release: </p>
@@ -861,14 +787,12 @@ const AudioDetail = () => {
                 navigate(MORE, {
                   state: {
                     name: "",
-                    heading: `Similar Audios by ${
-                      currentaudio?.rpname?.split(" ")[0]
-                    } ${currentaudio?.rpname?.split(" ")[1]}`,
+                    heading: `Similar Audios by ${currentAudioInfo?.rpname}`,
                     id: "",
                     img: "",
                     type: "lectures",
                     navtitle: "Similar Audio",
-                    currentdata: similarAudio,
+                    currentdata: similarAudios,
                   },
                 });
               }}
@@ -886,50 +810,51 @@ const AudioDetail = () => {
               <img src={foward} alt="foward" />
             </div>
             <div ref={slide} className="overflow_auto_wrapper">
-              {similarAudio.map(
-                (
-                  {
-                    img,
-                    lec_img,
-                    categories,
-                    cats,
-                    title,
-                    Title,
-                    rpname,
-                    nid,
-                    audio,
-                    views,
-                  },
-                  idx
-                ) => {
-                  return (
-                    <div
-                      className="similarWidget_album_item"
-                      onClick={() => {
-                        navigate(`${LECTURE}${id}`);
+              {Array.isArray(similarAudios) &&
+                similarAudios.map(
+                  (
+                    {
+                      img,
+                      lec_img,
+                      categories,
+                      cats,
+                      title,
+                      Title,
+                      rpname,
+                      nid,
+                      audio,
+                      views,
+                    },
+                    idx
+                  ) => {
+                    return (
+                      <div
+                        className="similarWidget_album_item"
+                        onClick={() => {
+                          navigate(`${LECTURE}${id}`);
 
-                        // setendpUrl(similarAudioUrl);
-                        dispatch(getPack(null));
-                        dispatch(getPage(1));
-                        dispatch(getaudioId(nid));
-                        dispatch(getCount(idx));
-                        dispatch(getPack(similarAudio));
+                          // setendpUrl(similarAudioUrl);
+                          dispatch(getPack(null));
+                          dispatch(getPage(1));
+                          dispatch(getaudioId(nid));
+                          dispatch(getCount(idx));
+                          dispatch(getPack(similarAudio));
 
-                        setCurUser(currentUser);
-                        window.location.reload();
-                      }}
-                      key={idx + 1}
-                    >
-                      <LandingWidget
-                        key={idx}
-                        categories={categories || cats}
-                        img={img || lec_img}
-                        views={views}
-                      />
-                    </div>
-                  );
-                }
-              )}
+                          setCurUser(currentUser);
+                          window.location.reload();
+                        }}
+                        key={idx + 1}
+                      >
+                        <LandingWidget
+                          key={idx}
+                          categories={categories || cats}
+                          img={img || lec_img}
+                          views={views}
+                        />
+                      </div>
+                    );
+                  }
+                )}
             </div>
           </div>
         </div>

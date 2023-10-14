@@ -75,7 +75,7 @@ const AudioActionDesktop = () => {
       .get(`/leclistingapi.php?lecid=${audioId}`)
       .then((res) => {
         setcurrentaudio(res.data[0]);
-        //console.log(res.data);
+        
         dispatch(getcurrentAudioInfo(res.data[0]));
         setLoading(false);
         console.log("@@@@@@@@@@@ def");
@@ -86,7 +86,7 @@ const AudioActionDesktop = () => {
           cancelAnimationFrame(playAnimation.current);
         } else {
           dispatch(setPlaying(true));
-          // audioRef.current?.pause()
+         
           console.log("@@@@@@@@@@@ playing");
           audioRef.current?.play();
           playAnimation.current = requestAnimationFrame(repeat);

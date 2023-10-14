@@ -13,9 +13,7 @@ const IconText = ({ icon, link, name, id, setisOpen }) => {
   const navigate = useNavigate();
 
   const { addplaylist } = useSelector((state) => state.user);
-
-  //console.log(addplaylist)
-
+  
   function close() {
     setisOpen(false);
   }
@@ -32,7 +30,9 @@ const IconText = ({ icon, link, name, id, setisOpen }) => {
       setActive(11);
     } else if (location.pathname.includes("lecturers")) {
       setActive(3);
-    } else if (location.pathname.includes("quran")) {
+
+    } else if (location.pathname.includes("recitations")) {
+
       setActive(4);
     } else if (location.pathname.includes("videos")) {
       setActive(5);
@@ -62,7 +62,7 @@ const IconText = ({ icon, link, name, id, setisOpen }) => {
       onClick={() => {
         navigate(link);
         close();
-        if (id === 8) {
+        if (id === 9) {
           dispatch(showaddPlaylist(true));
           //console.log('8')
         }

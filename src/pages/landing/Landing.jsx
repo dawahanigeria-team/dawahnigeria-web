@@ -31,19 +31,16 @@ import {
   LECTURERS,
   QURAN,
 } from "../../utils/routes/constants";
-import { landingPageApis } from "../../services";
 import HeadMeta from "../../components/head-meta";
+import { useLandingPageHook } from "../../hooks/landing";
+
 import RowSkeletonContainer from "../../components/skeletion/skeleton.container";
+
 const Landing = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [curPlay, setcurPlay] = useState([]);
   const [isrecent, setisrecent] = useState(false);
-  const [landingpagedata, setlandingpagedata] = useState({
-    images: [],
-    specailFeat: [],
-    recentlyposted: [],
-    recentlyviewed: [],
-  });
+  const id = currentUser?.id;
   const page = 1;
   const settings = {
     dots: true,
@@ -85,115 +82,94 @@ const Landing = () => {
     ],
   };
 
-  useEffect(() => {
-    const fetchLandingPageData = async () => {
-      try {
-        const [
-          sliderImages,
-          specialFeaturesLectures,
-          //   recentlyPosted,
-          recentlyViewed,
-        ] = await Promise.all([
-          landingPageApis.getSliderImages(),
-          landingPageApis.getSpecialFeaturesLectures(),
-          //  landingPageApis.getRecentlyPosted(),
-          landingPageApis.getRecentlyViewed(
-            currentUser?.id,
-            page,
-            setisrecent,
-            setcurPlay
-          ),
-        ]);
 
-        const specialFeatures = specialFeaturesLectures.flatMap((val) => [
-          { name: val.name, more: val.more },
-        ]);
+  const [sliders, recentlyPosted, specialFeatures, recentlyviewed] =
+    useLandingPageHook();
 
-        setlandingpagedata({
-          images: sliderImages,
-          specailFeat: specialFeatures,
-          // recentlyposted: recentlyPosted.slice(0, 10),
-          recentlyviewed: recentlyViewed.slice(0, 10),
-        });
+  const specialFeat = specialFeatures?.data?.flatMap((val) => [
+    { name: val.name, more: val.more },
+  ]);
 
-        // setisrecent(true);
-        // setcurPlay(recentlyViewed);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchLandingPageData();
-  }, []);
 
   return (
     <Container>
-      <HeadMeta title="DawahNigeria | Home" />
+      <HeadMeta title="Welcome to Dawah Nigeria - Home of Islamic resources" />
       <div className="landing_wrapper px-[2%] max-[615px]:py-[5%] py-[8%] min-[690px]:py-[2%]">
-        {landingpagedata?.images.length > 1 ? (
-          <>
-            <div className="carousel  h-[250px] min-[950px]:h-[250px] min-[1050px]:h-[250px] min-[1283px]:h-[300px]">
-              <MyCarousel images={landingpagedata?.images} />
-            </div>
 
-            <Slider className="landing_carousel landing_space" {...settings}>
-              {landingpagedata?.images?.map((image, index) => {
-                return (
-                  <div key={index} className="landing_carousel_img">
-                    <MobileImageWidget image={image} className="" />
-                  </div>
-                );
-              })}
-            </Slider>
-            <Slider className="landing_options" {...settings1}>
-              <LandingOptions text={"Charts"} img={bchart} link={CHARTS} />
-              <LandingOptions
-                text={"Lecturers"}
-                img={blecturer}
-                link={LECTURERS}
-              />
-              <LandingOptions text={"Quran"} img={quranIcon} link={QURAN} />
-              <LandingOptions text={"Playlists"} img={bplaylist} link={PLAY} />
-              <LandingOptions
-                text={"Video"}
-                icon={<BsFillPlayBtnFill />}
-                link={VIDEO}
-              />
-              <LandingOptions text={"Genre"} img={bgenre} link={GENRES} />
-              <LandingOptions
-                text={"Trending"}
-                img={btrending}
-                link={TRENDING}
-              />
-              <LandingOptions text={"New"} img={bnew} link={NEW} />
-            </Slider>
-          </>
+        {sliders?.data?.length > 1 ? (
+          <>
+        <div className="carousel  h-[250px] min-[950px]:h-[250px] min-[1050px]:h-[250px] min-[1283px]:h-[300px]">
+          <MyCarousel images={sliders?.data} />
+        </div>
+
+        <Slider className="landing_carousel landing_space" {...settings}>
+          {sliders?.data?.map((image, index) => {
+            return (
+              <div key={image} className="landing_carousel_img">
+                <MobileImageWidget image={image} className="" />
+              </div>
+            );
+          })}
+        </Slider>
+        <Slider className="landing_options" {...settings1}>
+          <LandingOptions text={"Charts"} img={bchart} link={CHARTS} />
+          <LandingOptions text={"Lecturers"} img={blecturer} link={LECTURERS} />
+          <LandingOptions text={"Quran"} img={quranIcon} link={QURAN} />
+          <LandingOptions text={"Playlists"} img={bplaylist} link={PLAY} />
+          <LandingOptions
+            text={"Video"}
+            icon={<BsFillPlayBtnFill />}
+            link={VIDEO}
+          />
+          <LandingOptions text={"Genre"} img={bgenre} link={GENRES} />
+          <LandingOptions text={"Trending"} img={btrending} link={TRENDING} />
+          <LandingOptions text={"New"} img={bnew} link={NEW} />
+        </Slider>
+        </>
         ) : (
           <CarouselSkeleton />
         )}
-
-        {landingpagedata?.recentlyviewed ? (
+        {recentlyPosted?.isSuccess && Array.isArray(recentlyPosted?.data) && (
           <div className="landing_recent landing_space my-1 min-[615px]:my-3">
             {" "}
             <GroupWidget
-              data={landingpagedata?.recentlyviewed}
+              data={recentlyPosted?.data.slice(0,10)}
               heading="Recently Posted"
               type={"lectures"}
-              endpoint_url={"/leclisting_recent.php&page="}
+              endpoint_url={
+                "/leclisting_recent.php?&action=get_recent_audio&page="
+              }
+              currentPage={page}
+              isrecentpost={true}
+              nav1={{ title: "Home", link: HOME }}
+            />
+          </div>
+
+        )}
+        {recentlyviewed?.isSuccess &&  
+        (Array.isArray(recentlyviewed?.data) ? (
+          <div className="landing_recent landing_space my-1 min-[615px]:my-3">
+            {" "}
+            <GroupWidget
+              data={recentlyviewed?.data}
+              heading="Recently Viewed"
+              type={"recent"}
+              endpoint_url={"/leclisting_lang.php?langid=6&page="}
               currentPage={page}
               previousPlay={curPlay}
-              isrecentpost={true}
+              isrecent={isrecent}
               nav1={{ title: "Home", link: HOME }}
             />
           </div>
         ) : (
           <div className="landing_recent landing_space my-1 min-[615px]:my-3">
             <RowSkeletonContainer />
-          </div>
-        )}
 
-        {Array.isArray(landingpagedata?.specailFeat) &&
-          landingpagedata?.specailFeat
+          </div>))
+        }
+
+        {Array.isArray(specialFeat) &&
+          specialFeat
             ?.filter(({ more }) => Array.isArray(more) && more.length > 0)
             .map(({ name, more }, idx) => (
               <div
@@ -210,8 +186,8 @@ const Landing = () => {
               </div>
             ))}
 
-        {Array.isArray(landingpagedata?.specailFeat) &&
-          landingpagedata?.specailFeat.length === 0 &&
+        {Array.isArray(specialFeat) &&
+          specialFeat.length === 0 &&
           Array(10)
             .fill(undefined)
             .map((_, i) => (
