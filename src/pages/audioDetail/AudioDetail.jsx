@@ -57,6 +57,7 @@ import plus from "../../../src/assets/svg/plus.svg";
 import CurrentPlayData from "../../components/currentData/currentPlayData";
 import Loader from "../../components/UI/loader/loader";
 import { AudioDownloadModal } from "../../components/audioDownloadModal/AudioDownloadModal";
+import HeadMeta from "../../components/head-meta";
 const AudioDetail = () => {
   const { id } = useParams();
   const {
@@ -117,7 +118,7 @@ const AudioDetail = () => {
 
   //console.log("currentPage", page);
   /**
-   
+
    */
 
   const getMusic = async (id) => {
