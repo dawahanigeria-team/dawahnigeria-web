@@ -10,6 +10,7 @@ export const useRequest = (requestType, routeName, payload = null) => {
     setIsLoading(true);
     axios[type](route, payloadData)
       .then((res) => {
+        console.log("handleRequest", res.data);
         setData(res.data);
         setIsLoading(false);
       })
@@ -21,6 +22,7 @@ export const useRequest = (requestType, routeName, payload = null) => {
   useEffect(() => {
     handleRequest(requestType, routeName, payload);
   }, [requestType, routeName, payload]);
+
   return { isLoading, data };
 };
 

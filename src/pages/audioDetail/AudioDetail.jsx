@@ -57,6 +57,9 @@ import plus from "../../../src/assets/svg/plus.svg";
 import CurrentPlayData from "../../components/currentData/currentPlayData";
 import Loader from "../../components/UI/loader/loader";
 import { AudioDownloadModal } from "../../components/audioDownloadModal/AudioDownloadModal";
+import { useRequest } from "../landing/utils";
+import RowSkeletonContainer from "../../components/skeletion/skeleton.container";
+import CardSkeleton from "../../components/skeletion";
 const AudioDetail = () => {
   const { id } = useParams();
   const {
@@ -409,43 +412,12 @@ const AudioDetail = () => {
     return () => slide.current?.removeEventListener("scroll", scrollEl);
   }, [slide.current?.scrollLeft]);
 
-  useEffect(() => {
-    //all lecturers
-    axios
-      .get(`${process.env.REACT_APP_API_BASE_URL}/all_rps_api.php`)
-      .then((res) => {
-        const data = res.data;
-        const rpArray = data.map((rp) => rp.name);
-        console.clear();
-        console.log("rpArray", rpArray);
-        const isPresent = rpArray.includes(currentAudioInfo?.rpname);
-        if (isPresent) {
-          const rpindex = rpArray.indexOf(currentAudioInfo?.rpname);
-          const page = 1;
-          axios
-            .get(
-              `/leclisting_rp.php?page=${page}&lim=10&offset=30&rpid=${data[rpindex]?.id}`
-            )
-            .then((res) => {
-              setSimilarAudio(res.data);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-      })
-      .catch((err) => {
-        //console.log(err);
-      });
-  }, [currentAudioInfo?.rpname]);
-
-  const shareAudio = () => {
-    setisShare(!isShare);
-    //setNidValue(nid)
-  };
+  const { data: similarLecture, isLoading } = useRequest(
+    "get",
+    `https://www.dawahbox.com/scripts/py_srch_exec.php?srch_str=Yusuff`
+  );
 
   ////*********************************************************** */
-
   return (
     <Container>
       <div className="audiodetail_wrapper">
@@ -886,7 +858,7 @@ const AudioDetail = () => {
               <img src={foward} alt="foward" />
             </div>
             <div ref={slide} className="overflow_auto_wrapper">
-              {similarAudio.map(
+              {(similarLecture?.display_data?.mini_result ?? []).map(
                 (
                   {
                     img,
@@ -930,6 +902,17 @@ const AudioDetail = () => {
                   );
                 }
               )}
+
+              {
+                isLoading &&
+                  // <div className="landing_recent landing_space my-1 min-[615px]:my-3">
+                  Array(10)
+                    .fill(undefined)
+                    .map((_, i) => {
+                      return <CardSkeleton key={i} />;
+                    })
+                // </div>
+              }
             </div>
           </div>
         </div>
