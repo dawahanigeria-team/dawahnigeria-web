@@ -34,7 +34,7 @@ const MyCarousel = ({ images }) => {
           <MdNavigateNext className="text-white text-[40px]" />
         </div>
       </div>
-      {images &&
+      {Array.isArray(images)  &&
         images.map((image, index) => {
           return (
             <div
@@ -57,7 +57,7 @@ const MyCarousel = ({ images }) => {
               </div>
 
               <div className="w-full flex items-center z-[12]   justify-center space-x-1 absolute bottom-7 inset-x-0">
-                {images.map((img, index) => {
+                {Array.isArray(images) && images.map((img, index) => {
                   return (
                     <span
                       key={index}

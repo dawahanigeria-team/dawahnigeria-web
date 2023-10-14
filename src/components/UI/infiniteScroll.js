@@ -1,11 +1,11 @@
-function infiniteScroll(node, observer, page, setPage, isEmpty) {
-  if (isEmpty) return;
+function infiniteScroll(node, observer, page, setPage) {
 
   // console.log(node);
   if (observer.current) observer.current.disconnect();
   observer.current = new IntersectionObserver(
     (entries) => {
       if (entries[0].isIntersecting) {
+        console.log('is visible')
         setTimeout(() => {
           setPage(page + 1);
         }, 2000);

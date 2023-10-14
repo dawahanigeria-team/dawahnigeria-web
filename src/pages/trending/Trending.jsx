@@ -1,78 +1,52 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useState } from "react";
 import "./trending.scss";
 import Container from "../../components/container/Container";
 import List from "../../components/list/list";
 import { useNavigate } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
-import infiniteScroll from "../../components/UI/infiniteScroll";
 import pmobile from "../../../src/assets/svg/playmobile.svg";
-import axios from "../../utils/useAxios";
 import Loader from "../../components/UI/loader/loader";
-import { LECTURE, NEW, TRENDING } from "../../utils/routes/constants";
-
+import { LECTURE, TRENDING } from "../../utils/routes/constants";
+import { useInfiniteScrollPagination } from "../../hooks";
 import _ from "lodash";
+import { useQueryGetRequest } from "../../hooks/getqueries";
+import { trendingApi } from "../../services/trending.service";
 import HeadMeta from "../../components/head-meta";
+
 const Trending = () => {
-  const [data, setData] = useState([]);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-  const observer = useRef();
-  const observerMobile = useRef();
-  const [isEmpty, setIsEmpty] = useState(false);
-  const [nextPageLoad, setNextPageLoad] = useState(false);
   const [page, setPage] = useState(1);
+  const queryParam = {page}
+  const { isLoading, isLoadingNextPage, isLastPage, querieddata } =
+    useQueryGetRequest(
+      "trending",
+       queryParam,
+      trendingApi.getTrendings
+    );
 
-  useEffect(() => {
-    if (page > 1) {
-      setNextPageLoad(true);
-    }
-    axios
-      .get(`/popular_lec_api.php?langid=6&page=${page}`)
-      .then((res) => {
-        //console.log(res.data);
-        if (page === 1) {
-          setLoading(false);
-        }
-        setNextPageLoad(false);
-        if (res.data.length === 0) {
-          setIsEmpty(true);
-          return;
-        }
+ // console.log(isLoadingNextPage, isLastPage, 'page:', page);
 
-        setData((prev) => _.uniqBy([...prev, ...res.data], "nid"));
-      })
-      .catch((err) => {
-        //console.log(err);
-      });
-  }, [page]);
-
-  const lastElement = useCallback(
-    (node) => {
-      if (isEmpty) return;
-      infiniteScroll(node, observer, page, setPage);
-    },
-
-    [page]
+  const { ref: infiniteScrollRef } = useInfiniteScrollPagination(
+    querieddata?.length,
+    page,
+    setPage
   );
 
-  const lastElementMobile = useCallback(
-    (node) => {
-      if (isEmpty) return;
-      infiniteScroll(node, observerMobile, page, setPage);
-    },
-
-    [page]
+  const { ref: infiniteScrollRefMobile } = useInfiniteScrollPagination(
+    querieddata?.length,
+    page,
+    setPage
   );
 
   //play all audio files
   const playAll = () => {
-    navigate(`${LECTURE}${data[0]?.nid}`, {
+    navigate(`${LECTURE}${querieddata[0]?.nid}`, {
       state: {
         endpoint_url: `/popular_lec_api.php?langid=6&page=`,
         currentPage: 1,
         idx: 0,
-        nid: data[0].nid,
-        nav1: { title: "playAll", link: NEW },
+        nid: querieddata[0].nid,
+        nav1: { title: "playAll", link: TRENDING},
       },
     });
   };
@@ -99,16 +73,16 @@ const Trending = () => {
             <span>Time</span>
           </p>
         </div>
-        {loading && (
+        {isLoading && !isLoadingNextPage && (
           <div className="load_desktop">
             <div className="load">
               <Loader />
             </div>
           </div>
         )}
-        {!loading && (
+        { (
           <div className="table">
-            {data.map(
+            {querieddata?.map(
               (
                 {
                   mp3_thumbnail,
@@ -124,64 +98,44 @@ const Trending = () => {
                 },
                 idx
               ) => {
-                if (data.length === idx + 1) {
-                  return (
-                    <div ref={lastElement} key={idx} className="">
-                      <List
-                        key={idx}
-                        id={idx}
-                        image={mp3_thumbnail || img}
-                        favorites={favorites}
-                        duration={duration}
-                        title={Title}
-                        lecturer={rpname}
-                        rpid={rp_id}
-                        url={`${LECTURE}${nid}`}
-                        Title={Title}
-                        rpname={rpname}
-                        endpoint_url={"/popular_lec_api.php?langid=6&page="}
-                        currentPage={page}
-                        cats={cats}
-                        nid={nid}
-                        views={views}
-                        navName={"Trending"}
-                        navLink={TRENDING}
-                        controlData={data}
-                      />
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div key={idx} className="">
-                      <List
-                        key={idx}
-                        id={idx}
-                        image={mp3_thumbnail || img}
-                        duration={duration}
-                        favorites={favorites}
-                        title={Title}
-                        lecturer={rpname}
-                        rpid={rp_id}
-                        url={`${LECTURE}${nid}`}
-                        Title={Title}
-                        rpname={rpname}
-                        endpoint_url={"/popular_lec_api.php?langid=6&page="}
-                        currentPage={page}
-                        cats={cats}
-                        nid={nid}
-                        navName={"Trending"}
-                        navLink={TRENDING}
-                        controlData={data}
-                        views={views}
-                      />
-                    </div>
-                  );
-                }
+                return (
+                  <div
+                    ref={
+                      idx === querieddata.length - 1 && !isLastPage
+                        ? infiniteScrollRef
+                        : null
+                    }
+                    key={idx}
+                    className=""
+                  >
+                    <List
+                      key={idx}
+                      id={idx}
+                      image={mp3_thumbnail || img}
+                      favorites={favorites}
+                      duration={duration}
+                      title={Title}
+                      lecturer={rpname}
+                      rpid={rp_id}
+                      url={`${LECTURE}${nid}`}
+                      Title={Title}
+                      rpname={rpname}
+                      endpoint_url={"/popular_lec_api.php?langid=6&page="}
+                      currentPage={page}
+                      cats={cats}
+                      nid={nid}
+                      views={views}
+                      navName={"Trending"}
+                      navLink={TRENDING}
+                      controlData={querieddata}
+                    />
+                  </div>
+                );
               }
             )}
           </div>
         )}
-        {nextPageLoad && (
+        {isLoadingNextPage && (
           <div className="load_m">
             <div className="loads">
               <Loader />
@@ -203,15 +157,15 @@ const Trending = () => {
             <p className="">Play All</p>
           </div>
           <div className="bg-none h-1 w-1"></div>
-          {loading && (
+          {isLoading && !isLoadingNextPage && (
             <div className="load_mobile">
               <div className="loads">
                 <Loader />
               </div>
             </div>
           )}
-          {!loading &&
-            data.map(
+          {
+            querieddata?.map(
               (
                 {
                   mp3_thumbnail,
@@ -229,70 +183,44 @@ const Trending = () => {
                 },
                 idx
               ) => {
-                if (data.length === idx + 1) {
-                  return (
-                    <div
-                      ref={lastElementMobile}
+                return (
+                  <div
+                  ref={
+                    idx === querieddata.length - 1 && !isLastPage
+                      ? infiniteScrollRefMobile
+                      : null
+                  }
+                    key={idx}
+                    className="each_mobile_list"
+                  >
+                    <List
                       key={idx}
-                      className="each_mobile_list"
-                    >
-                      <List
-                        key={idx}
-                        id={idx}
-                        duration={duration}
-                        image={mp3_thumbnail || img}
-                        title={Title}
-                        lecturer={rpname}
-                        favorites={favorites}
-                        comments={comments}
-                        rpid={rp_id}
-                        url={`${LECTURE}${nid}`}
-                        Title={Title}
-                        rpname={rpname}
-                        endpoint_url={"/popular_lec_api.php?langid=6&page="}
-                        currentPage={page}
-                        cats={cats}
-                        nid={nid}
-                        navName={"Trending"}
-                        navLink={TRENDING}
-                        controlData={data}
-                        views={views}
-                        share={share}
-                      />
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div key={idx} className="each_mobile_list">
-                      <List
-                        key={idx}
-                        id={idx}
-                        duration={duration}
-                        image={mp3_thumbnail || img}
-                        title={Title}
-                        lecturer={rpname}
-                        favorites={favorites}
-                        comments={comments}
-                        rpid={rp_id}
-                        url={`${LECTURE}${nid}`}
-                        Title={Title}
-                        rpname={rpname}
-                        endpoint_url={"/popular_lec_api.php?langid=6&page="}
-                        currentPage={page}
-                        cats={cats}
-                        nid={nid}
-                        navName={"Trending"}
-                        navLink={TRENDING}
-                        controlData={data}
-                        views={views}
-                        share={share}
-                      />
-                    </div>
-                  );
-                }
+                      id={idx}
+                      duration={duration}
+                      image={mp3_thumbnail || img}
+                      title={Title}
+                      lecturer={rpname}
+                      favorites={favorites}
+                      comments={comments}
+                      rpid={rp_id}
+                      url={`${LECTURE}${nid}`}
+                      Title={Title}
+                      rpname={rpname}
+                      endpoint_url={"/popular_lec_api.php?langid=6&page="}
+                      currentPage={page}
+                      cats={cats}
+                      nid={nid}
+                      navName={"Trending"}
+                      navLink={TRENDING}
+                      controlData={querieddata}
+                      views={views}
+                      share={share}
+                    />
+                  </div>
+                );
               }
             )}
-          {nextPageLoad && (
+          {isLoadingNextPage && (
             <div className="load_m">
               <div className="loads">
                 <Loader />

@@ -308,7 +308,7 @@ const GroupWidget = ({
           </div>
         </div>
       )}
-      {type === "lectures" && (
+      {type === "lectures" && nav1.title === "Charts" && (
         <div
           className={
             styling
@@ -316,11 +316,11 @@ const GroupWidget = ({
               : "hidden"
           }
         >
-          <LectureMobileChart data={data} />
+          <LectureMobileChart data={ data} />
         </div>
       )}
 
-      {type === "album" && (
+      {type === "album" && nav1.title === "Charts" && (
         <div
           className={
             styling
@@ -328,11 +328,11 @@ const GroupWidget = ({
               : "hidden"
           }
         >
-          <AlbumMobileChart data={data} />
+          <AlbumMobileChart data={ data} />
         </div>
       )}
 
-      {type === "lecturer" && (
+      {type === "lecturer" && nav1.title === "Charts" && (
         <div
           className={
             styling
@@ -340,7 +340,7 @@ const GroupWidget = ({
               : "hidden"
           }
         >
-          <LecturerMobileChart data={data} />
+          <LecturerMobileChart data={Array.isArray(data) && data} />
         </div>
       )}
       {type === "album" && (
@@ -357,6 +357,7 @@ const GroupWidget = ({
                 styling ? "min-[615px]:space-x-3 space-x-3" : ""
               }`}
             >
+
               {Array.isArray(data) &&
                 data.map(
                   (
@@ -385,6 +386,7 @@ const GroupWidget = ({
                         }`}
                         onClick={() => {}}
                         key={idx + 1}
+
                       >
                         <LandingWidget
                           key={idx}
@@ -452,7 +454,7 @@ const GroupWidget = ({
                         key={idx + 1}
                       >
                         <LandingWidget
-                          key={idx}
+                          key={nid}
                           categories={
                             name ||
                             Title ||
@@ -475,18 +477,19 @@ const GroupWidget = ({
       {nav1.title === "Genres" && type === "lecturer" && (
         <div className="w-full h-full overflow-hidden min-[615px]:hidden">
           <div className="w-full overflow-x-auto flex items-center space-x-4 h-full">
-            {Array.isArray(data) &&
-              data.map(({ img, name, id, nid }, idx) => {
-                return (
-                  <Link
-                    to={`${RESOURCE_PERSON}${id || nid}`}
-                    key={idx}
-                    className=""
-                  >
-                    <GenreMobileLecturer img={img} rp={name} />
-                  </Link>
-                );
-              })}
+
+            {Array.isArray(data) && data.map(({ img, name, id, nid }, idx) => {
+              return (
+                <Link
+                  to={`${RESOURCE_PERSON}${id || nid}`}
+                  key={name}
+                  className=""
+                >
+                  <GenreMobileLecturer img={img} rp={name} />
+                </Link>
+              );
+            })}
+
           </div>
         </div>
       )}

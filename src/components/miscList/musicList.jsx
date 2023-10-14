@@ -1,20 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./musicList.scss";
-import imge from "../../../src/assets/png/genre/1.png";
-import love from "../../../src/assets/svg/love-d.svg";
-import comment from "../../../src/assets/svg/com-d.svg";
 import headpmobile from "../../../src/assets/svg/headpmobile.svg";
-import sharesvg from "../../../src/assets/svg/share-d.svg";
-import adfav from "../../../src/assets/svg/adfav.svg";
+
 import sharebig from "../../../src/assets/svg/boom-share.svg";
-import headp from "../../../src/assets/svg/hp-d.svg";
 import plus from "../../../src/assets/svg/boom-addplay.svg";
 import pmobile from "../../../src/assets/svg/playmobile.svg";
 import dot from "../../../src/assets/svg/threedot.svg";
 import { SlShare } from "react-icons/sl";
 import dmobile from "../../../src/assets/svg/boom-download.svg";
 import { useNavigate } from "react-router-dom";
-import lazysong from "../../assets/png/lazysong.jpeg";
+
 import Add_playlist from "../../pages/add_playlist/AddPlaylist";
 import ShareAudio from "../shareaudio/shareAudio";
 import { toast } from "react-hot-toast";
@@ -172,31 +167,7 @@ function MusicList({
     dispatch(showaddPlaylist(true));
   };
 
-  useEffect(() => {
-    //all lecturers
-    axios
-      .get(`${process.env.REACT_APP_API_BASE_URL}/all_rps_api.php`)
-      .then((res) => {
-        //console.log(res.data);
-        const data = res.data;
-        setrpData(data);
-        setrpnameArray(data.map((rp) => rp.name));
-      })
-      .catch((err) => {
-        //console.log(err);
-      });
-  }, []);
 
-  const lecturerDetail = (lecturer) => {
-    const isPresent = rpnameArray.includes(lecturer);
-    //console.log("is rp present is", isPresent);
-    if (isPresent) {
-      const rpindex = rpnameArray.indexOf(lecturer);
-
-      //console.log(rpData[rpindex]?.id);
-      navigate(`${RESOURCE_PERSON}${rpData[rpindex]?.id}`);
-    }
-  };
 
   /**
    * 

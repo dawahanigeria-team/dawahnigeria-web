@@ -68,20 +68,21 @@ const CommentBox = ({ id, audioComment, type }) => {
       </div>
 
       <div className="aud_comment_texts">
-        {audioComment?.map(({ user, date, content }, idx) => {
-          return (
-            <div className="com_wrap">
-              <div className="com_date">
-                <span className="logo_img">
-                  <img className="logo_img_sz" src={logo} alt="" />
-                </span>
-                <span className="commentor">{user}</span>
-                <span className="comment_date">{date}</span>
+        {Array.isArray(audioComment) &&
+          audioComment?.map(({ user, date, content }, idx) => {
+            return (
+              <div className="com_wrap">
+                <div className="com_date">
+                  <span className="logo_img">
+                    <img className="logo_img_sz" src={logo} alt="" />
+                  </span>
+                  <span className="commentor">{user}</span>
+                  <span className="comment_date">{date}</span>
+                </div>
+                <div className="comment_content">{content}</div>
               </div>
-              <div className="comment_content">{content}</div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
     </div>
   );

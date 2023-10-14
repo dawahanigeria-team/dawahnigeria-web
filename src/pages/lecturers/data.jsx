@@ -1,6 +1,6 @@
 export const lecturers = [
   {
-    id: 10,
+    id: null,
     name: "All",
     img: "https://backend.dawahnigeria.com/sites/default/files/Cover (10).jpg",
     status: 1,
