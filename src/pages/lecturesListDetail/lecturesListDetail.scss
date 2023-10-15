@@ -369,12 +369,13 @@
               margin: unset;
             }
           }
-          .leclistdet_download {
+          .audiodetail_download {
             background-color: #ffffff17;
             width: fit-content;
             height: 38px;
             border-radius: 4px;
             display: flex;
+            gap:0.5rem;
             flex-direction: row;
             align-items: center;
 
@@ -384,12 +385,24 @@
             &:hover {
               background-color: #ffffff2d;
             }
-            .leclistdet_download_icon {
+            .audiodetail_download_icon {
               font-size: 25px;
               @media screen and (max-width: 615px) {
                 font-size: 20px;
               }
               color: #cfcfcf;
+            }
+            .audiodetail_download_text {
+              font-family: "Nunito Sans";
+              font-style: normal;
+              font-weight: 400;
+              font-size: 14px;
+              @media screen and (max-width: 615px) {
+                font-size: 12px;
+              }
+              line-height: 24px;
+              color: #cfcfcf;
+              margin: unset;
             }
           }
         }

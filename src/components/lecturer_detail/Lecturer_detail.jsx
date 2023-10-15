@@ -102,7 +102,7 @@ const LecturerDetail = () => {
 
       <HeadMeta
         title={`${
-          singleData?.name || "Lecturer"
+          querieddata?.name || "Lecturer"
         } on Dawah Nigeria - Home of islamic resources`}
       />
         {Array.isArray(querieddata) && (
