@@ -30,7 +30,7 @@ const GenreDetail = () => {
     <Container>
       <HeadMeta
         title={`${
-          catDetail?.[0]?.name || ""
+          querieddata?.category_details && querieddata?.category_details[0]?.name || ""
         } - Islamic resources on Dawah Nigeria`}
       />
       <div className="genredet_wrapper max-[615px]:pt-[10%]">
