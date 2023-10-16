@@ -1,20 +1,23 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState } from "react";
 import "./videos.scss";
 import Container from "../../components/container/Container";
 import { categories } from "./data";
 import FilterButton from "../../components/filterButton/FilterButton";
 import VideoWidget from "../../components/videoWidget/VideoWidget";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
-import axios from "../../utils/useAxios";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/UI/loader/loader";
-import infiniteScroll from "../../components/UI/infiniteScroll";
-import _ from "lodash";
+import { useInfiniteScrollPagination } from "../../hooks";
+import { useQueryGetRequest } from "../../hooks/getqueries";
 import { VIDEOS } from "../../utils/routes/constants";
+
+import { videoApis } from "../../services";
+
+import HeadMeta from "../../components/head-meta";
+
 const Videos = () => {
   const navigate = useNavigate();
-  const observer = useRef();
-  const [data, setData] = useState([]);
+
   const [filter, setFilter] = useState([]);
   const [data1, setData1] = useState([]);
   const [data2, setData2] = useState([]);
@@ -22,50 +25,22 @@ const Videos = () => {
   const [active, setActive] = useState("All");
   const [, setTypeName] = useState();
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [isEmpty, setIsEmpty] = useState(false);
-  const [nextPageLoad, setNextPageLoad] = useState(false);
+  const [, setIsEmpty] = useState(false);
 
-  useEffect(() => {
-    const handleRequest = () => {
-      if (page > 1) {
-        setNextPageLoad(true);
-      }
-      axios
-        .get(`/video_listingApi.php?page=${page}&action=allVideo`)
-        .then((res) => {
-          //console.log(res.data);
-          if (page === 1) {
-            setLoading(false);
-          }
-          setNextPageLoad(false);
-          if (res.data.length === 0) {
-            setIsEmpty(true);
-            return;
-          }
+  const queryParam = { page };
 
-          setData((prev) => _.uniqBy([...prev, ...res.data], "id"));
-        })
-        .catch((err) => {
-          //console.log(err);
-        });
-    };
+  const { isLoading, querieddata, isLastPage, isLoadingNextPage } =
+    useQueryGetRequest("videos", queryParam, videoApis.getVideos);
 
-    handleRequest();
-  }, [page]);
-  //console.log(page)
-
-  const lastElement = useCallback(
-    (node) => {
-      if (isEmpty) return;
-
-      infiniteScroll(node, observer, page, setPage);
-    },
-
-    [page]
+  const { ref: infiniteScrollRef } = useInfiniteScrollPagination(
+    querieddata?.length,
+    page,
+    setPage
   );
+
   return (
     <Container>
+      <HeadMeta title={`Videos - Get islamic resources on Dawah Nigeria`} />
       <div className="video_wrapper">
         <div className="vid_header_link  max-[615px]:border-b border-zinc-700">
           <HeaderRouter title={"Videos"} />
@@ -90,47 +65,34 @@ const Videos = () => {
                   setTypeName={setTypeName}
                   setIsEmpty={setIsEmpty}
                   action="categories"
-                  data={data}
+                  data={querieddata}
                 />
               );
             })}
           </div>
         </div>
-        {loading && (
+        {isLoading && !isLoadingNextPage && (
           <div className="w-full flex items-center justify-center h-[300px]">
             <Loader />
           </div>
         )}
-        {!loading && (
+        {
           <div className="video_widget">
-            {data.map(
-              (
-                { images, id, favourites, author, views, title, duration },
-                idx
-              ) => {
-                console.log({ images });
-                if (data.length === idx + 1) {
+
+            {Array.isArray(querieddata) &&
+              querieddata?.map(
+                (
+                  { images, id, favourites, author, views, title, duration },
+                  idx
+                ) => {
+
                   return (
                     <div
-                      ref={lastElement}
-                      onClick={() => {
-                        navigate(`${VIDEOS}${id}`);
-                      }}
-                    >
-                      <VideoWidget
-                        key={idx}
-                        title={title}
-                        lecturer={author}
-                        views={views}
-                        img={images}
-                        favourites={favourites}
-                        duration={duration}
-                      />
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div
+                      ref={
+                        idx === querieddata.length - 1 && !isLastPage
+                          ? infiniteScrollRef
+                          : null
+                      }
                       onClick={() => {
                         navigate(`${VIDEOS}${id}`);
                       }}
@@ -147,11 +109,10 @@ const Videos = () => {
                     </div>
                   );
                 }
-              }
-            )}
+              )}
           </div>
-        )}
-        {nextPageLoad && (
+        }
+        {isLoadingNextPage && (
           <div className="w-full flex items-center h-[100px] justify-center ">
             <Loader />
           </div>

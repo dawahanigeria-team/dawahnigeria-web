@@ -5,6 +5,7 @@ import axios from "../../utils/useAxios";
 import { toast } from "react-hot-toast";
 import Loader from "../../components/UI/loader/loader";
 import ResetPassword from "./resetpassword/resetPassword";
+import HeadMeta from "../../components/head-meta";
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState();
@@ -46,6 +47,9 @@ const ForgotPassword = () => {
 
   return (
     <div className="w-full z-[100] h-full fixed bg-black inset-0">
+      <HeadMeta
+        title={`Forgot password -  Dawah Nigeria, home of islamic resources`}
+      />
       <div className="bg-[#353535] m-auto h-full inset-0 absolute w-full min-[615px]:w-[600px]">
         <div
           onClick={() => {

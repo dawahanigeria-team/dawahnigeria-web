@@ -9,48 +9,25 @@ import _ from "lodash";
 import { useSelector } from "react-redux";
 import MusicList from "../../miscList/musicList";
 import { LECTURE } from "../../../utils/routes/constants";
+import { useQueryGetRequest } from "../../../hooks/getqueries";
+import { lecturerDetailApi } from "../../../services";
 const Lecturer_songs = ({ id, setCount1 }) => {
   const { currentUser } = useSelector((state) => state.user);
-  const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(true);
-  const [isEmpty, setIsEmpty] = useState(false);
-  const [nextPageLoad, setNextPageLoad] = useState(false);
   const [comment, setComment] = useState();
   const [audioComment, setaudioComment] = useState();
+  const queryParam = { page, id: parseInt(id) };
 
+  const { isLoading, isLoadingNextPage, isLastPage, querieddata } =
+    useQueryGetRequest(
+      "lecturer-songs",
+      queryParam,
+      lecturerDetailApi.getLecturerSongs
+    );
   //console.log("rp id", id);
   useEffect(() => {
-    setCount1(data.length);
-  }, [data]);
-
-  useEffect(() => {
-    const handleRequest = () => {
-      if (page > 1) {
-        setNextPageLoad(true);
-      }
-      axios
-        .get(`/leclisting_rp.php?page=${page}&rpid=${parseInt(id)}`)
-        .then((res) => {
-          //console.log(res.data);
-          if (page === 1) {
-            setLoading(false);
-          }
-          setNextPageLoad(false);
-          if (res.data.length === 0) {
-            setIsEmpty(true);
-            return;
-          }
-
-          setData((prev) => _.uniqBy([...prev, ...res.data], "nid"));
-        })
-        .catch((err) => {
-          //console.log(err);
-        });
-    };
-
-    handleRequest();
-  }, [page]);
+    setCount1(querieddata?.length || 0);
+  }, [querieddata]);
 
   //////*************handling comment**************** */
 
@@ -116,7 +93,7 @@ const Lecturer_songs = ({ id, setCount1 }) => {
           <span>Time</span>
         </p>
       </div>
-      {loading && (
+      {isLoading && (
         <div className="load_desktop">
           <div className="load">
             <Loader />
@@ -124,8 +101,8 @@ const Lecturer_songs = ({ id, setCount1 }) => {
         </div>
       )}
       <div className="lecsong_content">
-        {!loading &&
-          data.map(
+        {Array.isArray(querieddata) &&
+          querieddata.map(
             (
               {
                 title,
@@ -162,7 +139,7 @@ const Lecturer_songs = ({ id, setCount1 }) => {
                       currentPage={page}
                       navName={"Back"}
                       navLink={-1}
-                      controlData={data}
+                      controlData={querieddata}
                       views={views}
                       duration={duration}
                     />
@@ -185,7 +162,7 @@ const Lecturer_songs = ({ id, setCount1 }) => {
                       navLink={-1}
                       endpoint_url={`/leclisting_rp.php?lim=10&&rpid=${id}page=`}
                       currentPage={page}
-                      controlData={data}
+                      controlData={querieddata}
                       views={views}
                       duration={duration}
                     />
@@ -196,28 +173,28 @@ const Lecturer_songs = ({ id, setCount1 }) => {
           )}
       </div>
 
-      {!loading && (
+      {
         <div className="flex h-fit w-full min-[615px]:text-[16px] text-sm  min-[615px]:mt-6 mt-3 items-center justify-center">
           {" "}
           <button
             onClick={() => {
-              if (isEmpty) return;
+              if (isLastPage) return;
               setPage(page + 1);
             }}
             className={
-              !isEmpty
+              !isLastPage
                 ? "w-[40%] min-[615px]:w-[200px] min-[615px]:py-3  flex justify-center items-center py-2 border border-gray-400 text-gray-400 rounded-2xl"
                 : "hidden"
             }
           >
-            {nextPageLoad ? (
+            {isLoadingNextPage ? (
               <span className="rounded-full w-4 h-4 border-l border-r border-gray-400 animate-spin"></span>
             ) : (
               <span>Show more</span>
             )}
           </button>
         </div>
-      )}
+      }
 
       <div className="lecsong_comments">
         <div className="lecsong_comments_header">Comments</div>

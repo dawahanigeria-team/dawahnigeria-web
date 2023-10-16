@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../components/UI/loader/loader";
 import { useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
+import HeadMeta from "../../components/head-meta";
 const LoginForm = () => {
   const [show, setShow] = useState("password");
   const [loading, setLoading] = useState(false);
@@ -62,6 +63,7 @@ const LoginForm = () => {
   const { email, password } = data;
   return (
     <div className="loginform_wrapper">
+      <HeadMeta title="Sign in to Dawah Nigeria | Home of Islamic resources" />
       <form
         onSubmit={(e) => {
           handleSubmit(e);
