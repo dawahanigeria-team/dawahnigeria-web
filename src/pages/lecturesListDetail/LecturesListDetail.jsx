@@ -46,18 +46,17 @@ import { DesktopFavoriteButton } from "../../components/UI/favoritebuttons/deskt
 import { MobileFavoriteButton } from "../../components/UI/favoritebuttons/mobilefavoriteButton";
 
 import HeadMeta from "../../components/head-meta";
+import { AudioDownloadModal } from "../../components/audioDownloadModal/AudioDownloadModal";
 
 const LecturesListDetail = () => {
   const { id } = useParams();
   const { state } = useLocation();
   const dispatch = useDispatch();
-  const [similarAlb, setsimilarAlb] = useState([]);
-  const [data, setData] = useState([]);
   const { currentUser, sharedAlbum } = useSelector((state) => state.user);
   const observeEl = useRef();
   const leclistdet = useRef();
+  const [, setsingleData] = useState()
   const { setinitial } = useContext(AudioContext);
-  const [sumofFav, setsumofFav] = useState();
   const [isShare, setisShare] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
@@ -179,7 +178,7 @@ const LecturesListDetail = () => {
 
       <HeadMeta
         title={`${
-          lectureTitleExtractor(singleData?.title, 2) || "Album"
+          lectureTitleExtractor(querieddata?.title, 2) || "Album"
         } on Dawah Nigeria - Home of islamic resources`}
       />
  
@@ -289,13 +288,10 @@ const LecturesListDetail = () => {
                       {formatNumber(querieddata[0]?.comments || 0)}
                     </p>
                   </div>
-                  <div className="leclistdet_download">
-                    <img
-                      src={download}
-                      alt=""
-                      className="leclistdet_download_icon"
-                    />
-                  </div>
+                 <AudioDownloadModal
+                 downloads={querieddata[0]?.downloads}
+                 nid={id}
+                 />
                 </div>
 
               </div>
@@ -571,14 +567,14 @@ const LecturesListDetail = () => {
             <div className="px-3">
               <SimilarAudio
                 similar={similarAlbums}
-                current={id}
+                current={querieddata?.rp_id}
                 url={`/a`}
                 type={"album"}
                 endpoint_url={`/albumlisting_rp.php?offset=30&lim=10&rpid=${querieddata?.rp_id}&page=`}
                 currentPage={1}
                 navtitle={"Album"}
-                heading={`Similar albums by 
-       
+                heading={`Similar albums
+                    
               `}
               />
 

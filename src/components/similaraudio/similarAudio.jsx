@@ -26,12 +26,7 @@ const SimilarAudio = ({
 
   //get lectures from the same lecturers
   function prev() {
-    // e.stopPropagation()
 
-    ////console.log('window.scrollWidth')
-    //console.log(slide.current.scrollLeft);
-    //console.log(slide.current.scrollWidth);
-    //console.log(slide.current.offsetWidth);
     slide.current.scrollBy({
       left: -slide.current.scrollWidth / 10,
       behavior: "smooth",
@@ -39,11 +34,7 @@ const SimilarAudio = ({
   }
 
   function next() {
-    //e.stopPropagation()
-    ////console.log('window.scrollWidth')
-
-    //console.log(slide.current.scrollWidth);
-    //console.log(slide.current.offsetWidth);
+   
     slide.current.scrollBy({
       left: slide.current.scrollWidth / 10,
       behavior: "smooth",
