@@ -82,7 +82,7 @@ const Trending = () => {
         )}
         { (
           <div className="table">
-            {querieddata?.map(
+            {_.uniqBy(querieddata, "nid")?.map(
               (
                 {
                   mp3_thumbnail,
