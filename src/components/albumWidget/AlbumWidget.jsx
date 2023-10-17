@@ -4,6 +4,7 @@ import { RiPlayListLine } from "react-icons/ri";
 import { formatNumber } from "../UI/formatter";
 import { FaPlay } from "react-icons/fa";
 import { useSelector } from "react-redux";
+
 const AlbumWidget = ({ categories, img, lec_no, nid }) => {
   const { audioId } = useSelector((state) => state.user);
 
