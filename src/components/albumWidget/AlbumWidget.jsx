@@ -4,7 +4,7 @@ import { FiHeadphones } from "react-icons/fi";
 import { formatNumber } from "../UI/formatter";
 import { FaPlay } from "react-icons/fa";
 import { useSelector } from "react-redux";
-const AlbumWidget = ({ categories, img, views, nid }) => {
+const AlbumWidget = ({ categories, img, lec_no, nid }) => {
   const { audioId } = useSelector((state) => state.user);
 
   ////
@@ -40,7 +40,7 @@ const AlbumWidget = ({ categories, img, views, nid }) => {
         <p className="album_widget_name">DN</p>
         <div className="album_listen_wrapper">
           <FiHeadphones className="album_listen_icon" />
-          <p className="album_listen_text">{formatNumber(views)}</p>
+          <p className="album_listen_text">{formatNumber(lec_no)}</p>
         </div>
 
         <div
