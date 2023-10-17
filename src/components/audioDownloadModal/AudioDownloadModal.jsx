@@ -48,7 +48,7 @@ export const AudioDownloadModal = ({
           <div className="audiodetail_download">
             <img src={downbig} alt="" className="audiodetail_download_icon" />
             <p className="audiodetail_download_text">
-              {formatNumber(downloads) || 0}
+              {formatNumber(downloads || 0) }
             </p>
           </div>
         )}
