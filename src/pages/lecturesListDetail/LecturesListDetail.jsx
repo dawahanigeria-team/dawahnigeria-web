@@ -179,7 +179,7 @@ const LecturesListDetail = () => {
 
       <HeadMeta
         title={`${
-          lectureTitleExtractor(singleData?.title, 2) || "Album"
+          lectureTitleExtractor(querieddata?.title, 2) || "Album"
         } on Dawah Nigeria - Home of islamic resources`}
       />
  

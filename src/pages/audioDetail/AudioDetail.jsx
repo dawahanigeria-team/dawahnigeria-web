@@ -527,7 +527,7 @@ const AudioDetail = () => {
               {currentAudioInfo?.description || "unknown"}
             </p>
             <div onClick={() => setMore(!more)} className="audiodetail_more">
-              <p className="audiodetail_more_text">{more ? "less" : "more"}</p>
+              <p className="audiodetail_more_text  less"></p>
 
               <FiChevronsRight className="audiodetail_more_icon" />
             </div>

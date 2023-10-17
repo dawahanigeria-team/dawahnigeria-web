@@ -153,7 +153,7 @@ const PlaylistDetail = () => {
     <Container>
       <HeadMeta
         title={`${
-          singleData?.name || "Playlist"
+          querieddata[0]?.name || "Playlist"
         } on Dawah Nigeria - Home of islamic resources`}
       />
       <div className="leclistdet_wrapper">
