@@ -11,7 +11,7 @@ These instructions will get you a copy of the project up and running on your loc
 You will need to have the following installed on your machine:
 
 - Node.js
-- npm
+- Yarn
 
 ### Installing
 
@@ -22,11 +22,11 @@ git clone https://github.com/dawahanigeria-team/dawahnig-live.git
 
 
 2. Install dependencies
-npm install
+yarn install
 
 
 3. Start the development server
-npm start
+yarn start
 
 
 This will start the app on http://localhost:3000
