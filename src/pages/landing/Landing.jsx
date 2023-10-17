@@ -88,7 +88,7 @@ const Landing = () => {
   const specialFeat = specialFeatures?.data?.flatMap((val) => [
     { name: val.name, more: val.more },
   ]);
-  console.log({ sliders, recentlyPosted, specialFeatures, recentlyviewed });
+  //console.log({ sliders, recentlyPosted, specialFeatures, recentlyviewed });
 
   return (
     <Container>

@@ -18,9 +18,10 @@ export const useLandingPageHook = (id, page, setisrecent, setcurPlay) => {
       },
       {
         queryKey: ["recentlyviewed"],
-        queryFn: () => landingPageApis.getRecentlyViewed(),
-        staleTime: 300000, //refetch data after 5min
-        cacheTime: 1800000, // clear from cache after 30min
+
+        queryFn: () => landingPageApis.getRecentlyViewed(id, page, setisrecent, setcurPlay),
+       
+
       },
     ],
   });
