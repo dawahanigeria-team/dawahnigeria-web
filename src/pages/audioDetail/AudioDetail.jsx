@@ -500,7 +500,7 @@ const AudioDetail = () => {
           <div className="audiodetail_info">
             <div className="audiodetail_info_wrap">
               <div className="audiodetail_info_name">Genre: </div>
-              <Link to={`${GENRES}/${parseInt(currentAudioInfo?.cat_id.toString())}`} className="audiodetail_info_value hover:text-[#ddff2b] hover:underline">
+              <Link to={`${GENRES}/${parseInt(currentAudioInfo?.cat_id?.toString())}`} className="audiodetail_info_value hover:text-[#ddff2b] hover:underline">
                 {currentAudioInfo?.cats || "unknown"}
               </Link>
             </div>
@@ -735,7 +735,7 @@ const AudioDetail = () => {
                 <p className="audiodetail_info_mob_head">Information</p>
                 <div className="audiodetail_info_wrap_mob">
                   <p className="audiodetail_info_name_mob">Genre: </p>
-                  <Link to={`${GENRES}/${parseInt(currentAudioInfo?.cat_id.toString())}`} className="audiodetail_info_value_mob hover:text-[#ddff2b] hover:underline">
+                  <Link to={`${GENRES}/${parseInt(currentAudioInfo?.cat_id?.toString())}`} className="audiodetail_info_value_mob hover:text-[#ddff2b] hover:underline">
                     {currentAudioInfo?.cats || "unknown"}
                   </Link>
                 </div>
@@ -763,8 +763,8 @@ const AudioDetail = () => {
                   onClick={() => setMore(!more)}
                   className="audiodetail_more_mob"
                 >
-                  <p className="audiodetail_more_text_mob">
-                    {more ? "less" : "more"}
+                  <p className="audiodetail_more_text_mob less">
+                   
                   </p>
                   <FiChevronsRight className="audiodetail_more_icon_mob" />
                 </div>*/}
