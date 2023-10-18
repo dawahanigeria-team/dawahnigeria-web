@@ -12,8 +12,8 @@ export const landingPageApis = {
     await apiService().get(
       `/leclisting_recent.php?&action=get_recent_audio&page=${page}`
     ),
-  getRecentlyViewed: async (id, page = 1, setisrecent, setcurPlay) => {
-    console.log({id, page , setisrecent, setcurPlay})
+    getRecentlyViewed: async (id, page = 1, setisrecent, setcurPlay) => {
+      
     try {
      
       if (id) {
