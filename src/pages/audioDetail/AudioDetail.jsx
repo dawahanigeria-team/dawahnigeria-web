@@ -19,7 +19,6 @@ import { SlEmotsmile, SlOptionsVertical } from "react-icons/sl";
 import { GiPauseButton } from "react-icons/gi";
 import sharebig from "../../../src/assets/svg/boom-share.svg";
 import commentbig from "../../../src/assets/svg/boom-comment.svg";
-
 import { formatNumber } from "../../components/UI/formatter";
 import { AudioContext } from "../../App.jsx";
 
@@ -30,8 +29,6 @@ import {
   TbRepeat,
 } from "react-icons/tb";
 import Add_playlist from "../add_playlist/AddPlaylist";
-import GroupWidget from "../../components/groupWidget/GroupWidget";
-import Disk from "../../assets/png/Disk_tranparent.png";
 import { durationFormat, playTimingRes } from "./UI_audiodetail/playtiming";
 import axios from "../../utils/useAxios";
 import _ from "lodash";
@@ -517,17 +514,19 @@ const AudioDetail = () => {
           <div className="audiodetail_summary">
             <h1 className="audiodetail_summary_header">Summary</h1>
             <p
-              className={`audiodetail_summary_body audiodetail_summary_body_open  `}
+              className={`audiodetail_summary_body audiodetail_summary_body_open `}
             >
               {currentAudioInfo?.description || "unknown"}
             </p>
-          {/*  <div onClick={() => setMore(!more)} className="audiodetail_more">
-              <p className="audiodetail_more_text  less"></p>
-              ${
+           {/* 
+           ${
                 more
-                  ? "audiodetail_summary_body_close "
-                  : " "
+                  ? "audiodetail_summary_body_open "
+                  : "audiodetail_summary_body_close "
               }
+           <div onClick={() => setMore(!more)} className="audiodetail_more">
+              <p className="audiodetail_more_text">{more ? "less" : "more"}</p>
+
               <FiChevronsRight className="audiodetail_more_icon" />
             </div>*/}
           </div>
@@ -754,7 +753,13 @@ const AudioDetail = () => {
                 >
                   {currentAudioInfo?.description || "unknown"}
                 </div>
-               {/* <div
+                {/*
+                ${
+                    more
+                      ? "audiodetail_summary_body_open_mob "
+                      : "audiodetail_summary_body_close_mob "
+                  }
+                <div
                   onClick={() => setMore(!more)}
                   className="audiodetail_more_mob"
                 >
