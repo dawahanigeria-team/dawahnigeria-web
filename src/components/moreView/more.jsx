@@ -72,7 +72,7 @@ function More() {
     currentdata
   );
 
-  //console.log(data);
+  // console.log(data);
 
   const { ref: infiniteScrollRef } = useInfiniteScrollPagination(
     data?.length,
@@ -108,7 +108,6 @@ function More() {
           */}
         <div className="more_widget">
           {type === "lectures" &&
-
             Array.isArray(data) &&
             data?.map(
               (
@@ -124,7 +123,7 @@ function More() {
                   rpname,
                   nid,
                   audio,
-                  views,
+                  lec_no,
                 },
                 idx
               ) => {
@@ -157,7 +156,7 @@ function More() {
                         mp3_title
                       }
                       img={img || lec_img}
-                      views={views}
+                      lec_no={lec_no}
                       nid={nid}
                     />
                   </Link>
@@ -165,7 +164,6 @@ function More() {
               }
             )}
           {type === "album" &&
-
             Array.isArray(data) &&
             data?.map(
               (
@@ -182,6 +180,7 @@ function More() {
                   id,
                   audio,
                   views,
+                  lec_no,
                 },
                 idx
               ) => {
@@ -200,7 +199,7 @@ function More() {
                         Title
                       }
                       img={img || lec_img}
-                      views={views}
+                      lec_no={lec_no}
                       nid={nid}
                     />
                   </Link>
@@ -208,7 +207,6 @@ function More() {
               }
             )}
           {type === "playlist" &&
-
             Array.isArray(data) &&
             data.map(
               (
@@ -224,7 +222,7 @@ function More() {
                   id,
                   audio,
                   name,
-                  views,
+                  lec_no,
                 },
                 idx
               ) => {
@@ -249,7 +247,7 @@ function More() {
                         name
                       }
                       img={img || lec_img}
-                      views={views || 0}
+                      lec_no={lec_no || 0}
                       nid={nid}
                     />
                   </Link>
@@ -258,7 +256,6 @@ function More() {
             )}
 
           {type === "recent" &&
-
             Array.isArray(data) &&
             data.map(
               (
@@ -275,6 +272,7 @@ function More() {
                   audio,
                   name,
                   views,
+                  lec_no,
                 },
                 idx
               ) => {
@@ -306,7 +304,7 @@ function More() {
                         name
                       }
                       img={img || lec_img}
-                      views={views || 0}
+                      lec_no={lec_no || 0}
                       nid={nid}
                     />
                   </Link>
@@ -316,7 +314,6 @@ function More() {
         </div>
         <div className="lecturers_widget">
           {type === "lecturer" &&
-
             Array.isArray(data) &&
             data?.map(
               (
