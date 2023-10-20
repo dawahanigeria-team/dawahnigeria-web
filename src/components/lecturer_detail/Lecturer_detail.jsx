@@ -23,7 +23,6 @@ import { MobileFavoriteButton } from "../UI/favoritebuttons/mobilefavoriteButton
 
 import HeadMeta from "../head-meta";
 
-
 const LecturerDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -99,13 +98,12 @@ const LecturerDetail = () => {
 
   return (
     <Container>
-
       <HeadMeta
         title={`${
           querieddata[0]?.name || "Lecturer"
         } on Dawah Nigeria - Home of islamic resources`}
       />
-        {Array.isArray(querieddata) && (
+      {Array.isArray(querieddata) && (
         <div className="lecdet_wrapper">
           <img
             ref={lecdet}
@@ -117,9 +115,9 @@ const LecturerDetail = () => {
             }
             alt="audiohero"
           />
-     
-        <div className="lecdet_container">
-          {/* ------------------------------Desktop------ Bread Crumbs -------------------------------------- */}
+
+          <div className="lecdet_container">
+            {/* ------------------------------Desktop------ Bread Crumbs -------------------------------------- */}
 
             <div className="lecdet_breadcrumb">
               <p
@@ -210,7 +208,10 @@ const LecturerDetail = () => {
                     className={`${
                       tab === 1 ? "lecdet_tab_song2_active" : "lecdet_tab_song2"
                     }`}
-                  >{`(${count1})`}</p>
+                  >
+                    {/* {`(${count1})`} */}
+                    ({querieddata[0]?.total_audio || 0})
+                  </p>
                 </div>
                 <div
                   onClick={() => {
@@ -233,7 +234,9 @@ const LecturerDetail = () => {
                         ? "lecdet_tab_album2_active"
                         : "lecdet_tab_album2"
                     }`}
-                  >{`(${count2})`}</p>
+                  >
+                    ({querieddata[0]?.total_albums || 0})
+                  </p>
                 </div>
                 <div
                   onClick={() => {
@@ -256,7 +259,9 @@ const LecturerDetail = () => {
                         ? "lecdet_tab_playlist2_active"
                         : "lecdet_tab_playlist2"
                     }`}
-                  >{`(${count3})`}</p>
+                  >
+                    ({querieddata[0]?.total_playlist || 0})
+                  </p>
                 </div>
 
                 <div
@@ -423,7 +428,9 @@ const LecturerDetail = () => {
                         ? "mobile_lecdet_tab_song2_active"
                         : "mobile_lecdet_tab_song2"
                     }`}
-                  >{`(${count1})`}</p>
+                  >
+                    ({querieddata[0]?.total_audio || 0})
+                  </p>
                 </div>
                 <div
                   onClick={() => {
@@ -447,7 +454,9 @@ const LecturerDetail = () => {
                         ? "mobile_lecdet_tab_album2_active"
                         : "mobile_lecdet_tab_album2"
                     }`}
-                  >{`(${count2})`}</p>
+                  >
+                    ({querieddata[0]?.total_albums || 0})
+                  </p>
                 </div>
                 <div
                   onClick={() => {
@@ -471,7 +480,9 @@ const LecturerDetail = () => {
                         ? "mobile_lecdet_tab_playlist2_active"
                         : "mobile_lecdet_tab_playlist2"
                     }`}
-                  >{`(${count3})`}</p>
+                  >
+                    ({querieddata[0]?.total_playlist || 0})
+                  </p>
                 </div>
 
                 <div
