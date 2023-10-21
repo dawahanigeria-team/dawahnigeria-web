@@ -95,7 +95,7 @@ const Favourite_songs = ({ setCount1 }) => {
       {(!currentUser?.id || myaud?.length === 0) && (
         <div className="favsongs_img_wrap">
           <img src={empty} alt="empty" />
-          <p className="favsongs_text">
+          <p className="favsongs_text text-foreground">
             You haven’t added any audio.
           </p>
           <button

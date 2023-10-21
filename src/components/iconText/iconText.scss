@@ -8,14 +8,6 @@
 //   margin-bottom: 0.5rem;
 //   margin-top: 0.5rem;
 // }
-.icontext_active_text {
-  color: #d6ff00 !important;
-}
-.icontext_active_icon {
-  * {
-    color: #d6ff00;
-  }
-}
 
 .icontext_link {
   display: flex;
@@ -28,16 +20,16 @@
   &:hover {
     .icontext_icon {
       .icon {
-        color: #d6ff00;
+       // color: #d6ff00;
       }
     }
     .icontext_name {
-      color: #d6ff00;
+     // color: #d6ff00;
     }
   }
   .icontext_icon {
     .icon {
-      color: #aeaeae;
+    //  color: #aeaeae;
       font-size: 16px;
       margin-bottom: 1rem;
     }
@@ -46,11 +38,11 @@
     margin-left: 1rem;
     font-family: "Nunito Sans";
     font-style: normal;
-    font-weight: 400;
+    
     margin-bottom: 1rem;
     font-size: 14px;
     line-height: 21px;
     align-items: center;
-    color: #868686;
+  //  color: #868686;
   }
 }

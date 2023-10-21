@@ -26,7 +26,7 @@ const Recommend2 = () => {
   // //console.log(r)
   return (
     <Container>
-      <div className="recommend2_header_link">
+      <div className="recommend2_header_link bg-background">
         <HeaderRouter title={"Podcast"} />
       </div>
       <div className="recommend2_wrapper">

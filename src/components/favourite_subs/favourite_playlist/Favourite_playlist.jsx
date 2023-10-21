@@ -88,7 +88,7 @@ const Favourite_playlist = ({ setCount3 }) => {
       {(!currentUser?.id || myAlb?.length === 0) && (
         <div className="favplaylist_img_wrap">
           <img src={empty} alt="empty" />
-          <p className="favplaylist_text">
+          <p className="favplaylist_text text-foreground">
             You haven&apos;t added any playlist Add a playlist here.
           </p>
           <button

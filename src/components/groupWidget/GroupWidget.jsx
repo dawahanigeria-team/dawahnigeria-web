@@ -107,7 +107,7 @@ const GroupWidget = ({
     <div className="groupWidget_wrapper">
       {Array.isArray(data) && data.length > 0 && (
         <div className="groupWidget_top">
-          <p className="groupWidget_top_heading">{heading}</p>
+          <p className="groupWidget_top_heading text-text-primary">{heading}</p>
           <div
             onClick={() => {
               if (heading === "Trending") {
@@ -132,8 +132,8 @@ const GroupWidget = ({
             }}
             className={
               styling && endpoint_url
-                ? "flex text-[#d6ff00] text-[15px] items-center"
-                : `flex text-[#d6ff00] text-[15px] items-center ${
+                ? "flex dark:text-[#d6ff00] text-text-primary text-[15px] items-center"
+                : `flex dark:text-[#d6ff00] text-text-primary text-[15px] items-center ${
                     nav1.title === "Charts" ? "max-[615px]:hidden" : ""
                   }  `
             }

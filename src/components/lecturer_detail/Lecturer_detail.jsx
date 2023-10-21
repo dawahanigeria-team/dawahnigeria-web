@@ -13,7 +13,6 @@ import combold from "../../assets/svg/combold.svg";
 import sharebig from "../../../src/assets/svg/boom-share.svg";
 import commentbig from "../../../src/assets/svg/boom-comment.svg";
 import { formatNumber } from "../UI/formatter";
-import { useSelector } from "react-redux";
 import lazy from "../../assets/png/lazyrps.jpeg";
 import ShareAudio from "../shareaudio/shareAudio";
 import { useQueryGetRequest } from "../../hooks/getqueries";
@@ -130,7 +129,7 @@ const LecturerDetail = () => {
               >
                 {`${"Back"}/`}
               </p>
-              <p className="lecdet_breadcrumb_second">
+              <p className="lecdet_breadcrumb_second text-foreground">
                 {querieddata[0]?.name || querieddata[0]?.name}
               </p>
             </div>
@@ -147,7 +146,7 @@ const LecturerDetail = () => {
                 />
               </div>
               <div className="lecdet_head_right">
-                <p className="lecdet_head_right_head">
+                <p className="lecdet_head_right_head text-foreground">
                   {querieddata[0]?.name || querieddata[0]?.name}
                 </p>
 
@@ -201,14 +200,14 @@ const LecturerDetail = () => {
                 >
                   <p
                     className={`${
-                      tab === 1 ? "lecdet_tab_song1_active" : "lecdet_tab_song1"
+                      tab === 1 ? "lecdet_tab_song1_active text-foreground" : "lecdet_tab_song1"
                     }`}
                   >
                     Audio
                   </p>
                   <p
                     className={`${
-                      tab === 1 ? "lecdet_tab_song2_active" : "lecdet_tab_song2"
+                      tab === 1 ? "lecdet_tab_song2_active text-text" : "lecdet_tab_song2"
                     }`}
                   >{`(${count1})`}</p>
                 </div>
@@ -221,7 +220,7 @@ const LecturerDetail = () => {
                   <p
                     className={`${
                       tab === 2
-                        ? "lecdet_tab_album1_active"
+                        ? "lecdet_tab_album1_active text-foreground"
                         : "lecdet_tab_album1"
                     }`}
                   >
@@ -230,7 +229,7 @@ const LecturerDetail = () => {
                   <p
                     className={`${
                       tab === 2
-                        ? "lecdet_tab_album2_active"
+                        ? "lecdet_tab_album2_active text-text"
                         : "lecdet_tab_album2"
                     }`}
                   >{`(${count2})`}</p>
@@ -244,8 +243,8 @@ const LecturerDetail = () => {
                   <p
                     className={`${
                       tab === 3
-                        ? "lecdet_tab_playlist1_active"
-                        : "lecdet_tab_playlist1"
+                        ? "lecdet_tab_playlist1_active text-foreground"
+                        : "lecdet_tab_playlist1 "
                     }`}
                   >
                     Playlist
@@ -253,7 +252,7 @@ const LecturerDetail = () => {
                   <p
                     className={`${
                       tab === 3
-                        ? "lecdet_tab_playlist2_active"
+                        ? "lecdet_tab_playlist2_active text-text"
                         : "lecdet_tab_playlist2"
                     }`}
                   >{`(${count3})`}</p>
@@ -263,12 +262,12 @@ const LecturerDetail = () => {
                   onClick={() => {
                     setTab(5);
                   }}
-                  className="lecdet_tab_simrp"
+                  className="lecdet_tab_simrp "
                 >
                   <p
                     className={`${
                       tab === 5
-                        ? "lecdet_tab_simrp1_active"
+                        ? "lecdet_tab_simrp1_active text-foreground"
                         : "lecdet_tab_simrp1"
                     }`}
                   >

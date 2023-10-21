@@ -31,7 +31,7 @@ const Playlists = () => {
         title={`Quran recitations on Dawah Nigeria - Home of islamic resources`}
       />
       <div className="playlist_wrapper">
-        <div className="play_header_link">
+        <div className="play_header_link bg-background">
           <HeaderRouter title={"Quran"} />
         </div>
 

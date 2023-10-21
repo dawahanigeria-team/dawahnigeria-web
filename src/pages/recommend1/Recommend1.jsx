@@ -72,7 +72,7 @@ const Recommend1 = () => {
   return (
     <Container>
       <div className="recommend1_wrapper">
-        <div className="rec_header_link">
+        <div className="rec_header_link bg-background">
           <HeaderRouter title={"Buzz"} />
         </div>
         <div className="recommend1_filter_categories">
@@ -112,7 +112,7 @@ const Recommend1 = () => {
         <div className="recommend1_content">
           {" "}
           {filter.map((value, idx) => {
-            const { img, rpname, title, categories, nid, audio } = value;
+            const { img, rpname, title, nid, audio } = value;
             const catsname = Object.values(value)[3];
             if (filter.length === idx + 1) {
               return (

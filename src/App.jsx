@@ -73,6 +73,7 @@ import {
 } from "./utils/routes/constants";
 import ForgotPassword from "./pages/forgotpassword/forgotPassword";
 import { usePageTracking } from "./utils/tracking";
+import { useThemeHook } from "./hooks";
 export const AudioContext = createContext();
 export const SearchContext = createContext();
 
@@ -106,7 +107,7 @@ const App = () => {
   const [lecturerId, setLecturerId] = useState([]);
   const [albumId, setAlbumId] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  useThemeHook()
   //Detect if user has interacted with the page
   useEffect(() => {
     const handleClick = () => {

@@ -1,14 +1,11 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
 import "./audiodetail.scss";
-import AudioActionDesktop from "../../components/audio/audioActionDesktop";
 import Container from "../../components/container/Container";
-import audioHero from "../../assets/png/detialPagehero.png";
 import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
 import { CiPlay1 } from "react-icons/ci";
 import back from "../../assets/svg/back.svg";
 import foward from "../../assets/svg/foward.svg";
 import logo from "../../assets/png/dn logo.png";
-import { BsPause } from "react-icons/bs";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { BiMessageMinus } from "react-icons/bi";
 import { RiDownload2Fill, RiPlayListFill } from "react-icons/ri";
@@ -35,7 +32,7 @@ import _ from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import ShareAudio from "../../components/shareaudio/shareAudio";
 import {
-  getcurrentAudioInfo,
+
   getLecid,
   showaddPlaylist,
 } from "../../Redux/Actions/ActionCreators";

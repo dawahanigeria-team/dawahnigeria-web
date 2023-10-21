@@ -7,7 +7,7 @@ export const DownloadIcon = () => {
       width="20px"
       height="20px"
       viewBox="0 0 20 20"
-      className="stroke"
+      className="stroke-text dark:hover:stroke-[#ddff2b] hover:stroke-text-foreground"
       version="1.1"
     >
       <g id="Symbols" strokeWidth="1" fill="none" fillRule="evenodd">
@@ -33,7 +33,7 @@ export const AddplayIcon = () => {
     <svg
       width="20px"
       height="20px"
-      className="stroke"
+      className="stroke-text dark:hover:stroke-[#ddff2b] hover:stroke-text-foreground"
       viewBox="0 0 20 20"
       version="1.1"
     >
@@ -73,7 +73,7 @@ export const RepeatIcon = () => {
       <g
         id="Symbols"
         stroke="none"
-        className="stroke"
+        className="stroke-text dark:hover:stroke-[#ddff2b] hover:stroke-text-foreground"
         strokeWidth="1"
         fill="none"
         fillRule="evenodd"
@@ -115,7 +115,7 @@ export const RepeatedIcon = () => {
           <g
             id="编组"
             transform="translate(0.500000, 1.500000)"
-            stroke="#ddff2e"
+            className="stroke-text dark:hover:stroke-[#ddff2b] hover:stroke-text-foreground"
           >
             <path
               d="M1.55981168,-8.8817842e-16 L0,1.91536613 L6,1.91536613 C10.1421356,1.91536613 13.5,5.06831882 13.5,8.95768307 C13.5,11.4541695 12.1165472,13.6472516 10.0302412,14.897863"
@@ -147,7 +147,7 @@ export const AddFavourites = () => {
         id="Symbols"
         stroke="none"
         strokeWidth="1"
-        className="stroke"
+        className="stroke-text dark:hover:stroke-[#ddff2b] hover:stroke-text-foreground"
         fill="none"
         fillRule="evenodd"
       >
@@ -172,7 +172,7 @@ export const AddedFavourites = () => {
         fill="none"
         fill-rule="evenodd"
       >
-        <g id="btn/全屏播放/收藏/default" stroke="#ddff2b">
+        <g id="btn/全屏播放/收藏/default" className="stroke-text dark:hover:stroke-[#ddff2b] hover:stroke-text-foreground" stroke="">
           <path
             d="M18.2967189,9.187261 L10.8984636,18.8575017 C10.0698919,19.7141661 9.91348598,19.7141661 9.08491431,18.8575017 L1.70312279,9.187261 C0.959728516,8.05747565 0.543336643,6.74410976 0.5,5.39242125 C0.5,2.84078962 2.46298981,0.50031658 5.2491689,0.50031658 C7.22767266,0.50031658 8.78571667,1.56149142 9.9983378,2.81957878 C11.2733313,1.63430473 12.7709026,0.5 14.7506728,0.5 C17.5368519,0.5 19.5,2.84047304 19.5,5.39210467 C19.5093731,6.75240787 19.088236,8.08085166 18.2967189,9.187261 Z"
             id="收藏"

@@ -83,7 +83,7 @@ const Favourite_lecturers = () => {
       {(!currentUser?.id || myRp?.length === 0) && (
         <div className="favlec_img_wrap">
           <img src={empty} alt="empty" />
-          <p className="favlec_text">
+          <p className="favlec_text text-foreground">
             You haven’t any lecturer. Add lecturers here.
           </p>
           <button

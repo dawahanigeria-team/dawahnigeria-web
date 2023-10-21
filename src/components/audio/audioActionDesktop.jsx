@@ -347,7 +347,7 @@ const AudioActionDesktop = () => {
   return (
     <>
       <div
-        className={`fixed bg-black z-[60]  bottom-0 flex items-center gap-4  transform  cursor-pointer ${
+        className={`fixed bg-background z-[60]  bottom-0 flex items-center gap-4  transform  cursor-pointer ${
           isminimize
             ? `w-[220px] h-[60px] bg-black right-0 transition-all duartion-300`
             : `w-full h-[80px] left-0 right-0`
@@ -400,7 +400,7 @@ const AudioActionDesktop = () => {
           }}
         />
         <div
-          className={`flex items-center relative bg-black text-white w-full ${
+          className={`flex items-center relative bg-background text-text w-full ${
             isminimize ? "justify-center" : "justify-between"
           }`}
         >
@@ -446,7 +446,7 @@ const AudioActionDesktop = () => {
               id="player"
               className="audiodet_play_btn"
             >
-              <TbPlayerSkipBackFilled className="text-white text-[20px] hover:text-[#ddff2b] " />
+              <TbPlayerSkipBackFilled className="text-text text-[20px] hover:text-text-foreground dark:hover:text-[#ddff2b] " />
             </button>
 
             {loading ? (
@@ -455,7 +455,7 @@ const AudioActionDesktop = () => {
               <button
                 onClick={handlePlay}
                 disabled={isloaded}
-                className="relative flex h-[42px] w-[42px] text-black rounded-full bg-[#ddff2b] justify-center items-center"
+                className="relative flex h-[42px] w-[42px] dark:text-black text-gray-100 rounded-full dark:bg-[#ddff2b] bg-gray-500 justify-center items-center"
               >
                 {!playing ? (
                   <FaPlay id="player" className="text-[22px]" />
@@ -468,7 +468,7 @@ const AudioActionDesktop = () => {
               </button>
             )}
             <button onClick={handleNextAudio} id="player" className="">
-              <TbPlayerSkipForwardFilled className="text-white text-[20px] hover:text-[#ddff2b]" />
+              <TbPlayerSkipForwardFilled className="text-text text-[20px] hover:text-text-foreground dark:hover:text-[#ddff2b]" />
             </button>
           </div>
 
@@ -482,14 +482,14 @@ const AudioActionDesktop = () => {
               onClick={() => {
                 dispatch(getRepeat(!isrepeat));
               }}
-              className="h-[20px] w-[20px]  text-white hover:text-[#ddff2b]"
+              className="h-[20px] w-[20px]  text-text hover:text-text-foreground dark:hover:text-[#ddff2b]"
             >
               {isrepeat ? <RepeatedIcon /> : <RepeatIcon />}
             </button>
 
             <AudioDownloadModal
               nid={audioId}
-              className="h-[20px] w-[20px] hover:text-[#ddff2b]"
+              className="h-[20px] w-[20px]  text-text hover:text-text-foreground dark:hover:text-[#ddff2b]"
               triggerInnerChild={<DownloadIcon />}
             />
             <button
@@ -512,14 +512,14 @@ const AudioActionDesktop = () => {
               disabled={!audioId}
               className="h-[20px] w-[20px]"
             >
-              <SlShare className="text-white hover:text-[#ddff2b] text-[20px]" />
+              <SlShare className="text-text hover:text-text-foreground dark:hover:text-[#ddff2b] text-[20px]" />
             </button>
             <button
               onClick={() => {
                 addToPlaylist();
               }}
               disabled={!audioId}
-              className="audiodet_play_add hover:text-[#ddff2b]"
+              className="audiodet_play_add text-text hover:text-text-foreground dark:hover:text-[#ddff2b]"
             >
               <AddplayIcon />
             </button>

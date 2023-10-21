@@ -9,7 +9,7 @@
   display: block;
   line-height: 18px;
   text-align: center;
-  color: #ffffff;
+ 
   margin: unset;
 }
 
@@ -90,7 +90,7 @@
     font-size: 14px;
     line-height: 18px;
     display: block;
-    color: #ffffff;
+  
     margin: unset;
   }
   .lecturerWidget_texthover {
@@ -105,7 +105,7 @@
     gap: 0.6rem;
     .lecturerWidget_views_icon {
       font-size: 16px;
-      color: #868686;
+      //color: #868686;
     }
     .lecturerWidget_views_text {
       font-family: "Nunito Sans";
@@ -113,7 +113,7 @@
       font-weight: 400;
       font-size: 14px;
       line-height: 24px;
-      color: #868686;
+      //color: #868686;
       margin: unset;
       text-shadow: 0px 3px 4px rgba(44, 44, 44, 0.25);
     }

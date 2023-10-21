@@ -36,7 +36,7 @@ const Playlists = () => {
     <Container>
       <HeadMeta title={`Playlists - Get islamic resources on Dawah Nigeria`} />
       <div className="playlist_wrapper">
-        <div className="play_header_link">
+        <div className="play_header_link bg-background">
           <HeaderRouter title={"Playlist"} />
         </div>
         <div className="playlist_filter">

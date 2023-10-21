@@ -111,7 +111,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
   background: linear-gradient(
     180deg,
     rgba(217, 217, 217, 0) 0%,
@@ -257,6 +258,83 @@
 .shadow {
   text-shadow: 0px 3px 4px rgba(44, 44, 44, 0.25);
 }
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 1%;
+
+    --muted: 240 0% 45%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --text: 240 10% 36%;
+    --text-foreground: 240 11% 11%;
+    --text-primary: 0 0% 1%;
+
+    --dncolor:240 11% 11%;
+    --border: 216 5% 86%;
+    --input: 214.3 31.8% 91.4%;
+    --hover: 220 3% 92%;
+    --search: 0 0% 100%;
+
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 215 20.2% 65.1%;
+
+    --radius: 0.5rem;
+    --footer: 32 0% 82%;
+  }
+
+  .dark {
+    --background: 0 0% 1%;
+    --foreground: 0 0% 100%;
+
+    --muted: 240 0% 83%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --text: 220 0% 53%;
+    --text-foreground: 68 100% 100%;
+    --text-primary: 0 0% 88%;
+
+    --search: 32 0% 4%;    
+    --dncolor:32 100% 100%;
+    --border:  216 0% 64%;
+    --input: 32 0% 13%;
+    --hover: 220 0% 13%;
+
+    --primary: 32 0% 13%;
+    --primary-foreground: 32 0% 5%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 85.7% 97.3%;
+
+    --ring: 217.2 32.6% 17.5%;
+    --footer: 32 0% 13%;
+  }
+}
+
 
 @tailwind base;
 @tailwind components;

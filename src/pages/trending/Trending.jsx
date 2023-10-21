@@ -4,7 +4,7 @@ import Container from "../../components/container/Container";
 import List from "../../components/list/list";
 import { useNavigate } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
-import pmobile from "../../../src/assets/svg/playmobile.svg";
+import { BsFillPlayFill } from "react-icons/bs";
 import Loader from "../../components/UI/loader/loader";
 import { LECTURE, TRENDING } from "../../utils/routes/constants";
 import { useInfiniteScrollPagination } from "../../hooks";
@@ -16,15 +16,11 @@ import HeadMeta from "../../components/head-meta";
 const Trending = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  const queryParam = {page}
+  const queryParam = { page };
   const { isLoading, isLoadingNextPage, isLastPage, querieddata } =
-    useQueryGetRequest(
-      "trending",
-       queryParam,
-      trendingApi.getTrendings
-    );
+    useQueryGetRequest("trending", queryParam, trendingApi.getTrendings);
 
- // console.log(isLoadingNextPage, isLastPage, 'page:', page);
+  // console.log(isLoadingNextPage, isLastPage, 'page:', page);
 
   const { ref: infiniteScrollRef } = useInfiniteScrollPagination(
     querieddata?.length,
@@ -46,7 +42,7 @@ const Trending = () => {
         currentPage: 1,
         idx: 0,
         nid: querieddata[0].nid,
-        nav1: { title: "playAll", link: TRENDING},
+        nav1: { title: "playAll", link: TRENDING },
       },
     });
   };
@@ -56,11 +52,11 @@ const Trending = () => {
         title={`Trending resources on Dawah Nigeria - Home of islamic contents`}
       />
       <div className="trend_wrapper">
-        <div className="trend_header_link max-[615px]:border-b border-zinc-700">
+        <div className="trend_header_link bg-background max-[615px]:border-b border-zinc-700">
           <HeaderRouter title={"Trending"} />
         </div>
 
-        <div className="trend_title_wrap">
+        <div className="trend_title_wrap text-text">
           <div className="tend_title1">
             <p className="tend_hash">#</p>
             <p>Title</p>
@@ -80,7 +76,7 @@ const Trending = () => {
             </div>
           </div>
         )}
-        { (
+        {
           <div className="table">
             {_.uniqBy(querieddata, "nid")?.map(
               (
@@ -134,7 +130,7 @@ const Trending = () => {
               }
             )}
           </div>
-        )}
+        }
         {isLoadingNextPage && (
           <div className="load_m">
             <div className="loads">
@@ -146,15 +142,13 @@ const Trending = () => {
         <div className="mobile_lists">
           <div
             onClick={playAll}
-            className="header pb-2 border-b border-zinc-500 w-full"
+            className="header pb-2 border-b border-text-primary  w-full"
           >
-            <div className="w-fit h-fit border p-1 rounded-full items-center flex justify-center">
-              <div className="w-3 h-3  ">
-                <img className="w-full h-full" src={pmobile} alt="" />
-              </div>
+            <div className="w-fit h-fit border border-text-primary p-[2px] rounded-full">
+              <BsFillPlayFill className="text-[22px] text-text-primary" />
             </div>
 
-            <p className="">Play All</p>
+            <p className="text-text-primary font-medium">Play All</p>
           </div>
           <div className="bg-none h-1 w-1"></div>
           {isLoading && !isLoadingNextPage && (
@@ -164,62 +158,61 @@ const Trending = () => {
               </div>
             </div>
           )}
-          {
-            querieddata?.map(
-              (
-                {
-                  mp3_thumbnail,
-                  Title,
-                  rpname,
-                  img,
-                  cats,
-                  rp_id,
-                  favorites,
-                  nid,
-                  views,
-                  comments,
-                  duration,
-                  share,
-                },
-                idx
-              ) => {
-                return (
-                  <div
+          {querieddata?.map(
+            (
+              {
+                mp3_thumbnail,
+                Title,
+                rpname,
+                img,
+                cats,
+                rp_id,
+                favorites,
+                nid,
+                views,
+                comments,
+                duration,
+                share,
+              },
+              idx
+            ) => {
+              return (
+                <div
                   ref={
                     idx === querieddata.length - 1 && !isLastPage
                       ? infiniteScrollRefMobile
                       : null
                   }
+                  key={idx}
+                  className="each_mobile_list"
+                >
+                  <List
                     key={idx}
-                    className="each_mobile_list"
-                  >
-                    <List
-                      key={idx}
-                      id={idx}
-                      duration={duration}
-                      image={mp3_thumbnail || img}
-                      title={Title}
-                      lecturer={rpname}
-                      favorites={favorites}
-                      comments={comments}
-                      rpid={rp_id}
-                      url={`${LECTURE}${nid}`}
-                      Title={Title}
-                      rpname={rpname}
-                      endpoint_url={"/popular_lec_api.php?langid=6&page="}
-                      currentPage={page}
-                      cats={cats}
-                      nid={nid}
-                      navName={"Trending"}
-                      navLink={TRENDING}
-                      controlData={querieddata}
-                      views={views}
-                      share={share}
-                    />
-                  </div>
-                );
-              }
-            )}
+                    id={idx}
+                    duration={duration}
+                    image={mp3_thumbnail || img}
+                    title={Title}
+                    lecturer={rpname}
+                    favorites={favorites}
+                    comments={comments}
+                    rpid={rp_id}
+                    url={`${LECTURE}${nid}`}
+                    Title={Title}
+                    rpname={rpname}
+                    endpoint_url={"/popular_lec_api.php?langid=6&page="}
+                    currentPage={page}
+                    cats={cats}
+                    nid={nid}
+                    navName={"Trending"}
+                    navLink={TRENDING}
+                    controlData={querieddata}
+                    views={views}
+                    share={share}
+                  />
+                </div>
+              );
+            }
+          )}
           {isLoadingNextPage && (
             <div className="load_m">
               <div className="loads">

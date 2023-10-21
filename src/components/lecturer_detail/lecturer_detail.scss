@@ -60,7 +60,7 @@
   font-weight: 800;
   font-size: 21px;
   line-height: 30px;
-  color: #ffffff;
+  
 }
 @mixin tab_sub_activetext {
   font-family: "Nunito Sans";
@@ -176,7 +176,7 @@
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
-        color: #ffffff;
+     
       }
     }
     // ----------- Bread Crumbs End --------------
@@ -232,7 +232,7 @@
           font-weight: 600;
           font-size: 20px;
           line-height: 26px;
-          color: #ffffff;
+          
           //max-width: 350px;
           @media screen and (max-width: 600px) {
             width: 100%;

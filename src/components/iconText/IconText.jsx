@@ -70,15 +70,15 @@ const IconText = ({ icon, link, name, id, setisOpen }) => {
       className={`icontext_link ${active === id ? "icontext_active" : ""}`}
     >
       <div
-        className={`icontext_icon ${
-          active === id ? "icontext_active_icon" : ""
+        className={`icontext_icon text-text dark:hover:text-[#ddff00]  hover:text-text-foreground ${
+          active === id ? "icontext_active_icon font-semibold dark:text-[#ddff00] text-text-foreground" : ""
         }`}
       >
         {icon}
       </div>
       <div
-        className={`icontext_name ${
-          active === id ? "icontext_active_text" : ""
+        className={`icontext_name text-text dark:hover:text-[#ddff00] hover:font-semibold hover:text-text-foreground ${
+          active === id ? "icontext_active_text font-semibold dark:text-[#ddff00] text-text-foreground" : ""
         }`}
       >
         {name}
