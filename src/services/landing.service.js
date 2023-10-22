@@ -12,10 +12,12 @@ export const landingPageApis = {
     await apiService().get(
       `/leclisting_recent.php?&action=get_recent_audio&page=${page}`
     ),
-  getRecentlyViewed: async (user, page = 1, setisrecent, setcurPlay) => {
+    getRecentlyViewed: async (id, page = 1, setisrecent, setcurPlay) => {
+      
     try {
-      if (user) {
-        const response = landingPageApis?.getRecentlyViewedForLoginUser(user); // get recently viewed if there is auth token
+     
+      if (id) {
+        const response = landingPageApis?.getRecentlyViewedForLoginUser(id); // get recently viewed if there is auth token
         const result = await response;
         let datas;
         if (result.length === 0) {

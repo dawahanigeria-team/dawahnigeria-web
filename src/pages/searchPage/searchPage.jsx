@@ -20,6 +20,7 @@ import {
   getSearchRecord,
 } from "../../Redux/Actions/ActionCreators";
 import { SEARCH } from "../../utils/routes/constants";
+import HeadMeta from "../../components/head-meta";
 const SearchPage = () => {
   const { albumId, lecturerId, text, languageId, categoryId } =
     useContext(SearchContext);
@@ -85,6 +86,11 @@ const SearchPage = () => {
     <Container>
       <div className=" w-full h-full max-[615px]:pt-[6px] text-sm min-[615px]:text-[16px] font-thin text-gray-200">
         <div className="w-full fixed inset-x-0 z-[10] bg-[#090909] p-0 max-[615px]:border-b border-zinc-700">
+          <HeadMeta
+            title={`Search for ${
+              text || "islamic"
+            } resources on Dawah Nigeria `}
+          />
           <HeaderRouter title={"Search"} />
         </div>
         <div className="pt-2 pl-2 flex items-center space-x-1 max-[615px]:hidden text-gray-200">

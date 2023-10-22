@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./playlists.scss";
 import Container from "../../components/container/Container";
-import { category, language } from "./data";
 import FilterButton from "../../components/filterButton/FilterButton";
 import AlbumWidget from "../../components/albumWidget/AlbumWidget";
 import { useNavigate } from "react-router-dom";
@@ -10,8 +9,13 @@ import Loader from "../../components/UI/loader/loader";
 import axios from "../../utils/useAxios";
 import _ from "lodash";
 import { PLAYLISTS } from "../../utils/routes/constants";
+
+import { useCategoriesHook, useLanguagesHook } from "../../hooks/lecturers";
+import { useAllPlaylistHook } from "../../hooks/playlists";
+
+import HeadMeta from "../../components/head-meta";
+
 const Playlists = () => {
-  const [data, setData] = useState([]);
   const [filter, setFilter] = useState([]);
   const [data1, setData1] = useState([]);
   const [data2, setData2] = useState([]);
@@ -21,143 +25,77 @@ const Playlists = () => {
   const [catid, setCatid] = useState("40217");
   const [langid, setLangid] = useState("6");
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-
-  const [page] = useState(1);
-  const [categories, setCategories] = useState([]);
-  const [languages, setLanguages] = useState([]);
   const [, setTypeName] = useState();
   const [, setIsEmpty] = useState(false);
-  useEffect(() => {
-    //get all categories
-    function getCatAndLang() {
-      axios
-        .get(`${process.env.REACT_APP_API_BASE_URL}/allcateg_api.php`)
-        .then((res) => {
-          ////console.log(res.data);
-          setCategories([...category, ...res.data?.slice(0, 15)]);
-          // setLoading(false);
-        })
-        .catch((err) => {
-          //console.log(err);
-        });
 
-      //get all langyages
-      axios
-        .get(`${process.env.REACT_APP_API_BASE_URL}/all_lang_api.php`)
-        .then((res) => {
-          ////console.log(res.data);
-          if (res.data) setLanguages([...language, ...res.data]);
-        })
-        .catch((err) => {
-          //console.log(err);
-        });
-    }
-    getCatAndLang();
-  }, []);
-
-  useEffect(() => {
-    setData3(data);
-  }, [data]);
-
-  useEffect(() => {
-    ////console.log(initialCatid, catid);
-    const handleRequest = () => {
-      /**
-        if (initialLangid !== langid || initialCatid !== catid) {
-        setData([]);
-        setLoading(true);
-      }
-
-      */
-      axios
-        .get(`/playlistApi.php?action=all_public_playlist_data`)
-        .then((res) => {
-          //console.log("playlists", res.data);
-
-          setLoading(false);
-          /**
- 
-          setNextPageLoad(false);
-          if (res.data.length === 0) {
-            setIsEmpty(true);
-            return;
-          }
- */
-          // setinitialLangid(langid);
-          // setinitialCatid(catid);
-          setData((prev) => _.uniqBy([...prev, ...res.data], "id"));
-        })
-        .catch((err) => {
-          //console.log(err);
-        });
-    };
-
-    handleRequest();
-  }, [catid, langid, page]);
-  // //console.log(filter);
+  const { data: categories } = useCategoriesHook();
+  const { data: languages } = useLanguagesHook();
+  const { data: allPlaylists, isLoading } = useAllPlaylistHook();
 
   return (
     <Container>
+      <HeadMeta title={`Playlists - Get islamic resources on Dawah Nigeria`} />
       <div className="playlist_wrapper">
         <div className="play_header_link">
           <HeaderRouter title={"Playlist"} />
         </div>
         <div className="playlist_filter">
           <div className="playlist_filter_categories">
-            {categories.map(({ name, id }, idx) => {
-              return (
-                <FilterButton
-                  key={idx}
-                  filter={filter}
-                  setFilter={setFilter}
-                  data1={data1}
-                  setData1={setData1}
-                  data2={data2}
-                  setData2={setData2}
-                  data3={data3}
-                  setData3={setData3}
-                  active={active}
-                  setActive={setActive}
-                  title={name}
-                  action="categories"
-                  data={data}
-                  id={id}
-                  setTypeName={setTypeName}
-                  setIsEmpty={setIsEmpty}
-                  setCatid={setCatid}
-                />
-              );
-            })}
+            {Array.isArray(categories) &&
+              categories?.map(({ name, id }, idx) => {
+                return (
+                  <FilterButton
+                    key={idx}
+                    filter={filter}
+                    setFilter={setFilter}
+                    data1={data1}
+                    setData1={setData1}
+                    data2={data2}
+                    setData2={setData2}
+                    data3={data3}
+                    setData3={setData3}
+                    active={active}
+                    setActive={setActive}
+                    title={name}
+                    action="categories"
+                    data={allPlaylists}
+                    id={id}
+                    setTypeName={setTypeName}
+                    setIsEmpty={setIsEmpty}
+                    setCatid={setCatid}
+                  />
+                );
+              })}
           </div>
           <div className="playlist_filter_language">
-            {languages.map(({ name, id }, idx) => {
-              return (
-                <FilterButton
-                  key={idx}
-                  filter={filter}
-                  setFilter={setFilter}
-                  data1={data1}
-                  setData1={setData1}
-                  data2={data2}
-                  setData2={setData2}
-                  data3={data3}
-                  setData3={setData3}
-                  active={active1}
-                  setActive={setActive1}
-                  title={name}
-                  action="language"
-                  data={data}
-                  setIsEmpty={setIsEmpty}
-                  setTypeName={setTypeName}
-                  lid={id}
-                  setLangid={setLangid}
-                />
-              );
-            })}
+            {Array.isArray(languages) &&
+              languages?.map(({ name, id }, idx) => {
+                return (
+                  <FilterButton
+                    key={idx}
+                    filter={filter}
+                    setFilter={setFilter}
+                    data1={data1}
+                    setData1={setData1}
+                    data2={data2}
+                    setData2={setData2}
+                    data3={data3}
+                    setData3={setData3}
+                    active={active1}
+                    setActive={setActive1}
+                    title={name}
+                    action="language"
+                    data={allPlaylists}
+                    setIsEmpty={setIsEmpty}
+                    setTypeName={setTypeName}
+                    lid={id}
+                    setLangid={setLangid}
+                  />
+                );
+              })}
           </div>
         </div>
-        {loading && (
+        {isLoading && (
           <div className="load_desktop mgt">
             <div className="loads">
               <Loader />
@@ -165,8 +103,9 @@ const Playlists = () => {
           </div>
         )}
         <div className="playlist_widget">
-          {!loading &&
-            filter.map(({ lec_img, id, name }, idx) => {
+          {!isLoading &&
+            Array.isArray(allPlaylists) &&
+            allPlaylists.map(({ lec_img, id, name,lec_no }, idx) => {
               return (
                 <div
                   key={idx + 1}
@@ -177,7 +116,7 @@ const Playlists = () => {
                 >
                   <AlbumWidget
                     key={idx}
-                    views={0}
+                    lec_no={lec_no || 0}
                     categories={name}
                     img={lec_img}
                   />

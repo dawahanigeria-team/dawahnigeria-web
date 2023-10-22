@@ -8,7 +8,7 @@ export const useRequest = (requestType, routeName, payload = null) => {
 
   const handleRequest = (type, route, payloadData) => {
     setIsLoading(true);
-    axios[type](route, payloadData)
+    axios[type](`${process.env.REACT_APP_API_BASE_URL}${route}`, payloadData)
       .then((res) => {
         console.log("handleRequest", res.data);
         setData(res.data);

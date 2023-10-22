@@ -6,9 +6,7 @@ import React, {
   useContext,
 } from "react";
 import Container from "../../components/container/Container";
-import axios from "axios";
 import arrow from "../../assets/svg/arrowleft.svg";
-import headpmobile from "../../assets/svg/headpmobile.svg";
 import sharebold from "../../assets/svg/sharebold.svg";
 import adfav from "../../../src/assets/svg/adfav.svg";
 import combold from "../../assets/svg/combold.svg";
@@ -16,7 +14,6 @@ import lovebold from "../../assets/svg/lovebold.svg";
 import { CiPlay1 } from "react-icons/ci";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import "./lecturesListDetail.scss";
-import audioHero from "../../assets/png/detialPagehero.png";
 import { MdFavorite } from "react-icons/md";
 import MusicList from "../../components/miscList/musicList";
 import MobileList from "../../components/list/mobileList";
@@ -25,17 +22,15 @@ import pmobile from "../../../src/assets/svg/playmobile.svg";
 import sharebig from "../../../src/assets/svg/boom-share.svg";
 import commentbig from "../../../src/assets/svg/boom-comment.svg";
 import favbig from "../../../src/assets/svg/boom-fav.svg";
-import infiniteScroll from "../../components/UI/infiniteScroll";
 import { formatNumber } from "../../components/UI/formatter";
 import { useSelector, useDispatch } from "react-redux";
 import useaxios from "../../utils/useAxios";
-import lazysong from "../../assets/png/lazysong.jpeg";
 import { toast } from "react-hot-toast";
 import _ from "lodash";
 import CommentBox from "../../components/comment/comment";
 import SimilarAudio from "../../components/similaraudio/similarAudio";
 import ShareAudio from "../../components/shareaudio/shareAudio";
-import lazy from "../../assets/png/lazyrps.jpeg";
+import { useQueryGetRequest } from "../../hooks/getqueries";
 import {
   getaudioId,
   getCount,
@@ -43,45 +38,46 @@ import {
 } from "../../Redux/Actions/ActionCreators";
 import { LECTURE } from "../../utils/routes/constants";
 import { AudioContext } from "../../App";
+import { playlistdetailApi } from "../../services/playlistdetail.service";
+import { useAllPlaylistHook, usePlaylistLectures } from "../../hooks/playlists";
+import { DesktopFavoriteButton } from "../../components/UI/favoritebuttons/desktopfavoriteButtons";
+import { MobileFavoriteButton } from "../../components/UI/favoritebuttons/mobilefavoriteButton";
+
+import HeadMeta from "../../components/head-meta";
+
 
 const PlaylistDetail = () => {
   const { id } = useParams();
-  const { state } = useLocation();
   const dispatch = useDispatch();
-  const [similarPlaylist, setsimilarPlaylist] = useState([]);
   const [data, setData] = useState([]);
   const { currentUser } = useSelector((state) => state.user);
   const observeEl = useRef();
   const { setinitial } = useContext(AudioContext);
-  const [sumofFav, setsumofFav] = useState();
   const [isShare, setisShare] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
-  const [singleData, setsingleData] = useState();
-  const [rpimage, setrpImg] = useState();
   const navigate = useNavigate();
-  const [addFav, setaddFav] = useState(false);
-  const [isdisabled, setdisabled] = useState(false);
-  const [getFavs, setgetfavs] = useState([]);
-  const [listdetail, setlistdetail] = useState();
-  const [rpnames, setrpname] = useState([]);
+
   const [audioComment, setaudioComment] = useState();
+  const queryParam = { id };
 
-  useEffect(() => {
-    useaxios
-      .get(`/playlistApi.php?playlist_id=${id}&action=single_playlist_data`)
-      .then((res) => {
-        //console.log("single data @@@@@@@@@", res);
-        const { audio, name, lec_img } = res.data[0];
-        setsingleData({ name, img: lec_img });
-        setlistdetail(audio);
+  const { querieddata , isLoading, refetch} = useQueryGetRequest(
+    "playlist-details",
+    queryParam,
+    playlistdetailApi.getPlaylistData
+  );
 
-        setsumofFav(res.data[0]?.favorites || 0);
-      })
-      .catch((err) => {
-        //console.log(err);
-      });
-  }, [id]);
+  //console.log("queries", querieddata);
+  const keyParam = { multiId: querieddata[0]?.audio?.toString() || null };
+
+  const { querieddata: playlistlectures } = usePlaylistLectures(
+    "playlist-lectures",
+    keyParam,
+    playlistdetailApi.getPlaylistLectures
+  );
+
+  const { data: similarPlaylists } = useAllPlaylistHook();
+
+  // console.log("lectures", playlistlectures);
 
   //////*************handling comment**************** */
 
@@ -108,89 +104,7 @@ const PlaylistDetail = () => {
       });
   }, [id]);
 
-  useEffect(() => {
-    if (listdetail) {
-      useaxios
-        .get(`/leclisting_multi_nid_api.php?id=${listdetail.toString()}`)
-        .then((res) => {
-          //console.log(res.data);
-          setLoading(false);
-          setData(res.data);
-          if (res.data === null) {
-            toast.error("Playlist is empty");
-          }
-        });
-    }
-  }, [listdetail]);
 
-  /////get users favorites
-  async function fetchFavorites(addFav) {
-    if (!currentUser?.id) return;
-    if (addFav || (!addFav && id)) {
-      //console.log("...ALBUM.......@@@@@@@@@@@@@");
-      await useaxios
-        .get(
-          `/leclisting_favorites.php?user_id=${currentUser?.id}&type=playlist`,
-          {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-            },
-          }
-        )
-        .then((res) => {
-          //console.log(res.data);
-          const { playlist } = res.data;
-          setgetfavs(playlist);
-          // const isExist = [Object.values(audio)].includes(id)
-        })
-        .catch((err) => {
-          //console.log(err);
-        });
-    }
-  }
-  useEffect(() => {
-    fetchFavorites(addFav, parseInt(id));
-  }, [addFav, id]);
-
-  const addToFav = async (e) => {
-    /// add to favorites
-    e.stopPropagation();
-    //console.log("event clicked");
-    if (!currentUser?.id) {
-      toast.error("Login or register to add to favorites");
-      return;
-    }
-    const payload = {
-      user_id: currentUser?.id,
-      item_id: parseInt(id),
-      type: "playlist",
-    };
-    await useaxios
-      .post(`/leclisting_favorites.php`, payload, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-        },
-      })
-      .then((res) => {
-        //console.log(res);
-        toast.success(res.data.message);
-        setdisabled(false);
-        //console.log(addFav);
-        if (!getFavs?.includes(parseInt(id))) {
-          setsumofFav(sumofFav + 1);
-        } else {
-          setsumofFav(sumofFav - 1);
-        }
-      })
-
-      .catch((err) => {
-        //console.log(err);
-      });
-  };
 
   /// Get the exiting element
   const firstElement = useCallback((node) => {
@@ -206,32 +120,15 @@ const PlaylistDetail = () => {
     if (node) observeEl.current.observe(node);
   }, []);
 
-  /**
-     * 
-      const lastElement = useCallback(
-      (node) => {
-        if (isEmpty) return;
-        if (nav1.title === "Charts") return;
-  
-        infiniteScroll(node, observer, page, setPage, isEmpty);
-      },
-  
-      [page]
-    );
-    //console.log("current page", page);
-  
-     */
-
-  //console.log(data);
   //play all audio files
   const playAll = () => {
     if (window.innerWidth <= 615) {
-      navigate(`${LECTURE}${data[0]?.nid}`);
+      navigate(`${LECTURE}${querieddata[0]?.nid}`);
     } else {
-      dispatch(getaudioId(data[0]?.nid));
+      dispatch(getaudioId(querieddata[0]?.nid));
     }
     dispatch(getCount(0));
-    dispatch(getPack(data));
+    dispatch(getPack(querieddata));
     setinitial(false);
   };
 
@@ -243,14 +140,7 @@ const PlaylistDetail = () => {
     setisShare(!isShare);
   };
 
-  useEffect(() => {
-    useaxios
-      .get(`/playlistApi.php?action=all_public_playlist_data`)
-      .then((res) => {
-        setsimilarPlaylist(res.data);
-      });
-  }, []);
-  ////not contented but under presssure by DN project manager
+  ///////
   useEffect(() => {
     const lazy = document.querySelectorAll("#detail");
     lazy.forEach((im) => {
@@ -261,10 +151,17 @@ const PlaylistDetail = () => {
 
   return (
     <Container>
+      <HeadMeta
+        title={`${
+          querieddata[0]?.name || "Playlist"
+        } on Dawah Nigeria - Home of islamic resources`}
+      />
       <div className="leclistdet_wrapper">
         <img
           className="leclistdet_hero"
-          src={singleData?.img || "https://imagetolink.com/ib/vwea8kukZP.jpeg"}
+          src={
+            querieddata[0]?.img || "https://imagetolink.com/ib/vwea8kukZP.jpeg"
+          }
           alt="audiohero"
         />
         <div className="leclistdet_container">
@@ -276,8 +173,10 @@ const PlaylistDetail = () => {
                 navigate(-1);
               }}
               className="leclistdet_breadcrumb_first"
-            ></p>
-            <p className="leclistdet_breadcrumb_second">{singleData?.name}</p>
+            >Back/</p>
+            <p className="leclistdet_breadcrumb_second">
+              {querieddata[0]?.name || "Unknown"}
+            </p>
           </div>
 
           {/* -------------------Desktop----------------- Section 1 -------------------------------------- */}
@@ -286,14 +185,16 @@ const PlaylistDetail = () => {
               <img
                 className="leclistdet_head_left_img"
                 src={
-                  singleData?.img ||
+                  querieddata[0]?.img ||
                   "https://imagetolink.com/ib/AEFQQC1ybX.jpeg"
                 }
                 alt="head"
               />
             </div>
             <div className="leclistdet_head_right">
-              <p className="leclistdet_head_right_head">{singleData?.name}</p>
+              <p className="leclistdet_head_right_head">
+                {querieddata[0]?.name  || "Unknown"}
+              </p>
               <div className="leclistdet_head_right_text"></div>
 
               <div className="leclistdet_head_right_actions_wrap">
@@ -307,33 +208,12 @@ const PlaylistDetail = () => {
                   <CiPlay1 className="leclistdet_play_icon" />
                   <p className="leclistdet_play_text">Play All</p>
                 </button>
-                <div className="leclistdet_fav">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      addToFav(e);
-                      fetchFavorites(addFav);
-                      setaddFav(!addFav);
-                      setdisabled(true);
-                    }}
-                    className="fav_btn"
-                    disabled={isdisabled}
-                  >
-                    {getFavs?.includes(id) ? (
-                      <MdFavorite className="leclistdet_fav_icon_active" />
-                    ) : (
-                      <img
-                        src={favbig}
-                        alt=""
-                        className="leclistdet_fav_icon"
-                      />
-                    )}
-                  </button>
-
-                  <p className="leclistdet_fav_text">
-                    {formatNumber(sumofFav || 0)}
-                  </p>
-                </div>
+                <DesktopFavoriteButton
+                favorites={querieddata[0]?.favorites}
+                id={id}
+                type={"playlist"}
+                refetch={refetch}
+               />
                 <div
                   onClick={(e) => {
                     sharePlaylist(e, id);
@@ -345,9 +225,7 @@ const PlaylistDetail = () => {
                     alt=""
                     className="leclistdet_share_icon"
                   />
-                  <p className="leclistdet_share_text">
-                    {formatNumber(singleData?.share || 0)}
-                  </p>
+                  <p className="leclistdet_share_text">{formatNumber(0)}</p>
                 </div>
                 <div className="leclistdet_comment">
                   <img
@@ -355,9 +233,7 @@ const PlaylistDetail = () => {
                     alt=""
                     className="leclistdet_comment_icon"
                   />
-                  <p className="leclistdet_comment_text">
-                    {formatNumber(singleData?.comments || 0)}
-                  </p>
+                  <p className="leclistdet_comment_text">{formatNumber(0)}</p>
                 </div>
                 {/* <div className="leclistdet_download">
                   <img
@@ -370,9 +246,9 @@ const PlaylistDetail = () => {
             </div>
           </div>
           <p className="leclistdet_head_right_text2">
-            {`${singleData?.name}`}
+            {`${querieddata[0]?.name  || "Unknown"}`}
             <span className="braces">
-              (<span className="braces_text">{data?.length}</span>)
+              (<span className="braces_text">{playlistlectures?.length}</span>)
             </span>
           </p>
           {/* ------------------------------------ mobile view -------------------------------------- */}
@@ -386,7 +262,7 @@ const PlaylistDetail = () => {
               <img
                 className="leclistdet_head_img_sz"
                 src={
-                  singleData?.img ||
+                  querieddata[0]?.img ||
                   "https://imagetolink.com/ib/vwea8kukZP.jpeg"
                 }
                 alt="head"
@@ -414,7 +290,7 @@ const PlaylistDetail = () => {
                 <img
                   className="album_img_sz"
                   src={
-                    singleData?.img ||
+                    querieddata[0]?.img ||
                     "https://imagetolink.com/ib/vwea8kukZP.jpeg"
                   }
                   alt=""
@@ -423,7 +299,7 @@ const PlaylistDetail = () => {
 
               <div className="mob_like">
                 <div className="leclistdet_head_mob_head">
-                  {singleData?.name}
+                  {querieddata[0]?.name  || "Unknown"}
                 </div>
                 {/**
                  
@@ -433,38 +309,24 @@ const PlaylistDetail = () => {
                     <img
                       className="likeys_img_sz"
                       src={
-                        singleData?.img ||
+                        querieddata[0]?.img ||
                         "https://imagetolink.com/ib/eCnXEHHRos.jpeg"
                       }
                       alt=""
                     />
                   </span>
-                  <span className="likeys_text">{singleData?.categories}</span>
+                  <span className="likeys_text">{"--"}</span>
                 </div>
               </div>
             </div>
             <div className="listrank_and_listblack_wrap">
               <div className={isVisible ? "listranking_none" : "listranking"}>
-                <div className="icons_mob_listblack">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      addToFav(e);
-                      fetchFavorites(addFav);
-                      setaddFav(!addFav);
-                      setdisabled(true);
-                    }}
-                    className="likeys_img"
-                    disabled={isdisabled}
-                  >
-                    {getFavs?.includes(id) ? (
-                      <img className="likeys_img_sz" src={adfav} alt="" />
-                    ) : (
-                      <img className="likeys_img_sz" src={lovebold} alt="" />
-                    )}
-                  </button>
-                  <span className="likeys_text">{formatNumber(sumofFav)}</span>
-                </div>
+              <MobileFavoriteButton
+                favorites={querieddata[0]?.favorites}
+                id={id}
+                type={"playlist"}
+                refetch={refetch}
+               />
                 <div
                   onClick={(e) => {
                     sharePlaylist(e);
@@ -474,18 +336,13 @@ const PlaylistDetail = () => {
                   <button className="likeys_img">
                     <img className="likeys_img_sz" src={sharebold} alt="" />
                   </button>
-                  <span className="likeys_text">
-                    {formatNumber(singleData?.share || 0)}
-                  </span>
+                  <span className="likeys_text">{formatNumber(0)}</span>
                 </div>
                 <div className="icons_mob_listblack">
                   <button className="likeys_img">
                     <img className="likeys_img_sz" src={combold} alt="" />
                   </button>
-                  <span className="likeys_text">
-                    {" "}
-                    {formatNumber(singleData?.comments || 0)}
-                  </span>
+                  <span className="likeys_text"> {formatNumber(0)}</span>
                 </div>
               </div>
               <div className={isVisible ? "headings pb-7" : "headings_none"}>
@@ -497,14 +354,14 @@ const PlaylistDetail = () => {
                 >
                   <img className="fixed_mob_arrow_sz" src={arrow} alt="hun" />
                 </div>
-                <div className="fixed_text"> {singleData?.name}</div>
+                <div className="fixed_text"> {querieddata[0]?.name}</div>
 
                 <div className="fixed_bg_none"></div>
                 <div className="header_bg">
                   <img
                     className="img"
                     src={
-                      singleData?.img ||
+                      querieddata[0]?.img ||
                       "https://imagetolink.com/ib/eCnXEHHRos.jpeg"
                     }
                     alt="head"
@@ -551,22 +408,23 @@ const PlaylistDetail = () => {
                 <span>Time</span>
               </p>
             </div>
-            {loading && (
+            {isLoading && (
               <div className="loads">
                 <div className="load">
                   <Loader />
                 </div>
               </div>
             )}
-            {!loading && listdetail?.length == 0 && (
+            {!isLoading && querieddata[0]?.audio?.length === 0 && (
               <div className="text-gray-200 no_playlist flex items-center justify-center w-full h-[200px]">
                 <span>-- no lecture in playlist --</span>
               </div>
             )}
             <div className="lecsong_content">
-              {!loading &&
-                listdetail?.length !== 0 &&
-                data?.map(
+              {!isLoading &&
+                querieddata[0]?.audio?.length !== 0 &&
+                Array.isArray(playlistlectures) &&
+                playlistlectures?.map(
                   (
                     {
                       lectitle,
@@ -587,112 +445,55 @@ const PlaylistDetail = () => {
                     },
                     idx
                   ) => {
-                    if (data?.length === idx + 1) {
-                      return (
-                        <div key={idx} className="lecsong_content_item">
-                          <div className="desktops_item">
-                            <MusicList
-                              key={idx}
-                              id={idx}
-                              title={lectitle || title}
-                              lecturer={rpname || rp}
-                              image={lec_img || img}
-                              url={`${LECTURE}${nid}`}
-                              rpid={rp_id}
-                              Title={Title || lectitle || title}
-                              share={share}
-                              rpname={rpname || rp}
-                              cats={cats}
-                              comments={comments}
-                              favorites={favorites}
-                              nid={nid}
-                              navName={"Back"}
-                              navLink={-1}
-                              endpoint_url={`${process.env.REACT_APP_API_BASE_URL}/albumapi3.php?aid=${id}`}
-                              controlData={data}
-                              duration={duration}
-                              views={views}
-                            />
-                          </div>
-                          <div className="mobile_item">
-                            <MobileList
-                              key={idx}
-                              id={idx}
-                              title={lectitle || title}
-                              lecturer={rpname || rp}
-                              image={lec_img || img}
-                              url={`${LECTURE}${nid}`}
-                              Title={Title || lectitle || title}
-                              rpname={rpname || rp}
-                              cats={cats}
-                              nid={nid}
-                              rpid={rp_id}
-                              comments={comments}
-                              favorites={favorites}
-                              navName={"Back"}
-                              navLink={-1}
-                              endpoint_url={`${process.env.REACT_APP_API_BASE_URL}/albumapi3.php?aid=${id}&lim=10&offset=30&page=`}
-                              controlData={data}
-                              duration={duration}
-                              views={views}
-                            />
-                          </div>
+                    return (
+                      <div key={idx} className="lecsong_content_item">
+                        <div className="desktops_item">
+                          <MusicList
+                            key={idx}
+                            id={idx}
+                            title={lectitle || title}
+                            lecturer={rpname || rp}
+                            image={lec_img || img}
+                            url={`${LECTURE}${nid}`}
+                            rpid={rp_id}
+                            Title={Title || lectitle || title}
+                            share={share}
+                            rpname={rpname || rp}
+                            cats={cats}
+                            comments={comments}
+                            favorites={favorites}
+                            nid={nid}
+                            navName={"Back"}
+                            navLink={-1}
+                            controlData={playlistlectures}
+                            duration={duration}
+                            views={views}
+                          />
                         </div>
-                      );
-                    } else {
-                      return (
-                        <div key={idx} className="lecsong_content_item">
-                          <div className="desktops_item">
-                            <MusicList
-                              key={idx}
-                              id={idx}
-                              title={lectitle || title}
-                              lecturer={rpname || rp}
-                              image={lec_img || img}
-                              url={`${LECTURE}${nid}`}
-                              Title={Title || lectitle || title}
-                              rpname={rpname || rp}
-                              cats={cats}
-                              share={share}
-                              rpid={rp_id}
-                              favorites={favorites}
-                              comments={comments}
-                              nid={nid}
-                              navName={"Back"}
-                              navLink={-1}
-                              endpoint_url={`${process.env.REACT_APP_API_BASE_URL}/albumapi3.php?aid=${id}`}
-                              controlData={data}
-                              duration={duration}
-                              views={views}
-                            />
-                          </div>
-                          <div className="mobile_item">
-                            <MobileList
-                              key={idx}
-                              id={idx}
-                              title={lectitle || title}
-                              lecturer={rpname || rp}
-                              image={lec_img}
-                              url={`${LECTURE}${nid}`}
-                              Title={Title || lectitle || title}
-                              rpname={rpname || rp}
-                              cats={cats}
-                              rpid={rp_id}
-                              share={share}
-                              comments={comments}
-                              nid={id}
-                              favorites={favorites}
-                              navName={"Back"}
-                              navLink={-1}
-                              endpoint_url={`${process.env.REACT_APP_API_BASE_URL}/albumapi3.php?aid=${id}&lim=10&offset=30&page=`}
-                              controlData={data}
-                              duration={duration}
-                              views={views}
-                            />
-                          </div>
+                        <div className="mobile_item">
+                          <MobileList
+                            key={idx}
+                            id={idx}
+                            title={lectitle || title}
+                            lecturer={rpname || rp}
+                            image={lec_img || img}
+                            url={`${LECTURE}${nid}`}
+                            Title={Title || lectitle || title}
+                            rpname={rpname || rp}
+                            cats={cats}
+                            nid={nid}
+                            rpid={rp_id}
+                            comments={comments}
+                            favorites={favorites}
+                            navName={"Back"}
+                            navLink={-1}
+                            controlData={playlistlectures}
+                            duration={duration}
+                            views={views}
+                          />
                         </div>
-                      );
-                    }
+                      </div>
+                    );
                   }
                 )}
             </div>
@@ -700,7 +501,7 @@ const PlaylistDetail = () => {
 
           <div className="px-3">
             <SimilarAudio
-              similar={similarPlaylist}
+              similar={similarPlaylists}
               current={id}
               url={`/pl`}
               type={"playlist"}

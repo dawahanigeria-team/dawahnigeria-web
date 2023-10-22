@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/UI/loader/loader";
 import { registration } from "../../Redux/Actions/ActionCreators";
+import HeadMeta from "../../components/head-meta";
 
 const SignupForm = () => {
   const dispatch = useDispatch();
@@ -105,6 +106,7 @@ const SignupForm = () => {
   //console.log(data);
   return (
     <div className="signupform_wrapper">
+      <HeadMeta title="Sign up on Dawah Nigeria | Home of Islamic resources" />
       <form
         onSubmit={(e) => {
           handleSubmit(e);

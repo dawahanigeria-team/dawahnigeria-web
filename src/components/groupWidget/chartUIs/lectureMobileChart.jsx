@@ -19,9 +19,9 @@ const LectureMobileChart = ({ data }) => {
   return (
     <div>
       <div className="w-[95%] mx-auto">
-        <div className="top3 grid grid-cols-3 items-center gap-10  ">
+        {Array.isArray(data) && <div className="top3 grid grid-cols-3 items-center gap-10  ">
           <Link
-            to={`${LECTURE}${data[1]?.id}`}
+            to={`${LECTURE}${data[1]?.nid}`}
             onClick={() => {
               gotoLecture();
               dispatch(getCount(1));
@@ -32,9 +32,7 @@ const LectureMobileChart = ({ data }) => {
               <img
                 className="rounded-md w-full h-full"
                 src={
-                  data[1]?.mp3_thumbnail ||
-                  data[1]?.img ||
-                  data[1]?.lec_img ||
+                  ( data[1]?.img) ||
                   "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"
                 }
                 alt=""
@@ -48,12 +46,12 @@ const LectureMobileChart = ({ data }) => {
               </div>
             </div>
             <div className="overflow-hidden text-[13px] w-[95px] text-ellipsis whitespace-nowrap">
-              {data[1]?.mp3_title}
+              { data[1]?.mp3_title}
             </div>
           </Link>
 
           <Link
-            to={`${LECTURE}${data[0]?.id}`}
+            to={`${LECTURE}${data[0]?.nid}`}
             onClick={() => {
               gotoLecture();
               dispatch(getCount(0));
@@ -64,9 +62,7 @@ const LectureMobileChart = ({ data }) => {
               <img
                 className="rounded-md w-full h-full"
                 src={
-                  data[0]?.mp3_thumbnail ||
-                  data[0]?.img ||
-                  data[0]?.lec_img ||
+                  (data[0]?.img) ||
                   "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"
                 }
                 alt=""
@@ -79,11 +75,11 @@ const LectureMobileChart = ({ data }) => {
               </div>
             </div>
             <div className="overflow-hidden w-[85px] text-[13px] text-ellipsis whitespace-nowrap">
-              {data[0]?.mp3_title}
+              { data[0]?.mp3_title}
             </div>
           </Link>
           <Link
-            to={`${LECTURE}${data[2]?.id}`}
+            to={`${LECTURE}${ data[2]?.nid}`}
             onClick={() => {
               gotoLecture();
               dispatch(getCount(2));
@@ -94,9 +90,7 @@ const LectureMobileChart = ({ data }) => {
               <img
                 className="rounded-md w-full h-full"
                 src={
-                  data[2]?.mp3_thumbnail ||
-                  data[2]?.img ||
-                  data[2]?.lec_img ||
+                  ( data[2]?.img) ||
                   "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"
                 }
                 alt=""
@@ -110,20 +104,22 @@ const LectureMobileChart = ({ data }) => {
               </div>
             </div>
             <div className="overflow-hidden w-[95px] text-[13px] text-ellipsis whitespace-nowrap">
-              {data[2]?.mp3_title}
+              { data[2]?.mp3_title}
             </div>
           </Link>
-        </div>
+        </div>}
       </div>
 
       <div className="flex flex-col w-full mt-4 space-y-2 justify-end items-end">
         {Array.isArray(data) &&
           data
             ?.slice(3)
-            .map(({ mp3_title, id, mp3_thumbnail, lec_img, img }, idx) => {
+
+            .map(({ mp3_title, nid, img }, idx) => {
               return (
                 <Link
-                  to={`${LECTURE}${id}`}
+                  to={`${LECTURE}${nid}`}
+
                   onClick={() => {
                     dispatch(getPack(null));
 
@@ -136,7 +132,9 @@ const LectureMobileChart = ({ data }) => {
                 >
                   <LectChartWidget
                     name={mp3_title}
-                    img={mp3_thumbnail || img || lec_img}
+
+                    img={img}
+
                     idx={idx}
                   />
                 </Link>

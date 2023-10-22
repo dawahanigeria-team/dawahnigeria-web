@@ -3,7 +3,7 @@ import "./audiodetail.scss";
 import AudioActionDesktop from "../../components/audio/audioActionDesktop";
 import Container from "../../components/container/Container";
 import audioHero from "../../assets/png/detialPagehero.png";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
 import { CiPlay1 } from "react-icons/ci";
 import back from "../../assets/svg/back.svg";
 import foward from "../../assets/svg/foward.svg";
@@ -17,10 +17,8 @@ import { FaPlay } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 import { SlEmotsmile, SlOptionsVertical } from "react-icons/sl";
 import { GiPauseButton } from "react-icons/gi";
-import pmobile from "../../../src/assets/svg/playmobile.svg";
 import sharebig from "../../../src/assets/svg/boom-share.svg";
 import commentbig from "../../../src/assets/svg/boom-comment.svg";
-import favbig from "../../../src/assets/svg/boom-fav.svg";
 import { formatNumber } from "../../components/UI/formatter";
 import { AudioContext } from "../../App.jsx";
 
@@ -31,8 +29,6 @@ import {
   TbRepeat,
 } from "react-icons/tb";
 import Add_playlist from "../add_playlist/AddPlaylist";
-import GroupWidget from "../../components/groupWidget/GroupWidget";
-import Disk from "../../assets/png/Disk_tranparent.png";
 import { durationFormat, playTimingRes } from "./UI_audiodetail/playtiming";
 import axios from "../../utils/useAxios";
 import _ from "lodash";
@@ -52,14 +48,21 @@ import {
   getRepeat,
   getValue,
 } from "../../Redux/Actions/ActionCreators";
-import { LECTURE, MORE } from "../../utils/routes/constants";
+import { useSimilarAudioHook } from "../../hooks";
+import { GENRES, LECTURE, MORE } from "../../utils/routes/constants";
 import plus from "../../../src/assets/svg/plus.svg";
 import CurrentPlayData from "../../components/currentData/currentPlayData";
 import Loader from "../../components/UI/loader/loader";
+
+import { useAudioHook } from "../../hooks";
+import { audioDetailApi } from "../../services";
+import { DesktopFavoriteButton } from "../../components/UI/favoritebuttons/desktopfavoriteButtons";
 import { AudioDownloadModal } from "../../components/audioDownloadModal/AudioDownloadModal";
 import { useRequest } from "../landing/utils";
 import RowSkeletonContainer from "../../components/skeletion/skeleton.container";
 import CardSkeleton from "../../components/skeletion";
+import HeadMeta from "../../components/head-meta";
+
 const AudioDetail = () => {
   const { id } = useParams();
   const {
@@ -78,28 +81,18 @@ const AudioDetail = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const [more, setMore] = useState(0);
-  const [play, setPlay] = useState(0);
   const [moreOption, setmoreOption] = useState(false);
   const { audioRef, setinitial, loading } = useContext(AudioContext);
-  //const [music, setMusic] = useState(0);
-  const [data, setData] = useState([]);
   const slide = useRef();
   const [audioComment, setaudioComment] = useState();
   const [subdata, setSubData] = useState([]);
   const [currentaudio, setcurrentaudio] = useState([]);
   const [curUser, setCurUser] = useState(currentUser || null);
   const [iscurrents, setcurrents] = useState(false);
-  //const audioRef = useRef();
   const rangeRef = useRef();
-  //const [page, getPage] = useState(currentPage);
-  //  const [endpUrl, setendpUrl] = useState(endpoint_url);
   const [isprev, setisprev] = useState(false);
   const [isnext, setisnext] = useState(true);
-  //const [isrepeat, getRepeat] = useState(false);
-  const [isComplete, setIsComplete] = useState(false);
   const [isComment, setIsComment] = useState(false);
-  //const [nidValue, setNidValue] = useState(nid);
-  //const [count, getCount] = useState(idx || id);
   const [isEmpty, setIsEmpty] = useState(false);
   const [isPrevious, setIsPrevious] = useState(false);
   const [isAddedToFavorite, setisAddedToFavorite] = useState(false);
@@ -112,37 +105,15 @@ const AudioDetail = () => {
   const [sumofFav, setsumofFav] = useState(0);
   const [isShare, setisShare] = useState(false);
   const [comment, setComment] = useState("");
-  const [noOfComments, setNoOfComments] = useState("");
-
   const dispatch = useDispatch();
-  //console.log("count: ", count);
-  //console.log("controlData: ", id);
 
   //console.log("currentPage", page);
-  /**
-   
-   */
 
-  const getMusic = async (id) => {
-    if (state?.layout) return;
-    if (window.innerWidth <= 615) {
-      dispatch(getaudioId(id));
-    } else {
-      axios
-        .get(`/leclistingapi.php?lecid=${id}`)
-        .then((res) => {
-          console.log("Audio response", res.data[0]);
-          dispatch(getcurrentAudioInfo(res.data[0]));
-        })
-        .catch((err) => {
-          //console.log(err);
-        });
-    }
-  };
-  useEffect(() => {
-    getMusic(id);
-  }, [id, audioId]);
+  const { refetch } = useAudioHook(id);
+  const keyParam = { id: currentAudioInfo?.rp_id, page: 1 };
+  const { querieddata: similarAudios } = useSimilarAudioHook(keyParam);
 
+  console.log(similarAudios);
   const handlePlay = () => {
     dispatch(getaudioId(id));
     setinitial(false);
@@ -155,24 +126,20 @@ const AudioDetail = () => {
 
   const handleRange = (curr) => {
     dispatch(getValue(curr));
-    //   //console.log(rangeRef.current.value);
+
     if (audioRef.current) {
       audioRef.current.currentTime = curr;
     }
   };
 
   const handleNextAudio = () => {
-    // //console.log("first count: ", count);
     setIsPrevious(false);
     dispatch(setPlaying(false));
-    //console.log(pack);
 
     const next = pack?.findIndex((value) => {
       return value.nid === parseInt(id);
     });
 
-    //console.log("first count: ", next);
-    // //console.log("current diff: ", data?.length - 1 - next);
     if (!isEmpty && pack?.length - 1 - next <= 2) {
       dispatch(getPage(page + 1));
     }
@@ -180,10 +147,8 @@ const AudioDetail = () => {
     if (next === pack?.length - 1) {
       navigate(`${LECTURE}${pack[next]?.nid}`);
 
-      //console.log("@@@@@@@@@@ end of track next");
       dispatch(getCount(next));
     } else if (count < pack?.length - 1) {
-      //console.log("@@@@@@@@@@@ working");
       navigate(`${LECTURE}${pack[next + 1]?.nid}`);
 
       dispatch(getCount(next + 1));
@@ -207,18 +172,13 @@ const AudioDetail = () => {
       dispatch(getPage(page - 1));
     }
 
-    // getCount(prev);
-    // //console.log("second count: ", count);
     if (prev === 0) {
       navigate(`${LECTURE}${pack[prev]?.nid}`);
-      //dispatch(getaudioId(pack[prev]?.nid));
-      dispatch(getCount(prev));
 
-      //console.log("end of track prev");
+      dispatch(getCount(prev));
     } else {
-      //console.log("third count: ", count);
       navigate(`${LECTURE}${pack[prev - 1]?.nid}`);
-      //dispatch(getaudioId(pack[prev - 1]?.nid));
+
       dispatch(getCount(prev - 1));
     }
     setinitial(false);
@@ -414,12 +374,24 @@ const AudioDetail = () => {
 
   const { data: similarLecture, isLoading } = useRequest(
     "get",
-    `https://www.dawahbox.com/scripts/py_srch_exec.php?srch_str=Yusuff`
+    `/genre_api.php?cat_id=${currentAudioInfo?.cat_id}`
   );
+
+  const shareAudio = () => {
+    setisShare(!isShare);
+    //setNidValue(nid)
+  };
 
   ////*********************************************************** */
   return (
     <Container>
+      <HeadMeta
+        title={`${
+          currentAudioInfo?.title?.split("-")[0] ||
+          currentAudioInfo?.Title ||
+          "Audio"
+        } on Dawah Nigeria - Home of islamic resources`}
+      />
       <div className="audiodetail_wrapper">
         <img
           className="audiodetail_hero"
@@ -487,33 +459,14 @@ const AudioDetail = () => {
                   <CiPlay1 className="audiodetail_play_icon" />
                   <p className="audiodetail_play_text">{"play"}</p>
                 </div>
-                <div className="audiodetail_fav">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      addToFav(e, audioId);
-                      fetchFavorites(addFav, audioId);
-                      setaddFav(!addFav);
-                      setdisabled(true);
-                    }}
-                    className="fav_btn"
-                    disabled={isdisabled}
-                  >
-                    {getFavs?.includes(parseInt(id || audioId)) ? (
-                      <MdFavorite className="audiodetail_fav_icon_active" />
-                    ) : (
-                      <img
-                        src={favbig}
-                        alt=""
-                        className="audiodetail_fav_icon"
-                      />
-                    )}
-                  </button>
 
-                  <p className="audiodetail_fav_text">
-                    {formatNumber(currentAudioInfo?.favorites || 0)}
-                  </p>
-                </div>
+                <DesktopFavoriteButton
+                  favorites={currentAudioInfo?.favorites}
+                  id={id}
+                  type={"audio"}
+                  refetch={refetch}
+                />
+
                 <div
                   onClick={() => {
                     shareAudio();
@@ -535,7 +488,9 @@ const AudioDetail = () => {
                     alt=""
                     className="audiodetail_comment_icon"
                   />
-                  <p className="audiodetail_comment_text">44</p>
+                  <p className="audiodetail_comment_text">
+                    {formatNumber(currentAudioInfo?.comment || 0)}
+                  </p>
                 </div>
                 <AudioDownloadModal
                   downloads={currentAudioInfo?.downloads}
@@ -550,9 +505,14 @@ const AudioDetail = () => {
           <div className="audiodetail_info">
             <div className="audiodetail_info_wrap">
               <div className="audiodetail_info_name">Genre: </div>
-              <div className="audiodetail_info_value">
+              <Link
+                to={`${GENRES}/${parseInt(
+                  currentAudioInfo?.cat_id?.toString()
+                )}`}
+                className="audiodetail_info_value hover:text-[#ddff2b] hover:underline"
+              >
                 {currentAudioInfo?.cats || "unknown"}
-              </div>
+              </Link>
             </div>
             <div className="audiodetail_info_wrap">
               <div className="audiodetail_info_name">Date of Release: </div>
@@ -564,19 +524,21 @@ const AudioDetail = () => {
           <div className="audiodetail_summary">
             <h1 className="audiodetail_summary_header">Summary</h1>
             <p
-              className={`audiodetail_summary_body ${
-                more
-                  ? "audiodetail_summary_body_open "
-                  : "audiodetail_summary_body_close "
-              }`}
+              className={`audiodetail_summary_body audiodetail_summary_body_open `}
             >
               {currentAudioInfo?.description || "unknown"}
             </p>
-            <div onClick={() => setMore(!more)} className="audiodetail_more">
+            {/* 
+           ${
+                more
+                  ? "audiodetail_summary_body_open "
+                  : "audiodetail_summary_body_close "
+              }
+           <div onClick={() => setMore(!more)} className="audiodetail_more">
               <p className="audiodetail_more_text">{more ? "less" : "more"}</p>
 
               <FiChevronsRight className="audiodetail_more_icon" />
-            </div>
+            </div>*/}
           </div>
 
           {/* // ----------------------- audiores --------------------- // */}
@@ -783,9 +745,14 @@ const AudioDetail = () => {
                 <p className="audiodetail_info_mob_head">Information</p>
                 <div className="audiodetail_info_wrap_mob">
                   <p className="audiodetail_info_name_mob">Genre: </p>
-                  <p className="audiodetail_info_value_mob">
+                  <Link
+                    to={`${GENRES}/${parseInt(
+                      currentAudioInfo?.cat_id?.toString()
+                    )}`}
+                    className="audiodetail_info_value_mob hover:text-[#ddff2b] hover:underline"
+                  >
                     {currentAudioInfo?.cats || "unknown"}
-                  </p>
+                  </Link>
                 </div>
                 <div className="audiodetail_info_wrap_mob">
                   <p className="audiodetail_info_name_mob">Date of Release: </p>
@@ -797,23 +764,25 @@ const AudioDetail = () => {
               <div className="audiodetail_summary_mob">
                 <p className="audiodetail_summary_header_mob">Summary</p>
                 <div
-                  className={`audiodetail_summary_body ${
-                    more
-                      ? "audiodetail_summary_body_open_mob "
-                      : "audiodetail_summary_body_close_mob "
-                  }`}
+                  className={`audiodetail_summary_body audiodetail_summary_body_open_mob`}
                 >
                   {currentAudioInfo?.description || "unknown"}
                 </div>
+                {/*
+                ${
+                    more
+                      ? "audiodetail_summary_body_open_mob "
+                      : "audiodetail_summary_body_close_mob "
+                  }
                 <div
                   onClick={() => setMore(!more)}
                   className="audiodetail_more_mob"
                 >
-                  <p className="audiodetail_more_text_mob">
-                    {more ? "less" : "more"}
+                  <p className="audiodetail_more_text_mob less">
+                   
                   </p>
                   <FiChevronsRight className="audiodetail_more_icon_mob" />
-                </div>
+                </div>*/}
               </div>
 
               {/**data={data}  data={data}*/}
@@ -828,27 +797,14 @@ const AudioDetail = () => {
         <div className="similarWidget_wrapper px-4">
           <div className="similarWidget_top">
             <p className="similarWidget_top_heading">{"Similar Audio"}</p>
-            <div
-              onClick={() => {
-                navigate(MORE, {
-                  state: {
-                    name: "",
-                    heading: `Similar Audios by ${
-                      currentaudio?.rpname?.split(" ")[0]
-                    } ${currentaudio?.rpname?.split(" ")[1]}`,
-                    id: "",
-                    img: "",
-                    type: "lectures",
-                    navtitle: "Similar Audio",
-                    currentdata: similarAudio,
-                  },
-                });
-              }}
+
+            <Link
+              to={`${GENRES}/${parseInt(currentAudioInfo?.cat_id?.toString())}`}
               className="similarWidget_more"
             >
               <p className="similarWidget_more_text">more</p>
               <FiChevronsRight className="similarWidget_more_icon" />
-            </div>
+            </Link>
           </div>
           <div className="overflow_hidden_wrapper">
             <div className={isprev ? "prev" : "prev_none"} onClick={prev}>
@@ -858,7 +814,7 @@ const AudioDetail = () => {
               <img src={foward} alt="foward" />
             </div>
             <div ref={slide} className="overflow_auto_wrapper">
-              {(similarLecture?.display_data?.mini_result ?? []).map(
+              {(similarLecture?.audio ?? []).map(
                 (
                   {
                     img,
@@ -870,6 +826,7 @@ const AudioDetail = () => {
                     rpname,
                     nid,
                     audio,
+                    mp3_title,
                     views,
                   },
                   idx
@@ -894,7 +851,7 @@ const AudioDetail = () => {
                     >
                       <LandingWidget
                         key={idx}
-                        categories={categories || cats}
+                        categories={mp3_title || categories || cats}
                         img={img || lec_img}
                         views={views}
                       />

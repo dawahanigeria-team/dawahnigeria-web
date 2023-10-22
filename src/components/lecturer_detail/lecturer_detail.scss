@@ -303,7 +303,7 @@
               margin: unset;
             }
           }
-          .lecdet_fav {
+          .leclistdet_fav {
             background-color: #ffffff17;
             @include button_style;
             &:hover {
@@ -313,7 +313,7 @@
               background: none;
               margin: 0;
               border: 0;
-              .lecdet_fav_icon {
+              .leclistdet_fav_icon {
                 font-size: 25px;
 
                 @media screen and (max-width: 600px) {
@@ -321,7 +321,7 @@
                 }
                 color: #cfcfcf;
               }
-              .lecdet_fav_icon_active {
+              .leclistdet_fav_icon_active{
                 font-size: 25px;
 
                 @media screen and (max-width: 600px) {
@@ -330,7 +330,7 @@
                 color: #ddff2b;
               }
             }
-            .lecdet_fav_text {
+            .leclistdet_fav_text {
               font-family: "Nunito Sans";
               font-style: normal;
               font-weight: 400;
@@ -791,7 +791,7 @@
         background: #0d0d0d;
         border-bottom: 1px solid gray;
 
-        .icons_mob_black {
+        .icons_mob_listblack {
           display: flex;
           flex-direction: row;
           align-items: center;
@@ -831,7 +831,7 @@
         justify-content: space-around;
         padding: 2%;
         border-bottom: 1px solid gray;
-        .icons_mob_black {
+        .icons_mob_listblack {
           display: flex;
           flex-direction: row;
           align-items: center;

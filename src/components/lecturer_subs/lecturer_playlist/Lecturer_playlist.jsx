@@ -8,34 +8,25 @@ import Loader from "../../UI/loader/loader";
 import CommentBox from "../../comment/comment";
 import { useSelector } from "react-redux";
 import { PLAYLISTS } from "../../../utils/routes/constants";
+import { lecturerDetailApi } from "../../../services";
+import { useQueryGetRequest } from "../../../hooks/getqueries";
 const Lecturer_playlist = ({ id, setCount3 }) => {
   const [data, setData] = useState([]);
   const { currentUser } = useSelector((state) => state.user);
   const [audioComment, setaudioComment] = useState();
   const [loading, setLoading] = useState(true);
+  const queryParam = {id}
+
+  const { isLoading, querieddata } =
+  useQueryGetRequest(
+    "lecturer-playlist",
+    queryParam,
+    lecturerDetailApi.getLecturerPlaylist
+  );
 
   useEffect(() => {
-    setCount3(data.length);
-  }, [data]);
-
-  useEffect(() => {
-    const handleRequest = () => {
-      /// process.env.REACT_APP_API_BASE_URL/playlistApi.php?action=all_public_playlist_data&rp_id=39429
-      axios
-        .get(`/playlistApi.php?action=all_public_playlist_data&rp_id=${id}`)
-        .then((res) => {
-          //console.log(res.data);
-          setData(res.data);
-          setLoading(false);
-          setCount3(data.length);
-        })
-        .catch((err) => {
-          //console.log(err);
-        });
-    };
-
-    handleRequest();
-  }, []);
+    setCount3(querieddata.length);
+  }, [querieddata]);
 
   //////*************handling comment**************** */
 
@@ -61,33 +52,33 @@ const Lecturer_playlist = ({ id, setCount3 }) => {
 
   return (
     <>
-      {loading && (
+      {isLoading && (
         <div className="load_desktop">
           <div className="load">
             <Loader />
           </div>
         </div>
       )}
-      {!loading && data.length === 0 && (
+      {!isLoading && querieddata?.length === 0 && (
         <div className="text-gray-200 no_playlist flex items-center justify-center w-full h-[200px]">
           <span>-- no playlist --</span>
         </div>
       )}
       <div className="lecplaylist_wrapper">
-        {!loading &&
-          data.length !== 0 &&
-          data.map(({ name, id, views, lec_img }, idx) => {
+        {!isLoading &&
+         Array.isArray(querieddata)  && querieddata.length !== 0 &&
+         querieddata.map(({ name, id,nid,lec_no, lec_img }, idx) => {
             return (
               <Link
-                to={`${PLAYLISTS}${id}`}
+                to={`${PLAYLISTS}${nid}`}
                 className="lecplaylist_item "
-                onClick={() => {}}
+            
                 key={idx + 1}
               >
                 <AlbumWidget
                   key={idx}
                   categories={name}
-                  views={views || 0}
+                  lec_no={lec_no || 0}
                   img={lec_img}
                 />
               </Link>

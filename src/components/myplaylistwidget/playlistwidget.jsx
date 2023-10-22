@@ -190,7 +190,7 @@ function MyPlayListWidget({
                   <button className="likeys_img">
                     <img className="likeys_img_sz" src={comment} alt="" />
                   </button>
-                  <span className="likeys_text">2.2k</span>
+                  <span className="likeys_text">0</span>
                 </div>
               </div>
             </div>
@@ -298,7 +298,7 @@ function MyPlayListWidget({
                   <button className="likeys_img">
                     <img className="likeys_img_sz" src={comment} alt="" />
                   </button>
-                  <span className="likeys_text">2.2k</span>
+                  <span className="likeys_text">0</span>
                 </div>
               </div>
             </div>

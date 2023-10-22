@@ -9,75 +9,28 @@ import Loader from "../../UI/loader/loader";
 import _ from "lodash";
 import CommentBox from "../../comment/comment";
 import { ALBUMS } from "../../../utils/routes/constants";
+import { useQueryGetRequest } from "../../../hooks/getqueries";
+import { lecturerDetailApi } from "../../../services";
 
-const Lecturer_album = ({ id, setCount2, rpname, setImg }) => {
-  const [data, setData] = useState([]);
-
-  const [rpid, setRpid] = useState("");
+const Lecturer_album = ({ id, setCount2}) => {
   const { currentUser } = useSelector((state) => state.user);
-  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [isEmpty, setIsEmpty] = useState(false);
-  const [nextPageLoad, setNextPageLoad] = useState(false);
   const [audioComment, setaudioComment] = useState();
+  const queryParam = { id, page };
+
+  const { isLoading, isLoadingNextPage, isLastPage, querieddata } =
+    useQueryGetRequest(
+      "lecturer-albums",
+      queryParam,
+      lecturerDetailApi.getLecturerAlbums
+    );
+
+ // console.log("albums", querieddata);
 
   useEffect(() => {
-    setCount2(data.length);
-  }, [data]);
+    setCount2(querieddata?.length);
+  }, [querieddata]);
 
-  useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_BASE_URL}/all_rps_api.php`)
-      .then((res) => {
-        setRpid(
-          res.data.filter((value) => {
-            return value.name === rpname;
-          })[0]?.id
-        );
-        setImg(
-          res.data.filter((value) => {
-            return value.name === rpname;
-          })[0]?.img
-        );
-      })
-      .catch((err) => {
-        //console.log(err);
-      });
-  });
-
-  useEffect(() => {
-    const handleRequest = () => {
-      if (page > 1) {
-        setNextPageLoad(true);
-      }
-
-      axios
-        .get(
-          `/albumlisting_rp.php?offset=30&lim=10&page=${page}&rpid=${
-            id || rpid
-          }`
-        )
-        .then((res) => {
-          //console.log(res.data);
-
-          if (page === 1) {
-            setLoading(false);
-          }
-          setNextPageLoad(false);
-          if (res.data.length === 0 || undefined) {
-            setIsEmpty(true);
-            return;
-          }
-
-          setData((prev) => _.uniqBy([...prev, ...res.data], "id"));
-        })
-        .catch((err) => {
-          //console.log(err);
-        });
-    };
-
-    handleRequest();
-  }, [rpid, page]);
   // //console.log(setCount2);
 
   //////*************handling comment**************** */
@@ -102,11 +55,11 @@ const Lecturer_album = ({ id, setCount2, rpname, setImg }) => {
       });
   }, []);
 
-  //console.log(data);
+  //console.log('comments',audioComment);
 
   return (
     <>
-      {loading && (
+      {isLoading && !isLastPage && (
         <div className="load_desktop">
           <div className="load">
             <Loader />
@@ -114,8 +67,8 @@ const Lecturer_album = ({ id, setCount2, rpname, setImg }) => {
         </div>
       )}
       <div className="lecalb_wrapper">
-        {!loading &&
-          data.map(
+        {Array.isArray(querieddata) &&
+          querieddata?.map(
             (
               {
                 categories,
@@ -129,7 +82,7 @@ const Lecturer_album = ({ id, setCount2, rpname, setImg }) => {
                 audio,
                 Title,
                 title,
-                views,
+                lec_no,
                 favorites,
                 comments,
               },
@@ -137,13 +90,13 @@ const Lecturer_album = ({ id, setCount2, rpname, setImg }) => {
             ) => {
               return (
                 <Link
-                  to={`${ALBUMS}${id}`}
+                  to={`${ALBUMS}${nid}`}
                   className="lecalb_album_item"
                   key={idx + 1}
                 >
                   <AlbumWidget
                     key={idx}
-                    views={views}
+                    lec_no={lec_no}
                     categories={name.split("-")[0]}
                     img={img || lazyalbum}
                   />
@@ -152,28 +105,28 @@ const Lecturer_album = ({ id, setCount2, rpname, setImg }) => {
             }
           )}
       </div>
-      {!loading && (
+      {
         <div className="flex w-full min-[615px]:mt-6 mt-3 items-center h-fit justify-center  min-[615px]:text-[16px] text-sm">
           {" "}
           <button
             onClick={() => {
-              if (isEmpty) return;
+              if (isLastPage) return;
               setPage(page + 1);
             }}
             className={
-              !isEmpty
+              !isLastPage
                 ? "w-[40%] min-[615px]:w-[200px] min-[615px]:py-3   flex justify-center items-center py-2 border border-gray-400 text-gray-400 rounded-2xl"
                 : "hidden"
             }
           >
-            {nextPageLoad ? (
+            {isLoadingNextPage ? (
               <span className="rounded-full w-4 h-4 border-l border-r border-gray-400 animate-spin"></span>
             ) : (
               <span>Show more</span>
             )}
           </button>
         </div>
-      )}
+      }
 
       <div className="lecalb_comments">
         <CommentBox audioComment={audioComment} id={id} type={"rp"} />
