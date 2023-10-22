@@ -17,10 +17,8 @@ import { FaPlay } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 import { SlEmotsmile, SlOptionsVertical } from "react-icons/sl";
 import { GiPauseButton } from "react-icons/gi";
-import pmobile from "../../../src/assets/svg/playmobile.svg";
 import sharebig from "../../../src/assets/svg/boom-share.svg";
 import commentbig from "../../../src/assets/svg/boom-comment.svg";
-import favbig from "../../../src/assets/svg/boom-fav.svg";
 import { formatNumber } from "../../components/UI/formatter";
 import { AudioContext } from "../../App.jsx";
 
@@ -31,8 +29,6 @@ import {
   TbRepeat,
 } from "react-icons/tb";
 import Add_playlist from "../add_playlist/AddPlaylist";
-import GroupWidget from "../../components/groupWidget/GroupWidget";
-import Disk from "../../assets/png/Disk_tranparent.png";
 import { durationFormat, playTimingRes } from "./UI_audiodetail/playtiming";
 import axios from "../../utils/useAxios";
 import _ from "lodash";
@@ -504,7 +500,7 @@ const AudioDetail = () => {
           <div className="audiodetail_info">
             <div className="audiodetail_info_wrap">
               <div className="audiodetail_info_name">Genre: </div>
-              <Link to={`${GENRES}/${parseInt(currentAudioInfo?.cat_id.toString())}`} className="audiodetail_info_value hover:text-[#ddff2b] hover:underline">
+              <Link to={`${GENRES}/${parseInt(currentAudioInfo?.cat_id?.toString())}`} className="audiodetail_info_value hover:text-[#ddff2b] hover:underline">
                 {currentAudioInfo?.cats || "unknown"}
               </Link>
             </div>
@@ -518,19 +514,21 @@ const AudioDetail = () => {
           <div className="audiodetail_summary">
             <h1 className="audiodetail_summary_header">Summary</h1>
             <p
-              className={`audiodetail_summary_body ${
-                more
-                  ? "audiodetail_summary_body_open "
-                  : "audiodetail_summary_body_close "
-              }`}
+              className={`audiodetail_summary_body audiodetail_summary_body_open `}
             >
               {currentAudioInfo?.description || "unknown"}
             </p>
-            <div onClick={() => setMore(!more)} className="audiodetail_more">
+           {/* 
+           ${
+                more
+                  ? "audiodetail_summary_body_open "
+                  : "audiodetail_summary_body_close "
+              }
+           <div onClick={() => setMore(!more)} className="audiodetail_more">
               <p className="audiodetail_more_text">{more ? "less" : "more"}</p>
 
               <FiChevronsRight className="audiodetail_more_icon" />
-            </div>
+            </div>*/}
           </div>
 
           {/* // ----------------------- audiores --------------------- // */}
@@ -737,7 +735,7 @@ const AudioDetail = () => {
                 <p className="audiodetail_info_mob_head">Information</p>
                 <div className="audiodetail_info_wrap_mob">
                   <p className="audiodetail_info_name_mob">Genre: </p>
-                  <Link to={`${GENRES}/${parseInt(currentAudioInfo?.cat_id.toString())}`} className="audiodetail_info_value_mob hover:text-[#ddff2b] hover:underline">
+                  <Link to={`${GENRES}/${parseInt(currentAudioInfo?.cat_id?.toString())}`} className="audiodetail_info_value_mob hover:text-[#ddff2b] hover:underline">
                     {currentAudioInfo?.cats || "unknown"}
                   </Link>
                 </div>
@@ -751,23 +749,25 @@ const AudioDetail = () => {
               <div className="audiodetail_summary_mob">
                 <p className="audiodetail_summary_header_mob">Summary</p>
                 <div
-                  className={`audiodetail_summary_body ${
-                    more
-                      ? "audiodetail_summary_body_open_mob "
-                      : "audiodetail_summary_body_close_mob "
-                  }`}
+                  className={`audiodetail_summary_body audiodetail_summary_body_open_mob`}
                 >
                   {currentAudioInfo?.description || "unknown"}
                 </div>
+                {/*
+                ${
+                    more
+                      ? "audiodetail_summary_body_open_mob "
+                      : "audiodetail_summary_body_close_mob "
+                  }
                 <div
                   onClick={() => setMore(!more)}
                   className="audiodetail_more_mob"
                 >
-                  <p className="audiodetail_more_text_mob">
-                    {more ? "less" : "more"}
+                  <p className="audiodetail_more_text_mob less">
+                   
                   </p>
                   <FiChevronsRight className="audiodetail_more_icon_mob" />
-                </div>
+                </div>*/}
               </div>
 
               {/**data={data}  data={data}*/}

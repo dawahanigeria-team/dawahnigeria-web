@@ -296,10 +296,9 @@ const LecturesListDetail = () => {
 
               </div>
             </div>
-            <p className="leclistdet_head_right_text2">
-              {`${querieddata[0]?.categories || state?.name || "Unknown"}`}
+            <p className="leclistdet_head_right_text2"> Audio
               <span className="braces">
-                (<span className="braces_text">{querieddata?.length}</span>)
+                (<span className="braces_text">{formatNumber(querieddata[0]?.lec_no || 0)}</span>)
               </span>
             </p>
             {/* ------------------------------------ mobile view -------------------------------------- */}

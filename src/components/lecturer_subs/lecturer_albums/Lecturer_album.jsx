@@ -82,7 +82,7 @@ const Lecturer_album = ({ id, setCount2}) => {
                 audio,
                 Title,
                 title,
-                views,
+                lec_no,
                 favorites,
                 comments,
               },
@@ -96,7 +96,7 @@ const Lecturer_album = ({ id, setCount2}) => {
                 >
                   <AlbumWidget
                     key={idx}
-                    views={views}
+                    lec_no={lec_no}
                     categories={name.split("-")[0]}
                     img={img || lazyalbum}
                   />
