@@ -11,7 +11,7 @@ import MusicList from "../../miscList/musicList";
 import { LECTURE } from "../../../utils/routes/constants";
 import { useQueryGetRequest } from "../../../hooks/getqueries";
 import { lecturerDetailApi } from "../../../services";
-const Lecturer_songs = ({ id, setCount1 }) => {
+const Lecturer_songs = ({ id, totaldata }) => {
   const { currentUser } = useSelector((state) => state.user);
   const [page, setPage] = useState(1);
   const [comment, setComment] = useState();
@@ -24,10 +24,6 @@ const Lecturer_songs = ({ id, setCount1 }) => {
       queryParam,
       lecturerDetailApi.getLecturerSongs
     );
-  //console.log("rp id", id);
-  useEffect(() => {
-    setCount1(querieddata?.length || 0);
-  }, [querieddata]);
 
   //////*************handling comment**************** */
 
@@ -173,28 +169,29 @@ const Lecturer_songs = ({ id, setCount1 }) => {
           )}
       </div>
 
-      {
-        <div className="flex h-fit w-full min-[615px]:text-[16px] text-sm  min-[615px]:mt-6 mt-3 items-center justify-center">
-          {" "}
-          <button
-            onClick={() => {
-              if (isLastPage) return;
-              setPage(page + 1);
-            }}
-            className={
-              !isLastPage
-                ? "w-[40%] min-[615px]:w-[200px] min-[615px]:py-3  flex justify-center items-center py-2 border border-gray-400 text-gray-400 rounded-2xl"
-                : "hidden"
-            }
-          >
-            {isLoadingNextPage ? (
-              <span className="rounded-full w-4 h-4 border-l border-r border-gray-400 animate-spin"></span>
-            ) : (
-              <span>Show more</span>
-            )}
-          </button>
-        </div>
-      }
+      {(isLoading && page === 1) ||
+        (totaldata !== querieddata?.length && (
+          <div className="flex h-fit w-full min-[615px]:text-[16px] text-sm  min-[615px]:mt-6 mt-3 items-center justify-center">
+            {" "}
+            <button
+              onClick={() => {
+                if (isLastPage) return;
+                setPage(page + 1);
+              }}
+              className={
+                !isLastPage
+                  ? "w-[40%] min-[615px]:w-[200px] min-[615px]:py-3  flex justify-center items-center py-2 border border-gray-400 text-gray-400 rounded-2xl"
+                  : "hidden"
+              }
+            >
+              {isLoadingNextPage ? (
+                <span className="rounded-full w-4 h-4 border-l border-r border-gray-400 animate-spin"></span>
+              ) : (
+                <span>Show more</span>
+              )}
+            </button>
+          </div>
+        ))}
 
       <div className="lecsong_comments">
         <div className="lecsong_comments_header">Comments</div>
