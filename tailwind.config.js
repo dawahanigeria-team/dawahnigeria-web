@@ -4,13 +4,16 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        dncolor: {
+          500: "#ddff2b",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         hover: "hsl(var(--hover))",
+        comment: "hsl(var(--comment))",
         footer: "hsl(var(--footer))",
         ring: "hsl(var(--ring))",
         search: "hsl(var(--search))",
-        dncolor:"hsl(var(--dncolor))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {

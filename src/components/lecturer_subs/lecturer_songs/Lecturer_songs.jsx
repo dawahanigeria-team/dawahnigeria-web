@@ -4,13 +4,13 @@ import MobileList from "../../../components/list/mobileList";
 import "./lecturer_song.scss";
 import { SlEmotsmile } from "react-icons/sl";
 import Loader from "../../UI/loader/loader";
-import logo from "../../../assets/png/dn logo.png";
 import _ from "lodash";
 import { useSelector } from "react-redux";
 import MusicList from "../../miscList/musicList";
 import { LECTURE } from "../../../utils/routes/constants";
 import { useQueryGetRequest } from "../../../hooks/getqueries";
 import { lecturerDetailApi } from "../../../services";
+import CommentBox from "../../comment/comment";
 const Lecturer_songs = ({ id, setCount1 }) => {
   const { currentUser } = useSelector((state) => state.user);
   const [page, setPage] = useState(1);
@@ -183,58 +183,19 @@ const Lecturer_songs = ({ id, setCount1 }) => {
             }}
             className={
               !isLastPage
-                ? "w-[40%] min-[615px]:w-[200px] min-[615px]:py-3  flex justify-center items-center py-2 border border-gray-400 text-gray-400 rounded-2xl"
+                ? "w-[40%] min-[615px]:w-[200px] min-[615px]:py-3  flex justify-center items-center py-2 border text-text border-text rounded-2xl"
                 : "hidden"
             }
           >
             {isLoadingNextPage ? (
-              <span className="rounded-full w-4 h-4 border-l border-r border-gray-400 animate-spin"></span>
+              <span className="rounded-full w-4 h-4 border-l border-r border-text animate-spin"></span>
             ) : (
               <span>Show more</span>
             )}
           </button>
         </div>
       }
-
-      <div className="lecsong_comments">
-        <div className="lecsong_comments_header">Comments</div>
-        <textarea
-          className="lecsong_comment_input"
-          placeholder="Pls share your thoughts"
-          name=""
-          id=""
-          cols="30"
-          value={comment}
-          rows="5"
-          onChange={(e) => {
-            setComment(e.target.value);
-          }}
-          maxLength="500"
-        ></textarea>
-        <div className="lecsong_comment_action">
-          <SlEmotsmile className="lecsong_comment_moji" />
-          <button onClick={postComment} className="lecsong_comment_button">
-            Comment
-          </button>
-        </div>
-
-        <div className="aud_comment_texts">
-          {audioComment?.map(({ user, date, content }, idx) => {
-            return (
-              <div className="com_wrap">
-                <div className="com_date">
-                  <span className="logo_img">
-                    <img className="logo_img_sz" src={logo} alt="" />
-                  </span>
-                  <span className="commentor">{user}</span>
-                  <span className="comment_date">{date}</span>
-                </div>
-                <div className="comment_content">{content}</div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      <CommentBox audioComment={audioComment} type={"rp"} id={id} />
     </div>
   );
 };

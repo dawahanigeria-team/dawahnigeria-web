@@ -33,7 +33,7 @@ function MobileList({
     <div
       className={
         audioId === nid
-          ? `mobilelist_wrapper text-primary border-l-2 border-[#ddff2b]`
+          ? `mobilelist_wrapper text-primary border-l-2 border-gray-400 dark:border-[#ddff2b]`
           : "mobilelist_wrapper"
       }
     >
@@ -49,7 +49,7 @@ function MobileList({
         }}
         className="mobiletd"
       >
-        <div className="lecture text-text-foreground">{title || Title}</div>
+        <div className="lecture text-foreground">{title || Title}</div>
         <div className="lecturer">{rpname}</div>
       </div>
     </div>

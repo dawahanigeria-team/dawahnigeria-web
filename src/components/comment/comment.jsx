@@ -46,9 +46,9 @@ const CommentBox = ({ id, audioComment, type }) => {
 
   return (
     <div className="comment-box">
-      <div className="lecalb_comments_header">Comments</div>
+      <div className="lecalb_comments_header text-foreground">Comments</div>
       <textarea
-        className="lecalb_comment_input"
+        className="lecalb_comment_input bg-comment"
         placeholder="Pls share your thoughts"
         name=""
         id=""

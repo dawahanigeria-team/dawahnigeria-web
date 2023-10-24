@@ -3,23 +3,18 @@ import "./audiodetail.scss";
 import Container from "../../components/container/Container";
 import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
 import { CiPlay1 } from "react-icons/ci";
-import back from "../../assets/svg/back.svg";
-import foward from "../../assets/svg/foward.svg";
-import logo from "../../assets/png/dn logo.png";
+import { SlShare } from "react-icons/sl";
+import { BiSolidShareAlt } from "react-icons/bi";
+import { GrFormAdd } from "react-icons/gr";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { BiMessageMinus } from "react-icons/bi";
 import { RiDownload2Fill, RiPlayListFill } from "react-icons/ri";
-import { FiChevronsRight } from "react-icons/fi";
 import { FaPlay } from "react-icons/fa";
 import { toast } from "react-hot-toast";
-import { SlEmotsmile, SlOptionsVertical } from "react-icons/sl";
+import { SlOptionsVertical } from "react-icons/sl";
 import { GiPauseButton } from "react-icons/gi";
-import sharebig from "../../../src/assets/svg/boom-share.svg";
-import commentbig from "../../../src/assets/svg/boom-comment.svg";
 import { formatNumber } from "../../components/UI/formatter";
 import { AudioContext } from "../../App.jsx";
-
-import LandingWidget from "../../components/landingWidget/LandingWidget";
 import {
   TbPlayerSkipForwardFilled,
   TbPlayerSkipBackFilled,
@@ -31,11 +26,7 @@ import axios from "../../utils/useAxios";
 import _ from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import ShareAudio from "../../components/shareaudio/shareAudio";
-import {
-
-  getLecid,
-  showaddPlaylist,
-} from "../../Redux/Actions/ActionCreators";
+import { getLecid, showaddPlaylist } from "../../Redux/Actions/ActionCreators";
 import {
   getaudioId,
   getCount,
@@ -47,15 +38,16 @@ import {
 } from "../../Redux/Actions/ActionCreators";
 import { useSimilarAudioHook } from "../../hooks";
 import { GENRES, LECTURE, MORE } from "../../utils/routes/constants";
-import plus from "../../../src/assets/svg/plus.svg";
 import CurrentPlayData from "../../components/currentData/currentPlayData";
 import Loader from "../../components/UI/loader/loader";
 
 import { useAudioHook } from "../../hooks";
-import { audioDetailApi } from "../../services";
 import { DesktopFavoriteButton } from "../../components/UI/favoritebuttons/desktopfavoriteButtons";
 import { AudioDownloadModal } from "../../components/audioDownloadModal/AudioDownloadModal";
 import HeadMeta from "../../components/head-meta";
+import CommentBox from "../../components/comment/comment";
+import SimilarAudio from "../../components/similaraudio/similarAudio";
+import { CommentIcon } from "../../components/svgcomponent/svgComponent";
 
 const AudioDetail = () => {
   const { id } = useParams();
@@ -90,9 +82,7 @@ const AudioDetail = () => {
   const [isEmpty, setIsEmpty] = useState(false);
   const [isPrevious, setIsPrevious] = useState(false);
   const [isAddedToFavorite, setisAddedToFavorite] = useState(false);
-  const playAnimation = useRef();
   const [similarAudio, setSimilarAudio] = useState([]);
-  const [similarAudioUrl, setSimilarAudioUrl] = useState("");
   const [addFav, setaddFav] = useState(false);
   const [isdisabled, setdisabled] = useState(false);
   const [getFavs, setgetfavs] = useState([]);
@@ -100,10 +90,9 @@ const AudioDetail = () => {
   const [isShare, setisShare] = useState(false);
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
-
+  const { theme } = useSelector((state) => state.user);
 
   //console.log("currentPage", page);
-
 
   const { refetch } = useAudioHook(id);
   const keyParam = { id: currentAudioInfo?.rp_id, page: 1 };
@@ -386,7 +375,9 @@ const AudioDetail = () => {
       />
       <div className="audiodetail_wrapper">
         <img
-          className="audiodetail_hero"
+          className={`${
+            theme === "dark" ? "audiodetail_hero" : "audiodetail_hero_light"
+          }`}
           src={
             currentAudioInfo?.img ||
             "https://imagetolink.com/ib/TfEFBgq518.jpeg"
@@ -403,7 +394,7 @@ const AudioDetail = () => {
             >
               {`${"Back"}/`}
             </p>
-            <p className="audiodetail_breadcrumb_second">
+            <p className="audiodetail_breadcrumb_second text-foreground">
               {currentAudioInfo?.title?.split("-")[0] ||
                 currentAudioInfo?.Title ||
                 "Unknown"}
@@ -421,16 +412,16 @@ const AudioDetail = () => {
               />
             </div>
             <div className="audiodetail_head_right">
-              <p className="audiodetail_head_right_head">
+              <p className="audiodetail_head_right_head text-foreground">
                 {currentAudioInfo?.title ||
                   currentAudioInfo?.Title ||
                   "Unknown"}
               </p>
               <div className="audiodetail_head_right_text">
-                <p className="audiodetail_head_right_text1">
+                <p className="audiodetail_head_right_text1 text-text-foreground">
                   {currentAudioInfo?.rpname || "unknown"}
                 </p>
-                <p className="audiodetail_head_right_text2">
+                <p className="audiodetail_head_right_text2 text-text-foreground">
                   {currentAudioInfo?.album_name?.split("-")[0] ||
                     currentAudioInfo?.cats ||
                     "unknown"}
@@ -463,30 +454,22 @@ const AudioDetail = () => {
                   onClick={() => {
                     shareAudio();
                   }}
-                  className="audiodetail_share"
+                  className="audiodetail_share bg-gray-200  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
                 >
-                  <img
-                    src={sharebig}
-                    alt=""
-                    className="audiodetail_share_icon"
-                  />
-                  <p className="audiodetail_share_text">
+                  <SlShare className="text-[22px] text-text-primary" />
+                  <p className="audiodetail_share_text text-text-primary">
                     {formatNumber(currentAudioInfo?.share || 0)}
                   </p>
                 </div>
-                <div className="audiodetail_comment">
-                  <img
-                    src={commentbig}
-                    alt=""
-                    className="audiodetail_comment_icon"
-                  />
-                  <p className="audiodetail_comment_text">
+                <div className="audiodetail_comment bg-gray-200  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
+                  <CommentIcon />
+                  <p className="audiodetail_comment_text text-text-primary">
                     {formatNumber(currentAudioInfo?.comment || 0)}
                   </p>
                 </div>
                 <AudioDownloadModal
                   downloads={currentAudioInfo?.downloads}
-                  nid={currentAudioInfo.nid}
+                  nid={currentAudioInfo?.nid}
                 />
               </div>
             </div>
@@ -496,26 +479,37 @@ const AudioDetail = () => {
           {/* -------------------------- End ------------------- */}
           <div className="audiodetail_info">
             <div className="audiodetail_info_wrap">
-              <div className="audiodetail_info_name">Genre: </div>
-              <Link to={`${GENRES}/${parseInt(currentAudioInfo?.cat_id?.toString())}`} className="audiodetail_info_value hover:text-[#ddff2b] hover:underline">
+              <div className="audiodetail_info_name text-text dark:text-muted">
+                Genre:{" "}
+              </div>
+              <Link
+                to={`${GENRES}/${parseInt(
+                  currentAudioInfo?.cat_id?.toString()
+                )}`}
+                className="audiodetail_info_value text-text dark:text-muted  hover:text-foreground dark:hover:text-[#ddff2b] hover:underline"
+              >
                 {currentAudioInfo?.cats || "unknown"}
               </Link>
             </div>
             <div className="audiodetail_info_wrap">
-              <div className="audiodetail_info_name">Date of Release: </div>
-              <div className="audiodetail_info_value">
+              <div className="audiodetail_info_name dark:text-muted text-text">
+                Date of Release:{" "}
+              </div>
+              <div className="audiodetail_info_value text-text dark:text-muted">
                 {currentAudioInfo?.post_date?.split("-")[0] || "no date"}
               </div>
             </div>
           </div>
           <div className="audiodetail_summary">
-            <h1 className="audiodetail_summary_header">Summary</h1>
+            <h1 className="audiodetail_summary_header text-foreground">
+              Summary
+            </h1>
             <p
-              className={`audiodetail_summary_body audiodetail_summary_body_open `}
+              className={`audiodetail_summary_body audiodetail_summary_body_open text-foreground`}
             >
               {currentAudioInfo?.description || "unknown"}
             </p>
-           {/* 
+            {/* 
            ${
                 more
                   ? "audiodetail_summary_body_open "
@@ -540,7 +534,7 @@ const AudioDetail = () => {
                 alt="head"
               />
             </div>
-            <div className="audiores_text">
+            <div className="audiores_text text-text">
               <p className="audiores_text1">
                 {currentAudioInfo?.title ||
                   currentAudioInfo?.Title ||
@@ -554,7 +548,7 @@ const AudioDetail = () => {
             </div>
             {/**to be adjusted */}
             <div className="audiores_scroll_wrap">
-              <p className="audiores_scroll_start">
+              <p className="audiores_scroll_start text-text">
                 {playTimingRes(audioRef?.current?.currentTime)}
               </p>
               {/* <div className="audiores_scroll_bar"></div> */}
@@ -577,7 +571,7 @@ const AudioDetail = () => {
                   className=""
                 />
               </div>
-              <p className="audiores_scroll_stop">
+              <p className="audiores_scroll_stop text-text">
                 {durationFormat(audioRef?.current?.duration)}
               </p>
             </div>
@@ -588,8 +582,8 @@ const AudioDetail = () => {
                 }}
                 className={
                   isrepeat
-                    ? "audiores_play_control_repeat_active"
-                    : "audiores_play_control_repeat"
+                    ? "audiores_play_control_repeat_active dark:text-[#ddff2b] text-black"
+                    : "audiores_play_control_repeat text-foreground"
                 }
               />
               <div className="audiores_play_control">
@@ -600,18 +594,21 @@ const AudioDetail = () => {
                     handlePreviousAudio();
                   }}
                 >
-                  <TbPlayerSkipBackFilled className="audiores_play_back" />
+                  <TbPlayerSkipBackFilled className="audiores_play_back text-foreground" />
                 </button>
                 {loading ? (
                   <div className="w-[40px] h-[40px]">
                     <Loader />
                   </div>
                 ) : (
-                  <div onClick={handlePlay} className="audiores_play_start">
+                  <div
+                    onClick={handlePlay}
+                    className="audiores_play_start dark:bg-[#ddff2b] bg-gray-400"
+                  >
                     {!playing ? (
-                      <FaPlay className="audiores_play_start_icon" />
+                      <FaPlay className="audiores_play_start_icon text-background" />
                     ) : (
-                      <GiPauseButton className="audiores_play_start_icon" />
+                      <GiPauseButton className="audiores_play_start_icon text-background" />
                     )}
                   </div>
                 )}
@@ -622,7 +619,7 @@ const AudioDetail = () => {
                     handleNextAudio();
                   }}
                 >
-                  <TbPlayerSkipForwardFilled className="audiores_play_forward" />
+                  <TbPlayerSkipForwardFilled className="audiores_play_forward text-foreground" />
                 </button>
               </div>
               <div
@@ -630,15 +627,15 @@ const AudioDetail = () => {
                   setcurrents(!iscurrents);
                 }}
               >
-                <RiPlayListFill className="audiores_play_control_list" />
+                <RiPlayListFill className="audiores_play_control_list text-foreground" />
               </div>
             </div>
             <div className="audiores_actions">
               <AudioDownloadModal
                 downloads={currentAudioInfo?.downloads}
-                nid={currentAudioInfo.nid}
+                nid={currentAudioInfo?.nid}
                 triggerInnerChild={
-                  <RiDownload2Fill className="audiores_download" />
+                  <RiDownload2Fill className="audiores_download text-foreground" />
                 }
               />
               <button
@@ -653,9 +650,9 @@ const AudioDetail = () => {
                 disabled={isdisabled}
               >
                 {getFavs?.includes(parseInt(id)) || isAddedToFavorite ? (
-                  <MdFavorite className="audiores_fav_active" />
+                  <MdFavorite className="audiores_fav_active text-foreground dark:text-[#ddff2b]" />
                 ) : (
-                  <MdFavoriteBorder className="audiores_fav" />
+                  <MdFavoriteBorder className="audiores_fav text-foreground" />
                 )}
               </button>
 
@@ -664,7 +661,9 @@ const AudioDetail = () => {
                   setIsComment(!isComment);
                 }}
                 className={
-                  isComment ? "audiores_comment_active" : "audiores_comment"
+                  isComment
+                    ? "audiores_comment_active text-gray-700 dark:text-[#ddff2b]"
+                    : "audiores_comment text-foreground"
                 }
               />
               <div
@@ -674,7 +673,7 @@ const AudioDetail = () => {
                 }}
                 className="audres_option_relative"
               >
-                <SlOptionsVertical className="audiores_option" />
+                <SlOptionsVertical className="audiores_option text-foreground" />
                 <div
                   className={
                     moreOption
@@ -694,7 +693,7 @@ const AudioDetail = () => {
                       e.stopPropagation();
                       ////console.log('cliked')
                     }}
-                    className="bg-black z-[200] relative rounded-sm space-y-2 p-1 font-light text-[12px] text-white"
+                    className="bg-background shadow-lg border z-[200] relative rounded-sm space-y-2 p-1 font-light text-[12px] text-foreground"
                   >
                     <span
                       onClick={(e) => {
@@ -703,9 +702,7 @@ const AudioDetail = () => {
                       }}
                       className="flex w-full items-center space-x-2"
                     >
-                      <span className=" w-3 h-3 ">
-                        <img className="w-full h-full" src={sharebig} alt="" />
-                      </span>
+                      <BiSolidShareAlt className="text-foreground text-xl" />
                       <span className="">Share</span>
                     </span>
 
@@ -716,9 +713,7 @@ const AudioDetail = () => {
                       }}
                       className="flex w-full items-center space-x-2"
                     >
-                      <span className="w-3 h-3">
-                        <img className="w-full h-full" src={plus} alt="" />
-                      </span>
+                      <GrFormAdd className="text-foreground text-xl" />
                       <span className="">Add to playlist</span>
                     </span>
                   </div>
@@ -727,12 +722,19 @@ const AudioDetail = () => {
             </div>
 
             {/**cnbfmg */}
-            <div className="mobile">
+            <div className="mobile text-muted-foreground">
               <div className="audiodetail_info_mob">
-                <p className="audiodetail_info_mob_head">Information</p>
+                <p className="audiodetail_info_mob_head text-muted-foreground">
+                  Information
+                </p>
                 <div className="audiodetail_info_wrap_mob">
                   <p className="audiodetail_info_name_mob">Genre: </p>
-                  <Link to={`${GENRES}/${parseInt(currentAudioInfo?.cat_id?.toString())}`} className="audiodetail_info_value_mob hover:text-[#ddff2b] hover:underline">
+                  <Link
+                    to={`${GENRES}/${parseInt(
+                      currentAudioInfo?.cat_id?.toString()
+                    )}`}
+                    className="audiodetail_info_value_mob hover:text-[#ddff2b] hover:underline"
+                  >
                     {currentAudioInfo?.cats || "unknown"}
                   </Link>
                 </div>
@@ -750,21 +752,6 @@ const AudioDetail = () => {
                 >
                   {currentAudioInfo?.description || "unknown"}
                 </div>
-                {/*
-                ${
-                    more
-                      ? "audiodetail_summary_body_open_mob "
-                      : "audiodetail_summary_body_close_mob "
-                  }
-                <div
-                  onClick={() => setMore(!more)}
-                  className="audiodetail_more_mob"
-                >
-                  <p className="audiodetail_more_text_mob less">
-                   
-                  </p>
-                  <FiChevronsRight className="audiodetail_more_icon_mob" />
-                </div>*/}
               </div>
 
               {/**data={data}  data={data}*/}
@@ -776,134 +763,24 @@ const AudioDetail = () => {
           </div>
         </div>
 
-        <div className="similarWidget_wrapper px-4">
-          <div className="similarWidget_top">
-            <p className="similarWidget_top_heading">{"Similar Audio"}</p>
-            <div
-              onClick={() => {
-                navigate(MORE, {
-                  state: {
-                    name: "",
-                    heading: `Similar Audios by ${currentAudioInfo?.rpname}`,
-                    id: "",
-                    img: "",
-                    type: "lectures",
-                    navtitle: "Similar Audio",
-                    currentdata: similarAudios,
-                  },
-                });
-              }}
-              className="similarWidget_more"
-            >
-              <p className="similarWidget_more_text">more</p>
-              <FiChevronsRight className="similarWidget_more_icon" />
-            </div>
-          </div>
-          <div className="overflow_hidden_wrapper">
-            <div className={isprev ? "prev" : "prev_none"} onClick={prev}>
-              <img src={back} alt="back" />
-            </div>
-            <div className={isnext ? "next" : "next_none"} onClick={next}>
-              <img src={foward} alt="foward" />
-            </div>
-            <div ref={slide} className="overflow_auto_wrapper">
-              {Array.isArray(similarAudios) &&
-                similarAudios.map(
-                  (
-                    {
-                      img,
-                      lec_img,
-                      categories,
-                      cats,
-                      title,
-                      Title,
-                      rpname,
-                      nid,
-                      audio,
-                      views,
-                    },
-                    idx
-                  ) => {
-                    return (
-                      <div
-                        className="similarWidget_album_item"
-                        onClick={() => {
-                          navigate(`${LECTURE}${id}`);
-
-                          // setendpUrl(similarAudioUrl);
-                          dispatch(getPack(null));
-                          dispatch(getPage(1));
-                          dispatch(getaudioId(nid));
-                          dispatch(getCount(idx));
-                          dispatch(getPack(similarAudio));
-
-                          setCurUser(currentUser);
-                          window.location.reload();
-                        }}
-                        key={idx + 1}
-                      >
-                        <LandingWidget
-                          key={idx}
-                          categories={categories || cats}
-                          img={img || lec_img}
-                          views={views}
-                        />
-                      </div>
-                    );
-                  }
-                )}
-            </div>
-          </div>
+        <div className="px-4 sm:px-8 w-full">
+          <SimilarAudio
+            heading={`Similar Audios by ${currentAudioInfo?.rpname || ""}`}
+            type={"lectures"}
+            navtitle={"Similar Audio"}
+            current={id}
+            similar={similarAudios}
+          />
         </div>
-
-        {/**
-           /////////////
-
-           */}
-
-        <div className="audiodetail_comments">
-          <p className="audiodetail_comments_header">Comments</p>
-          <textarea
-            className="audiodetail_comment_input"
-            placeholder="Pls share your thoughts"
-            name=""
-            id=""
-            cols="30"
-            value={comment}
-            rows="5"
-            onChange={(e) => {
-              setComment(e.target.value);
-            }}
-            maxLength="500"
-          ></textarea>
-          <div className="audiodetail_comment_action">
-            <SlEmotsmile className="audiodetail_comment_moji" />
-            <button
-              onClick={postComment}
-              className="audiodetail_comment_button"
-            >
-              Comment
-            </button>
+        {window.innerWidth > 615 && (
+          <div className="audioCommentBoxWrap">
+            <CommentBox
+              audioComment={audioComment}
+              id={currentAudioInfo?.nid}
+              type={"audio"}
+            />
           </div>
-
-          <div></div>
-          <div className="aud_comment_texts">
-            {audioComment?.map(({ user, date, content }, idx) => {
-              return (
-                <div className="com_wrap">
-                  <div className="com_date">
-                    <span className="logo_img">
-                      <img className="logo_img_sz" src={logo} alt="" />
-                    </span>
-                    <span className="commentor">{user}</span>
-                    <span className="comment_date">{date}</span>
-                  </div>
-                  <div className="comment_content">{content}</div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        )}
 
         <div
           className={
@@ -912,44 +789,11 @@ const AudioDetail = () => {
               : "audiodetail_comments_mob_none"
           }
         >
-          <p className="audiodetail_comments_header_mob">Comments</p>
-          <textarea
-            className="audiodetail_comment_input_mob"
-            placeholder="Pls share your thought"
-            name=""
-            id=""
-            value={comment}
-            onChange={(e) => {
-              setComment(e.target.value);
-            }}
-            maxLength="500"
-          ></textarea>
-          <div className="audiodetail_comment_action_mob">
-            <SlEmotsmile className="audiodetail_comment_moji_mob" />
-            <button
-              onClick={postComment}
-              className="audiodetail_comment_button_mob"
-            >
-              Comment
-            </button>
-          </div>
-
-          <div className="aud_comment_texts">
-            {audioComment?.map(({ user, date, content }, idx) => {
-              return (
-                <div className="com_wrap">
-                  <div className="com_date">
-                    <span className="logo_img">
-                      <img className="logo_img_sz" src={logo} alt="" />
-                    </span>
-                    <span className="commentor">{user}</span>
-                    <span className="comment_date">{date}</span>
-                  </div>
-                  <div className="comment_content">{content}</div>
-                </div>
-              );
-            })}
-          </div>
+          <CommentBox
+            type={"audio"}
+            id={currentAudioInfo?.nid}
+            audioComment={audioComment}
+          />
         </div>
 
         <Add_playlist />

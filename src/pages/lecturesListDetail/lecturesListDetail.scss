@@ -97,6 +97,19 @@
     }
     @include hide_for_mobile;
   }
+
+  .leclistdet_hero_light {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    filter: blur(500px);
+    height: 12%;
+    @media screen and (max-width: 1096px) {
+      height: 20%;
+    }
+    @include hide_for_mobile;
+  }
   .leclistdet_container {
     z-index: 1;
     padding: 2%;
@@ -133,7 +146,7 @@
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
-        color: #ffffff;
+       
       }
     }
     // ----------- Bread Crumbs End --------------
@@ -188,7 +201,7 @@
           font-weight: 600;
           font-size: 20px;
           line-height: 26px;
-          color: #ffffff;
+          
           //max-width: 350px;
           @media screen and (max-width: 600px) {
             width: 100%;
@@ -225,7 +238,7 @@
               font-style: normal;
               font-size: 14px;
               line-height: 20px;
-              color: #d4d4d4;
+             
               @media screen and (max-width: 600px) {
                 margin-top: 0.5rem;
                 font-size: 14px;
@@ -275,10 +288,10 @@
             }
           }
           .leclistdet_fav {
-            background-color: #ffffff17;
+         
             @include button_style;
             &:hover {
-              background-color: #ffffff2d;
+            
             }
             .fav_btn {
               background: none;
@@ -290,7 +303,7 @@
                 @media screen and (max-width: 600px) {
                   font-size: 20px;
                 }
-                color: #cfcfcf;
+               
               }
               .leclistdet_fav_icon_active {
                 font-size: 25px;
@@ -298,7 +311,7 @@
                 @media screen and (max-width: 600px) {
                   font-size: 20px;
                 }
-                color: #ddff2b;
+                
               }
             }
             .leclistdet_fav_text {
@@ -311,22 +324,22 @@
                 font-size: 12px;
                 line-height: 20px;
               }
-              color: #cfcfcf;
+              
               margin: unset;
             }
           }
           .leclistdet_share {
-            background-color: #ffffff17;
+           
             @include button_style;
             &:hover {
-              background-color: #ffffff2d;
+            
             }
             .leclistdet_share_icon {
               font-size: 25px;
               @media screen and (max-width: 615px) {
                 font-size: 20px;
               }
-              color: #cfcfcf;
+              
             }
             .leclistdet_share_text {
               font-family: "Nunito Sans";
@@ -334,7 +347,7 @@
               font-weight: 400;
               font-size: 14px;
               line-height: 24px;
-              color: #cfcfcf;
+            
               margin: unset;
               @media screen and (max-width: 600px) {
                 font-size: 12px;
@@ -343,17 +356,17 @@
             }
           }
           .leclistdet_comment {
-            background-color: #ffffff17;
+         
             @include button_style;
             &:hover {
-              background-color: #ffffff2d;
+             
             }
             .leclistdet_comment_icon {
               font-size: 25px;
               @media screen and (max-width: 615px) {
                 font-size: 20px;
               }
-              color: #cfcfcf;
+             
             }
             .leclistdet_comment_text {
               font-family: "Nunito Sans";
@@ -365,12 +378,12 @@
                 font-size: 12px;
                 line-height: 20px;
               }
-              color: #cfcfcf;
+             
               margin: unset;
             }
           }
           .audiodetail_download {
-            background-color: #ffffff17;
+         
             width: fit-content;
             height: 38px;
             border-radius: 4px;
@@ -383,14 +396,14 @@
             padding: 0rem 1rem;
             cursor: pointer;
             &:hover {
-              background-color: #ffffff2d;
+             
             }
             .audiodetail_download_icon {
               font-size: 25px;
               @media screen and (max-width: 615px) {
                 font-size: 20px;
               }
-              color: #cfcfcf;
+             
             }
             .audiodetail_download_text {
               font-family: "Nunito Sans";
@@ -401,7 +414,7 @@
                 font-size: 12px;
               }
               line-height: 24px;
-              color: #cfcfcf;
+             
               margin: unset;
             }
           }
@@ -418,17 +431,17 @@
       font-size: 18px;
       line-height: 20px;
 
-      color: #d4d4d4;
+     
       @media screen and (max-width: 600px) {
         margin-top: 0.5rem;
         font-size: 14px;
         line-height: 16px;
       }
       .braces {
-        color: #868686;
+       
         margin-left: 3px;
         .braces_text {
-          color: #d4d4d4;
+          
         }
       }
     }
@@ -560,7 +573,7 @@
           width: 100%;
           font-family: "Poppins";
           justify-content: space-around;
-          background: rgba(0, 0, 0, 0.3);
+         
           padding: 0% 2%;
           height: 65px;
           opacity: 1;
@@ -661,7 +674,7 @@
         }
         .listblacks {
           width: 100%;
-          background: #0d0d0d;
+          
           border-top-right-radius: 24px;
           border-top-left-radius: 24px;
           position: relative;
@@ -678,7 +691,7 @@
             font-family: "Poppins";
             justify-content: flex-start;
             //padding:1% 2%;
-            background: #0d0d0d;
+           
             border-bottom: 1px solid gray;
 
             .play_header {
@@ -715,7 +728,7 @@
             border-top-right-radius: 24px;
             border-top-left-radius: 24px;
             z-index: 10;
-            background: #0d0d0d;
+          
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -749,15 +762,10 @@
               }
             }
           }
-          .descript {
-            font-size: 14px;
-            color: white;
-            font-family: "Poppins";
-            padding: 4% 3% 3% 5%;
-          }
+        
 
           .mobile_color_vid {
-            background: #0d0d0d;
+           
             padding: 3%;
             @include hide_for_desktop;
           }
@@ -779,7 +787,7 @@
     .lecsong_wrapper {
       padding: 1rem 0rem 3rem;
       @media screen and (max-width: 615px) {
-        background: #0d0d0d;
+      
         position: relative;
         padding: 1rem 0rem 1.5rem;
       }

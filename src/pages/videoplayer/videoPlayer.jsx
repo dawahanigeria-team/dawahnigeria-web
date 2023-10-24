@@ -4,6 +4,7 @@ import { VIDEO, VIDEOS } from "../../utils/routes/constants";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import { useNavigate, useLocation, useParams, Link } from "react-router-dom";
 import axios from "../../utils/useAxios";
+import { BiSolidShareAlt, BiMessageMinus } from "react-icons/bi";
 import _ from "lodash";
 import comvideo from "../../assets/svg/comment-video.svg";
 import sharevideo from "../../assets/svg/share-video.svg";
@@ -225,31 +226,31 @@ const VideoPlayer = () => {
         } on Dawah Nigeria - Home of islamic resources`}
       />
       <div className="w-full boom min-[615px]:px-4 pt-3 pb-20 h-full text-sm min-[615px]:text-[15px]">
-        <div className="my-3 max-[615px]:hidden text-sm text-white space-x-2 flex items-center">
+        <div className="my-3 max-[615px]:hidden text-sm text-foreground space-x-2 flex items-center">
           <HiOutlineArrowLongLeft
             onClick={() => {
               navigate(-1);
             }}
             className={
               pathname === `${VIDEOS}${id}`
-                ? "text-white text-[22px]"
-                : "text-[22px] text-gray-300"
+                ? "text-foreground text-[22px]"
+                : "text-[22px] text-gray-500 dark:text-gray-300"
             }
           />
           <HiOutlineArrowLongRight
             className={
               pathname === VIDEO
-                ? "text-white text-[22px]"
-                : "text-[22px] text-gray-300"
+                ? "text-foeground text-[22px]"
+                : "text-[22px] text-gray-500 dark:text-gray-300"
             }
           />
-          <span className="text-gray-300">Videos</span>
+          <span className="text-gray-500 dark:text-gray-300">Videos</span>
           <span>/</span> <span></span>
           {data?.title}
         </div>
 
         <div className="w-full grid grid-cols-1 xl:grid-cols-9 xl:gap-3 ">
-          <div className="h-full max-[615px]:h-[220px] bg-[#0d0d0d]   col-span-6">
+          <div className="h-full max-[615px]:h-[220px] bg-secondary   col-span-6">
             <div className="w-full h-[220px] min-[615px]:pb-3 min-[615px]:mb-[0rem] z-[10] max-[615px]:fixed inset-x-0 top-[55px] min-[615px]:h-[400px] min-[615px]:rounded-md">
               <div
                 onClick={(e) => {
@@ -276,7 +277,7 @@ const VideoPlayer = () => {
               )}
             </div>
 
-            <div className="p-2 hidden xl:block  w-full bg-[#0d0d0d] text-gray-50 space-y-2">
+            <div className="p-2 hidden xl:block  w-full bg-secondary text-foreground space-y-2">
               <div className="min-[615px]:text-lg text-[15px] font-semibold capitalize ">
                 {data?.title || ""}
               </div>
@@ -286,7 +287,7 @@ const VideoPlayer = () => {
               </div>
             </div>
 
-            <div className="w-full xl:flex hidden mt-2 text-gray-400 pr-6  min-[615px]:text-sm  space-x-20 justify-end items-center">
+            <div className="w-full xl:flex hidden mt-2 text-zinc-600 dark:text-gray-400 pr-6  min-[615px]:text-sm  space-x-20 justify-end items-center">
               <button
                 onClick={() => {
                   addToFav();
@@ -294,7 +295,7 @@ const VideoPlayer = () => {
                 disabled={isdisabled}
                 className="flex items-center cursor-pointer space-x-2"
               >
-                <MdOutlineFavoriteBorder className="text-[25px]" />
+                <MdOutlineFavoriteBorder className="text-[22px]" />
                 <span>{formatNumber(data?.favourites || 0)}</span>
               </button>
 
@@ -303,15 +304,15 @@ const VideoPlayer = () => {
                   onClick={(e) => {
                     shareAudio(e);
                   }}
-                  className="w-[25px] h-[25px]"
+                  className="text-zinc-600 dark:text-gray-400"
                 >
-                  <img className="w-full h-full" src={sharevideo} alt="" />
+                  <BiSolidShareAlt className="text-[22px]" />
                 </button>
                 <span>{formatNumber(data?.share || 0)}</span>
               </div>
               <div className="flex items-center space-x-2">
-                <div className="w-[25px] h-[25px]">
-                  <img className="w-full h-full" src={comvideo} alt="" />
+                <div className="text-zinc-600 dark:text-gray-400">
+                  <BiMessageMinus className="text-[22px]" />
                 </div>
                 <span>{formatNumber(data?.comments || 0)}</span>
               </div>
@@ -326,8 +327,8 @@ const VideoPlayer = () => {
             </div>
           </div>
 
-          <div className="px-3 pt-3 xl:pt-0 text-gray-200 max-[1238px]:space-y-4   min-[615px]:col-span-3">
-            <div className="p-2 block xl:hidden  w-full bg-[#0d0d0d] text-gray-50 space-y-2">
+          <div className="px-3 pt-3 xl:pt-0 text-foreground max-[1238px]:space-y-4   min-[615px]:col-span-3">
+            <div className="p-2 block xl:hidden  w-full bg-secondary text-foreground space-y-2">
               <div className="min-[615px]:text-lg text-[15px] font-semibold capitalize ">
                 {data?.title || ""}
               </div>
@@ -339,7 +340,7 @@ const VideoPlayer = () => {
               </div>
             </div>
 
-            <div className="w-full xl:hidden flex text-gray-400 text-[12px] min-[615px]:text-sm space-x-20 min-[615px]:pl-6 min-[615px]:justify-start justify-center items-center">
+            <div className="w-full xl:hidden flex text-zinc-600 dark:text-gray-400 text-[12px] min-[615px]:text-sm space-x-20 min-[615px]:pl-6 min-[615px]:justify-start justify-center items-center">
               <button
                 onClick={() => {
                   addToFav();
@@ -347,7 +348,7 @@ const VideoPlayer = () => {
                 disabled={isdisabled}
                 className="flex items-center cursor-pointer space-x-2"
               >
-                <MdOutlineFavoriteBorder className="min-[615px]:text-[25px] text-[22px]" />
+                <MdOutlineFavoriteBorder className=" text-[22px]" />
                 <span>{formatNumber(data?.favourites || 0)}</span>
               </button>
 
@@ -356,15 +357,15 @@ const VideoPlayer = () => {
                   onClick={(e) => {
                     shareAudio(e);
                   }}
-                  className="min-[615px]:w-[25px] min-[615px]:h-[25px] w-[22px] h-[22px]"
+                  className="text-zinc-600 dark:text-gray-400"
                 >
-                  <img className="w-full h-full" src={sharevideo} alt="" />
+                  <BiSolidShareAlt className="text-[22px]" />
                 </div>
                 <span>{formatNumber(data?.share || 0)}</span>
               </div>
               <div className="flex items-center space-x-2">
-                <div className="min-[615px]:w-[25px] min-[615px]:h-[25px] w-[22px] h-[22px]">
-                  <img className="w-full h-full" src={comvideo} alt="" />
+                <div className="text-zinc-600 dark:text-gray-400">
+                  <BiMessageMinus className="text-[22px]" />
                 </div>
                 <span>{formatNumber(data?.comments || 0)}</span>
               </div>
@@ -401,10 +402,10 @@ const VideoPlayer = () => {
                   if (isEmpty) return;
                   setPage(page + 1);
                 }}
-                className="w-full min-[615px]:w-[50%] flex justify-center items-center py-2 border border-gray-400 text-gray-400 rounded-lg"
+                className="w-full min-[615px]:w-[50%] flex justify-center items-center py-2 border border-text text-text rounded-lg"
               >
                 {nextPageLoad ? (
-                  <span className="rounded-full w-4 h-4 border-l border-r border-gray-400 animate-spin"></span>
+                  <span className="rounded-full w-4 h-4 border-l border-r border-text animate-spin"></span>
                 ) : (
                   <span>Show more</span>
                 )}
@@ -437,23 +438,3 @@ const VideoPlayer = () => {
 
 export default VideoPlayer;
 
-{
-  /**
-   *    <ReactPlayer
-                url={`https://www.youtube.com/watch?v=${data?.youtubekey}&rel=0`}
-                width="100%"
-                height="100%"
-                onEnded={() => handleNextAudio()}
-                onError={(e) => //console.log("onError", e)}
-                fallback={data?.images}
-                light={true}
-                muted={false}
-                controls={true}
-                playing={true}
-              />  <iframe
-                src={`https://youtube.com/embed/?rel=0&autoplay=1&amp;mute=1`}
-                title={data?.title}
-                
-                className="w-full h-full min-[615px]:rounded-md"
-              ></iframe> <img src={data?.images || 'https://imagetolink.com/ib/kk8U1nb2nR.jpeg'} className="w-full h-full"/> */
-}

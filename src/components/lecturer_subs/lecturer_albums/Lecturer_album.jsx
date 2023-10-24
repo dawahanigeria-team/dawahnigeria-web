@@ -115,12 +115,12 @@ const Lecturer_album = ({ id, setCount2}) => {
             }}
             className={
               !isLastPage
-                ? "w-[40%] min-[615px]:w-[200px] min-[615px]:py-3   flex justify-center items-center py-2 border border-gray-400 text-gray-400 rounded-2xl"
+                ? "w-[40%] min-[615px]:w-[200px] min-[615px]:py-3  text-text border-text flex justify-center items-center py-2 border rounded-2xl"
                 : "hidden"
             }
           >
             {isLoadingNextPage ? (
-              <span className="rounded-full w-4 h-4 border-l border-r border-gray-400 animate-spin"></span>
+              <span className="rounded-full w-4 h-4 border-l border-r border-text animate-spin"></span>
             ) : (
               <span>Show more</span>
             )}

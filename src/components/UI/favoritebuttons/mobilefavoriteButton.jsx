@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from "react";
-import adfav from "../../../assets/svg/adfav.svg";
-import lovebold from "../../../assets/svg/lovebold.svg";
+import {AiFillHeart} from "react-icons/ai"
 import { formatNumber } from "../formatter";
 import { useAddFavoritesHook, useFetchFavoritesHook } from "../../../hooks";
 import { useSelector } from "react-redux";
@@ -63,9 +62,9 @@ export function MobileFavoriteButton({ favorites, id, type, refetch }) {
     >
       <button className="likeys_img">
         {favoriteCount[type]?.includes(parseInt(id)) ? (
-          <img className="likeys_img_sz" src={adfav} alt="" />
+        <AiFillHeart className="text-foreground text-xl dark:text-[#ddff2b]"/>
         ) : (
-          <img className="likeys_img_sz" src={lovebold} alt="" />
+          <AiFillHeart className=" text-xl text-[#aeaeae]"/>
         )}
       </button>
 

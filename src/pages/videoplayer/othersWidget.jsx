@@ -30,10 +30,10 @@ const OthersWidget = ({ images, author, views, title }) => {
       </div>
 
       <div className="justify-start w-full col-span-7 xl:col-span-4">
-        <div className="font-medium text-ellipsis whitespace-nowrap overflow-hidden w-[200px] min-[615px]:w-[450px]  xl:w-[150px]">
+        <div className="font-medium text-foreground text-ellipsis whitespace-nowrap overflow-hidden w-[200px] min-[615px]:w-[450px]  xl:w-[150px]">
           {title}
         </div>
-        <div className="text-[12px] flex items-center text-gray-300 min-[615px]:text-sm ">
+        <div className="text-[12px] flex items-center text-text min-[615px]:text-sm ">
           <span className="mr-1">{`${views} views.`}</span>
           <span className="text-ellipsis whitespace-nowrap overflow-hidden w-[200px] min-[615px]:w-[450px] xl:w-[130px]">
             {author}

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useCallback, useRef, useEffect, useContext } from "react";
 import "./lecturer_detail.scss";
 import Container from "../../components/container/Container";
 import { useNavigate, useParams } from "react-router-dom";
@@ -8,9 +8,9 @@ import LecturerPlaylist from "../lecturer_subs/lecturer_playlist/Lecturer_playli
 import arrow from "../../assets/svg/arrowleft.svg";
 import headpmobile from "../../assets/svg/headpmobile.svg";
 import Simillarrp from "../lecturer_subs/simillarrp/Simillarrp";
-import sharebold from "../../assets/svg/sharebold.svg";
 import combold from "../../assets/svg/combold.svg";
-import sharebig from "../../../src/assets/svg/boom-share.svg";
+import {SlShare} from "react-icons/sl"
+import {BiSolidShareAlt} from 'react-icons/bi'
 import commentbig from "../../../src/assets/svg/boom-comment.svg";
 import { formatNumber } from "../UI/formatter";
 import lazy from "../../assets/png/lazyrps.jpeg";
@@ -21,6 +21,9 @@ import { DesktopFavoriteButton } from "../UI/favoritebuttons/desktopfavoriteButt
 import { MobileFavoriteButton } from "../UI/favoritebuttons/mobilefavoriteButton";
 
 import HeadMeta from "../head-meta";
+import { useSelector } from "react-redux";
+import { CommentIcon } from "../svgcomponent/svgComponent";
+
 
 
 const LecturerDetail = () => {
@@ -35,6 +38,8 @@ const LecturerDetail = () => {
   const [count1, setCount1] = useState(0);
   const [count2, setCount2] = useState(0);
   const [count3, setCount3] = useState(0);
+ const {theme} = useSelector((state) => state.user)
+
   const queryParam = { id };
 
   const [, setImg] = useState(
@@ -109,7 +114,7 @@ const LecturerDetail = () => {
           <img
             ref={lecdet}
             id="hero"
-            className="lecdet_hero"
+            className={`${theme === "dark" ? 'lecdet_hero' :"lecdet_hero_light"}`}
             src={
               querieddata[0]?.img ||
               "https://imagetolink.com/ib/9TU6bi2SDs.jpeg"
@@ -117,6 +122,7 @@ const LecturerDetail = () => {
             alt="audiohero"
           />
      
+    
         <div className="lecdet_container">
           {/* ------------------------------Desktop------ Bread Crumbs -------------------------------------- */}
 
@@ -161,27 +167,19 @@ const LecturerDetail = () => {
                     onClick={(e) => {
                       shareRp(e, id);
                     }}
-                    className="lecdet_share"
+                    className="lecdet_share bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
                   >
-                    <button className="fav_btn">
-                      <img
-                        src={sharebig}
-                        alt=""
-                        className="lecdet_share_icon"
-                      />
+                    <button className="fav_btn ">
+                    <SlShare className="text-text-primary hover:text-text-foreground dark:hover:text-[#ddff2b] text-[20px]" />
                     </button>
 
-                    <p className="lecdet_share_text">
+                    <p className="lecdet_share_text text-text-primary">
                       {formatNumber(querieddata[0]?.share || 0)}
                     </p>
                   </div>
-                  <div className="lecdet_comment">
-                    <img
-                      src={commentbig}
-                      alt=""
-                      className="lecdet_comment_icon"
-                    />
-                    <p className="lecdet_comment_text">
+                  <div className="lecdet_comment bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d] ">
+                    <CommentIcon/>
+                    <p className="lecdet_comment_text text-text-primary">
                       {formatNumber(querieddata[0]?.comments || 0)}
                     </p>
                   </div>
@@ -368,8 +366,8 @@ const LecturerDetail = () => {
                 </div>
               </div>
             </div>
-            <div className="blacks">
-              <div className={isVisible ? "fixed_icons_black" : "icons_black"}>
+            <div className="blacks bg-secondary">
+              <div className={isVisible ? "fixed_icons_black bg-secondary" : "icons_black bg-secondary"}>
                 <MobileFavoriteButton
                   favorites={querieddata[0]?.favorites}
                   id={id}
@@ -383,9 +381,9 @@ const LecturerDetail = () => {
                   className="icons_mob_listblack"
                 >
                   <button className="likeys_img">
-                    <img className="likeys_img_sz" src={sharebold} alt="" />
+                   <BiSolidShareAlt className="text-xl "/>
                   </button>
-                  <span className="likeys_text">
+                  <span className="likeys_text ">
                     {formatNumber(querieddata[0]?.share || 0)}
                   </span>
                 </div>
@@ -410,7 +408,7 @@ const LecturerDetail = () => {
                   <p
                     className={`${
                       tab === 1
-                        ? "mobile_lecdet_tab_song1_active"
+                        ? "mobile_lecdet_tab_song1_active text-foreground"
                         : "mobile_lecdet_tab_song1"
                     }`}
                   >
@@ -419,7 +417,7 @@ const LecturerDetail = () => {
                   <p
                     className={`${
                       tab === 1
-                        ? "mobile_lecdet_tab_song2_active"
+                        ? "mobile_lecdet_tab_song2_active text-text"
                         : "mobile_lecdet_tab_song2"
                     }`}
                   >{`(${count1})`}</p>
@@ -434,7 +432,7 @@ const LecturerDetail = () => {
                   <p
                     className={`${
                       tab === 2
-                        ? "mobile_lecdet_tab_album1_active"
+                        ? "mobile_lecdet_tab_album1_active text-foreground"
                         : "mobile_lecdet_tab_album1"
                     }`}
                   >
@@ -443,8 +441,8 @@ const LecturerDetail = () => {
                   <p
                     className={`${
                       tab === 2
-                        ? "mobile_lecdet_tab_album2_active"
-                        : "mobile_lecdet_tab_album2"
+                        ? "mobile_lecdet_tab_album1_active text-text"
+                        : "mobile_lecdet_tab_album1"
                     }`}
                   >{`(${count2})`}</p>
                 </div>
@@ -458,7 +456,7 @@ const LecturerDetail = () => {
                   <p
                     className={`${
                       tab === 3
-                        ? "mobile_lecdet_tab_playlist1_active"
+                        ? "mobile_lecdet_tab_playlist1_active text-foreground"
                         : "mobile_lecdet_tab_playlist1"
                     }`}
                   >
@@ -467,8 +465,8 @@ const LecturerDetail = () => {
                   <p
                     className={`${
                       tab === 3
-                        ? "mobile_lecdet_tab_playlist2_active"
-                        : "mobile_lecdet_tab_playlist2"
+                        ? "mobile_lecdet_tab_playlist1_active text-text"
+                        : "mobile_lecdet_tab_playlist1"
                     }`}
                   >{`(${count3})`}</p>
                 </div>
@@ -483,8 +481,8 @@ const LecturerDetail = () => {
                   <p
                     className={`${
                       tab === 5
-                        ? "mobile_lecdet_tab_simrp1_active"
-                        : "mobile_lecdet_tab_simrp1"
+                        ? "mobile_lecdet_tab_simrp2_active text-foreground"
+                        : "mobile_lecdet_tab_simrp2"
                     }`}
                   >
                     Similar
@@ -492,7 +490,7 @@ const LecturerDetail = () => {
                   <p
                     className={`${
                       tab === 5
-                        ? "mobile_lecdet_tab_simrp2_active"
+                        ? "mobile_lecdet_tab_simrp2_active text-foreground"
                         : "mobile_lecdet_tab_simrp2"
                     }`}
                   >
@@ -501,20 +499,20 @@ const LecturerDetail = () => {
                 </div>
               </div>
 
-              <div className="set_choice">
+              <div className="set_choice text-foreground">
                 <span>{choice}</span>
-                <span className="nums">
+                <span className="nums text-text">
                   {tab === 1 ? `(${count1})` : false}
                 </span>
-                <span className="nums">
+                <span className="nums text-text ">
                   {tab === 2 ? `(${count2})` : false}
                 </span>
-                <span className="nums">
+                <span className=" text-text nums">
                   {tab === 3 ? `(${count3})` : false}
                 </span>
               </div>
 
-              <div className="mobile_color_vid">
+              <div className="mobile_color_vid bg-secondary">
                 {tab === 1 && (
                   <LecturerSongs
                     rpname={querieddata[0]?.name}
