@@ -130,6 +130,7 @@ const Favourite_album = ({ setCount2 }) => {
                   Title,
                   title,
                   views,
+                  lec_no,
                   favorites,
                 },
                 idx
@@ -146,7 +147,7 @@ const Favourite_album = ({ setCount2 }) => {
                     >
                       <AlbumWidget
                         key={idx}
-                        views={views || 0}
+                        lec_no={lec_no || 0}
                         categories={categories}
                         img={img}
                       />
@@ -163,7 +164,7 @@ const Favourite_album = ({ setCount2 }) => {
                     >
                       <AlbumWidget
                         key={idx}
-                        views={views || 0}
+                        lec_no={lec_no || 0}
                         categories={categories}
                         img={img}
                       />

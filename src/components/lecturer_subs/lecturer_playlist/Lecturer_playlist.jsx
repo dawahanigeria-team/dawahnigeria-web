@@ -67,7 +67,7 @@ const Lecturer_playlist = ({ id, setCount3 }) => {
       <div className="lecplaylist_wrapper">
         {!isLoading &&
          Array.isArray(querieddata)  && querieddata.length !== 0 &&
-         querieddata.map(({ name, id,nid, views, lec_img }, idx) => {
+         querieddata.map(({ name, id,nid,lec_no, lec_img }, idx) => {
             return (
               <Link
                 to={`${PLAYLISTS}${nid}`}
@@ -78,7 +78,7 @@ const Lecturer_playlist = ({ id, setCount3 }) => {
                 <AlbumWidget
                   key={idx}
                   categories={name}
-                  views={views || 0}
+                  lec_no={lec_no || 0}
                   img={lec_img}
                 />
               </Link>
