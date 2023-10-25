@@ -11,10 +11,8 @@ import { PLAYLISTS } from "../../../utils/routes/constants";
 import { lecturerDetailApi } from "../../../services";
 import { useQueryGetRequest } from "../../../hooks/getqueries";
 const Lecturer_playlist = ({ id }) => {
-  const [data, setData] = useState([]);
   const { currentUser } = useSelector((state) => state.user);
   const [audioComment, setaudioComment] = useState();
-  const [loading, setLoading] = useState(true);
   const queryParam = { id };
 
   const { isLoading, querieddata } = useQueryGetRequest(
@@ -62,8 +60,7 @@ const Lecturer_playlist = ({ id }) => {
       <div className="lecplaylist_wrapper">
         {!isLoading &&
           Array.isArray(querieddata) &&
-          querieddata.length !== 0 &&
-          querieddata.map(({ name, id, nid, lec_no, lec_img }, idx) => {
+          querieddata?.map(({ name, id, nid, lec_no, lec_img }, idx) => {
             return (
               <Link
                 to={`${PLAYLISTS}${nid}`}
