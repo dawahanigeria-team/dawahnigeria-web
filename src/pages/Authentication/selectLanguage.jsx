@@ -58,8 +58,8 @@ const SelectLanguage = () => {
             key={index}
             className={
               selected && id === langid
-                ? "signuplang_name active"
-                : "signuplang_name not_active"
+                ? "signuplang_name active dark:bg-white bg-[#ddff2b]"
+                : "signuplang_name  text-foreground"
             }
           >
             {name}

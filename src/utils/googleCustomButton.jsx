@@ -60,10 +60,10 @@ const GoogleCustomButton = () => {
       onClick={() => {
         login();
       }}
-      className=" text-gray-200 hover:text-[#070707] space-x-3 hover:bg-gray-200 hover:border-0 w-full flex justify-center items-center rounded-[5px] h-[47px] border-[#ddff2b] min-[615px]:text-[#070707] border bg-none min-[615px]:bg-gray-100 min-[615px]:border-0"
+      className=" text-gray-200  hover:text-[#070707] space-x-3 hover:bg-gray-200 w-full flex justify-center items-center rounded-[5px] h-[47px] dark:border-[#ddff2b] min-[615px]:text-[#070707] border dark:border bg-none min-[615px]:bg-gray-100 min-[615px]:dark:border-0  min-[615px]:border"
     >
       <FcGoogle className="text-[25px] text-color" />
-      <div className="font-medium ">Sign in with google</div>
+      <div className="font-medium text-foreground">Sign in with google</div>
     </button>
   );
 };

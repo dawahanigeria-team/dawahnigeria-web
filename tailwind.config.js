@@ -8,6 +8,7 @@ module.exports = {
           500: "#ddff2b",
         },
         border: "hsl(var(--border))",
+        auth: "hsl(var(--auth))",
         input: "hsl(var(--input))",
         hover: "hsl(var(--hover))",
         comment: "hsl(var(--comment))",

@@ -1,24 +1,27 @@
 import React from "react";
 import "./auth.scss";
 import loginHero from "../../../assets/png/loginheroimg.png";
-import Logo from "../../../assets/svg/close.svg";
+import {IoCloseOutline} from "react-icons/io5"
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
+  const {theme} = useSelector((state) => state.user)
 
   return (
-    <div className="auth_wrapper">
-      <div className="auth_container">
+    <div className="auth_wrapper bg-background">
+      <div className="auth_container min-[690px]:bg-auth shadow-lg">
         <img
           className="auth_hero_image"
           src={loginHero}
           src-data={loginHero}
           alt="loginhero"
         />
+        <div className={`min-[690px]:hidden ${theme === "dark" ? "gradientauth" : "gradientauth_light"}`}></div>
         <div
           className={
             pathname === "/auth/selectlanguage"
@@ -26,14 +29,14 @@ const Login = () => {
               : "auth_header_logo"
           }
         >
-          <img
+          <button
             onClick={() => {
               navigate("/");
             }}
-            src={Logo}
-            alt="Logo"
-            src-data={Logo}
-          />
+          >
+
+            <IoCloseOutline className="text-foreground text-2xl min-[690px]:text-5xl"/>
+          </button>
         </div>
         <div className="sl_wrapper">
           <div
@@ -45,7 +48,7 @@ const Login = () => {
           >
             <Link to={"/auth/login"}>
               <p
-                className={`${
+                className={` text-foreground ${
                   pathname === "/auth/login"
                     ? "auth_login_link_active"
                     : "auth_login_link"
@@ -56,7 +59,7 @@ const Login = () => {
             </Link>
             <Link to={"/auth/signup"}>
               <p
-                className={`${
+                className={` text-foreground  ${
                   pathname === "/auth/signup"
                     ? "auth_signup_link_active"
                     : "auth_signup_link"
@@ -66,7 +69,7 @@ const Login = () => {
               </p>
             </Link>
           </div>
-          <div className="auth_outlet">
+          <div className="auth_outlet text-foreground">
             <Outlet />
           </div>
         </div>

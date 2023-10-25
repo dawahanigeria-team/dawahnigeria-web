@@ -4,7 +4,7 @@
   font-weight: 400;
   font-size: 18px;
   // line-height: 42px;
-  color: rgba(207, 207, 207, 0.5);
+  //color: #cfcfcf80;
 }
 @mixin header_link_style_active {
   font-family: "Nunito Sans";
@@ -12,7 +12,7 @@
   font-weight: 600;
   font-size: 25px;
   // line-height: 68px;
-  color: #f2f2f2;
+  //color: #f2f2f2;
 }
 
 .auth_wrapper {
@@ -21,7 +21,7 @@
   align-items: center;
   justify-content: center;
 
-  background-color: #030303;
+ 
   width: 100%;
   height: 100%;
   .auth_container {
@@ -38,7 +38,7 @@
     @media screen and (min-width: 690px) {
       width: 650px;
       overflow: unset;
-      background: #353535;
+      
     }
     .auth_hero_image {
       position: absolute;
@@ -135,7 +135,6 @@
           width: 100%;
         }
         z-index: 2;
-        color: white;
         margin-top: 1rem;
       }
     }

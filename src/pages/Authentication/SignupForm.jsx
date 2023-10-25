@@ -125,7 +125,7 @@ const SignupForm = () => {
             required
             value={name}
             id="name"
-            className="signupform_fullname"
+            className="signupform_fullname text-foreground"
           />
           <input
             onChange={(e) => {
@@ -137,7 +137,7 @@ const SignupForm = () => {
             required
             value={email}
             id="email"
-            className="signupform_name"
+            className="signupform_name text-foreground"
           />
 
           <div className="signupform_password_wrap">
@@ -151,13 +151,13 @@ const SignupForm = () => {
               required
               value={password}
               id="password"
-              className="signupform_password"
+              className="signupform_password text-foreground"
             />
             {show === "password" && (
               <div className="signupform_password_icon_show_wrap">
                 <AiFillEye
                   onClick={() => setShow("text")}
-                  className="signupform_password_icon_show"
+                  className="signupform_password_icon_show text-text"
                 />
               </div>
             )}
@@ -165,7 +165,7 @@ const SignupForm = () => {
               <div className="signupform_password_icon_hide_wrap">
                 <AiFillEyeInvisible
                   onClick={() => setShow("password")}
-                  className="signupform_password_icon_hide"
+                  className="signupform_password_icon_hide text-text"
                 />
               </div>
             )}
@@ -181,13 +181,13 @@ const SignupForm = () => {
               required
               value={confirm_password}
               id="confirm_password"
-              className="signupform_confpassword"
+              className="signupform_confpassword text-foreground"
             />
             {show2 === "password" && (
               <div className="signupform_confpassword_icon_show_wrap">
                 <AiFillEye
                   onClick={() => setShow2("text")}
-                  className="signupform_confpassword_icon_show"
+                  className="signupform_confpassword_icon_show text-text"
                 />
               </div>
             )}
@@ -195,7 +195,7 @@ const SignupForm = () => {
               <div className="signupform_confpassword_icon_hide_wrap">
                 <AiFillEyeInvisible
                   onClick={() => setShow2("password")}
-                  className="signupform_confpassword_icon_hide"
+                  className="signupform_confpassword_icon_hide text-text"
                 />
               </div>
             )}
@@ -212,8 +212,14 @@ const SignupForm = () => {
               {lang || "-select a language-"}
             </span>
             {isdrop && (
-              <div className="selected_lang_drop h-[200px] overflow-hidden">
-                <div className="overflow-y-auto w-full h-full">
+              <div className="selected_lang_drop">
+                <button
+                onClick={() => {
+                  setisdrop(!isdrop);
+                }}
+                className="fixed z-[50] inset-0 bg-none w-full h-full"></button>
+                <div className="relative z-[60] w-full h-[200px] overflow-y-auto shadow-lg">
+                <div className="flex flex-col w-full h-full">
                   {langData.map(({ name, id }, index) => {
                     return (
                       <div
@@ -223,13 +229,15 @@ const SignupForm = () => {
                           setLang(name);
                           setisdrop(!isdrop);
                         }}
-                        className="drops"
+                        className="drops hover:bg-gray-100 cursor-pointer"
                       >
                         {name}
                       </div>
                     );
                   })}
                 </div>
+                </div>
+              
               </div>
             )}
           </div>
@@ -289,15 +297,15 @@ const SignupForm = () => {
               }`}
             ></div>
             <div className="signupform_terms_text">
-              <p className="signupform_terms_text1">
+              <p className="signupform_terms_text1 text-text">
                 I have read and accept the{" "}
               </p>
-              <p className="signupform_terms_text2">Terms and Condition</p>
+              <p className="signupform_terms_text2 text-foreground dark:text-[#ddff2b]">Terms and Condition</p>
             </div>
           </div>
         </div>
 
-        <span className="signupform_or">- or -</span>
+        <span className="signupform_or text-text">- or -</span>
         <div className="login_socials inset-x-0 flex items-center w-full mx-auto h-fit">
           <div className="hidden">
             <GetFacebookAuth data={data} setData={setData} />

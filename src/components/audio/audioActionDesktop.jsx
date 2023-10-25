@@ -400,7 +400,7 @@ const AudioActionDesktop = () => {
           }}
         />
         <div
-          className={`flex items-center relative bg-background text-text w-full ${
+          className={`flex items-center relative bg-background text-foreground w-full ${
             isminimize ? "justify-center" : "justify-between"
           }`}
         >
@@ -512,14 +512,14 @@ const AudioActionDesktop = () => {
               disabled={!audioId}
               className="h-[20px] w-[20px]"
             >
-              <SlShare className="text-text hover:text-text-foreground dark:hover:text-[#ddff2b] text-[20px]" />
+              <SlShare className=" hover:text-text-foreground dark:hover:text-[#ddff2b] text-[20px]" />
             </button>
             <button
               onClick={() => {
                 addToPlaylist();
               }}
               disabled={!audioId}
-              className="audiodet_play_add text-text hover:text-text-foreground dark:hover:text-[#ddff2b]"
+              className="audiodet_play_add  hover:text-text-foreground dark:hover:text-[#ddff2b]"
             >
               <AddplayIcon />
             </button>
