@@ -85,7 +85,7 @@ const Landing = () => {
   const [sliders, recentlyPosted, specialFeatures, recentlyviewed] =
     useLandingPageHook(id, page, setisrecent, setcurPlay);
 
-  const specialFeat = specialFeatures?.data?.flatMap((val) => [
+  const specialFeat = Array.isArray(specialFeatures) && specialFeatures?.data?.flatMap((val) => [
     { name: val.name, more: val.more },
   ]);
   //console.log({ sliders, recentlyPosted, specialFeatures, recentlyviewed });

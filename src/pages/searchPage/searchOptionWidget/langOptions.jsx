@@ -20,7 +20,7 @@ const LangOptions = () => {
 
   //console.log(selectCategory);
   return (
-    <div className="flex flex-col text-zinc-400 text-sm font-normal mb-6 w-full space-y-3 h-fit justify-start">
+    <div className="flex flex-col text-text text-sm font-normal mb-6 w-full space-y-3 h-fit justify-start">
       <div className="flex items-center justify-between">
         <div className="flex space-x-2">
           <span>Languages</span>
@@ -31,7 +31,7 @@ const LangOptions = () => {
           }}
         >
           <MdNavigateNext
-            className={`text-[#ddff2b] text-[22px] min-[615px]:text-[25px] ${
+            className={`text-text dark:text-[#ddff2b] text-[22px] min-[615px]:text-[25px] ${
               showmore ? "rotate-[-90deg]" : "rotate-[90deg]"
             }`}
           />
@@ -43,7 +43,7 @@ const LangOptions = () => {
             return (
               <label key={idx} className="filter-container flex">
                 <div className="flex items-center space-x-2">
-                  <div className="hover:text-gray-500 ">{name}</div>
+                  <div className="text-text ">{name}</div>
                   <span className="bg-[#ddff2b] text-black rounded-full px-2 py-[1px] text-[10px] min-[615px]:text-[13px]">
                     {count}
                   </span>

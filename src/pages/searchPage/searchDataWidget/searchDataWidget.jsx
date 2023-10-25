@@ -38,18 +38,18 @@ const SearchDataWidget = ({
         />
       </div>
       <div className="col-span-5 min-[615px]:col-span-5">
-        <div className="max-[615px]:whitespace-nowrap max-[615px]:text-ellipsis max-[615px]:overflow-hidden w-full">
+        <div className="max-[615px]:whitespace-nowrap text-foreground max-[615px]:text-ellipsis max-[615px]:overflow-hidden w-full">
           {mp3_title}
         </div>
-        <div className="max-[615px]:whitespace-nowrap max-[615px]:text-ellipsis max-[615px]:overflow-hidden w-full">
+        <div className="max-[615px]:whitespace-nowrap text-text max-[615px]:text-ellipsis max-[615px]:overflow-hidden w-full">
           {cat_name}
         </div>
-        <div className="max-[615px]:whitespace-nowrap max-[615px]:text-ellipsis max-[615px]:overflow-hidden w-full">
+        <div className="max-[615px]:whitespace-nowrap text-text max-[615px]:text-ellipsis max-[615px]:overflow-hidden w-full">
           {mp3_description?.split("/")[0]}
         </div>
-        <p>{`Date: ${date}`}</p>
+        <p className="text-text"> {`Date: ${date}`}</p>
       </div>
-      <div className="max-[615px]:hidden">{mp3_duration}</div>
+      <div className="max-[615px]:hidden text-text">{mp3_duration}</div>
     </Link>
   );
 };

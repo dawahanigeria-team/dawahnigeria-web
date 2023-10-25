@@ -41,7 +41,7 @@ const fetchData = () => {
         }}
         value={inputValue}
         type="search"
-        className="search_input"
+        className="search_input text-text"
         placeholder="Search"
       />
     </div>
