@@ -12,7 +12,7 @@ import { ALBUMS } from "../../../utils/routes/constants";
 import { useQueryGetRequest } from "../../../hooks/getqueries";
 import { lecturerDetailApi } from "../../../services";
 
-const Lecturer_album = ({ id, totaldata }) => {
+const Lecturer_album = ({ id, totalData }) => {
   const { currentUser } = useSelector((state) => state.user);
   const [page, setPage] = useState(1);
   const [audioComment, setaudioComment] = useState();
@@ -102,12 +102,12 @@ const Lecturer_album = ({ id, totaldata }) => {
           )}
       </div>
       {(isLoading && page === 1) ||
-        (totaldata !== querieddata?.length && (
+        (totalData !== querieddata?.length && (
           <div className="flex w-full min-[615px]:mt-6 mt-3 items-center h-fit justify-center  min-[615px]:text-[16px] text-sm">
             {" "}
             <button
-              onClick={() => {
-                if (isLastPage) return;
+            disabled={isLoadingNextPage}
+              onClick={() => {              
                 setPage(page + 1);
               }}
               className={

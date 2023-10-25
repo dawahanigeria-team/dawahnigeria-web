@@ -11,7 +11,7 @@ import MusicList from "../../miscList/musicList";
 import { LECTURE } from "../../../utils/routes/constants";
 import { useQueryGetRequest } from "../../../hooks/getqueries";
 import { lecturerDetailApi } from "../../../services";
-const Lecturer_songs = ({ id, totaldata }) => {
+const Lecturer_songs = ({ id, totalData }) => {
   const { currentUser } = useSelector((state) => state.user);
   const [page, setPage] = useState(1);
   const [comment, setComment] = useState();
@@ -170,12 +170,13 @@ const Lecturer_songs = ({ id, totaldata }) => {
       </div>
 
       {(isLoading && page === 1) ||
-        (totaldata !== querieddata?.length && (
+        (totalData !== querieddata?.length && (
           <div className="flex h-fit w-full min-[615px]:text-[16px] text-sm  min-[615px]:mt-6 mt-3 items-center justify-center">
             {" "}
             <button
+            disabled={isLoadingNextPage}
               onClick={() => {
-                if (isLastPage) return;
+             
                 setPage(page + 1);
               }}
               className={

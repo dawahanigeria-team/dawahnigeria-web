@@ -566,7 +566,7 @@ const LecturerDetail = () => {
                 <LecturerSongs
                   rpname={querieddata[0]?.name}
                   id={id}
-                  totaldata={querieddata[0]?.total_audio}
+                  totalData={querieddata[0]?.total_audio}
                 />
               )}
               {tab === 2 && (
@@ -575,7 +575,7 @@ const LecturerDetail = () => {
                   rpImg={querieddata[0]?.img}
                   id={id}
                
-                  totaldata={querieddata[0]?.total_albums}
+                  totalData={querieddata[0]?.total_albums}
                 />
               )}
               {tab === 3 && (
@@ -583,7 +583,7 @@ const LecturerDetail = () => {
                   rpname={querieddata[0]?.name}
                   id={id}
                 
-                  totaldata={querieddata[0]?.total_playlist}
+                  totalData={querieddata[0]?.total_playlist}
                 />
               )}
 
