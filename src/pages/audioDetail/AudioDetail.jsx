@@ -58,6 +58,9 @@ import { useAudioHook } from "../../hooks";
 import { audioDetailApi } from "../../services";
 import { DesktopFavoriteButton } from "../../components/UI/favoritebuttons/desktopfavoriteButtons";
 import { AudioDownloadModal } from "../../components/audioDownloadModal/AudioDownloadModal";
+import { useRequest } from "../landing/utils";
+import RowSkeletonContainer from "../../components/skeletion/skeleton.container";
+import CardSkeleton from "../../components/skeletion";
 import HeadMeta from "../../components/head-meta";
 
 const AudioDetail = () => {
@@ -104,9 +107,7 @@ const AudioDetail = () => {
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
 
-
   //console.log("currentPage", page);
-
 
   const { refetch } = useAudioHook(id);
   const keyParam = { id: currentAudioInfo?.rp_id, page: 1 };
@@ -371,13 +372,17 @@ const AudioDetail = () => {
     return () => slide.current?.removeEventListener("scroll", scrollEl);
   }, [slide.current?.scrollLeft]);
 
+  const { data: similarLecture, isLoading } = useRequest(
+    "get",
+    `/genre_api.php?cat_id=${currentAudioInfo?.cat_id}`
+  );
+
   const shareAudio = () => {
     setisShare(!isShare);
     //setNidValue(nid)
   };
 
   ////*********************************************************** */
-
   return (
     <Container>
       <HeadMeta
@@ -500,7 +505,12 @@ const AudioDetail = () => {
           <div className="audiodetail_info">
             <div className="audiodetail_info_wrap">
               <div className="audiodetail_info_name">Genre: </div>
-              <Link to={`${GENRES}/${parseInt(currentAudioInfo?.cat_id?.toString())}`} className="audiodetail_info_value hover:text-[#ddff2b] hover:underline">
+              <Link
+                to={`${GENRES}/${parseInt(
+                  currentAudioInfo?.cat_id?.toString()
+                )}`}
+                className="audiodetail_info_value hover:text-[#ddff2b] hover:underline"
+              >
                 {currentAudioInfo?.cats || "unknown"}
               </Link>
             </div>
@@ -518,7 +528,7 @@ const AudioDetail = () => {
             >
               {currentAudioInfo?.description || "unknown"}
             </p>
-           {/* 
+            {/* 
            ${
                 more
                   ? "audiodetail_summary_body_open "
@@ -735,7 +745,12 @@ const AudioDetail = () => {
                 <p className="audiodetail_info_mob_head">Information</p>
                 <div className="audiodetail_info_wrap_mob">
                   <p className="audiodetail_info_name_mob">Genre: </p>
-                  <Link to={`${GENRES}/${parseInt(currentAudioInfo?.cat_id?.toString())}`} className="audiodetail_info_value_mob hover:text-[#ddff2b] hover:underline">
+                  <Link
+                    to={`${GENRES}/${parseInt(
+                      currentAudioInfo?.cat_id?.toString()
+                    )}`}
+                    className="audiodetail_info_value_mob hover:text-[#ddff2b] hover:underline"
+                  >
                     {currentAudioInfo?.cats || "unknown"}
                   </Link>
                 </div>
@@ -782,25 +797,14 @@ const AudioDetail = () => {
         <div className="similarWidget_wrapper px-4">
           <div className="similarWidget_top">
             <p className="similarWidget_top_heading">{"Similar Audio"}</p>
-            <div
-              onClick={() => {
-                navigate(MORE, {
-                  state: {
-                    name: "",
-                    heading: `Similar Audios by ${currentAudioInfo?.rpname}`,
-                    id: "",
-                    img: "",
-                    type: "lectures",
-                    navtitle: "Similar Audio",
-                    currentdata: similarAudios,
-                  },
-                });
-              }}
+
+            <Link
+              to={`${GENRES}/${parseInt(currentAudioInfo?.cat_id?.toString())}`}
               className="similarWidget_more"
             >
               <p className="similarWidget_more_text">more</p>
               <FiChevronsRight className="similarWidget_more_icon" />
-            </div>
+            </Link>
           </div>
           <div className="overflow_hidden_wrapper">
             <div className={isprev ? "prev" : "prev_none"} onClick={prev}>
@@ -810,51 +814,62 @@ const AudioDetail = () => {
               <img src={foward} alt="foward" />
             </div>
             <div ref={slide} className="overflow_auto_wrapper">
-              {Array.isArray(similarAudios) &&
-                similarAudios.map(
-                  (
-                    {
-                      img,
-                      lec_img,
-                      categories,
-                      cats,
-                      title,
-                      Title,
-                      rpname,
-                      nid,
-                      audio,
-                      views,
-                    },
-                    idx
-                  ) => {
-                    return (
-                      <div
-                        className="similarWidget_album_item"
-                        onClick={() => {
-                          navigate(`${LECTURE}${id}`);
+              {(similarLecture?.audio ?? []).map(
+                (
+                  {
+                    img,
+                    lec_img,
+                    categories,
+                    cats,
+                    title,
+                    Title,
+                    rpname,
+                    nid,
+                    audio,
+                    mp3_title,
+                    views,
+                  },
+                  idx
+                ) => {
+                  return (
+                    <div
+                      className="similarWidget_album_item"
+                      onClick={() => {
+                        navigate(`${LECTURE}${id}`);
 
-                          // setendpUrl(similarAudioUrl);
-                          dispatch(getPack(null));
-                          dispatch(getPage(1));
-                          dispatch(getaudioId(nid));
-                          dispatch(getCount(idx));
-                          dispatch(getPack(similarAudio));
+                        // setendpUrl(similarAudioUrl);
+                        dispatch(getPack(null));
+                        dispatch(getPage(1));
+                        dispatch(getaudioId(nid));
+                        dispatch(getCount(idx));
+                        dispatch(getPack(similarAudio));
 
-                          setCurUser(currentUser);
-                          window.location.reload();
-                        }}
-                        key={idx + 1}
-                      >
-                        <LandingWidget
-                          key={idx}
-                          categories={categories || cats}
-                          img={img || lec_img}
-                          views={views}
-                        />
-                      </div>
-                    );
-                  }
-                )}
+                        setCurUser(currentUser);
+                        window.location.reload();
+                      }}
+                      key={idx + 1}
+                    >
+                      <LandingWidget
+                        key={idx}
+                        categories={mp3_title || categories || cats}
+                        img={img || lec_img}
+                        views={views}
+                      />
+                    </div>
+                  );
+                }
+              )}
+
+              {
+                isLoading &&
+                  // <div className="landing_recent landing_space my-1 min-[615px]:my-3">
+                  Array(10)
+                    .fill(undefined)
+                    .map((_, i) => {
+                      return <CardSkeleton key={i} />;
+                    })
+                // </div>
+              }
             </div>
           </div>
         </div>
