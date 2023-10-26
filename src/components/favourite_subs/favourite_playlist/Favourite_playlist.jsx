@@ -147,6 +147,7 @@ const Favourite_playlist = ({ setCount3 }) => {
                             nid: id,
                             views,
                             audio,
+                            lec_no,
                             favorites,
                             nav1: {
                               title: "favorite playlist",
@@ -159,7 +160,7 @@ const Favourite_playlist = ({ setCount3 }) => {
                     >
                       <AlbumWidget
                         key={idx}
-                        views={views || 0}
+                        lec_no={lec_no || 0}
                         categories={categories}
                         img={img}
                       />
@@ -180,6 +181,7 @@ const Favourite_playlist = ({ setCount3 }) => {
                             audio,
                             favorites,
                             views,
+                            lec_no,
                             nav1: {
                               title: "favourite playlist",
                               link: "/favorite",
@@ -191,7 +193,7 @@ const Favourite_playlist = ({ setCount3 }) => {
                     >
                       <AlbumWidget
                         key={idx}
-                        views={views || 0}
+                        lec_no={lec_no || 0}
                         categories={categories}
                         img={img}
                       />

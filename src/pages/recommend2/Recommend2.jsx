@@ -31,7 +31,7 @@ const Recommend2 = () => {
       </div>
       <div className="recommend2_wrapper">
         {recommended2Data.map(
-          ({ cats, img, title, rpname, nid, cats_name, views }, idx) => {
+          ({ cats, img, title, rpname, nid, cats_name, lec_no}, idx) => {
             return (
               <div
                 onClick={() => {
@@ -53,7 +53,7 @@ const Recommend2 = () => {
               >
                 <AlbumWidget
                   key={idx}
-                  views={views}
+                  lec_no={lec_no}
                   categories={cats_name}
                   img={img}
                 />

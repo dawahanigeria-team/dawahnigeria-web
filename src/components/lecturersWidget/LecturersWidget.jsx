@@ -36,16 +36,19 @@ const LecturersWidget = ({ img, rp, views, styling }) => {
             alt="circleImg"
           />
         </div>
+
         <p className="lecturerWidget_text text-foreground">
-          {rp ? `${rp.split(" ")[0]} ${rp.split(" ")[1]}` : "undefined"}
+          {rp ? rp : "undefined"}
         </p>
-        <p className="lecturerWidget_texthover text-foreground">{rp}</p>
+       
         <div className={!styling ? "lecturerWidget_views_wrapper text-foreground" : "hidden"}>
+
           <FiHeadphones className="lecturerWidget_views_icon" />
           <p className="lecturerWidget_views_text">
             {formatNumber(parseInt(views) || 0)}
           </p>
         </div>
+      
       </div>
 
       {/* ------
