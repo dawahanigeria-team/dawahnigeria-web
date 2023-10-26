@@ -183,7 +183,7 @@ function List({
   //console.log(getFavs);
   return (
     <div className="list_wrapper dark:font-light font-medium">
-      <div className="table text-text-primary">
+      <div className="table text-color-primary">
         <div
           onClick={() => {
             dispatch(getCount(id));
@@ -239,7 +239,7 @@ function List({
                   {title}
                 </div>
               </div>
-              <div className="like_others text-text">
+              <div className="like_others text-color">
                 <div className="likeys">
                   <button className="likeys_img">
                     <img className="likeys_img_sz" src={headp} alt="" />
@@ -316,7 +316,7 @@ function List({
                   }}
                   className="likeys_img"
                 >
-                  <SlShare className="text-text" />
+                  <SlShare className="text-color" />
                 </button>
 
                 <AudioDownloadModal
@@ -335,7 +335,7 @@ function List({
       </div>
 
       {/********************mobile************** */}
-      <div className="mobile_list text-text-primary">
+      <div className="mobile_list text-color-primary">
         <div
           onClick={() => {
             navigate(url);
@@ -358,7 +358,7 @@ function List({
                 />
               </div>
               <div className="likeys">
-                <button className="text-text-primary likeys_img dark:text-[#ddff2b] hover:text-text-foreground">
+                <button className="text-color-primary likeys_img dark:text-[#ddff2b] hover:text-color-foreground">
                   <img className="likeys_img_sz" src={headpmobile} alt="" />
                 </button>
                 <span className="likeys_text text-[#e0e0e0]">
@@ -383,10 +383,10 @@ function List({
               </div>
               <div className="lect_name_wrap">
                 <Marquee pauseOnHover={true}>
-                  <div className="textb text-text-primary">{lecturer}</div>
+                  <div className="textb text-color-primary">{lecturer}</div>
                 </Marquee>
               </div>
-              <div className="likey_wrap text-text-primary">
+              <div className="likey_wrap text-color-primary">
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
@@ -448,7 +448,7 @@ function List({
               }}
               className="likeys_img_left"
             >
-              <BsThreeDotsVertical className="text-[22px] text-text-primary" />
+              <BsThreeDotsVertical className="text-[22px] text-color-primary" />
 
               <div
                 className={

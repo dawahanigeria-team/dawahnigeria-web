@@ -236,7 +236,7 @@ const LecturesListDetail = () => {
                         alt=""
                       />
                     </div>
-                    <p className="leclistdet_head_right_text1 text-text">
+                    <p className="leclistdet_head_right_text1 text-color">
                       {querieddata[0]?.rp_name}
                     </p>
                   </div>
@@ -266,14 +266,14 @@ const LecturesListDetail = () => {
                     }}
                     className="leclistdet_share bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
                   >
-                  <SlShare className="text-text-primary hover:text-text-foreground dark:hover:text-[#ddff2b] text-[20px]" />
-                    <p className="leclistdet_share_text  text-text-primary">
+                  <SlShare className="text-color-primary hover:text-color-foreground dark:hover:text-[#ddff2b] text-[20px]" />
+                    <p className="leclistdet_share_text  text-color-primary">
                       {formatNumber(querieddata[0]?.share || 0)}
                     </p>
                   </div>
                   <div className="leclistdet_comment bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
                    <CommentIcon/>
-                    <p className="leclistdet_comment_text  text-text-primary">
+                    <p className="leclistdet_comment_text  text-color-primary">
                       {formatNumber(querieddata[0]?.comments || 0)}
                     </p>
                   </div>
@@ -284,12 +284,12 @@ const LecturesListDetail = () => {
                 </div>
               </div>
             </div>
-            <p className="leclistdet_head_right_text2 text-text">
+            <p className="leclistdet_head_right_text2 text-color">
               {" "}
               Audio
-              <span className="braces text-text">
+              <span className="braces text-color">
                 (
-                <span className="braces_text text-text">
+                <span className="braces_text text-color">
                   {formatNumber(querieddata[0]?.lec_no || 0)}
                 </span>
                 )
@@ -447,11 +447,11 @@ const LecturesListDetail = () => {
                       onClick={playAll}
                       className="play_header border-b border-[#cfcfcf] pb-2 w-full"
                     >
-                      <div className="w-fit h-fit border border-text-primary dark:border-text-primary border-gray-500 p-[2px] rounded-full">
-                        <BsFillPlayFill className="text-[22px] dark:text-text-primary text-gray-500" />
+                      <div className="w-fit h-fit border border-color-primary dark:border-color-primary border-gray-500 p-[2px] rounded-full">
+                        <BsFillPlayFill className="text-[22px] dark:text-color-primary text-gray-500" />
                       </div>
 
-                      <p className="dark:text-text-primary text-gray-500 font-medium">
+                      <p className="dark:text-color-primary text-gray-500 font-medium">
                         Play All
                       </p>
                     </div>

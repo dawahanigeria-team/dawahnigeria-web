@@ -40,7 +40,7 @@ const Favourite = () => {
               </p>
               <p
                 className={`${
-                  tab === 1 ? "fav_tab_song2_active text-text" : "fav_tab_song2"
+                  tab === 1 ? "fav_tab_song2_active text-color" : "fav_tab_song2"
                 }`}
               >{`(${count1})`}</p>
             </div>
@@ -59,7 +59,7 @@ const Favourite = () => {
               </p>
               <p
                 className={`${
-                  tab === 2 ? "fav_tab_album2_active text-text" : "fav_tab_album2"
+                  tab === 2 ? "fav_tab_album2_active text-color" : "fav_tab_album2"
                 }`}
               >{`(${count2})`}</p>
             </div>
@@ -78,7 +78,7 @@ const Favourite = () => {
               </p>
               <p
                 className={`${
-                  tab === 3 ? "fav_tab_playlist2_active text-text" : "fav_tab_playlist2"
+                  tab === 3 ? "fav_tab_playlist2_active text-color" : "fav_tab_playlist2"
                 }`}
               >{`(${count3})`}</p>
             </div>

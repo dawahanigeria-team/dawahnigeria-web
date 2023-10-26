@@ -100,21 +100,21 @@ const SearchPage = () => {
             }}
             className={
               pathname === SEARCH
-                ? "text-[30px] text-text"
+                ? "text-[30px] text-color"
                 : "text-[30px] text-gray-400"
             }
           />
           <HiOutlineArrowLongRight
             className={
               pathname === "/"
-                ? "text-[30px] text-text"
+                ? "text-[30px] text-color"
                 : "text-[30px] text-zinc-400"
             }
           />
           <span className="mr-1">{"Search"}</span>/ <span></span>
           {`Search for ${text}`}
         </div>
-        <div className="flex text-text text-sm font-normal flex-col px-2 py-12  min-[615px]:px-6 min-[615px]:py-6 w-full">
+        <div className="flex text-color text-sm font-normal flex-col px-2 py-12  min-[615px]:px-6 min-[615px]:py-6 w-full">
           <div
             onClick={() => {
               handleSideBar();
@@ -134,7 +134,7 @@ const SearchPage = () => {
           )}
           {!loading && searchData.length === 0 && (
             <div className="w-full flex items-center justify-center h-[300px]">
-              <h1 className="text-3xl min-[615px]:text-4xl text-text tracking-wider ">
+              <h1 className="text-3xl min-[615px]:text-4xl text-color tracking-wider ">
                 No search result found
               </h1>
             </div>

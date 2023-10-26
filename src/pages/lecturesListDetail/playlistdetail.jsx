@@ -223,22 +223,22 @@ const PlaylistDetail = () => {
                   }}
                   className="leclistdet_share bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
                 >
-                  <SlShare className="text-text-primary hover:text-text-foreground dark:hover:text-[#ddff2b] text-[20px]" />
-                  <p className="leclistdet_share_text text-text-primary">{formatNumber(0)}</p>
+                  <SlShare className="text-color-primary hover:text-color-foreground dark:hover:text-[#ddff2b] text-[20px]" />
+                  <p className="leclistdet_share_text text-color-primary">{formatNumber(0)}</p>
                 </div>
                 <div className="leclistdet_comment bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
               <CommentIcon/>
-                  <p className="leclistdet_comment_text text-text-primary">{formatNumber(0)}</p>
+                  <p className="leclistdet_comment_text text-color-primary">{formatNumber(0)}</p>
                 </div>
              
               </div>
             </div>
           </div>
-          <p className="leclistdet_head_right_text2 text-text">
+          <p className="leclistdet_head_right_text2 text-color">
             {`${querieddata[0]?.name || "Unknown"}`}
-            <span className="braces text-text">
+            <span className="braces text-color">
               (
-              <span className="text-text braces_text">
+              <span className="text-color braces_text">
                 {playlistlectures?.length}
               </span>
               )

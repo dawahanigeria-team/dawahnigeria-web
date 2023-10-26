@@ -11,9 +11,9 @@ const HeaderRouter = ({ link, title }) => {
         onClick={() => {
           navigate(link || -1);
         }}
-        className="hroute_title_res_icon text-text"
+        className="hroute_title_res_icon text-color"
       />
-      <p className="hroute_title_res_text text-text">{title || "Unknown"}</p>
+      <p className="hroute_title_res_text text-color">{title || "Unknown"}</p>
 
       <div className="hides"></div>
     </div>

@@ -59,7 +59,7 @@ const LandingWidget = ({ categories, img, views, styling }) => {
           </div>
         </div>
       </div>
-      <p className="text-xs sm:text-sm w-full  line-clamp-2  pl-[3%]  text-text-primary ">
+      <p className="text-xs sm:text-sm w-full  line-clamp-2  pl-[3%]  text-color-primary ">
         {categories}
       </p>
     </div>

@@ -101,7 +101,7 @@ const LoginForm = () => {
               <div className="loginform_password_icon_show_wrap">
                 <AiFillEye
                   onClick={() => setShow("text")}
-                  className="loginform_password_icon_show text-text"
+                  className="loginform_password_icon_show text-color"
                 />
               </div>
             )}
@@ -109,7 +109,7 @@ const LoginForm = () => {
               <div className="loginform_password_icon_hide_wrap ">
                 <AiFillEyeInvisible
                   onClick={() => setShow("password")}
-                  className="loginform_password_icon_hide text-text"
+                  className="loginform_password_icon_hide text-color"
                 />
               </div>
             )}
@@ -130,7 +130,7 @@ const LoginForm = () => {
           </button>
         </div>
 
-        <span className="loginform_or text-text">- or -</span>
+        <span className="loginform_or text-color">- or -</span>
 
         <div className=" login_socials inset-x-0 w-full items-center mx-auto h-fit">
           <div className="hidden">

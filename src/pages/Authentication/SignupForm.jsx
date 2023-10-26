@@ -157,7 +157,7 @@ const SignupForm = () => {
               <div className="signupform_password_icon_show_wrap">
                 <AiFillEye
                   onClick={() => setShow("text")}
-                  className="signupform_password_icon_show text-text"
+                  className="signupform_password_icon_show text-color"
                 />
               </div>
             )}
@@ -165,7 +165,7 @@ const SignupForm = () => {
               <div className="signupform_password_icon_hide_wrap">
                 <AiFillEyeInvisible
                   onClick={() => setShow("password")}
-                  className="signupform_password_icon_hide text-text"
+                  className="signupform_password_icon_hide text-color"
                 />
               </div>
             )}
@@ -187,7 +187,7 @@ const SignupForm = () => {
               <div className="signupform_confpassword_icon_show_wrap">
                 <AiFillEye
                   onClick={() => setShow2("text")}
-                  className="signupform_confpassword_icon_show text-text"
+                  className="signupform_confpassword_icon_show text-color"
                 />
               </div>
             )}
@@ -195,7 +195,7 @@ const SignupForm = () => {
               <div className="signupform_confpassword_icon_hide_wrap">
                 <AiFillEyeInvisible
                   onClick={() => setShow2("password")}
-                  className="signupform_confpassword_icon_hide text-text"
+                  className="signupform_confpassword_icon_hide text-color"
                 />
               </div>
             )}
@@ -297,7 +297,7 @@ const SignupForm = () => {
               }`}
             ></div>
             <div className="signupform_terms_text">
-              <p className="signupform_terms_text1 text-text">
+              <p className="signupform_terms_text1 text-color">
                 I have read and accept the{" "}
               </p>
               <p className="signupform_terms_text2 text-foreground dark:text-[#ddff2b]">Terms and Condition</p>
@@ -305,7 +305,7 @@ const SignupForm = () => {
           </div>
         </div>
 
-        <span className="signupform_or text-text">- or -</span>
+        <span className="signupform_or text-color">- or -</span>
         <div className="login_socials inset-x-0 flex items-center w-full mx-auto h-fit">
           <div className="hidden">
             <GetFacebookAuth data={data} setData={setData} />

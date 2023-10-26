@@ -418,10 +418,10 @@ const AudioDetail = () => {
                   "Unknown"}
               </p>
               <div className="audiodetail_head_right_text">
-                <p className="audiodetail_head_right_text1 text-text-foreground">
+                <p className="audiodetail_head_right_text1 text-color-foreground">
                   {currentAudioInfo?.rpname || "unknown"}
                 </p>
-                <p className="audiodetail_head_right_text2 text-text-foreground">
+                <p className="audiodetail_head_right_text2 text-color-foreground">
                   {currentAudioInfo?.album_name?.split("-")[0] ||
                     currentAudioInfo?.cats ||
                     "unknown"}
@@ -456,14 +456,14 @@ const AudioDetail = () => {
                   }}
                   className="audiodetail_share bg-gray-200  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
                 >
-                  <SlShare className="text-[22px] text-text-primary" />
-                  <p className="audiodetail_share_text text-text-primary">
+                  <SlShare className="text-[22px] text-color-primary" />
+                  <p className="audiodetail_share_text text-color-primary">
                     {formatNumber(currentAudioInfo?.share || 0)}
                   </p>
                 </div>
                 <div className="audiodetail_comment bg-gray-200  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
                   <CommentIcon />
-                  <p className="audiodetail_comment_text text-text-primary">
+                  <p className="audiodetail_comment_text text-color-primary">
                     {formatNumber(currentAudioInfo?.comment || 0)}
                   </p>
                 </div>
@@ -479,23 +479,23 @@ const AudioDetail = () => {
           {/* -------------------------- End ------------------- */}
           <div className="audiodetail_info">
             <div className="audiodetail_info_wrap">
-              <div className="audiodetail_info_name text-text dark:text-muted">
+              <div className="audiodetail_info_name text-color dark:text-muted">
                 Genre:{" "}
               </div>
               <Link
                 to={`${GENRES}/${parseInt(
                   currentAudioInfo?.cat_id?.toString()
                 )}`}
-                className="audiodetail_info_value text-text dark:text-muted  hover:text-foreground dark:hover:text-[#ddff2b] hover:underline"
+                className="audiodetail_info_value text-color dark:text-muted  hover:text-foreground dark:hover:text-[#ddff2b] hover:underline"
               >
                 {currentAudioInfo?.cats || "unknown"}
               </Link>
             </div>
             <div className="audiodetail_info_wrap">
-              <div className="audiodetail_info_name dark:text-muted text-text">
+              <div className="audiodetail_info_name dark:text-muted text-color">
                 Date of Release:{" "}
               </div>
-              <div className="audiodetail_info_value text-text dark:text-muted">
+              <div className="audiodetail_info_value text-color dark:text-muted">
                 {currentAudioInfo?.post_date?.split("-")[0] || "no date"}
               </div>
             </div>
@@ -534,7 +534,7 @@ const AudioDetail = () => {
                 alt="head"
               />
             </div>
-            <div className="audiores_text text-text">
+            <div className="audiores_text text-color">
               <p className="audiores_text1">
                 {currentAudioInfo?.title ||
                   currentAudioInfo?.Title ||
@@ -548,7 +548,7 @@ const AudioDetail = () => {
             </div>
             {/**to be adjusted */}
             <div className="audiores_scroll_wrap">
-              <p className="audiores_scroll_start text-text">
+              <p className="audiores_scroll_start text-color">
                 {playTimingRes(audioRef?.current?.currentTime)}
               </p>
               {/* <div className="audiores_scroll_bar"></div> */}
@@ -571,7 +571,7 @@ const AudioDetail = () => {
                   className=""
                 />
               </div>
-              <p className="audiores_scroll_stop text-text">
+              <p className="audiores_scroll_stop text-color">
                 {durationFormat(audioRef?.current?.duration)}
               </p>
             </div>

@@ -8,7 +8,7 @@ const Company = () => {
     <>
       <div className="flex flex-col justify-start items-start space-y-4 h-fit mb-8 max-[450px]:py-3 max-[450px]:border-b border-zinc-700">
         <div className="flex justify-between items-center w-full    ">
-          <h2 className="text-text-foreground font-medium max-[450px]:text-lg text-xl">Company</h2>
+          <h2 className="text-color-foreground font-medium max-[450px]:text-lg text-xl">Company</h2>
 
           <div
             onClick={() => {
@@ -17,7 +17,7 @@ const Company = () => {
           >
             {" "}
             <MdNavigateNext
-              className={`text-text-foreground min-[450px]:hidden text-[25px] ${
+              className={`text-color-foreground min-[450px]:hidden text-[25px] ${
                 isShow ? "-rotate-90" : "rotate-90"
               }`}
             />

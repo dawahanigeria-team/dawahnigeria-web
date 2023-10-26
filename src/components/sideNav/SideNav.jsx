@@ -36,7 +36,7 @@ const SideNav = ({ res, handleSideBar, setisOpen }) => {
       {currentUser?.id && <div className="logout">
         <button
         onClick={handleLogout}
-        className="logout_btn border border-border text-text hover:text-text-foreground ">Logout</button>
+        className="logout_btn border border-border text-color hover:text-color-foreground ">Logout</button>
       </div>}
       <div className="sidenav_auth">
         <div className="sidenav_avatar">
@@ -48,7 +48,7 @@ const SideNav = ({ res, handleSideBar, setisOpen }) => {
               onClick={() => {
                 navigate("/auth/login");
               }}
-              className="sidenav_auth_text1 text-text dark:hover:text-[#ddff00] hover:text-text-foreground"
+              className="sidenav_auth_text1 text-color dark:hover:text-[#ddff00] hover:text-color-foreground"
             >
               Log in/
             </p>
@@ -56,14 +56,14 @@ const SideNav = ({ res, handleSideBar, setisOpen }) => {
               onClick={() => {
                 navigate("/auth/signup");
               }}
-              className="sidenav_auth_text2 text-text dark:hover:text-[#ddff00] hover:text-text-foreground"
+              className="sidenav_auth_text2 text-color dark:hover:text-[#ddff00] hover:text-color-foreground"
             >
               Sign Up
             </p>
           </div>
         )}
         {currentUser?.id && (
-          <div className="user_name text-text dark:hover:text-[#ddff00] hover:text-text-foreground">{currentUser?.username?.split(" ")[0] || currentUser?.username}</div>
+          <div className="user_name text-color dark:hover:text-[#ddff00] hover:text-color-foreground">{currentUser?.username?.split(" ")[0] || currentUser?.username}</div>
         )}
       </div>
     {pathname !== SEARCH && <div>

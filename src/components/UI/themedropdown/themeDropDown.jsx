@@ -12,16 +12,16 @@ export default function ThemeDropDown() {
     setOpen(!isOpen);
   }
 
-  console.log("current theme", theme);
+
   return (
     <div className=" relative text-[13px] sm:text-[15px]">
       {theme && (
         <button
           onClick={closeDropDown}
-          className="rounded-md p-1 group border-text hover:border-muted border "
+          className="rounded-md p-1 group border-color hover:border-muted border "
         >
           {theme === "light" && (
-            <BsSun className="text-xl text-text  transform transition-all duration-300 " />
+            <BsSun className="text-xl text-color  transform transition-all duration-300 " />
           )}
           {theme === "dark" && (
             <FaMoon className="text-xl dark:text-[#ddff2b]  transform transition-all duration-300 " />
@@ -60,7 +60,7 @@ function ToggleButtons({ text, close }) {
         close();
         dispatch(setTheme(text.toLowerCase()));
       }}
-      className="cursor-pointer hover:bg-hover text-text py-2 pl-2 pr-4"
+      className="cursor-pointer hover:bg-hover text-color py-2 pl-2 pr-4"
     >
       {text}
     </div>

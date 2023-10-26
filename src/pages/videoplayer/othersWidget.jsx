@@ -33,7 +33,7 @@ const OthersWidget = ({ images, author, views, title }) => {
         <div className="font-medium text-foreground text-ellipsis whitespace-nowrap overflow-hidden w-[200px] min-[615px]:w-[450px]  xl:w-[150px]">
           {title}
         </div>
-        <div className="text-[12px] flex items-center text-text min-[615px]:text-sm ">
+        <div className="text-[12px] flex items-center text-color min-[615px]:text-sm ">
           <span className="mr-1">{`${views} views.`}</span>
           <span className="text-ellipsis whitespace-nowrap overflow-hidden w-[200px] min-[615px]:w-[450px] xl:w-[130px]">
             {author}

@@ -72,7 +72,7 @@ export function DesktopFavoriteButton({ favorites, id, type, refetch }) {
       {isLoading ? (
         <LoaderIcon className="text-sm animate-spin" />
       ) : (
-        <p className="leclistdet_fav_text text-text-primary">{formatFavorite}</p>
+        <p className="leclistdet_fav_text text-color-primary">{formatFavorite}</p>
       )}
     </button>
   );

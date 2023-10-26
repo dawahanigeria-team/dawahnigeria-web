@@ -57,7 +57,7 @@ const AlbumWidget = ({ categories, img, lec_no, nid }) => {
           </div>
         </div>
       </div>
-      <p className="album_categories text-text-primary">{categories}</p>
+      <p className="album_categories text-color-primary">{categories}</p>
     </div>
   );
 };

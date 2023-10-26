@@ -402,10 +402,10 @@ const VideoPlayer = () => {
                   if (isEmpty) return;
                   setPage(page + 1);
                 }}
-                className="w-full min-[615px]:w-[50%] flex justify-center items-center py-2 border border-text text-text rounded-lg"
+                className="w-full min-[615px]:w-[50%] flex justify-center items-center py-2 border border-color text-color rounded-lg"
               >
                 {nextPageLoad ? (
-                  <span className="rounded-full w-4 h-4 border-l border-r border-text animate-spin"></span>
+                  <span className="rounded-full w-4 h-4 border-l border-r border-color animate-spin"></span>
                 ) : (
                   <span>Show more</span>
                 )}

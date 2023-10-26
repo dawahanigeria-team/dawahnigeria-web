@@ -36,7 +36,7 @@ const Nav = () => {
               onClick={() => {
                 handleSideBar();
               }}
-              className="nav_res_hamburger text-text"
+              className="nav_res_hamburger text-color"
             />
             <div
               onClick={() => {
@@ -82,7 +82,7 @@ const Nav = () => {
             </div>
           </div>
 
-          <div className="nav_res_download_wrapper bg-background text-text border border-border">
+          <div className="nav_res_download_wrapper bg-background text-color border border-border">
             <button
               className="nav_res_download"
               onClick={() => {

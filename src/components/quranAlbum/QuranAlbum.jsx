@@ -10,7 +10,7 @@ const QuranAlbum = ({ categories, img, views }) => {
 
   return (
     <div>
-      <div className="flex flex-col text-text-primary text-xs md:text-sm">
+      <div className="flex flex-col text-color-primary text-xs md:text-sm">
         <div className="relative group">
           <div className="absolute right-1 text-xl md:text-2xl font-bold md:font-black top-1 text-black">
             DN

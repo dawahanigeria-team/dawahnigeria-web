@@ -7,7 +7,7 @@ export const DownloadIcon = () => {
       width="20px"
       height="20px"
       viewBox="0 0 20 20"
-      className="stroke-text-primary dark:hover:stroke-[#ddff2b] hover:stroke-text-foreground"
+      className="stroke-color-primary dark:hover:stroke-[#ddff2b] hover:stroke-color-foreground"
       version="1.1"
     >
       <g id="Symbols" strokeWidth="1" fill="none" fillRule="evenodd">
@@ -33,7 +33,7 @@ export const AddplayIcon = () => {
     <svg
       width="20px"
       height="20px"
-      className="stroke-text-primary dark:hover:stroke-[#ddff2b] hover:stroke-text-foreground"
+      className="stroke-color-primary dark:hover:stroke-[#ddff2b] hover:stroke-color-foreground"
       viewBox="0 0 20 20"
       version="1.1"
     >
@@ -73,7 +73,7 @@ export const RepeatIcon = () => {
       <g
         id="Symbols"
         stroke="none"
-        className="stroke-text-primary dark:hover:stroke-[#ddff2b] hover:stroke-text-foreground"
+        className="stroke-color-primary dark:hover:stroke-[#ddff2b] hover:stroke-color-foreground"
         strokeWidth="1"
         fill="none"
         fillRule="evenodd"
@@ -115,7 +115,7 @@ export const RepeatedIcon = () => {
           <g
             id="编组"
             transform="translate(0.500000, 1.500000)"
-            className="stroke-text-primary dark:hover:stroke-[#ddff2b] hover:stroke-text-foreground"
+            className="stroke-color-primary dark:hover:stroke-[#ddff2b] hover:stroke-color-foreground"
           >
             <path
               d="M1.55981168,-8.8817842e-16 L0,1.91536613 L6,1.91536613 C10.1421356,1.91536613 13.5,5.06831882 13.5,8.95768307 C13.5,11.4541695 12.1165472,13.6472516 10.0302412,14.897863"
@@ -147,7 +147,7 @@ export const AddFavourites = () => {
         id="Symbols"
         stroke="none"
         strokeWidth="1"
-        className="stroke-text-primary dark:hover:stroke-[#ddff2b] hover:stroke-text-foreground"
+        className="stroke-color-primary dark:hover:stroke-[#ddff2b] hover:stroke-color-foreground"
         fill="none"
         fillRule="evenodd"
       >
@@ -174,7 +174,7 @@ export const AddedFavourites = () => {
       >
         <g
           id="btn/全屏播放/收藏/default"
-          className="stroke-text-primary dark:hover:stroke-[#ddff2b] hover:stroke-text-foreground"
+          className="stroke-color-primary dark:hover:stroke-[#ddff2b] hover:stroke-color-foreground"
           stroke=""
         >
           <path
@@ -193,7 +193,7 @@ export const CommentIcon = () => {
       width="20px"
       height="20px"
       viewBox="0 0 20 20"
-       className="stroke-text-primary dark:hover:stroke-[#ddff2b] hover:stroke-text-foreground"
+       className="stroke-color-primary dark:hover:stroke-[#ddff2b] hover:stroke-color-foreground"
       version="1.1"
       
     >
@@ -201,7 +201,7 @@ export const CommentIcon = () => {
         id="Symbols"
         stroke="none"
         stroke-width="1"
-        className="stroke-text-primary dark:hover:stroke-[#ddff2b] hover:stroke-text-foreground"
+        className="stroke-color-primary dark:hover:stroke-[#ddff2b] hover:stroke-color-foreground"
         fill="none"
         fill-rule="evenodd"
       >
@@ -210,7 +210,7 @@ export const CommentIcon = () => {
             d="M10,4.50042982 L17.0643091,4.50042982 C17.9112519,4.50042982 18.2183738,4.59325543 18.5280034,4.76756252 C18.837633,4.94186961 19.0806322,5.19765819 19.2462239,5.52358411 C19.4118157,5.84951004 19.4999986,6.17279628 19.4999986,7.06431502 L19.4999986,16.9365446 C19.4999986,17.8280634 19.4118157,18.1513496 19.2462239,18.4772755 C19.0806322,18.8032014 18.837633,19.05899 18.5280034,19.2332971 C18.2183738,19.4076042 17.9112519,19.5004298 17.0643091,19.5004298 L2.93569094,19.5004298 C2.08874814,19.5004298 1.78162621,19.4076042 1.47199658,19.2332971 C1.16236695,19.05899 0.919367807,18.8032014 0.753776069,18.4772755 C0.588184331,18.1513496 0.499948023,17.8280634 0.499948023,16.9365446 L0.499948023,7.06431502 C0.499948023,6.17279628 0.683102636,5.64933613 1.07754961,5.20844933 C1.47199658,4.76756252 2.07626411,4.50042982 2.62893425,4.50042982 C3.3037618,4.50042982 4.31600311,4.50042982 5.6656582,4.50042982 L4.36910376,1 L9.48219105,4.50042982 L10,4.50042982 Z"
             id="矩形"
             stroke=""
-            className="stroke-text-primary dark:hover:stroke-[#ddff2b] hover:stroke-text-foreground"
+            className="stroke-color-primary dark:hover:stroke-[#ddff2b] hover:stroke-color-foreground"
             stroke-linejoin="round"
             transform="translate(9.999973, 10.250215) scale(1, -1) translate(-9.999973, -10.250215) "
           ></path>
@@ -218,7 +218,7 @@ export const CommentIcon = () => {
             d="M5.5,8 L14.5,8 C14.7761424,8 15,8.22385763 15,8.5 C15,8.77614237 14.7761424,9 14.5,9 L5.5,9 C5.22385763,9 5,8.77614237 5,8.5 C5,8.22385763 5.22385763,8 5.5,8 Z"
             id="矩形"
             fill=""
-            className="fill-text-primary dark:hover:fill-[#ddff2b] hover:fill-text-foreground"
+            className="fill-color-primary dark:hover:fill-[#ddff2b] hover:fill-color-foreground"
           ></path>
         </g>
       </g>

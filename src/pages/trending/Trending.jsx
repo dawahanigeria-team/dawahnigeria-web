@@ -56,7 +56,7 @@ const Trending = () => {
           <HeaderRouter title={"Trending"} />
         </div>
 
-        <div className="trend_title_wrap text-text">
+        <div className="trend_title_wrap text-color">
           <div className="tend_title1">
             <p className="tend_hash">#</p>
             <p>Title</p>
@@ -142,13 +142,13 @@ const Trending = () => {
         <div className="mobile_lists">
           <div
             onClick={playAll}
-            className="header pb-2 border-b border-text-primary  w-full"
+            className="header pb-2 border-b border-color-primary  w-full"
           >
-            <div className="w-fit h-fit border border-text-primary p-[2px] rounded-full">
-              <BsFillPlayFill className="text-[22px] text-text-primary" />
+            <div className="w-fit h-fit border border-color-primary p-[2px] rounded-full">
+              <BsFillPlayFill className="text-[22px] text-color-primary" />
             </div>
 
-            <p className="text-text-primary font-medium">Play All</p>
+            <p className="text-color-primary font-medium">Play All</p>
           </div>
           <div className="bg-none h-1 w-1"></div>
           {isLoading && !isLoadingNextPage && (

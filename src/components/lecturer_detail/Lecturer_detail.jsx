@@ -170,16 +170,16 @@ const LecturerDetail = () => {
                     className="lecdet_share bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
                   >
                     <button className="fav_btn ">
-                    <SlShare className="text-text-primary hover:text-text-foreground dark:hover:text-[#ddff2b] text-[20px]" />
+                    <SlShare className="text-color-primary hover:text-color-foreground dark:hover:text-[#ddff2b] text-[20px]" />
                     </button>
 
-                    <p className="lecdet_share_text text-text-primary">
+                    <p className="lecdet_share_text text-color-primary">
                       {formatNumber(querieddata[0]?.share || 0)}
                     </p>
                   </div>
                   <div className="lecdet_comment bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d] ">
                     <CommentIcon/>
-                    <p className="lecdet_comment_text text-text-primary">
+                    <p className="lecdet_comment_text text-color-primary">
                       {formatNumber(querieddata[0]?.comments || 0)}
                     </p>
                   </div>
@@ -205,7 +205,7 @@ const LecturerDetail = () => {
                   </p>
                   <p
                     className={`${
-                      tab === 1 ? "lecdet_tab_song2_active text-text" : "lecdet_tab_song2"
+                      tab === 1 ? "lecdet_tab_song2_active text-color" : "lecdet_tab_song2"
                     }`}
                   >{`(${count1})`}</p>
                 </div>
@@ -227,7 +227,7 @@ const LecturerDetail = () => {
                   <p
                     className={`${
                       tab === 2
-                        ? "lecdet_tab_album2_active text-text"
+                        ? "lecdet_tab_album2_active text-color"
                         : "lecdet_tab_album2"
                     }`}
                   >{`(${count2})`}</p>
@@ -250,7 +250,7 @@ const LecturerDetail = () => {
                   <p
                     className={`${
                       tab === 3
-                        ? "lecdet_tab_playlist2_active text-text"
+                        ? "lecdet_tab_playlist2_active text-color"
                         : "lecdet_tab_playlist2"
                     }`}
                   >{`(${count3})`}</p>
@@ -417,7 +417,7 @@ const LecturerDetail = () => {
                   <p
                     className={`${
                       tab === 1
-                        ? "mobile_lecdet_tab_song2_active text-text"
+                        ? "mobile_lecdet_tab_song2_active text-color"
                         : "mobile_lecdet_tab_song2"
                     }`}
                   >{`(${count1})`}</p>
@@ -441,7 +441,7 @@ const LecturerDetail = () => {
                   <p
                     className={`${
                       tab === 2
-                        ? "mobile_lecdet_tab_album1_active text-text"
+                        ? "mobile_lecdet_tab_album1_active text-color"
                         : "mobile_lecdet_tab_album1"
                     }`}
                   >{`(${count2})`}</p>
@@ -465,7 +465,7 @@ const LecturerDetail = () => {
                   <p
                     className={`${
                       tab === 3
-                        ? "mobile_lecdet_tab_playlist1_active text-text"
+                        ? "mobile_lecdet_tab_playlist1_active text-color"
                         : "mobile_lecdet_tab_playlist1"
                     }`}
                   >{`(${count3})`}</p>
@@ -501,13 +501,13 @@ const LecturerDetail = () => {
 
               <div className="set_choice text-foreground">
                 <span>{choice}</span>
-                <span className="nums text-text">
+                <span className="nums text-color">
                   {tab === 1 ? `(${count1})` : false}
                 </span>
-                <span className="nums text-text ">
+                <span className="nums text-color ">
                   {tab === 2 ? `(${count2})` : false}
                 </span>
-                <span className=" text-text nums">
+                <span className=" text-color nums">
                   {tab === 3 ? `(${count3})` : false}
                 </span>
               </div>

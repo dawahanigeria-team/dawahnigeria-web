@@ -193,7 +193,7 @@ function MusicList({
 
   return (
     <div className="musicslist_wrapper dark:font-light font-medium">
-      <div className="table text-text-primary">
+      <div className="table text-color-primary">
         <div
           onClick={() => {
             setinitial(false);
@@ -273,7 +273,7 @@ function MusicList({
                   }}
                   className="likeys_img"
                 >
-                  <SlShare className="text-text" />
+                  <SlShare className="text-color" />
                 </span>
 
                 <AudioDownloadModal
@@ -319,7 +319,7 @@ function MusicList({
                 <button className="likeys_img">
                   <img className="likeys_img_sz" src={headpmobile} alt="" />
                 </button>
-                <span className="likeys_text text-text-primary">{formatNumber(views)}</span>
+                <span className="likeys_text text-color-primary">{formatNumber(views)}</span>
               </div>
 
               <div
@@ -335,12 +335,12 @@ function MusicList({
             <div className="wrap_text">
               <div className="title_wrap">
                 <Marquee pauseOnHover={true}>
-                  <div className="texta text-text-primary">{title}</div>
+                  <div className="texta text-color-primary">{title}</div>
                 </Marquee>
               </div>
               <div className="lect_name_wrap">
                 <Marquee pauseOnHover={true}>
-                  <div className="textb text-text-primary">{lecturer}</div>
+                  <div className="textb text-color-primary">{lecturer}</div>
                 </Marquee>
               </div>
             </div>
@@ -362,7 +362,7 @@ function MusicList({
               }}
               className="likeys_img_left"
             >
-               <BsThreeDotsVertical className="text-[22px] text-text-primary" />
+               <BsThreeDotsVertical className="text-[22px] text-color-primary" />
               <div
                 className={
                   more ? " left-[-100px] absolute min-w-max h-fit" : "hidden"

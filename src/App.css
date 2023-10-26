@@ -311,9 +311,9 @@
     --muted-foreground: 0 0% 3%;
 
 
-    --text: 240 10% 36%;
-    --text-foreground: 240 11% 11%;
-    --text-primary: 0 0% 1%;
+    --color: 240 10% 36%;
+    --color-foreground: 240 11% 11%;
+    --color-primary: 0 0% 1%;
 
     --actions:32 100% 100%;
     --border: 216 5% 86%;
@@ -349,9 +349,9 @@
     --muted-foreground: 240 0% 83%;
 
 
-    --text: 220 0% 53%;
-    --text-foreground: 68 100% 100%;
-    --text-primary: 0 0% 88%;
+    --color: 220 0% 53%;
+    --color-foreground: 68 100% 100%;
+    --color-primary: 0 0% 88%;
 
     --search: 32 0% 4%;    
     --actions:32 100% 100%;

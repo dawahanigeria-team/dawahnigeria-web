@@ -132,17 +132,17 @@ const Layout = () => {
             loop="5"
             className="layout_buttom_text_wrap"
           >
-            <p className="layout_buttom_text1 text-text">
+            <p className="layout_buttom_text1 text-color">
               {currentAudioInfo?.title || currentAudioInfo?.Title}
             </p>
-            <p className="layout_buttom_text2 text-text">{currentAudioInfo?.rpname}</p>
+            <p className="layout_buttom_text2 text-color">{currentAudioInfo?.rpname}</p>
           </marquee>
           <div
             onClick={() => {
               setisShare(!isShare);
             }}
           >
-            <BiShareAlt className="layout_buttom_share text-text" />
+            <BiShareAlt className="layout_buttom_share text-color" />
           </div>
           <div
             onClick={() => {
@@ -173,15 +173,15 @@ const Layout = () => {
             <FaHome
               className={
                 location.pathname === "/"
-                  ? "layout_buttom_menue2_homeIcon_active dark:text-[#ddff2b] text-text-foreground"
-                  : "layout_buttom_menue2_homeIcon text-text"
+                  ? "layout_buttom_menue2_homeIcon_active dark:text-[#ddff2b] text-color-foreground"
+                  : "layout_buttom_menue2_homeIcon text-color"
               }
             />
             <p
               className={
                 location.pathname === "/"
-                  ? "layout_buttom_menue2_homeText_active font-semibold dark:text-[#ddff2b] text-text-foreground"
-                  : "layout_buttom_menue2_homeText text-text"
+                  ? "layout_buttom_menue2_homeText_active font-semibold dark:text-[#ddff2b] text-color-foreground"
+                  : "layout_buttom_menue2_homeText text-color"
               }
             >
               Home
@@ -196,15 +196,15 @@ const Layout = () => {
             <SiApplemusic
               className={
                 location.pathname === LIBRARY
-                  ? "layout_buttom_menue2_libraryIcon_active dark:text-[#ddff2b] text-text-foreground"
-                  : "layout_buttom_menue2_libraryIcon text-text"
+                  ? "layout_buttom_menue2_libraryIcon_active dark:text-[#ddff2b] text-color-foreground"
+                  : "layout_buttom_menue2_libraryIcon text-color"
               }
             />
             <p
               className={
                 location.pathname === LIBRARY
-                  ? "layout_buttom_menue2_libraryText_active dark:text-[#ddff2b] text-text-foreground font-semibold"
-                  : "layout_buttom_menue2_libraryText text-text"
+                  ? "layout_buttom_menue2_libraryText_active dark:text-[#ddff2b] text-color-foreground font-semibold"
+                  : "layout_buttom_menue2_libraryText text-color"
               }
             >
               Library
@@ -219,15 +219,15 @@ const Layout = () => {
             <MdFavorite
               className={
                 location.pathname === FAVOURITE
-                  ? "layout_buttom_menue2_favouriteIcon_active dark:text-[#ddff2b] text-text-foreground"
-                  : "layout_buttom_menue2_favouriteIcon text-text"
+                  ? "layout_buttom_menue2_favouriteIcon_active dark:text-[#ddff2b] text-color-foreground"
+                  : "layout_buttom_menue2_favouriteIcon text-color"
               }
             />
             <p
               className={
                 location.pathname === FAVOURITE
-                  ? "layout_buttom_menue2_favouriteText_active dark:text-[#ddff2b] text-text-foreground font-semibold"
-                  : "layout_buttom_menue2_favouriteText text-text"
+                  ? "layout_buttom_menue2_favouriteText_active dark:text-[#ddff2b] text-color-foreground font-semibold"
+                  : "layout_buttom_menue2_favouriteText text-color"
               }
             >
               Favorites

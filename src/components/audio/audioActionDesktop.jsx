@@ -446,7 +446,7 @@ const AudioActionDesktop = () => {
               id="player"
               className="audiodet_play_btn"
             >
-              <TbPlayerSkipBackFilled className="text-text text-[20px] hover:text-text-foreground dark:hover:text-[#ddff2b] " />
+              <TbPlayerSkipBackFilled className="text-color text-[20px] hover:text-color-foreground dark:hover:text-[#ddff2b] " />
             </button>
 
             {loading ? (
@@ -468,7 +468,7 @@ const AudioActionDesktop = () => {
               </button>
             )}
             <button onClick={handleNextAudio} id="player" className="">
-              <TbPlayerSkipForwardFilled className="text-text text-[20px] hover:text-text-foreground dark:hover:text-[#ddff2b]" />
+              <TbPlayerSkipForwardFilled className="text-color text-[20px] hover:text-color-foreground dark:hover:text-[#ddff2b]" />
             </button>
           </div>
 
@@ -482,14 +482,14 @@ const AudioActionDesktop = () => {
               onClick={() => {
                 dispatch(getRepeat(!isrepeat));
               }}
-              className="h-[20px] w-[20px]  text-text hover:text-text-foreground dark:hover:text-[#ddff2b]"
+              className="h-[20px] w-[20px]  text-color hover:text-color-foreground dark:hover:text-[#ddff2b]"
             >
               {isrepeat ? <RepeatedIcon /> : <RepeatIcon />}
             </button>
 
             <AudioDownloadModal
               nid={audioId}
-              className="h-[20px] w-[20px]  text-text hover:text-text-foreground dark:hover:text-[#ddff2b]"
+              className="h-[20px] w-[20px]  text-color hover:text-color-foreground dark:hover:text-[#ddff2b]"
               triggerInnerChild={<DownloadIcon />}
             />
             <button
@@ -512,14 +512,14 @@ const AudioActionDesktop = () => {
               disabled={!audioId}
               className="h-[20px] w-[20px]"
             >
-              <SlShare className=" hover:text-text-foreground dark:hover:text-[#ddff2b] text-[20px]" />
+              <SlShare className=" hover:text-color-foreground dark:hover:text-[#ddff2b] text-[20px]" />
             </button>
             <button
               onClick={() => {
                 addToPlaylist();
               }}
               disabled={!audioId}
-              className="audiodet_play_add  hover:text-text-foreground dark:hover:text-[#ddff2b]"
+              className="audiodet_play_add  hover:text-color-foreground dark:hover:text-[#ddff2b]"
             >
               <AddplayIcon />
             </button>

@@ -183,12 +183,12 @@ const Lecturer_songs = ({ id, setCount1 }) => {
             }}
             className={
               !isLastPage
-                ? "w-[40%] min-[615px]:w-[200px] min-[615px]:py-3  flex justify-center items-center py-2 border text-text border-text rounded-2xl"
+                ? "w-[40%] min-[615px]:w-[200px] min-[615px]:py-3  flex justify-center items-center py-2 border text-color border-color rounded-2xl"
                 : "hidden"
             }
           >
             {isLoadingNextPage ? (
-              <span className="rounded-full w-4 h-4 border-l border-r border-text animate-spin"></span>
+              <span className="rounded-full w-4 h-4 border-l border-r border-color animate-spin"></span>
             ) : (
               <span>Show more</span>
             )}
