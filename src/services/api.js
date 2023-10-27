@@ -64,6 +64,17 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
     }
   );
 
+  //Can we make use of servicePromise instead of repeating code in the return object requestType = get || post || delete || patch || put
+  const servicePromise = async (requestType, url, payload = null) => {
+    try {
+      const data = service[requestType](url, payload);
+      const resolvedData = await Promise.resolve(data);
+      return resolvedData;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return {
     get: async (url) => {
       try {
