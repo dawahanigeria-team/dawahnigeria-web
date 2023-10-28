@@ -4,12 +4,15 @@ import Container from "../../components/container/Container";
 import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
 import { CiPlay1 } from "react-icons/ci";
 import { SlShare } from "react-icons/sl";
+import back from "../../assets/svg/back.svg";
+import foward from "../../assets/svg/foward.svg";
 import { BiSolidShareAlt } from "react-icons/bi";
 import { GrFormAdd } from "react-icons/gr";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { BiMessageMinus } from "react-icons/bi";
 import { RiDownload2Fill, RiPlayListFill } from "react-icons/ri";
 import { FaPlay } from "react-icons/fa";
+import {FiChevronsRight} from "react-icons/fi"
 import { toast } from "react-hot-toast";
 import { SlOptionsVertical } from "react-icons/sl";
 import { GiPauseButton } from "react-icons/gi";
@@ -45,12 +48,12 @@ import { useAudioHook } from "../../hooks";
 import { DesktopFavoriteButton } from "../../components/UI/favoritebuttons/desktopfavoriteButtons";
 import { AudioDownloadModal } from "../../components/audioDownloadModal/AudioDownloadModal";
 import { useRequest } from "../landing/utils";
-import RowSkeletonContainer from "../../components/skeletion/skeleton.container";
+
 import CardSkeleton from "../../components/skeletion";
 import HeadMeta from "../../components/head-meta";
 import CommentBox from "../../components/comment/comment";
-import SimilarAudio from "../../components/similaraudio/similarAudio";
 import { CommentIcon } from "../../components/svgcomponent/svgComponent";
+import LandingWidget from "../../components/landingWidget/LandingWidget";
 
 const AudioDetail = () => {
   const { id } = useParams();
