@@ -153,7 +153,7 @@ const Lecturers = () => {
           </div>
         </div>
 
-        {isLoading  && (
+        {isLoading  &&  !isLoadingNextPage && (
           <div className="load_desktop">
             <div className="load">
               <Loader />

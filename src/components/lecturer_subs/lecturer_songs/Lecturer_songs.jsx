@@ -11,7 +11,8 @@ import { LECTURE } from "../../../utils/routes/constants";
 import { useQueryGetRequest } from "../../../hooks/getqueries";
 import { lecturerDetailApi } from "../../../services";
 import CommentBox from "../../comment/comment";
-const Lecturer_songs = ({ id, setCount1 }) => {
+
+const Lecturer_songs = ({ id, totalData }) => {
   const { currentUser } = useSelector((state) => state.user);
   const [page, setPage] = useState(1);
   const [comment, setComment] = useState();
@@ -24,10 +25,6 @@ const Lecturer_songs = ({ id, setCount1 }) => {
       queryParam,
       lecturerDetailApi.getLecturerSongs
     );
-  //console.log("rp id", id);
-  useEffect(() => {
-    setCount1(querieddata?.length || 0);
-  }, [querieddata]);
 
   //////*************handling comment**************** */
 
@@ -173,28 +170,30 @@ const Lecturer_songs = ({ id, setCount1 }) => {
           )}
       </div>
 
-      {
-        <div className="flex h-fit w-full min-[615px]:text-[16px] text-sm  min-[615px]:mt-6 mt-3 items-center justify-center">
-          {" "}
-          <button
-            onClick={() => {
-              if (isLastPage) return;
-              setPage(page + 1);
-            }}
-            className={
-              !isLastPage
+       {(isLoading && page === 1) ||
+        (totalData !== querieddata?.length && (
+          <div className="flex h-fit w-full min-[615px]:text-[16px] text-sm  min-[615px]:mt-6 mt-3 items-center justify-center">
+            {" "}
+            <button
+            disabled={isLoadingNextPage}
+              onClick={() => {
+             
+                setPage(page + 1);
+              }}
+              className={
+                 !isLastPage
                 ? "w-[40%] min-[615px]:w-[200px] min-[615px]:py-3  flex justify-center items-center py-2 border text-color border-color rounded-2xl"
                 : "hidden"
-            }
-          >
-            {isLoadingNextPage ? (
-              <span className="rounded-full w-4 h-4 border-l border-r border-color animate-spin"></span>
-            ) : (
-              <span>Show more</span>
-            )}
-          </button>
-        </div>
-      }
+              }
+            >
+              {isLoadingNextPage ? (
+                <span className="rounded-full w-4 h-4 border-l border-r border-color animate-spin"></span>
+              ) : (
+                <span>Show more</span>
+              )}
+            </button>
+          </div>
+        ))}
       <CommentBox audioComment={audioComment} type={"rp"} id={id} />
     </div>
   );
