@@ -30,7 +30,7 @@ const Genres = () => {
     <Container>
       <HeadMeta title={`Genres of islamic resources on Dawah Nigeria `} />
       <div className="genre_wrapper">
-        <div className="genre_header_link max-[615px]:border-b border-zinc-700">
+        <div className="genre_header_link bg-background max-[615px]:border-b border-zinc-700">
           <HeaderRouter title={"Genres"} />
         </div>
 

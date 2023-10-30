@@ -44,13 +44,13 @@ import { DesktopFavoriteButton } from "../../components/UI/favoritebuttons/deskt
 import { MobileFavoriteButton } from "../../components/UI/favoritebuttons/mobilefavoriteButton";
 
 import HeadMeta from "../../components/head-meta";
-
+import { CommentIcon } from "../../components/svgcomponent/svgComponent";
 
 const PlaylistDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [data, setData] = useState([]);
-  const { currentUser } = useSelector((state) => state.user);
+ 
+  const { currentUser, theme } = useSelector((state) => state.user);
   const observeEl = useRef();
   const { setinitial } = useContext(AudioContext);
   const [isShare, setisShare] = useState(false);
@@ -60,7 +60,7 @@ const PlaylistDetail = () => {
   const [audioComment, setaudioComment] = useState();
   const queryParam = { id };
 
-  const { querieddata , isLoading, refetch} = useQueryGetRequest(
+  const { querieddata, isLoading, refetch } = useQueryGetRequest(
     "playlist-details",
     queryParam,
     playlistdetailApi.getPlaylistData
@@ -103,8 +103,6 @@ const PlaylistDetail = () => {
         //console.log(err);
       });
   }, [id]);
-
-
 
   /// Get the exiting element
   const firstElement = useCallback((node) => {
@@ -157,13 +155,17 @@ const PlaylistDetail = () => {
         } on Dawah Nigeria - Home of islamic resources`}
       />
       <div className="leclistdet_wrapper">
-        <img
-          className="leclistdet_hero"
-          src={
-            querieddata[0]?.img || "https://imagetolink.com/ib/vwea8kukZP.jpeg"
-          }
-          alt="audiohero"
-        />
+      <img
+            ref={lecdet}
+            id="hero"
+            className={`${theme === "dark" ? "leclistdet_hero" : "leclistdet_hero_light"}`}
+            src={
+              querieddata[0]?.img ||
+              "https://imagetolink.com/ib/9TU6bi2SDs.jpeg"
+            }
+            alt="audiohero"
+          />
+   
         <div className="leclistdet_container">
           {/* ------------------------------Desktop------ Bread Crumbs -------------------------------------- */}
 
@@ -173,8 +175,10 @@ const PlaylistDetail = () => {
                 navigate(-1);
               }}
               className="leclistdet_breadcrumb_first"
-            >Back/</p>
-            <p className="leclistdet_breadcrumb_second">
+            >
+              Back/
+            </p>
+            <p className="leclistdet_breadcrumb_second text-foreground">
               {querieddata[0]?.name || "Unknown"}
             </p>
           </div>
@@ -192,10 +196,9 @@ const PlaylistDetail = () => {
               />
             </div>
             <div className="leclistdet_head_right">
-              <p className="leclistdet_head_right_head">
-                {querieddata[0]?.name  || "Unknown"}
+              <p className="leclistdet_head_right_head text-foreground">
+                {querieddata[0]?.name || "Unknown"}
               </p>
-              <div className="leclistdet_head_right_text"></div>
 
               <div className="leclistdet_head_right_actions_wrap">
                 <button
@@ -209,46 +212,36 @@ const PlaylistDetail = () => {
                   <p className="leclistdet_play_text">Play All</p>
                 </button>
                 <DesktopFavoriteButton
-                favorites={querieddata[0]?.favorites}
-                id={id}
-                type={"playlist"}
-                refetch={refetch}
-               />
+                  favorites={querieddata[0]?.favorites}
+                  id={id}
+                  type={"playlist"}
+                  refetch={refetch}
+                />
                 <div
                   onClick={(e) => {
                     sharePlaylist(e, id);
                   }}
-                  className="leclistdet_share"
+                  className="leclistdet_share bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
                 >
-                  <img
-                    src={sharebig}
-                    alt=""
-                    className="leclistdet_share_icon"
-                  />
-                  <p className="leclistdet_share_text">{formatNumber(0)}</p>
+                  <SlShare className="text-color-primary hover:text-color-foreground dark:hover:text-[#ddff2b] text-[20px]" />
+                  <p className="leclistdet_share_text text-color-primary">{formatNumber(0)}</p>
                 </div>
-                <div className="leclistdet_comment">
-                  <img
-                    src={commentbig}
-                    alt=""
-                    className="leclistdet_comment_icon"
-                  />
-                  <p className="leclistdet_comment_text">{formatNumber(0)}</p>
+                <div className="leclistdet_comment bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
+              <CommentIcon/>
+                  <p className="leclistdet_comment_text text-color-primary">{formatNumber(0)}</p>
                 </div>
-                {/* <div className="leclistdet_download">
-                  <img
-                    src={download}
-                    alt=""
-                    className="leclistdet_download_icon"
-                  />
-                </div> */}
+             
               </div>
             </div>
           </div>
-          <p className="leclistdet_head_right_text2">
-            {`${querieddata[0]?.name  || "Unknown"}`}
-            <span className="braces">
-              (<span className="braces_text">{playlistlectures?.length}</span>)
+          <p className="leclistdet_head_right_text2 text-color">
+            {`${querieddata[0]?.name || "Unknown"}`}
+            <span className="braces text-color">
+              (
+              <span className="text-color braces_text">
+                {playlistlectures?.length}
+              </span>
+              )
             </span>
           </p>
           {/* ------------------------------------ mobile view -------------------------------------- */}
@@ -299,7 +292,7 @@ const PlaylistDetail = () => {
 
               <div className="mob_like">
                 <div className="leclistdet_head_mob_head">
-                  {querieddata[0]?.name  || "Unknown"}
+                  {querieddata[0]?.name || "Unknown"}
                 </div>
                 {/**
                  
@@ -321,12 +314,12 @@ const PlaylistDetail = () => {
             </div>
             <div className="listrank_and_listblack_wrap">
               <div className={isVisible ? "listranking_none" : "listranking"}>
-              <MobileFavoriteButton
-                favorites={querieddata[0]?.favorites}
-                id={id}
-                type={"playlist"}
-                refetch={refetch}
-               />
+                <MobileFavoriteButton
+                  favorites={querieddata[0]?.favorites}
+                  id={id}
+                  type={"playlist"}
+                  refetch={refetch}
+                />
                 <div
                   onClick={(e) => {
                     sharePlaylist(e);

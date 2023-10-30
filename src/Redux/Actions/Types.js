@@ -26,3 +26,4 @@ export const GET_REPEAT = "GET_REPEAT";
 export const GET_SEARCH_RECORD = "GET_SEARCH_RECORD";
 export const GET_SEARCH_DATA = "GET_SEARCH_DATA";
 export const GET_SEARCH_OPTIONS = "GET_SEARCH_OPTIONS";
+export const SET_THEME = "SET_THEME";

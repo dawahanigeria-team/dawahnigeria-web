@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import SearchOptions from "../../pages/searchPage/searchOptions";
 import { RECO1, RECO2, SEARCH } from "../../utils/routes/constants";
+import ThemeDropDown from "../UI/themedropdown/themeDropDown";
 const SideNav = ({ res, handleSideBar, setisOpen }) => {
 
   const navigate = useNavigate();
@@ -25,28 +26,29 @@ const SideNav = ({ res, handleSideBar, setisOpen }) => {
 
 
   return (
-    <div className="sidenav_wrapper">
+    <div className="sidenav_wrapper bg-background border-r dark:border-r-0 shadow-md">
       <div className="sidenav_logo">
         <Link to="/">
           <img src={Logo} alt="logo" />
         </Link>
+        <ThemeDropDown/>
       </div>
       {currentUser?.id && <div className="logout">
         <button
         onClick={handleLogout}
-        className="logout_btn">Logout</button>
+        className="logout_btn border border-border text-color hover:text-color-foreground ">Logout</button>
       </div>}
       <div className="sidenav_auth">
         <div className="sidenav_avatar">
           <img  src={avatar} alt="avatar" />
         </div>
         {!currentUser?.id && (
-          <div className="sidenav_auth_text">
+          <div className="sidenav_auth_text ">
             <p
               onClick={() => {
                 navigate("/auth/login");
               }}
-              className="sidenav_auth_text1"
+              className="sidenav_auth_text1 text-color dark:hover:text-[#ddff00] hover:text-color-foreground"
             >
               Log in/
             </p>
@@ -54,19 +56,19 @@ const SideNav = ({ res, handleSideBar, setisOpen }) => {
               onClick={() => {
                 navigate("/auth/signup");
               }}
-              className="sidenav_auth_text2"
+              className="sidenav_auth_text2 text-color dark:hover:text-[#ddff00] hover:text-color-foreground"
             >
               Sign Up
             </p>
           </div>
         )}
         {currentUser?.id && (
-          <div className="user_name">{currentUser?.username?.split(" ")[0] || currentUser?.username}</div>
+          <div className="user_name text-color dark:hover:text-[#ddff00] hover:text-color-foreground">{currentUser?.username?.split(" ")[0] || currentUser?.username}</div>
         )}
       </div>
     {pathname !== SEARCH && <div>
         <div className="sidenav_lectures">
-          <h1 className="sidenav_lectures_header">Lectures</h1>
+          <h1 className="sidenav_lectures_header text-muted">Lectures</h1>
           {lectures.map(({ icon, id, link, name }) => {
             return (
               <IconText
@@ -82,7 +84,7 @@ const SideNav = ({ res, handleSideBar, setisOpen }) => {
           })}
         </div>
         <div className="sidenav_library">
-          <h1 className="sidenav_library_header">Library</h1>
+          <h1 className="sidenav_library_header text-muted">Library</h1>
           {library.map(({ icon, id, link, name }) => {
             return (
               <IconText
@@ -98,7 +100,7 @@ const SideNav = ({ res, handleSideBar, setisOpen }) => {
           })}
         </div>
         <div className="sidenav_Buzz">
-          <h1 className="sidenav_Buzz_header">Buzz</h1>
+          <h1 className="sidenav_Buzz_header text-muted">Buzz</h1>
           <IconText
             icon={<RiAwardFill className="icon0 icon" />}
             id={11}
@@ -109,7 +111,7 @@ const SideNav = ({ res, handleSideBar, setisOpen }) => {
           />
         </div>
         <div className="sidenav_podcast">
-          <h1 className="sidenav_podcast_header">Podcast</h1>
+          <h1 className="sidenav_podcast_header text-muted">Podcast</h1>
           <IconText
             icon={<RiAwardFill className="icon0 icon" />}
             id={12}

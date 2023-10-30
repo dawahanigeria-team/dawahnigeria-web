@@ -85,15 +85,15 @@ const Landing = () => {
   const [sliders, recentlyPosted, specialFeatures, recentlyviewed] =
     useLandingPageHook(id, page, setisrecent, setcurPlay);
 
-  const specialFeat = specialFeatures?.data?.flatMap((val) => [
+  const specialFeat =  specialFeatures?.data?.flatMap((val) => [
     { name: val.name, more: val.more },
   ]);
-  //console.log({ sliders, recentlyPosted, specialFeatures, recentlyviewed });
+  //console.log({  specialFeatures, specialFeat });
 
   return (
     <Container>
       <HeadMeta title="Welcome to Dawah Nigeria - Home of Islamic resources" />
-      <div className="landing_wrapper px-[2%] max-[615px]:py-[5%] py-[8%] min-[690px]:py-[2%]">
+      <div className="landing_wrapper px-[2%]  max-[615px]:py-[5%] py-[8%] min-[690px]:py-[2%]">
         {sliders?.data?.length > 1 ? (
           <>
             <div className="carousel  h-[250px] min-[950px]:h-[250px] min-[1050px]:h-[250px] min-[1283px]:h-[300px]">

@@ -5,9 +5,9 @@ import headpmobile from "../../../src/assets/svg/headpmobile.svg";
 import sharebig from "../../../src/assets/svg/boom-share.svg";
 import plus from "../../../src/assets/svg/boom-addplay.svg";
 import pmobile from "../../../src/assets/svg/playmobile.svg";
-import dot from "../../../src/assets/svg/threedot.svg";
+
 import { SlShare } from "react-icons/sl";
-import dmobile from "../../../src/assets/svg/boom-download.svg";
+import {BsThreeDotsVertical} from 'react-icons/bs'
 import { useNavigate } from "react-router-dom";
 
 import Add_playlist from "../../pages/add_playlist/AddPlaylist";
@@ -192,8 +192,8 @@ function MusicList({
   //console.log("audioid @@@@@@@@@@@", audioId);
 
   return (
-    <div className="musicslist_wrapper">
-      <div className="table">
+    <div className="musicslist_wrapper dark:font-light font-medium">
+      <div className="table text-color-primary">
         <div
           onClick={() => {
             setinitial(false);
@@ -207,7 +207,7 @@ function MusicList({
               getaudioData({ endpoint_url, currentPage, controlData, navName })
             );
           }}
-          className={audioId === nid ? "td nowplaying" : "td"}
+          className={audioId === nid ? "td bg-hover nowplaying" : "td hover:bg-hover"}
         >
           <div className="tr">
             <p className={audioId === nid ? "num hide" : "num"}>{id + 1}</p>
@@ -273,7 +273,7 @@ function MusicList({
                   }}
                   className="likeys_img"
                 >
-                  <SlShare className="" />
+                  <SlShare className="text-color" />
                 </span>
 
                 <AudioDownloadModal
@@ -319,7 +319,7 @@ function MusicList({
                 <button className="likeys_img">
                   <img className="likeys_img_sz" src={headpmobile} alt="" />
                 </button>
-                <span className="likeys_text">{formatNumber(views)}</span>
+                <span className="likeys_text text-color-primary">{formatNumber(views)}</span>
               </div>
 
               <div
@@ -335,12 +335,12 @@ function MusicList({
             <div className="wrap_text">
               <div className="title_wrap">
                 <Marquee pauseOnHover={true}>
-                  <div className="texta">{title}</div>
+                  <div className="texta text-color-primary">{title}</div>
                 </Marquee>
               </div>
               <div className="lect_name_wrap">
                 <Marquee pauseOnHover={true}>
-                  <div className="textb">{lecturer}</div>
+                  <div className="textb text-color-primary">{lecturer}</div>
                 </Marquee>
               </div>
             </div>
@@ -351,7 +351,7 @@ function MusicList({
               nid={nid}
               className="likeys_img_left"
               triggerInnerChild={
-                <img className="likeys_img_sz_left" src={dmobile} alt="" />
+                <DownloadIcon />
               }
             />
 
@@ -362,7 +362,7 @@ function MusicList({
               }}
               className="likeys_img_left"
             >
-              <img className="likeys_img_sz_left" src={dot} alt="" />
+               <BsThreeDotsVertical className="text-[22px] text-color-primary" />
               <div
                 className={
                   more ? " left-[-100px] absolute min-w-max h-fit" : "hidden"
@@ -379,7 +379,7 @@ function MusicList({
                   onClick={(e) => {
                     e.stopPropagation();
                   }}
-                  className="bg-black z-[200] relative rounded-sm space-y-2 p-1"
+                  className="bg-background shadow-lg z-[200] relative rounded-sm space-y-2 p-1"
                 >
                   <span
                     onClick={(e) => {

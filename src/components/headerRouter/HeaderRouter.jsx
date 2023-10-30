@@ -6,14 +6,14 @@ import { useNavigate } from "react-router-dom";
 const HeaderRouter = ({ link, title }) => {
   const navigate = useNavigate();
   return (
-    <div className="hroute_title_res_wrap ">
+    <div className="hroute_title_res_wrap bg-backround">
       <MdOutlineKeyboardArrowLeft
         onClick={() => {
           navigate(link || -1);
         }}
-        className="hroute_title_res_icon"
+        className="hroute_title_res_icon text-color"
       />
-      <p className="hroute_title_res_text">{title || "Unknown"}</p>
+      <p className="hroute_title_res_text text-color">{title || "Unknown"}</p>
 
       <div className="hides"></div>
     </div>

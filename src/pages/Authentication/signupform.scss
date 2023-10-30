@@ -17,7 +17,7 @@
     font-size: 14px;
   }
   line-height: 1%;
-  color: white;
+
   &::placeholder {
     font-family: "Poppins";
     font-style: normal;
@@ -48,7 +48,7 @@
     font-size: 14px;
   }
   line-height: 1%;
-  color: white;
+
   &::placeholder {
     font-family: "Poppins";
     font-style: normal;
@@ -138,16 +138,12 @@
         position: absolute;
         top: 46px;
         left: -1px;
-        border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px;
-        border-top: 0px;
-        border: 1px solid white;
-        background: white;
+        
 
         .drops {
           width: 100%;
           @include dropdown_style;
-          padding: 0% 3%;
+          padding:4% 3%;
         }
         .dw {
           background: white;
@@ -175,7 +171,7 @@
         font-size: 15.5294px;
         line-height: 22px;
         padding-left: 1rem;
-        color: white;
+      
         @media screen and (max-width: 600px) {
           font-size: 14px;
         }
@@ -210,7 +206,7 @@
         font-size: 15.5294px;
         line-height: 22px;
         padding-left: 1rem;
-        color: white;
+   
 
         @media screen and (max-width: 600px) {
           font-size: 14px;
@@ -375,11 +371,11 @@
           line-height: 1%;
         }
         .signupform_terms_text1 {
-          color: #d4d4d4;
+          
           margin: unset;
         }
         .signupform_terms_text2 {
-          color: #d6ff00;
+        
           cursor: pointer;
           margin: unset;
         }
@@ -402,7 +398,7 @@
       }
 
       line-height: 1%;
-      color: #d4d4d4;
+    
       align-self: center;
       margin-bottom: 4%;
     }

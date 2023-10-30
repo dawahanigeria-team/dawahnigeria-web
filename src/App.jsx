@@ -73,9 +73,10 @@ import {
 } from "./utils/routes/constants";
 import ForgotPassword from "./pages/forgotpassword/forgotPassword";
 import { usePageTracking } from "./utils/tracking";
+import { useThemeHook } from "./hooks";
 export const AudioContext = createContext();
 export const SearchContext = createContext();
-
+export const ThemeProvider = createContext()
 // Create a client
 const queryClient = new QueryClient();
 
@@ -106,8 +107,11 @@ const App = () => {
   const [lecturerId, setLecturerId] = useState([]);
   const [albumId, setAlbumId] = useState([]);
   const [loading, setLoading] = useState(false);
+ const {darkQuery} =  useThemeHook()
 
-  //Detect if user has interacted with the page
+ 
+ 
+ //Detect if user has interacted with the page
   useEffect(() => {
     const handleClick = () => {
       setinitial(false);
@@ -174,6 +178,7 @@ const App = () => {
               setLoading,
             }}
           >
+          <ThemeProvider.Provider  value={{darkQuery}}>
             <Routes>
               <Route path="/auth" element={<Auth />}>
                 <Route path="/auth/login" element={<LoginForm />} />
@@ -216,6 +221,7 @@ const App = () => {
               <Route path="/" element={<Navigate to="/dawahcast" />} />
               <Route path="/dawahcast" element={<Layout />} />
             </Routes>
+            </ThemeProvider.Provider>
           </AudioContext.Provider>
         </SearchContext.Provider>
       </QueryClientProvider>

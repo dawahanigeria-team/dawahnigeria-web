@@ -22,7 +22,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  background: #090909;
+  
   mix-blend-mode: normal;
 
   //border: 1px solid rgba(205, 205, 205, 0.1);
@@ -42,7 +42,7 @@
         cursor: pointer;
         @media screen and (max-width: 890px) {
           display: block;
-          color: #cfcfcf;
+        
           font-size: 2rem;
         }
       }
@@ -96,16 +96,17 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: center;
+      border-radius:30px;
       .nav_res_download {
         display: none;
-        background-color: #090909;
+       
         flex-direction: row;
-        color: #cfcfcf;
+       
         justify-content: center;
         align-items: center;
         padding: 4px 8px;
-        border: 1px solid #cfcfcf;
+      
         border-radius: 32px;
         cursor: pointer;
         @media screen and (max-width: 1035px) {
@@ -113,7 +114,7 @@
           margin-right: 0;
         }
         @media screen and (max-width: 890px) {
-          margin-right: 2rem;
+         
         }
       }
     }

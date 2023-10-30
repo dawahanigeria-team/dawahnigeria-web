@@ -68,7 +68,7 @@ const SimilarAudio = ({
   return (
     <div className="similarWidget_wrapper">
       <div className="similarWidget_top">
-        <p className="similarWidget_top_heading">{heading}</p>
+        <p className="similarWidget_top_heading text-foreground">{heading}</p>
         <div
           onClick={() => {
             navigate(MORE, {
@@ -86,8 +86,8 @@ const SimilarAudio = ({
           }}
           className="similarWidget_more"
         >
-          <p className="similarWidget_more_text">more</p>
-          <FiChevronsRight className="similarWidget_more_icon" />
+          <p className="similarWidget_more_text text-foreground dark:text-[#ddff2b]">more</p>
+          <FiChevronsRight className="similarWidget_more_icon text-foreground dark:text-[#ddff2b]" />
         </div>
       </div>
       <div className="overflow_hidden_wrapper">

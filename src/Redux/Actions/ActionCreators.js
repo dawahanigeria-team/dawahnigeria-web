@@ -51,6 +51,13 @@ const getaudioId = (data) => {
   };
 };
 
+const setTheme = (data) => {
+  return {
+    type: type.SET_THEME,
+    payload: data
+  }
+}
+
 const updateAudioShareCount = () => {
   return {
     type: type.UPDATE_AUDIO_SHARE_COUNT,
@@ -268,4 +275,5 @@ export {
   getSearchRecord,
   getSearchData,
   getSearchOptions,
+  setTheme
 };

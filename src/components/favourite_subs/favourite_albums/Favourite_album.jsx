@@ -90,7 +90,7 @@ const Favourite_album = ({ setCount2 }) => {
       {(!currentUser?.id || myAlb?.length === 0) && (
         <div className="favalbum_img_wrap">
           <img src={empty} alt="empty" />
-          <p className="favalbum_text">
+          <p className="favalbum_text text-foreground">
             You haven’t added any Album. Add an album here.
           </p>
           <button

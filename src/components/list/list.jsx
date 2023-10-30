@@ -15,6 +15,7 @@ import { SlShare } from "react-icons/sl";
 import dmobile from "../../../src/assets/svg/boom-download.svg";
 import { Link, useNavigate } from "react-router-dom";
 import Add_playlist from "../../pages/add_playlist/AddPlaylist";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { toast } from "react-hot-toast";
 import { LECTURE, RESOURCE_PERSON } from "../../utils/routes/constants";
 import {
@@ -179,12 +180,10 @@ function List({
     dispatch(showaddPlaylist(true));
   };
 
-
-
   //console.log(getFavs);
   return (
-    <div className="list_wrapper">
-      <div className="table">
+    <div className="list_wrapper dark:font-light font-medium">
+      <div className="table text-color-primary">
         <div
           onClick={() => {
             dispatch(getCount(id));
@@ -199,7 +198,9 @@ function List({
             );
           }}
           id="player"
-          className={audioId === nid ? "td nowplaying" : "td"}
+          className={
+            audioId === nid ? "td bg-hover nowplaying" : "td hover:bg-hover"
+          }
         >
           <div className="tr">
             <p className={audioId === nid ? "num hide" : "num"}>{id + 1}</p>
@@ -238,7 +239,7 @@ function List({
                   {title}
                 </div>
               </div>
-              <div className="like_others">
+              <div className="like_others text-color">
                 <div className="likeys">
                   <button className="likeys_img">
                     <img className="likeys_img_sz" src={headp} alt="" />
@@ -315,7 +316,7 @@ function List({
                   }}
                   className="likeys_img"
                 >
-                  <SlShare className="" />
+                  <SlShare className="text-color" />
                 </button>
 
                 <AudioDownloadModal
@@ -334,7 +335,7 @@ function List({
       </div>
 
       {/********************mobile************** */}
-      <div className="mobile_list">
+      <div className="mobile_list text-color-primary">
         <div
           onClick={() => {
             navigate(url);
@@ -357,10 +358,12 @@ function List({
                 />
               </div>
               <div className="likeys">
-                <button className="likeys_img">
+                <button className="text-color-primary likeys_img dark:text-[#ddff2b] hover:text-color-foreground">
                   <img className="likeys_img_sz" src={headpmobile} alt="" />
                 </button>
-                <span className="likeys_text">{formatNumber(views)}</span>
+                <span className="likeys_text text-[#e0e0e0]">
+                  {formatNumber(views)}
+                </span>
               </div>
               <div
                 className={
@@ -380,10 +383,10 @@ function List({
               </div>
               <div className="lect_name_wrap">
                 <Marquee pauseOnHover={true}>
-                  <div className="textb">{lecturer}</div>
+                  <div className="textb text-color-primary">{lecturer}</div>
                 </Marquee>
               </div>
-              <div className="likey_wrap">
+              <div className="likey_wrap text-color-primary">
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
@@ -407,7 +410,9 @@ function List({
                       <img className="likeys_img_sz" src={love} alt="" />
                     )}
                   </button>
-                  <span className="likeys_text">{formatNumber(sumofFav)}</span>
+                  <span className="likeys_text text-foreground">
+                    {formatNumber(sumofFav)}
+                  </span>
                 </div>
                 <div className="likeys">
                   <button className="likeys_img">
@@ -432,7 +437,7 @@ function List({
               nid={nid}
               className="likeys_img_left"
               triggerInnerChild={
-                <img className="likeys_img_sz_left" src={dmobile} alt="" />
+                <DownloadIcon />
               }
             />
 
@@ -443,7 +448,7 @@ function List({
               }}
               className="likeys_img_left"
             >
-              <img className="likeys_img_sz_left" src={dot} alt="" />
+              <BsThreeDotsVertical className="text-[22px] text-color-primary" />
 
               <div
                 className={

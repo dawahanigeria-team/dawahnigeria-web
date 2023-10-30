@@ -32,7 +32,7 @@
     right: 0;
     padding: unset;
     z-index: 10;
-    background: #090909;
+  
   }
   .new_title_res_wrap {
     @media screen and (min-width: 1221px) {
@@ -45,21 +45,7 @@
     margin-bottom: 2rem;
     justify-content: flex-start;
 
-    .new_title_res_icon {
-      font-size: 40px;
-      color: #d4d4d4;
-      cursor: pointer;
-    }
-    .new_title_res_text {
-      font-family: "Poppins";
-      font-style: normal;
-      font-weight: 500;
-      font-size: 20px;
-      line-height: 30px;
-      color: #d4d4d4;
-      grid-column: span 2;
-      margin-left: 1.5rem;
-    }
+   
   }
   .new_title_wrap {
     @media screen and (max-width: 600px) {
@@ -125,7 +111,7 @@
   }
   .table {
     @include mobile_hide;
-    color: #e0e0e0;
+    
     font-family: "Poppins";
     width: 100%;
     font-size: 14px;
@@ -142,7 +128,7 @@
     gap: 0.5em;
     width: 100%;
     font-family: "Poppins";
-    color: #cfcfcf;
+  
     font-size: 12px;
 
     .header {

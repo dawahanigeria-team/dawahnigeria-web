@@ -17,7 +17,7 @@
     font-size: 14px;
   }
   line-height: 1%;
-  color: white;
+ 
   &::placeholder {
     font-family: "Poppins";
     font-style: normal;
@@ -89,6 +89,7 @@
   flex-direction: column;
   .header {
     font-family: "Poppins";
+    margin-bottom: 2rem;
   }
   .signuplang_name {
     @include input_style;
@@ -99,13 +100,10 @@
     }
   }
   .active {
-    background-color: rgba(255, 255, 255, 1);
+   
     color: black;
   }
-  .not_active {
-    background-color: rgba(255, 255, 255, 0);
-    color: white;
-  }
+  
 
   .continue_btn {
     display: flex;

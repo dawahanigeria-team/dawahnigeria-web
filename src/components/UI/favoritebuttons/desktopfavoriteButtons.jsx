@@ -5,6 +5,7 @@ import { formatNumber } from "../formatter";
 import { useAddFavoritesHook, useFetchFavoritesHook } from "../../../hooks";
 import { useSelector } from "react-redux";
 import toast, { LoaderIcon } from "react-hot-toast";
+import { AddFavourites } from "../../svgcomponent/svgComponent";
 export function DesktopFavoriteButton({ favorites, id, type, refetch }) {
   const [isdisabled, setdisabled] = useState(false);
 
@@ -58,20 +59,20 @@ export function DesktopFavoriteButton({ favorites, id, type, refetch }) {
         setdisabled(true);
       }}
       disabled={isdisabled}
-      className="leclistdet_fav"
+      className="leclistdet_fav bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
     >
       <button className="fav_btn">
         {favoriteCount[type]?.includes(parseInt(id)) ? (
-          <MdFavorite className="leclistdet_fav_icon_active" />
+          <MdFavorite className="leclistdet_fav_icon_active dark:text-[#ddff2b] text-foreground" />
         ) : (
-          <img src={favbig} alt="" className="leclistdet_fav_icon" />
+          <AddFavourites/>
         )}
       </button>
 
       {isLoading ? (
         <LoaderIcon className="text-sm animate-spin" />
       ) : (
-        <p className="leclistdet_fav_text">{formatFavorite}</p>
+        <p className="leclistdet_fav_text text-color-primary">{formatFavorite}</p>
       )}
     </button>
   );

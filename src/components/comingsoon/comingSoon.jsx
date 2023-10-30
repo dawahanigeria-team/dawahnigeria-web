@@ -16,7 +16,7 @@ const ComingSoon = ({ comingSoon, setcomingSoon }) => {
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className="absolute inset-0 m-auto bg-[#1E1E1E] py-6 space-y-6  flex-col text-white rounded-md w-[80%] min-[615px]:w-[350px] h-[250px] flex items-center justify-center"
+        className="absolute inset-0 m-auto bg-background shadow-lg py-6 space-y-6  flex-col text-foreground rounded-md w-[80%] min-[615px]:w-[350px] h-[250px] flex items-center justify-center"
       >
         <div
           aria-hidden="true"

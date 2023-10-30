@@ -28,7 +28,7 @@ const fetchData = () => {
  setText(inputValue)
 }
   return (
-    <div className="search_wrapper">
+    <div className="search_wrapper bg-input">
       <FiSearch className="search_icon" />
       <input
         onChange={(e) => {
@@ -41,7 +41,7 @@ const fetchData = () => {
         }}
         value={inputValue}
         type="search"
-        className="search_input"
+        className="search_input text-color"
         placeholder="Search"
       />
     </div>

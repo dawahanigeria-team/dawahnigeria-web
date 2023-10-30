@@ -16,7 +16,7 @@
 }
 
 @mixin dfco_icon_size_res {
-  color: white;
+ 
   font-size: 25px;
   @media screen and (max-width: 615px) {
     font-size: 20px;
@@ -38,6 +38,18 @@
       height: 50%;
     }
     filter: blur(200px);
+    z-index: 0;
+  }
+  .audiodetail_hero_light {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 28%;
+    @media screen and (max-width: 1096px) {
+      height: 50%;
+    }
+    filter: blur(800px);
     z-index: 0;
   }
   .audiodetail_container {
@@ -79,7 +91,7 @@
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
-        color: #ffffff;
+       
         @media screen and (max-width: 615px) {
           font-size: 14px;
         }
@@ -141,7 +153,7 @@
             font-size: 16px;
           }
           line-height: 24px;
-          color: #ffffff;
+        
           max-width: 400px;
         }
         .audiodetail_head_right_text {
@@ -159,7 +171,7 @@
               font-size: 14px;
             }
             line-height: 20px;
-            color: #d4d4d4;
+           
           }
           .audiodetail_head_right_text2 {
             margin: unset;
@@ -171,7 +183,7 @@
               font-size: 14px;
             }
             line-height: 20px;
-            color: #d4d4d4;
+         
           }
         }
 
@@ -223,7 +235,7 @@
                 @media screen and (max-width: 615px) {
                   font-size: 20px;
                 }
-                color: #cfcfcf;
+               
               }
               .leclistdet_fav_icon_active {
                 font-size: 25px;
@@ -231,7 +243,7 @@
                 @media screen and (max-width: 615px) {
                   font-size: 20px;
                 }
-                color: #ddff2b;
+                
               }
             }
             .leclistdet_fav_text {
@@ -243,7 +255,7 @@
                 font-size: 12px;
               }
               line-height: 24px;
-              color: #cfcfcf;
+              
               margin: unset;
             }
           }
@@ -259,7 +271,7 @@
               @media screen and (max-width: 615px) {
                 font-size: 20px;
               }
-              color: #cfcfcf;
+             
             }
             .audiodetail_share_text {
               font-family: "Nunito Sans";
@@ -270,10 +282,11 @@
                 font-size: 12px;
               }
               line-height: 24px;
-              color: #cfcfcf;
+              
               margin: unset;
             }
           }
+        
           .audiodetail_comment {
             background-color: #ffffff17;
             @include button_style;
@@ -286,7 +299,7 @@
               @media screen and (max-width: 615px) {
                 font-size: 20px;
               }
-              color: #cfcfcf;
+              
             }
             .audiodetail_comment_text {
               font-family: "Nunito Sans";
@@ -297,7 +310,7 @@
                 font-size: 12px;
               }
               line-height: 24px;
-              color: #cfcfcf;
+            
               margin: unset;
             }
           }
@@ -313,7 +326,7 @@
               @media screen and (max-width: 615px) {
                 font-size: 20px;
               }
-              color: #cfcfcf;
+              
             }
             .audiodetail_download_text {
               font-family: "Nunito Sans";
@@ -324,13 +337,14 @@
                 font-size: 12px;
               }
               line-height: 24px;
-              color: #cfcfcf;
+            
               margin: unset;
             }
           }
         }
       }
     }
+  
     // -------------------------- Audio Detial play -------------------
     .audiodetail_play_contain {
       background: #000;
@@ -519,7 +533,7 @@
           font-size: 16px;
           @include font_mobile;
           line-height: 24px;
-          color: #cfcfcf;
+        
           margin: unset;
         }
         .audiodetail_info_value {
@@ -529,12 +543,10 @@
           font-size: 16px;
           @include font_mobile;
           line-height: 24px;
-          color: #868686;
+         
           margin: unset;
         }
-        .audiodetail_info_value:hover {
-          color:#d6ff00;
-        }
+     
       }
     }
     .audiodetail_summary {
@@ -553,7 +565,7 @@
           font-size: 18px;
         }
         line-height: 32px;
-        color: #ffffff;
+       
         margin: unset;
       }
       .audiodetail_summary_body {
@@ -563,7 +575,7 @@
         font-size: 16px;
         @include font_mobile;
         line-height: 24px;
-        color: #ffffff;
+       
         width: 300px;
         text-align: justify;
         overflow: hidden;
@@ -661,7 +673,7 @@
           font-size: 16px;
           @include font_mobile;
           line-height: 20px;
-          color: #d4d4d4;
+         
           text-align: center;
         }
         .audiores_text2 {
@@ -672,7 +684,7 @@
           font-size: 16px;
           @include font_mobile;
           line-height: 20px;
-          color: #d4d4d4;
+        
         }
       }
       .audiores_scroll_wrap {
@@ -690,7 +702,7 @@
           font-size: 16px;
           @include font_mobile;
           line-height: 20px;
-          color: #d4d4d4;
+        
         }
 
         .range_progress {
@@ -778,7 +790,7 @@
           font-size: 16px;
           @include font_mobile;
           line-height: 20px;
-          color: #d4d4d4;
+        
         }
       }
       .audiores_play_control_wrap {
@@ -792,7 +804,7 @@
           margin-top: 1rem;
         }
         .audiores_play_control_repeat {
-          color: white;
+        
           font-size: 20px;
           @media screen and (max-width: 615px) {
             font-size: 18px;
@@ -800,7 +812,7 @@
           cursor: pointer;
         }
         .audiores_play_control_repeat_active {
-          color: #ddff2b;
+         
           font-size: 20px;
           @media screen and (max-width: 615px) {
             font-size: 18px;
@@ -818,7 +830,7 @@
             padding: 0;
             margin: 0;
             .audiores_play_back {
-              color: white;
+             
               font-size: 20px;
               @media screen and (max-width: 615px) {
                 font-size: 16px;
@@ -835,14 +847,14 @@
             height: 42px;
             width: 42px;
             border-radius: 50%;
-            background-color: #ddff2b;
+            
             .audiores_play_start_icon {
               font-size: 22px;
               cursor: pointer;
             }
           }
           .audiores_play_forward {
-            color: white;
+          
             font-size: 20px;
             @media screen and (max-width: 615px) {
               font-size: 16px;
@@ -851,7 +863,7 @@
           }
         }
         .audiores_play_control_list {
-          color: white;
+         
           font-size: 20px;
           cursor: pointer;
         }
@@ -872,7 +884,7 @@
           @include dfco_icon_size_res;
         }
         .audiores_download_active {
-          color: #d6ff00;
+         
           font-size: 25px;
           @media screen and (max-width: 615px) {
             font-size: 20px;
@@ -889,7 +901,7 @@
             @media screen and (max-width: 615px) {
               font-size: 20px;
             }
-            color: #cfcfcf;
+           
           }
           .audiores_fav_active {
             font-size: 25px;
@@ -897,7 +909,7 @@
             @media screen and (max-width: 615px) {
               font-size: 20px;
             }
-            color: #ddff2b;
+            
           }
         }
         .audiores_comment {
@@ -968,12 +980,12 @@
         align-items: flex-start;
         gap: 1rem;
         width: 100%;
-        color: #cfcfcf;
+      
         font-family: "Poppins";
         .audiodetail_info_mob {
           display: flex;
           flex-direction: column;
-          color: #cfcfcf;
+         
           gap: 0rem;
           width: 100%;
           .audiodetail_info_mob_head {
@@ -1098,155 +1110,6 @@
     }
   }
 
-  .similarWidget_wrapper {
-    display: flex;
-    margin-bottom: 1rem;
-    flex-direction: column;
-    width: 100%;
-
-    overflow: hidden;
-    .similarWidget_top {
-      // padding: 0rem 2%;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      z-index: 1;
-      margin-bottom: 1rem;
-      @media screen and (max-width: 615px) {
-        padding: 0rem 0rem;
-        margin-bottom: 0.5rem;
-        width: 100%;
-      }
-      .similarWidget_top_heading {
-        font-family: "Nunito Sans";
-        font-style: normal;
-        font-weight: 615;
-        font-size: 22px;
-        line-height: 42px;
-        display: flex;
-        color: #d4d4d4;
-        margin: unset;
-        @media screen and (max-width: 900px) {
-          font-size: 20px;
-        }
-        @media screen and (max-width: 615px) {
-          font-size: 15px;
-          margin-right: 2px;
-        }
-      }
-      .similarWidget_more {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        cursor: pointer;
-        .similarWidget_more_text {
-          font-family: "Nunito Sans";
-          font-style: normal;
-          font-weight: 400;
-          font-size: 16px;
-          @media screen and (max-width: 615px) {
-            font-size: 14px;
-          }
-          line-height: 24px;
-          display: flex;
-          align-items: center;
-          color: #d6ff00;
-          margin: unset;
-        }
-        .similarWidget_more_icon {
-          color: #d6ff00;
-          font-size: 25px;
-          @media screen and (max-width: 615px) {
-            font-size: 20px;
-          }
-          margin-left: 0.2rem;
-        }
-      }
-    }
-    .overflow_hidden_wrapper,
-    .overflow_hidden_wrapper_lect,
-    .overflow_hidden_wrapper_talb {
-      width: 100%;
-      overflow-x: hidden;
-      position: relative;
-
-      .prev,
-      .next {
-        cursor: pointer;
-        position: absolute;
-        // top: 30px;
-        //width: auto;
-        padding: 1px;
-        color: white;
-        font-weight: bold;
-        bottom: 95px;
-        z-index: 90;
-        //padding:3px 12px;
-        background: rgba(0, 0, 0, 0.6);
-        //font-size: 18px;
-        transition: 0.7s ease;
-        // border-radius: 50%;
-        text-decoration: none;
-        user-select: none;
-      }
-      .next {
-        right: 7px;
-        @media screen and (max-width: 615px) {
-          display: none;
-        }
-      }
-      .prev {
-        left: 15px;
-        @media screen and (max-width: 615px) {
-          display: none;
-        }
-      }
-
-      .prev_none {
-        display: none;
-      }
-      .next_none {
-        display: none;
-      }
-    }
-    .overflow_auto_wrapper::-webkit-scrollbar,
-    .overflow_auto_wrapper_lect::-webkit-scrollbar,
-    .overflow_auto_wrapper_talb::-webkit-scrollbar {
-      display: none;
-    }
-    .overflow_auto_wrapper {
-      @media screen and (max-width: 615px) {
-        gap: 0.5em;
-        // padding-right:2em;
-        //padding-left:4px;
-      }
-    }
-    .overflow_auto_wrapper,
-    .overflow_auto_wrapper_lect,
-    .overflow_auto_wrapper_talb {
-      width: 105%;
-      display: flex;
-      // gap:1em;
-      // padding-right:4em;
-      //padding-left:1em;
-
-      flex-direction: row;
-      overflow: auto;
-
-      .similarWidget_album_item {
-        cursor: pointer;
-      }
-      .similarWidget_album_item {
-        width: fit-content !important;
-        height: fit-content !important;
-      }
-      .similarWidget_album_item_talb {
-        @include hide_for_mobile;
-      }
-    }
-  }
 
   .audiodetail_comments {
     display: flex;

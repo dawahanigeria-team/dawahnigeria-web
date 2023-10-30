@@ -82,9 +82,9 @@ const LoginForm = () => {
             required
             value={email}
             id="email"
-            className="loginform_name"
+            className="loginform_name text-foreground "
           />
-          <div className="loginform_password_wrap">
+          <div className="loginform_password_wrap ">
             <input
               onChange={(e) => {
                 handleInput(e);
@@ -95,21 +95,21 @@ const LoginForm = () => {
               required
               value={password}
               id="password"
-              className="loginform_password"
+              className="loginform_password text-foreground "
             />
             {show === "password" && (
               <div className="loginform_password_icon_show_wrap">
                 <AiFillEye
                   onClick={() => setShow("text")}
-                  className="loginform_password_icon_show"
+                  className="loginform_password_icon_show text-color"
                 />
               </div>
             )}
             {show !== "password" && (
-              <div className="loginform_password_icon_hide_wrap">
+              <div className="loginform_password_icon_hide_wrap ">
                 <AiFillEyeInvisible
                   onClick={() => setShow("password")}
-                  className="loginform_password_icon_hide"
+                  className="loginform_password_icon_hide text-color"
                 />
               </div>
             )}
@@ -130,7 +130,7 @@ const LoginForm = () => {
           </button>
         </div>
 
-        <span className="loginform_or">- or -</span>
+        <span className="loginform_or text-color">- or -</span>
 
         <div className=" login_socials inset-x-0 w-full items-center mx-auto h-fit">
           <div className="hidden">

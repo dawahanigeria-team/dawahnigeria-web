@@ -193,7 +193,7 @@ const My_playlist = () => {
         title={`My playlist on Dawah Nigeria - Home of islamic resources`}
       />
       <div className="myplay_wrapper">
-        <div className="myplay_header_link">
+        <div className="myplay_header_link bg-background">
           <HeaderRouter title={"My Playlist"} />
         </div>
 

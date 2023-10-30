@@ -4,29 +4,25 @@ import React, {
   useRef,
   useCallback,
   useContext,
-  useMemo,
 } from "react";
 import Container from "../../components/container/Container";
 import arrow from "../../assets/svg/arrowleft.svg";
 import sharebold from "../../assets/svg/sharebold.svg";
-import adfav from "../../../src/assets/svg/adfav.svg";
 import combold from "../../assets/svg/combold.svg";
-import lovebold from "../../assets/svg/lovebold.svg";
 import { CiPlay1 } from "react-icons/ci";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import "./lecturesListDetail.scss";
-import { MdFavorite } from "react-icons/md";
 import MusicList from "../../components/miscList/musicList";
 import MobileList from "../../components/list/mobileList";
 import Loader from "../../components/UI/loader/loader";
-import pmobile from "../../../src/assets/svg/playmobile.svg";
+import { BsFillPlayFill } from "react-icons/bs";
+import {SlShare} from "react-icons/sl"
 import sharebig from "../../../src/assets/svg/boom-share.svg";
 import commentbig from "../../../src/assets/svg/boom-comment.svg";
-import favbig from "../../../src/assets/svg/boom-fav.svg";
 import { formatNumber } from "../../components/UI/formatter";
 import { useSelector, useDispatch } from "react-redux";
 import useaxios from "../../utils/useAxios";
-import { toast } from "react-hot-toast";
+
 import _ from "lodash";
 import CommentBox from "../../components/comment/comment";
 import SimilarAudio from "../../components/similaraudio/similarAudio";
@@ -47,6 +43,7 @@ import { MobileFavoriteButton } from "../../components/UI/favoritebuttons/mobile
 
 import HeadMeta from "../../components/head-meta";
 import { AudioDownloadModal } from "../../components/audioDownloadModal/AudioDownloadModal";
+import { CommentIcon } from "../../components/svgcomponent/svgComponent";
 
 const LecturesListDetail = () => {
   const { id } = useParams();
@@ -55,13 +52,13 @@ const LecturesListDetail = () => {
   const { currentUser, sharedAlbum } = useSelector((state) => state.user);
   const observeEl = useRef();
   const leclistdet = useRef();
-  const [, setsingleData] = useState()
+  const [, setsingleData] = useState();
   const { setinitial } = useContext(AudioContext);
   const [isShare, setisShare] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
   const [audioComment, setaudioComment] = useState();
-
+  const { theme } = useSelector((state) => state.user);
 
   const queryParam = { id };
   const keyParam = { id, page: 1 };
@@ -82,7 +79,6 @@ const LecturesListDetail = () => {
     lectureListDetailApi.getSimilarAlbums
   );
 
-
   useEffect(() => {
     // if (sharedAlbum !== 0) {
     setsingleData((prev) => {
@@ -91,8 +87,6 @@ const LecturesListDetail = () => {
     });
     // }
   }, [sharedAlbum]);
-
-
 
   //////*************handling comment**************** */
 
@@ -175,26 +169,29 @@ const LecturesListDetail = () => {
   };
   return (
     <Container>
-
       <HeadMeta
         title={`${
           lectureTitleExtractor(querieddata?.title, 2) || "Album"
         } on Dawah Nigeria - Home of islamic resources`}
       />
- 
 
       {Array.isArray(querieddata) && (
         <div className="leclistdet_wrapper">
-          <img
-            ref={leclistdet}
-            id="hero"
-            className="leclistdet_hero"
-            src={
-              querieddata[0]?.img ||
-              "https://imagetolink.com/ib/vwea8kukZP.jpeg"
-            }
-            alt="audiohero"
-          />
+          {
+            <img
+              ref={leclistdet}
+              id="hero"
+              className={`${
+                theme === "dark" ? "leclistdet_hero" : "leclistdet_hero_light"
+              }`}
+              src={
+                querieddata[0]?.img ||
+                "https://imagetolink.com/ib/vwea8kukZP.jpeg"
+              }
+              alt="audiohero"
+            />
+          }
+
           <div className="leclistdet_container">
             {/* ------------------------------Desktop------ Bread Crumbs -------------------------------------- */}
 
@@ -207,7 +204,7 @@ const LecturesListDetail = () => {
               >
                 Back/
               </button>
-              <p className="leclistdet_breadcrumb_second">
+              <p className="leclistdet_breadcrumb_second text-foreground">
                 {querieddata[0]?.title || "Unknown"}
               </p>
             </div>
@@ -227,7 +224,7 @@ const LecturesListDetail = () => {
                 />
               </div>
               <div className="leclistdet_head_right">
-                <p className="leclistdet_head_right_head">
+                <p className="leclistdet_head_right_head text-foreground">
                   {lectureTitleExtractor(querieddata[0]?.title, 2)}
                 </p>
                 <div className="leclistdet_head_right_text">
@@ -239,7 +236,7 @@ const LecturesListDetail = () => {
                         alt=""
                       />
                     </div>
-                    <p className="leclistdet_head_right_text1">
+                    <p className="leclistdet_head_right_text1 text-color">
                       {querieddata[0]?.rp_name}
                     </p>
                   </div>
@@ -267,38 +264,35 @@ const LecturesListDetail = () => {
                     onClick={(e) => {
                       shareAlbum(e, id);
                     }}
-                    className="leclistdet_share"
+                    className="leclistdet_share bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
                   >
-                    <img
-                      src={sharebig}
-                      alt=""
-                      className="leclistdet_share_icon"
-                    />
-                    <p className="leclistdet_share_text">
+                  <SlShare className="text-color-primary hover:text-color-foreground dark:hover:text-[#ddff2b] text-[20px]" />
+                    <p className="leclistdet_share_text  text-color-primary">
                       {formatNumber(querieddata[0]?.share || 0)}
                     </p>
                   </div>
-                  <div className="leclistdet_comment">
-                    <img
-                      src={commentbig}
-                      alt=""
-                      className="leclistdet_comment_icon"
-                    />
-                    <p className="leclistdet_comment_text">
+                  <div className="leclistdet_comment bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
+                   <CommentIcon/>
+                    <p className="leclistdet_comment_text  text-color-primary">
                       {formatNumber(querieddata[0]?.comments || 0)}
                     </p>
                   </div>
-                 <AudioDownloadModal
-                 downloads={querieddata[0]?.downloads}
-                 nid={id}
-                 />
+                  <AudioDownloadModal
+                    downloads={querieddata[0]?.downloads}
+                    nid={id}
+                  />
                 </div>
-
               </div>
             </div>
-            <p className="leclistdet_head_right_text2"> Audio
-              <span className="braces">
-                (<span className="braces_text">{formatNumber(querieddata[0]?.lec_no || 0)}</span>)
+            <p className="leclistdet_head_right_text2 text-color">
+              {" "}
+              Audio
+              <span className="braces text-color">
+                (
+                <span className="braces_text text-color">
+                  {formatNumber(querieddata[0]?.lec_no || 0)}
+                </span>
+                )
               </span>
             </p>
             {/* ------------------------------------ mobile view -------------------------------------- */}
@@ -375,7 +369,13 @@ const LecturesListDetail = () => {
                 </div>
               </div>
               <div className="listrank_and_listblack_wrap">
-                <div className={isVisible ? "listranking_none" : "listranking"}>
+                <div
+                  className={
+                    isVisible
+                      ? "listranking_none"
+                      : "listranking bg-black bg-opacity-50"
+                  }
+                >
                   <MobileFavoriteButton
                     favorites={querieddata[0]?.favorites}
                     id={id}
@@ -434,27 +434,28 @@ const LecturesListDetail = () => {
                   </div>
                 </div>
 
-                <div className="listblacks">
+                <div className="listblacks bg-secondary">
                   <div
                     className={
                       isVisible
-                        ? "fixed_icons_listblack p-3"
-                        : "icons_listblack p-3"
+                        ? "fixed_icons_listblack bg-secondary px-2 py-3"
+                        : "icons_listblack bg-secondary py-3 px-2"
                     }
                   >
-                    <div id="player" onClick={playAll} className="play_header">
-                      <div className="play_img_size">
-                        <img
-                          className="play_img_size_sm"
-                          src={pmobile}
-                          alt=""
-                        />
+                    <div
+                      id="player"
+                      onClick={playAll}
+                      className="play_header border-b border-[#cfcfcf] pb-2 w-full"
+                    >
+                      <div className="w-fit h-fit border border-color-primary dark:border-color-primary border-gray-500 p-[2px] rounded-full">
+                        <BsFillPlayFill className="text-[22px] dark:text-color-primary text-gray-500" />
                       </div>
-                      <div className="play_header_text">Play All</div>
+
+                      <p className="dark:text-color-primary text-gray-500 font-medium">
+                        Play All
+                      </p>
                     </div>
                   </div>
-
-                  <div className="mobile_color_vid"></div>
                 </div>
               </div>
             </div>
@@ -463,7 +464,7 @@ const LecturesListDetail = () => {
             <div className="desktop_color_vid"> </div>
             {/* ------------------------------------ Section 3 ends -------------------------------------- */}
 
-            <div className="lecsong_wrapper">
+            <div className="lecsong_wrapper bg-secondary">
               <div className="lect_title_wrap">
                 <div className="lect_title1">
                   <p className="lect_hash">#</p>
