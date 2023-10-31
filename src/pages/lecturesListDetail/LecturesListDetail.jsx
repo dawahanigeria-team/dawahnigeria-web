@@ -82,7 +82,7 @@ const LecturesListDetail = () => {
   useEffect(() => {
     // if (sharedAlbum !== 0) {
     setsingleData((prev) => {
-      console.log({ prevShareCount: prev });
+      //console.log({ prevShareCount: prev });
       return { ...prev, share: prev?.share + 1 };
     });
     // }
