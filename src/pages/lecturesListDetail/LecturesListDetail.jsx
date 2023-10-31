@@ -442,10 +442,10 @@ const LecturesListDetail = () => {
                         : "icons_listblack bg-secondary py-3 px-2"
                     }
                   >
-                    <div
+                    <button
                       id="player"
                       onClick={playAll}
-                      className="play_header border-b border-[#cfcfcf] pb-2 w-full"
+                      className="play_header pb-2 w-full"
                     >
                       <div className="w-fit h-fit border border-color-primary dark:border-color-primary border-gray-500 p-[2px] rounded-full">
                         <BsFillPlayFill className="text-[22px] dark:text-color-primary text-gray-500" />
@@ -454,7 +454,7 @@ const LecturesListDetail = () => {
                       <p className="dark:text-color-primary text-gray-500 font-medium">
                         Play All
                       </p>
-                    </div>
+                    </button>
                   </div>
                 </div>
               </div>

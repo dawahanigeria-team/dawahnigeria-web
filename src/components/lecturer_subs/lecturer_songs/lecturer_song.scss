@@ -38,7 +38,7 @@
     }
   }
   .lect_title_wrap {
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 690px) {
       display: none;
     }
     display: flex;
@@ -58,7 +58,7 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      width: 50%;
+      width: 45%;
       // grid-column: span 5 / span 5;
       * {
         @include title_text;

@@ -8,11 +8,10 @@ import React, {
 import Container from "../../components/container/Container";
 import arrow from "../../assets/svg/arrowleft.svg";
 import sharebold from "../../assets/svg/sharebold.svg";
-import adfav from "../../../src/assets/svg/adfav.svg";
+import {BsFillPlayFill} from "react-icons/bs"
 import combold from "../../assets/svg/combold.svg";
-import lovebold from "../../assets/svg/lovebold.svg";
 import { CiPlay1 } from "react-icons/ci";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./lecturesListDetail.scss";
 import { MdFavorite } from "react-icons/md";
 import MusicList from "../../components/miscList/musicList";
@@ -313,7 +312,7 @@ const PlaylistDetail = () => {
               </div>
             </div>
             <div className="listrank_and_listblack_wrap">
-              <div className={isVisible ? "listranking_none" : "listranking"}>
+              <div className={isVisible ? "listranking_none" : "listranking bg-black bg-opacity-50"}>
                 <MobileFavoriteButton
                   favorites={querieddata[0]?.favorites}
                   id={id}
@@ -370,12 +369,19 @@ const PlaylistDetail = () => {
                       : "icons_listblack p-3"
                   }
                 >
-                  <div id="player" onClick={playAll} className="play_header">
-                    <div className="play_img_size">
-                      <img className="play_img_size_sm" src={pmobile} alt="" />
-                    </div>
-                    <div className="play_header_text">Play All</div>
-                  </div>
+                       <button
+                      id="player"
+                      onClick={playAll}
+                      className="play_header pb-2 w-full"
+                    >
+                      <div className="w-fit h-fit border border-color-primary dark:border-color-primary border-gray-500 p-[2px] rounded-full">
+                        <BsFillPlayFill className="text-[22px] dark:text-color-primary text-gray-500" />
+                      </div>
+
+                      <p className="dark:text-color-primary text-gray-500 font-medium">
+                        Play All
+                      </p>
+                    </button>
                 </div>
 
                 <div className="mobile_color_vid"></div>

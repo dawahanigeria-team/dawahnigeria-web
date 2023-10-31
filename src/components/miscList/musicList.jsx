@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./musicList.scss";
 import headpmobile from "../../../src/assets/svg/headpmobile.svg";
-
-import sharebig from "../../../src/assets/svg/boom-share.svg";
-import plus from "../../../src/assets/svg/boom-addplay.svg";
+import { AiOutlineShareAlt } from "react-icons/ai";
+import { CiSquarePlus } from "react-icons/ci";
 import pmobile from "../../../src/assets/svg/playmobile.svg";
 
 import { SlShare } from "react-icons/sl";
-import {BsThreeDotsVertical} from 'react-icons/bs'
-import { useNavigate } from "react-router-dom";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { Link, useNavigate } from "react-router-dom";
 
 import Add_playlist from "../../pages/add_playlist/AddPlaylist";
 import ShareAudio from "../shareaudio/shareAudio";
@@ -167,8 +166,6 @@ function MusicList({
     dispatch(showaddPlaylist(true));
   };
 
-
-
   /**
    * 
     navigate(url, {
@@ -207,7 +204,9 @@ function MusicList({
               getaudioData({ endpoint_url, currentPage, controlData, navName })
             );
           }}
-          className={audioId === nid ? "td bg-hover nowplaying" : "td hover:bg-hover"}
+          className={
+            audioId === nid ? "td bg-hover nowplaying" : "td hover:bg-hover"
+          }
         >
           <div className="tr">
             <p className={audioId === nid ? "num hide" : "num"}>{id + 1}</p>
@@ -243,20 +242,15 @@ function MusicList({
           </div>
           <div className="tr2">
             <div className="tr2_real_wrap">
-              <div
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (rpid) {
-                    navigate(`${RESOURCE_PERSON}${rpid}`);
-                  }
-                }}
+              <Link
+               to={rpid ? `${RESOURCE_PERSON}${rpid}` : "#"}
+              
                 id="player"
                 className="tr2_text"
               >
-                <div className="text_child hover:text-gray-400">{`${
-                  lecturer?.split(" ")[0]
-                } ${lecturer?.split(" ")[1]}`}</div>
-              </div>
+               <div className="text_child line-clamp-1 hover:text-gray-400 xl:w-[230px] w-[160px] max-[700px]:w-[100px] max-[1000px]:w-[130px]">{lecturer || ""}</div>
+               
+              </Link>
 
               <div className="tr2_likeys">
                 <span
@@ -292,7 +286,7 @@ function MusicList({
       </div>
 
       {/********************mobile************** */}
-      <div className={"mobile_musicslist"}>
+      <div className={"mobile_musicslist text-color-primary"}>
         <div
           onClick={() => {
             navigate(url);
@@ -319,7 +313,9 @@ function MusicList({
                 <button className="likeys_img">
                   <img className="likeys_img_sz" src={headpmobile} alt="" />
                 </button>
-                <span className="likeys_text text-color-primary">{formatNumber(views)}</span>
+                <span className="likeys_text text-[#e0e0e0]">
+                  {formatNumber(views)}
+                </span>
               </div>
 
               <div
@@ -333,15 +329,13 @@ function MusicList({
               </div>
             </div>
             <div className="wrap_text">
-              <div className="title_wrap">
-                <Marquee pauseOnHover={true}>
-                  <div className="texta text-color-primary">{title}</div>
-                </Marquee>
+            <div className="title_wrap">
+                <div className="texta line-clamp-2">{title}</div>
               </div>
               <div className="lect_name_wrap">
-                <Marquee pauseOnHover={true}>
-                  <div className="textb text-color-primary">{lecturer}</div>
-                </Marquee>
+                <div className="textb text-color-primary line-clamp-1">
+                  {lecturer}
+                </div>
               </div>
             </div>
           </div>
@@ -350,9 +344,7 @@ function MusicList({
             <AudioDownloadModal
               nid={nid}
               className="likeys_img_left"
-              triggerInnerChild={
-                <DownloadIcon />
-              }
+              triggerInnerChild={<DownloadIcon />}
             />
 
             <span
@@ -362,7 +354,7 @@ function MusicList({
               }}
               className="likeys_img_left"
             >
-               <BsThreeDotsVertical className="text-[22px] text-color-primary" />
+              <BsThreeDotsVertical className="text-[22px] text-color-primary" />
               <div
                 className={
                   more ? " left-[-100px] absolute min-w-max h-fit" : "hidden"
@@ -379,7 +371,7 @@ function MusicList({
                   onClick={(e) => {
                     e.stopPropagation();
                   }}
-                  className="bg-background shadow-lg z-[200] relative rounded-sm space-y-2 p-1"
+                  className="bg-background border shadow-lg z-[200] relative rounded-sm space-y-2 p-1"
                 >
                   <span
                     onClick={(e) => {
@@ -387,10 +379,8 @@ function MusicList({
                     }}
                     className=" flex w-full items-center space-x-2"
                   >
-                    <span className=" w-3 h-3 ">
-                      <img className="w-full h-full" src={sharebig} alt="" />
-                    </span>
-                    <span className="">Share</span>
+                    <AiOutlineShareAlt className="text-lg text-color" />
+                    <span className="text-color">Share</span>
                   </span>
 
                   <span
@@ -399,10 +389,8 @@ function MusicList({
                     }}
                     className="flex w-full items-center space-x-2"
                   >
-                    <span className="w-3 h-3">
-                      <img className="w-full h-full" src={plus} alt="" />
-                    </span>
-                    <span className="">Add to playlist</span>
+                    <CiSquarePlus className="text-lg text-color" />
+                    <span className="text-color">Add to playlist</span>
                   </span>
                 </div>
               </div>
@@ -426,4 +414,3 @@ function MusicList({
 }
 
 export default MusicList;
-
