@@ -78,16 +78,16 @@ const AudioActionDesktop = () => {
         
         dispatch(getcurrentAudioInfo(res.data[0]));
         setLoading(false);
-        console.log("@@@@@@@@@@@ def");
+       // console.log("@@@@@@@@@@@ def");
         if (initial) {
           dispatch(setPlaying(false));
           audioRef.current?.pause();
-          console.log("@@@@@@@@@@@ pause");
+         // console.log("@@@@@@@@@@@ pause");
           cancelAnimationFrame(playAnimation.current);
         } else {
           dispatch(setPlaying(true));
          
-          console.log("@@@@@@@@@@@ playing");
+          //console.log("@@@@@@@@@@@ playing");
           audioRef.current?.play();
           playAnimation.current = requestAnimationFrame(repeat);
         }

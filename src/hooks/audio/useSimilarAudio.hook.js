@@ -13,7 +13,7 @@ export const useSimilarAudioHook = (keyParam) => {
       enabled: !!keyParam?.id,
       onSuccess: (data) => {
         setQueriedData(data);
-        console.log(data)
+       // console.log(data)
       },
       onError: (error) => {
         console.error("error", error);
