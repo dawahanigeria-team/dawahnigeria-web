@@ -13,7 +13,6 @@ const MyCarousel = ({ images }) => {
     return () => clearInterval(interval);
   }, [currentIndex, images?.length]);
 
-  ////console.log(currentIndex);
   return (
     <div className="w-full group h-full relative items-end justify-end px-[5] flex cursor-pointer">
       <div className="w-full hidden inset-0 group-hover:flex justify-between items-center h-fit m-auto z-[30] absolute">
@@ -34,7 +33,7 @@ const MyCarousel = ({ images }) => {
           <MdNavigateNext className="text-white text-[40px]" />
         </div>
       </div>
-      {Array.isArray(images)  &&
+      {Array.isArray(images) &&
         images.map((image, index) => {
           return (
             <div
@@ -57,16 +56,17 @@ const MyCarousel = ({ images }) => {
               </div>
 
               <div className="w-full flex items-center z-[12]   justify-center space-x-1 absolute bottom-7 inset-x-0">
-                {Array.isArray(images) && images.map((img, index) => {
-                  return (
-                    <span
-                      key={index}
-                      className={`rounded-[50%] h-[4px] w-[4px] ${
-                        currentIndex === index ? "bg-white" : "bg-gray-400"
-                      }`}
-                    ></span>
-                  );
-                })}
+                {Array.isArray(images) &&
+                  images.map((img, index) => {
+                    return (
+                      <span
+                        key={index}
+                        className={`rounded-[50%] h-[4px] w-[4px] ${
+                          currentIndex === index ? "bg-white" : "bg-gray-400"
+                        }`}
+                      ></span>
+                    );
+                  })}
               </div>
             </div>
           );

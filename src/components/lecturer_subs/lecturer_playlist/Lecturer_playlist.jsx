@@ -35,12 +35,9 @@ const Lecturer_playlist = ({ id }) => {
         },
       })
       .then((res) => {
-        //console.log("comment result", res);
         setaudioComment(res.data.reverse());
       })
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   }, []);
 
   return (

@@ -15,7 +15,7 @@ export const useCategoriesHook = () => {
         setCategoriesData([...category, ...data.slice(0, 15)]);
       },
       onError: (error) => {
-        console.error("error", error);
+        
         toast.error("Unable to load data");
       },
     }

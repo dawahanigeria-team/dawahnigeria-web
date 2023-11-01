@@ -37,12 +37,9 @@ const SignupForm = () => {
     axios
       .get(`/all_lang_api.php`)
       .then((res) => {
-        ////console.log(res.data)
         setLangData(res.data);
       })
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   }, []);
 
   const handleInput = (e) => {
@@ -64,7 +61,6 @@ const SignupForm = () => {
       language: langid,
     };
 
-    //console.log(validateData);
     for (let i in validateData) {
       if (validateData[i] === "") {
         toast.error(`${i} cannot be empty`);
@@ -96,14 +92,11 @@ const SignupForm = () => {
       password: password,
     };
 
-    //console.log(payload)
     dispatch(registration(payload, isSocial, getId, navigate, setLoading));
-    //toast.success("Signup successful");
   };
 
   const { email, password, name, confirm_password } = data;
 
-  //console.log(data);
   return (
     <div className="signupform_wrapper">
       <HeadMeta title="Sign up on Dawah Nigeria | Home of Islamic resources" />
@@ -214,30 +207,30 @@ const SignupForm = () => {
             {isdrop && (
               <div className="selected_lang_drop">
                 <button
-                onClick={() => {
-                  setisdrop(!isdrop);
-                }}
-                className="fixed z-[50] inset-0 bg-none w-full h-full"></button>
+                  onClick={() => {
+                    setisdrop(!isdrop);
+                  }}
+                  className="fixed z-[50] inset-0 bg-none w-full h-full"
+                ></button>
                 <div className="relative z-[60] w-full h-[200px] overflow-y-auto shadow-lg">
-                <div className="flex flex-col w-full h-full">
-                  {langData.map(({ name, id }, index) => {
-                    return (
-                      <div
-                        key={index}
-                        onClick={() => {
-                          setlangid(id);
-                          setLang(name);
-                          setisdrop(!isdrop);
-                        }}
-                        className="drops hover:bg-gray-100 cursor-pointer"
-                      >
-                        {name}
-                      </div>
-                    );
-                  })}
+                  <div className="flex flex-col w-full h-full">
+                    {langData.map(({ name, id }, index) => {
+                      return (
+                        <div
+                          key={index}
+                          onClick={() => {
+                            setlangid(id);
+                            setLang(name);
+                            setisdrop(!isdrop);
+                          }}
+                          className="drops hover:bg-gray-100 cursor-pointer"
+                        >
+                          {name}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-                </div>
-              
               </div>
             )}
           </div>
@@ -300,7 +293,9 @@ const SignupForm = () => {
               <p className="signupform_terms_text1 text-color">
                 I have read and accept the{" "}
               </p>
-              <p className="signupform_terms_text2 text-foreground dark:text-[#ddff2b]">Terms and Condition</p>
+              <p className="signupform_terms_text2 text-foreground dark:text-[#ddff2b]">
+                Terms and Condition
+              </p>
             </div>
           </div>
         </div>

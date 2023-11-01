@@ -18,7 +18,7 @@ export const usePlaylistLectures = (
         setQueriedData(data);
       },
       onError: (error) => {
-        console.error("error", error);
+        
         toast.error("Unable to load data");
       },
     }

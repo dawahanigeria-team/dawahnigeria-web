@@ -10,7 +10,6 @@ export const useRequest = (requestType, routeName, payload = null) => {
     setIsLoading(true);
     axios[type](`${process.env.REACT_APP_API_BASE_URL}${route}`, payloadData)
       .then((res) => {
-        console.log("handleRequest", res.data);
         setData(res.data);
         setIsLoading(false);
       })

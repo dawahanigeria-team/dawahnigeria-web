@@ -33,7 +33,6 @@ const GoogleCustomButton = () => {
           if (pathname === "/auth/login") {
             const isSocial = true;
 
-            // //console.log(payload);
             dispatch(
               LoginAction(
                 { languageId: 6, ...payload },
@@ -50,9 +49,7 @@ const GoogleCustomButton = () => {
             });
           }
         })
-        .catch((err) => {
-          //console.log(err);
-        });
+        .catch((err) => {});
     },
   });
   return (

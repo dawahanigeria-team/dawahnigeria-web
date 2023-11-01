@@ -38,16 +38,13 @@ export function DesktopFavoriteButton({ favorites, id, type, refetch }) {
     };
     addToFavorite(payload, {
       onSuccess: (data) => {
-        //  console.log("response", data);
         toast.success(data.message);
         refetch(); //refetch favorite count
         refetchFavorite(); // refetch all favorite
         setdisabled(false);
         setLoading(false);
       },
-      onError: (error) => {
-        console.log("error", error);
-      },
+      onError: (error) => {},
     });
   };
 
@@ -65,14 +62,16 @@ export function DesktopFavoriteButton({ favorites, id, type, refetch }) {
         {favoriteCount[type]?.includes(parseInt(id)) ? (
           <MdFavorite className="leclistdet_fav_icon_active dark:text-[#ddff2b] text-foreground" />
         ) : (
-          <AddFavourites/>
+          <AddFavourites />
         )}
       </button>
 
       {isLoading ? (
         <LoaderIcon className="text-sm animate-spin" />
       ) : (
-        <p className="leclistdet_fav_text text-color-primary">{formatFavorite}</p>
+        <p className="leclistdet_fav_text text-color-primary">
+          {formatFavorite}
+        </p>
       )}
     </button>
   );

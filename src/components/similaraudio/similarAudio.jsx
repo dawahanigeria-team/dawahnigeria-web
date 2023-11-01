@@ -26,7 +26,6 @@ const SimilarAudio = ({
 
   //get lectures from the same lecturers
   function prev() {
-
     slide.current.scrollBy({
       left: -slide.current.scrollWidth / 10,
       behavior: "smooth",
@@ -34,7 +33,6 @@ const SimilarAudio = ({
   }
 
   function next() {
-   
     slide.current.scrollBy({
       left: slide.current.scrollWidth / 10,
       behavior: "smooth",
@@ -43,7 +41,6 @@ const SimilarAudio = ({
 
   useEffect(() => {
     function scrollEl() {
-      ////console.log("Slide")
       if (slide.current?.scrollLeft === 0) {
         setisprev(false);
       } else {
@@ -86,7 +83,9 @@ const SimilarAudio = ({
           }}
           className="similarWidget_more"
         >
-          <p className="similarWidget_more_text text-foreground dark:text-[#ddff2b]">more</p>
+          <p className="similarWidget_more_text text-foreground dark:text-[#ddff2b]">
+            more
+          </p>
           <FiChevronsRight className="similarWidget_more_icon text-foreground dark:text-[#ddff2b]" />
         </div>
       </div>

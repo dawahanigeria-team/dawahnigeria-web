@@ -15,7 +15,7 @@ export const lecturersApi = {
         return response;
       }
     } catch (error) {
-      console.log(error);
+      ;
     }
   },
   getLecturersByLangOrAlphabet: async (page, langid, alpha) =>

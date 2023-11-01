@@ -54,10 +54,8 @@ const LoginForm = () => {
       password: password,
     };
     const isSocial = false;
-    //console.log(payload);
-    dispatch(LoginAction(payload, isSocial, navigate, setLoading));
 
-    //toast.success("Login successful");
+    dispatch(LoginAction(payload, isSocial, navigate, setLoading));
   };
 
   const { email, password } = data;

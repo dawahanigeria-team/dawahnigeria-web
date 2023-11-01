@@ -12,7 +12,7 @@ import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { BiMessageMinus } from "react-icons/bi";
 import { RiDownload2Fill, RiPlayListFill } from "react-icons/ri";
 import { FaPlay } from "react-icons/fa";
-import {FiChevronsRight} from "react-icons/fi"
+import { FiChevronsRight } from "react-icons/fi";
 import { toast } from "react-hot-toast";
 import { SlOptionsVertical } from "react-icons/sl";
 import { GiPauseButton } from "react-icons/gi";
@@ -99,14 +99,10 @@ const AudioDetail = () => {
 
   const { theme } = useSelector((state) => state.user);
 
-
-  //console.log("currentPage", page);
-
   const { refetch } = useAudioHook(id);
   const keyParam = { id: currentAudioInfo?.rp_id, page: 1 };
   const { querieddata: similarAudios } = useSimilarAudioHook(keyParam);
 
-  console.log(similarAudios);
   const handlePlay = () => {
     dispatch(getaudioId(id));
     setinitial(false);
@@ -145,7 +141,6 @@ const AudioDetail = () => {
       navigate(`${LECTURE}${pack[next + 1]?.nid}`);
 
       dispatch(getCount(next + 1));
-      //console.log("@@@@@@ last count: ", next);
     } else {
       navigate(`${LECTURE}${pack[0]?.id}`);
 
@@ -154,7 +149,6 @@ const AudioDetail = () => {
     setinitial(false);
   };
   const handlePreviousAudio = () => {
-    //  //console.log("first count: ", count);
     dispatch(setPlaying(false));
     const prev = pack?.findIndex((value) => {
       return value.nid === parseInt(id);
@@ -181,17 +175,15 @@ const AudioDetail = () => {
   /// add to playlist ...../////////
   const addToPlaylist = (e, lecid) => {
     e.stopPropagation();
-    //console.log(`adding to playlist`);
+
     dispatch(showaddPlaylist(true));
     dispatch(getLecid(lecid));
   };
 
   /////get users favorites
   async function fetchFavorites(addFav, lecid) {
-    //setsumofFav(favorites)
     if (!curUser?.id) return;
     if (addFav || (!addFav && lecid)) {
-      ////console.log("..........@@@@@@@@@@@@@");
       await axios
         .get(`/leclisting_favorites.php?user_id=${curUser?.id}&type=audio`, {
           headers: {
@@ -201,14 +193,10 @@ const AudioDetail = () => {
           },
         })
         .then((res) => {
-          //  //console.log(res.data);
           const { audio } = res.data;
           setgetfavs(Object.values(audio));
-          // const isExist = [Object.values(audio)].includes(nid)
         })
-        .catch((err) => {
-          //console.log(err);
-        });
+        .catch((err) => {});
     }
   }
   useEffect(() => {
@@ -218,7 +206,7 @@ const AudioDetail = () => {
   const addToFav = async (e, lecid) => {
     /// add to favorites
     e.stopPropagation();
-    //console.log("event clicked");
+
     if (!curUser?.id) {
       toast.error("Login or register to add to favorites");
       return;
@@ -237,10 +225,9 @@ const AudioDetail = () => {
         },
       })
       .then((res) => {
-        //  //console.log(res);
         toast.success(res.data.message);
         setdisabled(false);
-        // //console.log(addFav);
+
         if (!getFavs?.includes(parseInt(lecid))) {
           setsumofFav(sumofFav + 1);
         } else {
@@ -248,9 +235,7 @@ const AudioDetail = () => {
         }
       })
 
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   };
 
   //////*************handling comment**************** */
@@ -272,12 +257,9 @@ const AudioDetail = () => {
         }
       )
       .then((res) => {
-        //console.log("comment result", res);
         setaudioComment(res.data.reverse());
       })
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   }, [currentAudioInfo?.nid]);
 
   const postComment = () => {
@@ -288,7 +270,7 @@ const AudioDetail = () => {
     }
 
     if (comment === "") return;
-    //console.log(comment);
+
     const payload = {
       user_id: curUser?.id,
       item_id: currentAudioInfo?.nid,
@@ -304,17 +286,13 @@ const AudioDetail = () => {
         },
       })
       .then((res) => {
-        //console.log(res);
         setComment("");
       })
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   };
 
   ///scrolll to view
   useEffect(() => {
-    //console.log(isComment)
     if (isComment) {
       window.scrollTo({
         top: 900,
@@ -343,7 +321,6 @@ const AudioDetail = () => {
 
   useEffect(() => {
     function scrollEl() {
-      ////console.log("Slide")
       if (slide.current?.scrollLeft === 0) {
         setisprev(false);
       } else {
@@ -491,7 +468,6 @@ const AudioDetail = () => {
           {/* -------------------------- End ------------------- */}
           <div className="audiodetail_info">
             <div className="audiodetail_info_wrap">
-
               <div className="audiodetail_info_name text-color dark:text-muted">
                 Genre:{" "}
               </div>
@@ -500,9 +476,7 @@ const AudioDetail = () => {
                 to={`${GENRES}/${parseInt(
                   currentAudioInfo?.cat_id?.toString()
                 )}`}
-
                 className="audiodetail_info_value text-color dark:text-muted  hover:text-foreground dark:hover:text-[#ddff2b] hover:underline"
-
               >
                 {currentAudioInfo?.cats || "unknown"}
               </Link>
@@ -707,7 +681,6 @@ const AudioDetail = () => {
                   <div
                     onClick={(e) => {
                       e.stopPropagation();
-                      ////console.log('cliked')
                     }}
                     className="bg-background shadow-lg border z-[200] relative rounded-sm space-y-2 p-1 font-light text-[12px] text-foreground"
                   >
@@ -779,16 +752,19 @@ const AudioDetail = () => {
           </div>
         </div>
 
-
         <div className="similarWidget_wrapper px-4">
           <div className="similarWidget_top">
-            <p className="similarWidget_top_heading text-foreground">{"Similar Audio"}</p>
+            <p className="similarWidget_top_heading text-foreground">
+              {"Similar Audio"}
+            </p>
 
             <Link
               to={`${GENRES}/${parseInt(currentAudioInfo?.cat_id?.toString())}`}
               className="similarWidget_more "
             >
-              <p className="similarWidget_more_text text-foreground dark:text-[#ddff2b]">more</p>
+              <p className="similarWidget_more_text text-foreground dark:text-[#ddff2b]">
+                more
+              </p>
               <FiChevronsRight className="similarWidget_more_icon text-foreground dark:text-[#ddff2b]" />
             </Link>
           </div>
@@ -858,7 +834,6 @@ const AudioDetail = () => {
               }
             </div>
           </div>
-
         </div>
         {window.innerWidth > 615 && (
           <div className="audioCommentBoxWrap">

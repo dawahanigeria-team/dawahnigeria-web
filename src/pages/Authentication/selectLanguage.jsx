@@ -21,11 +21,11 @@ const SelectLanguage = () => {
     axios
       .get(`/all_lang_api.php`)
       .then((res) => {
-        //console.log(res.data)
+   
         setLangData(res.data);
       })
       .catch((err) => {
-        //console.log(err);
+     
       });
   }, []);
 
@@ -38,7 +38,7 @@ const SelectLanguage = () => {
       languageId: langid,
     };
 
-    ////console.log(payload)
+   
 
     dispatch(registration(payload, isSocial, getId, navigate, setLoading));
   };

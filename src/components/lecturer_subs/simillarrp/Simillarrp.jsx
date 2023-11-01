@@ -22,10 +22,7 @@ const Simillarrp = ({ langid }) => {
       queryParam,
       lecturersApi.getLecturers,
       setPage
-  
     );
-
-    //console.log('query data',querieddata)
 
   const { ref: infiniteScrollRef } = useInfiniteScrollPagination(
     querieddata?.length,
