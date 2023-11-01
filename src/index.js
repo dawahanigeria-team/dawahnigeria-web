@@ -23,7 +23,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const middleware = [thunk];
 let store;
 
-if (window.location.hostname !== "localhost") {
+if (process.env.NODE_ENV === "development") {
   // If not on localhost, don't include the logger middleware
   store = createStore(persistedReducer, applyMiddleware(...middleware));
 } else {
