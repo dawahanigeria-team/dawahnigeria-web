@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 const CurrentPlayData = ({ datas, iscurrents, setcurrents }) => {
-  //  const data = []
-  //console.log('current datas',datas)
   return (
     <div
       onClick={() => {

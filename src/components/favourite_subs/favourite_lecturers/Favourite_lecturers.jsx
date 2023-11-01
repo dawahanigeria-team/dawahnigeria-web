@@ -29,8 +29,6 @@ const Favourite_lecturers = () => {
     axios
       .get(`/leclisting_favorites.php?user_id=${currentUser?.id}&type=rp`)
       .then((res) => {
-        //console.log(res)
-
         if (res.data.length === 0) {
           setmyRp([]);
           setLoading(false);
@@ -39,20 +37,15 @@ const Favourite_lecturers = () => {
         const { rp } = res.data;
         setmyRp(rp);
 
-        //console.log(rp.toString());
-
         axios
           .get(`/rplisting_multi_nid_api.php?id=${rp.toString()}`)
 
           .then((res) => {
-            //console.log(res)
             setMyFavLecturer(res.data);
             setLoading(false);
             setdata(_.uniqBy(res.data?.slice(0, 10), "nid"));
           })
-          .catch((err) => {
-            //console.log(err)
-          });
+          .catch((err) => {});
       });
   }, []);
 

@@ -75,26 +75,22 @@ const AudioActionDesktop = () => {
       .get(`/leclistingapi.php?lecid=${audioId}`)
       .then((res) => {
         setcurrentaudio(res.data[0]);
-        
+
         dispatch(getcurrentAudioInfo(res.data[0]));
         setLoading(false);
-       // console.log("@@@@@@@@@@@ def");
+
         if (initial) {
           dispatch(setPlaying(false));
           audioRef.current?.pause();
-         // console.log("@@@@@@@@@@@ pause");
+
           cancelAnimationFrame(playAnimation.current);
         } else {
           dispatch(setPlaying(true));
-         
-          //console.log("@@@@@@@@@@@ playing");
           audioRef.current?.play();
           playAnimation.current = requestAnimationFrame(repeat);
         }
       })
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -157,9 +153,8 @@ const AudioActionDesktop = () => {
       audioRef.current?.pause(); // Pause the audio
     } else {
       dispatch(setPlaying(true));
-      audioRef.current
-        ?.play()
-        .catch((error) => console.log("Play was not allowed:", error)); // Play the audio
+      audioRef.current?.play();
+      // Play the audio
     }
   };
 
@@ -168,7 +163,7 @@ const AudioActionDesktop = () => {
   };
   const handleRange = (curr) => {
     dispatch(getValue(curr));
-    //   //console.log(rangeRef.current.value);
+
     if (audioRef.current) {
       audioRef.current.currentTime = curr;
     }
@@ -179,7 +174,7 @@ const AudioActionDesktop = () => {
     setIsPrevious(false);
     dispatch(setPlaying(false));
     setnotloaded(true);
-    //console.log(pack);
+
     const next = pack?.findIndex((value) => {
       return value.nid === parseInt(audioId);
     });
@@ -190,22 +185,19 @@ const AudioActionDesktop = () => {
 
     if (next === pack?.length - 1) {
       dispatch(getaudioId(pack[next]?.nid));
-      //console.log("end of track next");
+
       dispatch(getCount(next));
     } else if (count < pack?.length - 1) {
-      //console.log("working");
       dispatch(getaudioId(pack[next + 1]?.nid));
-      ////console.log("last count: ", count);
+
       dispatch(getCount(next + 1));
-      //console.log("last count: ", next);
     } else {
       dispatch(getaudioId(pack[0]?.nid));
-      ////console.log("last count: ", count);
+
       dispatch(getCount(0));
     }
   };
   const handlePreviousAudio = () => {
-    //  //console.log("first count: ", count)
     setinitial(false);
     setnotloaded(true);
     dispatch(setPlaying(false));
@@ -221,10 +213,7 @@ const AudioActionDesktop = () => {
     if (prev === 0) {
       dispatch(getaudioId(pack[prev]?.nid));
       dispatch(getCount(prev));
-
-      //console.log("end of track prev");
     } else {
-      //console.log("third count: ", count);
       dispatch(getaudioId(pack[prev - 1]?.nid));
       dispatch(getCount(prev - 1));
     }
@@ -234,14 +223,9 @@ const AudioActionDesktop = () => {
 
   useEffect(() => {
     if (isrepeat === false && isComplete) {
-      //console.log(isComplete);
-      // //console.log('@@@@@@@@@@@@@@ data',data.length -1)
-
       const counter = pack?.findIndex((value) => {
         return value.nid === audioId;
       });
-
-      // //console.log('@@@@@@@@@@@@@@@ count',count)
 
       if (counter === pack.length - 1) {
         dispatch(getaudioId(pack[0]?.nid));
@@ -250,23 +234,17 @@ const AudioActionDesktop = () => {
         handleNextAudio();
       }
 
-      // getMusic(controlData[pres + 1]?.nid)
-
       return;
     } else {
-      //console.log("yeah");
-
       getMusic(audioId);
       dispatch(getValue(0));
       audioRef.current.currentTime = 0;
-      //audioRef?.current?.currentTime = 0
 
       return;
     }
   }, [isComplete]);
 
   const addToPlaylist = () => {
-    //console.log("@@@ add playlist clicked");
     dispatch(getLecid(audioId));
     dispatch(showaddPlaylist(true));
   };
@@ -275,7 +253,6 @@ const AudioActionDesktop = () => {
   async function fetchFavorites(addFav, audioId) {
     if (!currentUser?.id) return;
     if ((addFav || !addFav) && audioId) {
-      //console.log("..........@@@@@@@@@@@@@");
       await axios
         .get(
           `/leclisting_favorites.php?user_id=${currentUser?.id}&type=audio`,
@@ -288,15 +265,11 @@ const AudioActionDesktop = () => {
           }
         )
         .then((res) => {
-          //console.log(res.data);
           const { audio } = res.data;
 
           setgetfavs(Object.values(audio));
-          // const isExist = [Object.values(audio)].includes(nid)
         })
-        .catch((err) => {
-          //console.log(err);
-        });
+        .catch((err) => {});
     }
   }
   useEffect(() => {
@@ -329,18 +302,13 @@ const AudioActionDesktop = () => {
         },
       })
       .then((res) => {
-        //console.log(res);
         toast.success(res.data.message);
-        //setdisabled(false);
       })
 
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   };
 
   function handleState() {
-    /// if (!currentaudio?.audio) return
     setnotloaded(false);
   }
 
@@ -381,9 +349,7 @@ const AudioActionDesktop = () => {
           onTimeUpdate={() => {
             if (audioRef.current && !audioRef.current?.seeking) {
               dispatch(getValue(audioRef?.current?.currentTime));
-              //handleNextAudio()
-              // //console.log("from update", audioRef.current?.currentTime);
-              // //console.log("to update", Math.floor(audioRef.current?.duration));
+
               setIsComplete(
                 Math.floor(audioRef?.current?.currentTime) >=
                   Math.floor(audioRef?.current?.duration)

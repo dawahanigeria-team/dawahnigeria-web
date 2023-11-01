@@ -16,7 +16,7 @@ import MusicList from "../../components/miscList/musicList";
 import MobileList from "../../components/list/mobileList";
 import Loader from "../../components/UI/loader/loader";
 import { BsFillPlayFill } from "react-icons/bs";
-import {SlShare} from "react-icons/sl"
+import { SlShare } from "react-icons/sl";
 import sharebig from "../../../src/assets/svg/boom-share.svg";
 import commentbig from "../../../src/assets/svg/boom-comment.svg";
 import { formatNumber } from "../../components/UI/formatter";
@@ -80,12 +80,9 @@ const LecturesListDetail = () => {
   );
 
   useEffect(() => {
-    // if (sharedAlbum !== 0) {
     setsingleData((prev) => {
-      //console.log({ prevShareCount: prev });
       return { ...prev, share: prev?.share + 1 };
     });
-    // }
   }, [sharedAlbum]);
 
   //////*************handling comment**************** */
@@ -105,19 +102,15 @@ const LecturesListDetail = () => {
         }
       )
       .then((res) => {
-        //console.log("comment result", res);
         setaudioComment(res.data.reverse());
       })
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   }, [id]);
 
   /// Get the exiting element
   const firstElement = useCallback((node) => {
     observeEl.current = new IntersectionObserver((entries) => {
       if (!entries[0].isIntersecting) {
-        //console.log("not visible");
         setIsVisible(true);
       } else {
         setIsVisible(false);
@@ -142,7 +135,6 @@ const LecturesListDetail = () => {
   ///**** share album ******** */
 
   const shareAlbum = (e) => {
-    //console.log("album id", id);
     e.stopPropagation();
     setisShare(!isShare);
   };
@@ -157,7 +149,6 @@ const LecturesListDetail = () => {
   }, []);
 
   const lectureTitleExtractor = (title, position) => {
-    // console.log({ title });
     if (!title) return;
     if (title && title.includes("-")) {
       const titleArray = title.split("-");
@@ -266,13 +257,13 @@ const LecturesListDetail = () => {
                     }}
                     className="leclistdet_share bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
                   >
-                  <SlShare className="text-color-primary hover:text-color-foreground dark:hover:text-[#ddff2b] text-[20px]" />
+                    <SlShare className="text-color-primary hover:text-color-foreground dark:hover:text-[#ddff2b] text-[20px]" />
                     <p className="leclistdet_share_text  text-color-primary">
                       {formatNumber(querieddata[0]?.share || 0)}
                     </p>
                   </div>
                   <div className="leclistdet_comment bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
-                   <CommentIcon/>
+                    <CommentIcon />
                     <p className="leclistdet_comment_text  text-color-primary">
                       {formatNumber(querieddata[0]?.comments || 0)}
                     </p>

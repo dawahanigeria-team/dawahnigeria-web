@@ -9,7 +9,6 @@ const CatOptions = () => {
   const { setCategoryId } = useContext(SearchContext);
 
   const handleSelected = (e) => {
-    //console.log(e.target.value);
     if (e.target.checked) {
       setCategoryId((prev) => [...prev, e.target.value]);
     } else {

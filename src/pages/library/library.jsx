@@ -13,9 +13,7 @@ import HeadMeta from "../../components/head-meta";
 const Library = () => {
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
-  //const {id, username, email} = currentUser
 
-  //console.log(currentUser);
   return (
     <Container>
       <HeadMeta title={`Library - Islamic resources on Dawah Nigeria `} />

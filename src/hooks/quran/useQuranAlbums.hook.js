@@ -26,7 +26,7 @@ export const useQuranAlbums = (page = 1) => {
       },
       onError: (error) => {
         setIsLoadingNextPage(false);
-        console.error("error", error);
+        
         toast.error("Unable to load qurans");
       },
     }

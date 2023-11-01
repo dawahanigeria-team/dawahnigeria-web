@@ -11,7 +11,7 @@ const LecturerOptions = () => {
  
 
   const handleSelected = (e) => {
-    //console.log(e.target.value)
+
     if (e.target.checked) {
       setLecturerId((prev) => [...prev, e.target.value]);
     } else {

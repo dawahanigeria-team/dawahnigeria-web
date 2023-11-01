@@ -40,40 +40,15 @@ const Lecturer_songs = ({ id, totalData }) => {
         },
       })
       .then((res) => {
-        //console.log("comment result", res);
+    
         setaudioComment(res.data.reverse());
       })
       .catch((err) => {
-        //console.log(err);
+   
       });
   }, []);
 
-  const postComment = () => {
-    if (!currentUser?.id) return;
-    if (comment === "") return;
-    //console.log(comment);
-    const payload = {
-      user_id: currentUser?.id,
-      item_id: id,
-      type: "rp",
-      comment: comment,
-    };
-    axios
-      .post(`/commentApi.php`, payload, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-        },
-      })
-      .then((res) => {
-        //console.log(res);
-        setComment("");
-      })
-      .catch((err) => {
-        //console.log(err);
-      });
-  };
+ 
 
   return (
     <div className="lecsong_wrapper">
