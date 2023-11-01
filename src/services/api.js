@@ -28,7 +28,7 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
     },
     (error) => {
       if (error?.response === undefined) {
-        console.log("error", error);
+      
 
         toast.error("Unable to establish connection to server.");
         return Promise.reject("Unable to establish connection to server.");
@@ -38,7 +38,7 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
         const errorMessage = errors?.error || errors?.message;
 
         if (errorMessage) {
-          console.error(errorMessage);
+          
         }
 
         let serverErrors = errors?.errors;
@@ -71,7 +71,7 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
       const resolvedData = await Promise.resolve(data);
       return resolvedData;
     } catch (error) {
-      console.error(error);
+      
     }
   };
 
@@ -82,7 +82,7 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
         const resolvedData = await Promise.resolve(data);
         return resolvedData;
       } catch (error) {
-        console.error(error);
+        
       }
     },
 
@@ -92,7 +92,7 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
         const resolvedData = await Promise.resolve(data);
         return resolvedData;
       } catch (error) {
-        console.error(error);
+        
       }
     },
 
@@ -102,7 +102,7 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
         const resolvedData = await Promise.resolve(data);
         return resolvedData;
       } catch (error) {
-        console.error(error);
+        
       }
     },
 
@@ -112,7 +112,7 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
         const resolvedData = await Promise.resolve(data);
         return resolvedData;
       } catch (error) {
-        console.error(error);
+       
       }
     },
 
@@ -122,7 +122,7 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
         const resolvedData = await Promise.resolve(data);
         return resolvedData;
       } catch (error) {
-        console.error(error);
+        
       }
     },
   };
