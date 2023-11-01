@@ -292,7 +292,7 @@ function List({
                 to={rpid ? `${RESOURCE_PERSON}${rpid}` : "#"}
                 className="tr2_text"
               >
-                <div className="text_child line-clamp-1 hover:text-gray-400 xl:w-[230px] w-[160px] max-[700px]:w-[100px] max-[1000px]:w-[130px]">{lecturer || ""}</div>
+                <div className="text_child line-clamp-2 hover:text-gray-400 xl:w-[230px] w-[160px] max-[700px]:w-[100px] max-[1000px]:w-[130px]">{lecturer || ""}</div>
               </Link>
 
               <div className="tr2_likeys">
