@@ -76,8 +76,6 @@ function List({
   const { setinitial } = useContext(AudioContext);
   const [rpnameArray, setrpnameArray] = useState([]);
   const [isShare, setisShare] = useState(false);
-  //const [lectureId, setlectureId] = useState()
-  ////console.log(currentUser?.id)
 
   ////not contented but under presssure by DN project manager
   useEffect(() => {
@@ -106,7 +104,6 @@ function List({
   async function fetchFavorites(addFav, lecid) {
     if (!currentUser?.id) return;
     if ((addFav || !addFav) && lecid) {
-      //console.log("..........@@@@@@@@@@@@@");
       await axios
         .get(
           `/leclisting_favorites.php?user_id=${currentUser?.id}&type=audio`,
@@ -119,14 +116,10 @@ function List({
           }
         )
         .then((res) => {
-          //console.log(res.data);
           const { audio } = res.data;
           setgetfavs(Object.values(audio));
-          // const isExist = [Object.values(audio)].includes(nid)
         })
-        .catch((err) => {
-          //console.log(err);
-        });
+        .catch((err) => {});
     }
   }
   useEffect(() => {
@@ -154,10 +147,9 @@ function List({
         },
       })
       .then((res) => {
-        //console.log(res);
         toast.success(res.data.message);
         setdisabled(false);
-        //console.log(addFav);
+
         if (!getFavs?.includes(lecid)) {
           setsumofFav(sumofFav + 1);
         } else {
@@ -165,9 +157,7 @@ function List({
         }
       })
 
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const addToPlaylist = (e, lecid) => {
@@ -176,7 +166,6 @@ function List({
     dispatch(showaddPlaylist(true));
   };
 
-  //console.log(getFavs);
   return (
     <div className="list_wrapper dark:font-light font-medium">
       <div className="table text-color-primary">

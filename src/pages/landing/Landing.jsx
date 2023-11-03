@@ -85,10 +85,9 @@ const Landing = () => {
   const [sliders, recentlyPosted, specialFeatures, recentlyviewed] =
     useLandingPageHook(id, page, setisrecent, setcurPlay);
 
-  const specialFeat =  specialFeatures?.data?.flatMap((val) => [
+  const specialFeat = specialFeatures?.data?.flatMap((val) => [
     { name: val.name, more: val.more },
   ]);
-  //console.log({  specialFeatures, specialFeat });
 
   return (
     <Container>
@@ -151,23 +150,22 @@ const Landing = () => {
             />
           </div>
         )}
-        {recentlyviewed?.isSuccess &&
-          (Array.isArray(recentlyviewed?.data) && (
-            <div className="landing_recent landing_space my-1 min-[615px]:my-3">
-              {" "}
-              <GroupWidget
-                data={recentlyviewed?.data}
-                heading="Recently Viewed"
-                type={"recent"}
-                endpoint_url={"/leclisting_lang.php?langid=6&page="}
-                currentPage={page}
-                previousPlay={curPlay}
-                isrecent={isrecent}
-                nav1={{ title: "Home", link: HOME }}
-              />
-            </div>
-          ))}
-          {/**
+        {recentlyviewed?.isSuccess && Array.isArray(recentlyviewed?.data) && (
+          <div className="landing_recent landing_space my-1 min-[615px]:my-3">
+            {" "}
+            <GroupWidget
+              data={recentlyviewed?.data}
+              heading="Recently Viewed"
+              type={"recent"}
+              endpoint_url={"/leclisting_lang.php?langid=6&page="}
+              currentPage={page}
+              previousPlay={curPlay}
+              isrecent={isrecent}
+              nav1={{ title: "Home", link: HOME }}
+            />
+          </div>
+        )}
+        {/**
             : (
             <div className="landing_recent landing_space my-1 min-[615px]:my-3">
               <RowSkeletonContainer />

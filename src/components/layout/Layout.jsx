@@ -42,14 +42,12 @@ const Layout = () => {
       (window.innerWidth > 890 ? 2 : 1)
     );
   });
-  //console.log(playing);
-  //console.log(currentAudioInfo);
+
   useEffect(() => {
     localStorage.setItem("navControl", JSON.stringify(res));
     const handleResize = () => {
       if (window.innerWidth <= 890) {
         setRes(1);
-        ////console.log(window.innerWidth)
       } else {
         setRes(2);
       }
@@ -76,7 +74,7 @@ const Layout = () => {
         }`}
       >
         <div className="layout_mini" onClick={(e) => e.stopPropagation()}>
-          <SideNav res={res}  setisOpen={setisOpen}/>
+          <SideNav res={res} setisOpen={setisOpen} />
         </div>
       </div>
 
@@ -135,7 +133,9 @@ const Layout = () => {
             <p className="layout_buttom_text1 text-color">
               {currentAudioInfo?.title || currentAudioInfo?.Title}
             </p>
-            <p className="layout_buttom_text2 text-color">{currentAudioInfo?.rpname}</p>
+            <p className="layout_buttom_text2 text-color">
+              {currentAudioInfo?.rpname}
+            </p>
           </marquee>
           <div
             onClick={() => {

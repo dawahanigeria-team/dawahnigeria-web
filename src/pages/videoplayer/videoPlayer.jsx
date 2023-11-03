@@ -48,13 +48,10 @@ const VideoPlayer = () => {
     axios
       .get(`/video_listingApi.php?id=${id}&action=singleVideo`)
       .then((res) => {
-        //console.log(res);
         setload(true);
         setdata(res.data);
       })
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   }, [id]);
 
   //similar videos
@@ -67,7 +64,6 @@ const VideoPlayer = () => {
       axios
         .get(`/video_listingApi.php?page=${page}&action=allVideo`)
         .then((res) => {
-          //console.log(res.data);
           if (page === 1) {
             setLoading(false);
           }
@@ -84,18 +80,15 @@ const VideoPlayer = () => {
             )
           );
         })
-        .catch((err) => {
-          //console.log(err);
-        });
+        .catch((err) => {});
     };
 
     handleRequest();
   }, [page]);
-  //console.log(page);
 
   const handleNextAudio = () => {
     const next = subdata.findIndex((value) => value.id === id);
-    //console.log(next);
+
     navigate(`${VIDEOS}${subdata[next + 1].id}`);
   };
 
@@ -126,12 +119,9 @@ const VideoPlayer = () => {
         }
       )
       .then((res) => {
-        //console.log("comment result", res);
         setaudioComment(res.data.reverse());
       })
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   }, [id]);
 
   useEffect(() => {
@@ -154,7 +144,6 @@ const VideoPlayer = () => {
     //setsumofFav(favorites)
     if (!currentUser?.id) return;
     if (addFav || (!addFav && lecid)) {
-      ////console.log("..........@@@@@@@@@@@@@");
       await axios
         .get(
           `/leclisting_favorites.php?user_id=${currentUser?.id}&type=video`,
@@ -166,15 +155,8 @@ const VideoPlayer = () => {
             },
           }
         )
-        .then((res) => {
-          //console.log('video favourites', res.data);
-          //  const { video } = res.data;
-          // setgetfavs(Object.values(audio));
-          // const isExist = [Object.values(audio)].includes(nid)
-        })
-        .catch((err) => {
-          //console.log(err);
-        });
+        .then((res) => {})
+        .catch((err) => {});
     }
   }
   useEffect(() => {
@@ -201,23 +183,13 @@ const VideoPlayer = () => {
         },
       })
       .then((res) => {
-        //  //console.log(res);
         toast.success(res.data.message);
         setdisabled(false);
-        // //console.log(addFav);
-        /** if (!getFavs?.includes(id)) {
-          setsumofFav(sumofFav + 1);
-        } else {
-          setsumofFav(sumofFav - 1);
-        } */
       })
 
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   };
 
-  //console.log('video data',data?.share, data?.views, data?.comments)
   return (
     <Container>
       <HeadMeta
@@ -437,4 +409,3 @@ const VideoPlayer = () => {
 };
 
 export default VideoPlayer;
-

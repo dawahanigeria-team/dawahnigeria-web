@@ -48,7 +48,7 @@ import { CommentIcon } from "../../components/svgcomponent/svgComponent";
 const PlaylistDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
- 
+
   const { currentUser, theme } = useSelector((state) => state.user);
   const observeEl = useRef();
   const { setinitial } = useContext(AudioContext);
@@ -65,7 +65,6 @@ const PlaylistDetail = () => {
     playlistdetailApi.getPlaylistData
   );
 
-  //console.log("queries", querieddata);
   const keyParam = { multiId: querieddata[0]?.audio?.toString() || null };
 
   const { querieddata: playlistlectures } = usePlaylistLectures(
@@ -75,8 +74,6 @@ const PlaylistDetail = () => {
   );
 
   const { data: similarPlaylists } = useAllPlaylistHook();
-
-  // console.log("lectures", playlistlectures);
 
   //////*************handling comment**************** */
 
@@ -95,19 +92,15 @@ const PlaylistDetail = () => {
         }
       )
       .then((res) => {
-        //console.log("comment result", res);
         setaudioComment(res.data.reverse());
       })
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   }, [id]);
 
   /// Get the exiting element
   const firstElement = useCallback((node) => {
     observeEl.current = new IntersectionObserver((entries) => {
       if (!entries[0].isIntersecting) {
-        //console.log("not visible");
         setIsVisible(true);
       } else {
         setIsVisible(false);
@@ -132,7 +125,6 @@ const PlaylistDetail = () => {
   ///**** share album ******** */
 
   const sharePlaylist = (e) => {
-    //console.log("playlist id", id);
     e.stopPropagation();
     setisShare(!isShare);
   };
@@ -154,17 +146,18 @@ const PlaylistDetail = () => {
         } on Dawah Nigeria - Home of islamic resources`}
       />
       <div className="leclistdet_wrapper">
-      <img
-            ref={lecdet}
-            id="hero"
-            className={`${theme === "dark" ? "leclistdet_hero" : "leclistdet_hero_light"}`}
-            src={
-              querieddata[0]?.img ||
-              "https://imagetolink.com/ib/9TU6bi2SDs.jpeg"
-            }
-            alt="audiohero"
-          />
-   
+        <img
+          ref={lecdet}
+          id="hero"
+          className={`${
+            theme === "dark" ? "leclistdet_hero" : "leclistdet_hero_light"
+          }`}
+          src={
+            querieddata[0]?.img || "https://imagetolink.com/ib/9TU6bi2SDs.jpeg"
+          }
+          alt="audiohero"
+        />
+
         <div className="leclistdet_container">
           {/* ------------------------------Desktop------ Bread Crumbs -------------------------------------- */}
 
@@ -223,13 +216,16 @@ const PlaylistDetail = () => {
                   className="leclistdet_share bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
                 >
                   <SlShare className="text-color-primary hover:text-color-foreground dark:hover:text-[#ddff2b] text-[20px]" />
-                  <p className="leclistdet_share_text text-color-primary">{formatNumber(0)}</p>
+                  <p className="leclistdet_share_text text-color-primary">
+                    {formatNumber(0)}
+                  </p>
                 </div>
                 <div className="leclistdet_comment bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
-              <CommentIcon/>
-                  <p className="leclistdet_comment_text text-color-primary">{formatNumber(0)}</p>
+                  <CommentIcon />
+                  <p className="leclistdet_comment_text text-color-primary">
+                    {formatNumber(0)}
+                  </p>
                 </div>
-             
               </div>
             </div>
           </div>

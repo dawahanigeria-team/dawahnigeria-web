@@ -47,7 +47,7 @@ const Add_playlist = () => {
       user_id: currentUser?.id,
     };
 
-    //console.log(validateData);
+  
 
     for (let i in validateData) {
       if (validateData[i] === "") {
@@ -79,12 +79,12 @@ const Add_playlist = () => {
       })
       .then((res) => {
         toast.success("lecture added to playlist");
-        //toast.success(message);
+       
         setLoading(false);
         setisShow(true);
       })
       .catch((err) => {
-        //console.log(err);
+       
       });
   };
 
@@ -105,18 +105,18 @@ const Add_playlist = () => {
           }
         )
         .then((res) => {
-          //console.log(res.data);
+      
           setmyFolders(res.data);
           const filter = res.data.map((item) => item.name.toLowerCase());
           setCreated(filter);
         })
         .catch((err) => {
-          //console.log(err);
+         
         });
     }
   }, []);
 
-  //console.log(myFolders);
+  
 
   const addSong = (id) => {
     if (!currentUser?.id) {
@@ -130,8 +130,7 @@ const Add_playlist = () => {
       action: "add_playlist_audio",
     };
 
-    //console.log(payload)
-    // if(payload) return
+   
     axios
       .post(`/playlistApi.php`, payload, {
         headers: {
@@ -141,12 +140,12 @@ const Add_playlist = () => {
         },
       })
       .then((res) => {
-        //console.log(res);
+      
         toast.success(res.data.message);
         dispatch(showaddPlaylist(false));
       })
       .catch((err) => {
-        //console.log(err);
+   
       });
   };
 

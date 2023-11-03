@@ -72,8 +72,6 @@ function More() {
     currentdata
   );
 
-  // console.log(data);
-
   const { ref: infiniteScrollRef } = useInfiniteScrollPagination(
     data?.length,
     page,

@@ -7,7 +7,11 @@ import pmobile from "../../../src/assets/svg/playmobile.svg";
 
 import { SlShare } from "react-icons/sl";
 import { BsThreeDotsVertical } from "react-icons/bs";
+
 import { Link, useNavigate } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
+
 
 import Add_playlist from "../../pages/add_playlist/AddPlaylist";
 import ShareAudio from "../shareaudio/shareAudio";
@@ -67,9 +71,7 @@ function MusicList({
   const [rpData, setrpData] = useState([]);
   const [rpnameArray, setrpnameArray] = useState([]);
   const [isShare, setisShare] = useState(false);
-  //const [lectureId, setlectureId] = useState()
-  ////console.log(currentUser?.id)
-  ////not contented but under presssure by DN project manager
+
   useEffect(() => {
     function lazyImage() {
       const lazy = document.querySelectorAll("#mlist");
@@ -96,7 +98,6 @@ function MusicList({
   async function fetchFavorites(addFav, lecid) {
     if (!currentUser?.id) return;
     if ((addFav || !addFav) && lecid) {
-      //console.log("..........@@@@@@@@@@@@@");
       await axios
         .get(
           `/leclisting_favorites.php?user_id=${currentUser?.id}&type=audio`,
@@ -109,14 +110,10 @@ function MusicList({
           }
         )
         .then((res) => {
-          //console.log(res.data);
           const { audio } = res.data;
           setgetfavs(Object.values(audio));
-          // const isExist = [Object.values(audio)].includes(nid)
         })
-        .catch((err) => {
-          //console.log(err);
-        });
+        .catch((err) => {});
     }
   }
   useEffect(() => {
@@ -144,10 +141,9 @@ function MusicList({
         },
       })
       .then((res) => {
-        //console.log(res);
         toast.success(res.data.message);
         setdisabled(false);
-        //console.log(addFav);
+
         if (!getFavs?.includes(lecid)) {
           setsumofFav(sumofFav + 1);
         } else {
@@ -155,9 +151,7 @@ function MusicList({
         }
       })
 
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const addToPlaylist = (e, lecid) => {
@@ -166,27 +160,6 @@ function MusicList({
     dispatch(showaddPlaylist(true));
   };
 
-  /**
-   * 
-    navigate(url, {
-              state: {
-                title: Title,
-                rpname,
-                image,
-                endpoint_url,
-                currentPage,
-                currentUser,
-                id,
-                cats,
-                nid,
-                controlData,
-                nav1: { title: navName, link: navLink },
-              },
-            });
-   */
-
-  //console.log("nid @@@@@@@@@@@", nid);
-  //console.log("audioid @@@@@@@@@@@", audioId);
 
   return (
     <div className="musicslist_wrapper dark:font-light font-medium">
@@ -313,7 +286,9 @@ function MusicList({
                 <button className="likeys_img">
                   <img className="likeys_img_sz" src={headpmobile} alt="" />
                 </button>
+
                 <span className="likeys_text text-[#e0e0e0]">
+
                   {formatNumber(views)}
                 </span>
               </div>

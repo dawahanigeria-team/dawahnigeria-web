@@ -9,10 +9,11 @@ import { Provider } from "react-redux";
 import rootReducer from "./Redux/Reducer/index";
 import { PersistGate } from "redux-persist/integration/react";
 import { composeWithDevTools } from "redux-devtools-extension";
-//import logger from "redux-logger";
+
 import { createLogger } from "redux-logger";
 import thunk from "redux-thunk";
 import { BrowserRouter as Router } from "react-router-dom";
+
 
 
 const persistConfig = {
@@ -21,24 +22,25 @@ const persistConfig = {
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
-const middleware = [thunk]; 
 
+const middleware = [thunk];
 let store;
 
-if (window.location.hostname !== 'localhost') {
-
-  store = createStore(persistedReducer, applyMiddleware(...middleware));   // If not on localhost, don't include the logger middleware
+if (process.env.NODE_ENV === "development") {
+  // If not on localhost, don't include the logger middleware
+  store = createStore(persistedReducer, applyMiddleware(...middleware));
 } else {
   // If on localhost include the logger middleware
-  
+
   const loggerMiddleware = createLogger();
   middleware.push(loggerMiddleware);
-  
+
   store = createStore(
     persistedReducer,
     composeWithDevTools(applyMiddleware(...middleware))
   );
 }
+
 let persistor = persistStore(store);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

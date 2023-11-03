@@ -25,10 +25,6 @@ const Lecturer_album = ({ id, totalData }) => {
       lecturerDetailApi.getLecturerAlbums
     );
 
-  // console.log("albums", querieddata);
-
-  // //console.log(setCount2);
-
   //////*************handling comment**************** */
 
   useEffect(() => {
@@ -43,15 +39,10 @@ const Lecturer_album = ({ id, totalData }) => {
         },
       })
       .then((res) => {
-        //console.log("comment result", res);
         setaudioComment(res.data.reverse());
       })
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   }, []);
-
-  //console.log('comments',audioComment);
 
   return (
     <>
@@ -104,17 +95,17 @@ const Lecturer_album = ({ id, totalData }) => {
 
       {(isLoading && page === 1) ||
         (totalData !== querieddata?.length && (
-          <div  className="flex w-full min-[615px]:mt-6 mt-3 items-center h-fit justify-center  min-[615px]:text-[16px] text-sm">
+          <div className="flex w-full min-[615px]:mt-6 mt-3 items-center h-fit justify-center  min-[615px]:text-[16px] text-sm">
             {" "}
             <button
-            disabled={isLoadingNextPage}
-              onClick={() => {              
+              disabled={isLoadingNextPage}
+              onClick={() => {
                 setPage(page + 1);
               }}
               className={
                 !isLastPage
-                ? "w-[40%] min-[615px]:w-[200px] min-[615px]:py-3  text-color border-color flex justify-center items-center py-2 border rounded-2xl"
-                : "hidden"
+                  ? "w-[40%] min-[615px]:w-[200px] min-[615px]:py-3  text-color border-color flex justify-center items-center py-2 border rounded-2xl"
+                  : "hidden"
               }
             >
               {isLoadingNextPage ? (
@@ -125,7 +116,6 @@ const Lecturer_album = ({ id, totalData }) => {
             </button>
           </div>
         ))}
-
 
       <div className="lecalb_comments">
         <CommentBox audioComment={audioComment} id={id} type={"rp"} />

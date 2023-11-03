@@ -35,8 +35,6 @@ const Favourite_album = ({ setCount2 }) => {
     axios
       .get(`/leclisting_favorites.php?user_id=${currentUser?.id}&type=album`)
       .then((res) => {
-        //console.log(res)
-
         if (res.data.length === 0) {
           setmyAlb([]);
           setLoading(false);
@@ -46,20 +44,15 @@ const Favourite_album = ({ setCount2 }) => {
         const { album } = res.data;
         setmyAlb(album);
 
-        //console.log(album.toString());
-
         axios
           .get(`/albumlisting_multi_nid_api.php?id=${album.toString()}`)
 
           .then((res) => {
-            //console.log('fav album',res)
             setMyFavAlbum(res.data);
             setLoading(false);
             setdata(_.uniqBy(res.data?.slice(0, 10), "nid"));
           })
-          .catch((err) => {
-            //console.log(err)
-          });
+          .catch((err) => {});
       });
   }, []);
 

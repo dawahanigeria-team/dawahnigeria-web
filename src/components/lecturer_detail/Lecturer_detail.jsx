@@ -1,4 +1,10 @@
-import React, { useState, useCallback, useRef, useEffect, useContext } from "react";
+import React, {
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+  useContext,
+} from "react";
 import "./lecturer_detail.scss";
 import Container from "../../components/container/Container";
 import { useNavigate, useParams } from "react-router-dom";
@@ -9,8 +15,8 @@ import arrow from "../../assets/svg/arrowleft.svg";
 import headpmobile from "../../assets/svg/headpmobile.svg";
 import Simillarrp from "../lecturer_subs/simillarrp/Simillarrp";
 import combold from "../../assets/svg/combold.svg";
-import {SlShare} from "react-icons/sl"
-import {BiSolidShareAlt} from 'react-icons/bi'
+import { SlShare } from "react-icons/sl";
+import { BiSolidShareAlt } from "react-icons/bi";
 import commentbig from "../../../src/assets/svg/boom-comment.svg";
 import { formatNumber } from "../UI/formatter";
 import lazy from "../../assets/png/lazyrps.jpeg";
@@ -24,7 +30,6 @@ import HeadMeta from "../head-meta";
 import { useSelector } from "react-redux";
 import { CommentIcon } from "../svgcomponent/svgComponent";
 
-
 const LecturerDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -37,7 +42,7 @@ const LecturerDetail = () => {
   const [count1, setCount1] = useState(0);
   const [count2, setCount2] = useState(0);
   const [count3, setCount3] = useState(0);
- const {theme} = useSelector((state) => state.user)
+  const { theme } = useSelector((state) => state.user);
 
   const queryParam = { id };
 
@@ -55,7 +60,6 @@ const LecturerDetail = () => {
   const firstElement = useCallback((node) => {
     observeEl.current = new IntersectionObserver((entries) => {
       if (!entries[0].isIntersecting) {
-        //console.log("not visible");
         setIsVisible(true);
       } else {
         setIsVisible(false);
@@ -112,16 +116,17 @@ const LecturerDetail = () => {
           <img
             ref={lecdet}
             id="hero"
-            className={`${theme === "dark" ? 'lecdet_hero' :"lecdet_hero_light"}`}
+            className={`${
+              theme === "dark" ? "lecdet_hero" : "lecdet_hero_light"
+            }`}
             src={
               querieddata[0]?.img ||
               "https://imagetolink.com/ib/9TU6bi2SDs.jpeg"
             }
             alt="audiohero"
           />
-        <div className="lecdet_container">
-          {/* ------------------------------Desktop------ Bread Crumbs -------------------------------------- */}
-
+          <div className="lecdet_container">
+            {/* ------------------------------Desktop------ Bread Crumbs -------------------------------------- */}
 
             <div className="lecdet_breadcrumb">
               <p
@@ -167,7 +172,7 @@ const LecturerDetail = () => {
                     className="lecdet_share bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
                   >
                     <button className="fav_btn ">
-                    <SlShare className="text-color-primary hover:text-color-foreground dark:hover:text-[#ddff2b] text-[20px]" />
+                      <SlShare className="text-color-primary hover:text-color-foreground dark:hover:text-[#ddff2b] text-[20px]" />
                     </button>
 
                     <p className="lecdet_share_text text-color-primary">
@@ -175,7 +180,7 @@ const LecturerDetail = () => {
                     </p>
                   </div>
                   <div className="lecdet_comment bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d] ">
-                    <CommentIcon/>
+                    <CommentIcon />
                     <p className="lecdet_comment_text text-color-primary">
                       {formatNumber(querieddata[0]?.comments || 0)}
                     </p>
@@ -195,18 +200,21 @@ const LecturerDetail = () => {
                 >
                   <p
                     className={`${
-                      tab === 1 ? "lecdet_tab_song1_active text-foreground" : "lecdet_tab_song1"
+                      tab === 1
+                        ? "lecdet_tab_song1_active text-foreground"
+                        : "lecdet_tab_song1"
                     }`}
                   >
                     Audio
                   </p>
                   <p
                     className={`${
-                      tab === 1 ? "lecdet_tab_song2_active text-color" : "lecdet_tab_song2"
+                      tab === 1
+                        ? "lecdet_tab_song2_active text-color"
+                        : "lecdet_tab_song2"
                     }`}
                   >
-                    {/* {`(${count1})`} */}
-                    ({querieddata[0]?.total_audio || 0})
+                    {/* {`(${count1})`} */}({querieddata[0]?.total_audio || 0})
                   </p>
                 </div>
                 <div
@@ -371,7 +379,13 @@ const LecturerDetail = () => {
               </div>
             </div>
             <div className="blacks bg-secondary">
-              <div className={isVisible ? "fixed_icons_black bg-secondary" : "icons_black bg-secondary"}>
+              <div
+                className={
+                  isVisible
+                    ? "fixed_icons_black bg-secondary"
+                    : "icons_black bg-secondary"
+                }
+              >
                 <MobileFavoriteButton
                   favorites={querieddata[0]?.favorites}
                   id={id}
@@ -385,7 +399,7 @@ const LecturerDetail = () => {
                   className="icons_mob_listblack"
                 >
                   <button className="likeys_img">
-                   <BiSolidShareAlt className="text-xl "/>
+                    <BiSolidShareAlt className="text-xl " />
                   </button>
                   <span className="likeys_text ">
                     {formatNumber(querieddata[0]?.share || 0)}
@@ -570,7 +584,6 @@ const LecturerDetail = () => {
                   rpname={querieddata[0]?.name}
                   rpImg={querieddata[0]?.img}
                   id={id}
-               
                   totalData={querieddata[0]?.total_albums}
                 />
               )}
@@ -578,7 +591,6 @@ const LecturerDetail = () => {
                 <LecturerPlaylist
                   rpname={querieddata[0]?.name}
                   id={id}
-                
                   totalData={querieddata[0]?.total_playlist}
                 />
               )}

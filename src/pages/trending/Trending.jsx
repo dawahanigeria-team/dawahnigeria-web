@@ -20,7 +20,6 @@ const Trending = () => {
   const { isLoading, isLoadingNextPage, isLastPage, querieddata } =
     useQueryGetRequest("trending", queryParam, trendingApi.getTrendings);
 
-  // console.log(isLoadingNextPage, isLastPage, 'page:', page);
 
   const { ref: infiniteScrollRef } = useInfiniteScrollPagination(
     querieddata?.length,
