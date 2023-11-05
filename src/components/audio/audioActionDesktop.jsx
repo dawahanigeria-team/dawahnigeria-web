@@ -79,6 +79,7 @@ const AudioActionDesktop = () => {
         dispatch(getcurrentAudioInfo(res.data[0]));
         setLoading(false);
 
+
         if (initial) {
           dispatch(setPlaying(false));
           audioRef.current?.pause();
@@ -86,6 +87,7 @@ const AudioActionDesktop = () => {
           cancelAnimationFrame(playAnimation.current);
         } else {
           dispatch(setPlaying(true));
+
           audioRef.current?.play();
           playAnimation.current = requestAnimationFrame(repeat);
         }

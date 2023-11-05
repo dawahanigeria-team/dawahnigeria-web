@@ -110,7 +110,6 @@ const App = () => {
  const {darkQuery} =  useThemeHook()
 
  
- 
  //Detect if user has interacted with the page
   useEffect(() => {
     const handleClick = () => {

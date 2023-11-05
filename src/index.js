@@ -9,9 +9,12 @@ import { Provider } from "react-redux";
 import rootReducer from "./Redux/Reducer/index";
 import { PersistGate } from "redux-persist/integration/react";
 import { composeWithDevTools } from "redux-devtools-extension";
+
 import { createLogger } from "redux-logger";
 import thunk from "redux-thunk";
 import { BrowserRouter as Router } from "react-router-dom";
+
+
 
 const persistConfig = {
   key: "root",

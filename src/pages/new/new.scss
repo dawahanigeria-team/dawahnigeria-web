@@ -7,12 +7,12 @@
   color: #5e5e5e;
 }
 @mixin mobile_hide {
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 690px) {
     display: none;
   }
 }
 @mixin desktop_hide {
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 690px) {
     display: none;
   }
 }
@@ -48,9 +48,7 @@
    
   }
   .new_title_wrap {
-    @media screen and (max-width: 600px) {
-      display: none;
-    }
+    @include mobile_hide;
     display: flex;
     //gap: 1rem;
     // grid-template-columns: repeat(11, minmax(0, 1fr));
@@ -122,7 +120,12 @@
 
   .mobile_lists {
     @include desktop_hide;
-    margin-top: 4rem;
+    @media screen and (max-width:690px) {
+      margin-top: 0rem;
+    }
+    @media screen and (max-width:600px) {
+      margin-top: 4rem;
+    }
     display: flex;
     flex-direction: column;
     gap: 0.5em;

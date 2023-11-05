@@ -739,7 +739,7 @@
               display: flex;
               gap: 0.5em;
               align-items: center;
-              justify-content: center;
+              //justify-content: center;
               .play_img_size {
                 border: 1px solid #cfcfcf;
                 border-radius: 50%;
@@ -816,7 +816,7 @@
       }
       .lect_title_wrap {
         font-weight: 600;
-        @media screen and (max-width: 600px) {
+        @media screen and (max-width: 690px) {
           display: none;
         }
         display: flex;

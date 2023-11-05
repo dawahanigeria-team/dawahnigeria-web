@@ -1,10 +1,10 @@
 @mixin mobile_hide {
-  @media screen and (max-width: 615px) {
+  @media screen and (max-width: 690px) {
     display: none;
   }
 }
 @mixin desktop_hide {
-  @media screen and (min-width: 615px) {
+  @media screen and (min-width: 690px) {
     display: none;
   }
 }
@@ -64,7 +64,7 @@
         grid-template-columns: repeat(3, auto);
         width: 35%;
         @media screen and (max-width: 1238px) {
-          width: 40%;
+          width: 35%;
           margin-right: 10%;
         }
         margin-right: 15%;
@@ -124,7 +124,7 @@
       }
 
       .tr2 {
-        width: 40%;
+        width: 45%;
         display: flex;
         flex-direction: column;
         margin-right: 5px;
@@ -139,20 +139,14 @@
           flex-direction: row;
           gap: 20%;
           width: 100%;
+          @media screen and (max-width: 1280px) {
+            gap:6%;
+          }
+
 
           .tr2_text {
             // margin-bottom:2px;
             .text_child {
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              width: 130px;
-              @media screen and (max-width: 1000px) {
-                width: 100px;
-              }
-              @media screen and (max-width: 700px) {
-                width: 80px;
-              }
-              overflow: hidden;
             }
           }
 
@@ -206,7 +200,7 @@
     flex-direction: column;
     gap: 0.5em;
     font-family: "Poppins";
-    color: #cfcfcf;
+    
     font-size: 12px;
 
     .music_list {
@@ -224,14 +218,14 @@
         width: 80vw;
 
         .wrap_image {
-          width: 66px;
-          height: 66px;
+          width: 70px;
+          height: 80px;
           border-radius: 6px;
           position: relative;
 
           .img_wr {
-            width: 66px;
-            height: 66px;
+            width: 70px;
+            height: 80px;
             border-radius: 6px;
             .img_wrp {
               width: 100%;
@@ -272,7 +266,7 @@
               }
             }
             .likeys_text {
-              color: white;
+             
             }
           }
         }
@@ -289,8 +283,8 @@
             width: 60vw;
             .texta {
               font-size: 13px;
-              text-overflow: ellipsis;
-              white-space: nowrap;
+             // text-overflow: ellipsis;
+              //white-space: nowrap;
               //width:50vw;
               //overflow: hidden;
             }
@@ -301,8 +295,8 @@
               font-size: 12px;
               
               margin: 0;
-              text-overflow: ellipsis;
-              white-space: nowrap;
+             // text-overflow: ellipsis;
+              //white-space: nowrap;
               //width:50vw;
               //overflow: hidden;
             }

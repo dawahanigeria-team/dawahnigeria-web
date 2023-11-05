@@ -573,7 +573,7 @@ const AudioDetail = () => {
                 className={
                   isrepeat
                     ? "audiores_play_control_repeat_active dark:text-[#ddff2b] text-black"
-                    : "audiores_play_control_repeat text-foreground"
+                    : "audiores_play_control_repeat text-color"
                 }
               />
               <div className="audiores_play_control">
@@ -584,7 +584,7 @@ const AudioDetail = () => {
                     handlePreviousAudio();
                   }}
                 >
-                  <TbPlayerSkipBackFilled className="audiores_play_back text-foreground" />
+                  <TbPlayerSkipBackFilled className="audiores_play_back text-color" />
                 </button>
                 {loading ? (
                   <div className="w-[40px] h-[40px]">
@@ -609,7 +609,7 @@ const AudioDetail = () => {
                     handleNextAudio();
                   }}
                 >
-                  <TbPlayerSkipForwardFilled className="audiores_play_forward text-foreground" />
+                  <TbPlayerSkipForwardFilled className="audiores_play_forward text-color" />
                 </button>
               </div>
               <div
@@ -617,7 +617,7 @@ const AudioDetail = () => {
                   setcurrents(!iscurrents);
                 }}
               >
-                <RiPlayListFill className="audiores_play_control_list text-foreground" />
+                <RiPlayListFill className="audiores_play_control_list text-color" />
               </div>
             </div>
             <div className="audiores_actions">
@@ -625,7 +625,7 @@ const AudioDetail = () => {
                 downloads={currentAudioInfo?.downloads}
                 nid={currentAudioInfo?.nid}
                 triggerInnerChild={
-                  <RiDownload2Fill className="audiores_download text-foreground" />
+                  <RiDownload2Fill className="audiores_download text-color"/>
                 }
               />
               <button
@@ -642,7 +642,7 @@ const AudioDetail = () => {
                 {getFavs?.includes(parseInt(id)) || isAddedToFavorite ? (
                   <MdFavorite className="audiores_fav_active text-foreground dark:text-[#ddff2b]" />
                 ) : (
-                  <MdFavoriteBorder className="audiores_fav text-foreground" />
+                  <MdFavoriteBorder className="audiores_fav text-color" />
                 )}
               </button>
 
@@ -653,7 +653,7 @@ const AudioDetail = () => {
                 className={
                   isComment
                     ? "audiores_comment_active text-gray-700 dark:text-[#ddff2b]"
-                    : "audiores_comment text-foreground"
+                    : "audiores_comment text-color"
                 }
               />
               <div
@@ -663,7 +663,7 @@ const AudioDetail = () => {
                 }}
                 className="audres_option_relative"
               >
-                <SlOptionsVertical className="audiores_option text-foreground" />
+                <SlOptionsVertical className="audiores_option text-color" />
                 <div
                   className={
                     moreOption
@@ -711,9 +711,9 @@ const AudioDetail = () => {
             </div>
 
             {/**cnbfmg */}
-            <div className="mobile text-muted-foreground">
+            <div className="mobile text-color">
               <div className="audiodetail_info_mob">
-                <p className="audiodetail_info_mob_head text-muted-foreground">
+                <p className="audiodetail_info_mob_head text-color-foreground">
                   Information
                 </p>
                 <div className="audiodetail_info_wrap_mob">
@@ -722,7 +722,7 @@ const AudioDetail = () => {
                     to={`${GENRES}/${parseInt(
                       currentAudioInfo?.cat_id?.toString()
                     )}`}
-                    className="audiodetail_info_value_mob hover:text-[#ddff2b] hover:underline"
+                    className="audiodetail_info_value_mob dark:hover:text-[#ddff2b] hover:underline"
                   >
                     {currentAudioInfo?.cats || "unknown"}
                   </Link>
@@ -735,7 +735,7 @@ const AudioDetail = () => {
                 </div>
               </div>
               <div className="audiodetail_summary_mob">
-                <p className="audiodetail_summary_header_mob">Summary</p>
+                <p className="audiodetail_summary_header_mob text-color-foreground">Summary</p>
                 <div
                   className={`audiodetail_summary_body audiodetail_summary_body_open_mob`}
                 >
