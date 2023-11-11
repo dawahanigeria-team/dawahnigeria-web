@@ -8,7 +8,7 @@ import { VscArrowLeft, VscArrowRight } from "react-icons/vsc";
 
 import GroupWidget from "../../components/groupWidget/GroupWidget";
 
-import { genresApi } from "../../services";
+import { lectureApi } from "../../services";
 
 import HeadMeta from "../../components/head-meta";
 import { useSelector } from "react-redux";
@@ -24,7 +24,7 @@ const GenreDetail = () => {
   const { querieddata } = useQueryGetRequest(
     "genre-details",
     queryParam,
-    genresApi.getCategoryDetails
+    lectureApi.getCategoryDetails
   );
 
  

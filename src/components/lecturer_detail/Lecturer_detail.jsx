@@ -22,7 +22,7 @@ import { formatNumber } from "../UI/formatter";
 import lazy from "../../assets/png/lazyrps.jpeg";
 import ShareAudio from "../shareaudio/shareAudio";
 import { useQueryGetRequest } from "../../hooks/getqueries";
-import { lecturerDetailApi } from "../../services";
+import { lectureApi } from "../../services";
 import { DesktopFavoriteButton } from "../UI/favoritebuttons/desktopfavoriteButtons";
 import { MobileFavoriteButton } from "../UI/favoritebuttons/mobilefavoriteButton";
 
@@ -53,7 +53,7 @@ const LecturerDetail = () => {
   const { querieddata, refetch } = useQueryGetRequest(
     "lecturer-detail",
     queryParam,
-    lecturerDetailApi.getLecturerById
+    lectureApi.getLecturerById
   );
 
   /// Get the exiting element

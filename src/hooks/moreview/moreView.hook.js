@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { moreViewApi } from "../../services";
+import { lectureApi } from "../../services";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 export const useMoreViewHook = (keyParam, currentdata) => {
@@ -9,7 +9,7 @@ export const useMoreViewHook = (keyParam, currentdata) => {
 
   const { data, isLoading, error } = useQuery(
     ["more-view", keyParam],
-    () => moreViewApi.moreDatas(keyParam),
+    () => lectureApi.moreDatas(keyParam),
     {
       enabled: !!keyParam.endpoint_url && !hasReachedLastPage,
       onSuccess: (data) => {

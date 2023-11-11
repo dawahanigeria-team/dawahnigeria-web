@@ -10,7 +10,7 @@ import { LECTURE, TRENDING } from "../../utils/routes/constants";
 import { useInfiniteScrollPagination } from "../../hooks";
 import _ from "lodash";
 import { useQueryGetRequest } from "../../hooks/getqueries";
-import { trendingApi } from "../../services/trending.service";
+import { lectureApi } from "../../services";
 import HeadMeta from "../../components/head-meta";
 
 const Trending = () => {
@@ -18,7 +18,7 @@ const Trending = () => {
   const [page, setPage] = useState(1);
   const queryParam = { page };
   const { isLoading, isLoadingNextPage, isLastPage, querieddata } =
-    useQueryGetRequest("trending", queryParam, trendingApi.getTrendings);
+    useQueryGetRequest("trending", queryParam, lectureApi.getTrendings);
 
 
   const { ref: infiniteScrollRef } = useInfiniteScrollPagination(

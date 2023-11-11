@@ -37,7 +37,7 @@ import { AudioContext } from "../../App";
 import { LECTURE } from "../../utils/routes/constants";
 
 import { useQueryGetRequest } from "../../hooks/getqueries";
-import { lectureListDetailApi } from "../../services";
+import { lectureApi } from "../../services";
 import { DesktopFavoriteButton } from "../../components/UI/favoritebuttons/desktopfavoriteButtons";
 import { MobileFavoriteButton } from "../../components/UI/favoritebuttons/mobilefavoriteButton";
 
@@ -66,17 +66,17 @@ const LecturesListDetail = () => {
   const { querieddata, refetch } = useQueryGetRequest(
     "albumdetails",
     queryParam,
-    lectureListDetailApi.getAlbumDetail
+    lectureApi.getAlbumDetail
   );
   const { querieddata: albumlectures, isLoading } = useQueryGetRequest(
     "albumlectures",
     queryParam,
-    lectureListDetailApi.getAlbumLectures
+    lectureApi.getAlbumLectures
   );
   const { querieddata: similarAlbums } = useQueryGetRequest(
     "similarRpAlbums",
     keyParam,
-    lectureListDetailApi.getSimilarAlbums
+    lectureApi.getSimilarAlbums
   );
 
   useEffect(() => {

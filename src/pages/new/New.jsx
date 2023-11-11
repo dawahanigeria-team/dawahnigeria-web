@@ -10,7 +10,7 @@ import { BsFillPlayFill } from "react-icons/bs";
 import { LECTURE, TRENDING, NEW } from "../../utils/routes/constants";
 import { useNavigate } from "react-router-dom";
 import { useQueryGetRequest } from "../../hooks/getqueries";
-import { newApi } from "../../services";
+import { lectureApi } from "../../services";
 
 import HeadMeta from "../../components/head-meta";
 
@@ -22,7 +22,7 @@ const New = () => {
   const { isLoading, querieddata } = useQueryGetRequest(
     "new",
     queryParam,
-    newApi.getNewLectures
+    lectureApi.getNewLectures
   );
 
   //play all audio filesF

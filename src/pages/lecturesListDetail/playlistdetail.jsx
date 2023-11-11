@@ -37,7 +37,7 @@ import {
 } from "../../Redux/Actions/ActionCreators";
 import { LECTURE } from "../../utils/routes/constants";
 import { AudioContext } from "../../App";
-import { playlistdetailApi } from "../../services/playlistdetail.service";
+import { lectureApi } from "../../services";
 import { useAllPlaylistHook, usePlaylistLectures } from "../../hooks/playlists";
 import { DesktopFavoriteButton } from "../../components/UI/favoritebuttons/desktopfavoriteButtons";
 import { MobileFavoriteButton } from "../../components/UI/favoritebuttons/mobilefavoriteButton";
@@ -62,7 +62,7 @@ const PlaylistDetail = () => {
   const { querieddata, isLoading, refetch } = useQueryGetRequest(
     "playlist-details",
     queryParam,
-    playlistdetailApi.getPlaylistData
+    lectureApi.getPlaylistData
   );
 
   const keyParam = { multiId: querieddata[0]?.audio?.toString() || null };
@@ -70,7 +70,7 @@ const PlaylistDetail = () => {
   const { querieddata: playlistlectures } = usePlaylistLectures(
     "playlist-lectures",
     keyParam,
-    playlistdetailApi.getPlaylistLectures
+    lectureApi.getPlaylistLectures
   );
 
   const { data: similarPlaylists } = useAllPlaylistHook();

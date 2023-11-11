@@ -7,7 +7,7 @@ import { language } from '../../pages/lecturers/data'
 export const useLanguagesHook = () => {
     const [languagedata, setLanguageData] = useState([])
 
-    const {data} = useQuery(["languages"], () => lecturersApi.getLanguages(), 
+    const {data} = useQuery(["languages"], () => lecturersApi.getLanguages(),
     {
         onSuccess: (data) => {
             setLanguageData([...language,...data])

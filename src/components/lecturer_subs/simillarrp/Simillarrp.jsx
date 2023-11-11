@@ -8,7 +8,7 @@ import Loader from "../../UI/loader/loader";
 import _ from "lodash";
 import { useInfiniteScrollPagination } from "../../../hooks";
 import GenreMobileLecturer from "../../../pages/genredetail/genreMobileLecturer";
-import { lecturersApi } from "../../../services";
+import { lectureApi } from "../../../services";
 import { useLecturersHook } from "../../../hooks/lecturers/useLecturers.hook";
 const Simillarrp = ({ langid }) => {
   const [page, setPage] = useState(1);
@@ -20,7 +20,7 @@ const Simillarrp = ({ langid }) => {
     useLecturersHook(
       "lecturers",
       queryParam,
-      lecturersApi.getLecturers,
+      lectureApi.getLecturers,
       setPage
     );
 
