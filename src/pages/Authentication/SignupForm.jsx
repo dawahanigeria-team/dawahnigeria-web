@@ -216,17 +216,17 @@ const SignupForm = () => {
                   <div className="flex flex-col w-full h-full">
                     {Array.isArray(langData) && langData?.map(({ name, id }, index) => {
                       return (
-                        <div
+                        <button
                           key={index}
                           onClick={() => {
                             setlangid(id);
                             setLang(name);
                             setisdrop(!isdrop);
                           }}
-                          className="drops hover:bg-gray-100 cursor-pointer"
+                          className="drops text-start hover:bg-gray-100 cursor-pointer"
                         >
                           {name}
-                        </div>
+                        </button>
                       );
                     })}
                   </div>
