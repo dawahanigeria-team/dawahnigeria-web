@@ -50,7 +50,7 @@ const SelectLanguage = () => {
 
       {Array.isArray(langData) && langData?.map(({ name, id }, index) => {
         return (
-          <div
+          <button
             onClick={() => {
               setlangid(id);
               setselected(true);
@@ -63,7 +63,7 @@ const SelectLanguage = () => {
             }
           >
             {name}
-          </div>
+          </button>
         );
       })}
 
