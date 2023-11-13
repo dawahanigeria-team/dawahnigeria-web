@@ -81,16 +81,17 @@ const GroupWidget = ({
   }
 
   useEffect(() => {
+    const currentSlide = slide.current;
     function scrollEl() {
-      if (slide.current.scrollLeft === 0) {
+      if (currentSlide?.scrollLeft === 0) {
         setisprev(false);
       } else {
         setisprev(true);
       }
 
       if (
-        slide.current.scrollLeft + slide.current.offsetWidth >=
-        slide.current.scrollWidth
+        currentSlide?.scrollLeft + currentSlide?.offsetWidth >=
+        currentSlide?.scrollWidth
       ) {
         setisnext(false);
       } else {
@@ -98,9 +99,13 @@ const GroupWidget = ({
       }
     }
 
-    slide.current?.addEventListener("scroll", scrollEl);
+    if (currentSlide) {
+      currentSlide?.addEventListener("scroll", scrollEl);
+    }
 
-    return () => slide.current?.removeEventListener("scroll", scrollEl);
+    return () => {
+      if (currentSlide) currentSlide.removeEventListener("scroll", scrollEl);
+    };
   }, [slide.current?.scrollLeft]);
 
   return (
@@ -510,7 +515,7 @@ const GroupWidget = ({
                 (
                   {
                     img,
-                  
+
                     views,
                     name,
                     nid,
