@@ -48,7 +48,7 @@ const SelectLanguage = () => {
       <HeadMeta title="Select language |  Dawah Nigeria, home of Islamic resources" />
       <p className="header">Select a language</p>
 
-      {langData?.map(({ name, id }, index) => {
+      {Array.isArray(langData) && langData?.map(({ name, id }, index) => {
         return (
           <div
             onClick={() => {
