@@ -40,7 +40,7 @@ const Trending = () => {
         endpoint_url: `/popular_lec_api.php?langid=6&page=`,
         currentPage: 1,
         idx: 0,
-        nid: querieddata[0].nid,
+        nid: querieddata[0]?.nid,
         nav1: { title: "playAll", link: TRENDING },
       },
     });

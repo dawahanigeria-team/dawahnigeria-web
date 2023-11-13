@@ -30,7 +30,7 @@ const New = () => {
     navigate(`${LECTURE}${querieddata[0?.nid]}`, {
       state: {
         idx: 0,
-        nid: querieddata[0].nid,
+        nid: querieddata[0]?.nid,
         nav1: { title: "playAll", link: NEW },
       },
     });
