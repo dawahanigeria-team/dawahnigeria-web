@@ -72,9 +72,7 @@ function List({
   const [isdisabled, setdisabled] = useState(false);
   const [getFavs, setgetfavs] = useState([]);
   const dispatch = useDispatch();
-  const [rpData, setrpData] = useState([]);
   const { setinitial } = useContext(AudioContext);
-  const [rpnameArray, setrpnameArray] = useState([]);
   const [isShare, setisShare] = useState(false);
 
   ////not contented but under presssure by DN project manager
@@ -97,7 +95,7 @@ function List({
   const shareAudio = (e) => {
     e.stopPropagation();
     setisShare(!isShare);
-    //setNidValue(nid)
+    
   };
 
   /////get users favorites
@@ -171,6 +169,7 @@ function List({
       <div className="table text-color-primary">
         <div
           onClick={() => {
+            
             dispatch(getCount(id));
             dispatch(getPack(null));
             dispatch(getaudioId(nid));

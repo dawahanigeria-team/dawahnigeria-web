@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { lectureApi } from "../../services";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+
 export const useMoreViewHook = (keyParam, currentdata) => {
   const [querydata, setquerydata] = useState([]);
   const [isLoadingNextPage, setIsLoadingNextPage] = useState(false);
@@ -26,7 +26,7 @@ export const useMoreViewHook = (keyParam, currentdata) => {
       onError: (error) => {
         setIsLoadingNextPage(false);
         
-        toast.error("Unable to load data");
+        
       },
     }
   );

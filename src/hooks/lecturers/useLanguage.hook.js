@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { lecturersApi } from '../../services'
-import { toast } from 'react-hot-toast'
+
 import { language } from '../../pages/lecturers/data'
 
 export const useLanguagesHook = () => {
@@ -14,7 +14,6 @@ export const useLanguagesHook = () => {
         },
         onError: (error) => {
             
-            toast.error("Unable to load data");
         }
     })
 

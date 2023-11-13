@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { toast } from "react-hot-toast";
 import { lectureApi } from "../../services";
 
 export const useAllPlaylistHook = () => {
@@ -15,7 +14,7 @@ export const useAllPlaylistHook = () => {
       },
       onError: (error) => {
         
-        toast.error("Unable to load data");
+      
       },
     }
   );

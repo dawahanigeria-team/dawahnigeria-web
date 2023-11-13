@@ -21,15 +21,14 @@ const Playlists = () => {
   const [data2, setData2] = useState([]);
   const [data3, setData3] = useState([]);
   const [active, setActive] = useState("All");
-  const [active1, setActive1] = useState("All");
+
   const [catid, setCatid] = useState("40217");
-  const [langid, setLangid] = useState("6");
+ 
   const navigate = useNavigate();
   const [, setTypeName] = useState();
   const [, setIsEmpty] = useState(false);
 
   const { data: categories } = useCategoriesHook();
-  const { data: languages } = useLanguagesHook();
   const { data: allPlaylists, isLoading } = useAllPlaylistHook();
 
   return (
@@ -67,33 +66,7 @@ const Playlists = () => {
                 );
               })}
           </div>
-          <div className="playlist_filter_language">
-            {Array.isArray(languages) &&
-              languages?.map(({ name, id }, idx) => {
-                return (
-                  <FilterButton
-                    key={idx}
-                    filter={filter}
-                    setFilter={setFilter}
-                    data1={data1}
-                    setData1={setData1}
-                    data2={data2}
-                    setData2={setData2}
-                    data3={data3}
-                    setData3={setData3}
-                    active={active1}
-                    setActive={setActive1}
-                    title={name}
-                    action="language"
-                    data={allPlaylists}
-                    setIsEmpty={setIsEmpty}
-                    setTypeName={setTypeName}
-                    lid={id}
-                    setLangid={setLangid}
-                  />
-                );
-              })}
-          </div>
+       
         </div>
         {isLoading && (
           <div className="load_desktop mgt">

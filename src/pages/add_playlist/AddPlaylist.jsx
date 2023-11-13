@@ -155,7 +155,7 @@ const Add_playlist = () => {
         onClick={(e) => {
           hidePlaylist(e);
         }}
-        className={addplaylist ? "addplay_wrapper dark:bg-black dark:bg-opacity-30 bg-opacity-60 bg-white" : "addplay_wrapper_none"}
+        className={addplaylist ? "addplay_wrapper dark:bg-[rgba(0,0,0,0.05)]  bg-opacity-60 bg-white" : "addplay_wrapper_none"}
       >
         <div
           onClick={(e) => {

@@ -70,6 +70,7 @@ const AudioActionDesktop = () => {
   const getMusic = (audioId) => {
     //dispatch(setPlaying(false));
     setLoading(true);
+    setnotloaded(true);
     ///get lecture audio
     axios
       .get(`/leclistingapi.php?lecid=${audioId}`)
@@ -78,19 +79,6 @@ const AudioActionDesktop = () => {
 
         dispatch(getcurrentAudioInfo(res.data[0]));
         setLoading(false);
-
-
-        if (initial) {
-          dispatch(setPlaying(false));
-          audioRef.current?.pause();
-
-          cancelAnimationFrame(playAnimation.current);
-        } else {
-          dispatch(setPlaying(true));
-
-          audioRef.current?.play();
-          playAnimation.current = requestAnimationFrame(repeat);
-        }
       })
       .catch((err) => {});
   };
@@ -137,6 +125,23 @@ const AudioActionDesktop = () => {
     postRecent();
   }, [audioId]);
   //************ */
+
+  //check if data is loaded
+  useEffect(() => {
+    if (!isloaded) {
+      if (initial) {
+        dispatch(setPlaying(false));
+        audioRef.current?.pause();
+
+        cancelAnimationFrame(playAnimation.current);
+      } else {
+        dispatch(setPlaying(true));
+
+        audioRef.current?.play();
+        playAnimation.current = requestAnimationFrame(repeat);
+      }
+    }
+  }, [isloaded]);
 
   useEffect(() => {
     if (playing && !initial) {
@@ -335,7 +340,7 @@ const AudioActionDesktop = () => {
             ref={rangeRef}
             type="range"
             min={"0"}
-            max={Math.floor(audioRef.current?.duration)}
+            max={Math.floor(audioRef.current?.duration || 0)}
             value={value}
             onChange={(e) => {
               handleRange(e.target.value);
@@ -346,8 +351,8 @@ const AudioActionDesktop = () => {
 
         <audio
           ref={audioRef}
+          onLoadedMetadata={handleState}
           src={currentaudio?.audio}
-          onLoadedData={handleState}
           onTimeUpdate={() => {
             if (audioRef.current && !audioRef.current?.seeking) {
               dispatch(getValue(audioRef?.current?.currentTime));

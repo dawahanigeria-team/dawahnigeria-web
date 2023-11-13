@@ -181,8 +181,11 @@ const LoginAction = (loginParams, isSocial, navigate, setLoading) => {
         })
         .catch((error) => {
           setLoading(false);
-
-          toast.error(error.response.data.message);
+          const err = error.response?.data
+          if (err) {
+            toast.error(err.message);
+          }
+         
         });
     }
   };
@@ -244,7 +247,10 @@ const registration = (
       .catch((error) => {
         setLoading(false);
 
-        toast.error(error.response.data.message);
+        const err = error.response?.data
+          if (err) {
+            toast.error(err.message);
+          }
       });
   };
 };

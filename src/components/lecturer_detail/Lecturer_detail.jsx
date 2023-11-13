@@ -17,12 +17,11 @@ import Simillarrp from "../lecturer_subs/simillarrp/Simillarrp";
 import combold from "../../assets/svg/combold.svg";
 import { SlShare } from "react-icons/sl";
 import { BiSolidShareAlt } from "react-icons/bi";
-import commentbig from "../../../src/assets/svg/boom-comment.svg";
 import { formatNumber } from "../UI/formatter";
 import lazy from "../../assets/png/lazyrps.jpeg";
 import ShareAudio from "../shareaudio/shareAudio";
 import { useQueryGetRequest } from "../../hooks/getqueries";
-import { lectureApi } from "../../services";
+import { lecturersApi } from "../../services";
 import { DesktopFavoriteButton } from "../UI/favoritebuttons/desktopfavoriteButtons";
 import { MobileFavoriteButton } from "../UI/favoritebuttons/mobilefavoriteButton";
 
@@ -53,7 +52,7 @@ const LecturerDetail = () => {
   const { querieddata, refetch } = useQueryGetRequest(
     "lecturer-detail",
     queryParam,
-    lectureApi.getLecturerById
+    lecturersApi.getLecturerById
   );
 
   /// Get the exiting element

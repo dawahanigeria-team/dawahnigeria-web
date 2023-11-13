@@ -8,7 +8,7 @@ import Loader from "../../UI/loader/loader";
 import CommentBox from "../../comment/comment";
 import { useSelector } from "react-redux";
 import { PLAYLISTS } from "../../../utils/routes/constants";
-import { lectureApi } from "../../../services";
+import { lecturersApi } from "../../../services";
 import { useQueryGetRequest } from "../../../hooks/getqueries";
 const Lecturer_playlist = ({ id }) => {
   const { currentUser } = useSelector((state) => state.user);
@@ -18,7 +18,7 @@ const Lecturer_playlist = ({ id }) => {
   const { isLoading, querieddata } = useQueryGetRequest(
     "lecturer-playlist",
     queryParam,
-    lectureApi.getLecturerPlaylist
+    lecturersApi.getLecturerPlaylist
   );
 
   //////*************handling comment**************** */

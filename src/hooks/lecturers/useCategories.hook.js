@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { lectureApi } from "../../services";
-import { toast } from "react-hot-toast";
+
 import { category } from "../../pages/playlists/data";
 
 export const useCategoriesHook = () => {
@@ -16,7 +16,7 @@ export const useCategoriesHook = () => {
       },
       onError: (error) => {
         
-        toast.error("Unable to load data");
+        
       },
     }
   );

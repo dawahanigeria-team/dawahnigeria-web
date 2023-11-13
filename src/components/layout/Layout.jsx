@@ -99,7 +99,10 @@ const Layout = () => {
               ref={rangeRef}
               type="range"
               min={"0"}
-              max={Math.floor(audioRef?.current?.duration)}
+              onChange={(e) => {
+                e.target.value
+              }}
+              max={Math.floor(audioRef?.current?.duration || 0)}
               value={value}
               className=""
             />

@@ -349,7 +349,7 @@ const AudioDetail = () => {
 
   const shareAudio = () => {
     setisShare(!isShare);
-    //setNidValue(nid)
+    
   };
 
   ////*********************************************************** */
@@ -553,7 +553,7 @@ const AudioDetail = () => {
                   ref={rangeRef}
                   type="range"
                   min={"0"}
-                  max={Math.floor(audioRef?.current?.duration)}
+                  max={Math.floor(audioRef?.current?.duration || 0)}
                   value={value}
                   onChange={(e) => {
                     handleRange(e.target.value);

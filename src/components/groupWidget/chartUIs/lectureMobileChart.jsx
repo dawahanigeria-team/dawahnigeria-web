@@ -127,7 +127,7 @@ const LectureMobileChart = ({ data }) => {
                     dispatch(getPack(data));
                     setinitial(false);
                   }}
-                  key={idx}
+                  key={img}
                   className="w-[90%]"
                 >
                   <LectChartWidget

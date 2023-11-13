@@ -17,7 +17,7 @@ export const useSimilarAudioHook = (keyParam) => {
       },
       onError: (error) => {
       
-        toast.error("Unable to load data");
+       
       },
     }
   );

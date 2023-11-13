@@ -57,13 +57,13 @@ export function MobileFavoriteButton({ favorites, id, type, refetch }) {
       disabled={isdisabled}
       className="icons_mob_listblack"
     >
-      <button className="likeys_img">
+      <span className="likeys_img">
         {favoriteCount[type]?.includes(parseInt(id)) ? (
           <AiFillHeart className="text-foreground text-xl dark:text-[#ddff2b]" />
         ) : (
           <AiFillHeart className=" text-xl text-[#aeaeae]" />
         )}
-      </button>
+      </span>
 
       {isLoading ? (
         <LoaderIcon className="text-sm animate-spin" />

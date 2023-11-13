@@ -94,13 +94,13 @@ const LecturerMobileChart = ({ data }) => {
 
       <div className="flex flex-col w-full mt-4 space-y-2 justify-end items-end">
         {Array.isArray(data) &&
-          data?.slice(3).map(({ id, img, nid, name }, idx) => {
+          data?.slice(3).map(({ id, img, nid, name ,_id}, idx) => {
             return (
               <div
                 onClick={() => {
                   navigate(`${RESOURCE_PERSON}${id || nid}`);
                 }}
-                key={idx}
+                key={_id?.$oid}
                 className="w-[90%]"
               >
                 <LecturersChartWidget img={img} name={name} idx={idx} />
