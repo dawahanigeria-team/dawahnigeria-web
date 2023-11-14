@@ -51,6 +51,7 @@ const Simillarrp = ({ langid }) => {
                 }
                 to={`${RESOURCE_PERSON}${id}`}
                 className="lecturers_item"
+                key={idx}
               >
                 <LecturersWidget
                   views={views}

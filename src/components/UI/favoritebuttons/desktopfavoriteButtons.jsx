@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from "react";
 import { MdFavorite } from "react-icons/md";
-import favbig from "../../../assets/svg/boom-fav.svg";
 import { formatNumber } from "../formatter";
 import { useAddFavoritesHook, useFetchFavoritesHook } from "../../../hooks";
 import { useSelector } from "react-redux";

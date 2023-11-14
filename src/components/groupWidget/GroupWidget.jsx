@@ -46,7 +46,7 @@ const GroupWidget = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { setinitial } = useContext(AudioContext);
-  const slide = useRef();
+  const slide = useRef(null);
 
   const [isprev, setisprev] = useState(false);
   const [isnext, setisnext] = useState(true);

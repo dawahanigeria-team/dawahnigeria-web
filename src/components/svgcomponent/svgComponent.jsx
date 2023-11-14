@@ -174,7 +174,7 @@ export const AddedFavourites = () => {
       >
         <g
           id="btn/全屏播放/收藏/default"
-          className="stroke-color-primary dark:hover:stroke-[#ddff2b] hover:stroke-color-foreground"
+          className="stroke-color-primary dark:stroke-[#ddff2b] dark:hover:stroke-[#ddff2b] hover:stroke-color-foreground"
           stroke=""
         >
           <path

@@ -18,6 +18,7 @@ import { GiPauseButton } from "react-icons/gi";
 import { FaPlay } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "../../utils/useAxios";
+import {BsFillHeartFill} from "react-icons/bs"
 import { useNavigate } from "react-router-dom";
 import {
   getaudioId,
@@ -45,8 +46,17 @@ import Addplaylist from "../../pages/add_playlist/AddPlaylist";
 import { LECTURE, RESOURCE_PERSON } from "../../utils/routes/constants";
 import { AudioDownloadModal } from "../audioDownloadModal/AudioDownloadModal";
 const AudioActionDesktop = () => {
-  const { currentUser, audioId, isrepeat, value, page, count, pack, playing } =
-    useSelector((state) => state.user);
+  const {
+    currentUser,
+    audioId,
+    isrepeat,
+    value,
+    page,
+    count,
+    pack,
+    playing,
+    theme,
+  } = useSelector((state) => state.user);
   //const [playing, setPlaying] = useState(false);
   const dispatch = useDispatch();
   const rangeRef = useRef();
@@ -469,11 +479,15 @@ const AudioActionDesktop = () => {
               onClick={() => {
                 addToFav();
               }}
-              className="h-[20px] w-[20px] "
+              className=" "
               disabled={!audioId}
             >
               {getFavs?.includes(parseInt(audioId)) ? (
-                <AddedFavourites />
+                theme === "dark" ? (
+                  <AddedFavourites />
+                ) : (
+                  <BsFillHeartFill className="text-[25px] text-zinc-800" />
+                )
               ) : (
                 <AddFavourites />
               )}
