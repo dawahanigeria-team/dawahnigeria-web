@@ -15,8 +15,6 @@ import { createLogger } from "redux-logger";
 import thunk from "redux-thunk";
 import { BrowserRouter as Router } from "react-router-dom";
 
-
-
 const persistConfig = {
   key: "root",
   storage,
@@ -29,9 +27,6 @@ let store;
 
 if (process.env.NODE_ENV === "development") {
   // If not on localhost, don't include the logger middleware
-  store = createStore(persistedReducer, applyMiddleware(...middleware));
-} else {
-  // If on localhost include the logger middleware
 
   const loggerMiddleware = createLogger();
   middleware.push(loggerMiddleware);
@@ -40,6 +35,9 @@ if (process.env.NODE_ENV === "development") {
     persistedReducer,
     composeWithDevTools(applyMiddleware(...middleware))
   );
+} else {
+  // If on localhost include the logger middleware
+  store = createStore(persistedReducer, applyMiddleware(...middleware));
 }
 
 let persistor = persistStore(store);
