@@ -7,7 +7,7 @@ const Container = ({ children }) => {
   return (
     <div className="container_wrapper">
       <Nav />
-      <div className="container_child">{children}</div>
+      <div className="container_child bg-primary-foreground">{children}</div>
       <Footer />
     </div>
   );

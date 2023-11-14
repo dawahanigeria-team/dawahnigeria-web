@@ -25,7 +25,7 @@ export const useMoreViewHook = (keyParam, currentdata) => {
       },
       onError: (error) => {
         setIsLoadingNextPage(false);
-        console.error("error", error);
+        
         toast.error("Unable to load data");
       },
     }

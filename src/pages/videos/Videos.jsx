@@ -42,7 +42,7 @@ const Videos = () => {
     <Container>
       <HeadMeta title={`Videos - Get islamic resources on Dawah Nigeria`} />
       <div className="video_wrapper">
-        <div className="vid_header_link  max-[615px]:border-b border-zinc-700">
+        <div className="vid_header_link bg-background max-[615px]:border-b border-zinc-700">
           <HeaderRouter title={"Videos"} />
         </div>
         <div className="video_filter">

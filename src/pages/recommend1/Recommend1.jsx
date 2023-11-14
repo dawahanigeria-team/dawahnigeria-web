@@ -36,7 +36,6 @@ const Recommend1 = () => {
       axios
         .get(`/leclisting_cat_api.php?langid=6&catid=${catid}&page=${page}`)
         .then((res) => {
-          //console.log(res.data)
           if (page === 1) {
             setLoading(false);
           }
@@ -49,13 +48,8 @@ const Recommend1 = () => {
           setData((prev) => [...prev, ...res.data]);
           setNextPageLoad(false);
         })
-        .catch((err) => {
-          //console.log(err);
-        });
+        .catch((err) => {});
     };
-    // //console.log("hold line 40", hold);
-
-    // //console.log("data line 42: ", data);
 
     handleRequest();
   }, [catid, page]);
@@ -72,7 +66,7 @@ const Recommend1 = () => {
   return (
     <Container>
       <div className="recommend1_wrapper">
-        <div className="rec_header_link">
+        <div className="rec_header_link bg-background">
           <HeaderRouter title={"Buzz"} />
         </div>
         <div className="recommend1_filter_categories">
@@ -112,7 +106,7 @@ const Recommend1 = () => {
         <div className="recommend1_content">
           {" "}
           {filter.map((value, idx) => {
-            const { img, rpname, title, categories, nid, audio } = value;
+            const { img, rpname, title, nid, audio } = value;
             const catsname = Object.values(value)[3];
             if (filter.length === idx + 1) {
               return (

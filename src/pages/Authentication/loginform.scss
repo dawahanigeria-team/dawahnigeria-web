@@ -17,7 +17,7 @@
     font-size: 14px;
   }
   line-height: 22px;
-  color: white;
+
   &::placeholder {
     font-family: "Poppins";
     font-style: normal;
@@ -62,7 +62,7 @@
         }
         line-height: 22px;
         padding-left: 1rem;
-        color: white;
+      
       }
       .loginform_password_icon_show_wrap,
       .loginform_password_icon_hide_wrap {
@@ -130,7 +130,7 @@
       font-size: 17px;
 
       line-height: 23px;
-      color: #d4d4d4;
+    
       align-self: center;
       margin-bottom: 10%;
       @media screen and (min-height: 700px) {

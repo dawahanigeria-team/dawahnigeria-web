@@ -8,6 +8,7 @@ import playfolder from "../../assets/svg/folder.svg";
 import { toast } from "react-hot-toast";
 import axios from "../../utils/useAxios";
 import Loader from "../../components/UI/loader/loader";
+import { MdClose } from "react-icons/md";
 
 const Add_playlist = () => {
   const { addplaylist, currentUser, lecid } = useSelector(
@@ -46,7 +47,7 @@ const Add_playlist = () => {
       user_id: currentUser?.id,
     };
 
-    //console.log(validateData);
+  
 
     for (let i in validateData) {
       if (validateData[i] === "") {
@@ -78,12 +79,12 @@ const Add_playlist = () => {
       })
       .then((res) => {
         toast.success("lecture added to playlist");
-        //toast.success(message);
+       
         setLoading(false);
         setisShow(true);
       })
       .catch((err) => {
-        //console.log(err);
+       
       });
   };
 
@@ -104,18 +105,18 @@ const Add_playlist = () => {
           }
         )
         .then((res) => {
-          //console.log(res.data);
+      
           setmyFolders(res.data);
           const filter = res.data.map((item) => item.name.toLowerCase());
           setCreated(filter);
         })
         .catch((err) => {
-          //console.log(err);
+         
         });
     }
   }, []);
 
-  //console.log(myFolders);
+  
 
   const addSong = (id) => {
     if (!currentUser?.id) {
@@ -129,8 +130,7 @@ const Add_playlist = () => {
       action: "add_playlist_audio",
     };
 
-    //console.log(payload)
-    // if(payload) return
+   
     axios
       .post(`/playlistApi.php`, payload, {
         headers: {
@@ -140,12 +140,12 @@ const Add_playlist = () => {
         },
       })
       .then((res) => {
-        //console.log(res);
+      
         toast.success(res.data.message);
         dispatch(showaddPlaylist(false));
       })
       .catch((err) => {
-        //console.log(err);
+   
       });
   };
 
@@ -155,14 +155,14 @@ const Add_playlist = () => {
         onClick={(e) => {
           hidePlaylist(e);
         }}
-        className={addplaylist ? "addplay_wrapper" : "addplay_wrapper_none"}
+        className={addplaylist ? "addplay_wrapper dark:bg-black dark:bg-opacity-60 bg-opacity-60 bg-white" : "addplay_wrapper_none"}
       >
         <div
           onClick={(e) => {
             e.stopPropagation();
           }}
           className={
-            isShow ? "curr_playlist let swipeDown" : "curr_playlist_none"
+            isShow ? "curr_playlist bg-background shadow-lg text-foreground let swipeDown" : "curr_playlist_none"
           }
         >
           <div
@@ -171,12 +171,8 @@ const Add_playlist = () => {
             }}
             className="close_image"
           >
-            <img
-              className="close_img_sz"
-              src={cloase}
-              src-data={cloase}
-              alt=""
-            />
+          
+          <MdClose className="text-xl"/>
           </div>
           <div className="cur_small_wrapper">
             <div className="create_play">
@@ -231,10 +227,10 @@ const Add_playlist = () => {
             e.stopPropagation();
           }}
           className={
-            isShow ? "smaller_wrapper_none" : "smaller_wrapper let swipeDown"
+            isShow ? "smaller_wrapper_none" : "smaller_wrapper bg-background text-foreground shadow-lg let swipeDown"
           }
         >
-          <div className="add_play_header">Add a new playlist</div>
+          <div className="add_play_header text-foreground">Add a new playlist</div>
 
           <div
             onClick={(e) => {

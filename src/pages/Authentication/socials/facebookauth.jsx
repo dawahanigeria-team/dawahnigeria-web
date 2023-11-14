@@ -12,13 +12,11 @@ function GetFacebookAuth() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
-  ////console.log(socialData)
   return (
     <div>
       <LoginSocialFacebook
         appId="392392739611134"
         onResolve={(response) => {
-          //console.log(response.data)
           const { name, email, accessToken } = response.data;
           if (pathname === "/auth/login") {
             const payload = {
@@ -27,9 +25,6 @@ function GetFacebookAuth() {
               token: accessToken,
               //password: "pa$$word",
             };
-
-            //console.log(payload);
-            // dispatch(LoginAction(payload, navigate, setLoading));
           } else {
             navigate("/auth/selectlanguage", {
               state: {
@@ -40,9 +35,7 @@ function GetFacebookAuth() {
             });
           }
         }}
-        onReject={(err) => {
-          //console.log(err)
-        }}
+        onReject={(err) => {}}
       >
         <div className="cursor-pointer size_img">
           <img

@@ -16,22 +16,19 @@ const Recommend2 = () => {
     axios
       .get("/albumlisting_page_api.php?lim=10&langid=7&page=1")
       .then((res) => {
-        ////console.log(res.data)
         setData(res.data);
       })
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   }, []);
-  // //console.log(r)
+
   return (
     <Container>
-      <div className="recommend2_header_link">
+      <div className="recommend2_header_link bg-background">
         <HeaderRouter title={"Podcast"} />
       </div>
       <div className="recommend2_wrapper">
         {recommended2Data.map(
-          ({ cats, img, title, rpname, nid, cats_name, lec_no}, idx) => {
+          ({ cats, img, title, rpname, nid, cats_name, lec_no }, idx) => {
             return (
               <div
                 onClick={() => {

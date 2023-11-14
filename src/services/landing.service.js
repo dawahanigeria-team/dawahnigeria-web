@@ -45,7 +45,7 @@ export const landingPageApis = {
         return await response;
       }
     } catch (error) {
-      console.log(error);
+      ;
     }
   },
   getRecentlyViewedForLoginUser: async (user) =>

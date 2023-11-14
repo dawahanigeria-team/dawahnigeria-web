@@ -13,7 +13,7 @@ export default function DailyAlbums() {
     keyParam,
     chartsApi.getAlbums
   );
-  // console.log('albums',querieddata)
+
   return (
     <div className="charts_recent charts_space">
       {" "}

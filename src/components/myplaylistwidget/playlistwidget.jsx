@@ -59,7 +59,6 @@ function MyPlayListWidget({
   async function fetchFavorites(addFav, lecid) {
     if (!currentUser?.id) return;
     if (addFav || (!addFav && lecid)) {
-      //console.log("..........@@@@@@@@@@@@@");
       await axios
         .get(
           `/leclisting_favorites.php?user_id=${currentUser?.id}&type=audio`,
@@ -72,14 +71,10 @@ function MyPlayListWidget({
           }
         )
         .then((res) => {
-          //console.log(res.data);
           const { audio } = res.data;
           setgetfavs(Object.values(audio));
-          // const isExist = [Object.values(audio)].includes(nid)
         })
-        .catch((err) => {
-          //console.log(err);
-        });
+        .catch((err) => {});
     }
   }
   useEffect(() => {
@@ -106,7 +101,6 @@ function MyPlayListWidget({
         },
       })
       .then((res) => {
-        //console.log(res);
         toast.success(res.data.message);
         setdisabled(false);
         if (!getFavs?.includes(lecid)) {
@@ -116,9 +110,7 @@ function MyPlayListWidget({
         }
       })
 
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   };
 
   return (

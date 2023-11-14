@@ -27,13 +27,13 @@ function MobileList({
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { setinitial } = useContext(AudioContext);
-  const { currentUser, audioId } = useSelector((state) => state.user);
+  const { audioId } = useSelector((state) => state.user);
 
   return (
     <div
       className={
         audioId === nid
-          ? `mobilelist_wrapper border-l-2 border-[#ddff2b]`
+          ? `mobilelist_wrapper text-primary border-l-2 border-gray-400 dark:border-[#ddff2b]`
           : "mobilelist_wrapper"
       }
     >
@@ -49,7 +49,7 @@ function MobileList({
         }}
         className="mobiletd"
       >
-        <div className="lecture">{title || Title}</div>
+        <div className="lecture text-foreground">{title || Title}</div>
         <div className="lecturer">{rpname}</div>
       </div>
     </div>

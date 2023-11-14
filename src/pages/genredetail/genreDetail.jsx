@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios from "../../utils/useAxios";
+import React from "react";
 import "./genredetail.scss";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Container from "../../components/container/Container";
@@ -12,12 +11,15 @@ import GroupWidget from "../../components/groupWidget/GroupWidget";
 import { genresApi } from "../../services";
 
 import HeadMeta from "../../components/head-meta";
+import { useSelector } from "react-redux";
+
 
 const GenreDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const queryParam = { id };
+  const {theme} = useSelector((state) => state.user)
 
   const { querieddata } = useQueryGetRequest(
     "genre-details",
@@ -25,6 +27,7 @@ const GenreDetail = () => {
     genresApi.getCategoryDetails
   );
 
+ 
   //i/genre_api.php?cat_id=40622
   return (
     <Container>
@@ -43,7 +46,7 @@ const GenreDetail = () => {
             }
             alt=""
           />
-          <div className="gradientgenre"></div>
+        {theme === "dark" ?  <div className="gradientgenre"></div> : <div className="gradientgenre_light"></div> }
         </div>
         <div className="w-full relative top-0 inset-x-0 h-[260px] min-[615px]:h-[350px]">
           <div className="w-full absolute top-0 inset-x-0 h-full">

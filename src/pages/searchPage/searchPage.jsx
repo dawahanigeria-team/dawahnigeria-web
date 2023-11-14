@@ -55,26 +55,18 @@ const SearchPage = () => {
         }${albumId?.length !== 0 ? `&album_id=${albumId.toString()}` : ""}`
       )
       .then((res) => {
-        //console.log(res.data);
         setLoading(false);
         const { display_data, section_data, total_rec_by_section } = res.data;
         dispatch(getSearchData(display_data.mini_result));
         dispatch(getSearchOptions(section_data));
         dispatch(getSearchRecord(total_rec_by_section));
-
-        // //console.log(display_data.mini_result)
-
-        //onchange("");
       })
       .catch((err) => {
-        //console.log(err);
         setLoading(false);
         dispatch(getSearchData([]));
         dispatch(getSearchOptions({}));
       });
   }
-
-  ////console.log(languageId, categoryId, lecturerId, albumId);
 
   useEffect(() => {
     if (text) {
@@ -84,8 +76,8 @@ const SearchPage = () => {
 
   return (
     <Container>
-      <div className=" w-full h-full max-[615px]:pt-[6px] text-sm min-[615px]:text-[16px] font-thin text-gray-200">
-        <div className="w-full fixed inset-x-0 z-[10] bg-[#090909] p-0 max-[615px]:border-b border-zinc-700">
+      <div className=" w-full h-full max-[615px]:pt-[6px] text-sm min-[615px]:text-[16px] font-thin text-black dark:text-gray-200">
+        <div className="w-full fixed inset-x-0 z-[10] bg-primary-foreground p-0 max-[615px]:border-b border-zinc-700">
           <HeadMeta
             title={`Search for ${
               text || "islamic"
@@ -93,38 +85,38 @@ const SearchPage = () => {
           />
           <HeaderRouter title={"Search"} />
         </div>
-        <div className="pt-2 pl-2 flex items-center space-x-1 max-[615px]:hidden text-gray-200">
+        <div className="pt-2 pl-2 flex items-center space-x-1 max-[615px]:hidden">
           <HiOutlineArrowLongLeft
             onClick={() => {
               navigate(-1);
             }}
             className={
               pathname === SEARCH
-                ? "text-[30px] text-white"
+                ? "text-[30px] text-color"
                 : "text-[30px] text-gray-400"
             }
           />
           <HiOutlineArrowLongRight
             className={
               pathname === "/"
-                ? "text-[30px] text-white"
-                : "text-[30px] text-gray-400"
+                ? "text-[30px] text-color"
+                : "text-[30px] text-zinc-400"
             }
           />
           <span className="mr-1">{"Search"}</span>/ <span></span>
           {`Search for ${text}`}
         </div>
-        <div className="flex text-zinc-400 text-sm font-normal flex-col px-2 py-12  min-[615px]:px-6 min-[615px]:py-6 w-full">
+        <div className="flex text-color text-sm font-normal flex-col px-2 py-12  min-[615px]:px-6 min-[615px]:py-6 w-full">
           <div
             onClick={() => {
               handleSideBar();
             }}
-            className="my-3 w-fit space-x-2 border px-2 py-1 rounded-md min-[890px]:hidden flex items-center border-zinc-400"
+            className="my-3 w-fit space-x-2 border px-2 py-1 rounded-md min-[890px]:hidden flex items-center border-border"
           >
             <FaFilter className="text-[22px]" />
             <div>Filter</div>
           </div>
-          <div className="text-lg mb-3 min-[615px]:text-xl">{`${
+          <div className="text-lg text-foreground mb-3 min-[615px]:text-xl">{`${
             searchRecord?.toLocaleString() || 0
           } result for '${text}'`}</div>
           {loading && (
@@ -134,7 +126,7 @@ const SearchPage = () => {
           )}
           {!loading && searchData.length === 0 && (
             <div className="w-full flex items-center justify-center h-[300px]">
-              <h1 className="text-3xl min-[615px]:text-4xl tracking-wider ">
+              <h1 className="text-3xl min-[615px]:text-4xl text-color tracking-wider ">
                 No search result found
               </h1>
             </div>
@@ -158,7 +150,7 @@ const SearchPage = () => {
                   <div key={idx}>
                     <SearchDataWidget
                       id={id}
-                      lec_img={ lec_img}
+                      lec_img={lec_img}
                       cat_name={cat_name}
                       date={updated_date}
                       mp3_title={mp3_title}

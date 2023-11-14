@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo } from "react";
-import "./landingWidget.scss";
 import { FiHeadphones } from "react-icons/fi";
 import { FaPlay } from "react-icons/fa";
 import { formatNumber } from "../UI/formatter";
@@ -60,7 +59,7 @@ const LandingWidget = ({ categories, img, views, styling }) => {
           </div>
         </div>
       </div>
-      <p className="text-xs sm:text-sm w-full  line-clamp-2  pl-[3%] shadow text-[#d4d4d4] ">
+      <p className="text-xs sm:text-sm w-full  line-clamp-2  pl-[3%]  text-color-primary ">
         {categories}
       </p>
     </div>

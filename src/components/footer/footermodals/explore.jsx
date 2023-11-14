@@ -7,7 +7,7 @@ const Explore = () => {
   return (
     <div className="flex flex-col justify-start items-start space-y-4 h-fit max-[450px]:py-3 max-[450px]:border-b border-zinc-700">
       <div className="flex justify-between items-center w-full    ">
-        <h2 className="text-gray-100 max-[450px]:text-lg text-xl">Explore</h2>
+        <h2 className="text-color-foreground font-medium max-[450px]:text-lg text-xl">Explore</h2>
         <div
           onClick={() => {
             setshow(!isShow);
@@ -15,7 +15,7 @@ const Explore = () => {
         >
           {" "}
           <MdNavigateNext
-            className={`text-gray-100 min-[450px]:hidden text-[25px] ${
+            className={` text-color-foreground min-[450px]:hidden text-[25px] ${
               isShow ? "-rotate-90" : "rotate-90"
             }`}
           />

@@ -21,14 +21,11 @@ const Addplaylist = () => {
   const [myFolders, setmyFolders] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  //console.log(lecid)
-
   const hidePlaylist = (e) => {
     e.stopPropagation();
     dispatch(showaddPlaylist(false));
   };
 
-  // //console.log(user.id)
   const setType = [
     { id: 0, type: "Set as public" },
     { id: 1, type: "Set as private" },
@@ -48,8 +45,6 @@ const Addplaylist = () => {
       seltype,
       user_id: currentUser?.id,
     };
-
-    //console.log(validateData);
 
     for (let i in validateData) {
       if (validateData[i] === "") {
@@ -86,9 +81,7 @@ const Addplaylist = () => {
         setLoading(false);
         setisShow(true);
       })
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -108,18 +101,13 @@ const Addplaylist = () => {
           }
         )
         .then((res) => {
-          //console.log(res.data);
           setmyFolders(res.data);
           const filter = res.data.map((item) => item.name.toLowerCase());
           setCreated(filter);
         })
-        .catch((err) => {
-          //console.log(err);
-        });
+        .catch((err) => {});
     }
   }, []);
-
-  //console.log(myFolders);
 
   const addSong = (id) => {
     //add song to folder
@@ -131,8 +119,6 @@ const Addplaylist = () => {
       action: "add_playlist_audio",
     };
 
-    //console.log(payload)
-    // if(payload) return
     axios
       .post(`/playlistApi.php`, payload, {
         headers: {
@@ -142,13 +128,10 @@ const Addplaylist = () => {
         },
       })
       .then((res) => {
-        //console.log(res);
         toast.success(res.data.message);
         dispatch(showaddPlaylist(false));
       })
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   };
 
   return (

@@ -15,6 +15,7 @@ const initailState = {
   value: 0,
   isrepeat: false,
   sharedAlbum: 0,
+  theme: "dark",
 };
 const User = (state = initailState, action) => {
   switch (action.type) {
@@ -29,7 +30,6 @@ const User = (state = initailState, action) => {
         currentUser: action.payload,
       };
     case type.GET_TYPE:
-      //console.log("GET_TYPE", action.payload);
       return {
         ...state,
         type: action.payload,
@@ -99,6 +99,12 @@ const User = (state = initailState, action) => {
       return {
         ...state,
         isrepeat: action.payload,
+      };
+
+    case type.SET_THEME:
+      return {
+        ...state,
+        theme: action.payload,
       };
 
     case type.LOGOUT:

@@ -5,6 +5,7 @@ import { Modal } from "../modal/Modal.component";
 import { useDownloadLecture } from "../../hooks";
 import { FaCheckCircle } from "react-icons/fa";
 import Loader from "../UI/loader/loader";
+import { DownloadIcon } from "../svgcomponent/svgComponent";
 
 export const AudioDownloadModal = ({
   downloads,
@@ -35,6 +36,7 @@ export const AudioDownloadModal = ({
         // preventing parent element from receiving click event from any of the children
         e.stopPropagation();
       }}
+      className="text-foreground"
     >
       {/* Trigger button */}
       <button
@@ -46,7 +48,7 @@ export const AudioDownloadModal = ({
           triggerInnerChild
         ) : (
           <div className="audiodetail_download">
-            <img src={downbig} alt="" className="audiodetail_download_icon" />
+           <DownloadIcon/>
             <p className="audiodetail_download_text">
               {formatNumber(downloads || 0) }
             </p>
@@ -66,12 +68,12 @@ export const AudioDownloadModal = ({
           </div>
         ) : (
           <form onSubmit={handleSubmit}>
-            <div className="divide-y  w-full text-white">
+            <div className="divide-y  w-full text-foreground">
               {downloadOptions?.map(({ format, urlKey }, index) => (
                 <label
                   key={index}
                   htmlFor={`${format}-download`}
-                  className={`block px-5 py-4 lg:py-6 cursor-pointer ease-in-out duration-300  hover:bg-primary-500/10 flex justify-between items-center uppercase`}
+                  className={`px-5 py-4 lg:py-6 cursor-pointer ease-in-out duration-300  hover:bg-dncolor-500/10 flex justify-between items-center uppercase`}
                 >
                   <input
                     type="radio"
@@ -87,7 +89,7 @@ export const AudioDownloadModal = ({
 
                   {selectedFormat === format && (
                     <FaCheckCircle
-                      className="text-primary-500 text-2xl"
+                      className="text-dncolor-500 text-2xl"
                       aria-hidden="true"
                     />
                   )}
@@ -97,7 +99,7 @@ export const AudioDownloadModal = ({
             <div>
               <button
                 type="submit"
-                className="text-center bg-primary-500 hover:bg-primary-500/90 text-[#030303] py-4 lg:py-6 w-full mt-3"
+                className="text-center bg-dncolor-500 hover:bg-dncolor-500/90 text-[#030303] py-4 lg:py-6 w-full mt-3"
               >
                 Download
               </button>

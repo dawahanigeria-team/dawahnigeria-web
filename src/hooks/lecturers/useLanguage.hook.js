@@ -13,7 +13,7 @@ export const useLanguagesHook = () => {
             setLanguageData([...language,...data])
         },
         onError: (error) => {
-            console.error("error", error);
+            
             toast.error("Unable to load data");
         }
     })
