@@ -859,7 +859,9 @@ const AudioDetail = () => {
           />
         </div>
 
-        <Add_playlist />
+        <Add_playlist 
+        lecid={currentAudioInfo?.nid}
+        />
 
         <div className={isShare ? "share_wrapper" : "hide_share_wrapper"}>
           <ShareAudio

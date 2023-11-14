@@ -472,7 +472,9 @@ function List({
         </div>
       </div>
 
-      <Add_playlist />
+      <Add_playlist
+      lecid={nid}
+       />
 
       <div className={isShare ? "share_wrapper" : "hide_share_wrapper"}>
         <ShareAudio

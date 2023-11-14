@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { lectureApi } from "../../services";
-import toast from "react-hot-toast";
+//import toast from "react-hot-toast";
 import { useCallback } from "react";
 
 export const useDownloadLecture = (lecid) => {
@@ -14,7 +14,7 @@ export const useDownloadLecture = (lecid) => {
       enabled: !!lecid,
       onError: (error) => {
         
-        toast.error("Unable to load lecture file");
+       // toast.error("Unable to load lecture file");
       },
     }
   );

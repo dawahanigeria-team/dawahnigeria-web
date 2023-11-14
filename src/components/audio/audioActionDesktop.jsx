@@ -545,7 +545,9 @@ const AudioActionDesktop = () => {
         />
       </div>
 
-      <Addplaylist />
+      <Addplaylist
+      lecid={audioId}
+      />
     </>
   );
 };
