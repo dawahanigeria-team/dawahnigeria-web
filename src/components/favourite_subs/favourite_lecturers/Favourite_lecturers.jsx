@@ -17,7 +17,7 @@ const Favourite_lecturers = () => {
 
   return (
     <div className="favlec_wrapper">
-      {!isLoading && (!currentUser?.id || data?.rpIDArrayIsEmpty) && (
+      { (!currentUser?.id || data?.rpIDArrayIsEmpty) && (
         <div className="favlec_img_wrap">
           <img src={empty} alt="empty" />
           <p className="favlec_text text-foreground">
@@ -37,7 +37,7 @@ const Favourite_lecturers = () => {
           </button>
         </div>
       )}
-      {isLoading && (
+      {currentUser?.id && isLoading && (
         <div className="loadd w-full flex justify-center items-center h-[300px]">
           <Loader />
         </div>

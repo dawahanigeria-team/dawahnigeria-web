@@ -1,3 +1,4 @@
+import { FaLaptopHouse } from "react-icons/fa";
 import { apiService } from "./api";
 
 // api requests pertaining to lectures
@@ -55,8 +56,6 @@ export const lectureApi = {
     await apiService().get(`/popular_lec_api.php?langid=6&page=${page}`),
 
   getFavoriteSongs: async (id) => {
-    let audioIDArrayIsEmpty = false;
-
     try {
       const response = await apiService().get(
         `/leclisting_favorites.php?user_id=${id}&type=audio`
@@ -64,9 +63,8 @@ export const lectureApi = {
 
       //endpoint return array of audio IDs, check if the array is empty
       if (response.length === 0) {
-        audioIDArrayIsEmpty = true;
         return {
-          audioIDArrayIsEmpty,
+          audioIDArrayIsEmpty: true,
           favoriteLectures: [],
         };
       }
@@ -78,7 +76,7 @@ export const lectureApi = {
       );
 
       return {
-        audioIDArrayIsEmpty,
+        audioIDArrayIsEmpty: false,
         favoriteLectures: lectures,
       };
     } catch (error) {
@@ -86,7 +84,6 @@ export const lectureApi = {
     }
   },
   getFavoriteAlbums: async (id) => {
-    let albumIDArrayIsEmpty = false;
     let favoriteAlbums = [];
 
     try {
@@ -96,10 +93,8 @@ export const lectureApi = {
 
       //endpoint return array of album IDs, check if the array is empty
       if (response?.album?.length === 0) {
-        albumIDArrayIsEmpty = true;
-
         return {
-          albumIDArrayIsEmpty,
+          albumIDArrayIsEmpty: true,
           favoriteAlbums,
         };
       }
@@ -113,7 +108,7 @@ export const lectureApi = {
       favoriteAlbums = albums.filter((value) => value.title !== null);
 
       return {
-        albumIDArrayIsEmpty,
+        albumIDArrayIsEmpty: false,
         favoriteAlbums,
       };
     } catch (error) {
@@ -122,7 +117,6 @@ export const lectureApi = {
   },
 
   getFavoritePlaylists: async (id) => {
-    let playlistIDArrayIsEmpty = false;
     let favoritePlaylist = [];
 
     try {
@@ -132,10 +126,8 @@ export const lectureApi = {
 
       //endpoint return array of playlist IDs, check if the array is empty
       if (response?.playlist.length === 0) {
-        playlistIDArrayIsEmpty = true;
-
         return {
-          playlistIDArrayIsEmpty,
+          playlistIDArrayIsEmpty: true,
           favoritePlaylist,
         };
       }
@@ -149,7 +141,7 @@ export const lectureApi = {
       favoritePlaylist = playlists.filter((value) => value.title !== null);
 
       return {
-        playlistIDArrayIsEmpty,
+        playlistIDArrayIsEmpty: false,
         favoritePlaylist,
       };
     } catch (error) {
@@ -157,8 +149,7 @@ export const lectureApi = {
     }
   },
   getFavoriteLecturer: async (id) => {
-    let rpIDArrayIsEmpty = false;
-    let favoriteRps = []
+    let favoriteRps = [];
 
     try {
       const response = await apiService().get(
@@ -167,10 +158,8 @@ export const lectureApi = {
 
       //endpoint return array of rp IDs, check if the array is empty
       if (response?.length === 0) {
-        rpIDArrayIsEmpty = true;
-
         return {
-          rpIDArrayIsEmpty,
+          rpIDArrayIsEmpty: true,
           favoriteRps,
         };
       }
@@ -181,11 +170,51 @@ export const lectureApi = {
         `/rplisting_multi_nid_api.php?id=${rps.toString()}`
       );
 
-    
+      return {
+        rpIDArrayIsEmpty: false,
+        favoriteRps: lecturers,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  getPlaylistFolders: async (id) =>
+    await apiService().get(
+      `/playlistApi.php?user_id=${parseInt(id)}&action=user_playlists`
+    ),
+  getPlaylistAudios: async ({ id, playlistId }) => {
+    try {
+      const response = await apiService().get(
+        `/playlistApi.php?user_id=${parseInt(id)}&playlist_id=${parseInt(
+          playlistId
+        )}&action=playlist_data`
+      );
+
+      const { audio } = response[0];
+
+      if (audio.length === 0) {
+        return {
+          isemptyPlaylist: true,
+          playlistLectures: [],
+        };
+      }
+      const audioArr = Object.values(audio);
+
+      const lectures = await apiService().get(
+        `/leclisting_multi_nid_api.php?id=${audioArr.toString()}`
+      );
+
+      if (lectures === null) {
+        return {
+          isemptyPlaylist: false,
+          playlistLectures: [],
+        };
+      }
 
       return {
-        rpIDArrayIsEmpty,
-        favoriteRps: lecturers,
+        isemptyPlaylist: false,
+        playlistLectures: lectures,
       };
     } catch (error) {
       console.log(error);

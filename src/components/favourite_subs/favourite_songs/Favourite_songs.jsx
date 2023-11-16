@@ -23,7 +23,7 @@ const Favourite_songs = ({ setCount1 }) => {
 
   return (
     <div className="favsongs_wrapper">
-      {!isLoading && (!currentUser?.id || data?.audioIDArrayIsEmpty) && (
+      {(!currentUser?.id || data?.audioIDArrayIsEmpty) && (
         <div className="favsongs_img_wrap">
           <img src={empty} alt="empty" />
           <p className="favsongs_text text-foreground">
@@ -60,7 +60,7 @@ const Favourite_songs = ({ setCount1 }) => {
             </p>
           </div>
         )}
-      {isLoading && (
+      {currentUser?.id && isLoading && (
         <div className="loadd w-full flex justify-center items-center h-[300px]">
           <Loader />
         </div>

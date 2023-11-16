@@ -29,7 +29,7 @@ const Favourite_album = ({ setCount2 }) => {
 
   return (
     <div className="favalbum_wrapper">
-      {!isLoading && (!currentUser?.id || data?.albumIDArrayIsEmpty) && (
+      {(!currentUser?.id || data?.albumIDArrayIsEmpty) && (
         <div className="favalbum_img_wrap">
           <img src={empty} alt="empty" />
           <p className="favalbum_text text-foreground">
@@ -50,7 +50,7 @@ const Favourite_album = ({ setCount2 }) => {
         </div>
       )}
 
-      {isLoading && (
+      {currentUser?.id && isLoading && (
         <div className="loadd w-full flex justify-center items-center h-[300px]">
           <Loader />
         </div>
