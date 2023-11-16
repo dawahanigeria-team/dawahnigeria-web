@@ -80,7 +80,7 @@ export const lectureApi = {
         favoriteLectures: lectures,
       };
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   },
   getFavoriteAlbums: async (id) => {
@@ -112,7 +112,7 @@ export const lectureApi = {
         favoriteAlbums,
       };
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   },
 
@@ -145,7 +145,7 @@ export const lectureApi = {
         favoritePlaylist,
       };
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   },
   getFavoriteLecturer: async (id) => {
@@ -175,7 +175,7 @@ export const lectureApi = {
         favoriteRps: lecturers,
       };
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   },
 
@@ -217,7 +217,7 @@ export const lectureApi = {
         playlistLectures: lectures,
       };
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   },
 };

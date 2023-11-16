@@ -43,7 +43,9 @@ export function MobileFavoriteButton({ favorites, id, type, refetch }) {
         setdisabled(false);
         setLoading(false);
       },
-      onError: (error) => {},
+      onError: (error) => {
+        setLoading(false);
+      },
     });
   };
 

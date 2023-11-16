@@ -443,14 +443,14 @@ const AudioDetail = () => {
                   onClick={() => {
                     shareAudio();
                   }}
-                  className="audiodetail_share bg-gray-200  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
+                  className="audiodetail_share"
                 >
                   <SlShare className="text-[22px] text-color-primary" />
                   <p className="audiodetail_share_text text-color-primary">
                     {formatNumber(currentAudioInfo?.share || 0)}
                   </p>
                 </div>
-                <div className="audiodetail_comment bg-gray-200  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
+                <div className="audiodetail_comment ">
                   <CommentIcon />
                   <p className="audiodetail_comment_text text-color-primary">
                     {formatNumber(currentAudioInfo?.comment || 0)}
