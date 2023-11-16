@@ -10,6 +10,7 @@ import headp from "../../../src/assets/svg/hp-d.svg";
 import { CiSquarePlus } from "react-icons/ci";
 import pmobile from "../../../src/assets/svg/playmobile.svg";
 import { SlShare } from "react-icons/sl";
+import {MdFavorite} from "react-icons/md"
 import { Link, useNavigate } from "react-router-dom";
 import Add_playlist from "../../pages/add_playlist/AddPlaylist";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -250,9 +251,9 @@ function List({
                     disabled={isdisabled}
                   >
                     {getFavs?.includes(nid) ? (
-                      <img className="likeys_img_sz" src={adfav} alt="" />
+                      <MdFavorite className="text-[22px] text-zinc-800 dark:text-[#ddff2b]"/>
                     ) : (
-                      <img className="likeys_img_sz" src={love} alt="" />
+                      <MdFavorite className="text-[22px] text-[#777]"/>
                     )}
                   </button>
                   <span className="likeys_text">{formatNumber(sumofFav)}</span>
@@ -385,9 +386,9 @@ function List({
                     disabled={isdisabled}
                   >
                     {getFavs?.includes(nid) ? (
-                      <img className="likeys_img_sz" src={adfav} alt="" />
+                       <MdFavorite className="text-[22px] text-zinc-800 dark:text-[#ddff2b]"/>
                     ) : (
-                      <img className="likeys_img_sz" src={love} alt="" />
+                      <MdFavorite className="text-[22px] text-[#777]"/>
                     )}
                   </button>
                   <span className="likeys_text text-foreground">

@@ -53,4 +53,142 @@ export const lectureApi = {
     await apiService().get(`/playlistApi.php?action=all_public_playlist_data`),
   getTrendings: async ({ page }) =>
     await apiService().get(`/popular_lec_api.php?langid=6&page=${page}`),
+
+  getFavoriteSongs: async (id) => {
+    let audioIDArrayIsEmpty = false;
+
+    try {
+      const response = await apiService().get(
+        `/leclisting_favorites.php?user_id=${id}&type=audio`
+      );
+
+      //endpoint return array of audio IDs, check if the array is empty
+      if (response.length === 0) {
+        audioIDArrayIsEmpty = true;
+        return {
+          audioIDArrayIsEmpty,
+          favoriteLectures: [],
+        };
+      }
+      const { audio } = response;
+      const audioArr = Object.values(audio);
+
+      const lectures = await apiService().get(
+        `/leclisting_multi_nid_api.php?id=${audioArr.toString()}`
+      );
+
+      return {
+        audioIDArrayIsEmpty,
+        favoriteLectures: lectures,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  getFavoriteAlbums: async (id) => {
+    let albumIDArrayIsEmpty = false;
+    let favoriteAlbums = [];
+
+    try {
+      const response = await apiService().get(
+        `/leclisting_favorites.php?user_id=${id}&type=album`
+      );
+
+      //endpoint return array of album IDs, check if the array is empty
+      if (response?.album?.length === 0) {
+        albumIDArrayIsEmpty = true;
+
+        return {
+          albumIDArrayIsEmpty,
+          favoriteAlbums,
+        };
+      }
+      const { album } = response;
+      const albumArr = Object.values(album);
+
+      const albums = await apiService().get(
+        `/albumlisting_multi_nid_api.php?id=${albumArr.toString()}`
+      );
+
+      favoriteAlbums = albums.filter((value) => value.title !== null);
+
+      return {
+        albumIDArrayIsEmpty,
+        favoriteAlbums,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  getFavoritePlaylists: async (id) => {
+    let playlistIDArrayIsEmpty = false;
+    let favoritePlaylist = [];
+
+    try {
+      const response = await apiService().get(
+        `/leclisting_favorites.php?user_id=${id}&type=playlist`
+      );
+
+      //endpoint return array of playlist IDs, check if the array is empty
+      if (response?.playlist.length === 0) {
+        playlistIDArrayIsEmpty = true;
+
+        return {
+          playlistIDArrayIsEmpty,
+          favoritePlaylist,
+        };
+      }
+      const { playlist } = response;
+      const playlistArr = Object.values(playlist);
+
+      const playlists = await apiService().get(
+        `/albumlisting_multi_nid_api.php?id=${playlistArr.toString()}`
+      );
+
+      favoritePlaylist = playlists.filter((value) => value.title !== null);
+
+      return {
+        playlistIDArrayIsEmpty,
+        favoritePlaylist,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  getFavoriteLecturer: async (id) => {
+    let rpIDArrayIsEmpty = false;
+    let favoriteRps = []
+
+    try {
+      const response = await apiService().get(
+        `/leclisting_favorites.php?user_id=${id}&type=rp`
+      );
+
+      //endpoint return array of rp IDs, check if the array is empty
+      if (response?.length === 0) {
+        rpIDArrayIsEmpty = true;
+
+        return {
+          rpIDArrayIsEmpty,
+          favoriteRps,
+        };
+      }
+      const { rp } = response;
+      const rps = Object.values(rp);
+
+      const lecturers = await apiService().get(
+        `/rplisting_multi_nid_api.php?id=${rps.toString()}`
+      );
+
+    
+
+      return {
+        rpIDArrayIsEmpty,
+        favoriteRps: lecturers,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };

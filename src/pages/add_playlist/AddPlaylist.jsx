@@ -147,7 +147,7 @@ const Add_playlist = ({lecid}) => {
         }}
         className={
           addplaylist
-            ? "addplay_wrapper dark:bg-[rgba(0,0,0,0.05)]  bg-opacity-60 bg-white"
+            ? "addplay_wrapper bg-[rgba(0,0,0,0.05)]   "
             : "addplay_wrapper_none"
         }
       >

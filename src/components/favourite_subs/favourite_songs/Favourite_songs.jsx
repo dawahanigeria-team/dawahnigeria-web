@@ -1,88 +1,29 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useEffect } from "react";
 import empty from "../../../assets/png/musicEmptyState.png";
 import "./favourite_song.scss";
 import { useSelector } from "react-redux";
 import Loader from "../../../components/UI/loader/loader";
 import _ from "lodash";
-import axios from "../../../utils/useAxios";
+
 import { useNavigate } from "react-router-dom";
-import infinitePlayFavScroll from "../../UI/infinitePlayFavScroll";
 import MusicList from "../../miscList/musicList";
 import { LECTURE, NEW } from "../../../utils/routes/constants";
+import { useFavoriteSongHook } from "../../../hooks";
 
 const Favourite_songs = ({ setCount1 }) => {
   const { currentUser } = useSelector((state) => state.user);
-  const [loading, setLoading] = useState(false);
-  const observer = useRef();
-  const [data, setdata] = useState([]);
-  const [isEmpty, setIsEmpty] = useState(false);
-  const [nextPageLoad, setNextPageLoad] = useState(false);
-  const [page, setPage] = useState(0);
-  const [myaud, setmyAud] = useState([]);
   const navigate = useNavigate();
-  const [myFavSong, setMyFavSong] = useState([]);
+
+ 
+  const { isLoading, data } = useFavoriteSongHook(currentUser?.id);
 
   useEffect(() => {
-    setCount1(data.length);
+    setCount1(data?.favoriteLectures?.length);
   }, [data]);
-
-  useEffect(() => {
-    if (!currentUser?.id) return;
-    if (page < 1) {
-      setLoading(true);
-    }
-    axios
-      .get(`/leclisting_favorites.php?user_id=${currentUser?.id}&type=audio`)
-      .then((res) => {
-        if (res.data.length === 0) {
-          setmyAud([]);
-          setLoading(false);
-
-          return;
-        }
-        const { audio } = res.data;
-        const audioArr = Object.values(audio);
-        setmyAud(audioArr);
-
-        axios
-          .get(`/leclisting_multi_nid_api.php?id=${audioArr.toString()}`)
-
-          .then((res) => {
-            setLoading(false);
-            setMyFavSong(res.data);
-            setdata(_.uniqBy(res.data?.slice(0, 10), "nid"));
-          })
-          .catch((err) => {});
-      })
-      .catch((err) => {});
-  }, []);
-
-  useEffect(() => {
-    if (page > 0) {
-      setNextPageLoad(true);
-    }
-    const additionalData = myFavSong.slice(page, page + 10);
-
-    if (additionalData.length === 0) {
-      setIsEmpty(true);
-      return;
-    }
-    setNextPageLoad(false);
-    setdata((prev) => _.uniqBy([...prev, ...additionalData], "nid"));
-  }, [page]);
-
-  const lastElement = useCallback(
-    (node) => {
-      if (isEmpty) return;
-      infinitePlayFavScroll(node, observer, page, setPage);
-    },
-
-    [page]
-  );
 
   return (
     <div className="favsongs_wrapper">
-      {(!currentUser?.id || myaud?.length === 0) && (
+      {!isLoading && (!currentUser?.id || data?.audioIDArrayIsEmpty) && (
         <div className="favsongs_img_wrap">
           <img src={empty} alt="empty" />
           <p className="favsongs_text text-foreground">
@@ -103,34 +44,35 @@ const Favourite_songs = ({ setCount1 }) => {
         </div>
       )}
 
-      {data?.length !== 0 && (
-        <div className="trend_title_wrap">
-          <div className="tend_title1">
-            <p className="tend_hash">#</p>
-            <p>Title</p>
-          </div>
-          <p className="tend_title2">
-            <span>Lecturer</span>
-          </p>
+      {Array.isArray(data?.favoriteLectures) &&
+        data?.favoriteLectures?.length !== 0 && (
+          <div className="trend_title_wrap text-color">
+            <div className="tend_title1">
+              <p className="tend_hash">#</p>
+              <p>Title</p>
+            </div>
+            <p className="tend_title2">
+              <span>Lecturer</span>
+            </p>
 
-          <p className="tend_title4">
-            <span>Time</span>
-          </p>
-        </div>
-      )}
-      {loading && (
+            <p className="tend_title4">
+              <span>Time</span>
+            </p>
+          </div>
+        )}
+      {isLoading && (
         <div className="loadd w-full flex justify-center items-center h-[300px]">
           <Loader />
         </div>
       )}
-      {!loading && (
+      {!isLoading && Array.isArray(data?.favoriteLectures) && (
         <div className="table">
-          {data?.map(
+          {data?.favoriteLectures?.map(
             (
               {
                 Title,
                 title,
-                rpname,
+                rp_name,
                 rp,
                 img,
                 cats,
@@ -141,62 +83,31 @@ const Favourite_songs = ({ setCount1 }) => {
               },
               idx
             ) => {
-              if (data.length === idx + 1) {
-                return (
-                  <div ref={lastElement} key={idx} className="">
-                    <MusicList
-                      key={idx}
-                      id={idx}
-                      image={img}
-                      duration={duration}
-                      title={title || Title}
-                      lecturer={rpname || rp}
-                      url={`${LECTURE}${nid}`}
-                      Title={Title}
-                      rpname={rpname || rp}
-                      cats={cats}
-                      nid={nid}
-                      views={views}
-                      currentUser={currentUser}
-                      favorites={favorites}
-                      navName={"favorite audio"}
-                      navLink={"/favorite"}
-                      controlData={myFavSong}
-                    />
-                  </div>
-                );
-              } else {
-                return (
-                  <div key={idx} className="">
-                    <MusicList
-                      key={idx}
-                      id={idx}
-                      image={img}
-                      duration={duration}
-                      title={Title || title}
-                      lecturer={rpname || rp}
-                      url={`${LECTURE}${nid}`}
-                      Title={Title}
-                      rpname={rpname || rp}
-                      cats={cats}
-                      nid={nid}
-                      favorites={favorites}
-                      currentUser={currentUser}
-                      navName={"favorite audio"}
-                      navLink={"/favorite"}
-                      controlData={myFavSong}
-                      views={views}
-                    />
-                  </div>
-                );
-              }
+              return (
+                <div key={idx} className="">
+                  <MusicList
+                    key={idx}
+                    id={idx}
+                    image={img}
+                    duration={duration}
+                    title={title || Title}
+                    lecturer={rp_name || rp}
+                    url={`${LECTURE}${nid}`}
+                    Title={Title}
+                    rpname={rp_name || rp}
+                    cats={cats}
+                    nid={nid}
+                    views={views}
+                    currentUser={currentUser}
+                    favorites={favorites}
+                    navName={"favorite audio"}
+                    navLink={"/favorite"}
+                    controlData={data?.favoriteLectures}
+                  />
+                </div>
+              );
             }
           )}
-        </div>
-      )}
-      {nextPageLoad && (
-        <div className=" loade w-full flex justify-center items-center h-[200px]">
-          <Loader />
         </div>
       )}
     </div>

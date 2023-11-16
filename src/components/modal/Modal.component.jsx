@@ -50,12 +50,12 @@ export const Modal = ({
       style={customStyles}
       contentLabel={contentLabel}
       className="justify-center items-start flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none ease-linear transition-all duration-150  modal"
-      overlayClassName="fixed inset-0 w-full h-full bg-white/50 dark:bg-black/50 z-50 cursor-pointer modal-overlay "
+      overlayClassName="fixed inset-0 w-full h-full bg-white/50 dark:bg-black/50 z-50  cursor-pointer modal-overlay "
     >
       <div className="relative w-auto mx-auto cursor-default">
         {/*content*/}
         <div
-          className={`border-0 rounded-lg shadow-lg relative flex flex-col  bg-white dark:bg-[#1E1E1E] outline-none focus:outline-none w-[95vw] md:w-[60vw] xl:w-[30vw]  p-4 md:p-10 ${className} `}
+          className={`dark:border-0 rounded-lg shadow-xl relative flex flex-col border border-gray-300 bg-white dark:bg-[#1E1E1E] outline-none focus:outline-none w-[95vw] md:w-[60vw] xl:w-[30vw]  p-4 md:p-10 ${className} `}
         >
           {/*header*/}
           <div className="relative">
