@@ -77,7 +77,7 @@ const Add_playlist = ({lecid}) => {
         },
       })
       .then((res) => {
-        toast.success(" playlist create successfully");
+        toast.success(" playlist created successfully");
         // check if the lecid is present before loading the folders
         getPlaylistFolders(currentUser?.id)
 
@@ -97,7 +97,7 @@ const Add_playlist = ({lecid}) => {
 
   async function getPlaylistFolders(id) {
     axios
-      .get(`/playlistApi.php?user_id=${parseInt(id)}&action=user_playlists`, {
+      .get(`/playlistApi.php?user_id=${id}&action=user_playlists`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -190,7 +190,7 @@ const Add_playlist = ({lecid}) => {
               <p className="create_text">Create a new playlist</p>
             </div>
 
-            {myFolders?.map(({ name, id }, index) => {
+            {Array.isArray(myFolders) && myFolders?.map(({ name, id }, index) => {
               return (
                 <button
                   onClick={() => {

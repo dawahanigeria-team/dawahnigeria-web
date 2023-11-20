@@ -3,14 +3,20 @@ import { Link } from "react-router-dom";
 import LectChartWidget from "./chartWidgets/lectChartWidget";
 import { ALBUMS } from "../../../utils/routes/constants";
 const AlbumMobileChart = ({ data }) => {
+  let remainingData = [];
+
+  if (Array.isArray(data)) {
+    remainingData = data?.length > 3 ? data?.slice(3) : data;
+  }
+
   return (
     <div>
-      {Array.isArray(data) && (
+      {Array.isArray(data) && data?.length > 3 && (
         <div className="w-[95%] mx-auto">
           <div className="top3 grid grid-cols-3 items-center gap-10  ">
             <Link
               to={`${ALBUMS}${data[1]?.id}`}
-              className="w-full h-full flex flex-col space-y-3 pt-[5px]  overflow-hidden text-white"
+              className="w-full h-full flex flex-col space-y-3 pt-[5px]  overflow-hidden text-foreground"
             >
               <div className="w-full relative h-[90px] rounded-md">
                 <img
@@ -35,7 +41,7 @@ const AlbumMobileChart = ({ data }) => {
 
             <Link
               to={`${ALBUMS}${data[0]?.id}`}
-              className="w-[105%] h-full flex flex-col space-y-3 overflow-hidden text-white"
+              className="w-[105%] h-full flex flex-col space-y-3 overflow-hidden text-foreground"
             >
               <div className="w-full relative h-[100px] rounded-md">
                 <img
@@ -58,7 +64,7 @@ const AlbumMobileChart = ({ data }) => {
             </Link>
             <Link
               to={`${ALBUMS}${data[2]?.id}`}
-              className="w-full h-full flex flex-col space-y-3 pt-[5px] overflow-hidden text-white"
+              className="w-full h-full flex flex-col space-y-3 pt-[5px] overflow-hidden text-foreground"
             >
               <div className="w-full relative h-[80px] rounded-md">
                 <img
@@ -85,8 +91,8 @@ const AlbumMobileChart = ({ data }) => {
       )}
 
       <div className="flex flex-col w-full mt-4 space-y-2 justify-end items-end">
-        {Array.isArray(data) &&
-          data?.slice(3).map(({ id, img, nid, name }, idx) => {
+        {Array.isArray(remainingData) &&
+          remainingData?.map(({ id, img, nid, name }, idx) => {
             return (
               <Link to={`${ALBUMS}${id || nid}`} key={idx} className="w-[90%]">
                 <LectChartWidget name={name} img={img} idx={idx} />

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { lectureApi } from "../../services";
 import _ from "lodash";
 export function usePlaylistFoldersHook(id) {
-  const [queryData, setqueryData] = useState([]);
+  const [queryData,setQueryData] = useState([]);
 
   const { data, isLoading } = useQuery(
     ["get-playlist-folders", id],
@@ -11,7 +11,7 @@ export function usePlaylistFoldersHook(id) {
     {
       enabled: !!id,
       onSuccess: (data) => {
-        setqueryData(_.uniqBy(data, "name"));
+       setQueryData(_.uniqBy(data, "name"));
       },
       onError: (error) => {},
     }
@@ -25,4 +25,9 @@ export function usePlaylistFoldersHook(id) {
 
 export function usePlaylistAudioHook() {
   return useMutation(lectureApi. getPlaylistAudios);
+}
+
+export function useAddLectureToPlaylist() {
+  return useMutation(lectureApi.addLectureToPlaylist);
+
 }

@@ -15,7 +15,7 @@ import HeadMeta from "../../components/head-meta";
 import { usePlaylistAudioHook, usePlaylistFoldersHook } from "../../hooks";
 const My_playlist = () => {
   const [loading, setLoading] = useState(false);
-  const [data, setdata] = useState(null);
+  const [data, setData] = useState(null);
 
   const slide = useRef(null);
   const [isprev, setisprev] = useState(false);
@@ -33,13 +33,13 @@ const My_playlist = () => {
   const getPlaylist = (playlistId) => {
     if (!currentUser?.id) return;
     setLoading(true);
-    setdata([]);
+    setData([]);
 
     const payload = { id: currentUser?.id, playlistId };
 
     playlistAudios(payload, {
       onSuccess: (data) => {
-        setdata(data);
+        setData(data);
         console.log({ data });
         setLoading(false);
       },
@@ -102,7 +102,7 @@ const My_playlist = () => {
           <HeaderRouter title={"My Playlist"} />
         </div>
 
-        {(!currentUser?.id || myFolders.length === 0) && (
+        {(!currentUser?.id || myFolders?.length === 0) && (
           <div className="myplay_img_wrap">
             <img src-data={empty} src={empty} alt="empty" />
             <p className="myplay_text text-foreground">
@@ -121,7 +121,7 @@ const My_playlist = () => {
             <img src={foward} src-data={foward} alt="foward" />
           </div>
           <div ref={slide} className="overflow_auto_wrapper">
-            {myFolders?.map(({ id, name, views, img }, idx) => {
+            {Array.isArray(myFolders) && myFolders?.map(({ id, name, views, img }, idx) => {
               return (
                 <button
                   className="similarWidget_album_item text-start"

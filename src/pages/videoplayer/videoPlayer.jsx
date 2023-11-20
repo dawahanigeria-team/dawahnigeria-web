@@ -27,7 +27,7 @@ import HeadMeta from "../../components/head-meta";
 const VideoPlayer = () => {
   const { pathname } = useLocation();
   const { id } = useParams();
-  const [data, setdata] = useState();
+  const [data, setData] = useState();
   const navigate = useNavigate();
   const observeEl = useRef();
   const [isEmpty, setIsEmpty] = useState(false);
@@ -49,7 +49,7 @@ const VideoPlayer = () => {
       .get(`/video_listingApi.php?id=${id}&action=singleVideo`)
       .then((res) => {
         setload(true);
-        setdata(res.data);
+        setData(res.data);
       })
       .catch((err) => {});
   }, [id]);

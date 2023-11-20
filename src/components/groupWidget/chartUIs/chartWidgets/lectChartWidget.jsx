@@ -14,7 +14,7 @@ const LectChartWidget = ({ img, name, idx }) => {
     });
   }, []);
   return (
-    <div className="relative bg-[#202020] p-2 rounded-md w-full text-white flex space-x-2 items-center">
+    <div className="relative dark:bg-[#202020] p-2 rounded-md w-full text-foreground flex space-x-2 items-center">
       <div className="w-[50px] h-[50px] rounded-md">
         <img
           id="chart-mbile"

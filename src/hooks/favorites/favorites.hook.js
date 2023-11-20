@@ -3,7 +3,7 @@ import { useState } from "react";
 import { lectureApi } from "../../services";
 
 export function useFavoriteSongHook(id) {
-  const [queryData, setqueryData] = useState(null);
+  const [queryData,setQueryData] = useState(null);
 
   const { data, isLoading } = useQuery(
     ["get-favorites-lectures", id],
@@ -11,7 +11,7 @@ export function useFavoriteSongHook(id) {
     {
       enabled: !!id,
       onSuccess: (data) => {
-        setqueryData(data);
+       setQueryData(data);
       },
       onError: (error) => {},
     }
@@ -24,7 +24,7 @@ export function useFavoriteSongHook(id) {
 }
 
 export function useFavoriteAlbumsHook(id) {
-  const [queryData, setqueryData] = useState(null);
+  const [queryData,setQueryData] = useState(null);
 
   const { data, isLoading } = useQuery(
     ["get-favorites-albums", id],
@@ -32,7 +32,7 @@ export function useFavoriteAlbumsHook(id) {
     {
       enabled: !!id,
       onSuccess: (data) => {
-        setqueryData(data);
+       setQueryData(data);
       },
       onError: (error) => {},
     }
@@ -45,7 +45,7 @@ export function useFavoriteAlbumsHook(id) {
 }
 
 export function useFavoritePlaylistHook(id) {
-  const [queryData, setqueryData] = useState(null);
+  const [queryData,setQueryData] = useState(null);
 
   const { data, isLoading } = useQuery(
     ["get-favorites-playlist", id],
@@ -53,7 +53,7 @@ export function useFavoritePlaylistHook(id) {
     {
       enabled: !!id,
       onSuccess: (data) => {
-        setqueryData(data);
+       setQueryData(data);
       },
       onError: (error) => {},
     }
@@ -66,7 +66,7 @@ export function useFavoritePlaylistHook(id) {
 }
 
 export function useFavoriteRpstHook(id) {
-    const [queryData, setqueryData] = useState(null);
+    const [queryData,setQueryData] = useState(null);
   
     const { data, isLoading } = useQuery(
       ["get-favorites-rp", id],
@@ -74,7 +74,7 @@ export function useFavoriteRpstHook(id) {
       {
         enabled: !!id,
         onSuccess: (data) => {
-          setqueryData(data);
+         setQueryData(data);
         },
         onError: (error) => {},
       }

@@ -16,17 +16,23 @@ const LectureMobileChart = ({ data }) => {
     setinitial(false);
   };
 
+  let remainingData = [];
+
+  if (Array.isArray(data)) {
+    remainingData = data?.length > 3 ? data?.slice(3) : data;
+  }
+
   return (
     <div>
       <div className="w-[95%] mx-auto">
-        {Array.isArray(data) && <div className="top3 grid grid-cols-3 items-center gap-10  ">
+        {Array.isArray(data) && data?.length > 3 && <div className="top3 grid grid-cols-3 items-center gap-10  ">
           <Link
             to={`${LECTURE}${data[1]?.nid}`}
             onClick={() => {
               gotoLecture();
               dispatch(getCount(1));
             }}
-            className="w-full h-full flex flex-col space-y-3 pt-[5px]  overflow-hidden text-white"
+            className="w-full h-full flex flex-col space-y-3 pt-[5px]  overflow-hidden text-foreground"
           >
             <div className="w-full relative h-[90px] rounded-md">
               <img
@@ -56,7 +62,7 @@ const LectureMobileChart = ({ data }) => {
               gotoLecture();
               dispatch(getCount(0));
             }}
-            className="w-[105%] h-full flex flex-col space-y-3 overflow-hidden text-white"
+            className="w-[105%] h-full flex flex-col space-y-3 overflow-hidden text-foreground"
           >
             <div className="w-full relative h-[100px] rounded-md">
               <img
@@ -84,7 +90,7 @@ const LectureMobileChart = ({ data }) => {
               gotoLecture();
               dispatch(getCount(2));
             }}
-            className="w-full h-full flex flex-col space-y-3 pt-[5px] overflow-hidden text-white"
+            className="w-full h-full flex flex-col space-y-3 pt-[5px] overflow-hidden text-foreground"
           >
             <div className="w-full relative h-[80px] rounded-md">
               <img
@@ -111,11 +117,8 @@ const LectureMobileChart = ({ data }) => {
       </div>
 
       <div className="flex flex-col w-full mt-4 space-y-2 justify-end items-end">
-        {Array.isArray(data) &&
-          data
-            ?.slice(3)
-
-            .map(({ mp3_title, nid, img }, idx) => {
+        {Array.isArray(remainingData) &&
+          remainingData.map(({ mp3_title, nid, img }, idx) => {
               return (
                 <Link
                   to={`${LECTURE}${nid}`}

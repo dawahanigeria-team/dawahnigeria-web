@@ -76,11 +76,11 @@ const AudioActionDesktop = () => {
   const [currentaudio, setcurrentaudio] = useState([]);
   const [isminimize, setminimize] = useState(false);
   const [transition, settransition] = useState(true);
-  const [isloaded, setnotloaded] = useState(true);
+  const [isLoaded, setNotLoaded] = useState(true);
   const getMusic = (audioId) => {
     //dispatch(setPlaying(false));
     setLoading(true);
-    setnotloaded(true);
+    setNotLoaded(true);
     ///get lecture audio
     axios
       .get(`/leclistingapi.php?lecid=${audioId}`)
@@ -138,7 +138,7 @@ const AudioActionDesktop = () => {
 
   //check if data is loaded
   useEffect(() => {
-    if (!isloaded) {
+    if (!isLoaded) {
       if (initial) {
         dispatch(setPlaying(false));
         audioRef.current?.pause();
@@ -151,7 +151,7 @@ const AudioActionDesktop = () => {
         playAnimation.current = requestAnimationFrame(repeat);
       }
     }
-  }, [isloaded]);
+  }, [isLoaded]);
 
   useEffect(() => {
     if (playing && !initial) {
@@ -190,7 +190,7 @@ const AudioActionDesktop = () => {
     setinitial(false);
     setIsPrevious(false);
     dispatch(setPlaying(false));
-    setnotloaded(true);
+    setNotLoaded(true);
 
     const next = pack?.findIndex((value) => {
       return value.nid === parseInt(audioId);
@@ -216,7 +216,7 @@ const AudioActionDesktop = () => {
   };
   const handlePreviousAudio = () => {
     setinitial(false);
-    setnotloaded(true);
+    setNotLoaded(true);
     dispatch(setPlaying(false));
     const prev = pack?.findIndex((value) => {
       return value.nid === parseInt(audioId);
@@ -326,7 +326,7 @@ const AudioActionDesktop = () => {
   };
 
   function handleState() {
-    setnotloaded(false);
+    setNotLoaded(false);
   }
 
   return (
@@ -437,7 +437,7 @@ const AudioActionDesktop = () => {
             ) : (
               <button
                 onClick={handlePlay}
-                disabled={isloaded}
+                disabled={isLoaded}
                 className="relative flex h-[42px] w-[42px] dark:text-black text-gray-100 rounded-full dark:bg-[#ddff2b] bg-gray-500 justify-center items-center"
               >
                 {!playing ? (
@@ -445,8 +445,8 @@ const AudioActionDesktop = () => {
                 ) : (
                   <GiPauseButton className="text-[22px]" />
                 )}
-                {isloaded && (
-                  <span className="absolute rounded-full inset-0 h-[45px] w-[45px] border-r border-b border-gray-200 animate-spin"></span>
+                {isLoaded && (
+                  <span className="absolute rounded-full inset-0 h-[45px] w-[45px] border-r border-b border-gray-900 dark:border-gray-200 animate-spin"></span>
                 )}
               </button>
             )}

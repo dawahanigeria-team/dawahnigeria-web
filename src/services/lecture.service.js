@@ -220,4 +220,6 @@ export const lectureApi = {
       //console.log(error);
     }
   },
+  addLectureToPlaylist: async (payload) =>
+    await apiService().post({ url: `/playlistApi.php`, payload }),
 };

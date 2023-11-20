@@ -3,7 +3,7 @@ import { lectureApi } from "../../services";
 import { useEffect, useState } from "react";
 
 export const useMoreViewHook = (keyParam, currentdata) => {
-  const [querydata, setquerydata] = useState([]);
+  const [querydata,setQueryData] = useState([]);
   const [isLoadingNextPage, setIsLoadingNextPage] = useState(false);
   const [hasReachedLastPage, setHasReachedLastPage] = useState(false);
 
@@ -21,7 +21,7 @@ export const useMoreViewHook = (keyParam, currentdata) => {
           return;
         }
 
-        setquerydata((prev) => [...prev, ...data]);
+       setQueryData((prev) => [...prev, ...data]);
       },
       onError: (error) => {
         setIsLoadingNextPage(false);
@@ -41,7 +41,7 @@ export const useMoreViewHook = (keyParam, currentdata) => {
   useEffect(() => {
     if (keyParam.endpoint_url) return;
     
-    setquerydata(currentdata);
+   setQueryData(currentdata);
     setHasReachedLastPage(true);
   }, [keyParam.endpoint_url]);
 
