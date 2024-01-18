@@ -88,12 +88,11 @@ const Landing = () => {
   const specialFeat = specialFeatures?.data?.flatMap((val) => [
     { name: val.name, more: val.more },
   ]);
-  //console.log({ sliders, recentlyPosted, specialFeatures, recentlyviewed });
 
   return (
     <Container>
       <HeadMeta title="Welcome to Dawah Nigeria - Home of Islamic resources" />
-      <div className="landing_wrapper px-[2%] max-[615px]:py-[5%] py-[8%] min-[690px]:py-[2%]">
+      <div className="landing_wrapper px-[2%]  max-[615px]:py-[5%] py-[8%] min-[690px]:py-[2%]">
         {sliders?.data?.length > 1 ? (
           <>
             <div className="carousel  h-[250px] min-[950px]:h-[250px] min-[1050px]:h-[250px] min-[1283px]:h-[300px]">
@@ -151,23 +150,22 @@ const Landing = () => {
             />
           </div>
         )}
-        {recentlyviewed?.isSuccess &&
-          (Array.isArray(recentlyviewed?.data) && (
-            <div className="landing_recent landing_space my-1 min-[615px]:my-3">
-              {" "}
-              <GroupWidget
-                data={recentlyviewed?.data}
-                heading="Recently Viewed"
-                type={"recent"}
-                endpoint_url={"/leclisting_lang.php?langid=6&page="}
-                currentPage={page}
-                previousPlay={curPlay}
-                isrecent={isrecent}
-                nav1={{ title: "Home", link: HOME }}
-              />
-            </div>
-          ))}
-          {/**
+        {recentlyviewed?.isSuccess && Array.isArray(recentlyviewed?.data) && (
+          <div className="landing_recent landing_space my-1 min-[615px]:my-3">
+            {" "}
+            <GroupWidget
+              data={recentlyviewed?.data}
+              heading="Recently Viewed"
+              type={"recent"}
+              endpoint_url={"/leclisting_lang.php?langid=6&page="}
+              currentPage={page}
+              previousPlay={curPlay}
+              isrecent={isrecent}
+              nav1={{ title: "Home", link: HOME }}
+            />
+          </div>
+        )}
+        {/**
             : (
             <div className="landing_recent landing_space my-1 min-[615px]:my-3">
               <RowSkeletonContainer />

@@ -31,7 +31,7 @@ const LecturerMobileWidget = ({ img, rp, }) => {
           />
         </div>
         <div className="lecwidres_text_wrap">
-          <div className="lecwidres_text">
+          <div className="lecwidres_text text-foreground">
             {rp
               ? `${rp.split(" ")[0]} ${rp.split(" ")[1]} ${rp.split(" ")[2]}`
               : "undefined"}

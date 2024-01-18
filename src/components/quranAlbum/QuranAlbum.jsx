@@ -10,7 +10,7 @@ const QuranAlbum = ({ categories, img, views }) => {
 
   return (
     <div>
-      <div className="flex flex-col text-[#d4d4d4] text-xs md:text-sm">
+      <div className="flex flex-col text-color-primary text-xs md:text-sm">
         <div className="relative group">
           <div className="absolute right-1 text-xl md:text-2xl font-bold md:font-black top-1 text-black">
             DN
@@ -24,7 +24,7 @@ const QuranAlbum = ({ categories, img, views }) => {
               ref={imageRef}
             />
           </div>
-          <div className="absolute z-[2] bottom-3 left-3 flex gap-x-1 items-center">
+          <div className="absolute z-[2] text-[#d4d4d4] bottom-3 left-3 flex gap-x-1 items-center">
             <FiHeadphones />
             <span>{formattedViews}</span>
           </div>
@@ -38,7 +38,7 @@ const QuranAlbum = ({ categories, img, views }) => {
           </div>
         </div>
 
-        <p>{categories}</p>
+        <p className="line-clamp-2 ">{categories}</p>
       </div>
     </div>
   );

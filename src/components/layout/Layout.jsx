@@ -42,14 +42,12 @@ const Layout = () => {
       (window.innerWidth > 890 ? 2 : 1)
     );
   });
-  //console.log(playing);
-  //console.log(currentAudioInfo);
+
   useEffect(() => {
     localStorage.setItem("navControl", JSON.stringify(res));
     const handleResize = () => {
       if (window.innerWidth <= 890) {
         setRes(1);
-        ////console.log(window.innerWidth)
       } else {
         setRes(2);
       }
@@ -76,11 +74,11 @@ const Layout = () => {
         }`}
       >
         <div className="layout_mini" onClick={(e) => e.stopPropagation()}>
-          <SideNav res={res}  setisOpen={setisOpen}/>
+          <SideNav res={res} setisOpen={setisOpen} />
         </div>
       </div>
 
-      <div className={`layout_outlet`}>
+      <div className={`layout_outlet bg-primary`}>
         <NavContext.Provider value={{ res, setRes, setisOpen, isOpen }}>
           <Outlet />
         </NavContext.Provider>
@@ -88,14 +86,14 @@ const Layout = () => {
       {/**aud desktop   <AudioActionDesktop/>*/}
 
       {/* ----------------Mobile Buttom menue------------------- */}
-      <div className="layout_buttom_menue">
+      <div className="layout_buttom_menue bg-background">
         <div className="layout_buttom_menue1">
           <div className="range_progress">
             <div
               style={{
                 width: `${(value * 100) / audioRef?.current?.duration}%`,
               }}
-              className="audio_mob_bar"
+              className="audio_mob_bar dark:bg-[#ddff2b] bg-muted"
             ></div>
             <input
               ref={rangeRef}
@@ -132,17 +130,19 @@ const Layout = () => {
             loop="5"
             className="layout_buttom_text_wrap"
           >
-            <p className="layout_buttom_text1">
+            <p className="layout_buttom_text1 text-color">
               {currentAudioInfo?.title || currentAudioInfo?.Title}
             </p>
-            <p className="layout_buttom_text2">{currentAudioInfo?.rpname}</p>
+            <p className="layout_buttom_text2 text-color">
+              {currentAudioInfo?.rpname}
+            </p>
           </marquee>
           <div
             onClick={() => {
               setisShare(!isShare);
             }}
           >
-            <BiShareAlt className="layout_buttom_share" />
+            <BiShareAlt className="layout_buttom_share text-color" />
           </div>
           <div
             onClick={() => {
@@ -153,12 +153,12 @@ const Layout = () => {
                 setinitial(false);
               }
             }}
-            className="layout_buttom_play_wrap"
+            className="layout_buttom_play_wrap dark:bg-[#ddff2b] bg-gray-500"
           >
             {!playing ? (
-              <FaPlay className="layout_buttom_play_icon" />
+              <FaPlay className="layout_buttom_play_icon dark:text-black text-gray-100" />
             ) : (
-              <GiPauseButton className="layout_play_icon" />
+              <GiPauseButton className="layout_play_icon dark:text-black text-gray-100" />
             )}
           </div>
         </div>
@@ -173,15 +173,15 @@ const Layout = () => {
             <FaHome
               className={
                 location.pathname === "/"
-                  ? "layout_buttom_menue2_homeIcon_active"
-                  : "layout_buttom_menue2_homeIcon"
+                  ? "layout_buttom_menue2_homeIcon_active dark:text-[#ddff2b] text-color-foreground"
+                  : "layout_buttom_menue2_homeIcon text-color"
               }
             />
             <p
               className={
                 location.pathname === "/"
-                  ? "layout_buttom_menue2_homeText_active"
-                  : "layout_buttom_menue2_homeText"
+                  ? "layout_buttom_menue2_homeText_active font-semibold dark:text-[#ddff2b] text-color-foreground"
+                  : "layout_buttom_menue2_homeText text-color"
               }
             >
               Home
@@ -196,15 +196,15 @@ const Layout = () => {
             <SiApplemusic
               className={
                 location.pathname === LIBRARY
-                  ? "layout_buttom_menue2_libraryIcon_active"
-                  : "layout_buttom_menue2_libraryIcon"
+                  ? "layout_buttom_menue2_libraryIcon_active dark:text-[#ddff2b] text-color-foreground"
+                  : "layout_buttom_menue2_libraryIcon text-color"
               }
             />
             <p
               className={
                 location.pathname === LIBRARY
-                  ? "layout_buttom_menue2_libraryText_active"
-                  : "layout_buttom_menue2_libraryText"
+                  ? "layout_buttom_menue2_libraryText_active dark:text-[#ddff2b] text-color-foreground font-semibold"
+                  : "layout_buttom_menue2_libraryText text-color"
               }
             >
               Library
@@ -219,15 +219,15 @@ const Layout = () => {
             <MdFavorite
               className={
                 location.pathname === FAVOURITE
-                  ? "layout_buttom_menue2_favouriteIcon_active"
-                  : "layout_buttom_menue2_favouriteIcon"
+                  ? "layout_buttom_menue2_favouriteIcon_active dark:text-[#ddff2b] text-color-foreground"
+                  : "layout_buttom_menue2_favouriteIcon text-color"
               }
             />
             <p
               className={
                 location.pathname === FAVOURITE
-                  ? "layout_buttom_menue2_favouriteText_active"
-                  : "layout_buttom_menue2_favouriteText"
+                  ? "layout_buttom_menue2_favouriteText_active dark:text-[#ddff2b] text-color-foreground font-semibold"
+                  : "layout_buttom_menue2_favouriteText text-color"
               }
             >
               Favorites

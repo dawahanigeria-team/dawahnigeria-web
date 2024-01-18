@@ -51,6 +51,13 @@ const getaudioId = (data) => {
   };
 };
 
+const setTheme = (data) => {
+  return {
+    type: type.SET_THEME,
+    payload: data,
+  };
+};
+
 const updateAudioShareCount = () => {
   return {
     type: type.UPDATE_AUDIO_SHARE_COUNT,
@@ -145,7 +152,6 @@ const LoginAction = (loginParams, isSocial, navigate, setLoading) => {
           }
         )
         .then((res) => {
-          //console.log(res.data);
           dispatch(GetUsersSuccess(res.data));
           navigate("/");
           setLoading(false);
@@ -166,9 +172,8 @@ const LoginAction = (loginParams, isSocial, navigate, setLoading) => {
           }
         )
         .then((res) => {
-          //console.log(res);
           const { data } = res;
-          //console.log(data);
+
           dispatch(GetUsersSuccess(data));
           navigate("/");
           toast.success("Login Successful");
@@ -176,7 +181,7 @@ const LoginAction = (loginParams, isSocial, navigate, setLoading) => {
         })
         .catch((error) => {
           setLoading(false);
-          //console.log(error.response.data.message);
+
           toast.error(error.response.data.message);
         });
     }
@@ -206,7 +211,6 @@ const registration = (
       )
       .then((res) => {
         if (isSocial) {
-          //console.log(res.data);
           dispatch(GetUsersSuccess(res.data));
           navigate("/");
           setLoading(false);
@@ -225,23 +229,21 @@ const registration = (
               }
             )
             .then((res) => {
-              //console.log(res);
               const { data } = res;
-              //console.log(data);
+
               dispatch(GetUsersSuccess(data));
               navigate("/");
               setLoading(false);
               toast.success("Registration Successful");
             })
             .catch(() => {
-              //console.log(err);
               setLoading(false);
             });
         }
       })
       .catch((error) => {
         setLoading(false);
-        //console.log(error.response.data.message);
+
         toast.error(error.response.data.message);
       });
   };
@@ -268,4 +270,5 @@ export {
   getSearchRecord,
   getSearchData,
   getSearchOptions,
+  setTheme,
 };

@@ -20,7 +20,7 @@ const LandingOptions = ({ icon, img, text, link }) => {
           </div>
         )}
       </div>
-      <div className="landop_text">{text}</div>
+      <div className="landop_text text-color">{text}</div>
     </div>
   );
 };

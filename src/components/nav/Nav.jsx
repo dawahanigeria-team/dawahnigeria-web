@@ -29,14 +29,14 @@ const Nav = () => {
 
   return (
     <>
-      <div className="nav_container ">
+      <div className="nav_container bg-search dark:border-b-0 border-b">
         <div className="nav_wrapper">
           <div className="nav_logo">
             <FiMenu
               onClick={() => {
                 handleSideBar();
               }}
-              className="nav_res_hamburger"
+              className="nav_res_hamburger text-color"
             />
             <div
               onClick={() => {
@@ -82,7 +82,7 @@ const Nav = () => {
             </div>
           </div>
 
-          <div className="nav_res_download_wrapper">
+          <div className="nav_res_download_wrapper bg-background text-color border border-border">
             <button
               className="nav_res_download"
               onClick={() => {

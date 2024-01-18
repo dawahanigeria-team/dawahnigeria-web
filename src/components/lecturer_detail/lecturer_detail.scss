@@ -25,6 +25,8 @@
   @media screen and (max-width: 615px) {
     font-size: 13px;
     font-weight: 400;
+    color: #aeaeae;
+    cursor: pointer;
   }
 }
 @mixin mobile_tab_text_align {
@@ -60,7 +62,7 @@
   font-weight: 800;
   font-size: 21px;
   line-height: 30px;
-  color: #ffffff;
+  
 }
 @mixin tab_sub_activetext {
   font-family: "Nunito Sans";
@@ -133,7 +135,22 @@
     top: 0px;
     left: 0px;
     width: 100%;
-    filter: blur(200px);
+   filter: blur(200px);
+    
+    height: 10%;
+    @media screen and (max-width: 1096px) {
+      height: 12%;
+    }
+    z-index: 0;
+    @include hide_for_mobile;
+  }
+  .lecdet_hero_light {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+   filter: blur(700px);
+    
     height: 10%;
     @media screen and (max-width: 1096px) {
       height: 12%;
@@ -176,7 +193,7 @@
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
-        color: #ffffff;
+     
       }
     }
     // ----------- Bread Crumbs End --------------
@@ -232,7 +249,7 @@
           font-weight: 600;
           font-size: 20px;
           line-height: 26px;
-          color: #ffffff;
+          
           //max-width: 350px;
           @media screen and (max-width: 600px) {
             width: 100%;
@@ -304,10 +321,10 @@
             }
           }
           .leclistdet_fav {
-            background-color: #ffffff17;
+        
             @include button_style;
             &:hover {
-              background-color: #ffffff2d;
+             
             }
             .fav_btn {
               background: none;
@@ -319,7 +336,7 @@
                 @media screen and (max-width: 600px) {
                   font-size: 20px;
                 }
-                color: #cfcfcf;
+                
               }
               .leclistdet_fav_icon_active{
                 font-size: 25px;
@@ -327,7 +344,7 @@
                 @media screen and (max-width: 600px) {
                   font-size: 20px;
                 }
-                color: #ddff2b;
+               
               }
             }
             .leclistdet_fav_text {
@@ -340,15 +357,15 @@
                 font-size: 12px;
                 line-height: 20px;
               }
-              color: #cfcfcf;
+             
               margin: unset;
             }
           }
           .lecdet_share {
-            background-color: #ffffff17;
+          //  background-color: #ffffff17;
             @include button_style;
             &:hover {
-              background-color: #ffffff2d;
+              //background-color: #ffffff2d;
             }
             .fav_btn {
               background: none;
@@ -359,7 +376,7 @@
                 @media screen and (max-width: 600px) {
                   font-size: 20px;
                 }
-                color: #cfcfcf;
+               // color: #cfcfcf;
               }
             }
             .lecdet_share_text {
@@ -368,7 +385,7 @@
               font-weight: 400;
               font-size: 14px;
               line-height: 24px;
-              color: #cfcfcf;
+             // color: #cfcfcf;
               margin: unset;
               @media screen and (max-width: 600px) {
                 font-size: 12px;
@@ -377,17 +394,17 @@
             }
           }
           .lecdet_comment {
-            background-color: #ffffff17;
+           
             @include button_style;
             &:hover {
-              background-color: #ffffff2d;
+            
             }
             .lecdet_comment_icon {
               font-size: 25px;
               @media screen and (max-width: 600px) {
                 font-size: 20px;
               }
-              color: #cfcfcf;
+              
             }
             .lecdet_comment_text {
               font-family: "Nunito Sans";
@@ -399,7 +416,7 @@
                 font-size: 12px;
                 line-height: 20px;
               }
-              color: #cfcfcf;
+             
               margin: unset;
             }
           }
@@ -772,7 +789,7 @@
     .blacks {
       @include hide_for_desktop;
       width: 100%;
-      background: #0d0d0d;
+    
       border-top-right-radius: 24px;
       border-top-left-radius: 24px;
       position: relative;
@@ -788,7 +805,7 @@
         align-items: center;
         justify-content: space-around;
         padding: 2%;
-        background: #0d0d0d;
+        
         border-bottom: 1px solid gray;
 
         .icons_mob_listblack {
@@ -801,6 +818,7 @@
             height: 17px;
             background: none;
             border: 0;
+            color: #aeaeae;
             margin-right: 6px;
             display: flex;
             align-items: center;
@@ -824,7 +842,7 @@
         border-top-right-radius: 24px;
         border-top-left-radius: 24px;
         z-index: 10;
-        background: #0d0d0d;
+      
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -857,20 +875,14 @@
           }
         }
       }
-      .descript {
-        font-size: 14px;
-        color: white;
-        font-family: "Poppins";
-        padding: 4% 3% 3% 5%;
-      }
+   
       .mobile_lecdet_tab {
         display: flex;
         margin-top: 0.6rem;
         font-family: "Poppins";
         font-size: 14px;
         width: 100%;
-        color: white;
-        overflow-x: auto;
+       overflow-x: auto;
         flex-direction: row;
         padding: 0% 3%;
         gap: 1rem;
@@ -926,10 +938,10 @@
               height: 0.25rem;
             }
           }
-          .mobile_lecdet_tab_album2_active {
+          .mobile_lecdet_tab_album1_active {
             @include mobile_tab_activetext;
           }
-          .mobile_lecdet_tab_album2 {
+          .mobile_lecdet_tab_album1 {
             @include mobile_tab_text;
             margin: unset;
           }
@@ -954,10 +966,10 @@
               height: 0.25rem;
             }
           }
-          .mobile_lecdet_tab_playlist2_active {
+          .mobile_lecdet_tab_playlist1_active {
             @include mobile_tab_activetext;
           }
-          .mobile_lecdet_tab_playlist2 {
+          .mobile_lecdet_tab_playlist1 {
             @include mobile_tab_text;
             margin: unset;
           }
@@ -1018,16 +1030,16 @@
 
       .set_choice {
         padding: 3%;
-        color: white;
+      
         font-family: "Poppins";
         font-size: 15px;
         .nums {
-          color: #868686;
+         
           padding-left: 3px;
         }
       }
       .mobile_color_vid {
-        background: #0d0d0d;
+       
         padding: 3%;
         @include hide_for_desktop;
       }

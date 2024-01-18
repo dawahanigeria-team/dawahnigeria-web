@@ -1,47 +1,43 @@
-import React, { useState,useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./search.scss";
 import { FiSearch } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../App";
-import {SEARCH} from "../../utils/routes/constants"
+import { SEARCH } from "../../utils/routes/constants";
 const Search = () => {
-  // const [langid, setLangid] = useState()
-  //const [rpId, setrpId] = useState()
-  const {pathname} = useLocation()
+  const { pathname } = useLocation();
   const navigate = useNavigate();
-  const {text, setText} = useContext(SearchContext);
- 
+  const { text, setText } = useContext(SearchContext);
 
-  const [inputValue, setInputValue] = useState()
-  //console.log(inputValue)
-  //const [text, onchange] = useState();
+  const [inputValue, setInputValue] = useState();
+
   useEffect(() => {
     if (pathname !== SEARCH) {
-        //setText("")
+      //setText("")
     }
-  },[pathname])
+  }, [pathname]);
 
-const fetchData = () => {
-  if(pathname !== SEARCH) {
-    navigate(SEARCH)
-  }
- setText(inputValue)
-}
+  const fetchData = () => {
+    if (pathname !== SEARCH) {
+      navigate(SEARCH);
+    }
+    setText(inputValue);
+  };
   return (
-    <div className="search_wrapper">
+    <div className="search_wrapper bg-input">
       <FiSearch className="search_icon" />
       <input
         onChange={(e) => {
-          setInputValue(e.target.value)
+          setInputValue(e.target.value);
         }}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
-           fetchData()
+            fetchData();
           }
         }}
         value={inputValue}
         type="search"
-        className="search_input"
+        className="search_input text-color"
         placeholder="Search"
       />
     </div>

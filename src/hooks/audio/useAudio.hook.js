@@ -9,11 +9,10 @@ import {
 
 export const useAudioHook = (id) => {
   const dispatch = useDispatch();
-
+ 
   const { data, refetch } = useQuery(["audio", id], () => audioDetailApi.getAudio(id), {
     enabled: window.innerWidth > 615,
     onSuccess: (data) => {
-        //console.log(data)
       dispatch(getcurrentAudioInfo(data[0]));
     },
   });
@@ -23,6 +22,8 @@ export const useAudioHook = (id) => {
       dispatch(getaudioId(id));
     }
   }, [id]);
+
+
 
   return {
     refetch

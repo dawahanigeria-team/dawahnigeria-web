@@ -13,7 +13,7 @@ export const useDownloadLecture = (lecid) => {
     {
       enabled: !!lecid,
       onError: (error) => {
-        console.error("error", error);
+        
         toast.error("Unable to load lecture file");
       },
     }

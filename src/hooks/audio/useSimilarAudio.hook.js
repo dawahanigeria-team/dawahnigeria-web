@@ -13,10 +13,10 @@ export const useSimilarAudioHook = (keyParam) => {
       enabled: !!keyParam?.id,
       onSuccess: (data) => {
         setQueriedData(data);
-        console.log(data)
+
       },
       onError: (error) => {
-        console.error("error", error);
+      
         toast.error("Unable to load data");
       },
     }

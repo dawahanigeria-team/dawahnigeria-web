@@ -7,7 +7,7 @@
   margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
-  color: #d4d4d4;
+ 
 }
 @mixin section_layouts {
   display: flex;
@@ -85,13 +85,14 @@
   }
   padding-bottom: 90px;
   overflow-y: auto;
-  background: #030303;
+ 
 
   .sidenav_logo {
     margin-bottom: 1rem;
-    @media screen and (max-width: 890px) {
-      //display: none;
-    }
+    display:flex;
+    width:100%;
+    align-items: center;
+    justify-content: space-between;
   }
   .logout {
     display: flex;
@@ -104,14 +105,14 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      border: 1px solid #868686;
+     
       border-radius: 1px;
       font-family: "Nunito Sans";
       font-style: normal;
       font-weight: 400;
       background: none;
       font-size: 12px;
-      color: #868686;
+     
       &:hover {
         color: #d6ff00;
       }
@@ -152,23 +153,18 @@
         }
         line-height: 21px;
         align-items: center;
-        color: #d4d4d4;
-        &:hover {
-          color: #d6ff00;
-        }
+      
       }
     }
     .user_name {
-      color: #d4d4d4;
+      
       font-family: "Nunito Sans";
       font-style: normal;
       font-weight: 700;
       font-size: 14px;
       text-transform: capitalize;
       line-height: 21px;
-      &:hover {
-        color: #d6ff00;
-      }
+     
     }
   }
   .sidenav_lectures {

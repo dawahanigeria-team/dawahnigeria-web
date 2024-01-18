@@ -21,11 +21,11 @@ const SelectLanguage = () => {
     axios
       .get(`/all_lang_api.php`)
       .then((res) => {
-        //console.log(res.data)
+   
         setLangData(res.data);
       })
       .catch((err) => {
-        //console.log(err);
+     
       });
   }, []);
 
@@ -38,7 +38,7 @@ const SelectLanguage = () => {
       languageId: langid,
     };
 
-    ////console.log(payload)
+   
 
     dispatch(registration(payload, isSocial, getId, navigate, setLoading));
   };
@@ -58,8 +58,8 @@ const SelectLanguage = () => {
             key={index}
             className={
               selected && id === langid
-                ? "signuplang_name active"
-                : "signuplang_name not_active"
+                ? "signuplang_name active dark:bg-white bg-[#ddff2b]"
+                : "signuplang_name  text-foreground"
             }
           >
             {name}

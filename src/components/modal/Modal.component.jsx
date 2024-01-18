@@ -50,12 +50,12 @@ export const Modal = ({
       style={customStyles}
       contentLabel={contentLabel}
       className="justify-center items-start flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none ease-linear transition-all duration-150  modal"
-      overlayClassName="fixed inset-0 w-full h-full bg-white/10 z-50 cursor-pointer modal-overlay "
+      overlayClassName="fixed inset-0 w-full h-full bg-white/50 dark:bg-black/50 z-50 cursor-pointer modal-overlay "
     >
       <div className="relative w-auto mx-auto cursor-default">
         {/*content*/}
         <div
-          className={`border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-[#1E1E1E] outline-none focus:outline-none w-[95vw] md:w-[60vw] xl:w-[30vw]  p-4 md:p-10 ${className} `}
+          className={`border-0 rounded-lg shadow-lg relative flex flex-col  bg-white dark:bg-[#1E1E1E] outline-none focus:outline-none w-[95vw] md:w-[60vw] xl:w-[30vw]  p-4 md:p-10 ${className} `}
         >
           {/*header*/}
           <div className="relative">
@@ -63,12 +63,12 @@ export const Modal = ({
               <div className="flex items-start justify-start pb-3  rounded-t whitespace-normal">
                 <div>
                   {modalTitle && (
-                    <h3 className="text-xl font-semibold text-white flex justify-center items-start flex-col gap-2">
+                    <h3 className="text-xl font-semibold text-foreground flex justify-center items-start flex-col gap-2">
                       <span>{modalTitle}</span>
                     </h3>
                   )}
                   {modalDescription && (
-                    <p className="text-xs text-gray-200 font-light">
+                    <p className="text-xs text-foreground font-light">
                       {modalDescription}
                     </p>
                   )}

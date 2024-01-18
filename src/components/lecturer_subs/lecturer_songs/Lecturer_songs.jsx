@@ -4,14 +4,15 @@ import MobileList from "../../../components/list/mobileList";
 import "./lecturer_song.scss";
 import { SlEmotsmile } from "react-icons/sl";
 import Loader from "../../UI/loader/loader";
-import logo from "../../../assets/png/dn logo.png";
 import _ from "lodash";
 import { useSelector } from "react-redux";
 import MusicList from "../../miscList/musicList";
 import { LECTURE } from "../../../utils/routes/constants";
 import { useQueryGetRequest } from "../../../hooks/getqueries";
 import { lecturerDetailApi } from "../../../services";
-const Lecturer_songs = ({ id, setCount1 }) => {
+import CommentBox from "../../comment/comment";
+
+const Lecturer_songs = ({ id, totalData }) => {
   const { currentUser } = useSelector((state) => state.user);
   const [page, setPage] = useState(1);
   const [comment, setComment] = useState();
@@ -24,10 +25,6 @@ const Lecturer_songs = ({ id, setCount1 }) => {
       queryParam,
       lecturerDetailApi.getLecturerSongs
     );
-  //console.log("rp id", id);
-  useEffect(() => {
-    setCount1(querieddata?.length || 0);
-  }, [querieddata]);
 
   //////*************handling comment**************** */
 
@@ -43,40 +40,15 @@ const Lecturer_songs = ({ id, setCount1 }) => {
         },
       })
       .then((res) => {
-        //console.log("comment result", res);
+    
         setaudioComment(res.data.reverse());
       })
       .catch((err) => {
-        //console.log(err);
+   
       });
   }, []);
 
-  const postComment = () => {
-    if (!currentUser?.id) return;
-    if (comment === "") return;
-    //console.log(comment);
-    const payload = {
-      user_id: currentUser?.id,
-      item_id: id,
-      type: "rp",
-      comment: comment,
-    };
-    axios
-      .post(`/commentApi.php`, payload, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-        },
-      })
-      .then((res) => {
-        //console.log(res);
-        setComment("");
-      })
-      .catch((err) => {
-        //console.log(err);
-      });
-  };
+ 
 
   return (
     <div className="lecsong_wrapper">
@@ -173,68 +145,31 @@ const Lecturer_songs = ({ id, setCount1 }) => {
           )}
       </div>
 
-      {
-        <div className="flex h-fit w-full min-[615px]:text-[16px] text-sm  min-[615px]:mt-6 mt-3 items-center justify-center">
-          {" "}
-          <button
-            onClick={() => {
-              if (isLastPage) return;
-              setPage(page + 1);
-            }}
-            className={
-              !isLastPage
-                ? "w-[40%] min-[615px]:w-[200px] min-[615px]:py-3  flex justify-center items-center py-2 border border-gray-400 text-gray-400 rounded-2xl"
+       {(isLoading && page === 1) ||
+        (totalData !== querieddata?.length && (
+          <div className="flex h-fit w-full min-[615px]:text-[16px] text-sm  min-[615px]:mt-6 mt-3 items-center justify-center">
+            {" "}
+            <button
+            disabled={isLoadingNextPage}
+              onClick={() => {
+             
+                setPage(page + 1);
+              }}
+              className={
+                 !isLastPage
+                ? "w-[40%] min-[615px]:w-[200px] min-[615px]:py-3  flex justify-center items-center py-2 border text-color border-color rounded-2xl"
                 : "hidden"
-            }
-          >
-            {isLoadingNextPage ? (
-              <span className="rounded-full w-4 h-4 border-l border-r border-gray-400 animate-spin"></span>
-            ) : (
-              <span>Show more</span>
-            )}
-          </button>
-        </div>
-      }
-
-      <div className="lecsong_comments">
-        <div className="lecsong_comments_header">Comments</div>
-        <textarea
-          className="lecsong_comment_input"
-          placeholder="Pls share your thoughts"
-          name=""
-          id=""
-          cols="30"
-          value={comment}
-          rows="5"
-          onChange={(e) => {
-            setComment(e.target.value);
-          }}
-          maxLength="500"
-        ></textarea>
-        <div className="lecsong_comment_action">
-          <SlEmotsmile className="lecsong_comment_moji" />
-          <button onClick={postComment} className="lecsong_comment_button">
-            Comment
-          </button>
-        </div>
-
-        <div className="aud_comment_texts">
-          {audioComment?.map(({ user, date, content }, idx) => {
-            return (
-              <div className="com_wrap">
-                <div className="com_date">
-                  <span className="logo_img">
-                    <img className="logo_img_sz" src={logo} alt="" />
-                  </span>
-                  <span className="commentor">{user}</span>
-                  <span className="comment_date">{date}</span>
-                </div>
-                <div className="comment_content">{content}</div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+              }
+            >
+              {isLoadingNextPage ? (
+                <span className="rounded-full w-4 h-4 border-l border-r border-color animate-spin"></span>
+              ) : (
+                <span>Show more</span>
+              )}
+            </button>
+          </div>
+        ))}
+      <CommentBox audioComment={audioComment} type={"rp"} id={id} />
     </div>
   );
 };

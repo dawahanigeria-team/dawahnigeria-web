@@ -28,7 +28,7 @@ export const useQueryGetRequest = (keyName, queryParam = {}, queryFunction) => {
       },
       onError: (error) => {
         setIsLoadingNextPage(false);
-        console.error("error", error);
+        
         toast.error("Unable to load data");
       },
     }

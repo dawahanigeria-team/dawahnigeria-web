@@ -12,7 +12,7 @@ import { ALBUMS } from "../../../utils/routes/constants";
 import { useQueryGetRequest } from "../../../hooks/getqueries";
 import { lecturerDetailApi } from "../../../services";
 
-const Lecturer_album = ({ id, setCount2}) => {
+const Lecturer_album = ({ id, totalData }) => {
   const { currentUser } = useSelector((state) => state.user);
   const [page, setPage] = useState(1);
   const [audioComment, setaudioComment] = useState();
@@ -24,14 +24,6 @@ const Lecturer_album = ({ id, setCount2}) => {
       queryParam,
       lecturerDetailApi.getLecturerAlbums
     );
-
- // console.log("albums", querieddata);
-
-  useEffect(() => {
-    setCount2(querieddata?.length);
-  }, [querieddata]);
-
-  // //console.log(setCount2);
 
   //////*************handling comment**************** */
 
@@ -47,15 +39,10 @@ const Lecturer_album = ({ id, setCount2}) => {
         },
       })
       .then((res) => {
-        //console.log("comment result", res);
         setaudioComment(res.data.reverse());
       })
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   }, []);
-
-  //console.log('comments',audioComment);
 
   return (
     <>
@@ -105,28 +92,30 @@ const Lecturer_album = ({ id, setCount2}) => {
             }
           )}
       </div>
-      {
-        <div className="flex w-full min-[615px]:mt-6 mt-3 items-center h-fit justify-center  min-[615px]:text-[16px] text-sm">
-          {" "}
-          <button
-            onClick={() => {
-              if (isLastPage) return;
-              setPage(page + 1);
-            }}
-            className={
-              !isLastPage
-                ? "w-[40%] min-[615px]:w-[200px] min-[615px]:py-3   flex justify-center items-center py-2 border border-gray-400 text-gray-400 rounded-2xl"
-                : "hidden"
-            }
-          >
-            {isLoadingNextPage ? (
-              <span className="rounded-full w-4 h-4 border-l border-r border-gray-400 animate-spin"></span>
-            ) : (
-              <span>Show more</span>
-            )}
-          </button>
-        </div>
-      }
+
+      {(isLoading && page === 1) ||
+        (totalData !== querieddata?.length && (
+          <div className="flex w-full min-[615px]:mt-6 mt-3 items-center h-fit justify-center  min-[615px]:text-[16px] text-sm">
+            {" "}
+            <button
+              disabled={isLoadingNextPage}
+              onClick={() => {
+                setPage(page + 1);
+              }}
+              className={
+                !isLastPage
+                  ? "w-[40%] min-[615px]:w-[200px] min-[615px]:py-3  text-color border-color flex justify-center items-center py-2 border rounded-2xl"
+                  : "hidden"
+              }
+            >
+              {isLoadingNextPage ? (
+                <span className="rounded-full w-4 h-4 border-l border-r border-color animate-spin"></span>
+              ) : (
+                <span>Show more</span>
+              )}
+            </button>
+          </div>
+        ))}
 
       <div className="lecalb_comments">
         <CommentBox audioComment={audioComment} id={id} type={"rp"} />

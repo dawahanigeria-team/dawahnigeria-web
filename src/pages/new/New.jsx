@@ -4,9 +4,9 @@ import Container from "../../components/container/Container";
 import MusicList from "../../components/miscList/musicList";
 //import { useNavigate } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
-import pmobile from "../../../src/assets/svg/playmobile.svg";
 import Loader from "../../components/UI/loader/loader";
 import _ from "lodash";
+import { BsFillPlayFill } from "react-icons/bs";
 import { LECTURE, TRENDING, NEW } from "../../utils/routes/constants";
 import { useNavigate } from "react-router-dom";
 import { useQueryGetRequest } from "../../hooks/getqueries";
@@ -16,10 +16,10 @@ import HeadMeta from "../../components/head-meta";
 
 const New = () => {
   const [page] = useState(1);
-  const [drop,setDrop] = useState(false)
+  const [drop, setDrop] = useState(false);
   const navigate = useNavigate();
-  const  queryParam = {page}
-  const { isLoading,querieddata } = useQueryGetRequest(
+  const queryParam = { page };
+  const { isLoading, querieddata } = useQueryGetRequest(
     "new",
     queryParam,
     newApi.getNewLectures
@@ -43,7 +43,7 @@ const New = () => {
         title={`New resources on Dawah Nigeria - Home of islamic contents`}
       />
       <div className="new_wrapper">
-        <div className="new_header_link max-[615px]:border-b border-zinc-700">
+        <div className="new_header_link bg-background max-[615px]:border-b border-zinc-700">
           <HeaderRouter title={"New"} />
         </div>
 
@@ -126,14 +126,13 @@ const New = () => {
         <div className="mobile_lists">
           <div
             onClick={playAll}
-            className="header  pb-2 border-b border-zinc-500 w-full"
+            className="header pb-2 border-b border-color-primary  w-full"
           >
-            <div className="w-fit h-fit border p-1 rounded-full items-center flex justify-center">
-              <div className="w-3 h-3  ">
-                <img className="w-full h-full" src={pmobile} alt="" />
-              </div>
+            <div className="w-fit h-fit border border-color-primary p-[2px] rounded-full">
+              <BsFillPlayFill className="text-[22px] text-color-primary" />
             </div>
-            <p className="">Play All</p>
+
+            <p className="text-color-primary font-medium">Play All</p>
           </div>
           <div className="bg-none h-1 w-1"></div>
           {isLoading && (

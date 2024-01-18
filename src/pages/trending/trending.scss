@@ -7,12 +7,12 @@
   color: #5e5e5e;
 }
 @mixin mobile_hide {
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 690px) {
     display: none;
   }
 }
 @mixin desktop_hide {
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 690px) {
     display: none;
   }
 }
@@ -32,7 +32,7 @@
     right: 0;
     padding: unset;
     z-index: 10;
-    background: #090909;
+  
   }
   .trend_title_res_wrap {
     @media screen and (min-width: 1221px) {
@@ -45,26 +45,9 @@
     margin-bottom: 2rem;
     justify-content: flex-start;
 
-    .trending_title_res_icon {
-      font-size: 40px;
-      color: #d4d4d4;
-      cursor: pointer;
-    }
-    .trending_title_res_text {
-      font-family: "Poppins";
-      font-style: normal;
-      font-weight: 500;
-      font-size: 20px;
-      line-height: 30px;
-      color: #d4d4d4;
-      grid-column: span 2;
-      margin-left: 1.5rem;
-    }
   }
   .trend_title_wrap {
-    @media screen and (max-width: 600px) {
-      display: none;
-    }
+    @include mobile_hide;
     display: flex;
     //gap: 1rem;
     // grid-template-columns: repeat(11, minmax(0, 1fr));
@@ -74,7 +57,7 @@
     .tend_title2,
     .tend_title3,
     .tend_title4 {
-      @include title_text;
+    
       margin: unset;
       padding: unset;
     }
@@ -82,7 +65,7 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      width: 50%;
+      width: 45%;
       // grid-column: span 5 / span 5;
       * {
         @include title_text;
@@ -125,7 +108,7 @@
   }
   .table {
     @include mobile_hide;
-    color: #e0e0e0;
+    
     font-family: "Poppins";
     width: 100%;
     font-size: 14px;
@@ -136,13 +119,20 @@
 
   .mobile_lists {
     @include desktop_hide;
-    margin-top: 4rem;
+   
+ 
+    @media screen and (max-width:690px) {
+      margin-top: 0rem;
+    }
+    @media screen and (max-width:600px) {
+      margin-top: 4rem;
+    }
     display: flex;
     flex-direction: column;
     gap: 0.5em;
     width: 100%;
     font-family: "Poppins";
-    color: #cfcfcf;
+
     font-size: 12px;
 
     .header {

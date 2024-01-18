@@ -75,26 +75,24 @@ const AudioActionDesktop = () => {
       .get(`/leclistingapi.php?lecid=${audioId}`)
       .then((res) => {
         setcurrentaudio(res.data[0]);
-        
+
         dispatch(getcurrentAudioInfo(res.data[0]));
         setLoading(false);
-        console.log("@@@@@@@@@@@ def");
+
+
         if (initial) {
           dispatch(setPlaying(false));
           audioRef.current?.pause();
-          console.log("@@@@@@@@@@@ pause");
+
           cancelAnimationFrame(playAnimation.current);
         } else {
           dispatch(setPlaying(true));
-         
-          console.log("@@@@@@@@@@@ playing");
+
           audioRef.current?.play();
           playAnimation.current = requestAnimationFrame(repeat);
         }
       })
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -157,9 +155,8 @@ const AudioActionDesktop = () => {
       audioRef.current?.pause(); // Pause the audio
     } else {
       dispatch(setPlaying(true));
-      audioRef.current
-        ?.play()
-        .catch((error) => console.log("Play was not allowed:", error)); // Play the audio
+      audioRef.current?.play();
+      // Play the audio
     }
   };
 
@@ -168,7 +165,7 @@ const AudioActionDesktop = () => {
   };
   const handleRange = (curr) => {
     dispatch(getValue(curr));
-    //   //console.log(rangeRef.current.value);
+
     if (audioRef.current) {
       audioRef.current.currentTime = curr;
     }
@@ -179,7 +176,7 @@ const AudioActionDesktop = () => {
     setIsPrevious(false);
     dispatch(setPlaying(false));
     setnotloaded(true);
-    //console.log(pack);
+
     const next = pack?.findIndex((value) => {
       return value.nid === parseInt(audioId);
     });
@@ -190,22 +187,19 @@ const AudioActionDesktop = () => {
 
     if (next === pack?.length - 1) {
       dispatch(getaudioId(pack[next]?.nid));
-      //console.log("end of track next");
+
       dispatch(getCount(next));
     } else if (count < pack?.length - 1) {
-      //console.log("working");
       dispatch(getaudioId(pack[next + 1]?.nid));
-      ////console.log("last count: ", count);
+
       dispatch(getCount(next + 1));
-      //console.log("last count: ", next);
     } else {
       dispatch(getaudioId(pack[0]?.nid));
-      ////console.log("last count: ", count);
+
       dispatch(getCount(0));
     }
   };
   const handlePreviousAudio = () => {
-    //  //console.log("first count: ", count)
     setinitial(false);
     setnotloaded(true);
     dispatch(setPlaying(false));
@@ -221,10 +215,7 @@ const AudioActionDesktop = () => {
     if (prev === 0) {
       dispatch(getaudioId(pack[prev]?.nid));
       dispatch(getCount(prev));
-
-      //console.log("end of track prev");
     } else {
-      //console.log("third count: ", count);
       dispatch(getaudioId(pack[prev - 1]?.nid));
       dispatch(getCount(prev - 1));
     }
@@ -234,14 +225,9 @@ const AudioActionDesktop = () => {
 
   useEffect(() => {
     if (isrepeat === false && isComplete) {
-      //console.log(isComplete);
-      // //console.log('@@@@@@@@@@@@@@ data',data.length -1)
-
       const counter = pack?.findIndex((value) => {
         return value.nid === audioId;
       });
-
-      // //console.log('@@@@@@@@@@@@@@@ count',count)
 
       if (counter === pack.length - 1) {
         dispatch(getaudioId(pack[0]?.nid));
@@ -250,23 +236,17 @@ const AudioActionDesktop = () => {
         handleNextAudio();
       }
 
-      // getMusic(controlData[pres + 1]?.nid)
-
       return;
     } else {
-      //console.log("yeah");
-
       getMusic(audioId);
       dispatch(getValue(0));
       audioRef.current.currentTime = 0;
-      //audioRef?.current?.currentTime = 0
 
       return;
     }
   }, [isComplete]);
 
   const addToPlaylist = () => {
-    //console.log("@@@ add playlist clicked");
     dispatch(getLecid(audioId));
     dispatch(showaddPlaylist(true));
   };
@@ -275,7 +255,6 @@ const AudioActionDesktop = () => {
   async function fetchFavorites(addFav, audioId) {
     if (!currentUser?.id) return;
     if ((addFav || !addFav) && audioId) {
-      //console.log("..........@@@@@@@@@@@@@");
       await axios
         .get(
           `/leclisting_favorites.php?user_id=${currentUser?.id}&type=audio`,
@@ -288,15 +267,11 @@ const AudioActionDesktop = () => {
           }
         )
         .then((res) => {
-          //console.log(res.data);
           const { audio } = res.data;
 
           setgetfavs(Object.values(audio));
-          // const isExist = [Object.values(audio)].includes(nid)
         })
-        .catch((err) => {
-          //console.log(err);
-        });
+        .catch((err) => {});
     }
   }
   useEffect(() => {
@@ -329,25 +304,20 @@ const AudioActionDesktop = () => {
         },
       })
       .then((res) => {
-        //console.log(res);
         toast.success(res.data.message);
-        //setdisabled(false);
       })
 
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   };
 
   function handleState() {
-    /// if (!currentaudio?.audio) return
     setnotloaded(false);
   }
 
   return (
     <>
       <div
-        className={`fixed bg-black z-[60]  bottom-0 flex items-center gap-4  transform  cursor-pointer ${
+        className={`fixed bg-background z-[60]  bottom-0 flex items-center gap-4  transform  cursor-pointer ${
           isminimize
             ? `w-[220px] h-[60px] bg-black right-0 transition-all duartion-300`
             : `w-full h-[80px] left-0 right-0`
@@ -381,9 +351,7 @@ const AudioActionDesktop = () => {
           onTimeUpdate={() => {
             if (audioRef.current && !audioRef.current?.seeking) {
               dispatch(getValue(audioRef?.current?.currentTime));
-              //handleNextAudio()
-              // //console.log("from update", audioRef.current?.currentTime);
-              // //console.log("to update", Math.floor(audioRef.current?.duration));
+
               setIsComplete(
                 Math.floor(audioRef?.current?.currentTime) >=
                   Math.floor(audioRef?.current?.duration)
@@ -400,7 +368,7 @@ const AudioActionDesktop = () => {
           }}
         />
         <div
-          className={`flex items-center relative bg-black text-white w-full ${
+          className={`flex items-center relative bg-background text-foreground w-full ${
             isminimize ? "justify-center" : "justify-between"
           }`}
         >
@@ -446,7 +414,7 @@ const AudioActionDesktop = () => {
               id="player"
               className="audiodet_play_btn"
             >
-              <TbPlayerSkipBackFilled className="text-white text-[20px] hover:text-[#ddff2b] " />
+              <TbPlayerSkipBackFilled className="text-color text-[20px] hover:text-color-foreground dark:hover:text-[#ddff2b] " />
             </button>
 
             {loading ? (
@@ -455,7 +423,7 @@ const AudioActionDesktop = () => {
               <button
                 onClick={handlePlay}
                 disabled={isloaded}
-                className="relative flex h-[42px] w-[42px] text-black rounded-full bg-[#ddff2b] justify-center items-center"
+                className="relative flex h-[42px] w-[42px] dark:text-black text-gray-100 rounded-full dark:bg-[#ddff2b] bg-gray-500 justify-center items-center"
               >
                 {!playing ? (
                   <FaPlay id="player" className="text-[22px]" />
@@ -468,7 +436,7 @@ const AudioActionDesktop = () => {
               </button>
             )}
             <button onClick={handleNextAudio} id="player" className="">
-              <TbPlayerSkipForwardFilled className="text-white text-[20px] hover:text-[#ddff2b]" />
+              <TbPlayerSkipForwardFilled className="text-color text-[20px] hover:text-color-foreground dark:hover:text-[#ddff2b]" />
             </button>
           </div>
 
@@ -482,14 +450,14 @@ const AudioActionDesktop = () => {
               onClick={() => {
                 dispatch(getRepeat(!isrepeat));
               }}
-              className="h-[20px] w-[20px]  text-white hover:text-[#ddff2b]"
+              className="h-[20px] w-[20px]  text-color hover:text-color-foreground dark:hover:text-[#ddff2b]"
             >
               {isrepeat ? <RepeatedIcon /> : <RepeatIcon />}
             </button>
 
             <AudioDownloadModal
               nid={audioId}
-              className="h-[20px] w-[20px] hover:text-[#ddff2b]"
+              className="h-[20px] w-[20px]  text-color hover:text-color-foreground dark:hover:text-[#ddff2b]"
               triggerInnerChild={<DownloadIcon />}
             />
             <button
@@ -512,14 +480,14 @@ const AudioActionDesktop = () => {
               disabled={!audioId}
               className="h-[20px] w-[20px]"
             >
-              <SlShare className="text-white hover:text-[#ddff2b] text-[20px]" />
+              <SlShare className=" hover:text-color-foreground dark:hover:text-[#ddff2b] text-[20px]" />
             </button>
             <button
               onClick={() => {
                 addToPlaylist();
               }}
               disabled={!audioId}
-              className="audiodet_play_add hover:text-[#ddff2b]"
+              className="audiodet_play_add  hover:text-color-foreground dark:hover:text-[#ddff2b]"
             >
               <AddplayIcon />
             </button>

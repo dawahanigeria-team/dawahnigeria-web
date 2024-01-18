@@ -19,9 +19,8 @@ export const useLandingPageHook = (id, page, setisrecent, setcurPlay) => {
       {
         queryKey: ["recentlyviewed"],
 
-        queryFn: () => landingPageApis.getRecentlyViewed(id, page, setisrecent, setcurPlay),
-       
-
+        queryFn: () =>
+          landingPageApis.getRecentlyViewed(id, page, setisrecent, setcurPlay),
       },
     ],
   });

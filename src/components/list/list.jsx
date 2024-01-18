@@ -1,20 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./list.scss";
-import imge from "../../../src/assets/png/genre/1.png";
 import love from "../../../src/assets/svg/love-d.svg";
 import comment from "../../../src/assets/svg/com-d.svg";
 import headpmobile from "../../../src/assets/svg/headpmobile.svg";
 import sharesvg from "../../../src/assets/svg/share-d.svg";
 import adfav from "../../../src/assets/svg/adfav.svg";
-import sharebig from "../../../src/assets/svg/boom-share.svg";
+import { AiOutlineShareAlt } from "react-icons/ai";
 import headp from "../../../src/assets/svg/hp-d.svg";
-import plus from "../../../src/assets/svg/boom-addplay.svg";
+import { CiSquarePlus } from "react-icons/ci";
 import pmobile from "../../../src/assets/svg/playmobile.svg";
-import dot from "../../../src/assets/svg/threedot.svg";
 import { SlShare } from "react-icons/sl";
-import dmobile from "../../../src/assets/svg/boom-download.svg";
 import { Link, useNavigate } from "react-router-dom";
 import Add_playlist from "../../pages/add_playlist/AddPlaylist";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { toast } from "react-hot-toast";
 import { LECTURE, RESOURCE_PERSON } from "../../utils/routes/constants";
 import {
@@ -38,7 +36,6 @@ import {
   ShareIcon,
 } from "../svgcomponent/svgComponent";
 import ShareAudio from "../shareaudio/shareAudio";
-import Marquee from "react-fast-marquee";
 import { AudioDownloadModal } from "../audioDownloadModal/AudioDownloadModal";
 
 function List({
@@ -79,8 +76,6 @@ function List({
   const { setinitial } = useContext(AudioContext);
   const [rpnameArray, setrpnameArray] = useState([]);
   const [isShare, setisShare] = useState(false);
-  //const [lectureId, setlectureId] = useState()
-  ////console.log(currentUser?.id)
 
   ////not contented but under presssure by DN project manager
   useEffect(() => {
@@ -109,7 +104,6 @@ function List({
   async function fetchFavorites(addFav, lecid) {
     if (!currentUser?.id) return;
     if ((addFav || !addFav) && lecid) {
-      //console.log("..........@@@@@@@@@@@@@");
       await axios
         .get(
           `/leclisting_favorites.php?user_id=${currentUser?.id}&type=audio`,
@@ -122,14 +116,10 @@ function List({
           }
         )
         .then((res) => {
-          //console.log(res.data);
           const { audio } = res.data;
           setgetfavs(Object.values(audio));
-          // const isExist = [Object.values(audio)].includes(nid)
         })
-        .catch((err) => {
-          //console.log(err);
-        });
+        .catch((err) => {});
     }
   }
   useEffect(() => {
@@ -157,10 +147,9 @@ function List({
         },
       })
       .then((res) => {
-        //console.log(res);
         toast.success(res.data.message);
         setdisabled(false);
-        //console.log(addFav);
+
         if (!getFavs?.includes(lecid)) {
           setsumofFav(sumofFav + 1);
         } else {
@@ -168,9 +157,7 @@ function List({
         }
       })
 
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const addToPlaylist = (e, lecid) => {
@@ -179,12 +166,9 @@ function List({
     dispatch(showaddPlaylist(true));
   };
 
-
-
-  //console.log(getFavs);
   return (
-    <div className="list_wrapper">
-      <div className="table">
+    <div className="list_wrapper dark:font-light font-medium">
+      <div className="table text-color-primary">
         <div
           onClick={() => {
             dispatch(getCount(id));
@@ -199,7 +183,9 @@ function List({
             );
           }}
           id="player"
-          className={audioId === nid ? "td nowplaying" : "td"}
+          className={
+            audioId === nid ? "td bg-hover nowplaying" : "td hover:bg-hover"
+          }
         >
           <div className="tr">
             <p className={audioId === nid ? "num hide" : "num"}>{id + 1}</p>
@@ -238,7 +224,7 @@ function List({
                   {title}
                 </div>
               </div>
-              <div className="like_others">
+              <div className="like_others text-color">
                 <div className="likeys">
                   <button className="likeys_img">
                     <img className="likeys_img_sz" src={headp} alt="" />
@@ -295,9 +281,7 @@ function List({
                 to={rpid ? `${RESOURCE_PERSON}${rpid}` : "#"}
                 className="tr2_text"
               >
-                <div className="text_child hover:text-gray-400">{`${
-                  lecturer?.split(" ")[0]
-                } ${lecturer?.split(" ")[1]}`}</div>
+                <div className="text_child line-clamp-2 hover:text-gray-400 xl:w-[230px] w-[160px] max-[700px]:w-[100px] max-[1000px]:w-[130px]">{lecturer || ""}</div>
               </Link>
 
               <div className="tr2_likeys">
@@ -315,7 +299,7 @@ function List({
                   }}
                   className="likeys_img"
                 >
-                  <SlShare className="" />
+                  <SlShare className="text-color" />
                 </button>
 
                 <AudioDownloadModal
@@ -334,7 +318,7 @@ function List({
       </div>
 
       {/********************mobile************** */}
-      <div className="mobile_list">
+      <div className="mobile_list text-color-primary">
         <div
           onClick={() => {
             navigate(url);
@@ -357,10 +341,12 @@ function List({
                 />
               </div>
               <div className="likeys">
-                <button className="likeys_img">
+                <button className="text-color-primary likeys_img dark:text-[#ddff2b] hover:text-color-foreground">
                   <img className="likeys_img_sz" src={headpmobile} alt="" />
                 </button>
-                <span className="likeys_text">{formatNumber(views)}</span>
+                <span className="likeys_text text-[#e0e0e0]">
+                  {formatNumber(views)}
+                </span>
               </div>
               <div
                 className={
@@ -374,16 +360,14 @@ function List({
             </div>
             <div className="wrap_text">
               <div className="title_wrap">
-                <Marquee pauseOnHover={true}>
-                  <div className="texta">{title}</div>
-                </Marquee>
+                <div className="texta line-clamp-2">{title}</div>
               </div>
               <div className="lect_name_wrap">
-                <Marquee pauseOnHover={true}>
-                  <div className="textb">{lecturer}</div>
-                </Marquee>
+                <div className="textb text-color-primary line-clamp-1">
+                  {lecturer}
+                </div>
               </div>
-              <div className="likey_wrap">
+              <div className="likey_wrap text-color-primary">
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
@@ -407,7 +391,9 @@ function List({
                       <img className="likeys_img_sz" src={love} alt="" />
                     )}
                   </button>
-                  <span className="likeys_text">{formatNumber(sumofFav)}</span>
+                  <span className="likeys_text text-foreground">
+                    {formatNumber(sumofFav)}
+                  </span>
                 </div>
                 <div className="likeys">
                   <button className="likeys_img">
@@ -431,9 +417,7 @@ function List({
             <AudioDownloadModal
               nid={nid}
               className="likeys_img_left"
-              triggerInnerChild={
-                <img className="likeys_img_sz_left" src={dmobile} alt="" />
-              }
+              triggerInnerChild={<DownloadIcon />}
             />
 
             <span
@@ -443,7 +427,7 @@ function List({
               }}
               className="likeys_img_left"
             >
-              <img className="likeys_img_sz_left" src={dot} alt="" />
+              <BsThreeDotsVertical className="text-[22px] text-foreground" />
 
               <div
                 className={
@@ -461,7 +445,7 @@ function List({
                   onClick={(e) => {
                     e.stopPropagation();
                   }}
-                  className="bg-black z-[200] relative rounded-sm space-y-2 p-1"
+                  className="bg-background border shadow-lg z-[200] relative rounded-sm space-y-2 p-1"
                 >
                   <span
                     onClick={(e) => {
@@ -469,10 +453,8 @@ function List({
                     }}
                     className=" flex w-full items-center space-x-2"
                   >
-                    <span className=" w-3 h-3 ">
-                      <img className="w-full h-full" src={sharebig} alt="" />
-                    </span>
-                    <span className="">Share</span>
+                    <AiOutlineShareAlt className="text-lg text-color" />
+                    <span className="text-color">Share</span>
                   </span>
 
                   <span
@@ -481,10 +463,8 @@ function List({
                     }}
                     className="flex w-full items-center space-x-2"
                   >
-                    <span className="w-3 h-3">
-                      <img className="w-full h-full" src={plus} alt="" />
-                    </span>
-                    <span className="">Add to playlist</span>
+                    <CiSquarePlus className="text-lg text-color" />
+                    <span className="text-color">Add to playlist</span>
                   </span>
                 </div>
               </div>

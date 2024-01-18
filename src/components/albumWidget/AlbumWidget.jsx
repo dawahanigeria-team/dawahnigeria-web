@@ -40,7 +40,9 @@ const AlbumWidget = ({ categories, img, lec_no, nid }) => {
         <p className="album_widget_name">DN</p>
         <div className="album_listen_wrapper">
           <RiPlayListLine className="album_listen_icon" />
-          <p className="album_listen_text">{formatNumber(lec_no||0)}</p>
+
+          <p className="album_listen_text">{formatNumber(lec_no || 0)}</p>
+
         </div>
 
         <div
@@ -57,7 +59,7 @@ const AlbumWidget = ({ categories, img, lec_no, nid }) => {
           </div>
         </div>
       </div>
-      <p className="album_categories">{categories}</p>
+      <p className="album_categories text-color-primary">{categories}</p>
     </div>
   );
 };

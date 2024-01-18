@@ -11,7 +11,6 @@ const CommentBox = ({ id, audioComment, type }) => {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
 
-  //console.log(type)
   const postComment = () => {
     if (!currentUser?.id) {
       navigate("/auth/login");
@@ -19,7 +18,7 @@ const CommentBox = ({ id, audioComment, type }) => {
       return;
     }
     if (comment === "") return;
-    //console.log(comment);
+
     const payload = {
       user_id: currentUser?.id,
       item_id: id,
@@ -36,19 +35,16 @@ const CommentBox = ({ id, audioComment, type }) => {
         },
       })
       .then((res) => {
-        //console.log(res);
         setComment("");
       })
-      .catch((err) => {
-        //console.log(err);
-      });
+      .catch((err) => {});
   };
 
   return (
     <div className="comment-box">
-      <div className="lecalb_comments_header">Comments</div>
+      <div className="lecalb_comments_header text-foreground">Comments</div>
       <textarea
-        className="lecalb_comment_input"
+        className="lecalb_comment_input bg-comment"
         placeholder="Pls share your thoughts"
         name=""
         id=""
