@@ -243,7 +243,7 @@ const VideoPlayer = () => {
               ) : (
                 <img
                   className="w-full h-full"
-                  src="https://imagetolink.com/ib/cswCjNKbQ2.jpeg"
+                  src="https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
                   alt=""
                 />
               )}

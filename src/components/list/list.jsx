@@ -85,7 +85,7 @@ function List({
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://imagetolink.com/ib/ITczTtYvdR.jpeg";
+          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg";
         });
       });
     }
@@ -201,7 +201,7 @@ function List({
               <img
                 className="img_size_sm"
                 id="list"
-                src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"}
+                src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"}
                 src-data={image}
                 alt=""
               />
@@ -335,7 +335,7 @@ function List({
                 <img
                   className="img_wrp"
                   id="list"
-                  src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"}
+                  src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"}
                   src-data={image}
                   alt=""
                 />

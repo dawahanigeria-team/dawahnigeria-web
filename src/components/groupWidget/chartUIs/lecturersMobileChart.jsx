@@ -22,7 +22,7 @@ const LecturerMobileChart = ({ data }) => {
                 <img
                   className="rounded-full w-full h-full"
                   src={
-                    data[1]?.img || "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"
+                    data[1]?.img || "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg"
                   }
                   alt=""
                 />
@@ -47,7 +47,7 @@ const LecturerMobileChart = ({ data }) => {
                 <img
                   className="rounded-full w-full h-full"
                   src={
-                    data[0]?.img || "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"
+                    data[0]?.img || "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg"
                   }
                   alt=""
                 />
@@ -70,7 +70,7 @@ const LecturerMobileChart = ({ data }) => {
                 <img
                   className="rounded-full w-full h-full"
                   src={
-                    data[2]?.img || "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"
+                    data[2]?.img || "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg"
                   }
                   alt=""
                 />

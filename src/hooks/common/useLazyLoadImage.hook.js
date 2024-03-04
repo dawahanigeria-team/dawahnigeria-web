@@ -7,7 +7,7 @@ export const useLazyLoadImage = (imgSrc) => {
   useEffect(() => {
     const handleImageError = () => {
       if (imageRef.current) {
-        imageRef.current.src = "https://imagetolink.com/ib/CQZFhVqz5o.jpeg";
+        imageRef.current.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/album_d1wslv.jpg";
       }
     };
 

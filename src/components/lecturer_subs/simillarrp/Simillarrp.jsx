@@ -55,14 +55,14 @@ const Simillarrp = ({ langid }) => {
               >
                 <LecturersWidget
                   views={views}
-                  img={img || "https://imagetolink.com/ib/a3qzKSu0SB.jpeg"}
+                  img={img || "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg"}
                   rp={name}
                 />
                 <GenreMobileLecturer
                   views={views}
                   styling={issimilarrp}
                   rp={name}
-                  img={img || "https://imagetolink.com/ib/a3qzKSu0SB.jpeg"}
+                  img={img || "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg"}
                 />
               </Link>
             );

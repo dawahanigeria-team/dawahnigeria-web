@@ -15,7 +15,7 @@ const LandingWidget = ({ categories, img, views, styling }) => {
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://imagetolink.com/ib/TnDGh8F6J0.jpeg";
+          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg";
         });
       });
     }
@@ -34,7 +34,7 @@ const LandingWidget = ({ categories, img, views, styling }) => {
         <img
           src-data={img}
           id="song"
-          src={"https://imagetolink.com/ib/TnDGh8F6J0.jpeg"}
+          src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"}
           alt="background"
           className="w-full h-full rounded-md"
         />

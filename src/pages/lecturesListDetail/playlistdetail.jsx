@@ -153,7 +153,7 @@ const PlaylistDetail = () => {
             theme === "dark" ? "leclistdet_hero" : "leclistdet_hero_light"
           }`}
           src={
-            querieddata[0]?.img || "https://imagetolink.com/ib/9TU6bi2SDs.jpeg"
+            querieddata[0]?.img || "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
           }
           alt="audiohero"
         />
@@ -182,7 +182,7 @@ const PlaylistDetail = () => {
                 className="leclistdet_head_left_img"
                 src={
                   querieddata[0]?.img ||
-                  "https://imagetolink.com/ib/AEFQQC1ybX.jpeg"
+                  "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
                 }
                 alt="head"
               />
@@ -251,7 +251,7 @@ const PlaylistDetail = () => {
                 className="leclistdet_head_img_sz"
                 src={
                   querieddata[0]?.img ||
-                  "https://imagetolink.com/ib/vwea8kukZP.jpeg"
+                  "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
                 }
                 alt="head"
               />
@@ -279,7 +279,7 @@ const PlaylistDetail = () => {
                   className="album_img_sz"
                   src={
                     querieddata[0]?.img ||
-                    "https://imagetolink.com/ib/vwea8kukZP.jpeg"
+                    "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
                   }
                   alt=""
                 />
@@ -298,7 +298,7 @@ const PlaylistDetail = () => {
                       className="likeys_img_sz"
                       src={
                         querieddata[0]?.img ||
-                        "https://imagetolink.com/ib/eCnXEHHRos.jpeg"
+                        "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
                       }
                       alt=""
                     />
@@ -350,7 +350,7 @@ const PlaylistDetail = () => {
                     className="img"
                     src={
                       querieddata[0]?.img ||
-                      "https://imagetolink.com/ib/eCnXEHHRos.jpeg"
+                      "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
                     }
                     alt="head"
                   />

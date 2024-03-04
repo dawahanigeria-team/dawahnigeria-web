@@ -369,7 +369,7 @@ const AudioDetail = () => {
           }`}
           src={
             currentAudioInfo?.img ||
-            "https://imagetolink.com/ib/TfEFBgq518.jpeg"
+            "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
           }
           alt="audiohero"
         />
@@ -395,7 +395,7 @@ const AudioDetail = () => {
                 className="audiodetail_head_left_img"
                 src={
                   currentAudioInfo?.img ||
-                  "https://imagetolink.com/ib/TfEFBgq518.jpeg"
+                  "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
                 }
                 alt="head"
               />
@@ -519,7 +519,7 @@ const AudioDetail = () => {
                 className="audiores_image"
                 src={
                   currentAudioInfo?.img ||
-                  "https://imagetolink.com/ib/TfEFBgq518.jpeg"
+                  "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
                 }
                 alt="head"
               />

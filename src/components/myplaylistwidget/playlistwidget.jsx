@@ -129,7 +129,7 @@ function MyPlayListWidget({
               <img
                 className="img_size_sm"
                 id="play"
-                src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"}
+                src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"}
                 src-data={image}
                 alt="ff"
               />
@@ -233,7 +233,7 @@ function MyPlayListWidget({
                 <img
                   className="img_wrp"
                   id="play"
-                  src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"}
+                  src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"}
                   src-data={image}
                   alt=""
                 />

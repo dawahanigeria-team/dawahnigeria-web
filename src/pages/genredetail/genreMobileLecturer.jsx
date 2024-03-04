@@ -10,7 +10,7 @@ const GenreMobileLecturer = ({ img, rp, styling }) => {
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://imagetolink.com/ib/kk8U1nb2nR.jpeg";
+          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg";
         });
       });
     }
@@ -34,7 +34,7 @@ const GenreMobileLecturer = ({ img, rp, styling }) => {
         <img
           id="lecturer"
           src-data={img}
-          src="https://imagetolink.com/ib/kk8U1nb2nR.jpeg"
+          src="https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg"
           alt=""
           className="w-full h-full rounded-full"
         />

@@ -39,7 +39,7 @@ const LectureMobileChart = ({ data }) => {
                 className="rounded-md w-full h-full"
                 src={
                   ( data[1]?.img) ||
-                  "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"
+                  "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
                 }
                 alt=""
               />
@@ -69,7 +69,7 @@ const LectureMobileChart = ({ data }) => {
                 className="rounded-md w-full h-full"
                 src={
                   (data[0]?.img) ||
-                  "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"
+                  "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
                 }
                 alt=""
               />
@@ -97,7 +97,7 @@ const LectureMobileChart = ({ data }) => {
                 className="rounded-md w-full h-full"
                 src={
                   ( data[2]?.img) ||
-                  "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"
+                  "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
                 }
                 alt=""
               />

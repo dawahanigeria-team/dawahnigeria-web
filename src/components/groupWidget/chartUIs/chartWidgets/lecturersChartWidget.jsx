@@ -10,7 +10,7 @@ const LecturersChartWidget = ({ img, idx, name }) => {
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://imagetolink.com/ib/kk8U1nb2nR.jpeg";
+          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg";
         });
       });
     }
@@ -24,7 +24,7 @@ const LecturersChartWidget = ({ img, idx, name }) => {
           id="chart-mbile-lecturers"
           className="w-full h-full rounded-full"
           src-data={img}
-          src="https://imagetolink.com/ib/kk8U1nb2nR.jpeg"
+          src="https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg"
           alt=""
         />
       </div>

@@ -122,7 +122,7 @@ const Layout = () => {
               className="curr_lect_img_sz"
               src={
                 currentAudioInfo?.img ||
-                "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"
+                "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
               }
               alt="disk"
             />

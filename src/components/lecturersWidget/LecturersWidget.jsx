@@ -16,7 +16,7 @@ const LecturersWidget = ({ img, rp, views, styling }) => {
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://imagetolink.com/ib/kk8U1nb2nR.jpeg";
+          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg";
         });
       });
     }
@@ -32,7 +32,7 @@ const LecturersWidget = ({ img, rp, views, styling }) => {
             className="lecturerWidget_img"
             id="lect"
             src-data={img}
-            src={"https://imagetolink.com/ib/kk8U1nb2nR.jpeg"}
+            src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg"}
             alt="circleImg"
           />
         </div>

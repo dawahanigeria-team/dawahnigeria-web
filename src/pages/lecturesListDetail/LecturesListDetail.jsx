@@ -144,7 +144,7 @@ const LecturesListDetail = () => {
     leclistdet?.current.addEventListener("error", () => {
       const imgs = document.querySelectorAll("#hero");
       imgs.forEach((img) => {
-        img.src = "https://imagetolink.com/ib/vwea8kukZP.jpeg";
+        img.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg";
       });
     });
   }, []);
@@ -178,7 +178,7 @@ const LecturesListDetail = () => {
               }`}
               src={
                 querieddata[0]?.img ||
-                "https://imagetolink.com/ib/vwea8kukZP.jpeg"
+                "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
               }
               alt="audiohero"
             />
@@ -208,7 +208,7 @@ const LecturesListDetail = () => {
                   className="leclistdet_head_left_img"
                   src={
                     querieddata[0]?.img ||
-                    "https://imagetolink.com/ib/AEFQQC1ybX.jpeg"
+                    "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
                   }
                   ref={leclistdet}
                   id="hero"
@@ -301,7 +301,7 @@ const LecturesListDetail = () => {
                   id="hero"
                   src={
                     querieddata[0]?.img ||
-                    "https://imagetolink.com/ib/vwea8kukZP.jpeg"
+                    "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
                   }
                   alt="head"
                 />
@@ -331,7 +331,7 @@ const LecturesListDetail = () => {
                     className="album_img_sz"
                     src={
                       querieddata[0]?.img ||
-                      "https://imagetolink.com/ib/vwea8kukZP.jpeg"
+                      "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
                     }
                     alt=""
                   />
@@ -349,7 +349,7 @@ const LecturesListDetail = () => {
                         id="hero"
                         src={
                           querieddata[0]?.img ||
-                          "https://imagetolink.com/ib/eCnXEHHRos.jpeg"
+                          "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
                         }
                         alt=""
                       />
@@ -419,7 +419,7 @@ const LecturesListDetail = () => {
                       id="hero"
                       src={
                         querieddata[0]?.img ||
-                        "https://imagetolink.com/ib/eCnXEHHRos.jpeg"
+                        "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
                       }
                       alt="head"
                     />

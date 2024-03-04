@@ -9,7 +9,7 @@ const LectChartWidget = ({ img, name, idx }) => {
       im.src = newurl;
 
       im.addEventListener("error", () => {
-        im.src = "https://imagetolink.com/ib/TnDGh8F6J0.jpeg";
+        im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg";
       });
     });
   }, []);
@@ -20,7 +20,7 @@ const LectChartWidget = ({ img, name, idx }) => {
           id="chart-mbile"
           className="w-full h-full rounded-md"
           src-data={img}
-          src={"https://imagetolink.com/ib/TnDGh8F6J0.jpeg"}
+          src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"}
           alt=""
         />
       </div>

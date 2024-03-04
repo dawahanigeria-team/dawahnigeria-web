@@ -42,7 +42,7 @@ const GenreDetail = () => {
             className="w-full h-full bg-cover "
             src={
               querieddata?.category_details && querieddata?.category_details[0]?.img ||
-              "https://imagetolink.com/ib/HSWijBu8Pn.jpeg"
+              "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
             }
             alt=""
           />

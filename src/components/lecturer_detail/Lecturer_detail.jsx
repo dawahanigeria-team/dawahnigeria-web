@@ -84,7 +84,7 @@ const LecturerDetail = () => {
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://imagetolink.com/ib/CQZFhVqz5o.jpeg";
+          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/album_d1wslv.jpg";
         });
       });
     }
@@ -97,7 +97,7 @@ const LecturerDetail = () => {
       lecdet?.current.addEventListener("error", () => {
         const imgs = document.querySelectorAll("#hero");
         imgs.forEach((img) => {
-          img.src = "https://imagetolink.com/ib/9TU6bi2SDs.jpeg";
+          img.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg";
         });
       });
     }
@@ -120,7 +120,7 @@ const LecturerDetail = () => {
             }`}
             src={
               querieddata[0]?.img ||
-              "https://imagetolink.com/ib/9TU6bi2SDs.jpeg"
+              "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
             }
             alt="audiohero"
           />
@@ -300,7 +300,7 @@ const LecturerDetail = () => {
                   className="lecdet_head_img_sz"
                   src={
                     querieddata[0]?.img ||
-                    "https://imagetolink.com/ib/9TU6bi2SDs.jpeg"
+                    "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
                   }
                   alt="head"
                 />
@@ -369,7 +369,7 @@ const LecturerDetail = () => {
                       id="hero"
                       src={
                         querieddata[0]?.img ||
-                        "https://imagetolink.com/ib/9TU6bi2SDs.jpeg"
+                        "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
                       }
                       alt="head"
                     />
