@@ -9,7 +9,7 @@ const LecturerMobileWidget = ({ img, rp, }) => {
         const newurl = im.getAttribute("src-data");
         im.src = newurl;
         im.addEventListener("error", () => {
-          im.src = "https://imagetolink.com/ib/kk8U1nb2nR.jpeg";
+          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg";
         });
       });
     }
@@ -25,7 +25,7 @@ const LecturerMobileWidget = ({ img, rp, }) => {
           <img
             className="lecwidres_img"
             id="lect"
-            src={"https://imagetolink.com/ib/Gl0xGV26lY.jpeg"}
+            src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg"}
             src-data={img}
             alt="lect"
           />

@@ -20,7 +20,7 @@ const SimrpWidget = ({ img, rp }) => {
         <img
           className="simrpwid_img"
           id="similar"
-          src={"https://imagetolink.com/ib/ILgTFgNfuy.jpeg"}
+          src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg"}
           src-data={img}
           alt="circleImg"
         />

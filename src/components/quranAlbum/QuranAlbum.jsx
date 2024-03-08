@@ -18,7 +18,7 @@ const QuranAlbum = ({ categories, img, views }) => {
           <div>
             <img
               data-src={img}
-              src="https://imagetolink.com/ib/CQZFhVqz5o.jpeg"
+              src="https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/album_d1wslv.jpg"
               alt={categories}
               className="w-full h-32 md:h-36 xl:h-40 rounded-md album"
               ref={imageRef}

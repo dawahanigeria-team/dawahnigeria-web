@@ -214,19 +214,19 @@ const SignupForm = () => {
                 ></button>
                 <div className="relative z-[60] w-full h-[200px] overflow-y-auto shadow-lg">
                   <div className="flex flex-col w-full h-full">
-                    {langData.map(({ name, id }, index) => {
+                    {Array.isArray(langData) && langData?.map(({ name, id }, index) => {
                       return (
-                        <div
+                        <button
                           key={index}
                           onClick={() => {
                             setlangid(id);
                             setLang(name);
                             setisdrop(!isdrop);
                           }}
-                          className="drops hover:bg-gray-100 cursor-pointer"
+                          className="drops text-start hover:bg-gray-100 cursor-pointer"
                         >
                           {name}
-                        </div>
+                        </button>
                       );
                     })}
                   </div>

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
-import { audioDetailApi } from "../../services";
+import { lectureApi } from "../../services";
 import { useEffect } from "react";
 import {
   getaudioId,
@@ -10,7 +10,7 @@ import {
 export const useAudioHook = (id) => {
   const dispatch = useDispatch();
  
-  const { data, refetch } = useQuery(["audio", id], () => audioDetailApi.getAudio(id), {
+  const { data, refetch } = useQuery(["audio", id], () => lectureApi.getAudio(id), {
     enabled: window.innerWidth > 615,
     onSuccess: (data) => {
       dispatch(getcurrentAudioInfo(data[0]));

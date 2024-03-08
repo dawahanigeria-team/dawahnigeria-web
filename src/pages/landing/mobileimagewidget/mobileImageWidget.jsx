@@ -8,7 +8,7 @@ const MobileImageWidget = ({ image }) => {
       im.src = newurl;
 
       im.addEventListener("error", () => {
-        im.src = "https://imagetolink.com/ib/bPd0uRB2BT.jpeg";
+        im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazyanime_i8hntv.jpg";
       });
     });
   }, []);
@@ -17,7 +17,7 @@ const MobileImageWidget = ({ image }) => {
       className="landing_carousel_img w-full rounded-[3px] h-[162px]"
       id="carousel"
       src-data={image}
-      src="https://imagetolink.com/ib/bPd0uRB2BT.jpeg"
+      src="https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazyanime_i8hntv.jpg"
       alt="1"
     />
   );

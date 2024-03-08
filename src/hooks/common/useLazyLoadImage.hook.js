@@ -6,13 +6,15 @@ export const useLazyLoadImage = (imgSrc) => {
 
   useEffect(() => {
     const handleImageError = () => {
-      imageRef.current.src = "https://imagetolink.com/ib/CQZFhVqz5o.jpeg";
+      if (imageRef.current) {
+        imageRef.current.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/album_d1wslv.jpg";
+      }
     };
 
     const lazyImage = () => {
       if (imageRef.current) {
         if (observerRef.current) {
-          observerRef.current.disconnect();
+          observerRef.current?.disconnect();
         }
 
         const observer = new IntersectionObserver((entries) => {
@@ -30,7 +32,7 @@ export const useLazyLoadImage = (imgSrc) => {
 
         observer.observe(imageRef.current);
 
-        imageRef.current.addEventListener("error", handleImageError);
+        imageRef.current?.addEventListener("error", handleImageError);
       }
     };
 
@@ -38,7 +40,7 @@ export const useLazyLoadImage = (imgSrc) => {
 
     return () => {
       if (imageRef.current) {
-        imageRef.current.removeEventListener("error", handleImageError);
+        imageRef.current?.removeEventListener("error", handleImageError);
       }
 
       if (observerRef.current) {

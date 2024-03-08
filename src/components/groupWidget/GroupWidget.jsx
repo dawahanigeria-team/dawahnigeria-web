@@ -46,7 +46,7 @@ const GroupWidget = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { setinitial } = useContext(AudioContext);
-  const slide = useRef();
+  const slide = useRef(null);
 
   const [isprev, setisprev] = useState(false);
   const [isnext, setisnext] = useState(true);
@@ -81,16 +81,17 @@ const GroupWidget = ({
   }
 
   useEffect(() => {
+    const currentSlide = slide.current;
     function scrollEl() {
-      if (slide.current.scrollLeft === 0) {
+      if (currentSlide?.scrollLeft === 0) {
         setisprev(false);
       } else {
         setisprev(true);
       }
 
       if (
-        slide.current.scrollLeft + slide.current.offsetWidth >=
-        slide.current.scrollWidth
+        currentSlide?.scrollLeft + currentSlide?.offsetWidth >=
+        currentSlide?.scrollWidth
       ) {
         setisnext(false);
       } else {
@@ -98,16 +99,22 @@ const GroupWidget = ({
       }
     }
 
-    slide.current?.addEventListener("scroll", scrollEl);
+    if (currentSlide) {
+      currentSlide?.addEventListener("scroll", scrollEl);
+    }
 
-    return () => slide.current?.removeEventListener("scroll", scrollEl);
+    return () => {
+      if (currentSlide) currentSlide.removeEventListener("scroll", scrollEl);
+    };
   }, [slide.current?.scrollLeft]);
 
   return (
     <div className="groupWidget_wrapper">
       {Array.isArray(data) && data.length > 0 && (
         <div className="groupWidget_top">
-          <p className="groupWidget_top_heading text-color-primary">{heading}</p>
+          <p className="groupWidget_top_heading text-color-primary">
+            {heading}
+          </p>
           <div
             onClick={() => {
               if (heading === "Trending") {
@@ -248,15 +255,15 @@ const GroupWidget = ({
                     {
                       img,
                       lec_img,
-                      categories,
-                      cats,
+
                       id,
+                      _id,
                       mp3_title,
                       title,
                       Title,
-                      rpname,
+
                       nid,
-                      audio,
+
                       views,
                     },
                     idx
@@ -279,7 +286,7 @@ const GroupWidget = ({
                               setinitial(false);
                             }
                           }}
-                          key={idx + 1}
+                          key={_id?.$oid}
                         >
                           <LandingWidget
                             key={idx}
@@ -316,7 +323,7 @@ const GroupWidget = ({
               : "hidden"
           }
         >
-          <LectureMobileChart data={ data} />
+          <LectureMobileChart data={data} />
         </div>
       )}
 
@@ -328,7 +335,7 @@ const GroupWidget = ({
               : "hidden"
           }
         >
-          <AlbumMobileChart data={ data} />
+          <AlbumMobileChart data={data} />
         </div>
       )}
 
@@ -357,22 +364,20 @@ const GroupWidget = ({
                 styling ? "min-[615px]:space-x-3 space-x-3" : ""
               }`}
             >
-
               {Array.isArray(data) &&
                 data.map(
                   (
                     {
                       img,
                       lec_img,
-                      categories,
-                      cats,
+                      _id,
                       title,
                       nid,
                       Title,
-                      rpname,
+
                       name,
                       id,
-                      audio,
+
                       views,
                     },
                     idx
@@ -385,8 +390,7 @@ const GroupWidget = ({
                           styling ? "relative max-[615px]:hidden" : ""
                         }`}
                         onClick={() => {}}
-                        key={idx + 1}
-
+                        key={_id?.$oid}
                       >
                         <LandingWidget
                           key={idx}
@@ -429,18 +433,17 @@ const GroupWidget = ({
                 data.map(
                   (
                     {
-                      img,
                       lec_img,
-                      categories,
-                      cats,
+
                       title,
                       nid,
                       Title,
-                      rpname,
+
+                      _id,
                       name,
-                      playlist_img,
+
                       id,
-                      audio,
+
                       views,
                     },
                     idx
@@ -451,7 +454,7 @@ const GroupWidget = ({
                         id={idx}
                         className="groupWidget_album_item"
                         onClick={() => {}}
-                        key={idx + 1}
+                        key={_id?.$oid}
                       >
                         <LandingWidget
                           key={nid}
@@ -477,19 +480,18 @@ const GroupWidget = ({
       {nav1.title === "Genres" && type === "lecturer" && (
         <div className="w-full h-full overflow-hidden min-[615px]:hidden">
           <div className="w-full overflow-x-auto flex items-center space-x-4 h-full">
-
-            {Array.isArray(data) && data.map(({ img, name, id, nid }, idx) => {
-              return (
-                <Link
-                  to={`${RESOURCE_PERSON}${id || nid}`}
-                  key={name}
-                  className=""
-                >
-                  <GenreMobileLecturer img={img} rp={name} />
-                </Link>
-              );
-            })}
-
+            {Array.isArray(data) &&
+              data.map(({ img, name, id, nid }, idx) => {
+                return (
+                  <Link
+                    to={`${RESOURCE_PERSON}${id || nid}`}
+                    key={name}
+                    className=""
+                  >
+                    <GenreMobileLecturer img={img} rp={name} />
+                  </Link>
+                );
+              })}
           </div>
         </div>
       )}
@@ -513,18 +515,12 @@ const GroupWidget = ({
                 (
                   {
                     img,
-                    lec_img,
-                    categories,
-                    cats,
-                    title,
-                    Title,
+
                     views,
                     name,
                     nid,
                     id,
-                    audio,
-
-                    favorites,
+                    _id,
                   },
                   idx
                 ) => {
@@ -536,7 +532,7 @@ const GroupWidget = ({
                         onClick={() => {
                           // navigate(`${RESOURCE_PERSON}${id || nid}`);
                         }}
-                        key={idx + 1}
+                        key={_id?.$oid}
                       >
                         <LecturersWidget
                           views={views}

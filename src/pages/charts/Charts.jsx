@@ -26,7 +26,7 @@ const Charts = () => {
     <Container>
       <HeadMeta title={`Charts - Get islamic resources on Dawah Nigeria`} />
       <div className="charts_wrapper">
-        <div className="charts_header_route max-[615px]:border-b border-zinc-700">
+        <div className="charts_header_route max-[615px]:border-b bg-background border-zinc-700">
           <HeaderRouter title={"Charts"} />
         </div>
         <DailyLectures/>

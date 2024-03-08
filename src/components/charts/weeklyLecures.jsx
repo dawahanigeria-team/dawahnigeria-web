@@ -1,7 +1,7 @@
 import React from "react";
 import GroupWidget from "../groupWidget/GroupWidget";
 import { useQueryGetRequest } from "../../hooks/getqueries";
-import { chartsApi } from "../../services";
+import { lectureApi } from "../../services";
 import { CHARTS } from "../../utils/routes/constants";
 
 export default function WeeklyLectures() {
@@ -11,7 +11,7 @@ export default function WeeklyLectures() {
   const { querieddata } = useQueryGetRequest(
     "weeklyLectures",
     keyParam,
-    chartsApi.getLectures
+    lectureApi.getLecturesChart
   );
 
   return (

@@ -30,7 +30,7 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
       if (error?.response === undefined) {
       
 
-        toast.error("Unable to establish connection to server.");
+       // toast.error("Unable to establish connection to server.");
         return Promise.reject("Unable to establish connection to server.");
       } else {
         const errors = error?.response?.data;

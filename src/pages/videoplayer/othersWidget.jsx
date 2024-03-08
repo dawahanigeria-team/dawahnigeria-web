@@ -10,7 +10,7 @@ const OthersWidget = ({ images, author, views, title }) => {
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://imagetolink.com/ib/cswCjNKbQ2.jpeg";
+          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazyanime_i8hntv.jpg";
         });
       });
     }
@@ -24,7 +24,7 @@ const OthersWidget = ({ images, author, views, title }) => {
           className="w-full h-full rounded-[6px]"
           id="others"
           src-data={images}
-          src="https://imagetolink.com/ib/cswCjNKbQ2.jpeg"
+          src="https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazyanime_i8hntv.jpg"
           alt=""
         />
       </div>

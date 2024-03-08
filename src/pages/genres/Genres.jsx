@@ -7,7 +7,7 @@ import Loader from "../../components/UI/loader/loader";
 import GenreWidget from "./genreWidget";
 import { GENRES } from "../../utils/routes/constants";
 
-import { genresApi } from "../../services";
+import { lectureApi } from "../../services";
 import { useQueryGetRequest } from "../../hooks/getqueries";
 
 import HeadMeta from "../../components/head-meta";
@@ -19,7 +19,7 @@ const Genres = () => {
   const { querieddata, isLoading } = useQueryGetRequest(
     "genres",
     queryParam,
-    genresApi.getCategories
+    lectureApi.getCategories
   );
 
   const showMore = (id) => {
