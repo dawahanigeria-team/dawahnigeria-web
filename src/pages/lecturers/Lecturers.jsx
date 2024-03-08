@@ -76,7 +76,6 @@ const Lecturers = () => {
                     title={name}
                     setlectId={setlectId}
                     lecid={id}
-                    //setIsEmpty={setIsEmpty}
                     setTypeName={setTypeName}
                     action="name"
                     data={querieddata}

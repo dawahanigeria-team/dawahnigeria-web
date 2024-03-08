@@ -8,7 +8,7 @@ import { VscArrowLeft, VscArrowRight } from "react-icons/vsc";
 
 import GroupWidget from "../../components/groupWidget/GroupWidget";
 
-import { genresApi } from "../../services";
+import { lectureApi } from "../../services";
 
 import HeadMeta from "../../components/head-meta";
 import { useSelector } from "react-redux";
@@ -24,7 +24,7 @@ const GenreDetail = () => {
   const { querieddata } = useQueryGetRequest(
     "genre-details",
     queryParam,
-    genresApi.getCategoryDetails
+    lectureApi.getCategoryDetails
   );
 
  
@@ -42,7 +42,7 @@ const GenreDetail = () => {
             className="w-full h-full bg-cover "
             src={
               querieddata?.category_details && querieddata?.category_details[0]?.img ||
-              "https://imagetolink.com/ib/HSWijBu8Pn.jpeg"
+              "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
             }
             alt=""
           />

@@ -29,7 +29,7 @@ export const useQueryGetRequest = (keyName, queryParam = {}, queryFunction) => {
       onError: (error) => {
         setIsLoadingNextPage(false);
         
-        toast.error("Unable to load data");
+       
       },
     }
   );

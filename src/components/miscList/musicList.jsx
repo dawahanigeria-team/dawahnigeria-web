@@ -77,7 +77,7 @@ function MusicList({
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://imagetolink.com/ib/ITczTtYvdR.jpeg";
+          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg";
         });
       });
     }
@@ -191,7 +191,7 @@ function MusicList({
               <img
                 className="img_size_sm"
                 id="mlist"
-                src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"}
+                src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"}
                 src-data={image}
                 alt="ff"
               />
@@ -274,7 +274,7 @@ function MusicList({
                 <img
                   className="img_wrp"
                   id="mlist"
-                  src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"}
+                  src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"}
                   src-data={image}
                   alt=""
                 />
@@ -371,7 +371,9 @@ function MusicList({
         </div>
       </div>
 
-      <Add_playlist />
+      <Add_playlist
+      lecid={nid}
+      />
 
       <div className={isShare ? "share_wrapper" : "hide_share_wrapper"}>
         <ShareAudio

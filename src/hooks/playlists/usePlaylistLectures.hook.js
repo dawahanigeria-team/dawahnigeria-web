@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect } from "react";
-import { toast } from "react-hot-toast";
+import { useState } from "react";
 import _ from "lodash";
 export const usePlaylistLectures = (
   keyName,
@@ -19,7 +18,7 @@ export const usePlaylistLectures = (
       },
       onError: (error) => {
         
-        toast.error("Unable to load data");
+       
       },
     }
   );

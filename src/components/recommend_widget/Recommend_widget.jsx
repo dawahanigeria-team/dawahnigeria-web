@@ -21,7 +21,7 @@ const Recommend_widget = ({ img, title, rpname, catsname }) => {
           className="recwid_left_img"
           id="recommend"
           src-data={img}
-          src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"}
+          src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"}
           alt="rect_circle"
         />
       </div>
@@ -53,7 +53,7 @@ const Recommend_widget = ({ img, title, rpname, catsname }) => {
             className="rec_img_sz"
             id="recommend"
             src-data={img}
-            src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"}
+            src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"}
             alt="Rec1rect"
           />
         </div>

@@ -16,7 +16,7 @@ const AlbumWidget = ({ categories, img, lec_no, nid }) => {
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://imagetolink.com/ib/CQZFhVqz5o.jpeg";
+          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/album_d1wslv.jpg";
         });
       });
     }
@@ -31,7 +31,7 @@ const AlbumWidget = ({ categories, img, lec_no, nid }) => {
           <img
             src-data={img}
             id="album"
-            src={"https://imagetolink.com/ib/CQZFhVqz5o.jpeg"}
+            src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/album_d1wslv.jpg"}
             alt="background"
             className="album_background_image"
           />

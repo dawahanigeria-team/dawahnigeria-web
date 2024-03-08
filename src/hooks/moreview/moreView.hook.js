@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { moreViewApi } from "../../services";
+import { lectureApi } from "../../services";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+
 export const useMoreViewHook = (keyParam, currentdata) => {
-  const [querydata, setquerydata] = useState([]);
+  const [querydata,setQueryData] = useState([]);
   const [isLoadingNextPage, setIsLoadingNextPage] = useState(false);
   const [hasReachedLastPage, setHasReachedLastPage] = useState(false);
 
   const { data, isLoading, error } = useQuery(
     ["more-view", keyParam],
-    () => moreViewApi.moreDatas(keyParam),
+    () => lectureApi.moreDatas(keyParam),
     {
       enabled: !!keyParam.endpoint_url && !hasReachedLastPage,
       onSuccess: (data) => {
@@ -21,12 +21,12 @@ export const useMoreViewHook = (keyParam, currentdata) => {
           return;
         }
 
-        setquerydata((prev) => [...prev, ...data]);
+       setQueryData((prev) => [...prev, ...data]);
       },
       onError: (error) => {
         setIsLoadingNextPage(false);
         
-        toast.error("Unable to load data");
+        
       },
     }
   );
@@ -41,7 +41,7 @@ export const useMoreViewHook = (keyParam, currentdata) => {
   useEffect(() => {
     if (keyParam.endpoint_url) return;
     
-    setquerydata(currentdata);
+   setQueryData(currentdata);
     setHasReachedLastPage(true);
   }, [keyParam.endpoint_url]);
 

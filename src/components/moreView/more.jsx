@@ -1,7 +1,5 @@
 import React, {
   useState,
-  useEffect,
-  useCallback,
   useRef,
   useContext,
 } from "react";
@@ -10,22 +8,18 @@ import Container from "../../components/container/Container";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import {
-  getaudioData,
-  getaudioId,
-  getCount,
   getPack,
   getPage,
 } from "../../Redux/Actions/ActionCreators";
 import AlbumWidget from "../../components/albumWidget/AlbumWidget";
-import axios from "../../utils/useAxios";
+
 import Loader from "../UI/loader/loader";
 import {
   HiOutlineArrowLongLeft,
   HiOutlineArrowLongRight,
 } from "react-icons/hi2";
-import infiniteScroll from "../UI/infiniteScroll";
 import _ from "lodash";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { AudioContext } from "../../App";
 import { useInfiniteScrollPagination } from "../../hooks";
 import LecturersWidget from "../lecturersWidget/LecturersWidget";
@@ -46,16 +40,10 @@ function More() {
   const dispatch = useDispatch();
 
   ///const [data, setData] = useState([]);
-  const observer = useRef();
-  const [loading, setLoading] = useState(true);
-  const [isEmpty, setIsEmpty] = useState(false);
-  const [nextPageLoad, setNextPageLoad] = useState(false);
   const { state, pathname } = useLocation();
   const islect = true;
   const {
-    name,
     type,
-    id,
     currentdata,
     navtitle,
     heading,

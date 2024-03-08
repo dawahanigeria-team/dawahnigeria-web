@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import MusicList from "../../miscList/musicList";
 import { LECTURE } from "../../../utils/routes/constants";
 import { useQueryGetRequest } from "../../../hooks/getqueries";
-import { lecturerDetailApi } from "../../../services";
+import { lecturersApi } from "../../../services";
 import CommentBox from "../../comment/comment";
 
 const Lecturer_songs = ({ id, totalData }) => {
@@ -23,7 +23,7 @@ const Lecturer_songs = ({ id, totalData }) => {
     useQueryGetRequest(
       "lecturer-songs",
       queryParam,
-      lecturerDetailApi.getLecturerSongs
+      lecturersApi.getLecturerSongs
     );
 
   //////*************handling comment**************** */

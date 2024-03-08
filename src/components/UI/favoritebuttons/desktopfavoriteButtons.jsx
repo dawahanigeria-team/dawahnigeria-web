@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from "react";
 import { MdFavorite } from "react-icons/md";
-import favbig from "../../../assets/svg/boom-fav.svg";
 import { formatNumber } from "../formatter";
 import { useAddFavoritesHook, useFetchFavoritesHook } from "../../../hooks";
 import { useSelector } from "react-redux";
@@ -44,7 +43,9 @@ export function DesktopFavoriteButton({ favorites, id, type, refetch }) {
         setdisabled(false);
         setLoading(false);
       },
-      onError: (error) => {},
+      onError: (error) => {
+        setLoading(false);
+      },
     });
   };
 
@@ -58,13 +59,13 @@ export function DesktopFavoriteButton({ favorites, id, type, refetch }) {
       disabled={isdisabled}
       className="leclistdet_fav bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
     >
-      <button className="fav_btn">
+      <span className="fav_btn">
         {favoriteCount[type]?.includes(parseInt(id)) ? (
           <MdFavorite className="leclistdet_fav_icon_active dark:text-[#ddff2b] text-foreground" />
         ) : (
           <AddFavourites />
         )}
-      </button>
+      </span>
 
       {isLoading ? (
         <LoaderIcon className="text-sm animate-spin" />

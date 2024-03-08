@@ -10,7 +10,7 @@ const GenreWidget = ({ img, name }) => {
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://imagetolink.com/ib/C04GvGmXGh.jpeg";
+          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/album_d1wslv.jpg";
         });
       });
     }
@@ -24,7 +24,7 @@ const GenreWidget = ({ img, name }) => {
         className="genre_img"
         id="genre"
         src-data={img}
-        src={"https://imagetolink.com/ib/C04GvGmXGh.jpeg"}
+        src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/album_d1wslv.jpg"}
         alt={`genre`}
       />
       <span className="name_abs">{name}</span>

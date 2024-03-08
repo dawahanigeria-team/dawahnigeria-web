@@ -17,12 +17,11 @@ import Simillarrp from "../lecturer_subs/simillarrp/Simillarrp";
 import combold from "../../assets/svg/combold.svg";
 import { SlShare } from "react-icons/sl";
 import { BiSolidShareAlt } from "react-icons/bi";
-import commentbig from "../../../src/assets/svg/boom-comment.svg";
 import { formatNumber } from "../UI/formatter";
 import lazy from "../../assets/png/lazyrps.jpeg";
 import ShareAudio from "../shareaudio/shareAudio";
 import { useQueryGetRequest } from "../../hooks/getqueries";
-import { lecturerDetailApi } from "../../services";
+import { lecturersApi } from "../../services";
 import { DesktopFavoriteButton } from "../UI/favoritebuttons/desktopfavoriteButtons";
 import { MobileFavoriteButton } from "../UI/favoritebuttons/mobilefavoriteButton";
 
@@ -53,7 +52,7 @@ const LecturerDetail = () => {
   const { querieddata, refetch } = useQueryGetRequest(
     "lecturer-detail",
     queryParam,
-    lecturerDetailApi.getLecturerById
+    lecturersApi.getLecturerById
   );
 
   /// Get the exiting element
@@ -85,7 +84,7 @@ const LecturerDetail = () => {
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://imagetolink.com/ib/CQZFhVqz5o.jpeg";
+          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/album_d1wslv.jpg";
         });
       });
     }
@@ -98,7 +97,7 @@ const LecturerDetail = () => {
       lecdet?.current.addEventListener("error", () => {
         const imgs = document.querySelectorAll("#hero");
         imgs.forEach((img) => {
-          img.src = "https://imagetolink.com/ib/9TU6bi2SDs.jpeg";
+          img.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg";
         });
       });
     }
@@ -121,7 +120,7 @@ const LecturerDetail = () => {
             }`}
             src={
               querieddata[0]?.img ||
-              "https://imagetolink.com/ib/9TU6bi2SDs.jpeg"
+              "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
             }
             alt="audiohero"
           />
@@ -301,7 +300,7 @@ const LecturerDetail = () => {
                   className="lecdet_head_img_sz"
                   src={
                     querieddata[0]?.img ||
-                    "https://imagetolink.com/ib/9TU6bi2SDs.jpeg"
+                    "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
                   }
                   alt="head"
                 />
@@ -370,7 +369,7 @@ const LecturerDetail = () => {
                       id="hero"
                       src={
                         querieddata[0]?.img ||
-                        "https://imagetolink.com/ib/9TU6bi2SDs.jpeg"
+                        "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
                       }
                       alt="head"
                     />

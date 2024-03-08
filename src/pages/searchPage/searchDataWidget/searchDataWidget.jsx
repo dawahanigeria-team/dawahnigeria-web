@@ -18,7 +18,7 @@ const SearchDataWidget = ({
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://imagetolink.com/ib/ITczTtYvdR.jpeg";
+          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg";
         });
       });
     }
@@ -31,7 +31,7 @@ const SearchDataWidget = ({
       <div className="col-span-3 min-[615px]:col-span-2 h-[100px] min-[615px]:h-[150px] w-full rounded-md">
         <img
           src-data={lec_img}
-          src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"}
+          src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"}
           id="search"
           alt=""
           className="w-full h-full rounded-md"

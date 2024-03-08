@@ -105,7 +105,7 @@ const Playlists = () => {
         <div className="playlist_widget">
           {!isLoading &&
             Array.isArray(allPlaylists) &&
-            allPlaylists.map(({ lec_img, id, name,lec_no }, idx) => {
+            allPlaylists.map(({ img, id, name,lec_no }, idx) => {
               return (
                 <div
                   key={idx + 1}
@@ -118,7 +118,7 @@ const Playlists = () => {
                     key={idx}
                     lec_no={lec_no || 0}
                     categories={name}
-                    img={lec_img}
+                    img={img}
                   />
                 </div>
               );
