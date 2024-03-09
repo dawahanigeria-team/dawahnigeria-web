@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
 const GenreMobileLecturer = ({ img, rp, styling }) => {
   ////not contented but under presssure by DN project manager
@@ -10,7 +11,7 @@ const GenreMobileLecturer = ({ img, rp, styling }) => {
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg";
+          im.src = IMAGE_PLACEHOLDERS.lecturer;
         });
       });
     }
@@ -34,7 +35,7 @@ const GenreMobileLecturer = ({ img, rp, styling }) => {
         <img
           id="lecturer"
           src-data={img}
-          src="https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg"
+          src={IMAGE_PLACEHOLDERS.lecturer}
           alt=""
           className="w-full h-full rounded-full"
         />

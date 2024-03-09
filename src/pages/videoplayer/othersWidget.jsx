@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
 const OthersWidget = ({ images, author, views, title }) => {
   ////not contented but under presssure by DN project manager
@@ -10,7 +11,7 @@ const OthersWidget = ({ images, author, views, title }) => {
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazyanime_i8hntv.jpg";
+          im.src = IMAGE_PLACEHOLDERS.carouselWidget;
         });
       });
     }
@@ -24,7 +25,7 @@ const OthersWidget = ({ images, author, views, title }) => {
           className="w-full h-full rounded-[6px]"
           id="others"
           src-data={images}
-          src="https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazyanime_i8hntv.jpg"
+          src={IMAGE_PLACEHOLDERS.carouselWidget}
           alt=""
         />
       </div>

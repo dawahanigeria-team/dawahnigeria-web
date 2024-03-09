@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { LECTURE } from "../../../utils/routes/constants";
+import { IMAGE_PLACEHOLDERS } from "../../../utils/imagePlaceholders";
 const SearchDataWidget = ({
   lec_img,
   mp3_description,
@@ -18,7 +19,7 @@ const SearchDataWidget = ({
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg";
+          im.src = IMAGE_PLACEHOLDERS.lecture;
         });
       });
     }
@@ -31,7 +32,7 @@ const SearchDataWidget = ({
       <div className="col-span-3 min-[615px]:col-span-2 h-[100px] min-[615px]:h-[150px] w-full rounded-md">
         <img
           src-data={lec_img}
-          src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"}
+          src={IMAGE_PLACEHOLDERS.lecture}
           id="search"
           alt=""
           className="w-full h-full rounded-md"

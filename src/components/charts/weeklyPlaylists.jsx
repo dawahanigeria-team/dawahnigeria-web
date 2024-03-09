@@ -1,7 +1,7 @@
 import React from "react";
 import GroupWidget from "../groupWidget/GroupWidget";
 import { useQueryGetRequest } from "../../hooks/getqueries";
-import { lectureApi } from "../../services";
+import { chartsApi } from "../../services";
 import { CHARTS } from "../../utils/routes/constants";
 
 export default function WeeklyPlaylists() {
@@ -11,7 +11,7 @@ export default function WeeklyPlaylists() {
   const { querieddata } = useQueryGetRequest(
     "weeklyPlaylists",
     keyParam,
-    lectureApi.getPlaylistsChart
+    chartsApi.getPlaylists
   );
 
   return (

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { IMAGE_PLACEHOLDERS } from "../../../utils/imagePlaceholders";
 
 const MobileImageWidget = ({ image }) => {
   useEffect(() => {
@@ -8,7 +9,7 @@ const MobileImageWidget = ({ image }) => {
       im.src = newurl;
 
       im.addEventListener("error", () => {
-        im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazyanime_i8hntv.jpg";
+        im.src = IMAGE_PLACEHOLDERS.carouselWidget;
       });
     });
   }, []);
@@ -17,7 +18,7 @@ const MobileImageWidget = ({ image }) => {
       className="landing_carousel_img w-full rounded-[3px] h-[162px]"
       id="carousel"
       src-data={image}
-      src="https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazyanime_i8hntv.jpg"
+      src={IMAGE_PLACEHOLDERS.carouselWidget}
       alt="1"
     />
   );

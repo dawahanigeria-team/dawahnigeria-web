@@ -17,17 +17,19 @@ import Simillarrp from "../lecturer_subs/simillarrp/Simillarrp";
 import combold from "../../assets/svg/combold.svg";
 import { SlShare } from "react-icons/sl";
 import { BiSolidShareAlt } from "react-icons/bi";
+import commentbig from "../../../src/assets/svg/boom-comment.svg";
 import { formatNumber } from "../UI/formatter";
 import lazy from "../../assets/png/lazyrps.jpeg";
 import ShareAudio from "../shareaudio/shareAudio";
 import { useQueryGetRequest } from "../../hooks/getqueries";
-import { lecturersApi } from "../../services";
+import { lecturerDetailApi } from "../../services";
 import { DesktopFavoriteButton } from "../UI/favoritebuttons/desktopfavoriteButtons";
 import { MobileFavoriteButton } from "../UI/favoritebuttons/mobilefavoriteButton";
 
 import HeadMeta from "../head-meta";
 import { useSelector } from "react-redux";
 import { CommentIcon } from "../svgcomponent/svgComponent";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
 const LecturerDetail = () => {
   const { id } = useParams();
@@ -52,7 +54,7 @@ const LecturerDetail = () => {
   const { querieddata, refetch } = useQueryGetRequest(
     "lecturer-detail",
     queryParam,
-    lecturersApi.getLecturerById
+    lecturerDetailApi.getLecturerById
   );
 
   /// Get the exiting element
@@ -84,7 +86,7 @@ const LecturerDetail = () => {
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/album_d1wslv.jpg";
+          im.src = IMAGE_PLACEHOLDERS.albumWidget;
         });
       });
     }
@@ -97,7 +99,7 @@ const LecturerDetail = () => {
       lecdet?.current.addEventListener("error", () => {
         const imgs = document.querySelectorAll("#hero");
         imgs.forEach((img) => {
-          img.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg";
+          img.src = IMAGE_PLACEHOLDERS.lecture;
         });
       });
     }
@@ -118,10 +120,7 @@ const LecturerDetail = () => {
             className={`${
               theme === "dark" ? "lecdet_hero" : "lecdet_hero_light"
             }`}
-            src={
-              querieddata[0]?.img ||
-              "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
-            }
+            src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
             alt="audiohero"
           />
           <div className="lecdet_container">
@@ -298,10 +297,7 @@ const LecturerDetail = () => {
                   ref={lecdet}
                   id="hero"
                   className="lecdet_head_img_sz"
-                  src={
-                    querieddata[0]?.img ||
-                    "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
-                  }
+                  src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
                   alt="head"
                 />
               </div>
@@ -367,10 +363,7 @@ const LecturerDetail = () => {
                       className="img"
                       ref={lecdet}
                       id="hero"
-                      src={
-                        querieddata[0]?.img ||
-                        "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
-                      }
+                      src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
                       alt="head"
                     />
                   </div>

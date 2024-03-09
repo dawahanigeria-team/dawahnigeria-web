@@ -61,7 +61,6 @@ const Videos = () => {
                   setData3={setData3}
                   active={active}
                   setActive={setActive}
-                  id={id}
                   title={categories}
                   setTypeName={setTypeName}
                   setIsEmpty={setIsEmpty}
@@ -89,7 +88,6 @@ const Videos = () => {
 
                   return (
                     <div
-                    key={idx}
                       ref={
                         idx === querieddata.length - 1 && !isLastPage
                           ? infiniteScrollRef

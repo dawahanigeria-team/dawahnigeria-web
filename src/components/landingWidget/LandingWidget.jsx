@@ -2,9 +2,9 @@ import React, { useEffect, useMemo } from "react";
 import { FiHeadphones } from "react-icons/fi";
 import { FaPlay } from "react-icons/fa";
 import { formatNumber } from "../UI/formatter";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 const LandingWidget = ({ categories, img, views, styling }) => {
-  const formattedViews = useMemo(() => formatNumber(views), [views])
-  
+  const formattedViews = useMemo(() => formatNumber(views), [views]);
 
   ////
   useEffect(() => {
@@ -15,7 +15,7 @@ const LandingWidget = ({ categories, img, views, styling }) => {
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg";
+          im.src = IMAGE_PLACEHOLDERS.lecture;
         });
       });
     }
@@ -34,7 +34,7 @@ const LandingWidget = ({ categories, img, views, styling }) => {
         <img
           src-data={img}
           id="song"
-          src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"}
+          src={IMAGE_PLACEHOLDERS.lecture}
           alt="background"
           className="w-full h-full rounded-md"
         />

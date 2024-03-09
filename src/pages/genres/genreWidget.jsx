@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import "./genres.scss";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 const GenreWidget = ({ img, name }) => {
   ////not contented but under presssure by DN project manager
   useEffect(() => {
@@ -10,7 +11,7 @@ const GenreWidget = ({ img, name }) => {
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/album_d1wslv.jpg";
+          im.src = IMAGE_PLACEHOLDERS.albumWidget;
         });
       });
     }
@@ -24,7 +25,7 @@ const GenreWidget = ({ img, name }) => {
         className="genre_img"
         id="genre"
         src-data={img}
-        src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/album_d1wslv.jpg"}
+        src={IMAGE_PLACEHOLDERS.albumWidget}
         alt={`genre`}
       />
       <span className="name_abs">{name}</span>

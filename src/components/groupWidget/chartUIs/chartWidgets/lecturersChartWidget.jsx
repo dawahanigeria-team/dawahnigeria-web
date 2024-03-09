@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { IMAGE_PLACEHOLDERS } from "../../../../utils/imagePlaceholders";
 
 const LecturersChartWidget = ({ img, idx, name }) => {
   ////not contented but under presssure by DN project manager
@@ -10,7 +11,7 @@ const LecturersChartWidget = ({ img, idx, name }) => {
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg";
+          im.src = IMAGE_PLACEHOLDERS.lecturer;
         });
       });
     }
@@ -18,13 +19,13 @@ const LecturersChartWidget = ({ img, idx, name }) => {
     lazyImages();
   }, []);
   return (
-    <div className="relative dark:bg-[#202020] px-3 py-2 rounded-[32px] w-full text-foreground flex space-x-2 items-center">
+    <div className="relative bg-[#202020] px-3 py-2 rounded-[32px] w-full text-white flex space-x-2 items-center">
       <div className="w-[50px] h-[50px] rounded-full">
         <img
           id="chart-mbile-lecturers"
           className="w-full h-full rounded-full"
           src-data={img}
-          src="https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg"
+          src={IMAGE_PLACEHOLDERS.lecturer}
           alt=""
         />
       </div>

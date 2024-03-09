@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { lectureApi } from "../../services";
+import { favoriteApi } from "../../services";
 import { useState } from "react";
 export const useFetchFavoritesHook = (keyParam) => {
   const [getFavsCount, setgetfavsCount] = useState([]);
 
   const { data, refetch } = useQuery(
     ["fetch-favorites", keyParam],
-    () => lectureApi.getFavorites(keyParam),
+    () => favoriteApi.getFavorites(keyParam),
     {
       enabled: !!keyParam.id,
       onSuccess: (data) => {

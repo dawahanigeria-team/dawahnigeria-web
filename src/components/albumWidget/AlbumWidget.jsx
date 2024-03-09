@@ -4,19 +4,20 @@ import { RiPlayListLine } from "react-icons/ri";
 import { formatNumber } from "../UI/formatter";
 import { FaPlay } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
 const AlbumWidget = ({ categories, img, lec_no, nid }) => {
   const { audioId } = useSelector((state) => state.user);
 
   useEffect(() => {
     function lazyImage() {
-      const lazy = document.querySelectorAll("#album");
+      const lazy = document.querySelectorAll(".album");
       lazy.forEach((im) => {
         const newurl = im.getAttribute("src-data");
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/album_d1wslv.jpg";
+          im.src = IMAGE_PLACEHOLDERS.albumWidget;
         });
       });
     }
@@ -31,9 +32,9 @@ const AlbumWidget = ({ categories, img, lec_no, nid }) => {
           <img
             src-data={img}
             id="album"
-            src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/album_d1wslv.jpg"}
+            src={img || IMAGE_PLACEHOLDERS.albumWidget}
             alt="background"
-            className="album_background_image"
+            className="album_background_image album"
           />
         </div>
         <div className="album_overlay"></div>
@@ -42,7 +43,6 @@ const AlbumWidget = ({ categories, img, lec_no, nid }) => {
           <RiPlayListLine className="album_listen_icon" />
 
           <p className="album_listen_text">{formatNumber(lec_no || 0)}</p>
-
         </div>
 
         <div

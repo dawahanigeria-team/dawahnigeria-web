@@ -75,7 +75,7 @@ const CommentBox = ({ id, audioComment, type }) => {
                   <span className="commentor">{user}</span>
                   <span className="comment_date">{date}</span>
                 </div>
-                <div className="comment_content text-foreground">{content}</div>
+                <div className="comment_content">{content}</div>
               </div>
             );
           })}

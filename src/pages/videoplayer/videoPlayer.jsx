@@ -23,11 +23,12 @@ import YouTube from "react-youtube";
 import { formatNumber } from "../../components/UI/formatter";
 import { FaClosedCaptioning } from "react-icons/fa";
 import HeadMeta from "../../components/head-meta";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
 const VideoPlayer = () => {
   const { pathname } = useLocation();
   const { id } = useParams();
-  const [data, setData] = useState();
+  const [data, setdata] = useState();
   const navigate = useNavigate();
   const observeEl = useRef();
   const [isEmpty, setIsEmpty] = useState(false);
@@ -49,7 +50,7 @@ const VideoPlayer = () => {
       .get(`/video_listingApi.php?id=${id}&action=singleVideo`)
       .then((res) => {
         setload(true);
-        setData(res.data);
+        setdata(res.data);
       })
       .catch((err) => {});
   }, [id]);
@@ -243,7 +244,7 @@ const VideoPlayer = () => {
               ) : (
                 <img
                   className="w-full h-full"
-                  src="https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
+                  src={IMAGE_PLACEHOLDERS.lecture}
                   alt=""
                 />
               )}

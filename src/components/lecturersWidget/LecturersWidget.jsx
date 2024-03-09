@@ -3,6 +3,7 @@ import "./lecturersWidget.scss";
 import { FiHeadphones } from "react-icons/fi";
 
 import { formatNumber } from "../UI/formatter";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
 const LecturersWidget = ({ img, rp, views, styling }) => {
   //const lazy = useRef()
@@ -16,7 +17,7 @@ const LecturersWidget = ({ img, rp, views, styling }) => {
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg";
+          im.src = IMAGE_PLACEHOLDERS.lecturer;
         });
       });
     }
@@ -32,7 +33,7 @@ const LecturersWidget = ({ img, rp, views, styling }) => {
             className="lecturerWidget_img"
             id="lect"
             src-data={img}
-            src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg"}
+            src={IMAGE_PLACEHOLDERS.lecturer}
             alt="circleImg"
           />
         </div>

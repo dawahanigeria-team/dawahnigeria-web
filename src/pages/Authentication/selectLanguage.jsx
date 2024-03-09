@@ -48,9 +48,9 @@ const SelectLanguage = () => {
       <HeadMeta title="Select language |  Dawah Nigeria, home of Islamic resources" />
       <p className="header">Select a language</p>
 
-      {Array.isArray(langData) && langData?.map(({ name, id }, index) => {
+      {langData?.map(({ name, id }, index) => {
         return (
-          <button
+          <div
             onClick={() => {
               setlangid(id);
               setselected(true);
@@ -58,12 +58,12 @@ const SelectLanguage = () => {
             key={index}
             className={
               selected && id === langid
-                ? "signuplang_name text-start active dark:bg-white bg-[#ddff2b]"
-                : "signuplang_name text-start  text-foreground"
+                ? "signuplang_name active dark:bg-white bg-[#ddff2b]"
+                : "signuplang_name  text-foreground"
             }
           >
             {name}
-          </button>
+          </div>
         );
       })}
 

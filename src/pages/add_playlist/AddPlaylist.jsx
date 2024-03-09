@@ -10,8 +10,8 @@ import axios from "../../utils/useAxios";
 import Loader from "../../components/UI/loader/loader";
 import { MdClose } from "react-icons/md";
 
-const Add_playlist = ({lecid}) => {
-  const { addplaylist, currentUser } = useSelector(
+const Add_playlist = () => {
+  const { addplaylist, currentUser, lecid } = useSelector(
     (state) => state.user
   );
   const dispatch = useDispatch();
@@ -25,7 +25,6 @@ const Add_playlist = ({lecid}) => {
   const hidePlaylist = (e) => {
     e.stopPropagation();
     dispatch(showaddPlaylist(false));
-    setisShow(true);
   };
 
   const setType = [
@@ -47,6 +46,8 @@ const Add_playlist = ({lecid}) => {
       seltype,
       user_id: currentUser?.id,
     };
+
+  
 
     for (let i in validateData) {
       if (validateData[i] === "") {
@@ -77,40 +78,45 @@ const Add_playlist = ({lecid}) => {
         },
       })
       .then((res) => {
-        toast.success(" playlist created successfully");
-        // check if the lecid is present before loading the folders
-        getPlaylistFolders(currentUser?.id)
-
-        setLoading(false);
+        toast.success("lecture added to playlist");
        
+        setLoading(false);
+        setisShow(true);
       })
-      .catch((err) => {});
+      .catch((err) => {
+       
+      });
   };
 
   // get my playlist
   useEffect(() => {
-    if (lecid && currentUser?.id) {
-  
-      getPlaylistFolders(currentUser?.id);
+    if (isShow && currentUser?.id) {
+      axios
+        .get(
+          `/playlistApi.php?user_id=${parseInt(
+            currentUser?.id
+          )}&action=user_playlists`,
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
+            },
+          }
+        )
+        .then((res) => {
+      
+          setmyFolders(res.data);
+          const filter = res.data.map((item) => item.name.toLowerCase());
+          setCreated(filter);
+        })
+        .catch((err) => {
+         
+        });
     }
-  }, [currentUser?.id]);
+  }, []);
 
-  async function getPlaylistFolders(id) {
-    axios
-      .get(`/playlistApi.php?user_id=${id}&action=user_playlists`, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-        },
-      })
-      .then((res) => {
-        setmyFolders(res.data);
-        const filter = res.data.map((item) => item.name.toLowerCase());
-        setCreated(filter);
-      })
-      .catch((err) => {});
-  }
+  
 
   const addSong = (id) => {
     if (!currentUser?.id) {
@@ -124,6 +130,7 @@ const Add_playlist = ({lecid}) => {
       action: "add_playlist_audio",
     };
 
+   
     axios
       .post(`/playlistApi.php`, payload, {
         headers: {
@@ -133,10 +140,13 @@ const Add_playlist = ({lecid}) => {
         },
       })
       .then((res) => {
+      
         toast.success(res.data.message);
         dispatch(showaddPlaylist(false));
       })
-      .catch((err) => {});
+      .catch((err) => {
+   
+      });
   };
 
   return (
@@ -145,33 +155,28 @@ const Add_playlist = ({lecid}) => {
         onClick={(e) => {
           hidePlaylist(e);
         }}
-        className={
-          addplaylist
-            ? "addplay_wrapper bg-[rgba(0,0,0,0.05)]   "
-            : "addplay_wrapper_none"
-        }
+        className={addplaylist ? "addplay_wrapper dark:bg-black dark:bg-opacity-60 bg-opacity-60 bg-white" : "addplay_wrapper_none"}
       >
         <div
           onClick={(e) => {
             e.stopPropagation();
           }}
           className={
-            isShow
-              ? "curr_playlist dark:bg-zinc-800 bg-background shadow-lg text-foreground let swipeDown"
-              : "curr_playlist_none"
+            isShow ? "curr_playlist bg-background shadow-lg text-foreground let swipeDown" : "curr_playlist_none"
           }
         >
-          <button
+          <div
             onClick={(e) => {
               hidePlaylist(e);
             }}
             className="close_image"
           >
-            <MdClose className="text-xl" />
-          </button>
+          
+          <MdClose className="text-xl"/>
+          </div>
           <div className="cur_small_wrapper">
             <div className="create_play">
-              <button
+              <div
                 onClick={() => {
                   setisShow(false);
                 }}
@@ -185,14 +190,14 @@ const Add_playlist = ({lecid}) => {
                     alt=" "
                   />
                 </div>
-              </button>
+              </div>
 
               <p className="create_text">Create a new playlist</p>
             </div>
 
-            {Array.isArray(myFolders) && myFolders?.map(({ name, id }, index) => {
+            {myFolders?.map(({ name, is_private, id }, index) => {
               return (
-                <button
+                <div
                   onClick={() => {
                     addSong(id);
                   }}
@@ -211,7 +216,7 @@ const Add_playlist = ({lecid}) => {
                   )}
 
                   <p className="created_text">{name}</p>
-                </button>
+                </div>
               );
             })}
           </div>
@@ -222,16 +227,12 @@ const Add_playlist = ({lecid}) => {
             e.stopPropagation();
           }}
           className={
-            isShow
-              ? "smaller_wrapper_none"
-              : "smaller_wrapper dark:bg-zinc-800 bg-background text-foreground shadow-lg let swipeDown"
+            isShow ? "smaller_wrapper_none" : "smaller_wrapper bg-background text-foreground shadow-lg let swipeDown"
           }
         >
-          <div className="add_play_header text-foreground">
-            Add a new playlist
-          </div>
+          <div className="add_play_header text-foreground">Add a new playlist</div>
 
-          <button
+          <div
             onClick={(e) => {
               hidePlaylist(e);
             }}
@@ -243,7 +244,7 @@ const Add_playlist = ({lecid}) => {
               src-data={cloase}
               alt=""
             />
-          </button>
+          </div>
 
           <input
             type="text"
@@ -269,11 +270,7 @@ const Add_playlist = ({lecid}) => {
                   className="container"
                 >
                   {type}
-                  <input
-                  onChange={(e) => {
-                    setseltype(id)
-                  }}
-                   type="checkbox" checked={id === seltype} />
+                  <input type="checkbox" defaultChecked={id === seltype} />
                   <span className="checkmark"></span>
                 </label>
               );

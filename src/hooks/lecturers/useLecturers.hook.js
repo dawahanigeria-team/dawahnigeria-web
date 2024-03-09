@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
-
+import { toast } from "react-hot-toast";
 import _ from "lodash";
 export const useLecturersHook = (
   keyName,
@@ -53,7 +53,7 @@ export const useLecturersHook = (
       onError: (error) => {
         setIsLoadingNextPage(false);
         
-       
+        toast.error("Unable to load data");
       },
     }
   );

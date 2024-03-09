@@ -18,7 +18,6 @@ import { GiPauseButton } from "react-icons/gi";
 import { FaPlay } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "../../utils/useAxios";
-import {BsFillHeartFill} from "react-icons/bs"
 import { useNavigate } from "react-router-dom";
 import {
   getaudioId,
@@ -46,17 +45,8 @@ import Addplaylist from "../../pages/add_playlist/AddPlaylist";
 import { LECTURE, RESOURCE_PERSON } from "../../utils/routes/constants";
 import { AudioDownloadModal } from "../audioDownloadModal/AudioDownloadModal";
 const AudioActionDesktop = () => {
-  const {
-    currentUser,
-    audioId,
-    isrepeat,
-    value,
-    page,
-    count,
-    pack,
-    playing,
-    theme,
-  } = useSelector((state) => state.user);
+  const { currentUser, audioId, isrepeat, value, page, count, pack, playing } =
+    useSelector((state) => state.user);
   //const [playing, setPlaying] = useState(false);
   const dispatch = useDispatch();
   const rangeRef = useRef();
@@ -76,11 +66,10 @@ const AudioActionDesktop = () => {
   const [currentaudio, setcurrentaudio] = useState([]);
   const [isminimize, setminimize] = useState(false);
   const [transition, settransition] = useState(true);
-  const [isLoaded, setNotLoaded] = useState(true);
+  const [isloaded, setnotloaded] = useState(true);
   const getMusic = (audioId) => {
     //dispatch(setPlaying(false));
     setLoading(true);
-    setNotLoaded(true);
     ///get lecture audio
     axios
       .get(`/leclistingapi.php?lecid=${audioId}`)
@@ -89,6 +78,19 @@ const AudioActionDesktop = () => {
 
         dispatch(getcurrentAudioInfo(res.data[0]));
         setLoading(false);
+
+
+        if (initial) {
+          dispatch(setPlaying(false));
+          audioRef.current?.pause();
+
+          cancelAnimationFrame(playAnimation.current);
+        } else {
+          dispatch(setPlaying(true));
+
+          audioRef.current?.play();
+          playAnimation.current = requestAnimationFrame(repeat);
+        }
       })
       .catch((err) => {});
   };
@@ -136,23 +138,6 @@ const AudioActionDesktop = () => {
   }, [audioId]);
   //************ */
 
-  //check if data is loaded
-  useEffect(() => {
-    if (!isLoaded) {
-      if (initial) {
-        dispatch(setPlaying(false));
-        audioRef.current?.pause();
-
-        cancelAnimationFrame(playAnimation.current);
-      } else {
-        dispatch(setPlaying(true));
-
-        audioRef.current?.play();
-        playAnimation.current = requestAnimationFrame(repeat);
-      }
-    }
-  }, [isLoaded]);
-
   useEffect(() => {
     if (playing && !initial) {
       audioRef.current?.play();
@@ -190,7 +175,7 @@ const AudioActionDesktop = () => {
     setinitial(false);
     setIsPrevious(false);
     dispatch(setPlaying(false));
-    setNotLoaded(true);
+    setnotloaded(true);
 
     const next = pack?.findIndex((value) => {
       return value.nid === parseInt(audioId);
@@ -216,7 +201,7 @@ const AudioActionDesktop = () => {
   };
   const handlePreviousAudio = () => {
     setinitial(false);
-    setNotLoaded(true);
+    setnotloaded(true);
     dispatch(setPlaying(false));
     const prev = pack?.findIndex((value) => {
       return value.nid === parseInt(audioId);
@@ -326,7 +311,7 @@ const AudioActionDesktop = () => {
   };
 
   function handleState() {
-    setNotLoaded(false);
+    setnotloaded(false);
   }
 
   return (
@@ -350,7 +335,7 @@ const AudioActionDesktop = () => {
             ref={rangeRef}
             type="range"
             min={"0"}
-            max={Math.floor(audioRef.current?.duration || 0)}
+            max={Math.floor(audioRef.current?.duration)}
             value={value}
             onChange={(e) => {
               handleRange(e.target.value);
@@ -361,8 +346,8 @@ const AudioActionDesktop = () => {
 
         <audio
           ref={audioRef}
-          onLoadedMetadata={handleState}
           src={currentaudio?.audio}
+          onLoadedData={handleState}
           onTimeUpdate={() => {
             if (audioRef.current && !audioRef.current?.seeking) {
               dispatch(getValue(audioRef?.current?.currentTime));
@@ -437,7 +422,7 @@ const AudioActionDesktop = () => {
             ) : (
               <button
                 onClick={handlePlay}
-                disabled={isLoaded}
+                disabled={isloaded}
                 className="relative flex h-[42px] w-[42px] dark:text-black text-gray-100 rounded-full dark:bg-[#ddff2b] bg-gray-500 justify-center items-center"
               >
                 {!playing ? (
@@ -445,8 +430,8 @@ const AudioActionDesktop = () => {
                 ) : (
                   <GiPauseButton className="text-[22px]" />
                 )}
-                {isLoaded && (
-                  <span className="absolute rounded-full inset-0 h-[45px] w-[45px] border-r border-b border-gray-900 dark:border-gray-200 animate-spin"></span>
+                {isloaded && (
+                  <span className="absolute rounded-full inset-0 h-[45px] w-[45px] border-r border-b border-gray-200 animate-spin"></span>
                 )}
               </button>
             )}
@@ -479,15 +464,11 @@ const AudioActionDesktop = () => {
               onClick={() => {
                 addToFav();
               }}
-              className=" "
+              className="h-[20px] w-[20px] "
               disabled={!audioId}
             >
               {getFavs?.includes(parseInt(audioId)) ? (
-                theme === "dark" ? (
-                  <AddedFavourites />
-                ) : (
-                  <BsFillHeartFill className="text-[25px] text-zinc-800" />
-                )
+                <AddedFavourites />
               ) : (
                 <AddFavourites />
               )}
@@ -545,9 +526,7 @@ const AudioActionDesktop = () => {
         />
       </div>
 
-      <Addplaylist
-      lecid={audioId}
-      />
+      <Addplaylist />
     </>
   );
 };

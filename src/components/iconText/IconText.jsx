@@ -25,9 +25,9 @@ const IconText = ({ icon, link, name, id, setisOpen }) => {
     } else if (location.pathname.includes("charts")) {
       setActive(7);
     } else if (location.pathname.includes("recommend2")) {
-      setActive(13);
-    } else if (location.pathname.includes("recommend1")) {
       setActive(12);
+    } else if (location.pathname.includes("recommend1")) {
+      setActive(11);
     } else if (location.pathname.includes("lecturers")) {
       setActive(3);
     } else if (location.pathname.includes("recitations")) {

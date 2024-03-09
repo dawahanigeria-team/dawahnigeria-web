@@ -54,6 +54,7 @@ import HeadMeta from "../../components/head-meta";
 import CommentBox from "../../components/comment/comment";
 import { CommentIcon } from "../../components/svgcomponent/svgComponent";
 import LandingWidget from "../../components/landingWidget/LandingWidget";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders.js";
 
 const AudioDetail = () => {
   const { id } = useParams();
@@ -349,7 +350,7 @@ const AudioDetail = () => {
 
   const shareAudio = () => {
     setisShare(!isShare);
-    
+    //setNidValue(nid)
   };
 
   ////*********************************************************** */
@@ -369,7 +370,7 @@ const AudioDetail = () => {
           }`}
           src={
             currentAudioInfo?.img ||
-            "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
+            IMAGE_PLACEHOLDERS.lecture
           }
           alt="audiohero"
         />
@@ -395,7 +396,7 @@ const AudioDetail = () => {
                 className="audiodetail_head_left_img"
                 src={
                   currentAudioInfo?.img ||
-                  "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
+                  IMAGE_PLACEHOLDERS.lecture
                 }
                 alt="head"
               />
@@ -443,14 +444,14 @@ const AudioDetail = () => {
                   onClick={() => {
                     shareAudio();
                   }}
-                  className="audiodetail_share"
+                  className="audiodetail_share bg-gray-200  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
                 >
                   <SlShare className="text-[22px] text-color-primary" />
                   <p className="audiodetail_share_text text-color-primary">
                     {formatNumber(currentAudioInfo?.share || 0)}
                   </p>
                 </div>
-                <div className="audiodetail_comment ">
+                <div className="audiodetail_comment bg-gray-200  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
                   <CommentIcon />
                   <p className="audiodetail_comment_text text-color-primary">
                     {formatNumber(currentAudioInfo?.comment || 0)}
@@ -519,7 +520,7 @@ const AudioDetail = () => {
                 className="audiores_image"
                 src={
                   currentAudioInfo?.img ||
-                  "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
+                  IMAGE_PLACEHOLDERS.lecture
                 }
                 alt="head"
               />
@@ -553,7 +554,7 @@ const AudioDetail = () => {
                   ref={rangeRef}
                   type="range"
                   min={"0"}
-                  max={Math.floor(audioRef?.current?.duration || 0)}
+                  max={Math.floor(audioRef?.current?.duration)}
                   value={value}
                   onChange={(e) => {
                     handleRange(e.target.value);
@@ -859,9 +860,7 @@ const AudioDetail = () => {
           />
         </div>
 
-        <Add_playlist 
-        lecid={currentAudioInfo?.nid}
-        />
+        <Add_playlist />
 
         <div className={isShare ? "share_wrapper" : "hide_share_wrapper"}>
           <ShareAudio
