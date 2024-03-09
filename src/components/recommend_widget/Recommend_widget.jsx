@@ -5,6 +5,7 @@ import Rec1_rect from "../../assets/png/recommend_rect.png";
 import { BiLike } from "react-icons/bi";
 import { HiShare } from "react-icons/hi";
 import { TbMessage2 } from "react-icons/tb";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 const Recommend_widget = ({ img, title, rpname, catsname }) => {
   useEffect(() => {
     const lazy = document.querySelectorAll("#recommend");
@@ -21,7 +22,7 @@ const Recommend_widget = ({ img, title, rpname, catsname }) => {
           className="recwid_left_img"
           id="recommend"
           src-data={img}
-          src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"}
+          src={IMAGE_PLACEHOLDERS.lecture}
           alt="rect_circle"
         />
       </div>
@@ -53,7 +54,7 @@ const Recommend_widget = ({ img, title, rpname, catsname }) => {
             className="rec_img_sz"
             id="recommend"
             src-data={img}
-            src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"}
+            src={IMAGE_PLACEHOLDERS.lecture}
             alt="Rec1rect"
           />
         </div>

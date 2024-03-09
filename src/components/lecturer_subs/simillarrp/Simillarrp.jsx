@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./simillarrp.scss";
 
 import LecturersWidget from "../../lecturersWidget/LecturersWidget";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { RESOURCE_PERSON } from "../../../utils/routes/constants";
 import Loader from "../../UI/loader/loader";
 import _ from "lodash";
@@ -10,6 +10,7 @@ import { useInfiniteScrollPagination } from "../../../hooks";
 import GenreMobileLecturer from "../../../pages/genredetail/genreMobileLecturer";
 import { lecturersApi } from "../../../services";
 import { useLecturersHook } from "../../../hooks/lecturers/useLecturers.hook";
+import { IMAGE_PLACEHOLDERS } from "../../../utils/imagePlaceholders";
 const Simillarrp = ({ langid }) => {
   const [page, setPage] = useState(1);
 
@@ -54,14 +55,14 @@ const Simillarrp = ({ langid }) => {
               >
                 <LecturersWidget
                   views={views}
-                  img={img || "https://imagetolink.com/ib/a3qzKSu0SB.jpeg"}
+                  img={img || IMAGE_PLACEHOLDERS.lecturer}
                   rp={name}
                 />
                 <GenreMobileLecturer
                   views={views}
                   styling={issimilarrp}
                   rp={name}
-                  img={img || "https://imagetolink.com/ib/a3qzKSu0SB.jpeg"}
+                  img={img || IMAGE_PLACEHOLDERS.lecturer}
                 />
               </Link>
             );

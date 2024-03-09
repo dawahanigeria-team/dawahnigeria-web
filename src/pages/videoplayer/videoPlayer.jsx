@@ -23,6 +23,7 @@ import YouTube from "react-youtube";
 import { formatNumber } from "../../components/UI/formatter";
 import { FaClosedCaptioning } from "react-icons/fa";
 import HeadMeta from "../../components/head-meta";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
 const VideoPlayer = () => {
   const { pathname } = useLocation();
@@ -243,7 +244,7 @@ const VideoPlayer = () => {
               ) : (
                 <img
                   className="w-full h-full"
-                  src="https://imagetolink.com/ib/cswCjNKbQ2.jpeg"
+                  src={IMAGE_PLACEHOLDERS.lecture}
                   alt=""
                 />
               )}

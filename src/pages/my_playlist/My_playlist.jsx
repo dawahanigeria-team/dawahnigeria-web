@@ -16,6 +16,7 @@ import playfolder from "../../assets/svg/folder.svg";
 import { toast } from "react-hot-toast";
 import MusicList from "../../components/miscList/musicList";
 import HeadMeta from "../../components/head-meta";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 const My_playlist = () => {
   const [loading, setLoading] = useState(false);
   const observer = useRef();
@@ -188,7 +189,7 @@ const My_playlist = () => {
             <img src={foward} src-data={foward} alt="foward" />
           </div>
           <div ref={slide} className="overflow_auto_wrapper">
-            {myFolders?.map(({ id, name, views, playlist_img }, idx) => {
+            {myFolders?.map(({ id, name, views, img }, idx) => {
               return (
                 <div
                   className="similarWidget_album_item"
@@ -201,7 +202,7 @@ const My_playlist = () => {
                     key={idx}
                     views={views || 0}
                     categories={name}
-                    img={"https://imagetolink.com/ib/CQZFhVqz5o.jpeg"}
+                    img={img || IMAGE_PLACEHOLDERS.lecture}
                   />
                 </div>
               );

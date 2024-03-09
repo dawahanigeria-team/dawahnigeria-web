@@ -54,6 +54,7 @@ import HeadMeta from "../../components/head-meta";
 import CommentBox from "../../components/comment/comment";
 import { CommentIcon } from "../../components/svgcomponent/svgComponent";
 import LandingWidget from "../../components/landingWidget/LandingWidget";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders.js";
 
 const AudioDetail = () => {
   const { id } = useParams();
@@ -369,7 +370,7 @@ const AudioDetail = () => {
           }`}
           src={
             currentAudioInfo?.img ||
-            "https://imagetolink.com/ib/TfEFBgq518.jpeg"
+            IMAGE_PLACEHOLDERS.lecture
           }
           alt="audiohero"
         />
@@ -395,7 +396,7 @@ const AudioDetail = () => {
                 className="audiodetail_head_left_img"
                 src={
                   currentAudioInfo?.img ||
-                  "https://imagetolink.com/ib/TfEFBgq518.jpeg"
+                  IMAGE_PLACEHOLDERS.lecture
                 }
                 alt="head"
               />
@@ -519,7 +520,7 @@ const AudioDetail = () => {
                 className="audiores_image"
                 src={
                   currentAudioInfo?.img ||
-                  "https://imagetolink.com/ib/TfEFBgq518.jpeg"
+                  IMAGE_PLACEHOLDERS.lecture
                 }
                 alt="head"
               />
