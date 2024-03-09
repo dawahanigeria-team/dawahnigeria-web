@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { FiHeadphones } from "react-icons/fi";
 import "./simrpWidget.scss";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 const SimrpWidget = ({ img, rp }) => {
   ////not contented but under presssure by DN project manager
   useEffect(() => {
@@ -20,7 +21,7 @@ const SimrpWidget = ({ img, rp }) => {
         <img
           className="simrpwid_img"
           id="similar"
-          src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg"}
+          src={IMAGE_PLACEHOLDERS.lecturer}
           src-data={img}
           alt="circleImg"
         />

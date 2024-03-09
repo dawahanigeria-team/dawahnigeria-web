@@ -43,9 +43,7 @@ export function MobileFavoriteButton({ favorites, id, type, refetch }) {
         setdisabled(false);
         setLoading(false);
       },
-      onError: (error) => {
-        setLoading(false);
-      },
+      onError: (error) => {},
     });
   };
 
@@ -59,13 +57,13 @@ export function MobileFavoriteButton({ favorites, id, type, refetch }) {
       disabled={isdisabled}
       className="icons_mob_listblack"
     >
-      <span className="likeys_img">
+      <button className="likeys_img">
         {favoriteCount[type]?.includes(parseInt(id)) ? (
           <AiFillHeart className="text-foreground text-xl dark:text-[#ddff2b]" />
         ) : (
           <AiFillHeart className=" text-xl text-[#aeaeae]" />
         )}
-      </span>
+      </button>
 
       {isLoading ? (
         <LoaderIcon className="text-sm animate-spin" />

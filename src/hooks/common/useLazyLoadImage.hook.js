@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
 export const useLazyLoadImage = (imgSrc) => {
   const imageRef = useRef(null);
@@ -6,15 +7,13 @@ export const useLazyLoadImage = (imgSrc) => {
 
   useEffect(() => {
     const handleImageError = () => {
-      if (imageRef.current) {
-        imageRef.current.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/album_d1wslv.jpg";
-      }
+      imageRef.current.src = IMAGE_PLACEHOLDERS.albumWidget;
     };
 
     const lazyImage = () => {
       if (imageRef.current) {
         if (observerRef.current) {
-          observerRef.current?.disconnect();
+          observerRef.current.disconnect();
         }
 
         const observer = new IntersectionObserver((entries) => {
@@ -32,7 +31,7 @@ export const useLazyLoadImage = (imgSrc) => {
 
         observer.observe(imageRef.current);
 
-        imageRef.current?.addEventListener("error", handleImageError);
+        imageRef.current.addEventListener("error", handleImageError);
       }
     };
 
@@ -40,7 +39,7 @@ export const useLazyLoadImage = (imgSrc) => {
 
     return () => {
       if (imageRef.current) {
-        imageRef.current?.removeEventListener("error", handleImageError);
+        imageRef.current.removeEventListener("error", handleImageError);
       }
 
       if (observerRef.current) {

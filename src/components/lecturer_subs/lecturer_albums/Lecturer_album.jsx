@@ -10,7 +10,7 @@ import _ from "lodash";
 import CommentBox from "../../comment/comment";
 import { ALBUMS } from "../../../utils/routes/constants";
 import { useQueryGetRequest } from "../../../hooks/getqueries";
-import { lecturersApi } from "../../../services";
+import { lecturerDetailApi } from "../../../services";
 
 const Lecturer_album = ({ id, totalData }) => {
   const { currentUser } = useSelector((state) => state.user);
@@ -22,7 +22,7 @@ const Lecturer_album = ({ id, totalData }) => {
     useQueryGetRequest(
       "lecturer-albums",
       queryParam,
-      lecturersApi.getLecturerAlbums
+      lecturerDetailApi.getLecturerAlbums
     );
 
   //////*************handling comment**************** */

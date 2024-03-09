@@ -6,7 +6,6 @@ import AlbumWidget from "../../components/albumWidget/AlbumWidget";
 import { useNavigate } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import Loader from "../../components/UI/loader/loader";
-import axios from "../../utils/useAxios";
 import _ from "lodash";
 import { PLAYLISTS } from "../../utils/routes/constants";
 
@@ -105,7 +104,7 @@ const Playlists = () => {
         <div className="playlist_widget">
           {!isLoading &&
             Array.isArray(allPlaylists) &&
-            allPlaylists.map(({ img, id, name,lec_no }, idx) => {
+            allPlaylists.map(({ img, id, name, lec_no }, idx) => {
               return (
                 <div
                   key={idx + 1}

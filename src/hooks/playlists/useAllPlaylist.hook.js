@@ -1,20 +1,21 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { lectureApi } from "../../services";
+import { toast } from "react-hot-toast";
+import { playlistdetailApi } from "../../services";
 
 export const useAllPlaylistHook = () => {
   const [playlistdata, setPlaylistData] = useState({});
 
   const { data, isLoading } = useQuery(
     ["all-playlists"],
-    () => lectureApi.getAllPlaylists(),
+    () => playlistdetailApi.getAllPlaylists(),
     {
       onSuccess: (data) => {
         setPlaylistData(data);
       },
       onError: (error) => {
         
-      
+        toast.error("Unable to load data");
       },
     }
   );

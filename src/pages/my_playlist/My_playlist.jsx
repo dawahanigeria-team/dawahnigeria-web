@@ -1,53 +1,126 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import "./myplaylist.scss";
 import empty from "../../assets/png/musicEmptyState.png";
 import Container from "../../components/container/Container";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
+import axios from "../../utils/useAxios";
 import { useSelector } from "react-redux";
 import back from "../../assets/svg/back.svg";
 import foward from "../../assets/svg/foward.svg";
 import { LECTURE } from "../../utils/routes/constants";
 import LandingWidget from "../../components/landingWidget/LandingWidget";
 import Loader from "../../components/UI/loader/loader";
+import infinitePlayFavScroll from "../../components/UI/infinitePlayFavScroll";
 import _ from "lodash";
+import playfolder from "../../assets/svg/folder.svg";
+import { toast } from "react-hot-toast";
 import MusicList from "../../components/miscList/musicList";
 import HeadMeta from "../../components/head-meta";
-import { usePlaylistAudioHook, usePlaylistFoldersHook } from "../../hooks";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 const My_playlist = () => {
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState(null);
-
-  const slide = useRef(null);
+  const observer = useRef();
+  const [data, setdata] = useState([]);
+  const [isEmpty, setIsEmpty] = useState(false);
+  const [nextPageLoad, setNextPageLoad] = useState(false);
+  const [page, setPage] = useState(0);
+  const slide = useRef();
   const [isprev, setisprev] = useState(false);
   const [isnext, setisnext] = useState(true);
-
+  const [myFolders, setmyFolders] = useState([]);
   const { currentUser } = useSelector((state) => state.user);
+  const [myplaylist, setmyplaylist] = useState([]);
 
   // get my playlist
-  const { isLoading, data: myFolders } = usePlaylistFoldersHook(
-    currentUser?.id
-  );
+  useEffect(() => {
+    if (!currentUser?.id) return;
+    axios
+      .get(
+        `/playlistApi.php?user_id=${parseInt(
+          currentUser?.id
+        )}&action=user_playlists`,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
+          },
+        }
+      )
+      .then((res) => {
+        setmyFolders(_.uniqBy(res.data, "name"));
+      })
+      .catch((err) => {});
+  }, []);
 
-  const { mutate: playlistAudios } = usePlaylistAudioHook();
-
-  const getPlaylist = (playlistId) => {
+  const getPlaylist = (id) => {
     if (!currentUser?.id) return;
     setLoading(true);
-    setData([]);
+    setdata([]);
+    axios
+      .get(
+        `/playlistApi.php?user_id=${parseInt(
+          currentUser?.id
+        )}&playlist_id=${parseInt(id)}&action=playlist_data`,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
+          },
+        }
+      )
+      .then((res) => {
+        const { audio } = res.data[0];
+        if (audio?.length === 0) {
+          setLoading(false);
+          toast.error("selected folder is empty");
 
-    const payload = { id: currentUser?.id, playlistId };
+          setmyplaylist([]);
 
-    playlistAudios(payload, {
-      onSuccess: (data) => {
-        setData(data);
-        console.log({ data });
-        setLoading(false);
-      },
-      onError: (error) => {
-        setLoading(false);
-      },
-    });
+          return;
+        }
+        const audioArr = Object.values(audio);
+
+        axios
+          .get(`/leclisting_multi_nid_api.php?id=${audioArr.toString()}`)
+
+          .then((res) => {
+            if (res.data === null || !res.data) {
+              toast.error("selected folder is empty");
+              setmyplaylist([]);
+              return;
+            }
+            setmyplaylist(res.data);
+            setLoading(false);
+            setdata(_.uniqBy(res.data?.slice(0, 10), "nid"));
+          })
+          .catch((err) => {});
+      })
+      .catch((err) => {});
   };
+
+  useEffect(() => {
+    if (page > 0) {
+      setNextPageLoad(true);
+    }
+    const additionalData = myplaylist.slice(page, page + 10);
+
+    if (additionalData.length === 0) {
+      setIsEmpty(true);
+    }
+    setNextPageLoad(false);
+    setdata((prev) => _.uniqBy([...prev, ...additionalData], "nid"));
+  }, [page]);
+
+  const lastElement = useCallback(
+    (node) => {
+      if (isEmpty) return;
+      infinitePlayFavScroll(node, observer, page, setPage);
+    },
+
+    [page]
+  );
 
   //get lectures from the same lecturers
   function prev() {
@@ -65,17 +138,16 @@ const My_playlist = () => {
   }
 
   useEffect(() => {
-    const currentSlide = slide.current;
     function scrollEl() {
-      if (currentSlide?.scrollLeft === 0) {
+      if (slide.current.scrollLeft === 0) {
         setisprev(false);
       } else {
         setisprev(true);
       }
 
       if (
-        currentSlide.scrollLeft + currentSlide.offsetWidth >=
-        currentSlide.scrollWidth
+        slide.current.scrollLeft + slide.current.offsetWidth >=
+        slide.current.scrollWidth
       ) {
         setisnext(false);
       } else {
@@ -83,13 +155,9 @@ const My_playlist = () => {
       }
     }
 
-    if (currentSlide) {
-      currentSlide?.addEventListener("scroll", scrollEl);
-    }
+    slide.current?.addEventListener("scroll", scrollEl);
 
-    return () => {
-      if (currentSlide) currentSlide?.removeEventListener("scroll", scrollEl);
-    };
+    return () => slide.current?.removeEventListener("scroll", scrollEl);
   }, [slide.current?.scrollLeft]);
 
   return (
@@ -102,10 +170,10 @@ const My_playlist = () => {
           <HeaderRouter title={"My Playlist"} />
         </div>
 
-        {(!currentUser?.id || myFolders?.length === 0) && (
+        {(!currentUser?.id || myFolders.length === 0) && (
           <div className="myplay_img_wrap">
             <img src-data={empty} src={empty} alt="empty" />
-            <p className="myplay_text text-foreground">
+            <p className="myplay_text">
               You haven&apos;t created any playlists. Create your own playlists
               here.
             </p>
@@ -121,10 +189,10 @@ const My_playlist = () => {
             <img src={foward} src-data={foward} alt="foward" />
           </div>
           <div ref={slide} className="overflow_auto_wrapper">
-            {Array.isArray(myFolders) && myFolders?.map(({ id, name, views, img }, idx) => {
+            {myFolders?.map(({ id, name, views, img }, idx) => {
               return (
-                <button
-                  className="similarWidget_album_item text-start"
+                <div
+                  className="similarWidget_album_item"
                   onClick={() => {
                     getPlaylist(id);
                   }}
@@ -134,22 +202,22 @@ const My_playlist = () => {
                     key={idx}
                     views={views || 0}
                     categories={name}
-                    img={img}
+                    img={img || IMAGE_PLACEHOLDERS.lecture}
                   />
-                </button>
+                </div>
               );
             })}
           </div>
         </div>
 
-        {!myFolders && data?.isemptyPlaylist && (
+        {!myFolders && myplaylist.length === 0 && (
           <div className="no_select_yet">
             <span className="no_sel_text">--- Select a folder ---</span>
           </div>
         )}
 
-        {!loading && data && !data?.isemptyPlaylist && (
-          <div className="trend_title_wrap mt-6 text-color">
+        {myplaylist.length !== 0 && (
+          <div className="trend_title_wrap">
             <div className="tend_title1">
               <p className="tend_hash">#</p>
               <p>Title</p>
@@ -163,21 +231,21 @@ const My_playlist = () => {
             </p>
           </div>
         )}
-        {currentUser?.id && loading && (
+        {loading && (
           <div className="load_desktop">
             <div className="load">
               <Loader />
             </div>
           </div>
         )}
-        {!loading && Array.isArray(data?.playlistLectures) && (
+        {!loading && myplaylist.length !== 0 && (
           <div className="table">
-            {data?.playlistLectures?.map(
+            {data?.map(
               (
                 {
                   Title,
                   title,
-                  rp_name,
+                  rpname,
                   rp,
                   img,
                   cats,
@@ -188,31 +256,64 @@ const My_playlist = () => {
                 },
                 idx
               ) => {
-                return (
-                  <div key={idx} className="">
-                    <MusicList
-                      key={idx}
-                      id={idx}
-                      image={img}
-                      duration={duration}
-                      title={title || Title}
-                      lecturer={rp_name || rp}
-                      url={`${LECTURE}${nid}`}
-                      Title={Title}
-                      rpname={rp_name || rp}
-                      cats={cats}
-                      nid={nid}
-                      views={views}
-                      currentUserId={currentUser?.id}
-                      favorites={favorites}
-                      navName={"My playlist"}
-                      navLink={"/myplaylist"}
-                      controlData={data?.playlistLectures}
-                    />
-                  </div>
-                );
+                if (data.length === idx + 1) {
+                  return (
+                    <div ref={lastElement} key={idx} className="">
+                      <MusicList
+                        key={idx}
+                        id={idx}
+                        image={img}
+                        duration={duration}
+                        title={title || Title}
+                        lecturer={rpname || rp}
+                        url={`${LECTURE}${nid}`}
+                        Title={Title}
+                        rpname={rpname || rp}
+                        cats={cats}
+                        nid={nid}
+                        views={views}
+                        currentUserId={currentUser?.id}
+                        favorites={favorites}
+                        navName={"My playlist"}
+                        navLink={"/myplaylist"}
+                        controlData={myplaylist}
+                      />
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div key={idx} className="">
+                      <MusicList
+                        key={idx}
+                        id={idx}
+                        image={img}
+                        duration={duration}
+                        title={Title || title}
+                        lecturer={rpname || rp}
+                        url={`${LECTURE}${nid}`}
+                        Title={Title}
+                        rpname={rpname || rp}
+                        cats={cats}
+                        nid={nid}
+                        favorites={favorites}
+                        currentUser={currentUser?.id}
+                        navName={"My Playlist"}
+                        navLink={"/myplaylist"}
+                        controlData={myplaylist}
+                        views={views}
+                      />
+                    </div>
+                  );
+                }
               }
             )}
+          </div>
+        )}
+        {nextPageLoad && (
+          <div className="load_m">
+            <div className="loads">
+              <Loader />
+            </div>
           </div>
         )}
       </div>

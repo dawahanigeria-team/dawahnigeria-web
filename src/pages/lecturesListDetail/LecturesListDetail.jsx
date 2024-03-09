@@ -17,8 +17,6 @@ import MobileList from "../../components/list/mobileList";
 import Loader from "../../components/UI/loader/loader";
 import { BsFillPlayFill } from "react-icons/bs";
 import { SlShare } from "react-icons/sl";
-import sharebig from "../../../src/assets/svg/boom-share.svg";
-import commentbig from "../../../src/assets/svg/boom-comment.svg";
 import { formatNumber } from "../../components/UI/formatter";
 import { useSelector, useDispatch } from "react-redux";
 import useaxios from "../../utils/useAxios";
@@ -37,13 +35,14 @@ import { AudioContext } from "../../App";
 import { LECTURE } from "../../utils/routes/constants";
 
 import { useQueryGetRequest } from "../../hooks/getqueries";
-import { lectureApi } from "../../services";
+import { lectureListDetailApi } from "../../services";
 import { DesktopFavoriteButton } from "../../components/UI/favoritebuttons/desktopfavoriteButtons";
 import { MobileFavoriteButton } from "../../components/UI/favoritebuttons/mobilefavoriteButton";
 
 import HeadMeta from "../../components/head-meta";
 import { AudioDownloadModal } from "../../components/audioDownloadModal/AudioDownloadModal";
 import { CommentIcon } from "../../components/svgcomponent/svgComponent";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
 const LecturesListDetail = () => {
   const { id } = useParams();
@@ -66,22 +65,21 @@ const LecturesListDetail = () => {
   const { querieddata, refetch } = useQueryGetRequest(
     "albumdetails",
     queryParam,
-    lectureApi.getAlbumDetail
+    lectureListDetailApi.getAlbumDetail
   );
   const { querieddata: albumlectures, isLoading } = useQueryGetRequest(
     "albumlectures",
     queryParam,
-    lectureApi.getAlbumLectures
+    lectureListDetailApi.getAlbumLectures
   );
   const { querieddata: similarAlbums } = useQueryGetRequest(
     "similarRpAlbums",
     keyParam,
-    lectureApi.getSimilarAlbums
+    lectureListDetailApi.getSimilarAlbums
   );
 
   useEffect(() => {
     setsingleData((prev) => {
-
       return { ...prev, share: prev?.share + 1 };
     });
   }, [sharedAlbum]);
@@ -144,7 +142,7 @@ const LecturesListDetail = () => {
     leclistdet?.current.addEventListener("error", () => {
       const imgs = document.querySelectorAll("#hero");
       imgs.forEach((img) => {
-        img.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg";
+        img.src = IMAGE_PLACEHOLDERS.lecture;
       });
     });
   }, []);
@@ -176,10 +174,7 @@ const LecturesListDetail = () => {
               className={`${
                 theme === "dark" ? "leclistdet_hero" : "leclistdet_hero_light"
               }`}
-              src={
-                querieddata[0]?.img ||
-                "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
-              }
+              src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
               alt="audiohero"
             />
           }
@@ -206,10 +201,7 @@ const LecturesListDetail = () => {
               <div className="leclistdet_head_left">
                 <img
                   className="leclistdet_head_left_img"
-                  src={
-                    querieddata[0]?.img ||
-                    "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
-                  }
+                  src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
                   ref={leclistdet}
                   id="hero"
                   alt="head"
@@ -299,10 +291,7 @@ const LecturesListDetail = () => {
                   className="leclistdet_head_img_sz"
                   ref={leclistdet}
                   id="hero"
-                  src={
-                    querieddata[0]?.img ||
-                    "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
-                  }
+                  src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
                   alt="head"
                 />
               </div>
@@ -329,10 +318,7 @@ const LecturesListDetail = () => {
                     ref={leclistdet}
                     id="hero"
                     className="album_img_sz"
-                    src={
-                      querieddata[0]?.img ||
-                      "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
-                    }
+                    src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
                     alt=""
                   />
                 </span>
@@ -347,10 +333,7 @@ const LecturesListDetail = () => {
                         className="likeys_img_sz"
                         ref={leclistdet}
                         id="hero"
-                        src={
-                          querieddata[0]?.img ||
-                          "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
-                        }
+                        src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
                         alt=""
                       />
                     </span>
@@ -417,10 +400,7 @@ const LecturesListDetail = () => {
                       className="img"
                       ref={leclistdet}
                       id="hero"
-                      src={
-                        querieddata[0]?.img ||
-                        "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
-                      }
+                      src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
                       alt="head"
                     />
                   </div>

@@ -8,7 +8,6 @@ import playfolder from "../../assets/svg/folder.svg";
 import { toast } from "react-hot-toast";
 import axios from "../../utils/useAxios";
 import Loader from "../../components/UI/loader/loader";
-import { useAddLectureToPlaylist } from "../../hooks";
 
 const Addplaylist = () => {
   const { addplaylist, currentUser, lecid } = useSelector(
@@ -26,8 +25,6 @@ const Addplaylist = () => {
     e.stopPropagation();
     dispatch(showaddPlaylist(false));
   };
-
-  const { mutate: addLectures } = useAddLectureToPlaylist();
 
   const setType = [
     { id: 0, type: "Set as public" },
@@ -68,17 +65,23 @@ const Addplaylist = () => {
       action: "create_playlist",
     };
 
-    //creating a  folder
+    //create folder
 
     setLoading(true);
-    addLectures(payload, {
-      onSuccess: (data) => {
-        toast.success(data.message);
+    axios
+      .post(`/playlistApi.php`, payload, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
+        },
+      })
+      .then((res) => {
+        toast.success(res.data.message);
         setLoading(false);
         setisShow(true);
-      },
-      onError: (error) => {},
-    });
+      })
+      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -88,7 +91,14 @@ const Addplaylist = () => {
         .get(
           `/playlistApi.php?user_id=${parseInt(
             currentUser?.id
-          )}&action=user_playlists`
+          )}&action=user_playlists`,
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
+            },
+          }
         )
         .then((res) => {
           setmyFolders(res.data);
@@ -108,14 +118,20 @@ const Addplaylist = () => {
       playlist_id: id,
       action: "add_playlist_audio",
     };
-    // adding a lecture to the playlist folder
-    addLectures(payload, {
-      onSuccess: (data) => {
-        toast.success(data.message);
+
+    axios
+      .post(`/playlistApi.php`, payload, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
+        },
+      })
+      .then((res) => {
+        toast.success(res.data.message);
         dispatch(showaddPlaylist(false));
-      },
-      onError: (error) => {},
-    });
+      })
+      .catch((err) => {});
   };
 
   return (
@@ -158,26 +174,25 @@ const Addplaylist = () => {
               <p className="create_text">Create a new playlist</p>
             </div>
 
-            {Array.isArray(myFolders) &&
-              myFolders?.map(({ name, is_private, id }, index) => {
-                return (
-                  <div
-                    onClick={() => {
-                      addSong(id);
-                    }}
-                    className="created_play"
-                    key={index}
-                  >
-                    {myFolders.length !== 0 && (
-                      <div className="created_folder_icon">
-                        <img className="img_sz" src={playfolder} alt=" " />
-                      </div>
-                    )}
+            {myFolders?.map(({ name, is_private, id }, index) => {
+              return (
+                <div
+                  onClick={() => {
+                    addSong(id);
+                  }}
+                  className="created_play"
+                  key={index}
+                >
+                  {myFolders.length !== 0 && (
+                    <div className="created_folder_icon">
+                      <img className="img_sz" src={playfolder} alt=" " />
+                    </div>
+                  )}
 
-                    <p className="created_text">{name}</p>
-                  </div>
-                );
-              })}
+                  <p className="created_text">{name}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
 

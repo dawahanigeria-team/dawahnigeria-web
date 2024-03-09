@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-
 import reportWebVitals from "./reportWebVitals";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
@@ -15,6 +14,8 @@ import { createLogger } from "redux-logger";
 import thunk from "redux-thunk";
 import { BrowserRouter as Router } from "react-router-dom";
 
+
+
 const persistConfig = {
   key: "root",
   storage,
@@ -27,6 +28,9 @@ let store;
 
 if (process.env.NODE_ENV === "development") {
   // If not on localhost, don't include the logger middleware
+  store = createStore(persistedReducer, applyMiddleware(...middleware));
+} else {
+  // If on localhost include the logger middleware
 
   const loggerMiddleware = createLogger();
   middleware.push(loggerMiddleware);
@@ -35,9 +39,6 @@ if (process.env.NODE_ENV === "development") {
     persistedReducer,
     composeWithDevTools(applyMiddleware(...middleware))
   );
-} else {
-  // If on localhost include the logger middleware
-  store = createStore(persistedReducer, applyMiddleware(...middleware));
 }
 
 let persistor = persistStore(store);

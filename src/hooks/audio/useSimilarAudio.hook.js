@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { lectureApi } from "../../services";
+import { audioDetailApi } from "../../services";
 import { useState } from "react";
 
 export const useSimilarAudioHook = (keyParam) => {
@@ -8,7 +8,7 @@ export const useSimilarAudioHook = (keyParam) => {
 
   const { data } = useQuery(
     ["similarAudios", keyParam],
-    () => lectureApi.getSimilarAudio(keyParam),
+    () => audioDetailApi.getSimilarAudio(keyParam),
     {
       enabled: !!keyParam?.id,
       onSuccess: (data) => {
@@ -17,7 +17,7 @@ export const useSimilarAudioHook = (keyParam) => {
       },
       onError: (error) => {
       
-       
+        toast.error("Unable to load data");
       },
     }
   );

@@ -10,7 +10,6 @@ import headp from "../../../src/assets/svg/hp-d.svg";
 import { CiSquarePlus } from "react-icons/ci";
 import pmobile from "../../../src/assets/svg/playmobile.svg";
 import { SlShare } from "react-icons/sl";
-import {MdFavorite} from "react-icons/md"
 import { Link, useNavigate } from "react-router-dom";
 import Add_playlist from "../../pages/add_playlist/AddPlaylist";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -38,6 +37,7 @@ import {
 } from "../svgcomponent/svgComponent";
 import ShareAudio from "../shareaudio/shareAudio";
 import { AudioDownloadModal } from "../audioDownloadModal/AudioDownloadModal";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
 function List({
   lecturer,
@@ -73,7 +73,9 @@ function List({
   const [isdisabled, setdisabled] = useState(false);
   const [getFavs, setgetfavs] = useState([]);
   const dispatch = useDispatch();
+  const [rpData, setrpData] = useState([]);
   const { setinitial } = useContext(AudioContext);
+  const [rpnameArray, setrpnameArray] = useState([]);
   const [isShare, setisShare] = useState(false);
 
   ////not contented but under presssure by DN project manager
@@ -85,7 +87,7 @@ function List({
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg";
+          im.src = IMAGE_PLACEHOLDERS.lecture;
         });
       });
     }
@@ -96,7 +98,7 @@ function List({
   const shareAudio = (e) => {
     e.stopPropagation();
     setisShare(!isShare);
-    
+    //setNidValue(nid)
   };
 
   /////get users favorites
@@ -170,7 +172,6 @@ function List({
       <div className="table text-color-primary">
         <div
           onClick={() => {
-            
             dispatch(getCount(id));
             dispatch(getPack(null));
             dispatch(getaudioId(nid));
@@ -201,7 +202,7 @@ function List({
               <img
                 className="img_size_sm"
                 id="list"
-                src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"}
+                src={IMAGE_PLACEHOLDERS.lecture}
                 src-data={image}
                 alt=""
               />
@@ -251,9 +252,9 @@ function List({
                     disabled={isdisabled}
                   >
                     {getFavs?.includes(nid) ? (
-                      <MdFavorite className="text-[22px] text-zinc-800 dark:text-[#ddff2b]"/>
+                      <img className="likeys_img_sz" src={adfav} alt="" />
                     ) : (
-                      <MdFavorite className="text-[22px] text-[#777]"/>
+                      <img className="likeys_img_sz" src={love} alt="" />
                     )}
                   </button>
                   <span className="likeys_text">{formatNumber(sumofFav)}</span>
@@ -281,7 +282,9 @@ function List({
                 to={rpid ? `${RESOURCE_PERSON}${rpid}` : "#"}
                 className="tr2_text"
               >
-                <div className="text_child line-clamp-2 hover:text-gray-400 xl:w-[230px] w-[160px] max-[700px]:w-[100px] max-[1000px]:w-[130px]">{lecturer || ""}</div>
+                <div className="text_child line-clamp-2 hover:text-gray-400 xl:w-[230px] w-[160px] max-[700px]:w-[100px] max-[1000px]:w-[130px]">
+                  {lecturer || ""}
+                </div>
               </Link>
 
               <div className="tr2_likeys">
@@ -335,7 +338,7 @@ function List({
                 <img
                   className="img_wrp"
                   id="list"
-                  src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"}
+                  src={IMAGE_PLACEHOLDERS.lecture}
                   src-data={image}
                   alt=""
                 />
@@ -386,9 +389,9 @@ function List({
                     disabled={isdisabled}
                   >
                     {getFavs?.includes(nid) ? (
-                       <MdFavorite className="text-[22px] text-zinc-800 dark:text-[#ddff2b]"/>
+                      <img className="likeys_img_sz" src={adfav} alt="" />
                     ) : (
-                      <MdFavorite className="text-[22px] text-[#777]"/>
+                      <img className="likeys_img_sz" src={love} alt="" />
                     )}
                   </button>
                   <span className="likeys_text text-foreground">
@@ -473,9 +476,7 @@ function List({
         </div>
       </div>
 
-      <Add_playlist
-      lecid={nid}
-       />
+      <Add_playlist />
 
       <div className={isShare ? "share_wrapper" : "hide_share_wrapper"}>
         <ShareAudio

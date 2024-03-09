@@ -5,6 +5,7 @@ import { FaPlay } from "react-icons/fa";
 import { BiHeart } from "react-icons/bi";
 import videoButtom from "../../assets/png/videoButtom.png";
 import { formatNumber } from "../UI/formatter";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
 const VideoWidget = ({ img, favourites, views, lecturer, title, duration }) => {
   ////not contented but under presssure by DN project manager
@@ -16,7 +17,7 @@ const VideoWidget = ({ img, favourites, views, lecturer, title, duration }) => {
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazyanime_i8hntv.jpg";
+          im.src = IMAGE_PLACEHOLDERS.carouselWidget;
         });
       });
     }
@@ -29,7 +30,7 @@ const VideoWidget = ({ img, favourites, views, lecturer, title, duration }) => {
         <img
           id="video"
           src-data={img}
-          src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazyanime_i8hntv.jpg"}
+          src={IMAGE_PLACEHOLDERS.carouselWidget}
           alt="background"
           className="videoWidget_background_image"
         />
@@ -55,7 +56,7 @@ const VideoWidget = ({ img, favourites, views, lecturer, title, duration }) => {
               <img
                 className="w-full h-full rounded-full"
                 src-data={videoButtom}
-                src={"https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550294/lazyrps_foahnl.jpg"}
+                src={IMAGE_PLACEHOLDERS.lecturer}
                 alt="videoButtom"
               />
             </div>

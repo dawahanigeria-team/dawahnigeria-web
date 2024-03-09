@@ -33,16 +33,16 @@ const Favourite = () => {
             >
               <p
                 className={`${
-                  tab === 1 ? "fav_tab_song1_active text-foreground " : "fav_tab_song1 text-color"
+                  tab === 1 ? "fav_tab_song1_active text-foreground " : "fav_tab_song1"
                 }`}
               >
                 Lectures
               </p>
               <p
                 className={`${
-                  tab === 1 ? "fav_tab_song2_active text-color" : "fav_tab_song2 text-color "
+                  tab === 1 ? "fav_tab_song2_active text-color" : "fav_tab_song2"
                 }`}
-              >{`(${count1 || 0})`}</p>
+              >{`(${count1})`}</p>
             </div>
             <div
               onClick={() => {
@@ -52,16 +52,16 @@ const Favourite = () => {
             >
               <p
                 className={`${
-                  tab === 2 ? "fav_tab_album1_active text-foreground" : "fav_tab_album1 text-color"
+                  tab === 2 ? "fav_tab_album1_active text-foreground" : "fav_tab_album1"
                 }`}
               >
                 Album
               </p>
               <p
                 className={`${
-                  tab === 2 ? "fav_tab_album2_active text-color" : "fav_tab_album2 text-color"
+                  tab === 2 ? "fav_tab_album2_active text-color" : "fav_tab_album2"
                 }`}
-              >{`(${count2 || 0})`}</p>
+              >{`(${count2})`}</p>
             </div>
             <div
               onClick={() => {
@@ -71,16 +71,16 @@ const Favourite = () => {
             >
               <p
                 className={`${
-                  tab === 3 ? "fav_tab_playlist1_active text-foreground" : "fav_tab_playlist1 text-color"
+                  tab === 3 ? "fav_tab_playlist1_active text-foreground" : "fav_tab_playlist1"
                 }`}
               >
                 Playlist
               </p>
               <p
                 className={`${
-                  tab === 3 ? "fav_tab_playlist2_active text-color" : "fav_tab_playlist2 text-color"
+                  tab === 3 ? "fav_tab_playlist2_active text-color" : "fav_tab_playlist2"
                 }`}
-              >{`(${count3 || 0})`}</p>
+              >{`(${count3})`}</p>
             </div>
             <div
               onClick={() => {
@@ -90,7 +90,7 @@ const Favourite = () => {
             >
               <p
                 className={`${
-                  tab === 4 ? "fav_tab_video1_active text-foreground" : "fav_tab_video1 text-color"
+                  tab === 4 ? "fav_tab_video1_active text-foreground" : "fav_tab_video1"
                 }`}
               >
                 Lecturers

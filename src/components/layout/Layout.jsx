@@ -20,6 +20,7 @@ import { AudioContext } from "../../App.jsx";
 import AudioActionDesktop from "../audio/audioActionDesktop";
 import { setPlaying } from "../../Redux/Actions/ActionCreators";
 import { FAVOURITE, LECTURE, LIBRARY } from "../../utils/routes/constants";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
 export const NavContext = createContext();
 
@@ -99,10 +100,7 @@ const Layout = () => {
               ref={rangeRef}
               type="range"
               min={"0"}
-              onChange={(e) => {
-                e.target.value
-              }}
-              max={Math.floor(audioRef?.current?.duration || 0)}
+              max={Math.floor(audioRef?.current?.duration)}
               value={value}
               className=""
             />
@@ -120,10 +118,7 @@ const Layout = () => {
           >
             <img
               className="curr_lect_img_sz"
-              src={
-                currentAudioInfo?.img ||
-                "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"
-              }
+              src={currentAudioInfo?.img || IMAGE_PLACEHOLDERS.lecture}
               alt="disk"
             />
           </div>
