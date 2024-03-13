@@ -5,6 +5,7 @@ import { ImMusic } from "react-icons/im";
 import { CgUserList } from "react-icons/cg";
 import { MdPerson, MdFavorite } from "react-icons/md";
 import { TiChartBar } from "react-icons/ti";
+import { BsMoonStarsFill } from "react-icons/bs";
 import {
   BsYoutube,
   BsMusicNoteList,
@@ -22,59 +23,56 @@ import {
   TRENDING,
   VIDEO,
   QURAN,
+  RAMADAN,
 } from "../../utils/routes/constants";
 
 export const lectures = [
   {
-    id: 0,
     name: "Home",
     icon: <FaHome className="icon0 icon" />,
     link: "/dawahcast",
   },
   {
-    id: 1,
     name: "Trending",
     icon: <AiOutlineLineChart className="icon1 icon" />,
     link: TRENDING,
   },
   {
-    id: 2,
     name: "New",
     icon: <ImMusic className="icon2 icon" />,
     link: NEW,
   },
   {
-    id: 3,
+    name: "Ramadan",
+    icon: <BsMoonStarsFill className="icon3 icon" />,
+    link: RAMADAN,
+  },
+  {
     name: "Lecturers",
     icon: <MdPerson className="icon3 icon" />,
     link: LECTURERS,
   },
   {
-    id: 4,
     name: "Quran",
     icon: <FaQuran className="icon" aria-hidden="true" />,
     link: QURAN,
   },
   {
-    id: 5,
     name: "Videos",
     icon: <BsYoutube className="icon4 icon" />,
     link: VIDEO,
   },
   {
-    id: 6,
     name: "Playlists",
     icon: <BsMusicNoteList className="icon5 icon" />,
     link: PLAY,
   },
   {
-    id: 7,
     name: "Charts",
     icon: <TiChartBar className="icon6 icon" />,
     link: CHARTS,
   },
   {
-    id: 8,
     name: "Genres",
     icon: <BsFileEarmarkMusicFill className="icon7 icon" />,
     link: GENRES,
@@ -82,19 +80,16 @@ export const lectures = [
 ];
 export const library = [
   {
-    id: 9,
     name: "Add Playlist",
     icon: <BsFillDiscFill className="icon0 icon" />,
     //link:,
   },
   {
-    id: 10,
     name: "Favourites",
     icon: <MdFavorite className="icon1 icon" />,
     link: FAVOURITE,
   },
   {
-    id: 11,
     name: "My Playlist",
     icon: <CgUserList className="icon2 icon" />,
     link: MYPLAYLIIST,

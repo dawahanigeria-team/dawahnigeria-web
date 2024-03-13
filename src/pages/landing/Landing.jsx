@@ -30,6 +30,7 @@ import {
   VIDEO,
   LECTURERS,
   QURAN,
+  RAMADAN,
 } from "../../utils/routes/constants";
 import HeadMeta from "../../components/head-meta";
 import { useLandingPageHook } from "../../hooks/landing";
@@ -109,6 +110,7 @@ const Landing = () => {
               })}
             </Slider>
             <Slider className="landing_options" {...settings1}>
+              <LandingOptions text={"Ramadan"} img={bplaylist} link={RAMADAN} />
               <LandingOptions text={"Charts"} img={bchart} link={CHARTS} />
               <LandingOptions
                 text={"Lecturers"}
