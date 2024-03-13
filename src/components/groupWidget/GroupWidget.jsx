@@ -42,6 +42,7 @@ const GroupWidget = ({
   endpoint_url,
   currentPage,
   previousPlay,
+  moreRoute,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -107,13 +108,15 @@ const GroupWidget = ({
     <div className="groupWidget_wrapper">
       {Array.isArray(data) && data.length > 0 && (
         <div className="groupWidget_top">
-          <p className="groupWidget_top_heading text-color-primary">{heading}</p>
+          <p className="groupWidget_top_heading text-color-primary">
+            {heading}
+          </p>
           <div
             onClick={() => {
               if (heading === "Trending") {
                 navigate(TRENDING);
               } else {
-                navigate(MORE, {
+                navigate(moreRoute || MORE, {
                   state: {
                     name: "",
                     heading: heading,
@@ -123,7 +126,7 @@ const GroupWidget = ({
                     currentdata: data,
                     endpoint_url: endpoint_url || "",
                     currentPage: currentPage || "",
-                    navtitle: nav1.title || "",
+                    navtitle: nav1?.title || "",
                   },
                 });
               }
@@ -134,7 +137,7 @@ const GroupWidget = ({
               styling && endpoint_url
                 ? "flex dark:text-[#d6ff00] text-color-primary text-[15px] items-center"
                 : `flex dark:text-[#d6ff00] text-color-primary text-[15px] items-center ${
-                    nav1.title === "Charts" ? "max-[615px]:hidden" : ""
+                    nav1?.title === "Charts" ? "max-[615px]:hidden" : ""
                   }  `
             }
           >
@@ -192,7 +195,7 @@ const GroupWidget = ({
                                 endpoint_url,
                                 currentPage,
                                 controlData: data,
-                                navName: nav1.navName,
+                                navName: nav1?.navName,
                               })
                             );
                           } else {
@@ -308,7 +311,7 @@ const GroupWidget = ({
           </div>
         </div>
       )}
-      {type === "lectures" && nav1.title === "Charts" && (
+      {type === "lectures" && nav1?.title === "Charts" && (
         <div
           className={
             styling
@@ -316,11 +319,11 @@ const GroupWidget = ({
               : "hidden"
           }
         >
-          <LectureMobileChart data={ data} />
+          <LectureMobileChart data={data} />
         </div>
       )}
 
-      {type === "album" && nav1.title === "Charts" && (
+      {type === "album" && nav1?.title === "Charts" && (
         <div
           className={
             styling
@@ -328,11 +331,11 @@ const GroupWidget = ({
               : "hidden"
           }
         >
-          <AlbumMobileChart data={ data} />
+          <AlbumMobileChart data={data} />
         </div>
       )}
 
-      {type === "lecturer" && nav1.title === "Charts" && (
+      {type === "lecturer" && nav1?.title === "Charts" && (
         <div
           className={
             styling
@@ -357,7 +360,6 @@ const GroupWidget = ({
                 styling ? "min-[615px]:space-x-3 space-x-3" : ""
               }`}
             >
-
               {Array.isArray(data) &&
                 data.map(
                   (
@@ -386,7 +388,6 @@ const GroupWidget = ({
                         }`}
                         onClick={() => {}}
                         key={idx + 1}
-
                       >
                         <LandingWidget
                           key={idx}
@@ -474,22 +475,21 @@ const GroupWidget = ({
           </div>
         </div>
       )}
-      {nav1.title === "Genres" && type === "lecturer" && (
+      {nav1?.title === "Genres" && type === "lecturer" && (
         <div className="w-full h-full overflow-hidden min-[615px]:hidden">
           <div className="w-full overflow-x-auto flex items-center space-x-4 h-full">
-
-            {Array.isArray(data) && data.map(({ img, name, id, nid }, idx) => {
-              return (
-                <Link
-                  to={`${RESOURCE_PERSON}${id || nid}`}
-                  key={name}
-                  className=""
-                >
-                  <GenreMobileLecturer img={img} rp={name} />
-                </Link>
-              );
-            })}
-
+            {Array.isArray(data) &&
+              data.map(({ img, name, id, nid }, idx) => {
+                return (
+                  <Link
+                    to={`${RESOURCE_PERSON}${id || nid}`}
+                    key={name}
+                    className=""
+                  >
+                    <GenreMobileLecturer img={img} rp={name} />
+                  </Link>
+                );
+              })}
           </div>
         </div>
       )}
@@ -505,7 +505,7 @@ const GroupWidget = ({
           <div
             ref={slide}
             className={`overflow_auto_wrapper_lect ${
-              nav1.title === "Genres" ? "hidden" : ""
+              nav1?.title === "Genres" ? "hidden" : ""
             } min-[615px]:space-x-20 `}
           >
             {Array.isArray(data) &&

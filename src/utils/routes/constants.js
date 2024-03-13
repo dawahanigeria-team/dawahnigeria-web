@@ -21,3 +21,4 @@ export const RECO1 = "/dawahcast/recommend1";
 export const RECO2 = "/dawahcast/recommend2";
 export const DOWNLOAD = "/dawahcast/download";
 export const FORGOTPASSWORD = "/dawahcast/forgot-password";
+export const RAMADAN = "/dawahcast/ramadan";

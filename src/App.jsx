@@ -19,6 +19,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import Landing from "./pages/landing/Landing";
+import Ramadan from "./pages/ramadan/Ramadan";
 import Layout from "./components/layout/Layout";
 import Genres from "./pages/genres/Genres";
 import Lecturers from "./pages/lecturers/Lecturers";
@@ -70,13 +71,15 @@ import {
   RECO2,
   DOWNLOAD,
   FORGOTPASSWORD,
+  RAMADAN,
 } from "./utils/routes/constants";
 import ForgotPassword from "./pages/forgotpassword/forgotPassword";
 import { usePageTracking } from "./utils/tracking";
 import { useThemeHook } from "./hooks";
+import RamadanDetail from "./pages/ramadan_detail/Ramadan_detail";
 export const AudioContext = createContext();
 export const SearchContext = createContext();
-export const ThemeProvider = createContext()
+export const ThemeProvider = createContext();
 // Create a client
 const queryClient = new QueryClient();
 
@@ -107,10 +110,9 @@ const App = () => {
   const [lecturerId, setLecturerId] = useState([]);
   const [albumId, setAlbumId] = useState([]);
   const [loading, setLoading] = useState(false);
- const {darkQuery} =  useThemeHook()
+  const { darkQuery } = useThemeHook();
 
- 
- //Detect if user has interacted with the page
+  //Detect if user has interacted with the page
   useEffect(() => {
     const handleClick = () => {
       setinitial(false);
@@ -177,49 +179,57 @@ const App = () => {
               setLoading,
             }}
           >
-          <ThemeProvider.Provider  value={{darkQuery}}>
-            <Routes>
-              <Route path="/auth" element={<Auth />}>
-                <Route path="/auth/login" element={<LoginForm />} />
-                <Route path="/auth/signup" element={<SignupForm />} />
-                <Route
-                  path="/auth/selectlanguage"
-                  element={<SelectLanguage />}
-                />
-              </Route>
-              <Route path="/dawahcast" element={<Layout />}>
-                <Route index element={<Landing />} />
-                <Route path={HOME} element={<Landing />} />
-                <Route path={MORE} element={<More />} />
-                <Route path={SEARCH} element={<SearchPage />} />
-                <Route path={LIBRARY} element={<Library />} />
-                <Route path={GENRES} element={<Genres />} />
-                <Route path={`${GENRES}/:id`} element={<GenreDetail />} />
-                <Route path={RECO2} element={<Podcast />} />
-                <Route path={RECO1} element={<Buzz />} />
-                <Route path={LECTURERS} element={<Lecturers />} />
-                <Route path={VIDEO} element={<Videos />} />
-                <Route path={PLAY} element={<Playlists />} />
-                <Route path={CHARTS} element={<Charts />} />
-                <Route path={TRENDING} element={<Trending />} />
-                <Route path={QURAN} element={<Quran />} />
-                <Route path={NEW} element={<New />} />
-                <Route path={`${LECTURE}:id`} element={<AudioDetail />} />
-                <Route path={`${PLAYLISTS}:id`} element={<PlaylistDetail />} />
-                <Route
-                  path={`${RESOURCE_PERSON}:id`}
-                  element={<LecturerDetail />}
-                />
-                <Route path={`${ALBUMS}:id`} element={<LecturesListDetail />} />
-                <Route path={`${VIDEOS}:id`} element={<VideoPlayer />} />
-                <Route path={FAVOURITE} element={<Favourite />} />
-                <Route path={FORGOTPASSWORD} element={<ForgotPassword />} />
-                <Route path={MYPLAYLIIST} element={<Myplaylist />} />
-              </Route>
+            <ThemeProvider.Provider value={{ darkQuery }}>
+              <Routes>
+                <Route path="/auth" element={<Auth />}>
+                  <Route path="/auth/login" element={<LoginForm />} />
+                  <Route path="/auth/signup" element={<SignupForm />} />
+                  <Route
+                    path="/auth/selectlanguage"
+                    element={<SelectLanguage />}
+                  />
+                </Route>
+                <Route path="/dawahcast" element={<Layout />}>
+                  <Route path={RAMADAN} element={<Ramadan />} />
+                  <Route path={`${RAMADAN}/:id`} element={<RamadanDetail />} />
 
-              <Route path="/" element={<Navigate to="/dawahcast" />} />
-              <Route path="/dawahcast" element={<Layout />} />
-            </Routes>
+                  <Route index element={<Landing />} />
+                  <Route path={HOME} element={<Landing />} />
+                  <Route path={MORE} element={<More />} />
+                  <Route path={SEARCH} element={<SearchPage />} />
+                  <Route path={LIBRARY} element={<Library />} />
+                  <Route path={GENRES} element={<Genres />} />
+                  <Route path={`${GENRES}/:id`} element={<GenreDetail />} />
+                  <Route path={RECO2} element={<Podcast />} />
+                  <Route path={RECO1} element={<Buzz />} />
+                  <Route path={LECTURERS} element={<Lecturers />} />
+                  <Route path={VIDEO} element={<Videos />} />
+                  <Route path={PLAY} element={<Playlists />} />
+                  <Route path={CHARTS} element={<Charts />} />
+                  <Route path={TRENDING} element={<Trending />} />
+                  <Route path={QURAN} element={<Quran />} />
+                  <Route path={NEW} element={<New />} />
+                  <Route path={`${LECTURE}:id`} element={<AudioDetail />} />
+                  <Route
+                    path={`${PLAYLISTS}:id`}
+                    element={<PlaylistDetail />}
+                  />
+                  <Route
+                    path={`${RESOURCE_PERSON}:id`}
+                    element={<LecturerDetail />}
+                  />
+                  <Route
+                    path={`${ALBUMS}:id`}
+                    element={<LecturesListDetail />}
+                  />
+                  <Route path={`${VIDEOS}:id`} element={<VideoPlayer />} />
+                  <Route path={FAVOURITE} element={<Favourite />} />
+                  <Route path={FORGOTPASSWORD} element={<ForgotPassword />} />
+                  <Route path={MYPLAYLIIST} element={<Myplaylist />} />
+                </Route>
+                <Route path="/" element={<Navigate to="/dawahcast" />} />
+                <Route path="/dawahcast" element={<Layout />} />
+              </Routes>
             </ThemeProvider.Provider>
           </AudioContext.Provider>
         </SearchContext.Provider>
