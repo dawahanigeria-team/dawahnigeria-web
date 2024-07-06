@@ -16,9 +16,8 @@ export const useQuranAlbums = (page = 1) => {
       onSuccess: (data) => {
         setIsLoadingNextPage(false);
 
-        // ensure subsequent requests are not sent when the last one doesn't have data
-
         setCummulatedData((prev) => [...prev, ...data]);
+        // ensure subsequent requests are not sent when the last one doesn't have data
         if (data?.length % 20 !== 0) {
           setHasReachedLastPage(true);
           return;
@@ -26,7 +25,6 @@ export const useQuranAlbums = (page = 1) => {
       },
       onError: (error) => {
         setIsLoadingNextPage(false);
-
         toast.error("Unable to load qurans");
       },
     }
