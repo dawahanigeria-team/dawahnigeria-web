@@ -1,5 +1,6 @@
 import React, { useState, createContext, useEffect, useRef } from "react";
 import * as Sentry from "@sentry/react";
+import TawkMessengerReact from "@tawk.to/tawk-messenger-react";
 import {
   useQuery,
   useMutation,
@@ -230,6 +231,10 @@ const App = () => {
                 <Route path="/" element={<Navigate to="/dawahcast" />} />
                 <Route path="/dawahcast" element={<Layout />} />
               </Routes>
+              <TawkMessengerReact
+                propertyId="5cd3dd3ed07d7e0c6392ad09"
+                widgetId="1i9f25qn4"
+              />
             </ThemeProvider.Provider>
           </AudioContext.Provider>
         </SearchContext.Provider>
