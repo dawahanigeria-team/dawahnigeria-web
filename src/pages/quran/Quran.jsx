@@ -5,13 +5,25 @@ import { Link } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import Loader from "../../components/UI/loader/loader";
 import { ALBUMS } from "../../utils/routes/constants";
-import { useInfiniteScrollPagination, useQuranAlbums } from "../../hooks";
+import {
+  useInfiniteScrollPagination,
+  useQuranAlbumInfiniteQuery,
+  useQuranAlbums,
+} from "../../hooks";
 import "./quran.scss";
 import HeadMeta from "../../components/head-meta";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 const Playlists = () => {
   const [page, setPage] = useState(1);
-
+  // const {
+  //   data,
+  //   fetchNextPage,
+  //   hasNextPage,
+  //   isFetching,
+  //   isFetchingNextPage,
+  //   status,
+  // } = useQuranAlbumInfiniteQuery();
   const {
     cummulatedData: albums,
     isLoading: isLoadingAlbums,
@@ -25,6 +37,7 @@ const Playlists = () => {
     setPage
   );
 
+  // console.log({ data });
   return (
     <Container>
       <HeadMeta
