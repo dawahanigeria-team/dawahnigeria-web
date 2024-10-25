@@ -15,8 +15,8 @@
   overflow-x: hidden;
   .container_child {
     width: 100%;
-    padding-top: 3.5rem;
-    
+    padding: 3.5rem 0px;
+
     //overflow: hidden;
     @media screen and (max-width: 690px) {
       padding-top: 3rem;
