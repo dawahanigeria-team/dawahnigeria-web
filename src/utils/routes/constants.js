@@ -1,3 +1,4 @@
+export const FORGOTPASSWORD = "/auth/forgot-password";
 export const ALBUMS = "/dawahcast/a/";
 export const LECTURE = "/dawahcast/l/";
 export const RESOURCE_PERSON = "/dawahcast/rp/";
@@ -20,5 +21,4 @@ export const LECTURERS = "/dawahcast/lecturers";
 export const RECO1 = "/dawahcast/recommend1";
 export const RECO2 = "/dawahcast/recommend2";
 export const DOWNLOAD = "/dawahcast/download";
-export const FORGOTPASSWORD = "/dawahcast/forgot-password";
 export const RAMADAN = "/dawahcast/ramadan";

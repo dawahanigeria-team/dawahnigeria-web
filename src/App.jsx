@@ -186,6 +186,10 @@ const App = () => {
                   <Route path="/auth/login" element={<LoginForm />} />
                   <Route path="/auth/signup" element={<SignupForm />} />
                   <Route
+                    path="/auth/forgot-password"
+                    element={<ForgotPassword />}
+                  />
+                  <Route
                     path="/auth/selectlanguage"
                     element={<SelectLanguage />}
                   />
@@ -225,7 +229,6 @@ const App = () => {
                   />
                   <Route path={`${VIDEOS}:id`} element={<VideoPlayer />} />
                   <Route path={FAVOURITE} element={<Favourite />} />
-                  <Route path={FORGOTPASSWORD} element={<ForgotPassword />} />
                   <Route path={MYPLAYLIIST} element={<Myplaylist />} />
                 </Route>
                 <Route path="/" element={<Navigate to="/dawahcast" />} />
