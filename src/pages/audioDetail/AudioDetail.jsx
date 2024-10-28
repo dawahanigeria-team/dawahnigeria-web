@@ -368,10 +368,7 @@ const AudioDetail = () => {
           className={`${
             theme === "dark" ? "audiodetail_hero" : "audiodetail_hero_light"
           }`}
-          src={
-            currentAudioInfo?.img ||
-            IMAGE_PLACEHOLDERS.lecture
-          }
+          src={currentAudioInfo?.img || IMAGE_PLACEHOLDERS.lecture}
           alt="audiohero"
         />
         <div className="audiodetail_container">
@@ -382,22 +379,19 @@ const AudioDetail = () => {
               }}
               className="audiodetail_breadcrumb_first"
             >
-              {`${"Back"}/`}
+              {`${"Back"}`}
             </p>
-            <p className="audiodetail_breadcrumb_second text-foreground">
+            {/* <p className="audiodetail_breadcrumb_second text-foreground">
               {currentAudioInfo?.title?.split("-")[0] ||
                 currentAudioInfo?.Title ||
                 "Unknown"}
-            </p>
+            </p> */}
           </div>
           <div className="audiodetail_head_wrap">
             <div className="audiodetail_head_left">
               <img
                 className="audiodetail_head_left_img"
-                src={
-                  currentAudioInfo?.img ||
-                  IMAGE_PLACEHOLDERS.lecture
-                }
+                src={currentAudioInfo?.img || IMAGE_PLACEHOLDERS.lecture}
                 alt="head"
               />
             </div>
@@ -419,48 +413,73 @@ const AudioDetail = () => {
               </div>
 
               <div className="audiodetail_head_right_actions_wrap">
-                <div
-                  id="player"
-                  onClick={() => {
-                    dispatch(setPlaying(false));
-                    dispatch(getaudioId(id));
-                    setinitial(false);
-                    ///this is not coming with audio pack
-                  }}
-                  className="audiodetail_play"
-                >
-                  <CiPlay1 className="audiodetail_play_icon" />
-                  <p className="audiodetail_play_text">{"play"}</p>
+                <div>
+                  <div
+                    id="player"
+                    onClick={() => {
+                      dispatch(setPlaying(false));
+                      dispatch(getaudioId(id));
+                      setinitial(false);
+                      ///this is not coming with audio pack
+                    }}
+                    className="audiodetail_play"
+                  >
+                    <CiPlay1 className="audiodetail_play_icon" />
+                    <p className="audiodetail_play_text">{"play"}</p>
+                  </div>
+                  <div className="dark:text-white text-center text-sm">
+                    Play
+                  </div>
                 </div>
 
-                <DesktopFavoriteButton
-                  favorites={currentAudioInfo?.favorites}
-                  id={id}
-                  type={"audio"}
-                  refetch={refetch}
-                />
+                <div>
+                  <DesktopFavoriteButton
+                    favorites={currentAudioInfo?.favorites}
+                    id={id}
+                    type={"audio"}
+                    refetch={refetch}
+                  />
+                  <div className="dark:text-white text-center text-sm">
+                    Like
+                  </div>
+                </div>
 
-                <div
-                  onClick={() => {
-                    shareAudio();
-                  }}
-                  className="audiodetail_share bg-gray-200  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
-                >
-                  <SlShare className="text-[22px] text-color-primary" />
-                  <p className="audiodetail_share_text text-color-primary">
-                    {formatNumber(currentAudioInfo?.share || 0)}
-                  </p>
+                <div>
+                  <div
+                    onClick={() => {
+                      shareAudio();
+                    }}
+                    className="audiodetail_share bg-gray-200  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
+                  >
+                    <SlShare className="text-[22px] text-color-primary" />
+                    <p className="audiodetail_share_text text-color-primary">
+                      {formatNumber(currentAudioInfo?.share || 0)}
+                    </p>
+                  </div>
+                  <div className="dark:text-white text-center text-sm">
+                    Share
+                  </div>
                 </div>
-                <div className="audiodetail_comment bg-gray-200  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
-                  <CommentIcon />
-                  <p className="audiodetail_comment_text text-color-primary">
-                    {formatNumber(currentAudioInfo?.comment || 0)}
-                  </p>
+                <div>
+                  <div className="audiodetail_comment bg-gray-200  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
+                    <CommentIcon />
+                    <p className="audiodetail_comment_text text-color-primary">
+                      {formatNumber(currentAudioInfo?.comment || 0)}
+                    </p>
+                  </div>
+                  <div className="dark:text-white text-center text-sm">
+                    Comment
+                  </div>
                 </div>
-                <AudioDownloadModal
-                  downloads={currentAudioInfo?.downloads}
-                  nid={currentAudioInfo?.nid}
-                />
+                <div>
+                  <AudioDownloadModal
+                    downloads={currentAudioInfo?.downloads}
+                    nid={currentAudioInfo?.nid}
+                  />
+                  <div className="dark:text-white text-center text-sm">
+                    Download
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -518,10 +537,7 @@ const AudioDetail = () => {
             <div className="audiores_image_wrap">
               <img
                 className="audiores_image"
-                src={
-                  currentAudioInfo?.img ||
-                  IMAGE_PLACEHOLDERS.lecture
-                }
+                src={currentAudioInfo?.img || IMAGE_PLACEHOLDERS.lecture}
                 alt="head"
               />
             </div>
@@ -567,16 +583,18 @@ const AudioDetail = () => {
               </p>
             </div>
             <div className="audiores_play_control_wrap">
-              <TbRepeat
-                onClick={() => {
-                  dispatch(getRepeat(!isrepeat));
-                }}
-                className={
-                  isrepeat
-                    ? "audiores_play_control_repeat_active dark:text-[#ddff2b] text-black"
-                    : "audiores_play_control_repeat text-color"
-                }
-              />
+              <div className="flex flex-col items-center justify-center">
+                <AudioDownloadModal
+                  downloads={currentAudioInfo?.downloads}
+                  nid={currentAudioInfo?.nid}
+                  triggerInnerChild={
+                    <RiDownload2Fill className="audiores_download text-color" />
+                  }
+                />
+                <div className="dark:text-white text-center text-sm">
+                  Download
+                </div>
+              </div>
               <div className="audiores_play_control">
                 <button
                   disabled={count === 0}
@@ -615,60 +633,21 @@ const AudioDetail = () => {
               </div>
               <div
                 onClick={() => {
-                  setcurrents(!iscurrents);
-                }}
-              >
-                <RiPlayListFill className="audiores_play_control_list text-color" />
-              </div>
-            </div>
-            <div className="audiores_actions">
-              <AudioDownloadModal
-                downloads={currentAudioInfo?.downloads}
-                nid={currentAudioInfo?.nid}
-                triggerInnerChild={
-                  <RiDownload2Fill className="audiores_download text-color"/>
-                }
-              />
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  addToFav(e, id);
-                  fetchFavorites(addFav, id);
-                  setaddFav(!addFav);
-                  setdisabled(true);
-                }}
-                className="fav_btn"
-                disabled={isdisabled}
-              >
-                {getFavs?.includes(parseInt(id)) || isAddedToFavorite ? (
-                  <MdFavorite className="audiores_fav_active text-foreground dark:text-[#ddff2b]" />
-                ) : (
-                  <MdFavoriteBorder className="audiores_fav text-color" />
-                )}
-              </button>
-
-              <BiMessageMinus
-                onClick={() => {
-                  setIsComment(!isComment);
-                }}
-                className={
-                  isComment
-                    ? "audiores_comment_active text-gray-700 dark:text-[#ddff2b]"
-                    : "audiores_comment text-color"
-                }
-              />
-              <div
-                onClick={() => {
                   //e.stopPropagation();
                   setmoreOption(!moreOption);
                 }}
-                className="audres_option_relative"
+                className="audres_option_relative relative"
               >
-                <SlOptionsVertical className="audiores_option text-color" />
+                <div className="flex flex-col items-center justify-center">
+                  <SlOptionsVertical className="audiores_option text-color" />
+                  <div className="dark:text-white text-center text-sm mt-1">
+                    More
+                  </div>
+                </div>
                 <div
                   className={
                     moreOption
-                      ? "left-[-70px]  absolute min-w-max h-fit"
+                      ? "right-0 top-10  absolute min-w-max h-fit"
                       : "hidden"
                   }
                 >
@@ -683,7 +662,7 @@ const AudioDetail = () => {
                     onClick={(e) => {
                       e.stopPropagation();
                     }}
-                    className="bg-background shadow-lg border z-[200] relative rounded-sm space-y-2 p-1 font-light text-[12px] text-foreground"
+                    className="bg-background shadow-lg border z-[200]  rounded-sm space-y-2 p-1 font-light text-[12px] text-foreground"
                   >
                     <span
                       onClick={(e) => {
@@ -692,7 +671,7 @@ const AudioDetail = () => {
                       }}
                       className="flex w-full items-center space-x-2"
                     >
-                      <BiSolidShareAlt className="text-foreground text-xl" />
+                      <BiSolidShareAlt className="text-foreground text-lg" />
                       <span className="">Share</span>
                     </span>
 
@@ -706,6 +685,60 @@ const AudioDetail = () => {
                       <GrFormAdd className="text-foreground text-xl" />
                       <span className="">Add to playlist</span>
                     </span>
+                    <div className="flex w-full items-center space-x-2">
+                      <TbRepeat
+                        onClick={() => {
+                          dispatch(getRepeat(!isrepeat));
+                          setmoreOption(!moreOption);
+                        }}
+                        className="text-foreground text-lg"
+                      />
+                      <span className="">Repeat</span>
+                    </div>
+                    <div className="flex w-full items-center space-x-2">
+                      <BiMessageMinus
+                        onClick={() => {
+                          setIsComment(!isComment);
+                          setmoreOption(!moreOption);
+                        }}
+                        className="text-foreground text-lg"
+                      />
+                      <span className="">Comment</span>
+                    </div>
+
+                    <div className="flex w-full items-center space-x-2">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          addToFav(e, id);
+                          fetchFavorites(addFav, id);
+                          setaddFav(!addFav);
+                          setdisabled(true);
+                          setmoreOption(!moreOption);
+                        }}
+                        className="fav_btn"
+                        disabled={isdisabled}
+                      >
+                        {getFavs?.includes(parseInt(id)) ||
+                        isAddedToFavorite ? (
+                          <MdFavorite className="text-foreground text-lg" />
+                        ) : (
+                          <MdFavoriteBorder className="text-foreground text-lg" />
+                        )}
+                      </button>
+                      <span className="">Add to Favorite</span>
+                    </div>
+                    <div className="flex w-full items-center space-x-2">
+                      <div
+                        onClick={() => {
+                          setcurrents(!iscurrents);
+                          setmoreOption(!moreOption);
+                        }}
+                      >
+                        <RiPlayListFill className="text-foreground text-lg" />
+                      </div>
+                      <span className="">Playlist</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -736,7 +769,9 @@ const AudioDetail = () => {
                 </div>
               </div>
               <div className="audiodetail_summary_mob">
-                <p className="audiodetail_summary_header_mob text-color-foreground">Summary</p>
+                <p className="audiodetail_summary_header_mob text-color-foreground">
+                  Summary
+                </p>
                 <div
                   className={`audiodetail_summary_body audiodetail_summary_body_open_mob`}
                 >

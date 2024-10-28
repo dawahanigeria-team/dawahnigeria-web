@@ -76,7 +76,6 @@ function MusicList({
       lazy.forEach((im) => {
         const newurl = im.getAttribute("src-data");
         im.src = newurl;
-
         im.addEventListener("error", () => {
           im.src = IMAGE_PLACEHOLDERS.lecture;
         });
