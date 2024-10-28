@@ -74,11 +74,9 @@ const New = () => {
                 {
                   Title,
                   rpname,
-                  img,
                   cats,
                   nid,
                   lec_thumbnail,
-                  mp3_thumbnail,
                   comments,
                   favorites,
                   rp_id,
