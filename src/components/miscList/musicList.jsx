@@ -76,7 +76,6 @@ function MusicList({
       lazy.forEach((im) => {
         const newurl = im.getAttribute("src-data");
         im.src = newurl;
-
         im.addEventListener("error", () => {
           im.src = IMAGE_PLACEHOLDERS.lecture;
         });
@@ -191,7 +190,7 @@ function MusicList({
               <img
                 className="img_size_sm"
                 id="mlist"
-                src={image ?? IMAGE_PLACEHOLDERS.lecture}
+                src={IMAGE_PLACEHOLDERS.lecture}
                 src-data={image}
                 alt="ff"
               />
@@ -274,7 +273,7 @@ function MusicList({
                 <img
                   className="img_wrp"
                   id="mlist"
-                  src={image ?? IMAGE_PLACEHOLDERS.lecture}
+                  src={IMAGE_PLACEHOLDERS.lecture}
                   src-data={image}
                   alt=""
                 />
