@@ -191,7 +191,7 @@ function MusicList({
               <img
                 className="img_size_sm"
                 id="mlist"
-                src={IMAGE_PLACEHOLDERS.lecture}
+                src={image ?? IMAGE_PLACEHOLDERS.lecture}
                 src-data={image}
                 alt="ff"
               />
@@ -274,7 +274,7 @@ function MusicList({
                 <img
                   className="img_wrp"
                   id="mlist"
-                  src={IMAGE_PLACEHOLDERS.lecture}
+                  src={image ?? IMAGE_PLACEHOLDERS.lecture}
                   src-data={image}
                   alt=""
                 />
