@@ -189,11 +189,14 @@ const LecturesListDetail = () => {
                 }}
                 className="leclistdet_breadcrumb_first"
               >
-                Back/
+                Back
               </button>
-              <p className="leclistdet_breadcrumb_second text-foreground">
-                {querieddata[0]?.title || "Unknown"}
-              </p>
+
+              {/*
+                <p className="leclistdet_breadcrumb_second text-foreground">
+                  {querieddata[0]?.title || "Unknown"}
+                </p>
+              */}
             </div>
 
             {/* -------------------Desktop----------------- Section 1 -------------------------------------- */}
@@ -209,7 +212,8 @@ const LecturesListDetail = () => {
               </div>
               <div className="leclistdet_head_right">
                 <p className="leclistdet_head_right_head text-foreground">
-                  {lectureTitleExtractor(querieddata[0]?.title, 2)}
+                  {/*  lectureTitleExtractor(querieddata[0]?.title, 2) */}
+                  {querieddata[0]?.title || "Unknown"}
                 </p>
                 <div className="leclistdet_head_right_text">
                   <div className="rpimage_wrap">
@@ -227,44 +231,72 @@ const LecturesListDetail = () => {
                 </div>
 
                 <div className="leclistdet_head_right_actions_wrap">
-                  <button
-                    onClick={() => {
-                      playAll();
-                    }}
-                    className="leclistdet_play"
-                    id="player"
-                  >
-                    <CiPlay1 className="leclistdet_play_icon" />
-                    <p className="leclistdet_play_text">Play All</p>
-                  </button>
+                  <div>
+                    <button
+                      onClick={() => {
+                        playAll();
+                      }}
+                      className="leclistdet_play"
+                      id="player"
+                    >
+                      <CiPlay1 className="leclistdet_play_icon" />
+                      <p className="leclistdet_play_text">Play All</p>
+                    </button>
+                    <div className="dark:text-white text-center text-sm">
+                      Play
+                    </div>
+                  </div>
 
-                  <DesktopFavoriteButton
-                    favorites={querieddata[0]?.favorites}
-                    id={id}
-                    type={"album"}
-                    refetch={refetch}
-                  />
-                  <div
-                    onClick={(e) => {
-                      shareAlbum(e, id);
-                    }}
-                    className="leclistdet_share bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
-                  >
-                    <SlShare className="text-color-primary hover:text-color-foreground dark:hover:text-[#ddff2b] text-[20px]" />
-                    <p className="leclistdet_share_text  text-color-primary">
-                      {formatNumber(querieddata[0]?.share || 0)}
-                    </p>
+                  <div>
+                    <DesktopFavoriteButton
+                      favorites={querieddata[0]?.favorites}
+                      id={id}
+                      type={"album"}
+                      refetch={refetch}
+                    />
+                    <div className="dark:text-white text-center text-sm">
+                      Like
+                    </div>
                   </div>
-                  <div className="leclistdet_comment bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
-                    <CommentIcon />
-                    <p className="leclistdet_comment_text  text-color-primary">
-                      {formatNumber(querieddata[0]?.comments || 0)}
-                    </p>
+
+                  <div>
+                    <div
+                      onClick={(e) => {
+                        shareAlbum(e, id);
+                      }}
+                      className="leclistdet_share bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
+                    >
+                      <SlShare className="text-color-primary hover:text-color-foreground dark:hover:text-[#ddff2b] text-[20px]" />
+                      <p className="leclistdet_share_text  text-color-primary">
+                        {formatNumber(querieddata[0]?.share || 0)}
+                      </p>
+                    </div>
+                    <div className="dark:text-white text-center text-sm">
+                      Share
+                    </div>
                   </div>
-                  <AudioDownloadModal
-                    downloads={querieddata[0]?.downloads}
-                    nid={id}
-                  />
+
+                  <div>
+                    <div className="leclistdet_comment bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
+                      <CommentIcon />
+                      <p className="leclistdet_comment_text  text-color-primary">
+                        {formatNumber(querieddata[0]?.comments || 0)}
+                      </p>
+                    </div>
+                    <div className="dark:text-white text-center text-sm">
+                      Comment
+                    </div>
+                  </div>
+
+                  <div>
+                    <AudioDownloadModal
+                      downloads={querieddata[0]?.downloads}
+                      nid={id}
+                    />
+                    <div className="dark:text-white text-center text-sm">
+                      Download
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
