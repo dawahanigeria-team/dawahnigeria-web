@@ -12,7 +12,6 @@ export const useLecturersHook = (
   const [isLoadingNextPage, setIsLoadingNextPage] = useState(false);
   const [hasReachedLastPage, setHasReachedLastPage] = useState(false);
   const [intialLangId, setinitialLangId] = useState("");
-  const [initialAlphabet, setInitialAlphabet] = useState("");
 
   const { isLoading, data, error } = useQuery(
     [keyName, queryParam],
@@ -38,21 +37,13 @@ export const useLecturersHook = (
           return;
         }
 
-        setInitialAlphabet(queryParam.alpha);
         setinitialLangId(queryParam.langid);
 
-        if (queryParam.alpha && queryParam.alpha !== "Hot") {
-          const filterByAlpha = data.filter(
-            (value) => value?.name[0]?.toLocaleUpperCase() === queryParam.alpha
-          );
-          setQueriedData((prev) => _.uniqBy([...prev, ...filterByAlpha], "id"));
-        } else {
-          setQueriedData((prev) => _.uniqBy([...prev, ...data], "id"));
-        }
+        setQueriedData((prev) => _.uniqBy([...prev, ...data], "id"));
       },
       onError: (error) => {
         setIsLoadingNextPage(false);
-        
+
         toast.error("Unable to load data");
       },
     }
@@ -78,18 +69,15 @@ export const useLecturersHook = (
   }, [queryParam.lectId]);
 
   useEffect(() => {
-    if (queryParam.alpha || queryParam.langid) {
+    if (queryParam.langid) {
       setHasReachedLastPage(false);
     }
     // start again from the first page whenever there is a change in the language or alphabet selection
-    if (
-      initialAlphabet !== queryParam.alpha ||
-      intialLangId !== queryParam.langid
-    ) {
+    if (intialLangId !== queryParam.langid) {
       setQueriedData([]);
       setPage(1);
     }
-  }, [queryParam.alpha, queryParam.langid]);
+  }, [queryParam.langid]);
   return {
     isLoading,
     isLoadingNextPage,

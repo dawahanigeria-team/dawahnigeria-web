@@ -13,7 +13,6 @@ const FilterButton = ({
   action,
   active,
   setActive,
-  setIsEmpty,
   data,
   id,
   lid,
@@ -22,7 +21,6 @@ const FilterButton = ({
   setLangid,
   setCatid,
   setTypeName,
-  setAlphabet,
 }) => {
   useEffect(() => {
     setFilter([...data1, ...data2, ...data3]);
@@ -61,26 +59,6 @@ const FilterButton = ({
       } else {
         setData2(
           Array.isArray(data) && data.filter((value) => value.lang === title)
-        );
-      }
-    } else if (action === "alphabet") {
-      setActiveId("All");
-      setlectId(null);
-      setAlphabet(title);
-      if (title === "Hot") {
-        setData3(
-          Array.isArray(data) &&
-            data.filter((value) => value?.title || value?.name)
-        );
-      } else {
-        let reset = [];
-        setData2([...reset]);
-        setData1([...reset]);
-        setData3(
-          Array.isArray(data) &&
-            data.filter(
-              (value) => value?.name?.toLocaleUpperCase().charAt(0) === title
-            )
         );
       }
     } else if (action === "categories") {
