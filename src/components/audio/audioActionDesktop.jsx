@@ -67,6 +67,7 @@ const AudioActionDesktop = () => {
   const [isminimize, setminimize] = useState(false);
   const [transition, settransition] = useState(true);
   const [isloaded, setnotloaded] = useState(true);
+
   const getMusic = (audioId) => {
     //dispatch(setPlaying(false));
     setLoading(true);
@@ -78,7 +79,6 @@ const AudioActionDesktop = () => {
 
         dispatch(getcurrentAudioInfo(res.data[0]));
         setLoading(false);
-
 
         if (initial) {
           dispatch(setPlaying(false));
@@ -238,13 +238,15 @@ const AudioActionDesktop = () => {
 
       return;
     } else {
+      if (!audioId || !audioRef?.current) return;
       getMusic(audioId);
       dispatch(getValue(0));
+
       audioRef.current.currentTime = 0;
 
       return;
     }
-  }, [isComplete]);
+  }, [isComplete, audioId, audioRef]);
 
   const addToPlaylist = () => {
     dispatch(getLecid(audioId));
@@ -313,6 +315,9 @@ const AudioActionDesktop = () => {
   function handleState() {
     setnotloaded(false);
   }
+
+  if (loading) return <></>;
+  if (isloaded && (!audioId || !currentaudio?.audio)) return <></>;
 
   return (
     <>
