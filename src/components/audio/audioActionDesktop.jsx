@@ -44,6 +44,8 @@ import {
 import Addplaylist from "../../pages/add_playlist/AddPlaylist";
 import { LECTURE, RESOURCE_PERSON } from "../../utils/routes/constants";
 import { AudioDownloadModal } from "../audioDownloadModal/AudioDownloadModal";
+import { useMediaPlayer } from "../../utils/mediaPlayer";
+
 const AudioActionDesktop = () => {
   const { currentUser, audioId, isrepeat, value, page, count, pack, playing } =
     useSelector((state) => state.user);
@@ -68,37 +70,35 @@ const AudioActionDesktop = () => {
   const [transition, settransition] = useState(true);
   const [isloaded, setnotloaded] = useState(true);
 
-  const getMusic = (audioId) => {
-    //dispatch(setPlaying(false));
-    setLoading(true);
-    ///get lecture audio
-    axios
-      .get(`/leclistingapi.php?lecid=${audioId}`)
-      .then((res) => {
-        setcurrentaudio(res.data[0]);
+  const { playMedia, pauseMedia } = useMediaPlayer(audioRef);
 
-        dispatch(getcurrentAudioInfo(res.data[0]));
-        setLoading(false);
+  const getMusic = async (audioId) => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`/leclistingapi.php?lecid=${audioId}`);
+      const audioData = response.data[0];
+      
+      setcurrentaudio(audioData);
+      dispatch(getcurrentAudioInfo(audioData));
+      setLoading(false);
 
-        if (initial) {
-          dispatch(setPlaying(false));
-          audioRef.current?.pause();
-
-          cancelAnimationFrame(playAnimation.current);
-        } else {
-          dispatch(setPlaying(true));
-
-          audioRef.current?.play();
-          playAnimation.current = requestAnimationFrame(repeat);
-        }
-      })
-      .catch((err) => {});
+      if (initial) {
+        dispatch(setPlaying(false));
+        await pauseMedia();
+        cancelAnimationFrame(playAnimation.current);
+      } else {
+        dispatch(setPlaying(true));
+        await playMedia();
+        playAnimation.current = requestAnimationFrame(repeat);
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error("Unable to load audio. Please try again.");
+    }
   };
 
   useEffect(() => {
-    if (!audioId) {
-      return;
-    }
+    if (!audioId) return;
     getMusic(audioId);
   }, [audioId]);
 
@@ -113,6 +113,7 @@ const AudioActionDesktop = () => {
   useEffect(() => {
     playAnimation.current = requestAnimationFrame(repeat);
     handleRange(audioRef?.current?.currentTime);
+    return () => cancelAnimationFrame(playAnimation.current);
   }, [audioRef, repeat]);
 
   useEffect(() => {
@@ -123,49 +124,57 @@ const AudioActionDesktop = () => {
       audio_id: audioId,
       user_id: currentUser?.id,
     };
-    async function postRecent() {
+
+    const postRecent = async () => {
       if (audioId) {
-        await axios.post(`/recentApi.php`, payload, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-          },
-        });
+        try {
+          await axios.post(`/recentApi.php`, payload, {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
+            },
+          });
+        } catch (error) {
+          console.warn('Error posting recent:', error);
+        }
       }
-    }
+    };
     postRecent();
   }, [audioId]);
-  //************ */
 
   useEffect(() => {
     if (playing && !initial) {
-      audioRef.current?.play();
+      playMedia().catch(error => {
+        if (error.name === 'AbortError') {
+          // Retry play if aborted
+          playMedia();
+        }
+      });
       playAnimation.current = requestAnimationFrame(repeat);
     } else {
-      audioRef.current?.pause();
+      pauseMedia();
       cancelAnimationFrame(playAnimation.current);
     }
   }, [playing]);
 
-  const handlePlay = () => {
+  const handlePlay = async () => {
     setinitial(false);
     if (playing) {
       dispatch(setPlaying(false));
-      audioRef.current?.pause(); // Pause the audio
+      await pauseMedia();
     } else {
       dispatch(setPlaying(true));
-      audioRef.current?.play();
-      // Play the audio
+      await playMedia();
     }
   };
 
   const shareAudio = () => {
     setisShare(!isShare);
   };
+
   const handleRange = (curr) => {
     dispatch(getValue(curr));
-
     if (audioRef.current) {
       audioRef.current.currentTime = curr;
     }
@@ -199,6 +208,7 @@ const AudioActionDesktop = () => {
       dispatch(getCount(0));
     }
   };
+
   const handlePreviousAudio = () => {
     setinitial(false);
     setnotloaded(true);
