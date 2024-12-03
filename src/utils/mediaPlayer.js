@@ -1,3 +1,5 @@
+import React from "react";
+
 // Utility to handle media playback and prevent AbortError
 class MediaPlayerManager {
   constructor() {
