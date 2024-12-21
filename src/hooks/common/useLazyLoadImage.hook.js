@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
 export const useLazyLoadImage = (imgSrc) => {
   const imageRef = useRef(null);
@@ -6,7 +7,7 @@ export const useLazyLoadImage = (imgSrc) => {
 
   useEffect(() => {
     const handleImageError = () => {
-      imageRef.current.src = "https://imagetolink.com/ib/CQZFhVqz5o.jpeg";
+      imageRef.current.src = IMAGE_PLACEHOLDERS.albumWidget;
     };
 
     const lazyImage = () => {

@@ -1,5 +1,6 @@
 import React, { useState, createContext, useEffect, useRef } from "react";
 import * as Sentry from "@sentry/react";
+import TawkMessengerReact from "@tawk.to/tawk-messenger-react";
 import {
   useQuery,
   useMutation,
@@ -19,6 +20,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import Landing from "./pages/landing/Landing";
+import Ramadan from "./pages/ramadan/Ramadan";
 import Layout from "./components/layout/Layout";
 import Genres from "./pages/genres/Genres";
 import Lecturers from "./pages/lecturers/Lecturers";
@@ -70,10 +72,12 @@ import {
   RECO2,
   DOWNLOAD,
   FORGOTPASSWORD,
+  RAMADAN,
 } from "./utils/routes/constants";
 import ForgotPassword from "./pages/forgotpassword/forgotPassword";
 import { usePageTracking } from "./utils/tracking";
 import { useThemeHook } from "./hooks";
+import RamadanDetail from "./pages/ramadan_detail/Ramadan_detail";
 export const AudioContext = createContext();
 export const SearchContext = createContext();
 export const ThemeProvider = createContext();
@@ -182,11 +186,18 @@ const App = () => {
                   <Route path="/auth/login" element={<LoginForm />} />
                   <Route path="/auth/signup" element={<SignupForm />} />
                   <Route
+                    path="/auth/forgot-password"
+                    element={<ForgotPassword />}
+                  />
+                  <Route
                     path="/auth/selectlanguage"
                     element={<SelectLanguage />}
                   />
                 </Route>
                 <Route path="/dawahcast" element={<Layout />}>
+                  <Route path={RAMADAN} element={<Ramadan />} />
+                  <Route path={`${RAMADAN}/:id`} element={<RamadanDetail />} />
+
                   <Route index element={<Landing />} />
                   <Route path={HOME} element={<Landing />} />
                   <Route path={MORE} element={<More />} />
@@ -218,13 +229,15 @@ const App = () => {
                   />
                   <Route path={`${VIDEOS}:id`} element={<VideoPlayer />} />
                   <Route path={FAVOURITE} element={<Favourite />} />
-                  <Route path={FORGOTPASSWORD} element={<ForgotPassword />} />
                   <Route path={MYPLAYLIIST} element={<Myplaylist />} />
                 </Route>
-
                 <Route path="/" element={<Navigate to="/dawahcast" />} />
                 <Route path="/dawahcast" element={<Layout />} />
               </Routes>
+              <TawkMessengerReact
+                propertyId="5cd3dd3ed07d7e0c6392ad09"
+                widgetId="1i9f25qn4"
+              />
             </ThemeProvider.Provider>
           </AudioContext.Provider>
         </SearchContext.Provider>

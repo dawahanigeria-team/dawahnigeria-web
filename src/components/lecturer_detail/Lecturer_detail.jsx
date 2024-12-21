@@ -29,6 +29,7 @@ import { MobileFavoriteButton } from "../UI/favoritebuttons/mobilefavoriteButton
 import HeadMeta from "../head-meta";
 import { useSelector } from "react-redux";
 import { CommentIcon } from "../svgcomponent/svgComponent";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
 const LecturerDetail = () => {
   const { id } = useParams();
@@ -85,7 +86,7 @@ const LecturerDetail = () => {
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://imagetolink.com/ib/CQZFhVqz5o.jpeg";
+          im.src = IMAGE_PLACEHOLDERS.albumWidget;
         });
       });
     }
@@ -98,7 +99,7 @@ const LecturerDetail = () => {
       lecdet?.current.addEventListener("error", () => {
         const imgs = document.querySelectorAll("#hero");
         imgs.forEach((img) => {
-          img.src = "https://imagetolink.com/ib/9TU6bi2SDs.jpeg";
+          img.src = IMAGE_PLACEHOLDERS.lecture;
         });
       });
     }
@@ -119,10 +120,7 @@ const LecturerDetail = () => {
             className={`${
               theme === "dark" ? "lecdet_hero" : "lecdet_hero_light"
             }`}
-            src={
-              querieddata[0]?.img ||
-              "https://imagetolink.com/ib/9TU6bi2SDs.jpeg"
-            }
+            src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
             alt="audiohero"
           />
           <div className="lecdet_container">
@@ -299,10 +297,7 @@ const LecturerDetail = () => {
                   ref={lecdet}
                   id="hero"
                   className="lecdet_head_img_sz"
-                  src={
-                    querieddata[0]?.img ||
-                    "https://imagetolink.com/ib/9TU6bi2SDs.jpeg"
-                  }
+                  src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
                   alt="head"
                 />
               </div>
@@ -368,10 +363,7 @@ const LecturerDetail = () => {
                       className="img"
                       ref={lecdet}
                       id="hero"
-                      src={
-                        querieddata[0]?.img ||
-                        "https://imagetolink.com/ib/9TU6bi2SDs.jpeg"
-                      }
+                      src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
                       alt="head"
                     />
                   </div>

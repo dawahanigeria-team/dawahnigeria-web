@@ -32,6 +32,7 @@ import { AudioWave } from "../UI/soundwave/soundWave";
 import { RESOURCE_PERSON } from "../../utils/routes/constants";
 import { AddplayIcon, DownloadIcon } from "../svgcomponent/svgComponent";
 import { AudioDownloadModal } from "../audioDownloadModal/AudioDownloadModal";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 function MusicList({
   lecturer,
   id,
@@ -75,9 +76,8 @@ function MusicList({
       lazy.forEach((im) => {
         const newurl = im.getAttribute("src-data");
         im.src = newurl;
-
         im.addEventListener("error", () => {
-          im.src = "https://imagetolink.com/ib/ITczTtYvdR.jpeg";
+          im.src = IMAGE_PLACEHOLDERS.lecture;
         });
       });
     }
@@ -157,7 +157,6 @@ function MusicList({
     dispatch(showaddPlaylist(true));
   };
 
-
   return (
     <div className="musicslist_wrapper dark:font-light font-medium">
       <div className="table text-color-primary">
@@ -191,7 +190,7 @@ function MusicList({
               <img
                 className="img_size_sm"
                 id="mlist"
-                src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"}
+                src={IMAGE_PLACEHOLDERS.lecture}
                 src-data={image}
                 alt="ff"
               />
@@ -213,13 +212,13 @@ function MusicList({
           <div className="tr2">
             <div className="tr2_real_wrap">
               <Link
-               to={rpid ? `${RESOURCE_PERSON}${rpid}` : "#"}
-              
+                to={rpid ? `${RESOURCE_PERSON}${rpid}` : "#"}
                 id="player"
                 className="tr2_text"
               >
-               <div className="text_child line-clamp-2 hover:text-gray-400 xl:w-[230px] w-[160px] max-[700px]:w-[100px] max-[1000px]:w-[130px]">{lecturer || ""}</div>
-               
+                <div className="text_child line-clamp-2 hover:text-gray-400 xl:w-[230px] w-[160px] max-[700px]:w-[100px] max-[1000px]:w-[130px]">
+                  {lecturer || ""}
+                </div>
               </Link>
 
               <div className="tr2_likeys">
@@ -274,7 +273,7 @@ function MusicList({
                 <img
                   className="img_wrp"
                   id="mlist"
-                  src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"}
+                  src={IMAGE_PLACEHOLDERS.lecture}
                   src-data={image}
                   alt=""
                 />
@@ -285,7 +284,6 @@ function MusicList({
                 </button>
 
                 <span className="likeys_text text-[#e0e0e0]">
-
                   {formatNumber(views)}
                 </span>
               </div>
@@ -301,7 +299,7 @@ function MusicList({
               </div>
             </div>
             <div className="wrap_text">
-            <div className="title_wrap">
+              <div className="title_wrap">
                 <div className="texta line-clamp-2">{title}</div>
               </div>
               <div className="lect_name_wrap">

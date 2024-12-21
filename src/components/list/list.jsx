@@ -37,6 +37,7 @@ import {
 } from "../svgcomponent/svgComponent";
 import ShareAudio from "../shareaudio/shareAudio";
 import { AudioDownloadModal } from "../audioDownloadModal/AudioDownloadModal";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
 function List({
   lecturer,
@@ -86,7 +87,7 @@ function List({
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://imagetolink.com/ib/ITczTtYvdR.jpeg";
+          im.src = IMAGE_PLACEHOLDERS.lecture;
         });
       });
     }
@@ -201,7 +202,7 @@ function List({
               <img
                 className="img_size_sm"
                 id="list"
-                src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"}
+                src={IMAGE_PLACEHOLDERS.lecture}
                 src-data={image}
                 alt=""
               />
@@ -281,7 +282,9 @@ function List({
                 to={rpid ? `${RESOURCE_PERSON}${rpid}` : "#"}
                 className="tr2_text"
               >
-                <div className="text_child line-clamp-2 hover:text-gray-400 xl:w-[230px] w-[160px] max-[700px]:w-[100px] max-[1000px]:w-[130px]">{lecturer || ""}</div>
+                <div className="text_child line-clamp-2 hover:text-gray-400 xl:w-[230px] w-[160px] max-[700px]:w-[100px] max-[1000px]:w-[130px]">
+                  {lecturer || ""}
+                </div>
               </Link>
 
               <div className="tr2_likeys">
@@ -335,7 +338,7 @@ function List({
                 <img
                   className="img_wrp"
                   id="list"
-                  src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"}
+                  src={IMAGE_PLACEHOLDERS.lecture}
                   src-data={image}
                   alt=""
                 />

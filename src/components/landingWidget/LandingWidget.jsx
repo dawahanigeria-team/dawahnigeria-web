@@ -1,10 +1,16 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import { FiHeadphones } from "react-icons/fi";
 import { FaPlay } from "react-icons/fa";
 import { formatNumber } from "../UI/formatter";
-const LandingWidget = ({ categories, img, views, styling }) => {
-  const formattedViews = useMemo(() => formatNumber(views), [views])
-  
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
+import { AudioContext } from "../../App";
+import { useDispatch } from "react-redux";
+import AudioLoader from "../UI/audioLoader/audioLoader";
+import { getaudioId, setPlaying } from "../../Redux/Actions/ActionCreators";
+const LandingWidget = ({ categories, img, views, nid, styling }) => {
+  const formattedViews = useMemo(() => formatNumber(views), [views]);
+  const { audioRef, setinitial, loading } = useContext(AudioContext);
+  const dispatch = useDispatch();
 
   ////
   useEffect(() => {
@@ -15,12 +21,22 @@ const LandingWidget = ({ categories, img, views, styling }) => {
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://imagetolink.com/ib/TnDGh8F6J0.jpeg";
+          im.src = IMAGE_PLACEHOLDERS.lecture;
         });
       });
     }
     lazyImage();
   }, []);
+
+  const handlePlayClick = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    
+    dispatch(setPlaying(false));
+    dispatch(getaudioId(nid));
+    setinitial(false);
+
+  }
 
   return (
     <div
@@ -34,7 +50,7 @@ const LandingWidget = ({ categories, img, views, styling }) => {
         <img
           src-data={img}
           id="song"
-          src={"https://imagetolink.com/ib/TnDGh8F6J0.jpeg"}
+          src={IMAGE_PLACEHOLDERS.lecture}
           alt="background"
           className="w-full h-full rounded-md"
         />
@@ -54,9 +70,9 @@ const LandingWidget = ({ categories, img, views, styling }) => {
         </div>
 
         <div className="absolute rounded-md bg-black/50 left-0 top-0 h-full w-full flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <div className="flex items-center justify-center h-16 w-16 rounded-full bg-[#222222]/70">
-            <FaPlay className="text-[#cfcfcf] text-3xl" />
-          </div>
+          <button onClick={handlePlayClick} disabled={loading} className="flex items-center justify-center h-16 w-16 rounded-full bg-[#222222]/70 disabled:cursor-not-allowed">
+            {loading? <AudioLoader /> : <FaPlay className="text-[#cfcfcf] text-3xl" />}
+          </button>
         </div>
       </div>
       <p className="text-xs sm:text-sm w-full  line-clamp-2  pl-[3%]  text-color-primary ">

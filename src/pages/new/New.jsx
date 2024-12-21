@@ -74,10 +74,9 @@ const New = () => {
                 {
                   Title,
                   rpname,
-                  img,
                   cats,
                   nid,
-                  mp3_thumbnail,
+                  lec_thumbnail,
                   comments,
                   favorites,
                   rp_id,
@@ -94,7 +93,7 @@ const New = () => {
                     <MusicList
                       key={idx}
                       id={idx}
-                      image={mp3_thumbnail || img}
+                      image={lec_thumbnail}
                       comments={comments}
                       favorites={favorites}
                       duration={mp3_duration || duration}

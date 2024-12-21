@@ -1,0 +1,75 @@
+@mixin mobile_hide {
+  @media screen and (max-width: 615px) {
+    display: none;
+  }
+}
+.load_desktop {
+  width: 100%;
+  height: 400px;
+  position: relative;
+  @include mobile_hide;
+  .load {
+    width: 100%;
+    height: 50%;
+    position: absolute;
+    inset: 0;
+
+    margin: auto auto;
+  }
+}
+.lecalb_wrapper {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  // justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 1rem;
+
+  gap: 1rem;
+
+  @media screen and (max-width: 615px) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    justify-content: unset;
+  }
+
+  .lecalb_album_item {
+    cursor: pointer;
+    width: 18%;
+    height: 180px;
+    @media screen and (max-width: 1100px) {
+      width: 23%;
+    }
+    @media screen and (max-width: 1000px) {
+      height: 160px;
+    }
+    @media screen and (max-width: 890px) {
+      width: 20%;
+      height: 180px;
+    }
+    @media screen and (max-width: 850px) {
+      height: 160px;
+    }
+    @media screen and (max-width: 768px) {
+      width: 22%;
+      height: 180px;
+    }
+    @media screen and (max-width: 670px) {
+      width: 23%;
+      height: 180px;
+    }
+    @media screen and (max-width: 640px) {
+      width: 31%;
+      height: 180px;
+    }
+    @media screen and (max-width: 615px) {
+      width: 100%;
+      height: 165px;
+    }
+  }
+}
+.lecalb_comments {
+  cursor: pointer;
+}

@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import LecturersChartWidget from "./chartWidgets/lecturersChartWidget";
 import { RESOURCE_PERSON } from "../../../utils/routes/constants";
+import { IMAGE_PLACEHOLDERS } from "../../../utils/imagePlaceholders";
 const LecturerMobileChart = ({ data }) => {
   const navigate = useNavigate();
 
@@ -19,9 +20,7 @@ const LecturerMobileChart = ({ data }) => {
               <div className="w-full relative h-[90px] rounded-full">
                 <img
                   className="rounded-full w-full h-full"
-                  src={
-                    data[1]?.img || "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"
-                  }
+                  src={data[1]?.img || IMAGE_PLACEHOLDERS.lecturer}
                   alt=""
                 />
 
@@ -46,9 +45,7 @@ const LecturerMobileChart = ({ data }) => {
               <div className="w-full relative h-[100px] rounded-full">
                 <img
                   className="rounded-full w-full h-full"
-                  src={
-                    data[0]?.img || "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"
-                  }
+                  src={data[0]?.img || IMAGE_PLACEHOLDERS.lecturer}
                   alt=""
                 />
                 <div className="w-full h-[20px]   text-[12px] inset-x-0 absolute bottom-[-5px] flex items-center justify-center">
@@ -71,9 +68,7 @@ const LecturerMobileChart = ({ data }) => {
               <div className="w-full relative h-[80px] rounded-full">
                 <img
                   className="rounded-full w-full h-full"
-                  src={
-                    data[2]?.img || "https://imagetolink.com/ib/kk8U1nb2nR.jpeg"
-                  }
+                  src={data[2]?.img || IMAGE_PLACEHOLDERS.lecturer}
                   alt=""
                 />
 

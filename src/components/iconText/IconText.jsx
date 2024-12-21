@@ -1,9 +1,7 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import "./iconText.scss";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-
 import { showaddPlaylist } from "../../Redux/Actions/ActionCreators";
 
 const IconText = ({ icon, link, name, id, setisOpen }) => {
@@ -12,53 +10,29 @@ const IconText = ({ icon, link, name, id, setisOpen }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { addplaylist } = useSelector((state) => state.user);
+  // const { addplaylist } = useSelector((state) => state.user);
 
   function close() {
     setisOpen(false);
   }
-  useEffect(() => {
-    if (location.pathname.includes("home")) {
-      setActive(0);
-    } else if (location.pathname === "/dawahcast") {
-      setActive(0);
-    } else if (location.pathname.includes("charts")) {
-      setActive(7);
-    } else if (location.pathname.includes("recommend2")) {
-      setActive(12);
-    } else if (location.pathname.includes("recommend1")) {
-      setActive(11);
-    } else if (location.pathname.includes("lecturers")) {
-      setActive(3);
-    } else if (location.pathname.includes("recitations")) {
-      setActive(4);
-    } else if (location.pathname.includes("videos")) {
-      setActive(5);
-    } else if (location.pathname.includes("playlists")) {
-      setActive(6);
-    } else if (location.pathname.includes("trending")) {
-      setActive(1);
-    } else if (location.pathname.includes("new")) {
-      setActive(2);
-    } else if (location.pathname.includes("favourite")) {
-      setActive(10);
-    } else if (location.pathname.includes("myplaylist")) {
-      setActive(11);
-    } else if (location.pathname.includes("genres")) {
-      setActive(8);
-    }
 
-    if (addplaylist) {
-      setActive(9);
-    }
-  }, [location.pathname]);
+  useEffect(() => {
+    // Check if the link is an exact match with the current pathname
+    const isActive = location.pathname === link;
+    setActive(isActive ? id : null);
+
+    // if (addplaylist && id === 9) {
+    //   setActive(9);
+    // }
+  }, [location.pathname, link, id]);
+
   return (
     <Link
       to={link}
       onClick={() => {
         navigate(link);
         close();
-        if (id === 9) {
+        if (name === "Add Playlist") {
           dispatch(showaddPlaylist(true));
         }
       }}
@@ -85,4 +59,5 @@ const IconText = ({ icon, link, name, id, setisOpen }) => {
     </Link>
   );
 };
+
 export default IconText;

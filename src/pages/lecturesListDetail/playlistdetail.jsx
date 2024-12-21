@@ -8,7 +8,7 @@ import React, {
 import Container from "../../components/container/Container";
 import arrow from "../../assets/svg/arrowleft.svg";
 import sharebold from "../../assets/svg/sharebold.svg";
-import {BsFillPlayFill} from "react-icons/bs"
+import { BsFillPlayFill } from "react-icons/bs";
 import combold from "../../assets/svg/combold.svg";
 import { CiPlay1 } from "react-icons/ci";
 import { useNavigate, useParams } from "react-router-dom";
@@ -44,6 +44,8 @@ import { MobileFavoriteButton } from "../../components/UI/favoritebuttons/mobile
 
 import HeadMeta from "../../components/head-meta";
 import { CommentIcon } from "../../components/svgcomponent/svgComponent";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
+import { SlShare } from "react-icons/sl";
 
 const PlaylistDetail = () => {
   const { id } = useParams();
@@ -147,14 +149,12 @@ const PlaylistDetail = () => {
       />
       <div className="leclistdet_wrapper">
         <img
-          ref={lecdet}
+          // ref={lecdet}
           id="hero"
           className={`${
             theme === "dark" ? "leclistdet_hero" : "leclistdet_hero_light"
           }`}
-          src={
-            querieddata[0]?.img || "https://imagetolink.com/ib/9TU6bi2SDs.jpeg"
-          }
+          src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
           alt="audiohero"
         />
 
@@ -180,10 +180,7 @@ const PlaylistDetail = () => {
             <div className="leclistdet_head_left">
               <img
                 className="leclistdet_head_left_img"
-                src={
-                  querieddata[0]?.img ||
-                  "https://imagetolink.com/ib/AEFQQC1ybX.jpeg"
-                }
+                src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
                 alt="head"
               />
             </div>
@@ -249,10 +246,7 @@ const PlaylistDetail = () => {
             >
               <img
                 className="leclistdet_head_img_sz"
-                src={
-                  querieddata[0]?.img ||
-                  "https://imagetolink.com/ib/vwea8kukZP.jpeg"
-                }
+                src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
                 alt="head"
               />
             </div>
@@ -277,10 +271,7 @@ const PlaylistDetail = () => {
               <span className="album_img">
                 <img
                   className="album_img_sz"
-                  src={
-                    querieddata[0]?.img ||
-                    "https://imagetolink.com/ib/vwea8kukZP.jpeg"
-                  }
+                  src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
                   alt=""
                 />
               </span>
@@ -296,10 +287,7 @@ const PlaylistDetail = () => {
                   <span className="likeys_img">
                     <img
                       className="likeys_img_sz"
-                      src={
-                        querieddata[0]?.img ||
-                        "https://imagetolink.com/ib/eCnXEHHRos.jpeg"
-                      }
+                      src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
                       alt=""
                     />
                   </span>
@@ -308,7 +296,13 @@ const PlaylistDetail = () => {
               </div>
             </div>
             <div className="listrank_and_listblack_wrap">
-              <div className={isVisible ? "listranking_none" : "listranking bg-black bg-opacity-50"}>
+              <div
+                className={
+                  isVisible
+                    ? "listranking_none"
+                    : "listranking bg-black bg-opacity-50"
+                }
+              >
                 <MobileFavoriteButton
                   favorites={querieddata[0]?.favorites}
                   id={id}
@@ -348,10 +342,7 @@ const PlaylistDetail = () => {
                 <div className="header_bg">
                   <img
                     className="img"
-                    src={
-                      querieddata[0]?.img ||
-                      "https://imagetolink.com/ib/eCnXEHHRos.jpeg"
-                    }
+                    src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
                     alt="head"
                   />
                 </div>
@@ -365,19 +356,19 @@ const PlaylistDetail = () => {
                       : "icons_listblack p-3"
                   }
                 >
-                       <button
-                      id="player"
-                      onClick={playAll}
-                      className="play_header pb-2 w-full"
-                    >
-                      <div className="w-fit h-fit border border-color-primary dark:border-color-primary border-gray-500 p-[2px] rounded-full">
-                        <BsFillPlayFill className="text-[22px] dark:text-color-primary text-gray-500" />
-                      </div>
+                  <button
+                    id="player"
+                    onClick={playAll}
+                    className="play_header pb-2 w-full"
+                  >
+                    <div className="w-fit h-fit border border-color-primary dark:border-color-primary border-gray-500 p-[2px] rounded-full">
+                      <BsFillPlayFill className="text-[22px] dark:text-color-primary text-gray-500" />
+                    </div>
 
-                      <p className="dark:text-color-primary text-gray-500 font-medium">
-                        Play All
-                      </p>
-                    </button>
+                    <p className="dark:text-color-primary text-gray-500 font-medium">
+                      Play All
+                    </p>
+                  </button>
                 </div>
 
                 <div className="mobile_color_vid"></div>

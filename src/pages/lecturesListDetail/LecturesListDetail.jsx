@@ -17,8 +17,6 @@ import MobileList from "../../components/list/mobileList";
 import Loader from "../../components/UI/loader/loader";
 import { BsFillPlayFill } from "react-icons/bs";
 import { SlShare } from "react-icons/sl";
-import sharebig from "../../../src/assets/svg/boom-share.svg";
-import commentbig from "../../../src/assets/svg/boom-comment.svg";
 import { formatNumber } from "../../components/UI/formatter";
 import { useSelector, useDispatch } from "react-redux";
 import useaxios from "../../utils/useAxios";
@@ -44,6 +42,7 @@ import { MobileFavoriteButton } from "../../components/UI/favoritebuttons/mobile
 import HeadMeta from "../../components/head-meta";
 import { AudioDownloadModal } from "../../components/audioDownloadModal/AudioDownloadModal";
 import { CommentIcon } from "../../components/svgcomponent/svgComponent";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
 const LecturesListDetail = () => {
   const { id } = useParams();
@@ -81,7 +80,6 @@ const LecturesListDetail = () => {
 
   useEffect(() => {
     setsingleData((prev) => {
-
       return { ...prev, share: prev?.share + 1 };
     });
   }, [sharedAlbum]);
@@ -144,7 +142,7 @@ const LecturesListDetail = () => {
     leclistdet?.current.addEventListener("error", () => {
       const imgs = document.querySelectorAll("#hero");
       imgs.forEach((img) => {
-        img.src = "https://imagetolink.com/ib/vwea8kukZP.jpeg";
+        img.src = IMAGE_PLACEHOLDERS.lecture;
       });
     });
   }, []);
@@ -176,10 +174,7 @@ const LecturesListDetail = () => {
               className={`${
                 theme === "dark" ? "leclistdet_hero" : "leclistdet_hero_light"
               }`}
-              src={
-                querieddata[0]?.img ||
-                "https://imagetolink.com/ib/vwea8kukZP.jpeg"
-              }
+              src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
               alt="audiohero"
             />
           }
@@ -194,11 +189,14 @@ const LecturesListDetail = () => {
                 }}
                 className="leclistdet_breadcrumb_first"
               >
-                Back/
+                Back
               </button>
-              <p className="leclistdet_breadcrumb_second text-foreground">
-                {querieddata[0]?.title || "Unknown"}
-              </p>
+
+              {/*
+                <p className="leclistdet_breadcrumb_second text-foreground">
+                  {querieddata[0]?.title || "Unknown"}
+                </p>
+              */}
             </div>
 
             {/* -------------------Desktop----------------- Section 1 -------------------------------------- */}
@@ -206,10 +204,7 @@ const LecturesListDetail = () => {
               <div className="leclistdet_head_left">
                 <img
                   className="leclistdet_head_left_img"
-                  src={
-                    querieddata[0]?.img ||
-                    "https://imagetolink.com/ib/AEFQQC1ybX.jpeg"
-                  }
+                  src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
                   ref={leclistdet}
                   id="hero"
                   alt="head"
@@ -217,7 +212,8 @@ const LecturesListDetail = () => {
               </div>
               <div className="leclistdet_head_right">
                 <p className="leclistdet_head_right_head text-foreground">
-                  {lectureTitleExtractor(querieddata[0]?.title, 2)}
+                  {/*  lectureTitleExtractor(querieddata[0]?.title, 2) */}
+                  {querieddata[0]?.title || "Unknown"}
                 </p>
                 <div className="leclistdet_head_right_text">
                   <div className="rpimage_wrap">
@@ -235,44 +231,72 @@ const LecturesListDetail = () => {
                 </div>
 
                 <div className="leclistdet_head_right_actions_wrap">
-                  <button
-                    onClick={() => {
-                      playAll();
-                    }}
-                    className="leclistdet_play"
-                    id="player"
-                  >
-                    <CiPlay1 className="leclistdet_play_icon" />
-                    <p className="leclistdet_play_text">Play All</p>
-                  </button>
+                  <div>
+                    <button
+                      onClick={() => {
+                        playAll();
+                      }}
+                      className="leclistdet_play"
+                      id="player"
+                    >
+                      <CiPlay1 className="leclistdet_play_icon" />
+                      <p className="leclistdet_play_text">Play All</p>
+                    </button>
+                    <div className="dark:text-white text-center text-sm">
+                      Play
+                    </div>
+                  </div>
 
-                  <DesktopFavoriteButton
-                    favorites={querieddata[0]?.favorites}
-                    id={id}
-                    type={"album"}
-                    refetch={refetch}
-                  />
-                  <div
-                    onClick={(e) => {
-                      shareAlbum(e, id);
-                    }}
-                    className="leclistdet_share bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
-                  >
-                    <SlShare className="text-color-primary hover:text-color-foreground dark:hover:text-[#ddff2b] text-[20px]" />
-                    <p className="leclistdet_share_text  text-color-primary">
-                      {formatNumber(querieddata[0]?.share || 0)}
-                    </p>
+                  <div>
+                    <DesktopFavoriteButton
+                      favorites={querieddata[0]?.favorites}
+                      id={id}
+                      type={"album"}
+                      refetch={refetch}
+                    />
+                    <div className="dark:text-white text-center text-sm">
+                      Like
+                    </div>
                   </div>
-                  <div className="leclistdet_comment bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
-                    <CommentIcon />
-                    <p className="leclistdet_comment_text  text-color-primary">
-                      {formatNumber(querieddata[0]?.comments || 0)}
-                    </p>
+
+                  <div>
+                    <div
+                      onClick={(e) => {
+                        shareAlbum(e, id);
+                      }}
+                      className="leclistdet_share bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
+                    >
+                      <SlShare className="text-color-primary hover:text-color-foreground dark:hover:text-[#ddff2b] text-[20px]" />
+                      <p className="leclistdet_share_text  text-color-primary">
+                        {formatNumber(querieddata[0]?.share || 0)}
+                      </p>
+                    </div>
+                    <div className="dark:text-white text-center text-sm">
+                      Share
+                    </div>
                   </div>
-                  <AudioDownloadModal
-                    downloads={querieddata[0]?.downloads}
-                    nid={id}
-                  />
+
+                  <div>
+                    <div className="leclistdet_comment bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
+                      <CommentIcon />
+                      <p className="leclistdet_comment_text  text-color-primary">
+                        {formatNumber(querieddata[0]?.comments || 0)}
+                      </p>
+                    </div>
+                    <div className="dark:text-white text-center text-sm">
+                      Comment
+                    </div>
+                  </div>
+
+                  <div>
+                    <AudioDownloadModal
+                      downloads={querieddata[0]?.downloads}
+                      nid={id}
+                    />
+                    <div className="dark:text-white text-center text-sm">
+                      Download
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -299,10 +323,7 @@ const LecturesListDetail = () => {
                   className="leclistdet_head_img_sz"
                   ref={leclistdet}
                   id="hero"
-                  src={
-                    querieddata[0]?.img ||
-                    "https://imagetolink.com/ib/vwea8kukZP.jpeg"
-                  }
+                  src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
                   alt="head"
                 />
               </div>
@@ -329,10 +350,7 @@ const LecturesListDetail = () => {
                     ref={leclistdet}
                     id="hero"
                     className="album_img_sz"
-                    src={
-                      querieddata[0]?.img ||
-                      "https://imagetolink.com/ib/vwea8kukZP.jpeg"
-                    }
+                    src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
                     alt=""
                   />
                 </span>
@@ -347,10 +365,7 @@ const LecturesListDetail = () => {
                         className="likeys_img_sz"
                         ref={leclistdet}
                         id="hero"
-                        src={
-                          querieddata[0]?.img ||
-                          "https://imagetolink.com/ib/eCnXEHHRos.jpeg"
-                        }
+                        src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
                         alt=""
                       />
                     </span>
@@ -417,10 +432,7 @@ const LecturesListDetail = () => {
                       className="img"
                       ref={leclistdet}
                       id="hero"
-                      src={
-                        querieddata[0]?.img ||
-                        "https://imagetolink.com/ib/eCnXEHHRos.jpeg"
-                      }
+                      src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
                       alt="head"
                     />
                   </div>

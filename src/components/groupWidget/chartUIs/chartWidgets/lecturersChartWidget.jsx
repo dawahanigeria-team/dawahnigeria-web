@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { IMAGE_PLACEHOLDERS } from "../../../../utils/imagePlaceholders";
 
 const LecturersChartWidget = ({ img, idx, name }) => {
   ////not contented but under presssure by DN project manager
@@ -10,7 +11,7 @@ const LecturersChartWidget = ({ img, idx, name }) => {
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://imagetolink.com/ib/kk8U1nb2nR.jpeg";
+          im.src = IMAGE_PLACEHOLDERS.lecturer;
         });
       });
     }
@@ -24,7 +25,7 @@ const LecturersChartWidget = ({ img, idx, name }) => {
           id="chart-mbile-lecturers"
           className="w-full h-full rounded-full"
           src-data={img}
-          src="https://imagetolink.com/ib/kk8U1nb2nR.jpeg"
+          src={IMAGE_PLACEHOLDERS.lecturer}
           alt=""
         />
       </div>

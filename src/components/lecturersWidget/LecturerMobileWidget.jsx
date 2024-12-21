@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import "./lecturerMobileWidget.scss";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
-const LecturerMobileWidget = ({ img, rp, }) => {
+const LecturerMobileWidget = ({ img, rp }) => {
   useEffect(() => {
     function lazyImages() {
       const lazy = document.querySelectorAll("#lect");
@@ -9,7 +10,7 @@ const LecturerMobileWidget = ({ img, rp, }) => {
         const newurl = im.getAttribute("src-data");
         im.src = newurl;
         im.addEventListener("error", () => {
-          im.src = "https://imagetolink.com/ib/kk8U1nb2nR.jpeg";
+          im.src = IMAGE_PLACEHOLDERS.lecturer;
         });
       });
     }
@@ -25,7 +26,7 @@ const LecturerMobileWidget = ({ img, rp, }) => {
           <img
             className="lecwidres_img"
             id="lect"
-            src={"https://imagetolink.com/ib/Gl0xGV26lY.jpeg"}
+            src={IMAGE_PLACEHOLDERS.lecturer}
             src-data={img}
             alt="lect"
           />

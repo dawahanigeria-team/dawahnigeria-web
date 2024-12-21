@@ -5,6 +5,7 @@ import { FaPlay } from "react-icons/fa";
 import { BiHeart } from "react-icons/bi";
 import videoButtom from "../../assets/png/videoButtom.png";
 import { formatNumber } from "../UI/formatter";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
 const VideoWidget = ({ img, favourites, views, lecturer, title, duration }) => {
   ////not contented but under presssure by DN project manager
@@ -16,7 +17,7 @@ const VideoWidget = ({ img, favourites, views, lecturer, title, duration }) => {
         im.src = newurl;
 
         im.addEventListener("error", () => {
-          im.src = "https://imagetolink.com/ib/cswCjNKbQ2.jpeg";
+          im.src = IMAGE_PLACEHOLDERS.carouselWidget;
         });
       });
     }
@@ -29,7 +30,7 @@ const VideoWidget = ({ img, favourites, views, lecturer, title, duration }) => {
         <img
           id="video"
           src-data={img}
-          src={"https://imagetolink.com/ib/cswCjNKbQ2.jpeg"}
+          src={IMAGE_PLACEHOLDERS.carouselWidget}
           alt="background"
           className="videoWidget_background_image"
         />
@@ -55,7 +56,7 @@ const VideoWidget = ({ img, favourites, views, lecturer, title, duration }) => {
               <img
                 className="w-full h-full rounded-full"
                 src-data={videoButtom}
-                src={"https://imagetolink.com/ib/kk8U1nb2nR.jpeg"}
+                src={IMAGE_PLACEHOLDERS.lecturer}
                 alt="videoButtom"
               />
             </div>

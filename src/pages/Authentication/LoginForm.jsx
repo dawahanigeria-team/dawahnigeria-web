@@ -12,6 +12,7 @@ import Loader from "../../components/UI/loader/loader";
 import { useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
 import HeadMeta from "../../components/head-meta";
+import { FORGOTPASSWORD } from "../../utils/routes/constants";
 const LoginForm = () => {
   const [show, setShow] = useState("password");
   const [loading, setLoading] = useState(false);
@@ -115,7 +116,7 @@ const LoginForm = () => {
           <div className="loginform_forgot_wrap">
             <p
               onClick={() => {
-                navigate("/forgot-password");
+                navigate(FORGOTPASSWORD);
               }}
               className="loginform_forgot"
             >

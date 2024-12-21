@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { IMAGE_PLACEHOLDERS } from "../../../utils/imagePlaceholders";
 
 const MobileImageWidget = ({ image }) => {
   useEffect(() => {
@@ -8,7 +9,7 @@ const MobileImageWidget = ({ image }) => {
       im.src = newurl;
 
       im.addEventListener("error", () => {
-        im.src = "https://imagetolink.com/ib/bPd0uRB2BT.jpeg";
+        im.src = IMAGE_PLACEHOLDERS.carouselWidget;
       });
     });
   }, []);
@@ -17,7 +18,7 @@ const MobileImageWidget = ({ image }) => {
       className="landing_carousel_img w-full rounded-[3px] h-[162px]"
       id="carousel"
       src-data={image}
-      src="https://imagetolink.com/ib/bPd0uRB2BT.jpeg"
+      src={IMAGE_PLACEHOLDERS.carouselWidget}
       alt="1"
     />
   );

@@ -19,6 +19,7 @@ import { AudioContext } from "../../App";
 import { useSelector } from "react-redux";
 import axios from "../../utils/useAxios";
 import { AudioDownloadModal } from "../audioDownloadModal/AudioDownloadModal";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 function MyPlayListWidget({
   lecturer,
   id,
@@ -129,7 +130,7 @@ function MyPlayListWidget({
               <img
                 className="img_size_sm"
                 id="play"
-                src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"}
+                src={IMAGE_PLACEHOLDERS.lecture}
                 src-data={image}
                 alt="ff"
               />
@@ -233,7 +234,7 @@ function MyPlayListWidget({
                 <img
                   className="img_wrp"
                   id="play"
-                  src={"https://imagetolink.com/ib/ITczTtYvdR.jpeg"}
+                  src={IMAGE_PLACEHOLDERS.lecture}
                   src-data={image}
                   alt=""
                 />

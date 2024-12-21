@@ -20,6 +20,7 @@ import { AudioContext } from "../../App.jsx";
 import AudioActionDesktop from "../audio/audioActionDesktop";
 import { setPlaying } from "../../Redux/Actions/ActionCreators";
 import { FAVOURITE, LECTURE, LIBRARY } from "../../utils/routes/constants";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
 export const NavContext = createContext();
 
@@ -117,10 +118,7 @@ const Layout = () => {
           >
             <img
               className="curr_lect_img_sz"
-              src={
-                currentAudioInfo?.img ||
-                "https://imagetolink.com/ib/TnDGh8F6J0.jpeg"
-              }
+              src={currentAudioInfo?.img || IMAGE_PLACEHOLDERS.lecture}
               alt="disk"
             />
           </div>
