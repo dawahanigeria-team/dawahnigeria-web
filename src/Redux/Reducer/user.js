@@ -8,7 +8,7 @@ const initailState = {
   addplaylist: false,
   lecid: "",
   audioData: null,
-  audioId: 164864,
+  audioId: null,
   count: 0,
   pack: [],
   page: 0,

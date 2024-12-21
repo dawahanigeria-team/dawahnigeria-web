@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./lecturers.scss";
 import Container from "../../components/container/Container";
 import FilterButton from "../../components/filterButton/FilterButton";
-import { lecturers, alphabet } from "./data";
+import { lecturers } from "./data";
 import LecturersWidget from "../../components/lecturersWidget/LecturersWidget";
 import LecturerMobileWidget from "../../components/lecturersWidget/LecturerMobileWidget";
 import { Link, useNavigate } from "react-router-dom";
@@ -23,14 +23,11 @@ const Lecturers = () => {
   const [data3, setData3] = useState([]);
   const [active, setActive] = useState("All");
   const [active1, setActive1] = useState("All");
-  const [active2, setActive2] = useState("Hot");
   const [langid, setLangid] = useState("");
-  const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [typeName, setTypeName] = useState("");
-  const [alpha, setAlphabet] = useState("");
   const [lectId, setlectId] = useState("");
-  const queryParam = { lectId, langid, alpha, page, typeName, active };
+  const queryParam = { lectId, langid, page, typeName, active };
 
   const { isLoading, isLoadingNextPage, isLastPage, querieddata } =
     useLecturersHook(
@@ -76,7 +73,6 @@ const Lecturers = () => {
                     title={name}
                     setlectId={setlectId}
                     lecid={id}
-                    //setIsEmpty={setIsEmpty}
                     setTypeName={setTypeName}
                     action="name"
                     data={querieddata}
@@ -114,34 +110,6 @@ const Lecturers = () => {
                   </div>
                 );
               })}
-          </div>
-          <div className="lecturers_filter_alphabet">
-            {alphabet.map(({ alphabet, id }, idx) => {
-              return (
-                <div key={alphabet}>
-                  <FilterButton
-                    filter={filter}
-                    setFilter={setFilter}
-                    data1={data1}
-                    setData1={setData1}
-                    data2={data2}
-                    setData2={setData2}
-                    data3={data3}
-                    aid={id}
-                    setData3={setData3}
-                    setActiveId={setActive}
-                    active={active2}
-                    setlectId={setlectId}
-                    setActive={setActive2}
-                    setTypeName={setTypeName}
-                    title={alphabet}
-                    setAlphabet={setAlphabet}
-                    action="alphabet"
-                    data={querieddata}
-                  />
-                </div>
-              );
-            })}
           </div>
         </div>
 
