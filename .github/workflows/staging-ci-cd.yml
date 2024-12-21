@@ -18,14 +18,13 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: 20
-    - name: install Bun
-      uses: oven-sh/setup-bun@v1
+        cache: 'yarn'
 
     - name: Install dependencies
-      run: bun install
+      run: yarn install
 
     - name: Build React app
-      run: bun run build
+      run: yarn build
       env:
             REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
             REACT_APP_API_ADMINISTER_BASE_URL: ${{ secrets.REACT_APP_API_ADMINISTER_BASE_URL }}
