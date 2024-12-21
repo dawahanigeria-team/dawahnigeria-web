@@ -1,11 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
+import { lectureApi } from "../../services";
+import toast from "react-hot-toast";
 import { useCallback } from "react";
-import { toast } from "react-hot-toast";
-import { lectureApi } from "../../services/lecture.service";
-import { isNetworkError } from "../../utils/network";
 
 export const useDownloadLecture = (lecid) => {
-  const { isLoading, data, error, refetch } = useQuery(
+  const { isLoading, data, error } = useQuery(
     ["lecture", "download", lecid],
     () => {
       const payload = { lecid: Number(lecid) };
@@ -13,21 +12,9 @@ export const useDownloadLecture = (lecid) => {
     },
     {
       enabled: !!lecid,
-      retry: 2,
       onError: (error) => {
-        if (isNetworkError(error)) {
-          toast.error(
-            "Unable to download lecture file. Please check your internet connection.",
-            {
-              duration: 4000,
-              icon: '🌐',
-            }
-          );
-        } else {
-          toast.error("Unable to download lecture file. Please try again later.", {
-            duration: 4000,
-          });
-        }
+        
+        toast.error("Unable to load lecture file");
       },
     }
   );
@@ -36,10 +23,5 @@ export const useDownloadLecture = (lecid) => {
     window.open(fileUrl, "_blank");
   }, []);
 
-  const retryDownload = () => {
-    toast.loading("Retrying download...");
-    refetch();
-  };
-
-  return { isLoading, error, data, download, retryDownload };
+  return { isLoading, error, data, download };
 };

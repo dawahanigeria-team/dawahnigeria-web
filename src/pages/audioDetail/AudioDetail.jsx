@@ -644,7 +644,13 @@ const AudioDetail = () => {
                     More
                   </div>
                 </div>
-                {moreOption && (
+                <div
+                  className={
+                    moreOption
+                      ? "right-0 top-10  absolute min-w-max h-fit"
+                      : "hidden"
+                  }
+                >
                   <span
                     onClick={(e) => {
                       e.stopPropagation();
@@ -652,19 +658,11 @@ const AudioDetail = () => {
                     }}
                     className="fixed inset-0 bg-none z-[90] w-full h-full"
                   ></span>
-                )}
-                <div
-                  className={
-                    moreOption
-                      ? "right-0 top-10 z-[200] absolute min-w-max h-fit"
-                      : "hidden"
-                  }
-                >
                   <div
                     onClick={(e) => {
                       e.stopPropagation();
                     }}
-                    className="bg-background shadow-lg border   rounded-sm space-y-2 p-1 font-light text-[12px] text-foreground"
+                    className="bg-background shadow-lg border z-[200]  rounded-sm space-y-2 p-1 font-light text-[12px] text-foreground"
                   >
                     <span
                       onClick={(e) => {
