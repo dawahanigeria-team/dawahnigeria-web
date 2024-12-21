@@ -44,8 +44,6 @@ import {
 import Addplaylist from "../../pages/add_playlist/AddPlaylist";
 import { LECTURE, RESOURCE_PERSON } from "../../utils/routes/constants";
 import { AudioDownloadModal } from "../audioDownloadModal/AudioDownloadModal";
-import { useMediaPlayer } from "../../utils/mediaPlayer";
-
 const AudioActionDesktop = () => {
   const { currentUser, audioId, isrepeat, value, page, count, pack, playing } =
     useSelector((state) => state.user);
@@ -69,36 +67,38 @@ const AudioActionDesktop = () => {
   const [isminimize, setminimize] = useState(false);
   const [transition, settransition] = useState(true);
   const [isloaded, setnotloaded] = useState(true);
+  const getMusic = (audioId) => {
+    //dispatch(setPlaying(false));
+    setLoading(true);
+    ///get lecture audio
+    axios
+      .get(`/leclistingapi.php?lecid=${audioId}`)
+      .then((res) => {
+        setcurrentaudio(res.data[0]);
 
-  const { playMedia, pauseMedia } = useMediaPlayer(audioRef);
+        dispatch(getcurrentAudioInfo(res.data[0]));
+        setLoading(false);
 
-  const getMusic = async (audioId) => {
-    try {
-      setLoading(true);
-      const response = await axios.get(`/leclistingapi.php?lecid=${audioId}`);
-      const audioData = response.data[0];
-      
-      setcurrentaudio(audioData);
-      dispatch(getcurrentAudioInfo(audioData));
-      setLoading(false);
 
-      if (initial) {
-        dispatch(setPlaying(false));
-        await pauseMedia();
-        cancelAnimationFrame(playAnimation.current);
-      } else {
-        dispatch(setPlaying(true));
-        await playMedia();
-        playAnimation.current = requestAnimationFrame(repeat);
-      }
-    } catch (error) {
-      setLoading(false);
-      toast.error("Unable to load audio. Please try again.");
-    }
+        if (initial) {
+          dispatch(setPlaying(false));
+          audioRef.current?.pause();
+
+          cancelAnimationFrame(playAnimation.current);
+        } else {
+          dispatch(setPlaying(true));
+
+          audioRef.current?.play();
+          playAnimation.current = requestAnimationFrame(repeat);
+        }
+      })
+      .catch((err) => {});
   };
 
   useEffect(() => {
-    if (!audioId) return;
+    if (!audioId) {
+      return;
+    }
     getMusic(audioId);
   }, [audioId]);
 
@@ -113,7 +113,6 @@ const AudioActionDesktop = () => {
   useEffect(() => {
     playAnimation.current = requestAnimationFrame(repeat);
     handleRange(audioRef?.current?.currentTime);
-    return () => cancelAnimationFrame(playAnimation.current);
   }, [audioRef, repeat]);
 
   useEffect(() => {
@@ -124,57 +123,49 @@ const AudioActionDesktop = () => {
       audio_id: audioId,
       user_id: currentUser?.id,
     };
-
-    const postRecent = async () => {
+    async function postRecent() {
       if (audioId) {
-        try {
-          await axios.post(`/recentApi.php`, payload, {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-            },
-          });
-        } catch (error) {
-          console.warn('Error posting recent:', error);
-        }
+        await axios.post(`/recentApi.php`, payload, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
+          },
+        });
       }
-    };
+    }
     postRecent();
   }, [audioId]);
+  //************ */
 
   useEffect(() => {
     if (playing && !initial) {
-      playMedia().catch(error => {
-        if (error.name === 'AbortError') {
-          // Retry play if aborted
-          playMedia();
-        }
-      });
+      audioRef.current?.play();
       playAnimation.current = requestAnimationFrame(repeat);
     } else {
-      pauseMedia();
+      audioRef.current?.pause();
       cancelAnimationFrame(playAnimation.current);
     }
   }, [playing]);
 
-  const handlePlay = async () => {
+  const handlePlay = () => {
     setinitial(false);
     if (playing) {
       dispatch(setPlaying(false));
-      await pauseMedia();
+      audioRef.current?.pause(); // Pause the audio
     } else {
       dispatch(setPlaying(true));
-      await playMedia();
+      audioRef.current?.play();
+      // Play the audio
     }
   };
 
   const shareAudio = () => {
     setisShare(!isShare);
   };
-
   const handleRange = (curr) => {
     dispatch(getValue(curr));
+
     if (audioRef.current) {
       audioRef.current.currentTime = curr;
     }
@@ -208,7 +199,6 @@ const AudioActionDesktop = () => {
       dispatch(getCount(0));
     }
   };
-
   const handlePreviousAudio = () => {
     setinitial(false);
     setnotloaded(true);
@@ -248,15 +238,13 @@ const AudioActionDesktop = () => {
 
       return;
     } else {
-      if (!audioId || !audioRef?.current) return;
       getMusic(audioId);
       dispatch(getValue(0));
-
       audioRef.current.currentTime = 0;
 
       return;
     }
-  }, [isComplete, audioId, audioRef]);
+  }, [isComplete]);
 
   const addToPlaylist = () => {
     dispatch(getLecid(audioId));
@@ -325,9 +313,6 @@ const AudioActionDesktop = () => {
   function handleState() {
     setnotloaded(false);
   }
-
-  if (loading) return <></>;
-  if (isloaded && (!audioId || !currentaudio?.audio)) return <></>;
 
   return (
     <>

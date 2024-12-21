@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { persistStore, persistReducer } from "redux-persist";
-import storageSession from "redux-persist/lib/storage/session"; // Read about storage engines here: https://www.npmjs.com/package/redux-persist#storage-engines
+import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./Redux/Reducer/index";
@@ -14,9 +14,11 @@ import { createLogger } from "redux-logger";
 import thunk from "redux-thunk";
 import { BrowserRouter as Router } from "react-router-dom";
 
+
+
 const persistConfig = {
   key: "root",
-  storage: storageSession,
+  storage,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
