@@ -1,4 +1,5 @@
 import { toast } from 'react-hot-toast';
+import React from 'react';
 
 // Network status singleton to track connectivity
 class NetworkStatusManager {
@@ -57,3 +58,4 @@ export const isNetworkError = (error) => {
     error?.code === 'ERR_NETWORK' ||
     error?.code === 'ECONNABORTED' ||
     error?.response?.status === 0;
+};
