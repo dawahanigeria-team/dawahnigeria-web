@@ -102,7 +102,7 @@ Sentry.init({
 const App = () => {
   usePageTracking();
   const scroll = useRef();
-  const audioRef = useRef();
+  const audioRef = useRef(null);
   const rangeRef = useRef();
   const [initial, setinitial] = useState(true);
   const [text, setText] = useState();
@@ -112,6 +112,8 @@ const App = () => {
   const [albumId, setAlbumId] = useState([]);
   const [loading, setLoading] = useState(false);
   const { darkQuery } = useThemeHook();
+  const [searchType, setSearchType] = useState("general");
+  const [playing, setPlaying] = useState(false);
 
   //Detect if user has interacted with the page
   useEffect(() => {
@@ -121,6 +123,21 @@ const App = () => {
     document.addEventListener("click", handleClick);
     return () => {
       document.removeEventListener("click", handleClick);
+    };
+  }, []);
+
+  // Add this effect to handle audio interruptions
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden && audioRef.current) {
+        audioRef.current.pause();
+        setPlaying(false);
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
 
@@ -168,6 +185,8 @@ const App = () => {
             setLanguageId,
             categoryId,
             setCategoryId,
+            searchType,
+            setSearchType,
           }}
         >
           <AudioContext.Provider
@@ -178,6 +197,8 @@ const App = () => {
               setinitial,
               loading,
               setLoading,
+              playing,
+              setPlaying,
             }}
           >
             <ThemeProvider.Provider value={{ darkQuery }}>
