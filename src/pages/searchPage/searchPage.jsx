@@ -22,7 +22,7 @@ import {
 import { SEARCH } from "../../utils/routes/constants";
 import HeadMeta from "../../components/head-meta";
 const SearchPage = () => {
-  const { albumId, lecturerId, text, languageId, categoryId } =
+  const { albumId, lecturerId, text, languageId, categoryId, searchType } =
     useContext(SearchContext);
   const { searchData, searchRecord } = useSelector((state) => state.search);
   const navigate = useNavigate();
@@ -42,29 +42,31 @@ const SearchPage = () => {
   }, [text]);
 
   function fetchData(languageId, categoryId, lecturerId, albumId) {
-    //e.preventDefault();
-
     if (text === "") return;
     setLoading(true);
+
+    const baseUrl = `${process.env.REACT_APP_API_BASE_URL}/searchApi.php`;
+    const apiUrl = `${baseUrl}?type=${searchType}&value=${text}`;
+
     axios
-      .get(
-        `https://www.dawahbox.com/scripts/py_srch_exec.php?srch_str=${text}${
-          languageId?.length !== 0 ? `&lang_id=${languageId.toString()}` : ""
-        }${lecturerId?.length !== 0 ? `&rp_id=${lecturerId.toString()}` : ""}${
-          categoryId?.length !== 0 ? `&cat_id=${categoryId.toString()}` : ""
-        }${albumId?.length !== 0 ? `&album_id=${albumId.toString()}` : ""}`
-      )
+      .get(apiUrl)
       .then((res) => {
         setLoading(false);
-        const { display_data, section_data, total_rec_by_section } = res.data;
-        dispatch(getSearchData(display_data.mini_result));
-        dispatch(getSearchOptions(section_data));
-        dispatch(getSearchRecord(total_rec_by_section));
+        if (res.data.success) {
+          dispatch(getSearchData(res.data.data));
+          dispatch(getSearchRecord(res.data.total));
+          dispatch(getSearchOptions({}));
+        } else {
+          dispatch(getSearchData([]));
+          dispatch(getSearchOptions({}));
+          dispatch(getSearchRecord(0));
+        }
       })
       .catch((err) => {
         setLoading(false);
         dispatch(getSearchData([]));
         dispatch(getSearchOptions({}));
+        dispatch(getSearchRecord(0));
       });
   }
 

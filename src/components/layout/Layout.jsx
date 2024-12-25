@@ -61,6 +61,25 @@ const Layout = () => {
     };
   }, [res]);
 
+  useEffect(() => {
+    const handleRouteChange = () => {
+      // Pause audio and reset state
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        dispatch(setPlaying(false)); // Make sure to import setPlaying action
+        setinitial(true);
+      }
+    };
+
+    // Call on mount and route changes
+    handleRouteChange();
+
+    return () => {
+      handleRouteChange();
+    };
+  }, [location.pathname, audioRef, dispatch, setinitial]);
+
   return (
     <div className="layout_wrapper">
       <div
@@ -145,10 +164,26 @@ const Layout = () => {
           <div
             onClick={() => {
               if (playing) {
-                dispatch(setPlaying(!playing));
+                audioRef.current?.pause();
+                dispatch(setPlaying(false));
               } else {
-                dispatch(setPlaying(!playing));
-                setinitial(false);
+                try {
+                  const playPromise = audioRef.current?.play();
+                  if (playPromise !== undefined) {
+                    playPromise
+                      .then(() => {
+                        dispatch(setPlaying(true));
+                        setinitial(false);
+                      })
+                      .catch((error) => {
+                        console.error("Playback failed:", error);
+                        dispatch(setPlaying(false));
+                      });
+                  }
+                } catch (error) {
+                  console.error("Play error:", error);
+                  dispatch(setPlaying(false));
+                }
               }
             }}
             className="layout_buttom_play_wrap dark:bg-[#ddff2b] bg-gray-500"
