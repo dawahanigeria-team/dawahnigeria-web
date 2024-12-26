@@ -221,3 +221,56 @@
     display: none;
   }
 }
+
+.album_widget_wrapper {
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.02);
+  }
+
+  .album_widget_img_wrap {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+
+    .album_widget_img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .album_widget_text_wrap {
+    padding: 0 4px;
+
+    .album_widget_text1 {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .album_widget_text2 {
+      font-size: 14px;
+      color: #666;
+      margin-top: 4px;
+    }
+  }
+}
+
+// Grid layout for the container
+.recommended2_wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 24px;
+  padding: 24px;
+}

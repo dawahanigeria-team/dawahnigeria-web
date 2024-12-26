@@ -5,7 +5,7 @@ import { FiHeadphones } from "react-icons/fi";
 import { formatNumber } from "../UI/formatter";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
-const LecturersWidget = ({ img, rp, views, styling }) => {
+const LecturersWidget = ({ img, rp, rpname, views, styling }) => {
   //const lazy = useRef()
 
   ////not contented but under presssure by DN project manager
@@ -41,6 +41,12 @@ const LecturersWidget = ({ img, rp, views, styling }) => {
         <p className="lecturerWidget_text text-foreground">
           {rp ? rp : "undefined"}
         </p>
+        
+        {rpname && (
+          <p className="lecturerWidget_rpname text-foreground">
+            {rpname}
+          </p>
+        )}
        
         <div className={!styling ? "lecturerWidget_views_wrapper text-foreground" : "hidden"}>
 
