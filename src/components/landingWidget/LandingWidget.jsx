@@ -82,11 +82,11 @@ const LandingWidget = ({ categories, img, views, nid, styling, rpname }) => {
         </button>
       </div>
       <div className="space-y-1 w-full">
-        <p className="text-sm font-medium text-color-primary line-clamp-2 pl-[3%]">
+        <p className="text-xs sm:text-sm font-medium text-color-primary line-clamp-2 pl-[3%] mb-0.5">
           {formatTitle(categories)}
         </p>
         {rpname && (
-          <p className="text-sm text-gray-500 line-clamp-1 pl-[3%]">
+          <p className="text-[11px] sm:text-sm text-gray-500 line-clamp-2 pl-[3%] min-h-[28px]">
             {rpname}
           </p>
         )}
