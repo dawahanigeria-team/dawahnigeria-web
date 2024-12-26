@@ -140,13 +140,81 @@ const AudioActionDesktop = () => {
 
   useEffect(() => {
     if (playing && !initial) {
-      audioRef.current?.play();
-      playAnimation.current = requestAnimationFrame(repeat);
+      audioRef.current?.play()
+        .then(() => {
+          playAnimation.current = requestAnimationFrame(repeat);
+          
+          // Set up MediaSession API for background playback
+          if ('mediaSession' in navigator) {
+            navigator.mediaSession.metadata = new MediaMetadata({
+              title: currentaudio?.title || 'Audio Track',
+              artist: currentaudio?.rpname || 'Unknown Artist',
+              artwork: [
+                { src: currentaudio?.image || lazys, sizes: '512x512', type: 'image/jpeg' }
+              ]
+            });
+
+            navigator.mediaSession.setActionHandler('play', () => {
+              dispatch(setPlaying(true));
+              audioRef.current?.play();
+            });
+
+            navigator.mediaSession.setActionHandler('pause', () => {
+              dispatch(setPlaying(false));
+              audioRef.current?.pause();
+            });
+
+            navigator.mediaSession.setActionHandler('previoustrack', handlePreviousAudio);
+            navigator.mediaSession.setActionHandler('nexttrack', handleNextAudio);
+            
+            // Add seek handlers
+            navigator.mediaSession.setActionHandler('seekbackward', () => {
+              const newTime = Math.max(audioRef.current.currentTime - 10, 0);
+              audioRef.current.currentTime = newTime;
+              handleRange(newTime);
+            });
+
+            navigator.mediaSession.setActionHandler('seekforward', () => {
+              const newTime = Math.min(audioRef.current.currentTime + 10, audioRef.current.duration);
+              audioRef.current.currentTime = newTime;
+              handleRange(newTime);
+            });
+
+            // Update position state
+            if ('setPositionState' in navigator.mediaSession) {
+              navigator.mediaSession.setPositionState({
+                duration: audioRef.current.duration || 0,
+                playbackRate: audioRef.current.playbackRate,
+                position: audioRef.current.currentTime || 0
+              });
+            }
+          }
+        })
+        .catch(error => {
+          console.error('Playback failed:', error);
+          // Handle the error appropriately
+        });
     } else {
       audioRef.current?.pause();
       cancelAnimationFrame(playAnimation.current);
     }
-  }, [playing]);
+
+    // Add audio focus management
+    const handleAudioInterruption = () => {
+      const handlePlay = () => {
+        if (playing && !initial) {
+          audioRef.current?.play();
+        }
+      };
+
+      audioRef.current?.addEventListener('pause', handlePlay);
+      return () => {
+        audioRef.current?.removeEventListener('pause', handlePlay);
+      };
+    };
+
+    return handleAudioInterruption();
+  }, [playing, initial, currentaudio]);
 
   const handlePlay = () => {
     setinitial(false);
