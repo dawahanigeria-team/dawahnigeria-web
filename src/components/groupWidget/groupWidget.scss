@@ -128,11 +128,13 @@
     overflow: auto;
 
     .overflow_auto_after {
-      width: max-content;
       display: flex;
-      gap: 1rem;
+      flex-direction: row;
+      gap: 12px;
+      padding: 4px;
+
       @media screen and (max-width: 615px) {
-        gap: 0.5rem;
+        gap: 16px;
       }
 
       .groupWidget_lecturer_item {
@@ -149,6 +151,12 @@
       }
       .groupWidget_album_item {
         cursor: pointer;
+        flex: 0 0 auto;
+        width: 200px;
+        
+        @media screen and (max-width: 615px) {
+          width: 160px;
+        }
       }
       .groupWidget_album_item {
         width: fit-content !important;

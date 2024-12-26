@@ -156,7 +156,7 @@ const GroupWidget = ({
             <img src={foward} alt="foward" />
           </div>
           <div ref={slide} className="overflow_auto_wrapper">
-            <div className="overflow_auto_after">
+            <div className={`overflow_auto_after ${styling ? "min-[615px]:space-x-3" : "space-x-4"}`}>
               {Array.isArray(data) &&
                 data.map(
                   (
