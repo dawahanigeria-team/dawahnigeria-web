@@ -1,5 +1,3 @@
-
-
 .lecturerWidget_wrapper:hover .lecturerWidget_text {
   font-family: "Nunito Sans";
   font-style: normal;
@@ -97,7 +95,16 @@
     margin: unset;
     text-align: center;
   }
-
+  .lecturerWidget_rpname {
+    font-size: 0.85rem;
+    color: #a7a7a7;
+    margin-top: -0.5rem;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
   .lecturerWidget_views_wrapper {
     display: flex;
     flex-direction: row;

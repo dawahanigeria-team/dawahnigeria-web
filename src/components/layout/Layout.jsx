@@ -80,6 +80,13 @@ const Layout = () => {
     };
   }, [location.pathname, audioRef, dispatch, setinitial]);
 
+  const handleRangeChange = (e) => {
+    if (audioRef.current) {
+      const newTime = parseFloat(e.target.value);
+      audioRef.current.currentTime = newTime;
+    }
+  };
+
   return (
     <div className="layout_wrapper">
       <div
@@ -118,9 +125,14 @@ const Layout = () => {
             <input
               ref={rangeRef}
               type="range"
-              min={"0"}
-              max={Math.floor(audioRef?.current?.duration)}
-              value={value}
+              min="0"
+              max={
+                audioRef?.current?.duration
+                  ? Math.floor(audioRef.current.duration)
+                  : "100"
+              }
+              value={value || 0}
+              onChange={handleRangeChange}
               className=""
             />
           </div>
