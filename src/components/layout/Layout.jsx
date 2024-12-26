@@ -19,8 +19,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { AudioContext } from "../../App.jsx";
 import AudioActionDesktop from "../audio/audioActionDesktop";
 import { setPlaying } from "../../Redux/Actions/ActionCreators";
-import { FAVOURITE, LECTURE, LIBRARY } from "../../utils/routes/constants";
+import {
+  FAVOURITE,
+  LECTURE,
+  LIBRARY,
+  DOWNLOAD,
+} from "../../utils/routes/constants";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
+import { MdDownload } from "react-icons/md";
 
 export const NavContext = createContext();
 
@@ -276,6 +282,29 @@ const Layout = () => {
               }
             >
               Favorites
+            </p>
+          </div>
+          <div
+            onClick={() => {
+              navigate(DOWNLOAD);
+            }}
+            className="layout_buttom_menue2_download"
+          >
+            <MdDownload
+              className={
+                location.pathname === DOWNLOAD
+                  ? "layout_buttom_menue2_downloadIcon_active dark:text-[#ddff2b] text-color-foreground"
+                  : "layout_buttom_menue2_downloadIcon text-color"
+              }
+            />
+            <p
+              className={
+                location.pathname === DOWNLOAD
+                  ? "layout_buttom_menue2_downloadText_active dark:text-[#ddff2b] text-color-foreground font-semibold"
+                  : "layout_buttom_menue2_downloadText text-color"
+              }
+            >
+              Download
             </p>
           </div>
         </div>
