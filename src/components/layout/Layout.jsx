@@ -19,8 +19,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { AudioContext } from "../../App.jsx";
 import AudioActionDesktop from "../audio/audioActionDesktop";
 import { setPlaying } from "../../Redux/Actions/ActionCreators";
-import { FAVOURITE, LECTURE, LIBRARY } from "../../utils/routes/constants";
+import {
+  FAVOURITE,
+  LECTURE,
+  LIBRARY,
+  DOWNLOAD,
+} from "../../utils/routes/constants";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
+import { MdDownload } from "react-icons/md";
 
 export const NavContext = createContext();
 
@@ -63,22 +69,75 @@ const Layout = () => {
 
   useEffect(() => {
     const handleRouteChange = () => {
-      // Pause audio and reset state
       if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0;
-        dispatch(setPlaying(false)); // Make sure to import setPlaying action
-        setinitial(true);
+        try {
+          // First pause the audio
+          audioRef.current.pause();
+          // Then reset the state
+          audioRef.current.currentTime = 0;
+          dispatch(setPlaying(false));
+          setinitial(true);
+          // Remove any event listeners safely
+          if (audioRef.current.onplay) {
+            audioRef.current.onplay = null;
+          }
+          if (audioRef.current.onpause) {
+            audioRef.current.onpause = null;
+          }
+          if (audioRef.current.onloadstart) {
+            audioRef.current.onloadstart = null;
+          }
+        } catch (error) {
+          console.error("Error cleaning up audio:", error);
+        }
       }
     };
 
     // Call on mount and route changes
     handleRouteChange();
 
-    return () => {
+    // Safely add and remove event listener
+    const handleBeforeUnload = () => {
       handleRouteChange();
     };
+
+    if (window) {
+      window.addEventListener("beforeunload", handleBeforeUnload);
+    }
+
+    return () => {
+      handleRouteChange();
+      if (window) {
+        window.removeEventListener("beforeunload", handleBeforeUnload);
+      }
+    };
   }, [location.pathname, audioRef, dispatch, setinitial]);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden && audioRef.current) {
+        try {
+          audioRef.current.pause();
+          dispatch(setPlaying(false));
+        } catch (error) {
+          console.error("Error pausing audio:", error);
+        }
+      }
+    };
+
+    if (document) {
+      document.addEventListener("visibilitychange", handleVisibilityChange);
+    }
+
+    return () => {
+      if (document) {
+        document.removeEventListener(
+          "visibilitychange",
+          handleVisibilityChange
+        );
+      }
+    };
+  }, [audioRef, dispatch]);
 
   const handleRangeChange = (e) => {
     if (audioRef.current) {
@@ -276,6 +335,29 @@ const Layout = () => {
               }
             >
               Favorites
+            </p>
+          </div>
+          <div
+            onClick={() => {
+              navigate(DOWNLOAD);
+            }}
+            className="layout_buttom_menue2_download"
+          >
+            <MdDownload
+              className={
+                location.pathname === DOWNLOAD
+                  ? "layout_buttom_menue2_downloadIcon_active dark:text-[#ddff2b] text-color-foreground"
+                  : "layout_buttom_menue2_downloadIcon text-color"
+              }
+            />
+            <p
+              className={
+                location.pathname === DOWNLOAD
+                  ? "layout_buttom_menue2_downloadText_active dark:text-[#ddff2b] text-color-foreground font-semibold"
+                  : "layout_buttom_menue2_downloadText text-color"
+              }
+            >
+              Download
             </p>
           </div>
         </div>
