@@ -77,10 +77,16 @@ const Layout = () => {
           audioRef.current.currentTime = 0;
           dispatch(setPlaying(false));
           setinitial(true);
-          // Remove any event listeners
-          audioRef.current.onplay = null;
-          audioRef.current.onpause = null;
-          audioRef.current.onloadstart = null;
+          // Remove any event listeners safely
+          if (audioRef.current.onplay) {
+            audioRef.current.onplay = null;
+          }
+          if (audioRef.current.onpause) {
+            audioRef.current.onpause = null;
+          }
+          if (audioRef.current.onloadstart) {
+            audioRef.current.onloadstart = null;
+          }
         } catch (error) {
           console.error("Error cleaning up audio:", error);
         }
@@ -90,12 +96,20 @@ const Layout = () => {
     // Call on mount and route changes
     handleRouteChange();
 
-    // Add event listener for beforeunload
-    window.addEventListener("beforeunload", handleRouteChange);
+    // Safely add and remove event listener
+    const handleBeforeUnload = () => {
+      handleRouteChange();
+    };
+
+    if (window) {
+      window.addEventListener("beforeunload", handleBeforeUnload);
+    }
 
     return () => {
       handleRouteChange();
-      window.removeEventListener("beforeunload", handleRouteChange);
+      if (window) {
+        window.removeEventListener("beforeunload", handleBeforeUnload);
+      }
     };
   }, [location.pathname, audioRef, dispatch, setinitial]);
 
@@ -111,9 +125,17 @@ const Layout = () => {
       }
     };
 
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+    if (document) {
+      document.addEventListener("visibilitychange", handleVisibilityChange);
+    }
+
     return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      if (document) {
+        document.removeEventListener(
+          "visibilitychange",
+          handleVisibilityChange
+        );
+      }
     };
   }, [audioRef, dispatch]);
 
