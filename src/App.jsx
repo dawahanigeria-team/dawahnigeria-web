@@ -126,20 +126,31 @@ const App = () => {
     };
   }, []);
 
-  // Add this effect to handle audio interruptions
+  // Add wake lock to prevent device from sleeping during playback
   useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.hidden && audioRef.current) {
-        audioRef.current.pause();
-        setPlaying(false);
+    let wakeLock = null;
+    
+    const requestWakeLock = async () => {
+      try {
+        if ('wakeLock' in navigator) {
+          wakeLock = await navigator.wakeLock.request('screen');
+        }
+      } catch (err) {
+        console.log('Wake Lock error:', err);
       }
     };
 
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+    if (playing && !initial) {
+      requestWakeLock();
+    }
+
     return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      if (wakeLock) {
+        wakeLock.release();
+        wakeLock = null;
+      }
     };
-  }, []);
+  }, [playing, initial]);
 
   return (
     <div ref={scroll} className="app_wrapper">
