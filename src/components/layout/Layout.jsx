@@ -69,80 +69,97 @@ const Layout = () => {
 
   useEffect(() => {
     const handleRouteChange = () => {
-      if (audioRef.current) {
-        try {
-          // First pause the audio
-          audioRef.current.pause();
-          // Then reset the state
-          audioRef.current.currentTime = 0;
-          dispatch(setPlaying(false));
-          setinitial(true);
-          // Remove any event listeners safely
-          if (audioRef.current.onplay) {
-            audioRef.current.onplay = null;
+      if (location.pathname.includes("/dawahcast/l/") && audioRef.current) {
+        const newAudioId = location.pathname.split("/").pop();
+        if (newAudioId !== audioId) {
+          try {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0;
+            dispatch(setPlaying(false));
+            setinitial(true);
+          } catch (error) {
+            console.error("Error cleaning up audio:", error);
           }
-          if (audioRef.current.onpause) {
-            audioRef.current.onpause = null;
-          }
-          if (audioRef.current.onloadstart) {
-            audioRef.current.onloadstart = null;
-          }
-        } catch (error) {
-          console.error("Error cleaning up audio:", error);
         }
       }
     };
 
-    // Call on mount and route changes
     handleRouteChange();
-
-    // Safely add and remove event listener
-    const handleBeforeUnload = () => {
-      handleRouteChange();
-    };
-
-    if (window) {
-      window.addEventListener("beforeunload", handleBeforeUnload);
-    }
-
-    return () => {
-      handleRouteChange();
-      if (window) {
-        window.removeEventListener("beforeunload", handleBeforeUnload);
-      }
-    };
-  }, [location.pathname, audioRef, dispatch, setinitial]);
+  }, [location.pathname, audioId]);
 
   useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.hidden && audioRef.current) {
+    const setupAudioContext = async () => {
+      if (audioRef.current) {
         try {
-          audioRef.current.pause();
-          dispatch(setPlaying(false));
+          audioRef.current.setAttribute("playsinline", "true");
+          audioRef.current.setAttribute("webkit-playsinline", "true");
+          audioRef.current.setAttribute("autoplay", "false");
+
+          if ("mediaSession" in navigator) {
+            navigator.mediaSession.setActionHandler("play", () => {
+              audioRef.current.play();
+              dispatch(setPlaying(true));
+            });
+            navigator.mediaSession.setActionHandler("pause", () => {
+              audioRef.current.pause();
+              dispatch(setPlaying(false));
+            });
+          }
         } catch (error) {
-          console.error("Error pausing audio:", error);
+          console.error("Error setting up audio:", error);
         }
       }
     };
 
-    if (document) {
-      document.addEventListener("visibilitychange", handleVisibilityChange);
-    }
-
-    return () => {
-      if (document) {
-        document.removeEventListener(
-          "visibilitychange",
-          handleVisibilityChange
-        );
-      }
-    };
-  }, [audioRef, dispatch]);
+    setupAudioContext();
+  }, [audioRef]);
 
   const handleRangeChange = (e) => {
     if (audioRef.current) {
       const newTime = parseFloat(e.target.value);
       audioRef.current.currentTime = newTime;
+    }
+  };
+
+  // Update the play handler in the mobile menu
+  const handlePlay = async () => {
+    if (playing) {
+      audioRef.current?.pause();
+      dispatch(setPlaying(false));
+    } else {
+      try {
+        if ("mediaSession" in navigator) {
+          navigator.mediaSession.metadata = new MediaMetadata({
+            title: currentAudioInfo?.title || "Unknown Title",
+            artist: currentAudioInfo?.rpname || "Unknown Artist",
+            artwork: [
+              {
+                src: currentAudioInfo?.img || "",
+                sizes: "512x512",
+                type: "image/jpeg",
+              },
+            ],
+          });
+        }
+
+        const playPromise = audioRef.current?.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              dispatch(setPlaying(true));
+              setinitial(false);
+            })
+            .catch((error) => {
+              if (error.name !== "NotAllowedError") {
+                console.error("Playback failed:", error);
+                dispatch(setPlaying(false));
+              }
+            });
+        }
+      } catch (error) {
+        console.error("Play error:", error);
+        dispatch(setPlaying(false));
+      }
     }
   };
 
@@ -233,30 +250,7 @@ const Layout = () => {
             <BiShareAlt className="layout_buttom_share text-color" />
           </div>
           <div
-            onClick={() => {
-              if (playing) {
-                audioRef.current?.pause();
-                dispatch(setPlaying(false));
-              } else {
-                try {
-                  const playPromise = audioRef.current?.play();
-                  if (playPromise !== undefined) {
-                    playPromise
-                      .then(() => {
-                        dispatch(setPlaying(true));
-                        setinitial(false);
-                      })
-                      .catch((error) => {
-                        console.error("Playback failed:", error);
-                        dispatch(setPlaying(false));
-                      });
-                  }
-                } catch (error) {
-                  console.error("Play error:", error);
-                  dispatch(setPlaying(false));
-                }
-              }
-            }}
+            onClick={handlePlay}
             className="layout_buttom_play_wrap dark:bg-[#ddff2b] bg-gray-500"
           >
             {!playing ? (
