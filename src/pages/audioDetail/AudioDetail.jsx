@@ -475,10 +475,15 @@ const AudioDetail = () => {
                   <AudioDownloadModal
                     downloads={currentAudioInfo?.downloads}
                     nid={currentAudioInfo?.nid}
+                    triggerInnerChild={
+                      <div className="flex flex-col items-center">
+                        <RiDownload2Fill className="audiores_download text-color" />
+                        <div className="dark:text-white text-center text-sm">
+                          Download
+                        </div>
+                      </div>
+                    }
                   />
-                  <div className="dark:text-white text-center text-sm">
-                    Download
-                  </div>
                 </div>
               </div>
             </div>
@@ -588,12 +593,14 @@ const AudioDetail = () => {
                   downloads={currentAudioInfo?.downloads}
                   nid={currentAudioInfo?.nid}
                   triggerInnerChild={
-                    <RiDownload2Fill className="audiores_download text-color" />
+                    <div className="flex flex-col items-center">
+                      <RiDownload2Fill className="audiores_download text-color" />
+                      <div className="dark:text-white text-center text-sm">
+                        Download
+                      </div>
+                    </div>
                   }
                 />
-                <div className="dark:text-white text-center text-sm">
-                  Download
-                </div>
               </div>
               <div className="audiores_play_control">
                 <button
