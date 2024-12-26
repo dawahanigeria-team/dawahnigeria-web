@@ -69,22 +69,53 @@ const Layout = () => {
 
   useEffect(() => {
     const handleRouteChange = () => {
-      // Pause audio and reset state
       if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0;
-        dispatch(setPlaying(false)); // Make sure to import setPlaying action
-        setinitial(true);
+        try {
+          // First pause the audio
+          audioRef.current.pause();
+          // Then reset the state
+          audioRef.current.currentTime = 0;
+          dispatch(setPlaying(false));
+          setinitial(true);
+          // Remove any event listeners
+          audioRef.current.onplay = null;
+          audioRef.current.onpause = null;
+          audioRef.current.onloadstart = null;
+        } catch (error) {
+          console.error("Error cleaning up audio:", error);
+        }
       }
     };
 
     // Call on mount and route changes
     handleRouteChange();
 
+    // Add event listener for beforeunload
+    window.addEventListener("beforeunload", handleRouteChange);
+
     return () => {
       handleRouteChange();
+      window.removeEventListener("beforeunload", handleRouteChange);
     };
   }, [location.pathname, audioRef, dispatch, setinitial]);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden && audioRef.current) {
+        try {
+          audioRef.current.pause();
+          dispatch(setPlaying(false));
+        } catch (error) {
+          console.error("Error pausing audio:", error);
+        }
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [audioRef, dispatch]);
 
   const handleRangeChange = (e) => {
     if (audioRef.current) {
