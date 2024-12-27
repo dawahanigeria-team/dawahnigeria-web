@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useRef, useState, useEffect } from "react";
 import "./more.scss";
 import Container from "../../components/container/Container";
 import { useNavigate, useLocation, Link } from "react-router-dom";
@@ -36,20 +36,55 @@ function More() {
   const [showFilters, setShowFilters] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const { state, pathname } = useLocation();
+
+  // Default values when state is null
+  const defaultState = {
+    name: "",
+    type: "lectures",
+    id: "",
+    currentdata: [],
+    navtitle: "Home",
+    heading: "Recently Posted",
+    endpoint_url: "/leclisting_recent.php?&action=get_recent_audio&page=",
+    currentPage: 1,
+  };
+
+  // Use state values if available, otherwise use defaults
   const {
-    name,
-    type,
-    id,
-    currentdata,
-    navtitle,
-    heading,
-    endpoint_url,
-    currentPage,
-  } = state;
+    name = defaultState.name,
+    type = defaultState.type,
+    id = defaultState.id,
+    currentdata = defaultState.currentdata,
+    navtitle = defaultState.navtitle,
+    heading = defaultState.heading,
+    endpoint_url = defaultState.endpoint_url,
+    currentPage = defaultState.currentPage,
+  } = state || defaultState;
+
   const [page, setPage] = useState(currentPage);
   const navigate = useNavigate();
   const { setinitial } = useContext(AudioContext);
   const keyParam = { endpoint_url, page };
+
+  // Get the appropriate endpoint based on the pathname
+  useEffect(() => {
+    if (!state) {
+      const path = pathname;
+      let newEndpoint = defaultState.endpoint_url;
+
+      if (path.includes("recently-viewed")) {
+        newEndpoint =
+          "/leclisting_recent_viewed.php?&action=get_recent_viewed&page=";
+      } else if (path.includes("trending")) {
+        newEndpoint = "/leclisting_trending.php?&action=get_trending&page=";
+      } else if (path.includes("recommended")) {
+        newEndpoint =
+          "/leclisting_recommended.php?&action=get_recommended&page=";
+      }
+
+      keyParam.endpoint_url = newEndpoint;
+    }
+  }, [pathname, state]);
 
   const { data, isLoading, isLoadingNextPage, isLastPage } = useMoreViewHook(
     keyParam,
@@ -61,6 +96,20 @@ function More() {
     page,
     setPage
   );
+
+  const getSectionTitle = () => {
+    const path = pathname;
+    if (path.includes("recently-posted")) {
+      return "Recently Posted";
+    } else if (path.includes("recently-viewed")) {
+      return "Recently Viewed";
+    } else if (path.includes("trending")) {
+      return "Trending";
+    } else if (path.includes("recommended")) {
+      return "Recommended";
+    }
+    return heading;
+  };
 
   // Filter panel component
   const FilterPanel = () => (
@@ -131,12 +180,14 @@ function More() {
 
   return (
     <Container>
-      <HeadMeta title={`${heading ?? "Islamic"} resources on Dawah Nigeria `} />
+      <HeadMeta
+        title={`${getSectionTitle() ?? "Islamic"} resources on Dawah Nigeria `}
+      />
       <div className="more_wrapper">
         {/* Header Section */}
         <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
           <div className="more_wrap_link">
-            <HeaderRouter title={heading} />
+            <HeaderRouter title={getSectionTitle()} />
           </div>
 
           {/* Search and Controls */}
