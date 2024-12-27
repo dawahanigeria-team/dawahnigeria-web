@@ -1,35 +1,22 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
-  useContext,
-} from "react";
+import React, { useContext, useRef, useState } from "react";
 import "./more.scss";
 import Container from "../../components/container/Container";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
-import {
-  getaudioData,
-  getaudioId,
-  getCount,
-  getPack,
-  getPage,
-} from "../../Redux/Actions/ActionCreators";
+import { getPack, getPage } from "../../Redux/Actions/ActionCreators";
 import AlbumWidget from "../../components/albumWidget/AlbumWidget";
-import axios from "../../utils/useAxios";
-import Loader from "../UI/loader/loader";
 import {
   HiOutlineArrowLongLeft,
   HiOutlineArrowLongRight,
+  HiMiniSquares2X2,
+  HiOutlineBars3,
+  HiMagnifyingGlass,
+  HiOutlineFunnel,
 } from "react-icons/hi2";
-import infiniteScroll from "../UI/infiniteScroll";
-import _ from "lodash";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { AudioContext } from "../../App";
 import { useInfiniteScrollPagination } from "../../hooks";
 import LecturersWidget from "../lecturersWidget/LecturersWidget";
-import GenreMobileLecturer from "../../pages/genredetail/genreMobileLecturer";
 import {
   LECTURE,
   ALBUMS,
@@ -37,21 +24,18 @@ import {
   PLAYLISTS,
   MORE,
 } from "../../utils/routes/constants";
-
 import { useMoreViewHook } from "../../hooks";
-
 import HeadMeta from "../head-meta";
+import Loader from "../UI/loader/loader";
 
 function More() {
   const dispatch = useDispatch();
-
-  ///const [data, setData] = useState([]);
   const observer = useRef();
   const [loading, setLoading] = useState(true);
-  const [isEmpty, setIsEmpty] = useState(false);
-  const [nextPageLoad, setNextPageLoad] = useState(false);
+  const [viewMode, setViewMode] = useState("grid"); // 'grid' or 'list'
+  const [showFilters, setShowFilters] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const { state, pathname } = useLocation();
-  const islect = true;
   const {
     name,
     type,
@@ -78,290 +62,303 @@ function More() {
     setPage
   );
 
+  // Filter panel component
+  const FilterPanel = () => (
+    <div className="filter-panel">
+      <div className="p-4 space-y-4 bg-background border border-border rounded-lg shadow-lg">
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg font-medium">Filters</h3>
+          <button
+            onClick={() => setShowFilters(false)}
+            className="text-muted-foreground hover:text-foreground"
+          >
+            ×
+          </button>
+        </div>
+
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Categories</label>
+            <select className="w-full p-2 rounded-md border border-border bg-background">
+              <option>All Categories</option>
+              <option>Fiqh</option>
+              <option>Aqeedah</option>
+              <option>Tafseer</option>
+            </select>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Language</label>
+            <select className="w-full p-2 rounded-md border border-border bg-background">
+              <option>All Languages</option>
+              <option>Arabic</option>
+              <option>English</option>
+              <option>Hausa</option>
+              <option>Yoruba</option>
+            </select>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Date Range</label>
+            <div className="flex gap-2">
+              <input
+                type="date"
+                className="flex-1 p-2 rounded-md border border-border bg-background"
+              />
+              <input
+                type="date"
+                className="flex-1 p-2 rounded-md border border-border bg-background"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Sort By</label>
+            <select className="w-full p-2 rounded-md border border-border bg-background">
+              <option>Most Recent</option>
+              <option>Most Viewed</option>
+              <option>Alphabetical</option>
+            </select>
+          </div>
+
+          <button className="w-full py-2 px-4 bg-primary text-primary-foreground rounded-md hover:bg-primary/90">
+            Apply Filters
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <Container>
       <HeadMeta title={`${heading ?? "Islamic"} resources on Dawah Nigeria `} />
       <div className="more_wrapper">
-        <div className="more_wrap_link max-[615px]:border-b border-zinc-700">
-          <HeaderRouter title={heading} />
-        </div>
-        <div className="desktop_heading">
-          <HiOutlineArrowLongLeft
-            onClick={() => {
-              navigate(-1);
-            }}
-            className={pathname === MORE ? "arrows white" : "arrows grey"}
-          />
-          <HiOutlineArrowLongRight
-            className={pathname === "/" ? "arrows white" : "arrows grey"}
-          />
-          <span className="grey">{navtitle}</span>/ <span></span>
-          {heading}
+        {/* Header Section */}
+        <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
+          <div className="more_wrap_link">
+            <HeaderRouter title={heading} />
+          </div>
+
+          {/* Search and Controls */}
+          <div className="px-4 py-3 border-b border-border">
+            <div className="flex items-center gap-4 max-w-7xl mx-auto">
+              <div className="flex-1 relative">
+                <input
+                  type="text"
+                  placeholder="Search lectures..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+                <HiMagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setViewMode("grid")}
+                  className={`p-2 rounded-md transition-colors ${
+                    viewMode === "grid"
+                      ? "bg-accent text-accent-foreground"
+                      : "hover:bg-accent/50"
+                  }`}
+                  aria-label="Grid view"
+                >
+                  <HiMiniSquares2X2 className="text-xl" />
+                </button>
+                <button
+                  onClick={() => setViewMode("list")}
+                  className={`p-2 rounded-md transition-colors ${
+                    viewMode === "list"
+                      ? "bg-accent text-accent-foreground"
+                      : "hover:bg-accent/50"
+                  }`}
+                  aria-label="List view"
+                >
+                  <HiOutlineBars3 className="text-xl" />
+                </button>
+                <button
+                  onClick={() => setShowFilters(!showFilters)}
+                  className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
+                >
+                  <HiOutlineFunnel />
+                  <span>Filter</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <nav className="desktop_heading px-6 py-4">
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => navigate(-1)}
+                className="p-2 hover:bg-accent rounded-full transition-colors"
+                aria-label="Go back"
+              >
+                <HiOutlineArrowLongLeft className="text-2xl text-foreground" />
+              </button>
+              <div className="flex items-center space-x-2 text-sm">
+                <span className="text-muted-foreground">{navtitle}</span>
+                <span className="text-muted-foreground">/</span>
+                <span className="text-foreground font-medium">{heading}</span>
+              </div>
+            </div>
+          </nav>
         </div>
 
-        {/*
-          <div className="flex w-full items-center h-[300px] justify-center">
+        {/* Filter Panel */}
+        {showFilters && <FilterPanel />}
+
+        {/* Content Section */}
+        {isLoading ? (
+          <div className="flex items-center justify-center h-[50vh]">
             <Loader />
           </div>
-          */}
-        <div className="more_widget">
-          {type === "lectures" &&
-            Array.isArray(data) &&
-            data?.map(
-              (
-                {
-                  img,
-                  lec_img,
-                  categories,
-                  cats,
-                  title,
-                  mp3_title,
-                  Title,
-                  id,
-                  rpname,
-                  nid,
-                  audio,
-                  lec_no,
-                },
-                idx
-              ) => {
-                return (
-                  <Link
-                    to={`${LECTURE}${nid || id}`}
-                    onClick={() => {
-                      if (window.innerWidth <= 615) {
-                        dispatch(getPack(null));
-                        dispatch(getPage(currentPage));
-                        dispatch(getPack(data));
-                        setinitial(false);
-                      }
-                    }}
-                    ref={
-                      idx === data?.length - 1 && !isLastPage
-                        ? infiniteScrollRef
-                        : null
+        ) : (
+          <div
+            className={`more_widget fade-in ${
+              viewMode === "list" ? "list-view" : ""
+            }`}
+          >
+            {type === "lectures" &&
+              Array.isArray(data) &&
+              data?.map((item, idx) => (
+                <Link
+                  to={`${LECTURE}${item.nid || item.id}`}
+                  onClick={() => {
+                    if (window.innerWidth <= 615) {
+                      dispatch(getPack(null));
+                      dispatch(getPage(currentPage));
+                      dispatch(getPack(data));
+                      setinitial(false);
                     }
-                    key={idx + 1}
-                    className="widget_list_items"
-                  >
-                    <AlbumWidget
-                      key={idx}
-                      categories={
-                        title?.split("-")[0] ||
-                        Title?.split("-")[0] ||
-                        title ||
-                        Title ||
-                        mp3_title
-                      }
-                      img={img || lec_img}
-                      lec_no={lec_no}
-                      nid={nid}
-                    />
-                  </Link>
-                );
-              }
-            )}
-          {type === "album" &&
-            Array.isArray(data) &&
-            data?.map(
-              (
-                {
-                  img,
-                  lec_img,
-                  categories,
-                  cats,
-                  title,
-                  name,
-                  Title,
-                  rpname,
-                  nid,
-                  id,
-                  audio,
-                  views,
-                  lec_no,
-                },
-                idx
-              ) => {
-                return (
-                  <Link
-                    to={`${ALBUMS}${nid || id}`}
-                    key={idx + 1}
-                    className="widget_list_items"
-                  >
-                    <AlbumWidget
-                      key={idx}
-                      categories={
-                        name?.split("-")[0] ||
-                        Title?.split("-")[0] ||
-                        title ||
-                        Title
-                      }
-                      img={img || lec_img}
-                      lec_no={lec_no}
-                      nid={nid}
-                    />
-                  </Link>
-                );
-              }
-            )}
-          {type === "playlist" &&
-            Array.isArray(data) &&
-            data.map(
-              (
-                {
-                  img,
-                  lec_img,
-                  categories,
-                  cats,
-                  title,
-                  Title,
-                  rpname,
-                  nid,
-                  id,
-                  audio,
-                  name,
-                  lec_no,
-                },
-                idx
-              ) => {
-                return (
-                  <Link
-                    to={`${PLAYLISTS}${nid || id}`}
-                    key={idx + 1}
-                    ref={
-                      idx === data?.length - 1 && !isLastPage
-                        ? infiniteScrollRef
-                        : null
-                    }
-                    className="widget_list_items"
-                  >
-                    <AlbumWidget
-                      key={idx}
-                      categories={
-                        title?.split("-")[0] ||
-                        Title?.split("-")[0] ||
-                        title ||
-                        Title ||
-                        name
-                      }
-                      img={img || lec_img}
-                      lec_no={lec_no || 0}
-                      nid={nid}
-                    />
-                  </Link>
-                );
-              }
-            )}
-
-          {type === "recent" &&
-            Array.isArray(data) &&
-            data.map(
-              (
-                {
-                  img,
-                  lec_img,
-                  categories,
-                  cats,
-                  title,
-                  Title,
-                  rpname,
-                  nid,
-                  id,
-                  audio,
-                  name,
-                  views,
-                  lec_no,
-                },
-                idx
-              ) => {
-                return (
-                  <Link
-                    to={
-                      endpoint_url
-                        ? `${LECTURE}${nid || id}`
-                        : `${ALBUMS}${nid || id}`
-                    }
-                    onClick={() => {
-                      if (endpoint_url && window.innerWidth <= 615) {
-                        dispatch(getPack(null));
-                        dispatch(getPage(currentPage));
-                        dispatch(getPack(data));
-                        setinitial(false);
-                      }
-                    }}
-                    key={idx + 1}
-                    className="widget_list_items"
-                  >
-                    <AlbumWidget
-                      key={idx}
-                      categories={
-                        title?.split("-")[0] ||
-                        Title?.split("-")[0] ||
-                        title ||
-                        Title ||
-                        name
-                      }
-                      img={img || lec_img}
-                      lec_no={lec_no || 0}
-                      nid={nid}
-                    />
-                  </Link>
-                );
-              }
-            )}
-        </div>
-        <div className="lecturers_widget">
-          {type === "lecturer" &&
-            Array.isArray(data) &&
-            data?.map(
-              (
-                {
-                  img,
-                  rp,
-                  name,
-                  rpname,
-                  comments,
-                  views,
-                  favorites,
-                  share,
-                  catsname,
-                  id,
-                },
-                idx
-              ) => {
-                return (
-                  <Link
-                    to={`${RESOURCE_PERSON}${id}`}
+                  }}
+                  ref={
+                    idx === data?.length - 1 && !isLastPage
+                      ? infiniteScrollRef
+                      : null
+                  }
+                  key={idx + 1}
+                  className="widget_list_items group fade-in-item"
+                  style={{ animationDelay: `${idx * 0.1}s` }}
+                >
+                  <AlbumWidget
                     key={idx}
-                    className="lecturers_item"
-                    ref={
-                      idx === data?.length - 1 && !isLastPage
-                        ? infiniteScrollRef
-                        : null
+                    categories={
+                      item.title?.split("-")[0] ||
+                      item.Title?.split("-")[0] ||
+                      item.title ||
+                      item.Title ||
+                      item.mp3_title
                     }
-                  >
-                    <LecturersWidget
-                      img={img}
-                      views={views}
-                      favorites={favorites}
-                      rp={rp || name || rpname}
-                    />
-                    <GenreMobileLecturer
-                      styling={islect}
-                      views={views}
-                      rp={name}
-                      img={img}
-                    />
-                  </Link>
-                );
-              }
-            )}
-        </div>
+                    img={item.img || item.lec_img}
+                    lec_no={item.lec_no}
+                    nid={item.nid}
+                    rpname={item.rpname}
+                    views={item.views}
+                    duration={item.duration}
+                    date={item.date}
+                    viewMode={viewMode}
+                  />
+                </Link>
+              ))}
+
+            {type === "album" &&
+              Array.isArray(data) &&
+              data?.map((item, idx) => (
+                <Link
+                  to={`${ALBUMS}${item.nid || item.id}`}
+                  key={idx + 1}
+                  className="widget_list_items group fade-in-item"
+                  style={{ animationDelay: `${idx * 0.1}s` }}
+                >
+                  <AlbumWidget
+                    key={idx}
+                    categories={
+                      item.name?.split("-")[0] ||
+                      item.Title?.split("-")[0] ||
+                      item.title ||
+                      item.Title
+                    }
+                    img={item.img || item.lec_img}
+                    lec_no={item.lec_no}
+                    nid={item.nid}
+                    rpname={item.rpname}
+                  />
+                </Link>
+              ))}
+
+            {type === "playlist" &&
+              Array.isArray(data) &&
+              data.map((item, idx) => (
+                <Link
+                  to={`${PLAYLISTS}${item.nid || item.id}`}
+                  key={idx + 1}
+                  ref={
+                    idx === data?.length - 1 && !isLastPage
+                      ? infiniteScrollRef
+                      : null
+                  }
+                  className="widget_list_items group fade-in-item"
+                  style={{ animationDelay: `${idx * 0.1}s` }}
+                >
+                  <AlbumWidget
+                    key={idx}
+                    categories={
+                      item.title?.split("-")[0] ||
+                      item.Title?.split("-")[0] ||
+                      item.title ||
+                      item.Title ||
+                      item.name
+                    }
+                    img={item.img || item.lec_img}
+                    lec_no={item.lec_no || 0}
+                    nid={item.nid}
+                    rpname={item.rpname}
+                  />
+                </Link>
+              ))}
+
+            {type === "lecturers" &&
+              Array.isArray(data) &&
+              data?.map((item, idx) => (
+                <Link
+                  to={`${RESOURCE_PERSON}${item.nid || item.id}`}
+                  key={idx + 1}
+                  ref={
+                    idx === data?.length - 1 && !isLastPage
+                      ? infiniteScrollRef
+                      : null
+                  }
+                  className="lecturers_item fade-in-item"
+                  style={{ animationDelay: `${idx * 0.1}s` }}
+                >
+                  <LecturersWidget
+                    key={idx}
+                    img={item.img}
+                    name={item.name}
+                    lec_no={item.lec_no}
+                  />
+                </Link>
+              ))}
+          </div>
+        )}
+
+        {/* Loading More Indicator */}
         {isLoadingNextPage && (
-          <div className="load_m">
-            <div className="loads">
-              <Loader />
-            </div>
+          <div className="flex justify-center py-8">
+            <Loader />
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!isLoading && data?.length === 0 && (
+          <div className="flex flex-col items-center justify-center h-[50vh] text-center">
+            <p className="text-xl font-medium text-foreground mb-2">
+              No content found
+            </p>
+            <p className="text-muted-foreground">
+              Try adjusting your search or filters
+            </p>
           </div>
         )}
       </div>
