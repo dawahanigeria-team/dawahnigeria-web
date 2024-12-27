@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./footer.scss";
 import { Link } from "react-router-dom";
 import apple from "../../assets/svg/apple.svg";
@@ -13,90 +13,91 @@ import {
 import ForUser from "./footermodals/forUser";
 import ForRp from "./footermodals/forRps";
 import Company from "./footermodals/company";
-import { useState } from "react";
 import ComingSoon from "../comingsoon/comingSoon";
+
 const Footer = () => {
   const [showComingSoon, setShowComingSoon] = useState(false);
+
   return (
     <>
-      <div className="footer_wrapper text-color bg-footer text-sm px-8 pt-8 max-[500px]:pb-[9rem] pb-24">
-        <div className="grid w-full max-[450px]:grid-cols-1 md:grid-cols-4 lg:grid-cols-6 min-[450px]:gap-6">
-          <Explore />
+      <footer className="footer_wrapper text-color bg-footer px-6 sm:px-8 pt-12 max-[500px]:pb-[9rem] pb-24">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid w-full max-[450px]:grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-8 lg:gap-12">
+            <Explore />
+            <ForUser />
+            <ForRp />
+            <Company />
 
-          <ForUser />
-
-          <ForRp />
-          <Company />
-
-          <div className="flex space-y-2 sm:col-span-2 flex-col justify-start items-start">
-            <div className=" w-full flex items-center space-x-2">
-              <Link
-                to={process.env.REACT_APP_APPLE_STORE_URL}
-                aria-label="Download app on Applestore"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.nativeEvent.stopImmediatePropagation();
-                  setShowComingSoon((prev) => !prev);
-                }}
-              >
-                <img className="cursor-pointer" src={apple} alt="" />
-              </Link>
-              <Link
-                to={process.env.REACT_APP_GOOGLE_PLAY_URL}
-                aria-label="Download app on Google play"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.nativeEvent.stopImmediatePropagation();
-                  setShowComingSoon((prev) => !prev);
-                }}
-              >
-                <img className="cursor-pointer" src={googleplay} alt="" />
-              </Link>
-            </div>
-            <div className="flex items-center space-x-6 py-3 w-full ">
-              <div className="group">
+            <div className="flex space-y-6 sm:col-span-2 flex-col justify-start items-start">
+              {/* App Store Links */}
+              <div className="w-full flex items-center space-x-4">
                 <Link
-                  to="https://web.facebook.com/dawahnigeria"
-                  className="block p-2 bg-[#333] group-hover:h-[48px] group-hover:w-[48px] h-[44px] w-[44px] bg-opacity-60 rounded-full"
+                  to={process.env.REACT_APP_APPLE_STORE_URL}
+                  aria-label="Download app on Applestore"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.nativeEvent.stopImmediatePropagation();
+                    setShowComingSoon(true);
+                  }}
+                  className="transition-transform hover:scale-105"
                 >
-                  <FaFacebook className="text-[28px] transition-all duration-300 dark:text-color text-zinc-300 group-hover:text-[32px]  transform ease-in dark:group-hover:text-[#ddff2b]" />
+                  <img
+                    className="h-[40px]"
+                    src={apple}
+                    alt="Download on App Store"
+                  />
+                </Link>
+                <Link
+                  to={process.env.REACT_APP_GOOGLE_PLAY_URL}
+                  aria-label="Download app on Google play"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.nativeEvent.stopImmediatePropagation();
+                    setShowComingSoon(true);
+                  }}
+                  className="transition-transform hover:scale-105"
+                >
+                  <img
+                    className="h-[40px]"
+                    src={googleplay}
+                    alt="Get it on Google Play"
+                  />
                 </Link>
               </div>
-              <div className="group">
-                <Link
-                  to="https://twitter.com/dawahnigeria"
-                  className=" block bg-[#333] bg-opacity-60 p-2 rounded-full group-hover:h-[48px] group-hover:w-[48px] h-[44px] w-[44px]"
-                >
-                  <AiOutlineTwitter className="text-[28px] transition-all duration-300 dark:text-color text-zinc-300 group-hover:text-[32px] transform ease-in dark:group-hover:text-[#ddff2b]" />
-                </Link>
-              </div>
-              <div className="group">
-                <Link
-                  to="https://www.instagram.com/dawahnigeria/"
-                  className="block bg-[#333] bg-opacity-60 p-2 rounded-full group-hover:h-[48px] group-hover:w-[48px] h-[44px] w-[44px]"
-                >
-                  <AiFillInstagram className="text-[28px] transition-all duration-300 dark:text-color text-zinc-300 group-hover:text-[32px] transform ease-in dark:group-hover:text-[#ddff2b]" />
-                </Link>
-              </div>
-              <div className="group ">
-                <Link
-                  to="https://www.youtube.com/@DawahNigeria"
-                  className="block bg-[hsl(0,0%,20%)] bg-opacity-60 p-2 rounded-full group-hover:h-[48px] group-hover:w-[48px] h-[44px] w-[44px]"
-                >
-                  <FaYoutube className="text-[28px] transition-all duration-300 dark:text-color text-zinc-300 group-hover:text-[32px] transform ease-in dark:group-hover:text-[#ddff2b]" />
-                </Link>
+
+              {/* Social Links */}
+              <div className="flex items-center space-x-4 py-3 w-full">
+                <SocialLink
+                  href="https://web.facebook.com/dawahnigeria"
+                  icon={<FaFacebook />}
+                />
+                <SocialLink
+                  href="https://twitter.com/dawahnigeria"
+                  icon={<AiOutlineTwitter />}
+                />
+                <SocialLink
+                  href="https://www.instagram.com/dawahnigeria/"
+                  icon={<AiFillInstagram />}
+                />
+                <SocialLink
+                  href="https://www.youtube.com/@DawahNigeria"
+                  icon={<FaYoutube />}
+                />
               </div>
             </div>
           </div>
-        </div>
-        <div className="py-6 mt-6 border-t border-[#868686]">
-          <div className="items-center w-full flex space-x-1  text-[12px]">
-            <AiOutlineCopyrightCircle className="" />
-            <div>{new Date().getFullYear()}</div>
-            <div>Dawah Nigeria</div>
+
+          {/* Copyright */}
+          <div className="py-6 mt-8 border-t border-zinc-700/50">
+            <div className="flex items-center space-x-2 text-sm text-zinc-400">
+              <AiOutlineCopyrightCircle className="text-lg" />
+              <span>{new Date().getFullYear()}</span>
+              <span>Dawah Nigeria. All rights reserved.</span>
+            </div>
           </div>
         </div>
-      </div>
+      </footer>
+
       {showComingSoon && (
         <ComingSoon
           comingSoon={showComingSoon}
@@ -106,5 +107,17 @@ const Footer = () => {
     </>
   );
 };
+
+// Social Link Component
+const SocialLink = ({ href, icon }) => (
+  <Link
+    to={href}
+    className="group flex items-center justify-center w-10 h-10 rounded-full bg-zinc-800/50 hover:bg-zinc-700/50 transition-all duration-300"
+  >
+    <div className="text-2xl text-zinc-400 group-hover:text-[#ddff2b] transition-colors duration-300">
+      {icon}
+    </div>
+  </Link>
+);
 
 export default Footer;
