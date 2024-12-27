@@ -30,6 +30,10 @@ import {
   RESOURCE_PERSON,
   MORE,
   TRENDING,
+  RECENTLY_POSTED_MORE,
+  RECENTLY_VIEWED_MORE,
+  TRENDING_MORE,
+  RECOMMENDED_MORE,
 } from "../../utils/routes/constants";
 
 const GroupWidget = ({
@@ -104,6 +108,21 @@ const GroupWidget = ({
     return () => slide.current?.removeEventListener("scroll", scrollEl);
   }, [slide.current?.scrollLeft]);
 
+  const getMoreRoute = (heading) => {
+    switch (heading?.toLowerCase()) {
+      case "recently posted":
+        return RECENTLY_POSTED_MORE;
+      case "recently viewed":
+        return RECENTLY_VIEWED_MORE;
+      case "trending":
+        return TRENDING_MORE;
+      case "recommended":
+        return RECOMMENDED_MORE;
+      default:
+        return moreRoute || MORE;
+    }
+  };
+
   return (
     <div className="groupWidget_wrapper">
       {Array.isArray(data) && data.length > 0 && (
@@ -116,7 +135,8 @@ const GroupWidget = ({
               if (heading === "Trending") {
                 navigate(TRENDING);
               } else {
-                navigate(moreRoute || MORE, {
+                const route = getMoreRoute(heading);
+                navigate(route, {
                   state: {
                     name: "",
                     heading: heading,
@@ -156,7 +176,11 @@ const GroupWidget = ({
             <img src={foward} alt="foward" />
           </div>
           <div ref={slide} className="overflow_auto_wrapper">
-            <div className={`overflow_auto_after ${styling ? "min-[615px]:space-x-3" : "space-x-4"}`}>
+            <div
+              className={`overflow_auto_after ${
+                styling ? "min-[615px]:space-x-3" : "space-x-4"
+              }`}
+            >
               {Array.isArray(data) &&
                 data.map(
                   (
