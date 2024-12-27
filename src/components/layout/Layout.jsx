@@ -19,8 +19,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { AudioContext } from "../../App.jsx";
 import AudioActionDesktop from "../audio/audioActionDesktop";
 import { setPlaying } from "../../Redux/Actions/ActionCreators";
-import { FAVOURITE, LECTURE, LIBRARY } from "../../utils/routes/constants";
+import {
+  FAVOURITE,
+  LECTURE,
+  LIBRARY,
+  DOWNLOAD,
+} from "../../utils/routes/constants";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
+import { MdDownload } from "react-icons/md";
 
 export const NavContext = createContext();
 
@@ -63,22 +69,99 @@ const Layout = () => {
 
   useEffect(() => {
     const handleRouteChange = () => {
-      // Pause audio and reset state
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0;
-        dispatch(setPlaying(false)); // Make sure to import setPlaying action
-        setinitial(true);
+      if (location.pathname.includes("/dawahcast/l/") && audioRef.current) {
+        const newAudioId = location.pathname.split("/").pop();
+        if (newAudioId !== audioId) {
+          try {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0;
+            dispatch(setPlaying(false));
+            setinitial(true);
+          } catch (error) {
+            console.error("Error cleaning up audio:", error);
+          }
+        }
       }
     };
 
-    // Call on mount and route changes
     handleRouteChange();
+  }, [location.pathname, audioId]);
 
-    return () => {
-      handleRouteChange();
+  useEffect(() => {
+    const setupAudioContext = async () => {
+      if (audioRef.current) {
+        try {
+          audioRef.current.setAttribute("playsinline", "true");
+          audioRef.current.setAttribute("webkit-playsinline", "true");
+          audioRef.current.setAttribute("autoplay", "false");
+
+          if ("mediaSession" in navigator) {
+            navigator.mediaSession.setActionHandler("play", () => {
+              audioRef.current.play();
+              dispatch(setPlaying(true));
+            });
+            navigator.mediaSession.setActionHandler("pause", () => {
+              audioRef.current.pause();
+              dispatch(setPlaying(false));
+            });
+          }
+        } catch (error) {
+          console.error("Error setting up audio:", error);
+        }
+      }
     };
-  }, [location.pathname, audioRef, dispatch, setinitial]);
+
+    setupAudioContext();
+  }, [audioRef]);
+
+  const handleRangeChange = (e) => {
+    if (audioRef.current) {
+      const newTime = parseFloat(e.target.value);
+      audioRef.current.currentTime = newTime;
+    }
+  };
+
+  // Update the play handler in the mobile menu
+  const handlePlay = async () => {
+    if (playing) {
+      audioRef.current?.pause();
+      dispatch(setPlaying(false));
+    } else {
+      try {
+        if ("mediaSession" in navigator) {
+          navigator.mediaSession.metadata = new MediaMetadata({
+            title: currentAudioInfo?.title || "Unknown Title",
+            artist: currentAudioInfo?.rpname || "Unknown Artist",
+            artwork: [
+              {
+                src: currentAudioInfo?.img || "",
+                sizes: "512x512",
+                type: "image/jpeg",
+              },
+            ],
+          });
+        }
+
+        const playPromise = audioRef.current?.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              dispatch(setPlaying(true));
+              setinitial(false);
+            })
+            .catch((error) => {
+              if (error.name !== "NotAllowedError") {
+                console.error("Playback failed:", error);
+                dispatch(setPlaying(false));
+              }
+            });
+        }
+      } catch (error) {
+        console.error("Play error:", error);
+        dispatch(setPlaying(false));
+      }
+    }
+  };
 
   return (
     <div className="layout_wrapper">
@@ -118,9 +201,14 @@ const Layout = () => {
             <input
               ref={rangeRef}
               type="range"
-              min={"0"}
-              max={Math.floor(audioRef?.current?.duration)}
-              value={value}
+              min="0"
+              max={
+                audioRef?.current?.duration
+                  ? Math.floor(audioRef.current.duration)
+                  : "100"
+              }
+              value={value || 0}
+              onChange={handleRangeChange}
               className=""
             />
           </div>
@@ -162,30 +250,7 @@ const Layout = () => {
             <BiShareAlt className="layout_buttom_share text-color" />
           </div>
           <div
-            onClick={() => {
-              if (playing) {
-                audioRef.current?.pause();
-                dispatch(setPlaying(false));
-              } else {
-                try {
-                  const playPromise = audioRef.current?.play();
-                  if (playPromise !== undefined) {
-                    playPromise
-                      .then(() => {
-                        dispatch(setPlaying(true));
-                        setinitial(false);
-                      })
-                      .catch((error) => {
-                        console.error("Playback failed:", error);
-                        dispatch(setPlaying(false));
-                      });
-                  }
-                } catch (error) {
-                  console.error("Play error:", error);
-                  dispatch(setPlaying(false));
-                }
-              }
-            }}
+            onClick={handlePlay}
             className="layout_buttom_play_wrap dark:bg-[#ddff2b] bg-gray-500"
           >
             {!playing ? (
@@ -264,6 +329,29 @@ const Layout = () => {
               }
             >
               Favorites
+            </p>
+          </div>
+          <div
+            onClick={() => {
+              navigate(DOWNLOAD);
+            }}
+            className="layout_buttom_menue2_download"
+          >
+            <MdDownload
+              className={
+                location.pathname === DOWNLOAD
+                  ? "layout_buttom_menue2_downloadIcon_active dark:text-[#ddff2b] text-color-foreground"
+                  : "layout_buttom_menue2_downloadIcon text-color"
+              }
+            />
+            <p
+              className={
+                location.pathname === DOWNLOAD
+                  ? "layout_buttom_menue2_downloadText_active dark:text-[#ddff2b] text-color-foreground font-semibold"
+                  : "layout_buttom_menue2_downloadText text-color"
+              }
+            >
+              Download
             </p>
           </div>
         </div>

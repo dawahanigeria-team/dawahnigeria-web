@@ -53,6 +53,7 @@ const Recommend2 = () => {
                   lec_no={lec_no}
                   categories={cats_name}
                   img={img}
+                  rpname={rpname}
                 />
               </div>
             );

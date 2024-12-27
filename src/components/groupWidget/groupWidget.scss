@@ -108,9 +108,8 @@
   }
   .overflow_auto_wrapper {
     @media screen and (max-width: 615px) {
-      gap: 0.5em;
-      padding-right: 2em;
-      padding-left: 4px;
+      gap: 0.5rem;
+      padding: 0.5rem;
     }
   }
   .overflow_auto_wrapper,
@@ -129,11 +128,13 @@
     overflow: auto;
 
     .overflow_auto_after {
-      width: max-content;
       display: flex;
-      gap: 1rem;
+      flex-direction: row;
+      gap: 12px;
+      padding: 4px;
+
       @media screen and (max-width: 615px) {
-        gap: 0.5rem;
+        gap: 16px;
       }
 
       .groupWidget_lecturer_item {
@@ -150,10 +151,21 @@
       }
       .groupWidget_album_item {
         cursor: pointer;
+        flex: 0 0 auto;
+        width: 200px;
+        
+        @media screen and (max-width: 615px) {
+          width: 160px;
+        }
       }
       .groupWidget_album_item {
         width: fit-content !important;
         height: fit-content !important;
+        @media screen and (max-width: 615px) {
+          min-width: 110px;
+          max-width: 130px;
+          margin-right: 8px;
+        }
       }
       .groupWidget_album_item_talb {
         @include hide_for_mobile;

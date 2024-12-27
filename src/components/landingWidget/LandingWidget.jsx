@@ -7,12 +7,12 @@ import { AudioContext } from "../../App";
 import { useDispatch } from "react-redux";
 import AudioLoader from "../UI/audioLoader/audioLoader";
 import { getaudioId, setPlaying } from "../../Redux/Actions/ActionCreators";
-const LandingWidget = ({ categories, img, views, nid, styling }) => {
+
+const LandingWidget = ({ categories, img, views, nid, styling, rpname }) => {
   const formattedViews = useMemo(() => formatNumber(views), [views]);
   const { audioRef, setinitial, loading } = useContext(AudioContext);
   const dispatch = useDispatch();
 
-  ////
   useEffect(() => {
     function lazyImage() {
       const lazy = document.querySelectorAll("#song");
@@ -35,8 +35,19 @@ const LandingWidget = ({ categories, img, views, nid, styling }) => {
     dispatch(setPlaying(false));
     dispatch(getaudioId(nid));
     setinitial(false);
-
   }
+
+  // Format the title to remove any unwanted characters or patterns
+  const formatTitle = (title) => {
+    if (!title) return "";
+    // Split by the last hyphen and take everything before it
+    const parts = title.split("-");
+    if (parts.length > 1) {
+      // Remove the last part (date) and join the rest back together
+      return parts.slice(0, -1).join("-").trim();
+    }
+    return title.trim();
+  };
 
   return (
     <div
@@ -49,35 +60,37 @@ const LandingWidget = ({ categories, img, views, nid, styling }) => {
       <div className="group w-full h-[115px] sm:h-[165px] relative rounded-md">
         <img
           src-data={img}
-          id="song"
           src={IMAGE_PLACEHOLDERS.lecture}
-          alt="background"
-          className="w-full h-full rounded-md"
+          id="song"
+          alt=""
+          className="w-full h-full object-cover rounded-md"
         />
-        <div className="gradientbg"></div>
-        <p className="font-bold text-base text-black name_abs absolute top-4 sm:top-2 right-2  sm:text-2xl">
-          DN
-        </p>
-        <div
-          className={
-            !styling ? "absolute bottom-2 left-2 flex items-center" : "hidden"
-          }
+        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300 rounded-md" />
+        <div className="absolute bottom-2 left-2 flex items-center space-x-1">
+          <FiHeadphones className="text-white" />
+          <p className="text-white text-sm">{formattedViews}</p>
+        </div>
+        <button
+          onClick={handlePlayClick}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-[#d6ff00] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300"
         >
-          <FiHeadphones className="text-[22px] text-[#d4d4d4]" />
-          <p className="ml-2 text-xs text-[#d4d4d4] boom sm:text-base whitespace-nowrap w-full text-ellipsis overflow-hidden">
-            {formattedViews}
-          </p>
-        </div>
-
-        <div className="absolute rounded-md bg-black/50 left-0 top-0 h-full w-full flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <button onClick={handlePlayClick} disabled={loading} className="flex items-center justify-center h-16 w-16 rounded-full bg-[#222222]/70 disabled:cursor-not-allowed">
-            {loading? <AudioLoader /> : <FaPlay className="text-[#cfcfcf] text-3xl" />}
-          </button>
-        </div>
+          {loading ? (
+            <AudioLoader />
+          ) : (
+            <FaPlay className="text-black ml-1" size={15} />
+          )}
+        </button>
       </div>
-      <p className="text-xs sm:text-sm w-full  line-clamp-2  pl-[3%]  text-color-primary ">
-        {categories}
-      </p>
+      <div className="space-y-1 w-full">
+        <p className="text-xs sm:text-sm font-medium text-color-primary line-clamp-2 pl-[3%] mb-0.5">
+          {formatTitle(categories)}
+        </p>
+        {rpname && (
+          <p className="text-[11px] sm:text-sm text-gray-500 line-clamp-2 pl-[3%] min-h-[28px]">
+            {rpname}
+          </p>
+        )}
+      </div>
     </div>
   );
 };

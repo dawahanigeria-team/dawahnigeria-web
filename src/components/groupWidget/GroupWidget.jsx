@@ -156,7 +156,7 @@ const GroupWidget = ({
             <img src={foward} alt="foward" />
           </div>
           <div ref={slide} className="overflow_auto_wrapper">
-            <div className="overflow_auto_after">
+            <div className={`overflow_auto_after ${styling ? "min-[615px]:space-x-3" : "space-x-4"}`}>
               {Array.isArray(data) &&
                 data.map(
                   (
@@ -212,15 +212,13 @@ const GroupWidget = ({
                         key={idx + 1}
                       >
                         <LandingWidget
-                          key={idx}
-                          categories={
-                            // title?.split("-")[0] ||
-                            // Title?.split("-")[0] ||
-                            title || Title
-                          }
+                          categories={title || Title || categories || cats}
                           img={img || lec_img}
-                          views={views || 0}
+                          views={views}
                           nid={nid}
+                          styling={styling}
+                          rpname={rpname}
+                          audio={audio}
                         />
                       </Link>
                     );
@@ -291,6 +289,7 @@ const GroupWidget = ({
                             views={views || 0}
                             nid={nid || id}
                             styling={styling}
+                            rpname={rpname}
                           />
                           <div
                             className={`absolute right-[-14px] bottom-[10px] rounded-full h-[38px] w-[38px] flex justify-center items-center text-white text-xl ${

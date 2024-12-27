@@ -57,6 +57,7 @@ const Simillarrp = ({ langid }) => {
                   views={views}
                   img={img || IMAGE_PLACEHOLDERS.lecturer}
                   rp={name}
+                  rpname={name}
                 />
                 <GenreMobileLecturer
                   views={views}
