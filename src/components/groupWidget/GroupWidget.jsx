@@ -47,6 +47,7 @@ const GroupWidget = ({
   currentPage,
   previousPlay,
   moreRoute,
+  hideMore = false,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -119,7 +120,7 @@ const GroupWidget = ({
       case "recommended":
         return RECOMMENDED_MORE;
       default:
-        return moreRoute || MORE;
+        return MORE;
     }
   };
 
@@ -130,13 +131,10 @@ const GroupWidget = ({
           <p className="groupWidget_top_heading text-color-primary">
             {heading}
           </p>
-          <div
-            onClick={() => {
-              if (heading === "Trending") {
-                navigate(TRENDING);
-              } else {
-                const route = getMoreRoute(heading);
-                navigate(route, {
+          {!hideMore && (
+            <div
+              onClick={() => {
+                navigate(getMoreRoute(heading) || MORE, {
                   state: {
                     name: "",
                     heading: heading,
@@ -149,21 +147,19 @@ const GroupWidget = ({
                     navtitle: nav1?.title || "",
                   },
                 });
+              }}
+              className={
+                styling && endpoint_url
+                  ? "flex dark:text-[#d6ff00] text-color-primary text-[15px] items-center"
+                  : `flex dark:text-[#d6ff00] text-color-primary text-[15px] items-center ${
+                      nav1?.title === "Charts" ? "max-[615px]:hidden" : ""
+                    }  `
               }
-
-              dispatch(getType(heading));
-            }}
-            className={
-              styling && endpoint_url
-                ? "flex dark:text-[#d6ff00] text-color-primary text-[15px] items-center"
-                : `flex dark:text-[#d6ff00] text-color-primary text-[15px] items-center ${
-                    nav1?.title === "Charts" ? "max-[615px]:hidden" : ""
-                  }  `
-            }
-          >
-            <p className="cursor-pointer">more</p>
-            <FiChevronsRight className=" cursor-pointer text-[20px] pt-1" />
-          </div>
+            >
+              <p className="cursor-pointer">more</p>
+              <FiChevronsRight className=" cursor-pointer text-[20px] pt-1" />
+            </div>
+          )}
         </div>
       )}
 

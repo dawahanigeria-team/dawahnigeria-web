@@ -71,18 +71,26 @@ function More() {
     if (!state) {
       const path = pathname;
       let newEndpoint = defaultState.endpoint_url;
+      let newHeading = defaultState.heading;
 
-      if (path.includes("recently-viewed")) {
+      if (path.includes("/more/recently-viewed")) {
         newEndpoint =
           "/leclisting_recent_viewed.php?&action=get_recent_viewed&page=";
-      } else if (path.includes("trending")) {
+        newHeading = "Recently Viewed";
+      } else if (path.includes("/more/trending")) {
         newEndpoint = "/leclisting_trending.php?&action=get_trending&page=";
-      } else if (path.includes("recommended")) {
+        newHeading = "Trending";
+      } else if (path.includes("/more/recommended")) {
         newEndpoint =
           "/leclisting_recommended.php?&action=get_recommended&page=";
+        newHeading = "Recommended";
+      } else if (path.includes("/more/recent")) {
+        newEndpoint = "/leclisting_recent.php?&action=get_recent_audio&page=";
+        newHeading = "Recently Posted";
       }
 
       keyParam.endpoint_url = newEndpoint;
+      defaultState.heading = newHeading;
     }
   }, [pathname, state]);
 
@@ -99,13 +107,13 @@ function More() {
 
   const getSectionTitle = () => {
     const path = pathname;
-    if (path.includes("recently-posted")) {
+    if (path.includes("/more/recent")) {
       return "Recently Posted";
-    } else if (path.includes("recently-viewed")) {
+    } else if (path.includes("/more/recently-viewed")) {
       return "Recently Viewed";
-    } else if (path.includes("trending")) {
+    } else if (path.includes("/more/trending")) {
       return "Trending";
-    } else if (path.includes("recommended")) {
+    } else if (path.includes("/more/recommended")) {
       return "Recommended";
     }
     return heading;
