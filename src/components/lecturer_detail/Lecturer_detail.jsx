@@ -255,32 +255,7 @@ const LecturerDetail = () => {
                   >
                     Playlist
                   </p>
-                  <p
-                    className={`${
-                      tab === 3
-                        ? "lecdet_tab_playlist2_active text-color"
-                        : "lecdet_tab_playlist2"
-                    }`}
-                  >
-                    ({querieddata[0]?.total_playlist || 0})
-                  </p>
-                </div>
-
-                <div
-                  onClick={() => {
-                    setTab(5);
-                  }}
-                  className="lecdet_tab_simrp "
-                >
-                  <p
-                    className={`${
-                      tab === 5
-                        ? "lecdet_tab_simrp1_active text-foreground"
-                        : "lecdet_tab_simrp1"
-                    }`}
-                  >
-                    Similar RP
-                  </p>
+                  
                 </div>
               </div>
             </div>
@@ -487,32 +462,7 @@ const LecturerDetail = () => {
                   </p>
                 </div>
 
-                <div
-                  onClick={() => {
-                    setTab(5);
-                    setChoice("Similar RP");
-                  }}
-                  className="mobile_lecdet_tab_simrp"
-                >
-                  <p
-                    className={`${
-                      tab === 5
-                        ? "mobile_lecdet_tab_simrp2_active text-foreground"
-                        : "mobile_lecdet_tab_simrp2"
-                    }`}
-                  >
-                    Similar
-                  </p>
-                  <p
-                    className={`${
-                      tab === 5
-                        ? "mobile_lecdet_tab_simrp2_active text-foreground"
-                        : "mobile_lecdet_tab_simrp2"
-                    }`}
-                  >
-                    RP
-                  </p>
-                </div>
+                
               </div>
 
               <div className="set_choice text-foreground">
