@@ -58,6 +58,10 @@ import {
   MYPLAYLIIST,
   FAVOURITE,
   MORE,
+  RECENTLY_POSTED_MORE,
+  RECENTLY_VIEWED_MORE,
+  TRENDING_MORE,
+  RECOMMENDED_MORE,
   SEARCH,
   LIBRARY,
   GENRES,
@@ -129,14 +133,14 @@ const App = () => {
   // Add wake lock to prevent device from sleeping during playback
   useEffect(() => {
     let wakeLock = null;
-    
+
     const requestWakeLock = async () => {
       try {
-        if ('wakeLock' in navigator) {
-          wakeLock = await navigator.wakeLock.request('screen');
+        if ("wakeLock" in navigator) {
+          wakeLock = await navigator.wakeLock.request("screen");
         }
       } catch (err) {
-        console.log('Wake Lock error:', err);
+        console.log("Wake Lock error:", err);
       }
     };
 
@@ -233,6 +237,10 @@ const App = () => {
                   <Route index element={<Landing />} />
                   <Route path={HOME} element={<Landing />} />
                   <Route path={MORE} element={<More />} />
+                  <Route path={RECENTLY_POSTED_MORE} element={<More />} />
+                  <Route path={RECENTLY_VIEWED_MORE} element={<More />} />
+                  <Route path={TRENDING_MORE} element={<More />} />
+                  <Route path={RECOMMENDED_MORE} element={<More />} />
                   <Route path={SEARCH} element={<SearchPage />} />
                   <Route path={LIBRARY} element={<Library />} />
                   <Route path={GENRES} element={<Genres />} />

@@ -2,59 +2,63 @@ import React, { useState } from "react";
 import { MdNavigateNext } from "react-icons/md";
 import { Link } from "react-router-dom";
 import ComingSoon from "../../comingsoon/comingSoon";
+
 const ForUser = () => {
   const [isShow, setshow] = useState(false);
   const [comingSoon, setcomingSoon] = useState(false);
+
+  const links = [
+    { text: "Download", onClick: () => setcomingSoon(true) },
+    { text: "Help Centre", onClick: () => setcomingSoon(true) },
+    { text: "Login/Signup", to: "/auth/login" },
+    { text: "Playlist", to: "/playlist" },
+  ];
+
   return (
     <>
-      <div className="flex flex-col justify-start items-start space-y-4 h-fit max-[450px]:py-3 max-[450px]:border-b border-zinc-700">
-        <div className="flex justify-between items-center w-full    ">
-          <h2 className="text-color-foreground font-medium max-[450px]:text-lg text-xl">
-            For Users
-          </h2>
-          <div
-            aria-hidden="true"
-            onClick={() => {
-              setshow(!isShow);
-            }}
+      <div className="flex flex-col space-y-6">
+        <div className="flex justify-between items-center w-full">
+          <h2 className="text-xl font-medium text-zinc-100">For Users</h2>
+          <button
+            onClick={() => setshow(!isShow)}
+            className="min-[450px]:hidden"
+            aria-label={isShow ? "Collapse menu" : "Expand menu"}
           >
-            {" "}
             <MdNavigateNext
-              className={`text-color-foreground min-[450px]:hidden text-[25px] ${
+              className={`text-zinc-100 text-2xl transition-transform duration-200 ${
                 isShow ? "-rotate-90" : "rotate-90"
               }`}
             />
-          </div>
+          </button>
         </div>
+
         <div
-          className={` space-y-4 ${
-            isShow ? "max-[450px]:block" : "max-[450px]:hidden"
+          className={`space-y-4 min-[450px]:block ${
+            isShow ? "block" : "hidden"
           }`}
         >
-          <div
-            onClick={() => {
-              setcomingSoon(!comingSoon);
-            }}
-            className="block cursor-pointer"
-          >
-            Download
-          </div>
-          <div
-            onClick={() => {
-              setcomingSoon(!comingSoon);
-            }}
-            className="block cursor-pointer"
-          >
-            Help Centre
-          </div>
-          <Link className="block" to="/auth/login">
-            Login/Signup
-          </Link>
-          <Link className="block" to="/playlist">
-            Playlist
-          </Link>
+          {links.map((link, index) => (
+            <div key={index}>
+              {link.to ? (
+                <Link
+                  to={link.to}
+                  className="block text-zinc-400 hover:text-[#ddff2b] transition-colors duration-200"
+                >
+                  {link.text}
+                </Link>
+              ) : (
+                <button
+                  onClick={link.onClick}
+                  className="block text-zinc-400 hover:text-[#ddff2b] transition-colors duration-200"
+                >
+                  {link.text}
+                </button>
+              )}
+            </div>
+          ))}
         </div>
       </div>
+
       {comingSoon && (
         <ComingSoon comingSoon={comingSoon} setcomingSoon={setcomingSoon} />
       )}

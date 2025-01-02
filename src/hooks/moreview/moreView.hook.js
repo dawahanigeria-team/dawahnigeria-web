@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { moreViewApi } from "../../services";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+
 export const useMoreViewHook = (keyParam, currentdata) => {
   const [querydata, setquerydata] = useState([]);
   const [isLoadingNextPage, setIsLoadingNextPage] = useState(false);
@@ -16,33 +17,48 @@ export const useMoreViewHook = (keyParam, currentdata) => {
         setIsLoadingNextPage(false);
 
         // ensure subsequent requests are not sent when the last one doesn't have data
-        if (data?.length === 0) {
+        if (!data || data.length === 0) {
           setHasReachedLastPage(true);
           return;
         }
 
-        setquerydata((prev) => [...prev, ...data]);
+        // Only append new data if it's a subsequent page
+        if (keyParam.page === 1) {
+          setquerydata(data);
+        } else {
+          setquerydata((prev) => {
+            // Filter out duplicates based on nid
+            const newData = data.filter(
+              (item) => !prev.some((prevItem) => prevItem.nid === item.nid)
+            );
+            return [...prev, ...newData];
+          });
+        }
       },
       onError: (error) => {
         setIsLoadingNextPage(false);
-        
         toast.error("Unable to load data");
       },
     }
   );
+
   // handles when page changes
   useEffect(() => {
-    if (!keyParam.page) return; // return if the query param is not page
+    if (!keyParam.page) return;
     if (keyParam.page !== 1 && !hasReachedLastPage) {
       setIsLoadingNextPage(true);
     }
   }, [keyParam.page]);
 
   useEffect(() => {
-    if (keyParam.endpoint_url) return;
-    
-    setquerydata(currentdata);
-    setHasReachedLastPage(true);
+    if (!keyParam.endpoint_url) {
+      setquerydata(currentdata || []);
+      setHasReachedLastPage(true);
+    } else {
+      // Reset state when endpoint changes
+      setquerydata([]);
+      setHasReachedLastPage(false);
+    }
   }, [keyParam.endpoint_url]);
 
   return {

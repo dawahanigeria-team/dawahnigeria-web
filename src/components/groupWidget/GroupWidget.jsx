@@ -30,6 +30,10 @@ import {
   RESOURCE_PERSON,
   MORE,
   TRENDING,
+  RECENTLY_POSTED_MORE,
+  RECENTLY_VIEWED_MORE,
+  TRENDING_MORE,
+  RECOMMENDED_MORE,
 } from "../../utils/routes/constants";
 
 const GroupWidget = ({
@@ -43,6 +47,7 @@ const GroupWidget = ({
   currentPage,
   previousPlay,
   moreRoute,
+  hideMore = false,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -104,6 +109,21 @@ const GroupWidget = ({
     return () => slide.current?.removeEventListener("scroll", scrollEl);
   }, [slide.current?.scrollLeft]);
 
+  const getMoreRoute = (heading) => {
+    switch (heading?.toLowerCase()) {
+      case "recently posted":
+        return RECENTLY_POSTED_MORE;
+      case "recently viewed":
+        return RECENTLY_VIEWED_MORE;
+      case "trending":
+        return TRENDING_MORE;
+      case "recommended":
+        return RECOMMENDED_MORE;
+      default:
+        return MORE;
+    }
+  };
+
   return (
     <div className="groupWidget_wrapper">
       {Array.isArray(data) && data.length > 0 && (
@@ -111,12 +131,10 @@ const GroupWidget = ({
           <p className="groupWidget_top_heading text-color-primary">
             {heading}
           </p>
-          <div
-            onClick={() => {
-              if (heading === "Trending") {
-                navigate(TRENDING);
-              } else {
-                navigate(moreRoute || MORE, {
+          {!hideMore && (
+            <div
+              onClick={() => {
+                navigate(getMoreRoute(heading) || MORE, {
                   state: {
                     name: "",
                     heading: heading,
@@ -129,21 +147,19 @@ const GroupWidget = ({
                     navtitle: nav1?.title || "",
                   },
                 });
+              }}
+              className={
+                styling && endpoint_url
+                  ? "flex dark:text-[#d6ff00] text-color-primary text-[15px] items-center"
+                  : `flex dark:text-[#d6ff00] text-color-primary text-[15px] items-center ${
+                      nav1?.title === "Charts" ? "max-[615px]:hidden" : ""
+                    }  `
               }
-
-              dispatch(getType(heading));
-            }}
-            className={
-              styling && endpoint_url
-                ? "flex dark:text-[#d6ff00] text-color-primary text-[15px] items-center"
-                : `flex dark:text-[#d6ff00] text-color-primary text-[15px] items-center ${
-                    nav1?.title === "Charts" ? "max-[615px]:hidden" : ""
-                  }  `
-            }
-          >
-            <p className="cursor-pointer">more</p>
-            <FiChevronsRight className=" cursor-pointer text-[20px] pt-1" />
-          </div>
+            >
+              <p className="cursor-pointer">more</p>
+              <FiChevronsRight className=" cursor-pointer text-[20px] pt-1" />
+            </div>
+          )}
         </div>
       )}
 
@@ -156,7 +172,11 @@ const GroupWidget = ({
             <img src={foward} alt="foward" />
           </div>
           <div ref={slide} className="overflow_auto_wrapper">
-            <div className={`overflow_auto_after ${styling ? "min-[615px]:space-x-3" : "space-x-4"}`}>
+            <div
+              className={`overflow_auto_after ${
+                styling ? "min-[615px]:space-x-3" : "space-x-4"
+              }`}
+            >
               {Array.isArray(data) &&
                 data.map(
                   (
