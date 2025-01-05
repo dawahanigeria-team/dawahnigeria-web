@@ -17,10 +17,11 @@ const Add_playlist = () => {
   const dispatch = useDispatch();
   const [seltype, setseltype] = useState("");
   const [isShow, setisShow] = useState(true);
-  const [created, setCreated] = useState();
+  const [created, setCreated] = useState([]);
   const [title, setTitle] = useState("");
   const [myFolders, setmyFolders] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const hidePlaylist = (e) => {
     e.stopPropagation();
@@ -38,16 +39,15 @@ const Add_playlist = () => {
 
   const submit = () => {
     if (!currentUser?.id) {
-      toast.error(`Sign in is required to add playlist`);
+      toast.error("Sign in is required to add playlist");
       return;
     }
+
     const validateData = {
       title,
       seltype,
       user_id: currentUser?.id,
     };
-
-  
 
     for (let i in validateData) {
       if (validateData[i] === "") {
@@ -57,7 +57,7 @@ const Add_playlist = () => {
     }
 
     if (created.includes(title.toLowerCase())) {
-      toast.error(`Title already exists`);
+      toast.error("Title already exists");
       return;
     }
 
@@ -69,8 +69,10 @@ const Add_playlist = () => {
     };
 
     setLoading(true);
+    setError(null);
+
     axios
-      .post(`/playlistApi.php`, payload, {
+      .post("/playlistApi.php", payload, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -78,51 +80,64 @@ const Add_playlist = () => {
         },
       })
       .then((res) => {
-        toast.success("lecture added to playlist");
-       
+        toast.success("Lecture added to playlist");
         setLoading(false);
         setisShow(true);
+        // Refresh playlists after adding
+        fetchPlaylists();
       })
       .catch((err) => {
-       
+        setLoading(false);
+        setError(err.message);
+        toast.error("Failed to create playlist");
       });
   };
 
-  // get my playlist
-  useEffect(() => {
-    if (isShow && currentUser?.id) {
-      axios
-        .get(
-          `/playlistApi.php?user_id=${parseInt(
-            currentUser?.id
-          )}&action=user_playlists`,
-          {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-            },
-          }
-        )
-        .then((res) => {
-      
+  const fetchPlaylists = () => {
+    if (!currentUser?.id) return;
+
+    axios
+      .get(
+        `/playlistApi.php?user_id=${parseInt(
+          currentUser?.id
+        )}&action=user_playlists`,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
+          },
+        }
+      )
+      .then((res) => {
+        if (Array.isArray(res.data)) {
           setmyFolders(res.data);
           const filter = res.data.map((item) => item.name.toLowerCase());
           setCreated(filter);
-        })
-        .catch((err) => {
-         
-        });
-    }
-  }, []);
+        } else {
+          setmyFolders([]);
+          setCreated([]);
+        }
+      })
+      .catch((err) => {
+        setError(err.message);
+        setmyFolders([]);
+        setCreated([]);
+      });
+  };
 
-  
+  useEffect(() => {
+    if (isShow && currentUser?.id) {
+      fetchPlaylists();
+    }
+  }, [isShow, currentUser?.id]);
 
   const addSong = (id) => {
     if (!currentUser?.id) {
-      toast.error(`Sign in is required to add playlist`);
+      toast.error("Sign in is required to add playlist");
       return;
     }
+
     const payload = {
       user_id: parseInt(currentUser?.id),
       audio_id: parseInt(lecid),
@@ -130,9 +145,11 @@ const Add_playlist = () => {
       action: "add_playlist_audio",
     };
 
-   
+    setLoading(true);
+    setError(null);
+
     axios
-      .post(`/playlistApi.php`, payload, {
+      .post("/playlistApi.php", payload, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -140,39 +157,48 @@ const Add_playlist = () => {
         },
       })
       .then((res) => {
-      
         toast.success(res.data.message);
         dispatch(showaddPlaylist(false));
       })
       .catch((err) => {
-   
+        setError(err.message);
+        toast.error("Failed to add to playlist");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center p-4 text-red-500">
+        {error}
+      </div>
+    );
+  }
 
   return (
     <>
       <div
-        onClick={(e) => {
-          hidePlaylist(e);
-        }}
-        className={addplaylist ? "addplay_wrapper dark:bg-black dark:bg-opacity-60 bg-opacity-60 bg-white" : "addplay_wrapper_none"}
+        onClick={hidePlaylist}
+        className={
+          addplaylist
+            ? "addplay_wrapper dark:bg-black dark:bg-opacity-60 bg-opacity-60 bg-white"
+            : "addplay_wrapper_none"
+        }
       >
         <div
           onClick={(e) => {
             e.stopPropagation();
           }}
           className={
-            isShow ? "curr_playlist bg-background shadow-lg text-foreground let swipeDown" : "curr_playlist_none"
+            isShow
+              ? "curr_playlist bg-background shadow-lg text-foreground let swipeDown"
+              : "curr_playlist_none"
           }
         >
-          <div
-            onClick={(e) => {
-              hidePlaylist(e);
-            }}
-            className="close_image"
-          >
-          
-          <MdClose className="text-xl"/>
+          <div onClick={hidePlaylist} className="close_image">
+            <MdClose className="text-xl" />
           </div>
           <div className="cur_small_wrapper">
             <div className="create_play">
@@ -185,40 +211,31 @@ const Add_playlist = () => {
                 <div className="create_folder_icon">
                   <img
                     className="img_sz"
-                    src-data={createplay}
                     src={createplay}
-                    alt=" "
+                    alt="Create playlist"
                   />
                 </div>
               </div>
-
               <p className="create_text">Create a new playlist</p>
             </div>
 
-            {myFolders?.map(({ name, is_private, id }, index) => {
-              return (
+            {Array.isArray(myFolders) &&
+              myFolders.map(({ name, is_private, id }, index) => (
                 <div
-                  onClick={() => {
-                    addSong(id);
-                  }}
+                  onClick={() => addSong(id)}
                   className="created_play"
                   key={index}
                 >
-                  {myFolders.length !== 0 && (
-                    <div className="created_folder_icon">
-                      <img
-                        className="img_sz"
-                        src={playfolder}
-                        src-data={playfolder}
-                        alt=" "
-                      />
-                    </div>
-                  )}
-
+                  <div className="created_folder_icon">
+                    <img
+                      className="img_sz"
+                      src={playfolder}
+                      alt="Playlist folder"
+                    />
+                  </div>
                   <p className="created_text">{name}</p>
                 </div>
-              );
-            })}
+              ))}
           </div>
         </div>
 
@@ -227,23 +244,17 @@ const Add_playlist = () => {
             e.stopPropagation();
           }}
           className={
-            isShow ? "smaller_wrapper_none" : "smaller_wrapper bg-background text-foreground shadow-lg let swipeDown"
+            isShow
+              ? "smaller_wrapper_none"
+              : "smaller_wrapper bg-background text-foreground shadow-lg let swipeDown"
           }
         >
-          <div className="add_play_header text-foreground">Add a new playlist</div>
+          <div className="add_play_header text-foreground">
+            Add a new playlist
+          </div>
 
-          <div
-            onClick={(e) => {
-              hidePlaylist(e);
-            }}
-            className="close_image"
-          >
-            <img
-              className="close_img_sz"
-              src={cloase}
-              src-data={cloase}
-              alt=""
-            />
+          <div onClick={hidePlaylist} className="close_image">
+            <MdClose className="text-xl" />
           </div>
 
           <input
@@ -252,37 +263,25 @@ const Add_playlist = () => {
             placeholder="Playlist title"
             required
             value={title}
-            id="playlist"
-            onChange={(e) => {
-              handleChange(e);
-            }}
+            onChange={handleChange}
             className="playlist_name"
           />
 
           <div className="private_public">
-            {setType.map(({ type, id }, index) => {
-              return (
-                <label
-                  onClick={() => {
-                    setseltype(id);
-                  }}
-                  key={index}
-                  className="container"
-                >
-                  {type}
-                  <input type="checkbox" defaultChecked={id === seltype} />
-                  <span className="checkmark"></span>
-                </label>
-              );
-            })}
+            {setType.map(({ type, id }, index) => (
+              <label
+                onClick={() => setseltype(id)}
+                key={index}
+                className="container"
+              >
+                {type}
+                <input type="checkbox" defaultChecked={id === seltype} />
+                <span className="checkmark"></span>
+              </label>
+            ))}
           </div>
 
-          <button
-            onClick={() => {
-              submit();
-            }}
-            className="done_btn"
-          >
+          <button onClick={submit} className="done_btn" disabled={loading}>
             {loading ? (
               <div className="loader_size">
                 <Loader />

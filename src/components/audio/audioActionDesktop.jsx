@@ -402,9 +402,9 @@ const AudioActionDesktop = () => {
           <input
             ref={rangeRef}
             type="range"
-            min={"0"}
-            max={Math.floor(audioRef.current?.duration)}
-            value={value}
+            min={0}
+            max={audioRef.current?.duration || 100}
+            value={value || 0}
             onChange={(e) => {
               handleRange(e.target.value);
             }}
