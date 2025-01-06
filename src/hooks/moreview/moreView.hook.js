@@ -16,22 +16,28 @@ export const useMoreViewHook = (keyParam, currentdata) => {
       onSuccess: (data) => {
         setIsLoadingNextPage(false);
 
+        // Ensure data is an array and has content
+        const responseData = Array.isArray(data) ? data : [];
+
         // ensure subsequent requests are not sent when the last one doesn't have data
-        if (!data || data.length === 0) {
+        if (!responseData || responseData.length === 0) {
           setHasReachedLastPage(true);
           return;
         }
 
         // Only append new data if it's a subsequent page
         if (keyParam.page === 1) {
-          setquerydata(data);
+          setquerydata(responseData);
         } else {
           setquerydata((prev) => {
+            // Ensure prev is an array
+            const prevData = Array.isArray(prev) ? prev : [];
+
             // Filter out duplicates based on nid
-            const newData = data.filter(
-              (item) => !prev.some((prevItem) => prevItem.nid === item.nid)
+            const newData = responseData.filter(
+              (item) => !prevData.some((prevItem) => prevItem.nid === item.nid)
             );
-            return [...prev, ...newData];
+            return [...prevData, ...newData];
           });
         }
       },
@@ -52,7 +58,8 @@ export const useMoreViewHook = (keyParam, currentdata) => {
 
   useEffect(() => {
     if (!keyParam.endpoint_url) {
-      setquerydata(currentdata || []);
+      // Ensure currentdata is an array
+      setquerydata(Array.isArray(currentdata) ? currentdata : []);
       setHasReachedLastPage(true);
     } else {
       // Reset state when endpoint changes
