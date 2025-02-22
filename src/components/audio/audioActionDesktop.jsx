@@ -44,10 +44,10 @@ import {
 import Addplaylist from "../../pages/add_playlist/AddPlaylist";
 import { LECTURE, RESOURCE_PERSON } from "../../utils/routes/constants";
 import { AudioDownloadModal } from "../audioDownloadModal/AudioDownloadModal";
+
 const AudioActionDesktop = () => {
   const { currentUser, audioId, isrepeat, value, page, count, pack, playing } =
     useSelector((state) => state.user);
-  //const [playing, setPlaying] = useState(false);
   const dispatch = useDispatch();
   const rangeRef = useRef();
   const navigate = useNavigate();
@@ -67,6 +67,55 @@ const AudioActionDesktop = () => {
   const [isminimize, setminimize] = useState(false);
   const [transition, settransition] = useState(true);
   const [isloaded, setnotloaded] = useState(true);
+
+  const handleNextAudio = useCallback(() => {
+    setinitial(false);
+    setIsPrevious(false);
+    dispatch(setPlaying(false));
+    setnotloaded(true);
+
+    const next = pack?.findIndex((value) => {
+      return value.nid === parseInt(audioId);
+    });
+
+    if (!isEmpty && pack?.length - 1 - next <= 2) {
+      dispatch(getPage(page + 1));
+    }
+
+    if (next === pack?.length - 1) {
+      dispatch(getaudioId(pack[next]?.nid));
+      dispatch(getCount(next));
+    } else if (count < pack?.length - 1) {
+      dispatch(getaudioId(pack[next + 1]?.nid));
+      dispatch(getCount(next + 1));
+    } else {
+      dispatch(getaudioId(pack[0]?.nid));
+      dispatch(getCount(0));
+    }
+  }, [audioId, count, dispatch, isEmpty, pack, page, setinitial]);
+
+  const handlePreviousAudio = useCallback(() => {
+    setinitial(false);
+    setnotloaded(true);
+    dispatch(setPlaying(false));
+    const prev = pack?.findIndex((value) => {
+      return value.nid === parseInt(audioId);
+    });
+
+    if (page > 1 && pack.length - 1 - prev <= pack.length - 1 - 2) {
+      setIsPrevious(true);
+      dispatch(getPage(page - 1));
+    }
+
+    if (prev === 0) {
+      dispatch(getaudioId(pack[prev]?.nid));
+      dispatch(getCount(prev));
+    } else {
+      dispatch(getaudioId(pack[prev - 1]?.nid));
+      dispatch(getCount(prev - 1));
+    }
+  }, [audioId, dispatch, pack, page, setinitial]);
+
   const getMusic = (audioId) => {
     //dispatch(setPlaying(false));
     setLoading(true);
@@ -78,7 +127,6 @@ const AudioActionDesktop = () => {
 
         dispatch(getcurrentAudioInfo(res.data[0]));
         setLoading(false);
-
 
         if (initial) {
           dispatch(setPlaying(false));
@@ -140,81 +188,153 @@ const AudioActionDesktop = () => {
 
   useEffect(() => {
     if (playing && !initial) {
-      audioRef.current?.play()
-        .then(() => {
+      const startPlayback = async () => {
+        try {
+          // Handle mobile audio context
+          if (window.AudioContext || window.webkitAudioContext) {
+            const audioContext = new (window.AudioContext ||
+              window.webkitAudioContext)();
+            if (audioContext.state === "suspended") {
+              await audioContext.resume();
+            }
+          }
+
+          // Ensure audio element is ready
+          if (!audioRef.current.readyState) {
+            await new Promise((resolve) => {
+              audioRef.current.addEventListener("loadedmetadata", resolve, {
+                once: true,
+              });
+            });
+          }
+
+          // Handle mobile wake lock
+          try {
+            if ("wakeLock" in navigator) {
+              await navigator.wakeLock.request("screen");
+            }
+          } catch (err) {
+            console.log("Wake Lock error:", err);
+          }
+
+          // Start playback
+          await audioRef.current.play();
           playAnimation.current = requestAnimationFrame(repeat);
-          
-          // Set up MediaSession API for background playback
-          if ('mediaSession' in navigator) {
+
+          // Set up MediaSession API for mobile controls
+          if ("mediaSession" in navigator) {
             navigator.mediaSession.metadata = new MediaMetadata({
-              title: currentaudio?.title || 'Audio Track',
-              artist: currentaudio?.rpname || 'Unknown Artist',
+              title: currentaudio?.title || "Audio Track",
+              artist: currentaudio?.rpname || "Unknown Artist",
               artwork: [
-                { src: currentaudio?.image || lazys, sizes: '512x512', type: 'image/jpeg' }
-              ]
+                {
+                  src: currentaudio?.image || lazys,
+                  sizes: "512x512",
+                  type: "image/jpeg",
+                },
+              ],
             });
 
-            navigator.mediaSession.setActionHandler('play', () => {
+            // Add mobile-friendly media controls
+            navigator.mediaSession.setActionHandler("play", () => {
               dispatch(setPlaying(true));
-              audioRef.current?.play();
+              audioRef.current?.play().catch(console.error);
             });
 
-            navigator.mediaSession.setActionHandler('pause', () => {
+            navigator.mediaSession.setActionHandler("pause", () => {
               dispatch(setPlaying(false));
               audioRef.current?.pause();
             });
 
-            navigator.mediaSession.setActionHandler('previoustrack', handlePreviousAudio);
-            navigator.mediaSession.setActionHandler('nexttrack', handleNextAudio);
-            
-            // Add seek handlers
-            navigator.mediaSession.setActionHandler('seekbackward', () => {
+            // Add seek controls for mobile
+            navigator.mediaSession.setActionHandler("seekbackward", () => {
               const newTime = Math.max(audioRef.current.currentTime - 10, 0);
               audioRef.current.currentTime = newTime;
               handleRange(newTime);
             });
 
-            navigator.mediaSession.setActionHandler('seekforward', () => {
-              const newTime = Math.min(audioRef.current.currentTime + 10, audioRef.current.duration);
+            navigator.mediaSession.setActionHandler("seekforward", () => {
+              const newTime = Math.min(
+                audioRef.current.currentTime + 10,
+                audioRef.current.duration
+              );
               audioRef.current.currentTime = newTime;
               handleRange(newTime);
             });
 
-            // Update position state
-            if ('setPositionState' in navigator.mediaSession) {
-              navigator.mediaSession.setPositionState({
-                duration: audioRef.current.duration || 0,
-                playbackRate: audioRef.current.playbackRate,
-                position: audioRef.current.currentTime || 0
-              });
-            }
+            navigator.mediaSession.setActionHandler(
+              "previoustrack",
+              handlePreviousAudio
+            );
+            navigator.mediaSession.setActionHandler(
+              "nexttrack",
+              handleNextAudio
+            );
           }
-        })
-        .catch(error => {
-          console.error('Playback failed:', error);
-          // Handle the error appropriately
-        });
-    } else {
-      audioRef.current?.pause();
-      cancelAnimationFrame(playAnimation.current);
-    }
-
-    // Add audio focus management
-    const handleAudioInterruption = () => {
-      const handlePlay = () => {
-        if (playing && !initial) {
-          audioRef.current?.play();
+        } catch (error) {
+          console.error("Playback failed:", error);
+          dispatch(setPlaying(false));
+          toast.error("Playback failed. Please try again.");
         }
       };
 
-      audioRef.current?.addEventListener('pause', handlePlay);
-      return () => {
-        audioRef.current?.removeEventListener('pause', handlePlay);
-      };
-    };
+      startPlayback();
 
-    return handleAudioInterruption();
-  }, [playing, initial, currentaudio]);
+      // Handle audio interruptions and focus
+      const handleVisibilityChange = () => {
+        if (document.hidden) {
+          audioRef.current?.pause();
+        } else if (playing && !initial) {
+          audioRef.current?.play().catch(console.error);
+        }
+      };
+
+      const handleAudioFocus = () => {
+        if (playing && !initial) {
+          audioRef.current?.play().catch(console.error);
+        }
+      };
+
+      // Mobile-specific event listeners
+      document.addEventListener("visibilitychange", handleVisibilityChange);
+      window.addEventListener("focus", handleAudioFocus);
+      window.addEventListener("blur", () => audioRef.current?.pause());
+
+      // Handle phone call interruptions
+      if ("ondevicelight" in window) {
+        window.addEventListener("pause", () => {
+          audioRef.current?.pause();
+          dispatch(setPlaying(false));
+        });
+      }
+
+      return () => {
+        document.removeEventListener(
+          "visibilitychange",
+          handleVisibilityChange
+        );
+        window.removeEventListener("focus", handleAudioFocus);
+        window.removeEventListener("blur", () => audioRef.current?.pause());
+        cancelAnimationFrame(playAnimation.current);
+        if (audioRef.current) {
+          audioRef.current.pause();
+        }
+      };
+    } else {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        cancelAnimationFrame(playAnimation.current);
+      }
+    }
+  }, [
+    playing,
+    initial,
+    currentaudio,
+    dispatch,
+    repeat,
+    handlePreviousAudio,
+    handleNextAudio,
+  ]);
 
   const handlePlay = () => {
     setinitial(false);
@@ -237,58 +357,6 @@ const AudioActionDesktop = () => {
     if (audioRef.current) {
       audioRef.current.currentTime = curr;
     }
-  };
-
-  const handleNextAudio = () => {
-    setinitial(false);
-    setIsPrevious(false);
-    dispatch(setPlaying(false));
-    setnotloaded(true);
-
-    const next = pack?.findIndex((value) => {
-      return value.nid === parseInt(audioId);
-    });
-
-    if (!isEmpty && pack?.length - 1 - next <= 2) {
-      dispatch(getPage(page + 1));
-    }
-
-    if (next === pack?.length - 1) {
-      dispatch(getaudioId(pack[next]?.nid));
-
-      dispatch(getCount(next));
-    } else if (count < pack?.length - 1) {
-      dispatch(getaudioId(pack[next + 1]?.nid));
-
-      dispatch(getCount(next + 1));
-    } else {
-      dispatch(getaudioId(pack[0]?.nid));
-
-      dispatch(getCount(0));
-    }
-  };
-  const handlePreviousAudio = () => {
-    setinitial(false);
-    setnotloaded(true);
-    dispatch(setPlaying(false));
-    const prev = pack?.findIndex((value) => {
-      return value.nid === parseInt(audioId);
-    });
-
-    if (page > 1 && pack.length - 1 - prev <= pack.length - 1 - 2) {
-      setIsPrevious(true);
-      dispatch(getPage(page - 1));
-    }
-
-    if (prev === 0) {
-      dispatch(getaudioId(pack[prev]?.nid));
-      dispatch(getCount(prev));
-    } else {
-      dispatch(getaudioId(pack[prev - 1]?.nid));
-      dispatch(getCount(prev - 1));
-    }
-
-    //audioRef.current?.currentTime = 0;
   };
 
   useEffect(() => {
