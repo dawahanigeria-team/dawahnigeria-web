@@ -30,21 +30,26 @@ const Search = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const searchRef = useRef(null);
 
+  // Check if we're on the main paths
+  const isMainPath = pathname === "/" || pathname === "/dawahcast";
+
   // Close dropdown when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (searchRef.current && !searchRef.current.contains(event.target)) {
-        setShowDropdown(false);
-      }
-    };
+    if (!isMainPath) {
+      const handleClickOutside = (event) => {
+        if (searchRef.current && !searchRef.current.contains(event.target)) {
+          setShowDropdown(false);
+        }
+      };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [isMainPath]);
 
   const debouncedSearch = useCallback(
     debounce(async (searchText, currentSearchType) => {
-      if (!searchText.trim()) {
+      if (!searchText.trim() || isMainPath) {
         setDropdownResults([]);
         setLoading(false);
         return;
@@ -68,7 +73,7 @@ const Search = () => {
       }
       setLoading(false);
     }, 500),
-    []
+    [isMainPath]
   );
 
   useEffect(() => {
@@ -104,9 +109,12 @@ const Search = () => {
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
-    setLoading(true);
-    setShowDropdown(true);
-    debouncedSearch(value, searchType);
+
+    if (!isMainPath) {
+      setLoading(true);
+      setShowDropdown(true);
+      debouncedSearch(value, searchType);
+    }
   };
 
   const handleItemSelect = (item) => {
@@ -118,18 +126,6 @@ const Search = () => {
     const lectureId = item.id || (item._id && item._id.$oid);
 
     // For lectures or when on root page, just navigate directly
-    if (
-      pathname === "/dawahcast" ||
-      pathname === "/" ||
-      searchType === "lectures"
-    ) {
-      if (lectureId) {
-        console.log("Navigating to:", `/dawahcast/l/${lectureId}`);
-        navigate(`/dawahcast/l/${lectureId}`);
-        setShowDropdown(false);
-        return;
-      }
-    }
 
     // For other cases, update input and navigate
     setInputValue(item.name || item.mp3_title || item.title);
@@ -150,38 +146,26 @@ const Search = () => {
 
   const handleSubmit = () => {
     if (!inputValue.trim()) return;
-    setShowDropdown(false);
 
+    // For root and dawahcast paths
+    if (isMainPath) {
+      setText(inputValue);
+      navigate(`/dawahcast/search?query=${encodeURIComponent(inputValue)}`);
+      return;
+    }
+
+    // Existing behavior for other paths
+    setShowDropdown(false);
     if (dropdownResults.length > 0) {
       const firstResult = dropdownResults[0];
-      const lectureId =
-        firstResult.id || (firstResult._id && firstResult._id.$oid);
+      const lectureId = firstResult.id || (firstResult._id && firstResult._id.$oid);
 
       if (lectureId) {
-        if (
-          pathname === "/dawahcast" ||
-          pathname === "/" ||
-          searchType === "lectures"
-        ) {
-          // For lectures or root page, just navigate
-          navigate(`/dawahcast/l/${lectureId}`);
-        } else {
-          // For other cases, update text and navigate
-          setText(inputValue);
-          navigate(`/dawahcast/l/${lectureId}`);
-        }
+        setText(inputValue);
+        navigate(`/dawahcast/l/${lectureId}`);
       }
     }
   };
-
-  useEffect(() => {
-    // Clean up when component unmounts or route changes
-    return () => {
-      setDropdownResults([]);
-      setShowDropdown(false);
-      setLoading(false);
-    };
-  }, [pathname]);
 
   return (
     <div ref={searchRef} className="search_wrapper bg-input relative">
@@ -193,13 +177,13 @@ const Search = () => {
             handleSubmit();
           }
         }}
-        onFocus={() => setShowDropdown(true)}
+        onFocus={() => !isMainPath && setShowDropdown(true)}
         value={inputValue}
         type="search"
         className="search_input text-color"
         placeholder="Search"
       />
-      {showDropdown && (
+      {showDropdown && !isMainPath && (
         <SearchDropdown
           results={dropdownResults}
           loading={loading}
