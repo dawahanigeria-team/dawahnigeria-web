@@ -1,16 +1,19 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { LECTURE } from "../../../utils/routes/constants";
+import { useNavigate } from "react-router-dom";
 import { IMAGE_PLACEHOLDERS } from "../../../utils/imagePlaceholders";
+
 const SearchDataWidget = ({
   lec_img,
-  mp3_description,
-  mp3_title,
-  mp3_duration,
   cat_name,
-  date,
+  mp3_title,
+  mp3_description,
+  mp3_duration,
+  lecturer_name,
   id,
+  language,
 }) => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     function lazyImages() {
       const lazy = document.querySelectorAll("#search");
@@ -28,30 +31,49 @@ const SearchDataWidget = ({
   }, []);
 
   return (
-    <Link to={`${LECTURE}${id}`} className="w-full mb-3 grid grid-cols-8 gap-5">
-      <div className="col-span-3 min-[615px]:col-span-2 h-[100px] min-[615px]:h-[150px] w-full rounded-md">
-        <img
-          src-data={lec_img}
-          src={IMAGE_PLACEHOLDERS.lecture}
-          id="search"
-          alt=""
-          className="w-full h-full rounded-md"
-        />
+    <div
+      onClick={() => navigate(`/dawahcast/l/${id}`)}
+      className="w-full cursor-pointer bg-black/90 hover:bg-black/80 transition-all duration-200 p-4"
+    >
+      <div className="flex gap-4">
+        {lec_img && (
+          <div className="shrink-0">
+            <img
+              src={lec_img}
+              alt={lecturer_name}
+              className="w-16 h-16 rounded object-cover"
+            />
+          </div>
+        )}
+        <div className="flex-1 min-w-0">
+          <h3 className="text-base font-normal text-white mb-1">{mp3_title}</h3>
+
+          <div className="space-y-0.5 text-sm">
+            {lecturer_name && (
+              <p className="text-gray-400 flex items-center gap-2">
+                <span>By:</span>
+                <span>{lecturer_name}</span>
+              </p>
+            )}
+            {cat_name && (
+              <p className="text-gray-400 flex items-center gap-2">
+                <span>Type:</span>
+                <span className="capitalize">{cat_name}</span>
+              </p>
+            )}
+            {language && (
+              <p className="text-gray-400 flex items-center gap-2">
+                <span>Language:</span>
+                <span>{language}</span>
+              </p>
+            )}
+            {mp3_duration && (
+              <p className="text-gray-400">Duration: {mp3_duration}</p>
+            )}
+          </div>
+        </div>
       </div>
-      <div className="col-span-5 min-[615px]:col-span-5">
-        <div className="max-[615px]:whitespace-nowrap text-foreground max-[615px]:text-ellipsis max-[615px]:overflow-hidden w-full">
-          {mp3_title}
-        </div>
-        <div className="max-[615px]:whitespace-nowrap text-color max-[615px]:text-ellipsis max-[615px]:overflow-hidden w-full">
-          {cat_name}
-        </div>
-        <div className="max-[615px]:whitespace-nowrap text-color max-[615px]:text-ellipsis max-[615px]:overflow-hidden w-full">
-          {mp3_description?.split("/")[0]}
-        </div>
-        <p className="text-color"> {`Date: ${date}`}</p>
-      </div>
-      <div className="max-[615px]:hidden text-color">{mp3_duration}</div>
-    </Link>
+    </div>
   );
 };
 

@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Container from "../../components/container/Container";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import { useDispatch, useSelector } from "react-redux";
 import { SearchContext } from "../../App";
 import { NavContext } from "../../components/layout/Layout";
-import { useContext } from "react";
 import { FaFilter } from "react-icons/fa";
-import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import {
   HiOutlineArrowLongLeft,
@@ -21,77 +19,94 @@ import {
 } from "../../Redux/Actions/ActionCreators";
 import { SEARCH } from "../../utils/routes/constants";
 import HeadMeta from "../../components/head-meta";
+
 const SearchPage = () => {
-  const { albumId, lecturerId, text, languageId, categoryId, searchType } =
-    useContext(SearchContext);
-  const { searchData, searchRecord } = useSelector((state) => state.search);
+  const { setText } = useContext(SearchContext);
+  const { searchData } = useSelector((state) => state.search);
   const navigate = useNavigate();
   const { setRes, setisOpen } = useContext(NavContext);
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [searchParams] = useSearchParams();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalResults, setTotalResults] = useState(0);
 
   const handleSideBar = () => {
     setRes(1);
     setisOpen(true);
   };
-  useEffect(() => {
-    if (!text) {
-      navigate("/");
-    }
-  }, [text]);
 
-  function fetchData(languageId, categoryId, lecturerId, albumId) {
-    if (text === "") return;
+  function fetchData(page = 1) {
+    const searchValue = searchParams.get("query");
+    if (!searchValue) {
+      navigate("/");
+      return;
+    }
+
     setLoading(true);
+    setText(searchValue); // Now setText is properly defined from SearchContext
 
     const baseUrl = `${process.env.REACT_APP_API_BASE_URL}/searchApi.php`;
-    const apiUrl = `${baseUrl}?type=${searchType}&value=${text}`;
+    const params = new URLSearchParams({
+      type: "global",
+      value: searchValue,
+      page: page.toString(),
+      limit: "20",
+    });
 
     axios
-      .get(apiUrl)
+      .get(`${baseUrl}?${params.toString()}`)
       .then((res) => {
         setLoading(false);
-        if (res.data.success) {
-          dispatch(getSearchData(res.data.data));
-          dispatch(getSearchRecord(res.data.total));
-          dispatch(getSearchOptions({}));
+        if (res.data.status === "success") {
+          dispatch(getSearchData(res.data.results || []));
+          dispatch(getSearchRecord(res.data.total || 0));
+          setTotalResults(res.data.total || 0);
+          setCurrentPage(parseInt(res.data.page) || 1);
         } else {
           dispatch(getSearchData([]));
-          dispatch(getSearchOptions({}));
           dispatch(getSearchRecord(0));
+          setTotalResults(0);
         }
       })
       .catch((err) => {
+        console.error("Search error:", err);
         setLoading(false);
         dispatch(getSearchData([]));
-        dispatch(getSearchOptions({}));
         dispatch(getSearchRecord(0));
+        setTotalResults(0);
       });
   }
 
   useEffect(() => {
-    if (text) {
-      fetchData(languageId, categoryId, lecturerId, albumId);
-    }
-  }, [languageId, categoryId, lecturerId, albumId, text]);
+    const page = parseInt(searchParams.get("page")) || 1;
+    fetchData(page);
+  }, [searchParams]);
+
+  const handlePageChange = (newPage) => {
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("page", newPage.toString());
+    navigate(`${pathname}?${newSearchParams.toString()}`);
+  };
+
+  const totalPages = Math.ceil(totalResults / 20);
+  const searchValue = searchParams.get("query");
 
   return (
     <Container>
-      <div className=" w-full h-full max-[615px]:pt-[6px] text-sm min-[615px]:text-[16px] font-thin text-black dark:text-gray-200">
+      <div className="w-full h-full max-[615px]:pt-[6px] text-sm min-[615px]:text-[16px] font-thin text-black dark:text-gray-200">
         <div className="w-full fixed inset-x-0 z-[10] bg-primary-foreground p-0 max-[615px]:border-b border-zinc-700">
           <HeadMeta
             title={`Search for ${
-              text || "islamic"
-            } resources on Dawah Nigeria `}
+              searchValue || "islamic"
+            } resources on Dawah Nigeria`}
           />
           <HeaderRouter title={"Search"} />
         </div>
         <div className="pt-2 pl-2 flex items-center space-x-1 max-[615px]:hidden">
           <HiOutlineArrowLongLeft
-            onClick={() => {
-              navigate(-1);
-            }}
+            onClick={() => navigate(-1)}
             className={
               pathname === SEARCH
                 ? "text-[30px] text-color"
@@ -106,63 +121,85 @@ const SearchPage = () => {
             }
           />
           <span className="mr-1">{"Search"}</span>/ <span></span>
-          {`Search for ${text}`}
+          {`Search for ${searchValue || ""}`}
         </div>
-        <div className="flex text-color text-sm font-normal flex-col px-2 py-12  min-[615px]:px-6 min-[615px]:py-6 w-full">
+        <div className="flex text-color text-sm font-normal flex-col px-2 py-12 min-[615px]:px-6 min-[615px]:py-6 w-full">
           <div
-            onClick={() => {
-              handleSideBar();
-            }}
+            onClick={handleSideBar}
             className="my-3 w-fit space-x-2 border px-2 py-1 rounded-md min-[890px]:hidden flex items-center border-border"
           >
             <FaFilter className="text-[22px]" />
             <div>Filter</div>
           </div>
-          <div className="text-lg text-foreground mb-3 min-[615px]:text-xl">{`${
-            searchRecord?.toLocaleString() || 0
-          } result for '${text}'`}</div>
+          <div className="text-lg text-foreground mb-3 min-[615px]:text-xl">
+            {`${totalResults?.toLocaleString() || 0} results for '${
+              searchValue || ""
+            }'`}
+          </div>
+
           {loading && (
             <div className="w-full h-[300px] flex items-center justify-center">
               <div className="animate-spin w-6 h-6 min-[615px]:w-8 min-[615px]:h-8 rounded-full border-r-2 border-b-2 border-zinc-400"></div>
             </div>
           )}
-          {!loading && searchData.length === 0 && (
+
+          {!loading && (!searchData || searchData.length === 0) && (
             <div className="w-full flex items-center justify-center h-[300px]">
-              <h1 className="text-3xl min-[615px]:text-4xl text-color tracking-wider ">
-                No search result found
+              <h1 className="text-3xl min-[615px]:text-4xl text-color tracking-wider">
+                No search results found
               </h1>
             </div>
           )}
-          {!loading &&
-            searchData.length !== 0 &&
-            searchData?.map(
-              (
-                {
-                  lec_img,
-                  cat_name,
-                  mp3_title,
-                  mp3_description,
-                  mp3_duration,
-                  updated_date,
-                  id,
-                },
-                idx
-              ) => {
-                return (
-                  <div key={idx}>
-                    <SearchDataWidget
-                      id={id}
-                      lec_img={lec_img}
-                      cat_name={cat_name}
-                      date={updated_date}
-                      mp3_title={mp3_title}
-                      mp3_description={mp3_description}
-                      mp3_duration={mp3_duration}
-                    />
-                  </div>
-                );
-              }
-            )}
+
+          {!loading && searchData && searchData.length > 0 && (
+            <>
+              <div className="space-y-2">
+                {searchData.map((item, idx) => (
+                  <SearchDataWidget
+                    key={item._id.$oid || idx}
+                    lec_img={item.lecturer_image}
+                    cat_name={item.type}
+                    mp3_title={item.title}
+                    mp3_description={item.description}
+                    mp3_duration={item.duration}
+                    lecturer_name={item.lecturer_name}
+                    language={item.language_name}
+                    id={item.id}
+                  />
+                ))}
+              </div>
+
+              {totalPages > 1 && (
+                <div className="flex justify-center items-center gap-4 mt-8">
+                  <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className={`px-4 py-2 rounded ${
+                      currentPage === 1
+                        ? "bg-gray-300 cursor-not-allowed"
+                        : "bg-primary text-white hover:bg-primary-dark"
+                    }`}
+                  >
+                    Previous
+                  </button>
+                  <span className="text-sm">
+                    Page {currentPage} of {totalPages}
+                  </span>
+                  <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className={`px-4 py-2 rounded ${
+                      currentPage === totalPages
+                        ? "bg-gray-300 cursor-not-allowed"
+                        : "bg-primary text-white hover:bg-primary-dark"
+                    }`}
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
+            </>
+          )}
         </div>
       </div>
     </Container>
