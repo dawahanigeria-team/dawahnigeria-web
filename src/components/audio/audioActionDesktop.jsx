@@ -191,11 +191,35 @@ const AudioActionDesktop = () => {
       const startPlayback = async () => {
         try {
           // Handle mobile audio context
+          let audioContext;
           if (window.AudioContext || window.webkitAudioContext) {
-            const audioContext = new (window.AudioContext ||
+            audioContext = new (window.AudioContext ||
               window.webkitAudioContext)();
             if (audioContext.state === "suspended") {
               await audioContext.resume();
+            }
+          }
+
+          // Configure audio element for mobile
+          if (audioRef.current) {
+            // Essential mobile attributes
+            audioRef.current.setAttribute("playsinline", "true");
+            audioRef.current.setAttribute("webkit-playsinline", "true");
+            audioRef.current.setAttribute("x-webkit-airplay", "allow");
+            audioRef.current.setAttribute("preload", "auto");
+            // Prevent auto-pause on mobile
+            audioRef.current.setAttribute("data-keepalive", "true");
+
+            // Mobile-specific settings
+            if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+              audioRef.current.volume = 1.0; // Ensure full volume on mobile
+              // Enable background playback for iOS
+              try {
+                await audioRef.current.play();
+                audioRef.current.pause();
+              } catch (e) {
+                console.log("Initial play-pause setup failed:", e);
+              }
             }
           }
 
@@ -208,24 +232,36 @@ const AudioActionDesktop = () => {
             });
           }
 
-          // Handle mobile wake lock
-          try {
-            if ("wakeLock" in navigator) {
-              await navigator.wakeLock.request("screen");
+          // Handle mobile wake lock with retry
+          let wakeLock = null;
+          const acquireWakeLock = async (retries = 3) => {
+            for (let i = 0; i < retries; i++) {
+              try {
+                if ("wakeLock" in navigator) {
+                  wakeLock = await navigator.wakeLock.request("screen");
+                  break;
+                }
+              } catch (err) {
+                console.log(`Wake Lock error attempt ${i + 1}:`, err);
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+              }
             }
-          } catch (err) {
-            console.log("Wake Lock error:", err);
+          };
+          await acquireWakeLock();
+
+          // Start playback with mobile considerations
+          const playPromise = audioRef.current.play();
+          if (playPromise !== undefined) {
+            await playPromise;
+            playAnimation.current = requestAnimationFrame(repeat);
           }
 
-          // Start playback
-          await audioRef.current.play();
-          playAnimation.current = requestAnimationFrame(repeat);
-
-          // Set up MediaSession API for mobile controls
+          // Set up MediaSession API for mobile controls with enhanced metadata
           if ("mediaSession" in navigator) {
             navigator.mediaSession.metadata = new MediaMetadata({
               title: currentaudio?.title || "Audio Track",
               artist: currentaudio?.rpname || "Unknown Artist",
+              album: "Islamic Lecture",
               artwork: [
                 {
                   src: currentaudio?.image || lazys,
@@ -235,27 +271,36 @@ const AudioActionDesktop = () => {
               ],
             });
 
-            // Add mobile-friendly media controls
-            navigator.mediaSession.setActionHandler("play", () => {
-              dispatch(setPlaying(true));
-              audioRef.current?.play().catch(console.error);
+            // Enhanced mobile controls
+            navigator.mediaSession.setActionHandler("play", async () => {
+              try {
+                await audioRef.current?.play();
+                dispatch(setPlaying(true));
+              } catch (error) {
+                console.error("Mobile play failed:", error);
+              }
             });
 
             navigator.mediaSession.setActionHandler("pause", () => {
-              dispatch(setPlaying(false));
               audioRef.current?.pause();
+              dispatch(setPlaying(false));
             });
 
-            // Add seek controls for mobile
+            // Mobile-optimized seek controls
             navigator.mediaSession.setActionHandler("seekbackward", () => {
-              const newTime = Math.max(audioRef.current.currentTime - 10, 0);
+              const skipTime = 10;
+              const newTime = Math.max(
+                audioRef.current.currentTime - skipTime,
+                0
+              );
               audioRef.current.currentTime = newTime;
               handleRange(newTime);
             });
 
             navigator.mediaSession.setActionHandler("seekforward", () => {
+              const skipTime = 10;
               const newTime = Math.min(
-                audioRef.current.currentTime + 10,
+                audioRef.current.currentTime + skipTime,
                 audioRef.current.duration
               );
               audioRef.current.currentTime = newTime;
@@ -270,43 +315,83 @@ const AudioActionDesktop = () => {
               "nexttrack",
               handleNextAudio
             );
+
+            // Add position state for better lock screen display
+            if (navigator.mediaSession.setPositionState) {
+              navigator.mediaSession.setPositionState({
+                duration: audioRef.current.duration,
+                playbackRate: audioRef.current.playbackRate,
+                position: audioRef.current.currentTime,
+              });
+            }
           }
         } catch (error) {
           console.error("Playback failed:", error);
           dispatch(setPlaying(false));
           toast.error("Playback failed. Please try again.");
         }
+
+        return () => {
+          if (wakeLock) {
+            wakeLock.release().catch(console.error);
+          }
+          if (audioContext) {
+            audioContext.close().catch(console.error);
+          }
+        };
       };
 
       startPlayback();
 
-      // Handle audio interruptions and focus
+      // Mobile-optimized visibility handling
       const handleVisibilityChange = () => {
-        if (document.hidden) {
-          audioRef.current?.pause();
-        } else if (playing && !initial) {
-          audioRef.current?.play().catch(console.error);
+        // On mobile, only attempt to resume if we were playing
+        if (!document.hidden && playing && !initial && audioRef.current) {
+          audioRef.current.play().catch((error) => {
+            if (error.name !== "NotAllowedError") {
+              console.error("Resume failed:", error);
+            }
+          });
         }
       };
 
-      const handleAudioFocus = () => {
-        if (playing && !initial) {
-          audioRef.current?.play().catch(console.error);
+      // Handle audio focus for Android
+      const handleAudioFocus = async () => {
+        if (playing && !initial && audioRef.current) {
+          try {
+            await audioRef.current.play();
+          } catch (error) {
+            if (error.name !== "NotAllowedError") {
+              console.error("Focus resume failed:", error);
+            }
+          }
         }
       };
 
-      // Mobile-specific event listeners
+      // Mobile interruption handlers
       document.addEventListener("visibilitychange", handleVisibilityChange);
       window.addEventListener("focus", handleAudioFocus);
-      window.addEventListener("blur", () => audioRef.current?.pause());
 
-      // Handle phone call interruptions
-      if ("ondevicelight" in window) {
-        window.addEventListener("pause", () => {
-          audioRef.current?.pause();
-          dispatch(setPlaying(false));
-        });
-      }
+      // Handle mobile-specific interruptions
+      window.addEventListener("pagehide", () => {
+        // Save current playback state before page hide
+        if (audioRef.current) {
+          localStorage.setItem("audioPosition", audioRef.current.currentTime);
+          localStorage.setItem("wasPlaying", playing);
+        }
+      });
+
+      window.addEventListener("pageshow", () => {
+        // Restore playback state after page show
+        const savedPosition = localStorage.getItem("audioPosition");
+        const wasPlaying = localStorage.getItem("wasPlaying") === "true";
+        if (savedPosition && audioRef.current) {
+          audioRef.current.currentTime = parseFloat(savedPosition);
+          if (wasPlaying) {
+            audioRef.current.play().catch(console.error);
+          }
+        }
+      });
 
       return () => {
         document.removeEventListener(
@@ -314,16 +399,18 @@ const AudioActionDesktop = () => {
           handleVisibilityChange
         );
         window.removeEventListener("focus", handleAudioFocus);
-        window.removeEventListener("blur", () => audioRef.current?.pause());
-        cancelAnimationFrame(playAnimation.current);
-        if (audioRef.current) {
-          audioRef.current.pause();
+        window.removeEventListener("pagehide", () => {});
+        window.removeEventListener("pageshow", () => {});
+        if (playAnimation.current) {
+          cancelAnimationFrame(playAnimation.current);
         }
       };
     } else {
       if (audioRef.current) {
         audioRef.current.pause();
-        cancelAnimationFrame(playAnimation.current);
+        if (playAnimation.current) {
+          cancelAnimationFrame(playAnimation.current);
+        }
       }
     }
   }, [
