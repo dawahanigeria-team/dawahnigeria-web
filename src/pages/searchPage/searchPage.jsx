@@ -161,10 +161,9 @@ const SearchPage = () => {
                     cat_name={item.type}
                     mp3_title={item.title}
                     mp3_description={item.description}
-                    mp3_duration={item.duration}
                     lecturer_name={item.lecturer_name}
-                    language={item.language_name}
                     id={item.id}
+                    duration={item.duration}
                   />
                 ))}
               </div>
