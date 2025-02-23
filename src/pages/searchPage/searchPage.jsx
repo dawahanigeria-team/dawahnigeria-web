@@ -163,6 +163,7 @@ const SearchPage = () => {
                     mp3_description={item.description}
                     lecturer_name={item.lecturer_name}
                     id={item.id}
+                    duration={item.duration}
                   />
                 ))}
               </div>

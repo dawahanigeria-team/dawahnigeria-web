@@ -9,6 +9,7 @@ const SearchDataWidget = ({
   mp3_description,
   lecturer_name,
   id,
+  duration,
 }) => {
   const navigate = useNavigate();
 
@@ -55,6 +56,8 @@ const SearchDataWidget = ({
               src={lec_img}
               alt={lecturer_name}
               className="w-16 h-16 rounded object-cover"
+              id="search"
+              src-data={lec_img}
             />
           </div>
         )}
@@ -79,12 +82,20 @@ const SearchDataWidget = ({
                 <span className="capitalize">{cat_name}</span>
               </p>
             )}
-            {size && (
-              <p className="text-gray-400 flex items-center gap-2">
-                <span>Size:</span>
-                <span>{size}</span>
-              </p>
-            )}
+            <div className="flex items-center gap-4">
+              {size && (
+                <p className="text-gray-400 flex items-center gap-2">
+                  <span>Size:</span>
+                  <span>{size}</span>
+                </p>
+              )}
+              {duration && (
+                <p className="text-gray-400 flex items-center gap-2">
+                  <span>Duration:</span>
+                  <span>{duration}</span>
+                </p>
+              )}
+            </div>
           </div>
         </div>
       </div>
