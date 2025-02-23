@@ -7,12 +7,26 @@ const SearchDataWidget = ({
   cat_name,
   mp3_title,
   mp3_description,
-  mp3_duration,
   lecturer_name,
   id,
-  language,
+  duration,
 }) => {
   const navigate = useNavigate();
+
+  // Parse description to get language and size
+  const parseDescription = (description) => {
+    if (!description) return {};
+
+    const languageMatch = description.match(/Language:\s*([^.]+)\./);
+    const sizeMatch = description.match(/Size:\s*([^[]+)/);
+
+    return {
+      language: languageMatch ? languageMatch[1].trim() : null,
+      size: sizeMatch ? sizeMatch[1].trim() : null,
+    };
+  };
+
+  const { language, size } = parseDescription(mp3_description);
 
   useEffect(() => {
     function lazyImages() {
@@ -42,11 +56,18 @@ const SearchDataWidget = ({
               src={lec_img}
               alt={lecturer_name}
               className="w-16 h-16 rounded object-cover"
+              id="search"
+              src-data={lec_img}
             />
           </div>
         )}
         <div className="flex-1 min-w-0">
-          <h3 className="text-base font-normal text-white mb-1">{mp3_title}</h3>
+          <h3 className="text-base font-normal text-white mb-1">
+            {mp3_title}
+            {language && (
+              <span className="text-gray-400 text-sm"> ({language})</span>
+            )}
+          </h3>
 
           <div className="space-y-0.5 text-sm">
             {lecturer_name && (
@@ -61,15 +82,20 @@ const SearchDataWidget = ({
                 <span className="capitalize">{cat_name}</span>
               </p>
             )}
-            {language && (
-              <p className="text-gray-400 flex items-center gap-2">
-                <span>Language:</span>
-                <span>{language}</span>
-              </p>
-            )}
-            {mp3_duration && (
-              <p className="text-gray-400">Duration: {mp3_duration}</p>
-            )}
+            <div className="flex items-center gap-4">
+              {size && (
+                <p className="text-gray-400 flex items-center gap-2">
+                  <span>Size:</span>
+                  <span>{size}</span>
+                </p>
+              )}
+              {duration && (
+                <p className="text-gray-400 flex items-center gap-2">
+                  <span>Duration:</span>
+                  <span>{duration}</span>
+                </p>
+              )}
+            </div>
           </div>
         </div>
       </div>

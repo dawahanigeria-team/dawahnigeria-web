@@ -5,7 +5,7 @@ import React, {
   useContext,
   useRef,
 } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import "./layout.scss";
 import SideNav from "../../components/sideNav/SideNav";
 import { BiShareAlt } from "react-icons/bi";
@@ -14,7 +14,7 @@ import { FaHome, FaPlay } from "react-icons/fa";
 import { MdFavorite } from "react-icons/md";
 import { SiApplemusic } from "react-icons/si";
 import { GiPauseButton } from "react-icons/gi";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { AudioContext } from "../../App.jsx";
 import AudioActionDesktop from "../audio/audioActionDesktop";
@@ -34,7 +34,6 @@ const Layout = () => {
   const { currentAudioInfo, playing, audioId, value } = useSelector(
     (state) => state.user
   );
-  // const { image, title, name, audio } = currentAudioInfo;
   const navigate = useNavigate();
   const rangeRef = useRef();
   const dispatch = useDispatch();
@@ -69,17 +68,22 @@ const Layout = () => {
 
   useEffect(() => {
     const handleRouteChange = () => {
-      if (location.pathname.includes("/dawahcast/l/") && audioRef.current) {
-        const newAudioId = location.pathname.split("/").pop();
-        if (newAudioId !== audioId) {
-          try {
-            audioRef.current.pause();
-            audioRef.current.currentTime = 0;
-            dispatch(setPlaying(false));
-            setinitial(true);
-          } catch (error) {
-            console.error("Error cleaning up audio:", error);
-          }
+      const newPath = location.pathname;
+      const isLecturePath = newPath.includes("/dawahcast/l/");
+      const newLectureId = isLecturePath ? newPath.split("/").pop() : null;
+
+      if (
+        isLecturePath &&
+        newLectureId &&
+        newLectureId !== audioId.toString()
+      ) {
+        try {
+          audioRef.current?.pause();
+          audioRef.current.currentTime = 0;
+          dispatch(setPlaying(false));
+          setinitial(true);
+        } catch (error) {
+          console.error("Error cleaning up audio:", error);
         }
       }
     };
@@ -94,16 +98,33 @@ const Layout = () => {
           audioRef.current.setAttribute("playsinline", "true");
           audioRef.current.setAttribute("webkit-playsinline", "true");
           audioRef.current.setAttribute("autoplay", "false");
+          audioRef.current.setAttribute("x-webkit-airplay", "allow");
+          audioRef.current.setAttribute("preload", "auto");
 
           if ("mediaSession" in navigator) {
             navigator.mediaSession.setActionHandler("play", () => {
-              audioRef.current.play();
+              audioRef.current?.play().catch(console.error);
               dispatch(setPlaying(true));
             });
             navigator.mediaSession.setActionHandler("pause", () => {
-              audioRef.current.pause();
+              audioRef.current?.pause();
               dispatch(setPlaying(false));
             });
+
+            if (currentAudioInfo) {
+              navigator.mediaSession.metadata = new MediaMetadata({
+                title:
+                  currentAudioInfo.title || currentAudioInfo.Title || "Unknown",
+                artist: currentAudioInfo.rpname || "Unknown Artist",
+                artwork: [
+                  {
+                    src: currentAudioInfo.img || IMAGE_PLACEHOLDERS.lecture,
+                    sizes: "512x512",
+                    type: "image/jpeg",
+                  },
+                ],
+              });
+            }
           }
         } catch (error) {
           console.error("Error setting up audio:", error);
@@ -112,7 +133,7 @@ const Layout = () => {
     };
 
     setupAudioContext();
-  }, [audioRef]);
+  }, [audioRef, currentAudioInfo, dispatch]);
 
   const handleRangeChange = (e) => {
     if (audioRef.current) {
@@ -121,7 +142,6 @@ const Layout = () => {
     }
   };
 
-  // Update the play handler in the mobile menu
   const handlePlay = async () => {
     if (playing) {
       audioRef.current?.pause();
@@ -142,12 +162,32 @@ const Layout = () => {
           });
         }
 
+        // Request audio focus if possible
+        if ("audioFocus" in navigator) {
+          try {
+            await navigator.audioFocus.request({
+              audioType: "media",
+              allowDucking: true,
+            });
+          } catch (error) {
+            console.log("Audio focus request failed:", error);
+          }
+        }
+
         const playPromise = audioRef.current?.play();
         if (playPromise !== undefined) {
           playPromise
             .then(() => {
               dispatch(setPlaying(true));
               setinitial(false);
+
+              // Set audio element attributes to allow background playback
+              if (audioRef.current) {
+                audioRef.current.setAttribute("x-webkit-airplay", "allow");
+                audioRef.current.setAttribute("preload", "auto");
+                audioRef.current.setAttribute("webkit-playsinline", "true");
+                audioRef.current.setAttribute("playsinline", "true");
+              }
             })
             .catch((error) => {
               if (error.name !== "NotAllowedError") {
