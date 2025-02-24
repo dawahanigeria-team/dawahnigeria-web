@@ -25,7 +25,7 @@ const Ramadan = () => {
                 heading={name || "Ramadan lectures"}
                 type={"album"}
                 nav1={{ title: "Ramadan", link: RAMADAN }}
-                moreRoute={`${RAMADAN}/${key_id}`}
+                moreRoute={`${RAMADAN}/keyword/${encodeURIComponent(name)}`}
               />
             </div>
           ))}

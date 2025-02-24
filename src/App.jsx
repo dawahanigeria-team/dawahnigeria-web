@@ -82,6 +82,7 @@ import ForgotPassword from "./pages/forgotpassword/forgotPassword";
 import { usePageTracking } from "./utils/tracking";
 import { useThemeHook } from "./hooks";
 import RamadanDetail from "./pages/ramadan_detail/Ramadan_detail";
+import { RamadanYearTafseer } from "./components/ramadan-details/ramadanYearTafseer/RamadanYearTafseer";
 export const AudioContext = createContext();
 export const SearchContext = createContext();
 export const ThemeProvider = createContext();
@@ -232,6 +233,10 @@ const App = () => {
                 </Route>
                 <Route path="/dawahcast" element={<Layout />}>
                   <Route path={RAMADAN} element={<Ramadan />} />
+                  <Route
+                    path={`${RAMADAN}/keyword/:year`}
+                    element={<RamadanYearTafseer />}
+                  />
                   <Route path={`${RAMADAN}/:id`} element={<RamadanDetail />} />
 
                   <Route index element={<Landing />} />
