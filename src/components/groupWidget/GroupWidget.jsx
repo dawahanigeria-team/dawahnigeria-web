@@ -110,6 +110,10 @@ const GroupWidget = ({
   }, [slide.current?.scrollLeft]);
 
   const getMoreRoute = (heading) => {
+    if (moreRoute) {
+      return moreRoute;
+    }
+
     switch (heading?.toLowerCase()) {
       case "recently posted":
         return RECENTLY_POSTED_MORE;
