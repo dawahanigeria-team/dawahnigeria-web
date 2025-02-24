@@ -65,20 +65,16 @@ const RamadanDetail = () => {
           </div>
 
           {/* details for desktop  */}
-          <div className="lecdet_head_wrap">
-            <div className="lecdet_head_left">
-              <img
-                id="hero"
-                className="lecdet_head_left_img"
-                src={lazy}
-                alt="head"
-              />
-            </div>
-            <div className="lecdet_head_right">
-              <p className="lecdet_head_right_head text-foreground">
-                {yearName}
-              </p>
-            </div>
+          <div className="lecdet_head_wrap hidden md:flex md:flex-col md:items-center">
+            <img
+              id="hero"
+              className="lecdet_head_img_sz mx-auto"
+              src={lazy}
+              alt="head"
+            />
+            <p className="lecdet_head_title text-foreground text-center mt-3 text-xl">
+              {yearName}
+            </p>
           </div>
 
           {/* details for mobile  */}
