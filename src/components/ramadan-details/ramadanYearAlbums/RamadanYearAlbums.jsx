@@ -28,7 +28,7 @@ export const RamadanYearAlbums = ({ languageId }) => {
               <AlbumWidget
                 nid={id}
                 lec_no={lec_no}
-                categories={name?.split("-")?.[1] || name}
+                /*categories={name?.split("-")?.[1] || name}*/
                 img={img}
               />
             </Link>

@@ -354,6 +354,10 @@ const LecturesListDetail = () => {
                     alt=""
                   />
                 </span>
+                <p className="leclistdet_head_right_head text-foreground">
+                  {/*  lectureTitleExtractor(querieddata[0]?.title, 2) */}
+                  {querieddata[0]?.title || "Unknown"}
+                </p>
 
                 <div className="mob_like">
                   <div className="leclistdet_head_mob_head">
