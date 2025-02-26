@@ -152,18 +152,19 @@
       .groupWidget_album_item {
         cursor: pointer;
         flex: 0 0 auto;
-        width: 200px;
+        width: 220px;
         
         @media screen and (max-width: 615px) {
-          width: 160px;
+          width: 180px;
         }
       }
       .groupWidget_album_item {
         width: fit-content !important;
+        min-width: 220px !important;
         height: fit-content !important;
         @media screen and (max-width: 615px) {
-          min-width: 110px;
-          max-width: 130px;
+          min-width: 180px !important;
+          max-width: 200px;
           margin-right: 8px;
         }
       }
