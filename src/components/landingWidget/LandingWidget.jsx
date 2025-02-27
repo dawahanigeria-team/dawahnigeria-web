@@ -40,12 +40,6 @@ const LandingWidget = ({ categories, img, views, nid, styling, rpname }) => {
   // Format the title to remove any unwanted characters or patterns
   const formatTitle = (title) => {
     if (!title) return "";
-    // Split by the last hyphen and take everything before it
-    const parts = title.split("-");
-    if (parts.length > 1) {
-      // Remove the last part (date) and join the rest back together
-      return parts.slice(0, -1).join("-").trim();
-    }
     return title.trim();
   };
 
@@ -53,8 +47,8 @@ const LandingWidget = ({ categories, img, views, nid, styling, rpname }) => {
     <div
       className={`flex flex-col justify-start items-start space-y-2 ${
         styling
-          ? "w-[150px] h-fit sm:w-[12rem]"
-          : "w-[150px]  h-fit sm:w-[13.5rem]"
+          ? "w-[220px] h-fit sm:w-[220px]"
+          : "w-[220px] h-fit sm:w-[220px]"
       }`}
     >
       <div className="group w-full h-[115px] sm:h-[165px] relative rounded-md">
@@ -82,7 +76,7 @@ const LandingWidget = ({ categories, img, views, nid, styling, rpname }) => {
         </button>
       </div>
       <div className="space-y-1 w-full">
-        <p className="text-xs sm:text-sm font-medium text-color-primary line-clamp-2 pl-[3%] mb-0.5">
+        <p className="text-xs sm:text-sm font-medium text-color-primary pl-[3%] mb-0.5 break-words">
           {formatTitle(categories)}
         </p>
         {rpname && (
