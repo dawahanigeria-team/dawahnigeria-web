@@ -2,13 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import { albumsApi } from "../../services/albums.service";
 import { useState, useEffect } from "react";
 
-export const useKeywordAlbums = ({ keyword, page = 1 }) => {
+export const useKeywordAlbums = ({ keyword, page = 1, search = "" }) => {
   const [cumulativeData, setCumulativeData] = useState([]);
   const [hasMore, setHasMore] = useState(true);
+  const [total, setTotal] = useState(0);
 
   const { isLoading, data, error } = useQuery(
-    ["albums-by-keyword", keyword, page],
-    () => albumsApi.getAlbumsByKeyword(keyword, page),
+    ["albums-by-keyword", keyword, page, search],
+    () => albumsApi.getAlbumsByKeyword(keyword, page, search),
     {
       enabled: !!keyword,
       keepPreviousData: true,
@@ -19,8 +20,10 @@ export const useKeywordAlbums = ({ keyword, page = 1 }) => {
           } else {
             setCumulativeData((prev) => [...prev, ...newData.data]);
           }
-          // If we get less than the expected number of items per page (20), we've reached the end
-          setHasMore(newData.data.length === 20);
+          // Update total from API response
+          setTotal(newData.total || 0);
+          // If we've loaded all items based on total, or got less than 20 items, we've reached the end
+          setHasMore(cumulativeData.length < (newData.total || 0));
         } else {
           setHasMore(false);
         }
@@ -28,16 +31,18 @@ export const useKeywordAlbums = ({ keyword, page = 1 }) => {
     }
   );
 
-  // Reset cumulative data when keyword changes
+  // Reset cumulative data when keyword or search changes
   useEffect(() => {
     setCumulativeData([]);
     setHasMore(true);
-  }, [keyword]);
+    setTotal(0);
+  }, [keyword, search]);
 
   return {
     isLoading,
     error,
     data: cumulativeData,
     hasMore,
+    total,
   };
 };
