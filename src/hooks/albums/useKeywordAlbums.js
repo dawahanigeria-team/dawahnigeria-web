@@ -2,13 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { albumsApi } from "../../services/albums.service";
 import { useState, useEffect } from "react";
 
-export const useKeywordAlbums = ({ keyword, page = 1 }) => {
+export const useKeywordAlbums = ({ keyword, page = 1, search = "" }) => {
   const [cumulativeData, setCumulativeData] = useState([]);
   const [hasMore, setHasMore] = useState(true);
 
   const { isLoading, data, error } = useQuery(
-    ["albums-by-keyword", keyword, page],
-    () => albumsApi.getAlbumsByKeyword(keyword, page),
+    ["albums-by-keyword", keyword, page, search],
+    () => albumsApi.getAlbumsByKeyword(keyword, page, search),
     {
       enabled: !!keyword,
       keepPreviousData: true,
@@ -28,11 +28,11 @@ export const useKeywordAlbums = ({ keyword, page = 1 }) => {
     }
   );
 
-  // Reset cumulative data when keyword changes
+  // Reset cumulative data when keyword or search changes
   useEffect(() => {
     setCumulativeData([]);
     setHasMore(true);
-  }, [keyword]);
+  }, [keyword, search]);
 
   return {
     isLoading,

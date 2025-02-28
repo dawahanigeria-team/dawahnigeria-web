@@ -17,6 +17,17 @@ export const RamadanYearTafseer = () => {
   const [scrolled, setScrolled] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+
+  // Debounce search query to avoid too many API calls
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+      setPage(1); // Reset to first page when search changes
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   // Add scroll listener to detect when user scrolls
   useEffect(() => {
@@ -40,6 +51,7 @@ export const RamadanYearTafseer = () => {
   } = useKeywordAlbums({
     keyword: `Ramadan Tafseer ${year}`,
     page,
+    search: debouncedSearch,
   });
 
   // Extract unique languages and count lectures per language
@@ -60,30 +72,20 @@ export const RamadanYearTafseer = () => {
       .sort((a, b) => b.count - a.count);
   }, [albums]);
 
-  // Filter albums by selected language and search query
+  // Filter albums only by language since search is now handled by the server
   const filteredAlbums = useMemo(() => {
-    let filtered = albums;
+    if (!albums) return [];
 
     // Filter by language
     if (selectedLanguage !== "all") {
-      filtered = filtered?.filter((album) => album.lang === selectedLanguage);
+      return albums.filter((album) => album.lang === selectedLanguage);
     }
 
-    // Filter by search query
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered?.filter(
-        (album) =>
-          album.title?.toLowerCase().includes(query) ||
-          album.rpname?.toLowerCase().includes(query)
-      );
-    }
-
-    return filtered;
-  }, [albums, selectedLanguage, searchQuery]);
+    return albums;
+  }, [albums, selectedLanguage]);
 
   const loadMore = () => {
-    if (!isLoading && hasMore) {
+    if (!isLoading && hasMore && !debouncedSearch) {
       setPage((prev) => prev + 1);
     }
   };
@@ -170,8 +172,8 @@ export const RamadanYearTafseer = () => {
           {/* Empty state */}
           {!isLoading && filteredAlbums?.length === 0 && (
             <div className="text-center text-gray-500 py-4">
-              {searchQuery
-                ? `No lectures found matching "${searchQuery}"${
+              {debouncedSearch
+                ? `No lectures found matching "${debouncedSearch}"${
                     selectedLanguage !== "all" ? ` in ${selectedLanguage}` : ""
                   }`
                 : `No lectures found${
@@ -227,7 +229,7 @@ export const RamadanYearTafseer = () => {
           {/* Load more button - only show if there are no active filters */}
           {!isLoading &&
             hasMore &&
-            !searchQuery &&
+            !debouncedSearch &&
             selectedLanguage === "all" && (
               <div className="flex justify-center mt-4 mb-8">
                 <button
