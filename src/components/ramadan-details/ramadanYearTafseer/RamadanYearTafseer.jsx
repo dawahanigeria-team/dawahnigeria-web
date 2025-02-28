@@ -33,23 +33,16 @@ export const RamadanYearTafseer = () => {
     data: albums,
     isLoading,
     hasMore,
+    error,
   } = useKeywordAlbums({
     keyword: `Ramadan Tafseer ${year}`, // Construct the full keyword
     page,
   });
 
-  console.log("Albums data:", albums);
-
-  // Check if albums is undefined or empty
-  if (!albums || albums.length === 0) {
-    console.log("No albums data available");
-  } else {
-    console.log("First album title:", albums[0].title);
-    console.log("First album data:", albums[0]);
-  }
-
   const loadMore = () => {
-    setPage((prev) => prev + 1);
+    if (!isLoading && hasMore) {
+      setPage((prev) => prev + 1);
+    }
   };
 
   // Function to extract title parts similar to lectureTitleExtractor in LecturesListDetail
@@ -73,16 +66,23 @@ export const RamadanYearTafseer = () => {
         </div>
 
         {/* Main content */}
-        <div className="py-8">
-          {/* loading state for initial load */}
-          {isLoading && page === 1 && (
-            <div className="flex justify-center">
-              <Loader />
+        <div className="py-8 pb-32 md:pb-8">
+          {/* Error state */}
+          {error && (
+            <div className="text-center text-red-500 py-4">
+              Error loading lectures. Please try again.
+            </div>
+          )}
+
+          {/* Empty state */}
+          {!isLoading && albums?.length === 0 && (
+            <div className="text-center text-gray-500 py-4">
+              No lectures found for this year.
             </div>
           )}
 
           {/* data grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-4">
             {albums?.map((album) => (
               <Link
                 key={album.nid}
@@ -112,22 +112,22 @@ export const RamadanYearTafseer = () => {
             ))}
           </div>
 
+          {/* Loading state */}
+          {isLoading && (
+            <div className="flex justify-center py-8">
+              <Loader />
+            </div>
+          )}
+
           {/* Load more button */}
-          {hasMore && !isLoading && (
-            <div className="flex justify-center mt-8">
+          {!isLoading && hasMore && (
+            <div className="flex justify-center mt-4 mb-8">
               <button
                 onClick={loadMore}
                 className="px-6 py-2 bg-primary text-white rounded-full hover:bg-opacity-90 transition-colors"
               >
                 Load More
               </button>
-            </div>
-          )}
-
-          {/* Loading state for load more */}
-          {isLoading && page > 1 && (
-            <div className="flex justify-center mt-8">
-              <Loader />
             </div>
           )}
         </div>
