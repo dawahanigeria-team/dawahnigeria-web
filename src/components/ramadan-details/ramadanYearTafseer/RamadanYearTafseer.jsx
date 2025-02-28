@@ -48,6 +48,7 @@ export const RamadanYearTafseer = () => {
     isLoading,
     hasMore,
     error,
+    total,
   } = useKeywordAlbums({
     keyword: `Ramadan Tafseer ${year}`,
     page,
@@ -123,6 +124,11 @@ export const RamadanYearTafseer = () => {
                 className="w-full px-4 py-2 pl-10 bg-accent rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
               />
               <HiMagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground text-lg" />
+              {debouncedSearch && !isLoading && (
+                <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-muted-foreground">
+                  {total} results
+                </div>
+              )}
             </div>
           </div>
 
@@ -139,7 +145,7 @@ export const RamadanYearTafseer = () => {
                         : "bg-accent hover:bg-accent/80 text-foreground"
                     }`}
                 >
-                  All ({albums?.length || 0})
+                  All ({albums?.length || 0}/{total})
                 </button>
                 {languageStats.map(({ lang, count }) => (
                   <button
@@ -179,6 +185,14 @@ export const RamadanYearTafseer = () => {
                 : `No lectures found${
                     selectedLanguage !== "all" ? ` in ${selectedLanguage}` : ""
                   }`}
+            </div>
+          )}
+
+          {/* Results summary when searching */}
+          {debouncedSearch && filteredAlbums?.length > 0 && (
+            <div className="text-sm text-muted-foreground mb-4">
+              Showing {filteredAlbums.length} of {total} results
+              {selectedLanguage !== "all" ? ` in ${selectedLanguage}` : ""}
             </div>
           )}
 

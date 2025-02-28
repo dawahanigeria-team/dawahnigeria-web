@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 export const useKeywordAlbums = ({ keyword, page = 1, search = "" }) => {
   const [cumulativeData, setCumulativeData] = useState([]);
   const [hasMore, setHasMore] = useState(true);
+  const [total, setTotal] = useState(0);
 
   const { isLoading, data, error } = useQuery(
     ["albums-by-keyword", keyword, page, search],
@@ -19,8 +20,10 @@ export const useKeywordAlbums = ({ keyword, page = 1, search = "" }) => {
           } else {
             setCumulativeData((prev) => [...prev, ...newData.data]);
           }
-          // If we get less than the expected number of items per page (20), we've reached the end
-          setHasMore(newData.data.length === 20);
+          // Update total from API response
+          setTotal(newData.total || 0);
+          // If we've loaded all items based on total, or got less than 20 items, we've reached the end
+          setHasMore(cumulativeData.length < (newData.total || 0));
         } else {
           setHasMore(false);
         }
@@ -32,6 +35,7 @@ export const useKeywordAlbums = ({ keyword, page = 1, search = "" }) => {
   useEffect(() => {
     setCumulativeData([]);
     setHasMore(true);
+    setTotal(0);
   }, [keyword, search]);
 
   return {
@@ -39,5 +43,6 @@ export const useKeywordAlbums = ({ keyword, page = 1, search = "" }) => {
     error,
     data: cumulativeData,
     hasMore,
+    total,
   };
 };
