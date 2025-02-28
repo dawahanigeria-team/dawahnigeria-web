@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Loader from "../../UI/loader/loader";
@@ -14,6 +14,7 @@ export const RamadanYearTafseer = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [scrolled, setScrolled] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState("all");
 
   // Add scroll listener to detect when user scrolls
   useEffect(() => {
@@ -35,9 +36,33 @@ export const RamadanYearTafseer = () => {
     hasMore,
     error,
   } = useKeywordAlbums({
-    keyword: `Ramadan Tafseer ${year}`, // Construct the full keyword
+    keyword: `Ramadan Tafseer ${year}`,
     page,
   });
+
+  // Extract unique languages and count lectures per language
+  const languageStats = useMemo(() => {
+    if (!albums?.length) return [];
+
+    const stats = albums.reduce((acc, album) => {
+      const lang = album.lang || "Unknown";
+      acc[lang] = (acc[lang] || 0) + 1;
+      return acc;
+    }, {});
+
+    return Object.entries(stats)
+      .map(([lang, count]) => ({
+        lang,
+        count,
+      }))
+      .sort((a, b) => b.count - a.count);
+  }, [albums]);
+
+  // Filter albums by selected language
+  const filteredAlbums = useMemo(() => {
+    if (selectedLanguage === "all") return albums;
+    return albums?.filter((album) => album.lang === selectedLanguage);
+  }, [albums, selectedLanguage]);
 
   const loadMore = () => {
     if (!isLoading && hasMore) {
@@ -65,6 +90,39 @@ export const RamadanYearTafseer = () => {
           <HeaderRouter title={`Ramadan Tafseer ${year}`} link={RAMADAN} />
         </div>
 
+        {/* Language filter */}
+        {languageStats.length > 0 && (
+          <div className="overflow-x-auto scrollbar-hide py-4 border-b border-border sticky top-16 z-40 bg-background/80 backdrop-blur-lg">
+            <div className="flex gap-2 min-w-max px-2">
+              <button
+                onClick={() => setSelectedLanguage("all")}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors
+                  ${
+                    selectedLanguage === "all"
+                      ? "bg-primary text-white"
+                      : "bg-accent hover:bg-accent/80 text-foreground"
+                  }`}
+              >
+                All ({albums?.length || 0})
+              </button>
+              {languageStats.map(({ lang, count }) => (
+                <button
+                  key={lang}
+                  onClick={() => setSelectedLanguage(lang)}
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors
+                    ${
+                      selectedLanguage === lang
+                        ? "bg-primary text-white"
+                        : "bg-accent hover:bg-accent/80 text-foreground"
+                    }`}
+                >
+                  {lang} ({count})
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Main content */}
         <div className="py-8 pb-32 md:pb-8">
           {/* Error state */}
@@ -75,15 +133,16 @@ export const RamadanYearTafseer = () => {
           )}
 
           {/* Empty state */}
-          {!isLoading && albums?.length === 0 && (
+          {!isLoading && filteredAlbums?.length === 0 && (
             <div className="text-center text-gray-500 py-4">
-              No lectures found for this year.
+              No lectures found for this year
+              {selectedLanguage !== "all" ? ` in ${selectedLanguage}` : ""}.
             </div>
           )}
 
           {/* data grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-4">
-            {albums?.map((album) => (
+            {filteredAlbums?.map((album) => (
               <Link
                 key={album.nid}
                 to={`${ALBUMS}${album.nid}`}
