@@ -10,6 +10,11 @@ import RowSkeletonContainer from "../../components/skeletion/skeleton.container"
 const Ramadan = () => {
   const { data: ramadanYears, isLoading } = useRamadanYears();
 
+  const extractYear = (name) => {
+    const match = name?.match(/\d{4}/);
+    return match ? match[0] : "";
+  };
+
   return (
     <Container>
       <HeadMeta title="Ramadan lectures on Dawah Nigeria - Home of Islamic resources" />
@@ -25,7 +30,7 @@ const Ramadan = () => {
                 heading={name || "Ramadan lectures"}
                 type={"album"}
                 nav1={{ title: "Ramadan", link: RAMADAN }}
-                moreRoute={`${RAMADAN}/keyword/${encodeURIComponent(name)}`}
+                moreRoute={`${RAMADAN}/year/${extractYear(name)}`}
               />
             </div>
           ))}

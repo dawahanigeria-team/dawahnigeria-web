@@ -234,7 +234,7 @@ const App = () => {
                 <Route path="/dawahcast" element={<Layout />}>
                   <Route path={RAMADAN} element={<Ramadan />} />
                   <Route
-                    path={`${RAMADAN}/keyword/:year`}
+                    path={`${RAMADAN}/year/:year`}
                     element={<RamadanYearTafseer />}
                   />
                   <Route path={`${RAMADAN}/:id`} element={<RamadanDetail />} />

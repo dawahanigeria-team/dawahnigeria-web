@@ -10,12 +10,19 @@ export const useKeywordAlbums = ({ keyword, page = 1 }) => {
     ["albums-by-keyword", keyword, page],
     () => albumsApi.getAlbumsByKeyword(keyword, page),
     {
-      enabled: !!keyword && hasMore,
+      enabled: !!keyword,
+      keepPreviousData: true,
       onSuccess: (newData) => {
         if (newData?.data) {
-          setCumulativeData((prev) => [...prev, ...newData.data]);
-          // If we get less than the expected number of items, we've reached the end
+          if (page === 1) {
+            setCumulativeData(newData.data);
+          } else {
+            setCumulativeData((prev) => [...prev, ...newData.data]);
+          }
+          // If we get less than the expected number of items per page (20), we've reached the end
           setHasMore(newData.data.length === 20);
+        } else {
+          setHasMore(false);
         }
       },
     }

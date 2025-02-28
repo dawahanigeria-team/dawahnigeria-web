@@ -1,20 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Loader from "../../UI/loader/loader";
 import { ALBUMS, RAMADAN } from "../../../utils/routes/constants";
 import { useKeywordAlbums } from "../../../hooks/albums";
-import Container from "../../container/Container";
 import arrow from "../../../assets/svg/arrowleft.svg";
 import { IMAGE_PLACEHOLDERS } from "../../../utils/imagePlaceholders";
-import { FiHeadphones } from "react-icons/fi";
 import { HiOutlinePlay } from "react-icons/hi2";
+import HeaderRouter from "../../headerRouter/HeaderRouter";
 
 export const RamadanYearTafseer = () => {
   const { year } = useParams();
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [scrolled, setScrolled] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState("all");
 
   // Add scroll listener to detect when user scrolls
   useEffect(() => {
@@ -34,23 +34,40 @@ export const RamadanYearTafseer = () => {
     data: albums,
     isLoading,
     hasMore,
+    error,
   } = useKeywordAlbums({
-    keyword: decodeURIComponent(year), // The year param is already the full keyword
+    keyword: `Ramadan Tafseer ${year}`,
     page,
   });
 
-  console.log("Albums data:", albums);
+  // Extract unique languages and count lectures per language
+  const languageStats = useMemo(() => {
+    if (!albums?.length) return [];
 
-  // Check if albums is undefined or empty
-  if (!albums || albums.length === 0) {
-    console.log("No albums data available");
-  } else {
-    console.log("First album title:", albums[0].title);
-    console.log("First album data:", albums[0]);
-  }
+    const stats = albums.reduce((acc, album) => {
+      const lang = album.lang || "Unknown";
+      acc[lang] = (acc[lang] || 0) + 1;
+      return acc;
+    }, {});
+
+    return Object.entries(stats)
+      .map(([lang, count]) => ({
+        lang,
+        count,
+      }))
+      .sort((a, b) => b.count - a.count);
+  }, [albums]);
+
+  // Filter albums by selected language
+  const filteredAlbums = useMemo(() => {
+    if (selectedLanguage === "all") return albums;
+    return albums?.filter((album) => album.lang === selectedLanguage);
+  }, [albums, selectedLanguage]);
 
   const loadMore = () => {
-    setPage((prev) => prev + 1);
+    if (!isLoading && hasMore) {
+      setPage((prev) => prev + 1);
+    }
   };
 
   // Function to extract title parts similar to lectureTitleExtractor in LecturesListDetail
@@ -66,132 +83,114 @@ export const RamadanYearTafseer = () => {
   };
 
   return (
-    <Container>
-      <div className="pt-20 md:pt-20">
-        {/* Breadcrumb navigation - desktop only */}
-        <div className="lecdet_breadcrumb mb-6 hidden md:flex">
-          <button
-            onClick={() => navigate(RAMADAN)}
-            className="lecdet_breadcrumb_first"
-          >
-            Back /
-          </button>
-          <p className="lecdet_breadcrumb_second text-foreground">
-            {decodeURIComponent(year)}
-          </p>
+    <div className="bg-background min-h-screen">
+      <div className="max-w-7xl mx-auto px-4">
+        {/* Header with back button */}
+        <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
+          <HeaderRouter title={`Ramadan Tafseer ${year}`} link={RAMADAN} />
         </div>
 
-        {/* Mobile back button and title header - similar to LecturesListDetail */}
-        <div className="mobile_lecdet_tab_wrap md:hidden">
-          <div
-            className={`py-4 fixed top-0 left-0 right-0 z-50 ${
-              scrolled ? "bg-black shadow-md" : "bg-black"
-            } transition-all duration-300`}
-          >
-            <button
-              onClick={() => navigate(RAMADAN)}
-              aria-label="Go back"
-              className="fixed_mob_arrow ml-4"
-            >
-              <img className="fixed_mob_arrow_sz" src={arrow} alt="back" />
-            </button>
-
-            {/* Mobile title header - similar to leclistdet_head_mob_head */}
-            <div className="text-white text-xl font-bold ml-12 truncate pr-4">
-              {decodeURIComponent(year)}
-            </div>
-          </div>
-        </div>
-
-        {/* loading state for initial load */}
-        {isLoading && page === 1 && (
-          <div className="load_desktop">
-            <div className="load">
-              <Loader />
+        {/* Language filter */}
+        {languageStats.length > 0 && (
+          <div className="overflow-x-auto scrollbar-hide py-4 border-b border-border sticky top-16 z-40 bg-background/80 backdrop-blur-lg">
+            <div className="flex gap-2 min-w-max px-2">
+              <button
+                onClick={() => setSelectedLanguage("all")}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors
+                  ${
+                    selectedLanguage === "all"
+                      ? "bg-primary text-white"
+                      : "bg-accent hover:bg-accent/80 text-foreground"
+                  }`}
+              >
+                All ({albums?.length || 0})
+              </button>
+              {languageStats.map(({ lang, count }) => (
+                <button
+                  key={lang}
+                  onClick={() => setSelectedLanguage(lang)}
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors
+                    ${
+                      selectedLanguage === lang
+                        ? "bg-primary text-white"
+                        : "bg-accent hover:bg-accent/80 text-foreground"
+                    }`}
+                >
+                  {lang} ({count})
+                </button>
+              ))}
             </div>
           </div>
         )}
 
-        {/* data grid */}
-        <div className="lecalb_wrapper mt-20 md:mt-0">
-          {albums?.map(({ img, title, nid, lec_no, views }) => {
-            // Extract lecturer name if present in the title
-            let mainTitle = title || "Untitled Album";
-            let lecturer = "";
+        {/* Main content */}
+        <div className="py-8 pb-32 md:pb-8">
+          {/* Error state */}
+          {error && (
+            <div className="text-center text-red-500 py-4">
+              Error loading lectures. Please try again.
+            </div>
+          )}
 
-            if (title && title.includes("-")) {
-              const parts = title.split("-");
-              lecturer = parts.pop().trim();
-              mainTitle = parts.join("-").trim();
-            }
+          {/* Empty state */}
+          {!isLoading && filteredAlbums?.length === 0 && (
+            <div className="text-center text-gray-500 py-4">
+              No lectures found for this year
+              {selectedLanguage !== "all" ? ` in ${selectedLanguage}` : ""}.
+            </div>
+          )}
 
-            return (
+          {/* data grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-4">
+            {filteredAlbums?.map((album) => (
               <Link
-                to={`${ALBUMS}${nid}`}
-                className="lecalb_album_item"
-                key={`album-${nid}`}
+                key={album.nid}
+                to={`${ALBUMS}${album.nid}`}
+                className="block hover:opacity-90 transition-opacity"
               >
-                {/* Card container with flex column layout */}
-                <div className="flex flex-col w-full cursor-pointer rounded-lg overflow-hidden shadow-md">
-                  {/* Image container */}
-                  <div className="w-full aspect-square overflow-hidden relative">
-                    <img
-                      src={img || IMAGE_PLACEHOLDERS.lecture}
-                      alt={title || "Album cover"}
-                      className="w-full h-full object-cover"
-                    />
-
-                    {/* Play button overlay */}
-                    <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 z-10">
-                      <div className="w-12 h-12 bg-[#d6ff00] bg-opacity-90 rounded-full flex items-center justify-center">
-                        <HiOutlinePlay className="text-black text-2xl ml-0.5" />
-                      </div>
-                    </div>
-
-                    {/* Views count */}
-                    <div className="absolute bottom-3 left-3 text-white text-xs font-medium flex items-center z-30 drop-shadow-md">
-                      <FiHeadphones className="mr-1" />
-                      <span>
-                        {views
-                          ? views >= 1000
-                            ? (views / 1000).toFixed(1) + "K"
-                            : views
-                          : "0"}
-                      </span>
-                    </div>
+                <div className="relative aspect-square">
+                  <img
+                    src={album.img || IMAGE_PLACEHOLDERS.album}
+                    alt={album.title}
+                    className="w-full h-full object-cover rounded-lg"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-20 rounded-lg flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                    <HiOutlinePlay className="text-white text-4xl" />
                   </div>
-
-                  {/* Title container - same for both mobile and desktop */}
-                  <div className="bg-black p-4">
-                    <h3 className="text-white text-base md:text-sm font-bold break-words line-clamp-2">
-                      {mainTitle || "Untitled Album"}
-                    </h3>
-
-                    {lecturer && (
-                      <p className="text-gray-300 text-xs break-words mt-1">
-                        {lecturer}
-                      </p>
-                    )}
+                </div>
+                <div className="mt-2">
+                  <h3 className="text-sm font-medium text-foreground whitespace-normal break-words">
+                    {album.title}
+                  </h3>
+                  <div className="flex items-center mt-1 text-xs text-color gap-1">
+                    <span>Language:</span>
+                    <span>{album.lang}</span>
                   </div>
                 </div>
               </Link>
-            );
-          })}
-        </div>
-
-        {/* load more button */}
-        {hasMore && (
-          <div className="flex justify-center mt-4 mb-20">
-            <button
-              onClick={loadMore}
-              className="px-6 py-2 bg-primary text-white rounded-md"
-              disabled={isLoading}
-            >
-              {isLoading ? "Loading..." : "Load More"}
-            </button>
+            ))}
           </div>
-        )}
+
+          {/* Loading state */}
+          {isLoading && (
+            <div className="flex justify-center py-8">
+              <Loader />
+            </div>
+          )}
+
+          {/* Load more button */}
+          {!isLoading && hasMore && (
+            <div className="flex justify-center mt-4 mb-8">
+              <button
+                onClick={loadMore}
+                className="px-6 py-2 bg-primary text-white rounded-full hover:bg-opacity-90 transition-colors"
+              >
+                Load More
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-    </Container>
+    </div>
   );
 };
