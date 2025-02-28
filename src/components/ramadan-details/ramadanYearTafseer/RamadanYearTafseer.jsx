@@ -179,7 +179,7 @@ export const RamadanYearTafseer = () => {
           {!isLoading && filteredAlbums?.length === 0 && (
             <div className="text-center text-gray-500 py-4">
               {debouncedSearch
-                ? `No lectures found matching "${debouncedSearch}"${
+                ? `No Ramadan Tafseer ${year} found matching "${debouncedSearch}"${
                     selectedLanguage !== "all" ? ` in ${selectedLanguage}` : ""
                   }`
                 : `No lectures found${
