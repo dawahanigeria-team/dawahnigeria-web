@@ -219,10 +219,7 @@ export const RamadanYearTafseer = () => {
                     {album.title}
                   </h3>
                   <div className="flex flex-col text-xs text-color gap-0.5">
-                    <div className="flex items-center gap-1">
-                      <span>Lecturer:</span>
-                      <span className="text-primary">{album.rpname}</span>
-                    </div>
+      
                     <div className="flex items-center gap-1">
                       <span>Lectures:</span>
                       <span>{album.lec_no}</span>
