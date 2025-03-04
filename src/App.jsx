@@ -132,6 +132,34 @@ const App = () => {
     };
   }, []);
 
+  // Add global handler for unhandled promise rejections related to audio
+  useEffect(() => {
+    const handleUnhandledRejection = (event) => {
+      // Check if this is an audio interruption error
+      if (
+        event.reason &&
+        event.reason.message &&
+        event.reason.message.includes("The play() request was interrupted")
+      ) {
+        // Prevent the default handling
+        event.preventDefault();
+        console.log(
+          "Caught unhandled audio interruption:",
+          event.reason.message
+        );
+      }
+    };
+
+    window.addEventListener("unhandledrejection", handleUnhandledRejection);
+
+    return () => {
+      window.removeEventListener(
+        "unhandledrejection",
+        handleUnhandledRejection
+      );
+    };
+  }, []);
+
   // Add wake lock to prevent device from sleeping during playback
   useEffect(() => {
     let wakeLock = null;

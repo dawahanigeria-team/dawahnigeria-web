@@ -7,8 +7,10 @@ const NETWORK_ERROR_MESSAGES = {
   TIMEOUT: "Request timed out. Server might be experiencing high load.",
   SERVER_DOWN: "Unable to establish connection to server.",
   BUFFER_ERROR: "Error loading media content. Please try again.",
-  THIRD_PARTY_ERROR: "Error with third-party service. This won't affect your main experience.",
-  DEFAULT: "Network error. Please check your connection and try again."
+  THIRD_PARTY_ERROR:
+    "Error with third-party service. This won't affect your main experience.",
+  AUDIO_INTERRUPTED: "Audio playback was interrupted. Please try again.",
+  DEFAULT: "Network error. Please check your connection and try again.",
 };
 
 // Track when the last error message was shown to prevent duplicates
@@ -82,6 +84,26 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
     true
   );
 
+  // Handle audio playback interruption errors
+  window.addEventListener("unhandledrejection", function (event) {
+    if (event.reason && typeof event.reason.message === "string") {
+      // Check for audio play interruption error
+      if (event.reason.message.includes("The play() request was interrupted")) {
+        // Prevent default error handling
+        event.preventDefault();
+
+        // Log for debugging
+        console.warn("Audio playback interrupted:", event.reason);
+
+        // Don't show a toast for this - it's usually not a critical error
+        // and happens during normal navigation between audio content
+
+        return true;
+      }
+    }
+    return false;
+  });
+
   service.interceptors.request.use((config) => {
     // Add x-project to the header if the request METHOD is not GET
     if (config.method !== "get") {
@@ -106,6 +128,14 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
     // Check for buffer loader errors
     if (error.message && error.message.includes("BufferLoader: XHR error")) {
       return NETWORK_ERROR_MESSAGES.BUFFER_ERROR;
+    }
+
+    // Check for audio interruption errors
+    if (
+      error.message &&
+      error.message.includes("The play() request was interrupted")
+    ) {
+      return NETWORK_ERROR_MESSAGES.AUDIO_INTERRUPTED;
     }
 
     // Other network errors

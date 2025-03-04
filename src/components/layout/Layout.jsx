@@ -27,6 +27,7 @@ import {
 } from "../../utils/routes/constants";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 import { MdDownload } from "react-icons/md";
+import { toast } from "react-hot-toast";
 
 export const NavContext = createContext();
 
@@ -193,12 +194,38 @@ const Layout = () => {
               if (error.name !== "NotAllowedError") {
                 console.error("Playback failed:", error);
                 dispatch(setPlaying(false));
+
+                // Handle specific error for interrupted play requests
+                if (
+                  error.message &&
+                  error.message.includes("The play() request was interrupted")
+                ) {
+                  console.log(
+                    "Audio playback was interrupted by navigation or loading a new track"
+                  );
+                  // Don't show error toast for this specific error as it's usually due to normal navigation
+                } else {
+                  // Only show error toast for other types of errors
+                  toast.error("Playback failed. Please try again.");
+                }
               }
             });
         }
       } catch (error) {
         console.error("Play error:", error);
         dispatch(setPlaying(false));
+
+        // Handle specific error for interrupted play requests
+        if (
+          error.message &&
+          error.message.includes("The play() request was interrupted")
+        ) {
+          console.log(
+            "Audio playback was interrupted by navigation or loading a new track"
+          );
+        } else {
+          toast.error("Playback failed. Please try again.");
+        }
       }
     }
   };
