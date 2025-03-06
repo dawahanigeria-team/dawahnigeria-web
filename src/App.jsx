@@ -12,6 +12,7 @@ import {
 import "./App.css";
 
 import { Toaster } from "react-hot-toast";
+import ErrorBoundary from "./components/UI/ErrorBoundary";
 
 import {
   BrowserRouter as Router,
@@ -131,6 +132,34 @@ const App = () => {
     };
   }, []);
 
+  // Add global handler for unhandled promise rejections related to audio
+  useEffect(() => {
+    const handleUnhandledRejection = (event) => {
+      // Check if this is an audio interruption error
+      if (
+        event.reason &&
+        event.reason.message &&
+        event.reason.message.includes("The play() request was interrupted")
+      ) {
+        // Prevent the default handling
+        event.preventDefault();
+        console.log(
+          "Caught unhandled audio interruption:",
+          event.reason.message
+        );
+      }
+    };
+
+    window.addEventListener("unhandledrejection", handleUnhandledRejection);
+
+    return () => {
+      window.removeEventListener(
+        "unhandledrejection",
+        handleUnhandledRejection
+      );
+    };
+  }, []);
+
   // Add wake lock to prevent device from sleeping during playback
   useEffect(() => {
     let wakeLock = null;
@@ -158,45 +187,33 @@ const App = () => {
   }, [playing, initial]);
 
   return (
-    <div ref={scroll} className="app_wrapper">
-      <div>
-        <Toaster
-          toastOptions={{
-            duration: 5000,
-            position: "top-center",
-            success: {
-              style: {
-                background: "#222",
-                color: "#fff",
-                fontFamily: "Poppins",
-                fontSize: "14px",
-              },
-            },
-            error: {
-              duration: 5000,
-              position: "top-center",
-              style: {
-                background: "red",
-                color: "#fff",
-                fontFamily: "Poppins",
-                fontSize: "14px",
-              },
-            },
-          }}
-        />
-      </div>
-
-      {/* <Router> */}
+    <div className="App">
       <Scrolltotop />
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        gutter={8}
+        containerClassName=""
+        containerStyle={{}}
+        toastOptions={{
+          // Define default options
+          className: "",
+          duration: 5000,
+          style: {
+            background: "#363636",
+            color: "#fff",
+          },
+        }}
+      />
       <QueryClientProvider client={queryClient}>
         <SearchContext.Provider
           value={{
-            albumId,
-            setAlbumId,
-            lecturerId,
-            setLecturerId,
             text,
             setText,
+            lecturerId,
+            setLecturerId,
+            albumId,
+            setAlbumId,
             languageId,
             setLanguageId,
             categoryId,
@@ -218,67 +235,72 @@ const App = () => {
             }}
           >
             <ThemeProvider.Provider value={{ darkQuery }}>
-              <Routes>
-                <Route path="/auth" element={<Auth />}>
-                  <Route path="/auth/login" element={<LoginForm />} />
-                  <Route path="/auth/signup" element={<SignupForm />} />
-                  <Route
-                    path="/auth/forgot-password"
-                    element={<ForgotPassword />}
-                  />
-                  <Route
-                    path="/auth/selectlanguage"
-                    element={<SelectLanguage />}
-                  />
-                </Route>
-                <Route path="/dawahcast" element={<Layout />}>
-                  <Route path={RAMADAN} element={<Ramadan />} />
-                  <Route
-                    path={`${RAMADAN}/year/:year`}
-                    element={<RamadanYearTafseer />}
-                  />
-                  <Route path={`${RAMADAN}/:id`} element={<RamadanDetail />} />
+              <ErrorBoundary>
+                <Routes>
+                  <Route path="/auth" element={<Auth />}>
+                    <Route path="/auth/login" element={<LoginForm />} />
+                    <Route path="/auth/signup" element={<SignupForm />} />
+                    <Route
+                      path="/auth/forgot-password"
+                      element={<ForgotPassword />}
+                    />
+                    <Route
+                      path="/auth/selectlanguage"
+                      element={<SelectLanguage />}
+                    />
+                  </Route>
+                  <Route path="/dawahcast" element={<Layout />}>
+                    <Route path={RAMADAN} element={<Ramadan />} />
+                    <Route
+                      path={`${RAMADAN}/year/:year`}
+                      element={<RamadanYearTafseer />}
+                    />
+                    <Route
+                      path={`${RAMADAN}/:id`}
+                      element={<RamadanDetail />}
+                    />
 
-                  <Route index element={<Landing />} />
-                  <Route path={HOME} element={<Landing />} />
-                  <Route path={MORE} element={<More />} />
-                  <Route path={RECENTLY_POSTED_MORE} element={<More />} />
-                  <Route path={RECENTLY_VIEWED_MORE} element={<More />} />
-                  <Route path={TRENDING_MORE} element={<More />} />
-                  <Route path={RECOMMENDED_MORE} element={<More />} />
-                  <Route path={SEARCH} element={<SearchPage />} />
-                  <Route path={LIBRARY} element={<Library />} />
-                  <Route path={GENRES} element={<Genres />} />
-                  <Route path={`${GENRES}/:id`} element={<GenreDetail />} />
-                  <Route path={RECO2} element={<Podcast />} />
-                  <Route path={RECO1} element={<Buzz />} />
-                  <Route path={LECTURERS} element={<Lecturers />} />
-                  <Route path={VIDEO} element={<Videos />} />
-                  <Route path={PLAY} element={<Playlists />} />
-                  <Route path={CHARTS} element={<Charts />} />
-                  <Route path={TRENDING} element={<Trending />} />
-                  <Route path={QURAN} element={<Quran />} />
-                  <Route path={NEW} element={<New />} />
-                  <Route path={`${LECTURE}:id`} element={<AudioDetail />} />
-                  <Route
-                    path={`${PLAYLISTS}:id`}
-                    element={<PlaylistDetail />}
-                  />
-                  <Route
-                    path={`${RESOURCE_PERSON}:id`}
-                    element={<LecturerDetail />}
-                  />
-                  <Route
-                    path={`${ALBUMS}:id`}
-                    element={<LecturesListDetail />}
-                  />
-                  <Route path={`${VIDEOS}:id`} element={<VideoPlayer />} />
-                  <Route path={FAVOURITE} element={<Favourite />} />
-                  <Route path={MYPLAYLIIST} element={<Myplaylist />} />
-                </Route>
-                <Route path="/" element={<Navigate to="/dawahcast" />} />
-                <Route path="/dawahcast" element={<Layout />} />
-              </Routes>
+                    <Route index element={<Landing />} />
+                    <Route path={HOME} element={<Landing />} />
+                    <Route path={MORE} element={<More />} />
+                    <Route path={RECENTLY_POSTED_MORE} element={<More />} />
+                    <Route path={RECENTLY_VIEWED_MORE} element={<More />} />
+                    <Route path={TRENDING_MORE} element={<More />} />
+                    <Route path={RECOMMENDED_MORE} element={<More />} />
+                    <Route path={SEARCH} element={<SearchPage />} />
+                    <Route path={LIBRARY} element={<Library />} />
+                    <Route path={GENRES} element={<Genres />} />
+                    <Route path={`${GENRES}/:id`} element={<GenreDetail />} />
+                    <Route path={RECO2} element={<Podcast />} />
+                    <Route path={RECO1} element={<Buzz />} />
+                    <Route path={LECTURERS} element={<Lecturers />} />
+                    <Route path={VIDEO} element={<Videos />} />
+                    <Route path={PLAY} element={<Playlists />} />
+                    <Route path={CHARTS} element={<Charts />} />
+                    <Route path={TRENDING} element={<Trending />} />
+                    <Route path={QURAN} element={<Quran />} />
+                    <Route path={NEW} element={<New />} />
+                    <Route path={`${LECTURE}:id`} element={<AudioDetail />} />
+                    <Route
+                      path={`${PLAYLISTS}:id`}
+                      element={<PlaylistDetail />}
+                    />
+                    <Route
+                      path={`${RESOURCE_PERSON}:id`}
+                      element={<LecturerDetail />}
+                    />
+                    <Route
+                      path={`${ALBUMS}:id`}
+                      element={<LecturesListDetail />}
+                    />
+                    <Route path={`${VIDEOS}:id`} element={<VideoPlayer />} />
+                    <Route path={FAVOURITE} element={<Favourite />} />
+                    <Route path={MYPLAYLIIST} element={<Myplaylist />} />
+                  </Route>
+                  <Route path="/" element={<Navigate to="/dawahcast" />} />
+                  <Route path="/dawahcast" element={<Layout />} />
+                </Routes>
+              </ErrorBoundary>
               <TawkMessengerReact
                 propertyId="5cd3dd3ed07d7e0c6392ad09"
                 widgetId="1i9f25qn4"

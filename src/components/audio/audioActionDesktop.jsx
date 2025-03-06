@@ -328,7 +328,19 @@ const AudioActionDesktop = () => {
         } catch (error) {
           console.error("Playback failed:", error);
           dispatch(setPlaying(false));
-          toast.error("Playback failed. Please try again.");
+
+          // Handle specific error for interrupted play requests
+          if (
+            error.message &&
+            error.message.includes("The play() request was interrupted")
+          ) {
+            console.log(
+              "Audio playback was interrupted by navigation or loading a new track"
+            );
+            // Don't show error toast for this specific error as it's usually due to normal navigation
+          } else {
+            toast.error("Playback failed. Please try again.");
+          }
         }
 
         return () => {
@@ -350,6 +362,14 @@ const AudioActionDesktop = () => {
           audioRef.current.play().catch((error) => {
             if (error.name !== "NotAllowedError") {
               console.error("Resume failed:", error);
+
+              // Don't show error for interrupted play requests during visibility changes
+              if (
+                !error.message ||
+                !error.message.includes("The play() request was interrupted")
+              ) {
+                toast.error("Resume failed. Please try again.");
+              }
             }
           });
         }
