@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@microsoft/clarity": "^1.0.0",
     "@react-oauth/google": "^0.11.0",
     "@sentry/react": "^7.68.0",
     "@tanstack/react-query": "^4.36.1",
