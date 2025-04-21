@@ -191,6 +191,12 @@ const App = () => {
     <>
       <title>Dawahnigeria - Your Source for Islamic Knowledge</title>
       <meta name="description" content="Access a vast library of Islamic lectures, Quran recitations, videos, and playlists from various scholars and genres on Dawahnigeria." />
+      {/* Default Open Graph Meta Tags */}
+      <meta property="og:title" content="Dawahnigeria - Your Source for Islamic Knowledge" />
+      <meta property="og:description" content="Access a vast library of Islamic lectures, Quran recitations, videos, and playlists from various scholars and genres on Dawahnigeria." />
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="Dawahnigeria" />
+      {/* Add a default image URL if available, e.g., <meta property="og:image" content="URL_TO_DEFAULT_IMAGE" /> */}
       <div className="App">
         <Scrolltotop />
         <Toaster
