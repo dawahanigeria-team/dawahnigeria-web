@@ -1,4 +1,3 @@
-import { Helmet } from "react-helmet";
 import React from "react";
 
 const HeadMeta = ({
@@ -7,7 +6,7 @@ const HeadMeta = ({
   ogImage = "https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg",
 }) => {
   return (
-    <Helmet>
+    <>
       <meta charSet="utf-8" />
       <meta
         name="description"
@@ -24,7 +23,7 @@ const HeadMeta = ({
 
       <meta name="author" content="Edawah" />
       <title>{title || "Dawah Nigeria"}</title>
-    </Helmet>
+    </>
   );
 };
 

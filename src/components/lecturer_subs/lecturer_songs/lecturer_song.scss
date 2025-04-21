@@ -74,14 +74,14 @@
       /// grid-column: span 2 / span 2;
       width: 40%;
       display: flex;
-      align-items: start;
+      align-items: flex-start;
       justify-content: flex-start;
     }
 
     .lect_title4 {
       // grid-column: span 2 / span 2;
       display: flex;
-      align-items: start;
+      align-items: flex-start;
       justify-content: flex-start;
     }
   }
