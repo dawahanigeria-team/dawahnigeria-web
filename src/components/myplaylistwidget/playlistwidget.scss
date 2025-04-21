@@ -27,7 +27,7 @@
       .play_tr {
         display: flex;
         width: 50%;
-        align-items: center;
+        align-items: flex-start;
         gap: 10px;
         .img_size {
           width: 56px;
@@ -44,7 +44,7 @@
           display: flex;
           flex-direction: column;
 
-          align-items: start;
+          align-items: flex-start;
           justify-content: flex-start;
           width: 100%;
           .rel_text {
@@ -124,7 +124,7 @@
             display: flex;
             flex-direction: row;
             gap: 8px;
-            align-items: center;
+            align-items: flex-start;
             .likeys_img {
               width: 20px;
               height: 20px;
@@ -145,7 +145,7 @@
       .play_tr3 {
         display: flex;
         justify-content: flex-start;
-        align-items: start;
+        align-items: flex-start;
       }
     }
   }
@@ -172,7 +172,7 @@
         display: flex;
         flex-direction: row;
         gap: 0.5em;
-        align-items: center;
+        align-items: flex-start;
         width: 90%;
 
         .wrap_image {
@@ -232,7 +232,7 @@
         .wrap_text {
           display: flex;
           flex-direction: column;
-          align-items: start;
+          align-items: flex-start;
           justify-content: flex-start;
           gap: 5px;
           width: 100%;
@@ -292,7 +292,7 @@
         display: flex;
         flex-direction: row;
         gap: 2%;
-        align-items: start;
+        align-items: flex-start;
         justify-content: flex-start;
 
         .likeys_img_left {
