@@ -24,7 +24,7 @@ const Library = () => {
           </div>
           {currentUser ? (
             <div className="user_name">
-              <span className="name">{currentUser?.usernam}</span>
+              <span className="name">{currentUser?.username}</span>
               <span className="social_name">{currentUser?.email}</span>
             </div>
           ) : (
