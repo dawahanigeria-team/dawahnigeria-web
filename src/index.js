@@ -27,11 +27,7 @@ const middleware = [thunk];
 let store;
 
 if (process.env.NODE_ENV === "development") {
-  // If not on localhost, don't include the logger middleware
-  store = createStore(persistedReducer, applyMiddleware(...middleware));
-} else {
-  // If on localhost include the logger middleware
-
+  // Include logger and devtools in development for easier debugging
   const loggerMiddleware = createLogger();
   middleware.push(loggerMiddleware);
 
@@ -39,6 +35,9 @@ if (process.env.NODE_ENV === "development") {
     persistedReducer,
     composeWithDevTools(applyMiddleware(...middleware))
   );
+} else {
+  // In production keep middleware minimal
+  store = createStore(persistedReducer, applyMiddleware(...middleware));
 }
 
 let persistor = persistStore(store);
