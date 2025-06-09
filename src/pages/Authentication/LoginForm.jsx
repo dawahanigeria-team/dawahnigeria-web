@@ -138,7 +138,7 @@ const LoginForm = () => {
 
           <div
             onClick={() => {
-              toast.error("Feature not yet availabe");
+              toast.error("Feature not yet available");
             }}
             className="hidden w-[45px] h-[45px]"
           >
