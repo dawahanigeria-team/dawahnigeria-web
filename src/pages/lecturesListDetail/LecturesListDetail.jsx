@@ -288,6 +288,19 @@ const LecturesListDetail = () => {
                     </div>
                   </div>
 
+                  {/* Show download button only for single-lecture albums */}
+                  {albumlectures?.length === 1 && (
+                    <div>
+                      <AudioDownloadModal
+                        downloads={querieddata[0]?.downloads}
+                        nid={albumlectures[0]?.nid}
+                      />
+                      <div className="dark:text-white text-center text-sm">
+                        Download
+                      </div>
+                    </div>
+                  )}
+
                 </div>
               </div>
             </div>
