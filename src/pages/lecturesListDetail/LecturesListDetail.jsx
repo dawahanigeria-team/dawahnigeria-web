@@ -288,15 +288,6 @@ const LecturesListDetail = () => {
                     </div>
                   </div>
 
-                  <div>
-                    <AudioDownloadModal
-                      downloads={querieddata[0]?.downloads}
-                      nid={id}
-                    />
-                    <div className="dark:text-white text-center text-sm">
-                      Download
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
