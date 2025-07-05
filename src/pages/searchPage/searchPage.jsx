@@ -60,10 +60,15 @@ const SearchPage = () => {
       .then((res) => {
         setLoading(false);
         if (res.data.status === "success") {
-          dispatch(getSearchData(res.data.results || []));
-          dispatch(getSearchRecord(res.data.total || 0));
-          setTotalResults(res.data.total || 0);
-          setCurrentPage(parseInt(res.data.page) || 1);
+          // Handle both possible response structures
+          const results = res.data.results || res.data.data || [];
+          const total = res.data.total || 0;
+          const page = res.data.page || 1;
+          
+          dispatch(getSearchData(results));
+          dispatch(getSearchRecord(total));
+          setTotalResults(total);
+          setCurrentPage(parseInt(page));
         } else {
           dispatch(getSearchData([]));
           dispatch(getSearchRecord(0));
