@@ -168,9 +168,9 @@ export const AddedFavourites = () => {
       <g
         id="Symbols"
         stroke="none"
-        stroke-width="1"
+        strokeWidth="1"
         fill="none"
-        fill-rule="evenodd"
+        fillRule="evenodd"
       >
         <g
           id="btn/全屏播放/收藏/default"
@@ -200,10 +200,10 @@ export const CommentIcon = () => {
       <g
         id="Symbols"
         stroke="none"
-        stroke-width="1"
+        strokeWidth="1"
         className="stroke-color-primary dark:hover:stroke-[#ddff2b] hover:stroke-color-foreground"
         fill="none"
-        fill-rule="evenodd"
+        fillRule="evenodd"
       >
         <g id="btn/comment">
           <path
@@ -211,7 +211,7 @@ export const CommentIcon = () => {
             id="矩形"
             stroke=""
             className="stroke-color-primary dark:hover:stroke-[#ddff2b] hover:stroke-color-foreground"
-            stroke-linejoin="round"
+            strokeLinejoin="round"
             transform="translate(9.999973, 10.250215) scale(1, -1) translate(-9.999973, -10.250215) "
           ></path>
           <path
