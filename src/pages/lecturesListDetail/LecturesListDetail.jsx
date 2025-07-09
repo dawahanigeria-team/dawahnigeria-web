@@ -205,10 +205,9 @@ const LecturesListDetail = () => {
             />
 
             <div className="leclistdet_container">
-              {/* ... (Keep all the original content inside leclistdet_container) ... */}
               {/* Make sure all the sections (breadcrumbs, head_wrap, mobile view, song list, similar audio, comments, share) are present here */}
 
-              {/* Example: Showing the breadcrumb part */}
+              {/* Breadcrumb part */}
               <div className="leclistdet_breadcrumb">
                 <button
                   onClick={() => {
@@ -219,7 +218,8 @@ const LecturesListDetail = () => {
                   Back
                 </button>
               </div>
-
+              
+              <div className="leclistdet_head_wrap">
                 <div className="leclistdet_head_right_actions_wrap">
                   <div>
                     <button
@@ -293,18 +293,18 @@ const LecturesListDetail = () => {
 
                 </div>
               </div>
-            </div>
-            <p className="leclistdet_head_right_text2 text-color">
-              {" "}
-              Audio
-              <span className="braces text-color">
-                (
-                <span className="braces_text text-color">
-                  {formatNumber(querieddata[0]?.lec_no || 0)}
+              <p className="leclistdet_head_right_text2 text-color">
+                {" "}
+                Audio
+                <span className="braces text-color">
+                  (
+                  <span className="braces_text text-color">
+                    {formatNumber(querieddata[0]?.lec_no || 0)}
+                  </span>
+                  )
                 </span>
-                )
-              </span>
-            </p>
+              </p>
+            </div>
             {/* ------------------------------------ mobile view -------------------------------------- */}
 
             <div className="leclistdet_head_mobile">
@@ -575,13 +575,10 @@ const LecturesListDetail = () => {
                 endpoint_url={`/albumlisting_rp.php?offset=30&lim=10&rpid=${querieddata?.rp_id}&page=`}
                 currentPage={1}
                 navtitle={"Album"}
-                heading={`Similar albums
-                    
-              `}
+                heading={`Similar albums`}
               />
 
-                <CommentBox audioComment={audioComment} id={id} type={"album"} />
-              </div>
+              <CommentBox audioComment={audioComment} id={id} type={"album"} />
 
               <div className={isShare ? "share_wrapper" : "hide_share_wrapper"}>
                 <ShareAudio
