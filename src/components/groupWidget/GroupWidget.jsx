@@ -219,7 +219,7 @@ const GroupWidget = ({
                                 endpoint_url,
                                 currentPage,
                                 controlData: data,
-                                navName: nav1?.navName,
+                                navName: nav1?.navName || nav1?.title || "Home",
                               })
                             );
                           } else {
@@ -301,6 +301,14 @@ const GroupWidget = ({
                               dispatch(getPage(currentPage));
                               dispatch(getCount(idx));
                               dispatch(getPack(data));
+                              dispatch(
+                                getaudioData({
+                                  endpoint_url,
+                                  currentPage,
+                                  controlData: data,
+                                  navName: nav1?.navName || nav1?.title || "Home",
+                                })
+                              );
                               setinitial(false);
                             }
                           }}

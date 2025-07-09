@@ -103,8 +103,16 @@ const Layout = () => {
 
           if ("mediaSession" in navigator) {
             navigator.mediaSession.setActionHandler("play", () => {
-              audioRef.current?.play().catch(console.error);
-              dispatch(setPlaying(true));
+              if (audioRef.current) {
+                audioRef.current.play().catch((error) => {
+                  if (error.name === 'AbortError') {
+                    console.log('Media session play was aborted - this is normal');
+                  } else if (error.name !== 'NotAllowedError') {
+                    console.error('Media session play failed:', error);
+                  }
+                });
+                dispatch(setPlaying(true));
+              }
             });
             navigator.mediaSession.setActionHandler("pause", () => {
               audioRef.current?.pause();
@@ -190,7 +198,12 @@ const Layout = () => {
               }
             })
             .catch((error) => {
-              if (error.name !== "NotAllowedError") {
+              if (error.name === 'AbortError') {
+                console.log('Play was aborted - this is normal when switching tracks');
+              } else if (error.name === 'NotAllowedError') {
+                console.log('Play not allowed - user interaction required');
+                dispatch(setPlaying(false));
+              } else {
                 console.error("Playback failed:", error);
                 dispatch(setPlaying(false));
               }

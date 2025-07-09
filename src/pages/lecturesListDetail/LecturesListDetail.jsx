@@ -540,7 +540,7 @@ const LecturesListDetail = () => {
                               comments={comments}
                               favorites={favorites}
                               nid={nid}
-                              navName={"Back"}
+                              navName={lectureTitleExtractor(querieddata?.title, 2) || "Album"}
                               navLink={-1}
                               controlData={albumlectures}
                               duration={duration}
@@ -562,7 +562,7 @@ const LecturesListDetail = () => {
                               rpid={rp_id}
                               comments={comments}
                               favorites={favorites}
-                              navName={"Back"}
+                              navName={lectureTitleExtractor(querieddata?.title, 2) || "Album"}
                               navLink={-1}
                               controlData={albumlectures}
                               duration={duration}

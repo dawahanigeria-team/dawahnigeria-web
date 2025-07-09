@@ -274,10 +274,16 @@ const AudioActionDesktop = () => {
             // Enhanced mobile controls
             navigator.mediaSession.setActionHandler("play", async () => {
               try {
-                await audioRef.current?.play();
-                dispatch(setPlaying(true));
+                if (audioRef.current) {
+                  await audioRef.current.play();
+                  dispatch(setPlaying(true));
+                }
               } catch (error) {
-                console.error("Mobile play failed:", error);
+                if (error.name === 'AbortError') {
+                  console.log('Media session play was aborted - this is normal');
+                } else if (error.name !== 'NotAllowedError') {
+                  console.error("Mobile play failed:", error);
+                }
               }
             });
 
@@ -348,7 +354,9 @@ const AudioActionDesktop = () => {
         // On mobile, only attempt to resume if we were playing
         if (!document.hidden && playing && !initial && audioRef.current) {
           audioRef.current.play().catch((error) => {
-            if (error.name !== "NotAllowedError") {
+            if (error.name === 'AbortError') {
+              console.log('Visibility resume was aborted - this is normal');
+            } else if (error.name !== "NotAllowedError") {
               console.error("Resume failed:", error);
             }
           });
@@ -361,7 +369,9 @@ const AudioActionDesktop = () => {
           try {
             await audioRef.current.play();
           } catch (error) {
-            if (error.name !== "NotAllowedError") {
+            if (error.name === 'AbortError') {
+              console.log('Focus resume was aborted - this is normal');
+            } else if (error.name !== "NotAllowedError") {
               console.error("Focus resume failed:", error);
             }
           }
@@ -388,7 +398,13 @@ const AudioActionDesktop = () => {
         if (savedPosition && audioRef.current) {
           audioRef.current.currentTime = parseFloat(savedPosition);
           if (wasPlaying) {
-            audioRef.current.play().catch(console.error);
+            audioRef.current.play().catch((error) => {
+              if (error.name === 'AbortError') {
+                console.log('Page show resume was aborted - this is normal');
+              } else if (error.name !== "NotAllowedError") {
+                console.error("Page show resume failed:", error);
+              }
+            });
           }
         }
       });
@@ -423,15 +439,42 @@ const AudioActionDesktop = () => {
     handleNextAudio,
   ]);
 
-  const handlePlay = () => {
+  const handlePlay = async () => {
+    // Prevent rapid clicking during loading
+    if (loading) {
+      return;
+    }
+    
     setinitial(false);
     if (playing) {
       dispatch(setPlaying(false));
       audioRef.current?.pause(); // Pause the audio
     } else {
       dispatch(setPlaying(true));
-      audioRef.current?.play();
-      // Play the audio
+      
+      // Handle play promise properly to prevent interruption errors
+      if (audioRef.current) {
+        try {
+          // Stop any existing play promise first
+          audioRef.current.pause();
+          
+          const playPromise = audioRef.current.play();
+          if (playPromise !== undefined) {
+            await playPromise;
+          }
+        } catch (error) {
+          // Handle specific play() errors
+          if (error.name === 'AbortError') {
+            console.log('Play was aborted - this is normal when switching tracks');
+          } else if (error.name === 'NotAllowedError') {
+            console.log('Play not allowed - user interaction required');
+            dispatch(setPlaying(false));
+          } else {
+            console.error('Play failed:', error);
+            dispatch(setPlaying(false));
+          }
+        }
+      }
     }
   };
 

@@ -379,13 +379,19 @@ const AudioDetail = () => {
               }}
               className="audiodetail_breadcrumb_first"
             >
-              {`${"Back"}`}
+              {audioData?.navName && audioData.navName !== "Home" 
+                ? `← Back to ${audioData.navName}` 
+                : audioData?.navName === "Home" 
+                  ? "← Back to Home" 
+                  : "← Back"}
             </p>
-            {/* <p className="audiodetail_breadcrumb_second text-foreground">
-              {currentAudioInfo?.title?.split("-")[0] ||
-                currentAudioInfo?.Title ||
-                "Unknown"}
-            </p> */}
+            {audioData?.navName && (
+              <p className="audiodetail_breadcrumb_second text-foreground">
+                {currentAudioInfo?.title?.split("-")[0] ||
+                  currentAudioInfo?.Title ||
+                  "Unknown"}
+              </p>
+            )}
           </div>
           <div className="audiodetail_head_wrap">
             <div className="audiodetail_head_left">
