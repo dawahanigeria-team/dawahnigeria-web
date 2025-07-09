@@ -62,8 +62,9 @@ const Search = () => {
           `${baseUrl}?type=${currentSearchType}&value=${encodedValue}`
         );
 
-        if (response.data.success) {
-          setDropdownResults(response.data.data.slice(0, 5)); // Limit to 5 results
+        if (response.data.success || response.data.status === "success") {
+          const results = response.data.data || response.data.results || [];
+          setDropdownResults(results.slice(0, 5)); // Limit to 5 results
         } else {
           setDropdownResults([]);
         }

@@ -220,20 +220,365 @@ const LecturesListDetail = () => {
                 </button>
               </div>
 
-              {/* ... (rest of the original content goes here) ... */}
+                <div className="leclistdet_head_right_actions_wrap">
+                  <div>
+                    <button
+                      onClick={() => {
+                        playAll();
+                      }}
+                      className="leclistdet_play"
+                      id="player"
+                    >
+                      <CiPlay1 className="leclistdet_play_icon" />
+                      <p className="leclistdet_play_text">Play All</p>
+                    </button>
+                    <div className="dark:text-white text-center text-sm">
+                      Play
+                    </div>
+                  </div>
 
-              {/* Ensure CommentBox and ShareAudio are correctly placed */}
-              <div className="px-3">
-                <SimilarAudio
-                  similar={similarAlbums}
-                  current={querieddata?.rp_id}
-                  url={`/a`}
-                  type={"album"}
-                  endpoint_url={`/albumlisting_rp.php?offset=30&lim=10&rpid=${querieddata?.rp_id}&page=`}
-                  currentPage={1}
-                  navtitle={"Album"}
-                  heading={`Similar albums`}
+                  <div>
+                    <DesktopFavoriteButton
+                      favorites={querieddata[0]?.favorites}
+                      id={id}
+                      type={"album"}
+                      refetch={refetch}
+                    />
+                    <div className="dark:text-white text-center text-sm">
+                      Like
+                    </div>
+                  </div>
+
+                  <div>
+                    <div
+                      onClick={(e) => {
+                        shareAlbum(e, id);
+                      }}
+                      className="leclistdet_share bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]"
+                    >
+                      <SlShare className="text-color-primary hover:text-color-foreground dark:hover:text-[#ddff2b] text-[20px]" />
+                      <p className="leclistdet_share_text  text-color-primary">
+                        {formatNumber(querieddata[0]?.share || 0)}
+                      </p>
+                    </div>
+                    <div className="dark:text-white text-center text-sm">
+                      Share
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="leclistdet_comment bg-gray-100  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
+                      <CommentIcon />
+                      <p className="leclistdet_comment_text  text-color-primary">
+                        {formatNumber(querieddata[0]?.comments || 0)}
+                      </p>
+                    </div>
+                    <div className="dark:text-white text-center text-sm">
+                      Comment
+                    </div>
+                  </div>
+
+                  {/* Show download button only for single-lecture albums */}
+                  {albumlectures?.length === 1 && (
+                    <div>
+                      <AudioDownloadModal
+                        downloads={querieddata[0]?.downloads}
+                        nid={albumlectures[0]?.nid}
+                      />
+                      <div className="dark:text-white text-center text-sm">
+                        Download
+                      </div>
+                    </div>
+                  )}
+
+                </div>
+              </div>
+            </div>
+            <p className="leclistdet_head_right_text2 text-color">
+              {" "}
+              Audio
+              <span className="braces text-color">
+                (
+                <span className="braces_text text-color">
+                  {formatNumber(querieddata[0]?.lec_no || 0)}
+                </span>
+                )
+              </span>
+            </p>
+            {/* ------------------------------------ mobile view -------------------------------------- */}
+
+            <div className="leclistdet_head_mobile">
+              <div
+                className={
+                  isVisible ? "leclistdet_head_img_none" : "leclistdet_head_img"
+                }
+              >
+                <img
+                  className="leclistdet_head_img_sz"
+                  ref={leclistdet}
+                  id="hero"
+                  src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
+                  alt="head"
                 />
+              </div>
+              <div className="leclistdet_min_wrap">
+                <div
+                  onClick={() => {
+                    navigate(-1);
+                  }}
+                  className="mob_arrow"
+                >
+                  <img className="mob_arrow_sz" src={arrow} alt="arrow" />
+                </div>
+              </div>
+            </div>
+            {/* ----------------------------------- Section 1 ends -------------------------------------- */}
+            {/* ---------------------desktop--------------- Section 2 -------------------------------------- */}
+
+            {/********-----------------------mobile *-----------------****************** */}
+
+            <div className="mobile_leclistdet_tab_wrap">
+              <div ref={firstElement} className="mob_txt">
+                <span className="album_img">
+                  <img
+                    ref={leclistdet}
+                    id="hero"
+                    className="album_img_sz"
+                    src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
+                    alt=""
+                  />
+                </span>
+                <p className="leclistdet_head_right_head text-foreground">
+                  {/*  lectureTitleExtractor(querieddata[0]?.title, 2) */}
+                  {querieddata[0]?.title || "Unknown"}
+                </p>
+
+                <div className="mob_like">
+                  <div className="leclistdet_head_mob_head">
+                    {lectureTitleExtractor(querieddata[0]?.title, 2)}
+                  </div>
+                  <div className="rp_img_name">
+                    <span className="likeys_img">
+                      <img
+                        className="likeys_img_sz"
+                        ref={leclistdet}
+                        id="hero"
+                        src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
+                        alt=""
+                      />
+                    </span>
+                    <span className="likeys_text">
+                      {querieddata[0]?.categories}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="listrank_and_listblack_wrap">
+                <div
+                  className={
+                    isVisible
+                      ? "listranking_none"
+                      : "listranking bg-black bg-opacity-50"
+                  }
+                >
+                  <MobileFavoriteButton
+                    favorites={querieddata[0]?.favorites}
+                    id={id}
+                    type={"album"}
+                    refetch={refetch}
+                  />
+                  <div
+                    onClick={(e) => {
+                      shareAlbum(e);
+                    }}
+                    className="icons_mob_listblack"
+                  >
+                    <button className="likeys_img">
+                      <img className="likeys_img_sz" src={sharebold} alt="" />
+                    </button>
+                    <span className="likeys_text">
+                      {formatNumber(querieddata[0]?.share || 0)}
+                    </span>
+                  </div>
+                  <div className="icons_mob_listblack">
+                    <button className="likeys_img">
+                      <img className="likeys_img_sz" src={combold} alt="" />
+                    </button>
+                    <span className="likeys_text">
+                      {" "}
+                      {formatNumber(querieddata[0]?.comments || 0)}
+                    </span>
+                  </div>
+                </div>
+                <div className={isVisible ? "headings pb-7" : "headings_none"}>
+                  <div
+                    onClick={() => {
+                      navigate(-1);
+                    }}
+                    className="fixed_mob_arrow"
+                  >
+                    <img className="fixed_mob_arrow_sz" src={arrow} alt="hun" />
+                  </div>
+                  <div className="fixed_text">
+                    {" "}
+                    {querieddata[0]?.categories}
+                  </div>
+
+                  <div className="fixed_bg_none"></div>
+                  <div className="header_bg">
+                    <img
+                      className="img"
+                      ref={leclistdet}
+                      id="hero"
+                      src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
+                      alt="head"
+                    />
+                  </div>
+                </div>
+
+                <div className="listblacks bg-secondary">
+                  <div
+                    className={
+                      isVisible
+                        ? "fixed_icons_listblack bg-secondary px-2 py-3"
+                        : "icons_listblack bg-secondary py-3 px-2"
+                    }
+                  >
+                    <button
+                      id="player"
+                      onClick={playAll}
+                      className="play_header pb-2 w-full"
+                    >
+                      <div className="w-fit h-fit border border-color-primary dark:border-color-primary border-gray-500 p-[2px] rounded-full">
+                        <BsFillPlayFill className="text-[22px] dark:text-color-primary text-gray-500" />
+                      </div>
+
+                      <p className="dark:text-color-primary text-gray-500 font-medium">
+                        Play All
+                      </p>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* ------------------------------------ Section 2 ends -------------------------------------- */}
+            {/* ------------------------------------ Section 3 -------------------------------------- */}
+            <div className="desktop_color_vid"> </div>
+            {/* ------------------------------------ Section 3 ends -------------------------------------- */}
+
+            <div className="lecsong_wrapper bg-secondary">
+              <div className="lect_title_wrap">
+                <div className="lect_title1">
+                  <p className="lect_hash">#</p>
+                  <p>Title</p>
+                </div>
+                <p className="lect_title2">
+                  <span>Lecturer</span>
+                </p>
+
+                <p className="lect_title4">
+                  <span>Time</span>
+                </p>
+              </div>
+              {isLoading && (
+                <div className="loads">
+                  <div className="load">
+                    <Loader />
+                  </div>
+                </div>
+              )}
+              <div className="lecsong_content">
+                {!isLoading &&
+                  Array.isArray(albumlectures) &&
+                  albumlectures.map(
+                    (
+                      {
+                        lectitle,
+                        Title,
+                        title,
+                        img,
+                        rp,
+                        duration,
+                        rpname,
+                        lec_img,
+                        mp3_thumbnail,
+                        rp_id,
+                        cats,
+                        nid,
+                        share,
+                        views,
+                        favorites,
+                        comments,
+                      },
+                      idx
+                    ) => {
+                      return (
+                        <div key={idx} className="lecsong_content_item">
+                          <div className="desktops_item">
+                            <MusicList
+                              key={idx}
+                              id={idx}
+                              title={lectitle || title}
+                              lecturer={querieddata?.rp_name || rp}
+                              image={mp3_thumbnail || lec_img || img}
+                              url={`${LECTURE}${nid}`}
+                              rpid={rp_id}
+                              Title={Title || lectitle || title}
+                              share={share}
+                              rpname={querieddata?.rp_name || rp}
+                              cats={cats}
+                              comments={comments}
+                              favorites={favorites}
+                              nid={nid}
+                              navName={"Back"}
+                              navLink={-1}
+                              controlData={albumlectures}
+                              duration={duration}
+                              views={views}
+                            />
+                          </div>
+                          <div className="mobile_item ">
+                            <MobileList
+                              key={idx}
+                              id={idx}
+                              title={lectitle || title}
+                              lecturer={rpname || rp}
+                              image={mp3_thumbnail || lec_img || img}
+                              url={`${LECTURE}${nid}`}
+                              Title={Title || lectitle || title}
+                              rpname={rpname || rp}
+                              cats={cats}
+                              nid={nid}
+                              rpid={rp_id}
+                              comments={comments}
+                              favorites={favorites}
+                              navName={"Back"}
+                              navLink={-1}
+                              controlData={albumlectures}
+                              duration={duration}
+                              views={views}
+                            />
+                          </div>
+                        </div>
+                      );
+                    }
+                  )}
+              </div>
+            </div>
+
+            <div className="px-3">
+              <SimilarAudio
+                similar={similarAlbums}
+                current={querieddata?.rp_id}
+                url={`/a`}
+                type={"album"}
+                endpoint_url={`/albumlisting_rp.php?offset=30&lim=10&rpid=${querieddata?.rp_id}&page=`}
+                currentPage={1}
+                navtitle={"Album"}
+                heading={`Similar albums
+                    
+              `}
+              />
 
                 <CommentBox audioComment={audioComment} id={id} type={"album"} />
               </div>
