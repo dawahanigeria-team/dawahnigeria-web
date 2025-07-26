@@ -3,7 +3,7 @@ import "./mobileList.scss";
 import { AudioContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getPack, getPage, getCount, setPlaying } from "../../Redux/Actions/ActionCreators";
+import { getPack, getPage, getCount, setPlaying, getaudioData } from "../../Redux/Actions/ActionCreators";
 function MobileList({
   lecturer,
   id,
@@ -46,6 +46,7 @@ function MobileList({
           dispatch(getPage(currentPage));
           dispatch(getPack(controlData));
           dispatch(getCount(id));
+          dispatch(getaudioData({ endpoint_url, currentPage, controlData, navName }));
         }}
         className="mobiletd"
       >

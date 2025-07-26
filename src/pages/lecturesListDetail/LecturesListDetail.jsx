@@ -490,7 +490,30 @@ const LecturesListDetail = () => {
               <div className="lecsong_content">
                 {!isLoading &&
                   Array.isArray(albumlectures) &&
-                  albumlectures.map(
+                  albumlectures
+                    .filter((item, index, arr) => {
+                      // Remove duplicates based on title and nid
+                      const title = item.lectitle || item.title || item.Title;
+                      const nid = item.nid;
+                      return arr.findIndex(
+                        (otherItem) => 
+                          (otherItem.lectitle || otherItem.title || otherItem.Title) === title &&
+                          otherItem.nid === nid
+                      ) === index;
+                    })
+                    .sort((a, b) => {
+                      // Extract numbers from titles for proper sorting
+                      const getNumberFromTitle = (title) => {
+                        const match = title?.match(/(\d+)/);
+                        return match ? parseInt(match[1]) : 0;
+                      };
+                      
+                      const aNum = getNumberFromTitle(a.lectitle || a.title || a.Title);
+                      const bNum = getNumberFromTitle(b.lectitle || b.title || b.Title);
+                      
+                      return aNum - bNum;
+                    })
+                    .map(
                     (
                       {
                         lectitle,
@@ -530,7 +553,7 @@ const LecturesListDetail = () => {
                               comments={comments}
                               favorites={favorites}
                               nid={nid}
-                              navName={"Back"}
+                              navName={lectureTitleExtractor(querieddata?.title, 2) || "Album"}
                               navLink={-1}
                               controlData={albumlectures}
                               duration={duration}
@@ -552,7 +575,7 @@ const LecturesListDetail = () => {
                               rpid={rp_id}
                               comments={comments}
                               favorites={favorites}
-                              navName={"Back"}
+                              navName={lectureTitleExtractor(querieddata?.title, 2) || "Album"}
                               navLink={-1}
                               controlData={albumlectures}
                               duration={duration}
