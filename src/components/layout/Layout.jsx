@@ -73,10 +73,14 @@ const Layout = () => {
       const isLecturePath = newPath.includes("/dawahcast/l/");
       const newLectureId = isLecturePath ? newPath.split("/").pop() : null;
 
+      // Defensive: Only call .toString() if audioId is not null/undefined
+      const audioIdStr = (audioId !== undefined && audioId !== null) ? audioId.toString() : null;
+
       if (
         isLecturePath &&
         newLectureId &&
-        newLectureId !== audioId.toString()
+        audioIdStr &&
+        newLectureId !== audioIdStr
       ) {
         try {
           audioRef.current?.pause();
