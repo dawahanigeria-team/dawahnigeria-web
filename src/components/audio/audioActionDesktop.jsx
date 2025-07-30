@@ -136,8 +136,24 @@ const AudioActionDesktop = () => {
         } else {
           dispatch(setPlaying(true));
 
-          audioRef.current?.play();
-          playAnimation.current = requestAnimationFrame(repeat);
+          if (audioRef.current) {
+            const playPromise = audioRef.current.play();
+            if (playPromise !== undefined) {
+              playPromise.catch((error) => {
+                if (error.name === 'AbortError') {
+                  console.log('Play was aborted - this is normal when switching tracks');
+                } else if (error.name === 'NotAllowedError') {
+                  console.log('Play not allowed - user interaction required');
+                  dispatch(setPlaying(false));
+                } else {
+                  console.error('Playback failed:', error);
+                  dispatch(setPlaying(false));
+                  toast.error('Playback failed. Please try again.');
+                }
+              });
+            }
+            playAnimation.current = requestAnimationFrame(repeat);
+          }
         }
       })
       .catch((err) => {});
