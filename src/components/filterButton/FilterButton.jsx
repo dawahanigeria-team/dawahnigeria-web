@@ -27,50 +27,49 @@ const FilterButton = ({
   }, [data1, data2, data3]);
 
   const handleFilter = () => {
-    setActive(title);
-
-    setTypeName(action);
+    if (typeof setActive === 'function') setActive(title);
+    if (typeof setTypeName === 'function') setTypeName(action);
 
     if (action === "name") {
-      setlectId(lecid);
+      if (typeof setlectId === 'function') setlectId(lecid);
       if (title === "All") {
-        setData1(
+        if (typeof setData1 === 'function') setData1(
           Array.isArray(data) && data.filter((value) => value.rp || value.name)
         );
       } else {
         let reset = [];
-        setData2([...reset]);
-        setData3([...reset]);
-        setData1(
+        if (typeof setData2 === 'function') setData2([...reset]);
+        if (typeof setData3 === 'function') setData3([...reset]);
+        if (typeof setData1 === 'function') setData1(
           Array.isArray(data) &&
             data.filter((value) => (value.rp || value.name).includes(title))
         );
       }
     } else if (action === "language") {
-      setLangid(lid);
+      if (typeof setLangid === 'function') setLangid(lid);
 
-      setlectId(null);
-      setActiveId("All");
+      if (typeof setlectId === 'function') setlectId(null);
+      if (typeof setActiveId === 'function') setActiveId("All");
       if (title === "All") {
-        setData2(
+        if (typeof setData2 === 'function') setData2(
           Array.isArray(data) &&
             data.filter((value) => value.lang || value.lang_id)
         );
       } else {
-        setData2(
+        if (typeof setData2 === 'function') setData2(
           Array.isArray(data) && data.filter((value) => value.lang === title)
         );
       }
     } else if (action === "categories") {
-      setCatid(id);
+      if (typeof setCatid === 'function') setCatid(id);
       //setIsEmpty(false);
       if (title === "All") {
-        setData3(
+        if (typeof setData3 === 'function') setData3(
           Array.isArray(data) &&
             data.filter((value) => value?.cats || value?.categories)
         );
       } else {
-        setData3(
+        if (typeof setData3 === 'function') setData3(
           Array.isArray(data) &&
             data.filter(
               (value) =>
