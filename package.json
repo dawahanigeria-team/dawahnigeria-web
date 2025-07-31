@@ -48,13 +48,13 @@
   "scripts": {
     "preinstall": "npx only-allow yarn",
     "dev": "react-scripts start",
-    "start": "node server/simple.js",
+    "start": "node server/ssr.js",
     "build": "CI=false react-scripts build",
     "build:server": "webpack --config webpack.server.js",
     "build:all": "yarn build && yarn build:server",
-    "start:ssr": "node build-server/server.js",
+    "start:ssr": "node server/ssr.js",
     "start:simple": "node server/simple.js",
-    "dev:ssr": "concurrently \"yarn build:all\" \"nodemon build-server/server.js\"",
+    "dev:ssr": "concurrently \"yarn build\" \"nodemon server/ssr.js\"",
     "dev:simple": "concurrently \"yarn build\" \"nodemon server/simple.js\"",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -78,8 +78,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.28.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.27.1",
     "@babel/preset-env": "^7.28.0",
     "@babel/preset-react": "^7.27.1",
+    "@babel/register": "^7.27.1",
     "@tanstack/eslint-plugin-query": "^4.34.1",
     "autoprefixer": "^10.4.14",
     "babel-loader": "^10.0.0",

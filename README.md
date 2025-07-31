@@ -37,17 +37,23 @@ yarn start
 ```
 This will start the app on http://localhost:3000
 
-#### Production Server
+#### Production Server (Full SSR)
 1. Build the production bundle:
 ```bash
 yarn build
 ```
 
-2. Start the production server:
+2. Start the full SSR server:
+```bash
+yarn start
+```
+This will start the server with **full Server-Side Rendering** on http://localhost:3000
+
+#### Alternative: Simple Server (Client-Side Only)
+For basic hosting without SSR:
 ```bash
 yarn start:simple
 ```
-This will start the server on http://localhost:3000
 
 #### Development with Auto-Reload
 For development with automatic rebuilding and server restart:
@@ -57,10 +63,13 @@ yarn dev:simple
 
 ### Available Scripts
 
-- `yarn start` - Start React development server
+- `yarn dev` - Start React development server
+- `yarn start` - **Start full SSR production server (recommended)**
 - `yarn build` - Build production bundle
-- `yarn start:simple` - Start production Node.js server
-- `yarn dev:simple` - Development mode with auto-reload
+- `yarn start:ssr` - Start full SSR server (same as `yarn start`)
+- `yarn start:simple` - Start simple server (client-side only)
+- `yarn dev:ssr` - Development mode with SSR and auto-reload
+- `yarn dev:simple` - Development mode with simple server
 - `yarn test` - Run tests
 
 ### Health Check
@@ -69,6 +78,34 @@ Once the server is running, you can check its status:
 ```bash
 curl http://localhost:3000/health
 ```
+
+## SEO Features
+
+This application includes comprehensive SEO optimization:
+
+### ✅ **Full Server-Side Rendering**
+- All pages are pre-rendered on the server
+- Search engines receive complete HTML content
+- No dependency on JavaScript for content visibility
+
+### ✅ **Dynamic Meta Tags**
+Route-specific optimization:
+- **Home/Dawahcast**: Islamic knowledge and education focus
+- **Trending**: Popular Islamic content discovery
+- **Lecturers**: Islamic scholars and teachers directory
+- **Genres**: Content categorization by Islamic topics
+- **Quran**: Quranic recitations and teachings
+
+### ✅ **Social Media Optimization**
+- Open Graph meta tags for Facebook, LinkedIn
+- Twitter Cards for enhanced sharing
+- Dynamic URLs and descriptions per page
+
+### ✅ **Search Engine Ready**
+- Pre-rendered content in `<div id="root">`
+- Proper HTML structure for crawlers
+- Fast loading with React 19 streaming
+- Fallback content for any rendering issues
 
 ## Deployment & Hosting
 
@@ -134,12 +171,17 @@ Set these environment variables in your hosting platform:
 
 ### Production Checklist
 
-- ✅ React 19 optimized build
+- ✅ **Full Server-Side Rendering (SSR)** with React 19
+- ✅ **SEO Optimized** - Dynamic meta tags per route
+- ✅ **React 19 Streaming** - Advanced SSR capabilities
+- ✅ **Route-specific SEO** - Optimized titles, descriptions, keywords
+- ✅ **Open Graph & Twitter Cards** - Social media optimization
 - ✅ Express.js server ready
 - ✅ Static asset serving configured
 - ✅ Health check endpoint available
 - ✅ Environment variable support
 - ✅ Auto-scaling compatible
+- ✅ **Search Engine Ready** - Pre-rendered content for crawlers
 
 ## Built With
 
