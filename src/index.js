@@ -26,6 +26,14 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const middleware = [thunk];
 let store;
 
+// Get initial state from SSR if available
+const initialState = typeof window !== 'undefined' ? (window.__INITIAL_STATE__ || {}) : {};
+
+// Clean up the global variable
+if (typeof window !== 'undefined' && window.__INITIAL_STATE__) {
+  delete window.__INITIAL_STATE__;
+}
+
 if (process.env.NODE_ENV === "development") {
   // Include logger and devtools in development for easier debugging
   const loggerMiddleware = createLogger();
@@ -33,17 +41,18 @@ if (process.env.NODE_ENV === "development") {
 
   store = createStore(
     persistedReducer,
+    initialState,
     composeWithDevTools(applyMiddleware(...middleware))
   );
 } else {
   // In production keep middleware minimal
-  store = createStore(persistedReducer, applyMiddleware(...middleware));
+  store = createStore(persistedReducer, initialState, applyMiddleware(...middleware));
 }
 
 let persistor = persistStore(store);
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const container = document.getElementById("root");
 
-root.render(
+const AppComponent = (
   <>
     <Router>
       <Provider store={store}>
@@ -54,5 +63,19 @@ root.render(
     </Router>
   </>
 );
+
+// Use React 19's hydrateRoot for SSR hydration
+if (container.hasChildNodes()) {
+  // Server-rendered content exists, hydrate it
+  ReactDOM.hydrateRoot(container, AppComponent, {
+    onRecoverableError: (error) => {
+      console.warn('Hydration recoverable error:', error);
+    }
+  });
+} else {
+  // No server-rendered content, render normally
+  const root = ReactDOM.createRoot(container);
+  root.render(AppComponent);
+}
 
 reportWebVitals();

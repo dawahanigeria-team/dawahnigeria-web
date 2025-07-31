@@ -1,6 +1,7 @@
 import React, { useState, createContext, useEffect, useRef } from "react";
 import * as Sentry from "@sentry/react";
 import TawkMessengerReact from "@tawk.to/tawk-messenger-react";
+import ClientOnly from "./components/ClientOnly";
 import {
   useQuery,
   useMutation,
@@ -311,17 +312,19 @@ const App = () => {
                     <Route path="/dawahcast" element={<Layout />} />
                   </Routes>
                 </ErrorBoundary>
-                <TawkMessengerReact
-                  propertyId="5cd3dd3ed07d7e0c6392ad09"
-                  widgetId="default"
-                  onLoad={() => {}}
-                  onStatusChange={() => {}}
-                  onBeforeLoad={() => {}}
-                  onChatMessageSystem={() => {}}
-                  onChatMessageVisitor={() => {}}
-                  onChatMessageAgent={() => {}}
-                  onUnreadCountChanged={() => {}}
-                />
+                <ClientOnly>
+                  <TawkMessengerReact
+                    propertyId="5cd3dd3ed07d7e0c6392ad09"
+                    widgetId="default"
+                    onLoad={() => {}}
+                    onStatusChange={() => {}}
+                    onBeforeLoad={() => {}}
+                    onChatMessageSystem={() => {}}
+                    onChatMessageVisitor={() => {}}
+                    onChatMessageAgent={() => {}}
+                    onUnreadCountChanged={() => {}}
+                  />
+                </ClientOnly>
               </ThemeProvider.Provider>
             </AudioContext.Provider>
           </SearchContext.Provider>
