@@ -119,7 +119,7 @@ const getSEOData = (pathname) => {
       description: 'Explore Islamic content organized by topics and genres including Quran, Hadith, Fiqh, and more.',
       keywords: 'Islamic genres, Quran, Hadith, Fiqh, Islamic topics'
     },
-    '/dawahcast/quran': {
+    '/dawahcast/recitations': {
       title: 'Quran Recitations - Dawahnigeria',
       description: 'Listen to beautiful Quran recitations from various reciters and learn from Quranic teachings.',
       keywords: 'Quran recitation, Quranic verses, Islamic recitation, Holy Quran'
