@@ -67,13 +67,29 @@ const AppComponent = (
 // Use React 19's hydrateRoot for SSR hydration
 if (container.hasChildNodes()) {
   // Server-rendered content exists, hydrate it
-  ReactDOM.hydrateRoot(container, AppComponent, {
-    onRecoverableError: (error) => {
-      console.warn('Hydration recoverable error:', error);
-    }
-  });
+  console.log('🔄 Hydrating SSR content...');
+  
+  // Remove any SSR fallback loading messages
+  const fallbackElements = container.querySelectorAll('#app-loading, #fallback-loading, #ssr-fallback');
+  fallbackElements.forEach(el => el.style.display = 'none');
+  
+  try {
+    ReactDOM.hydrateRoot(container, AppComponent, {
+      onRecoverableError: (error) => {
+        console.warn('Hydration recoverable error:', error);
+      }
+    });
+    console.log('✅ Hydration successful');
+  } catch (error) {
+    console.error('❌ Hydration failed, falling back to client render:', error);
+    // Clear the container and render normally
+    container.innerHTML = '';
+    const root = ReactDOM.createRoot(container);
+    root.render(AppComponent);
+  }
 } else {
   // No server-rendered content, render normally
+  console.log('🎨 Client-side rendering...');
   const root = ReactDOM.createRoot(container);
   root.render(AppComponent);
 }
