@@ -100,8 +100,15 @@ const AudioDetail = () => {
 
   const { theme } = useSelector((state) => state.user);
 
-  // Get server-side lecture data if available
-  const lectureData = typeof window !== 'undefined' ? window.__LECTURE_DATA__ : null;
+  // Better server-side data access with state management
+  const [lectureData, setLectureData] = useState(null);
+
+  useEffect(() => {
+    // Check for server-side data
+    if (typeof window !== 'undefined' && window.__LECTURE_DATA__) {
+      setLectureData(window.__LECTURE_DATA__);
+    }
+  }, []);
   
   const { refetch } = useAudioHook(id);
   const keyParam = { id: currentAudioInfo?.rp_id, page: 1 };
