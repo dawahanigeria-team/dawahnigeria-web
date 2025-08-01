@@ -135,18 +135,20 @@ const getSEOData = async (pathname) => {
   if (lectureMatch) {
     const lectureId = lectureMatch[1];
     try {
+      const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/leclistingapi.php?lecid=${lectureId}`;
+      
       // Fetch lecture data from API
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/leclistingapi.php?lecid=${lectureId}`,
-        {
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'x-project': '206cf92c-8a46-45ef-bf3f-a6ef92fc6f25'
-          },
-          timeout: 5000 // 5 second timeout
-        }
-      );
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'x-project': '206cf92c-8a46-45ef-bf3f-a6ef92fc6f25',
+          'Origin': 'https://dawahnigeria.com',
+          'Referer': 'https://dawahnigeria.com/',
+          'User-Agent': 'DawahNigeria-SSR/1.0'
+        },
+        timeout: 8000
+      });
       
       if (response.data && response.data[0]) {
         const lecture = response.data[0];
@@ -166,15 +168,17 @@ const getSEOData = async (pathname) => {
       }
     } catch (error) {
       console.error(`Error fetching lecture data for ID ${lectureId}:`, error.message);
-      // Fallback SEO data for lecture pages
-      return {
-        title: `Islamic Lecture | Dawahnigeria`,
-        description: 'Explore Islamic lectures and teachings on Dawahnigeria - Your source for Islamic knowledge and spiritual guidance.',
-        keywords: 'Islamic lecture, Islamic education, dawah, Nigeria, Islamic teachings',
-        ogImage: 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg',
-        ogType: 'article'
-      };
     }
+    
+    // Fallback SEO data for lecture pages
+    return {
+      title: `Islamic Lecture ${lectureId} | Dawahnigeria`,
+      description: 'Explore Islamic lectures and teachings on Dawahnigeria - Your source for Islamic knowledge and spiritual guidance.',
+      keywords: 'Islamic lecture, Islamic education, dawah, Nigeria, Islamic teachings',
+      ogImage: 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg',
+      ogType: 'article',
+      lectureData: null
+    };
   }
 
   return routes[pathname] || routes['/'];
