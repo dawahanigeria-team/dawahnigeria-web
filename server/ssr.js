@@ -92,7 +92,11 @@ app.get('/health', (req, res) => {
 });
 
 // Route-specific SEO data
-const getSEOData = (pathname) => {
+// Add axios for server-side API calls
+const axios = require('axios');
+
+// Enhanced getSEOData function to handle dynamic routes
+const getSEOData = async (pathname) => {
   const routes = {
     '/': {
       title: 'Dawahnigeria - Your Source for Islamic Knowledge',
@@ -126,6 +130,53 @@ const getSEOData = (pathname) => {
     }
   };
 
+  // Handle dynamic lecture routes (/dawahcast/l/:id)
+  const lectureMatch = pathname.match(/^\/dawahcast\/l\/(\d+)$/);
+  if (lectureMatch) {
+    const lectureId = lectureMatch[1];
+    try {
+      // Fetch lecture data from API
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_BASE_URL}/leclistingapi.php?lecid=${lectureId}`,
+        {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'x-project': '206cf92c-8a46-45ef-bf3f-a6ef92fc6f25'
+          },
+          timeout: 5000 // 5 second timeout
+        }
+      );
+      
+      if (response.data && response.data[0]) {
+        const lecture = response.data[0];
+        const title = lecture.title || lecture.Title || 'Islamic Lecture';
+        const lecturer = lecture.rpname || 'Islamic Scholar';
+        const description = lecture.description || 
+          `Listen to "${title}" by ${lecturer} on Dawahnigeria. Explore Islamic lectures, teachings, and spiritual guidance.`;
+        
+        return {
+          title: `${title} - ${lecturer} | Dawahnigeria`,
+          description: description.substring(0, 160), // SEO optimal length
+          keywords: `${title}, ${lecturer}, Islamic lecture, Islamic education, dawah, Nigeria, ${lecture.cats || 'Islamic teachings'}`,
+          ogImage: lecture.img || 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg',
+          ogType: 'article',
+          lectureData: lecture // Pass lecture data for additional meta tags
+        };
+      }
+    } catch (error) {
+      console.error(`Error fetching lecture data for ID ${lectureId}:`, error.message);
+      // Fallback SEO data for lecture pages
+      return {
+        title: `Islamic Lecture | Dawahnigeria`,
+        description: 'Explore Islamic lectures and teachings on Dawahnigeria - Your source for Islamic knowledge and spiritual guidance.',
+        keywords: 'Islamic lecture, Islamic education, dawah, Nigeria, Islamic teachings',
+        ogImage: 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg',
+        ogType: 'article'
+      };
+    }
+  }
+
   return routes[pathname] || routes['/'];
 };
 
@@ -148,22 +199,22 @@ const createServerStore = () => {
 };
 
 // Full SSR handler with React 19 streaming
-app.get('*', (req, res) => {
+app.get('*', async (req, res) => {
   const indexPath = path.join(__dirname, '../build/index.html');
   
   if (!fs.existsSync(indexPath)) {
     return res.status(404).send('Build not found. Please run yarn build first.');
   }
 
-  fs.readFile(indexPath, 'utf8', (err, htmlData) => {
+  fs.readFile(indexPath, 'utf8', async (err, htmlData) => {
     if (err) {
       console.error('Error reading HTML template:', err);
       return res.status(500).send('Internal Server Error');
     }
 
     try {
-      // Get SEO data for current route
-      const seoData = getSEOData(req.path);
+      // Get SEO data for current route (now async)
+      const seoData = await getSEOData(req.path);
       
       // Create store for this request
       const store = createServerStore();
@@ -186,12 +237,20 @@ app.get('*', (req, res) => {
           <meta property="og:title" content="${seoData.title}">
           <meta property="og:description" content="${seoData.description}">
           <meta property="og:url" content="${req.protocol}://${req.get('host')}${req.originalUrl}">
-          <meta property="og:type" content="website">
+          <meta property="og:type" content="${seoData.ogType || 'website'}">
           <meta property="og:site_name" content="Dawahnigeria">
+          <meta property="og:image" content="${seoData.ogImage || 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg'}">
           <meta name="twitter:card" content="summary_large_image">
           <meta name="twitter:title" content="${seoData.title}">
           <meta name="twitter:description" content="${seoData.description}">
+          <meta name="twitter:image" content="${seoData.ogImage || 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg'}">
+          ${seoData.lectureData ? `
+          <meta property="article:author" content="${seoData.lectureData.rpname || ''}">
+          <meta property="article:section" content="${seoData.lectureData.cats || 'Islamic Education'}">
+          <meta name="audio" content="${seoData.lectureData.audio || ''}">
+          ` : ''}
           <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState).replace(/</g, '\\u003c')};</script>
+          <script>window.__LECTURE_DATA__ = ${seoData.lectureData ? JSON.stringify(seoData.lectureData).replace(/</g, '\\u003c') : 'null'};</script>
           </head>`
         );
 

@@ -100,6 +100,9 @@ const AudioDetail = () => {
 
   const { theme } = useSelector((state) => state.user);
 
+  // Get server-side lecture data if available
+  const lectureData = typeof window !== 'undefined' ? window.__LECTURE_DATA__ : null;
+  
   const { refetch } = useAudioHook(id);
   const keyParam = { id: currentAudioInfo?.rp_id, page: 1 };
   const { querieddata: similarAudios } = useSimilarAudioHook(keyParam);
@@ -354,15 +357,150 @@ const AudioDetail = () => {
   };
 
   ////*********************************************************** */
+  // Enhanced SEO data generation for lecture pages
+  const generateSEOData = () => {
+    if (!lectureData && !currentAudioInfo) {
+      return {
+        title: 'Islamic Lecture | Dawahnigeria - Home of Islamic Resources',
+        description: 'Explore Islamic lectures, teachings, and spiritual guidance on Dawahnigeria.',
+        ogImage: IMAGE_PLACEHOLDERS.lecture,
+        keywords: 'Islamic lecture, Islamic education, dawah, Nigeria'
+      };
+    }
+    
+    const data = lectureData || currentAudioInfo;
+    const title = (data.title || data.Title || 'Islamic Lecture').trim();
+    const lecturer = (data.rpname || 'Islamic Scholar').trim();
+    const category = (data.cats || 'Islamic Education').trim();
+    const duration = data.duration ? ` (${data.duration})` : '';
+    
+    // Enhanced description with more context
+    const baseDescription = data.description || 
+      `Listen to "${title}" by ${lecturer} on Dawahnigeria. This ${category.toLowerCase()} lecture provides Islamic teachings and spiritual guidance.`;
+    
+    const enhancedDescription = `${baseDescription}${duration} Free Islamic audio content from Nigeria's premier dawah platform.`;
+    
+    // More comprehensive keywords
+    const keywords = [
+      title.toLowerCase(),
+      lecturer.toLowerCase(),
+      'islamic lecture',
+      'islamic education', 
+      'dawah',
+      'nigeria',
+      'islamic audio',
+      'muslim teachings',
+      category.toLowerCase(),
+      'free islamic content',
+      'dawahnigeria'
+    ].filter(Boolean).join(', ');
+    
+    return {
+      title: `${title} - ${lecturer} | Dawahnigeria`,
+      description: enhancedDescription.substring(0, 160),
+      ogImage: data.img || IMAGE_PLACEHOLDERS.lecture,
+      keywords,
+      lecturer,
+      category,
+      duration: data.duration,
+      publishDate: data.date_created || data.post_date
+    };
+  };
+
+  const seoData = generateSEOData();
+
   return (
     <Container>
       <HeadMeta
-        title={`${
-          currentAudioInfo?.title?.split("-")[0] ||
-          currentAudioInfo?.Title ||
-          "Audio"
-        } on Dawah Nigeria - Home of islamic resources`}
+        title={seoData.title || `${currentAudioInfo?.title?.split("-")[0] || currentAudioInfo?.Title || "Audio"} on Dawah Nigeria - Home of islamic resources`}
+        description={seoData.description}
+        ogImage={seoData.ogImage}
       />
+      
+      {/* Enhanced meta tags for better SEO */}
+      {(lectureData || currentAudioInfo) && (
+        <>
+          <meta name="keywords" content={seoData.keywords} />
+          <meta name="author" content={seoData.lecturer} />
+          <meta name="category" content={seoData.category} />
+          <meta name="language" content="en" />
+          <meta name="content-type" content="audio/mpeg" />
+          
+          {/* Open Graph tags */}
+          <meta property="og:type" content="music.song" />
+          <meta property="og:title" content={seoData.title} />
+          <meta property="og:description" content={seoData.description} />
+          <meta property="og:image" content={seoData.ogImage} />
+          <meta property="og:url" content={`${window.location.origin}/dawahcast/l/${id}`} />
+          <meta property="og:site_name" content="Dawahnigeria" />
+          <meta property="og:locale" content="en_US" />
+          
+          {/* Twitter Card tags */}
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={seoData.title} />
+          <meta name="twitter:description" content={seoData.description} />
+          <meta name="twitter:image" content={seoData.ogImage} />
+          <meta name="twitter:site" content="@dawahnigeria" />
+          
+          {/* Article specific tags */}
+          <meta property="article:author" content={seoData.lecturer} />
+          <meta property="article:section" content={seoData.category} />
+          {seoData.publishDate && <meta property="article:published_time" content={seoData.publishDate} />}
+          
+          {/* Audio specific tags */}
+          <meta name="audio" content={(lectureData || currentAudioInfo).audio || ''} />
+          {seoData.duration && <meta name="duration" content={seoData.duration} />}
+          
+          <link rel="canonical" href={`${window.location.origin}/dawahcast/l/${id}`} />
+        </>
+      )}
+      
+      {/* Enhanced JSON-LD structured data for rich snippets */}
+      {(lectureData || currentAudioInfo) && (
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "AudioObject",
+            "name": (lectureData || currentAudioInfo).title || (lectureData || currentAudioInfo).Title,
+            "description": seoData.description,
+            "creator": {
+              "@type": "Person",
+              "name": seoData.lecturer,
+              "jobTitle": "Islamic Scholar"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Dawahnigeria",
+              "url": "https://dawahnigeria.com",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://dawahnigeria.com/logo.png"
+              }
+            },
+            "contentUrl": (lectureData || currentAudioInfo).audio,
+            "thumbnailUrl": seoData.ogImage,
+            "uploadDate": seoData.publishDate,
+            "datePublished": seoData.publishDate,
+            "genre": seoData.category,
+            "inLanguage": "en",
+            "isAccessibleForFree": true,
+            "educationalLevel": "Adult",
+            "learningResourceType": "Audio Lecture",
+            "about": {
+              "@type": "Thing",
+              "name": "Islamic Education",
+              "description": "Islamic teachings and spiritual guidance"
+            },
+            "keywords": seoData.keywords,
+            "url": `${window.location.origin}/dawahcast/l/${id}`,
+            ...(seoData.duration && { "duration": seoData.duration }),
+            "potentialAction": {
+              "@type": "ListenAction",
+              "target": `${window.location.origin}/dawahcast/l/${id}`
+            }
+          })}
+        </script>
+      )}
       <div className="audiodetail_wrapper">
         <img
           className={`${
