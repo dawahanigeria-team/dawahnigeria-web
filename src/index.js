@@ -69,9 +69,21 @@ if (container.hasChildNodes()) {
   // Server-rendered content exists, hydrate it
   console.log('🔄 Hydrating SSR content...');
   
-  // Remove any SSR fallback loading messages
+  // Remove any SSR fallback loading messages and hide any visible fallback content
   const fallbackElements = container.querySelectorAll('#app-loading, #fallback-loading, #ssr-fallback');
-  fallbackElements.forEach(el => el.style.display = 'none');
+  fallbackElements.forEach(el => {
+    el.style.display = 'none';
+    el.style.visibility = 'hidden';
+  });
+  
+  // Hide any elements that might be causing white background flash
+  const potentialWhiteElements = container.children;
+  for (let i = 0; i < potentialWhiteElements.length; i++) {
+    const el = potentialWhiteElements[i];
+    if (el.style && (el.style.backgroundColor === 'white' || el.style.background.includes('white'))) {
+      el.style.backgroundColor = 'transparent';
+    }
+  }
   
   try {
     ReactDOM.hydrateRoot(container, AppComponent, {

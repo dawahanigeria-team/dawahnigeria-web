@@ -245,6 +245,58 @@ const getSEOData = async (pathname) => {
     };
   }
 
+  // Handle dynamic lecturer routes (/dawahcast/rp/:id)
+  const lecturerMatch = pathname.match(/^\/dawahcast\/rp\/(\d+)$/);
+  if (lecturerMatch) {
+    const lecturerId = lecturerMatch[1];
+    try {
+      const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/rplisting_multi_nid_api.php?id=${lecturerId}`;
+      
+      // Fetch lecturer data from API
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'x-project': '206cf92c-8a46-45ef-bf3f-a6ef92fc6f25',
+          'Origin': 'https://dawahnigeria.com',
+          'Referer': 'https://dawahnigeria.com/',
+          'User-Agent': 'DawahNigeria-SSR/1.0'
+        },
+        timeout: 8000
+      });
+      
+      if (response.data && response.data[0]) {
+        const lecturer = response.data[0];
+        const name = lecturer.name || 'Islamic Scholar';
+        const totalAudio = lecturer.total_audio || 0;
+        const totalAlbums = lecturer.total_albums || 0;
+        const views = lecturer.views || 0;
+        const description = `Explore Islamic lectures by ${name}. Listen to ${totalAudio} lectures across ${totalAlbums} albums with over ${views} views. Discover quality Islamic content and spiritual guidance on Dawahnigeria.`;
+        
+        return {
+          title: `${name} - Islamic Scholar | Dawahnigeria`,
+          description: description.substring(0, 160), // SEO optimal length
+          keywords: `${name}, Islamic scholar, Islamic lectures, dawah, Nigeria, Islamic education, ${totalAudio > 0 ? 'Islamic audio' : 'Islamic content'}`,
+          ogImage: lecturer.img || lecturer.rp_thumbnail || 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg',
+          ogType: 'profile',
+          lecturerData: lecturer // Pass lecturer data for additional meta tags
+        };
+      }
+    } catch (error) {
+      console.error(`Error fetching lecturer data for ID ${lecturerId}:`, error.message);
+    }
+    
+    // Fallback SEO data for lecturer pages
+    return {
+      title: `Islamic Scholar ${lecturerId} | Dawahnigeria`,
+      description: 'Discover Islamic scholars and their teachings on Dawahnigeria - Your source for Islamic knowledge and spiritual guidance.',
+      keywords: 'Islamic scholar, Islamic lectures, dawah, Nigeria, Islamic education',
+      ogImage: 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg',
+      ogType: 'profile',
+      lecturerData: null
+    };
+  }
+
   return routes[pathname] || routes['/'];
 };
 
@@ -324,9 +376,26 @@ app.get('*', async (req, res) => {
           <meta name="album:language" content="${seoData.albumData.lang || ''}">
           <meta name="album:views" content="${seoData.albumData.views || ''}">
           ` : ''}
+          ${seoData.lecturerData ? `
+          <meta property="profile:first_name" content="${seoData.lecturerData.name ? seoData.lecturerData.name.split(' ')[0] : ''}">
+          <meta property="profile:last_name" content="${seoData.lecturerData.name ? seoData.lecturerData.name.split(' ').slice(1).join(' ') : ''}">
+          <meta name="lecturer:total_audio" content="${seoData.lecturerData.total_audio || ''}">
+          <meta name="lecturer:total_albums" content="${seoData.lecturerData.total_albums || ''}">
+          <meta name="lecturer:views" content="${seoData.lecturerData.views || ''}">
+          <meta name="lecturer:favorites" content="${seoData.lecturerData.favorites || ''}">
+          ` : ''}
           <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState).replace(/</g, '\\u003c')};</script>
           <script>window.__LECTURE_DATA__ = ${seoData.lectureData ? JSON.stringify(seoData.lectureData).replace(/</g, '\\u003c') : 'null'};</script>
           <script>window.__ALBUM_DATA__ = ${seoData.albumData ? JSON.stringify(seoData.albumData).replace(/</g, '\\u003c') : 'null'};</script>
+          <script>window.__LECTURER_DATA__ = ${seoData.lecturerData ? JSON.stringify(seoData.lecturerData).replace(/</g, '\\u003c') : 'null'};</script>
+          <style>
+            /* Prevent white flash during SSR hydration */
+            body { background-color: #000 !important; color: #fff !important; }
+            #root { background-color: transparent !important; }
+            div[style*="background"] { background-color: transparent !important; }
+            .white-bg, [style*="white"] { background-color: transparent !important; }
+            #app-loading, #fallback-loading, #ssr-fallback { display: none !important; }
+          </style>
           </head>`
         );
 
@@ -347,13 +416,32 @@ app.get('*', async (req, res) => {
           if (error.loc) {
             console.error('Error location:', error.loc);
           }
-          // Fallback App component
+          // Fallback App component with proper dark theme styling
           App = () => React.createElement('div', { 
-            style: { padding: '20px', textAlign: 'center' }
+            style: { 
+              padding: '20px', 
+              textAlign: 'center',
+              backgroundColor: '#000000',
+              color: '#ffffff',
+              minHeight: '100vh',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              zIndex: -1,
+              display: 'none' // Hide fallback content
+            }
           }, 
-            React.createElement('h1', {}, seoData.title),
-            React.createElement('p', {}, seoData.description),
-            React.createElement('div', { id: 'app-loading' }, 'Loading application...')
+            React.createElement('h1', { 
+              style: { color: '#ffffff', fontSize: '18px', margin: '10px 0' }
+            }, seoData.title),
+            React.createElement('p', { 
+              style: { color: '#cccccc', fontSize: '14px', margin: '10px 0' }
+            }, seoData.description),
+            React.createElement('div', { 
+              id: 'app-loading',
+              style: { color: '#888888', fontSize: '16px', marginTop: '20px' }
+            }, 'Loading application...')
           );
         }
 
