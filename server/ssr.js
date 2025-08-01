@@ -8,14 +8,25 @@ process.env.REACT_APP_API_ADMINISTER_BASE_URL = process.env.REACT_APP_API_ADMINI
 // Full SSR Server with React 19
 require('@babel/register')({
   presets: [
-    ['@babel/preset-env', { targets: { node: 'current' } }],
-    ['@babel/preset-react', { runtime: 'automatic' }]
+    ['@babel/preset-env', { 
+      targets: { node: 'current' },
+      modules: 'commonjs',
+      loose: true
+    }],
+    ['@babel/preset-react', { 
+      runtime: 'automatic',
+      development: false
+    }]
   ],
-  plugins: [
-    ['@babel/plugin-transform-modules-commonjs']
-  ],
-  ignore: [/node_modules/]
+  ignore: [/node_modules/],
+  extensions: ['.js', '.jsx', '.ts', '.tsx'],
+  cache: false
 });
+
+// Setup CSS import handling for SSR
+require.extensions['.css'] = () => {};
+require.extensions['.scss'] = () => {};
+require.extensions['.sass'] = () => {};
 
 // Setup browser globals for SSR compatibility
 global.window = {
@@ -52,6 +63,7 @@ global.document = {
     defer: false
   }),
   addEventListener: () => {},
+  head: { appendChild: () => {} },
   body: { appendChild: () => {} }
 };
 
@@ -271,6 +283,10 @@ app.get('*', async (req, res) => {
           App = require('../src/App.jsx').default;
         } catch (error) {
           console.error('Could not load App component, using fallback:', error.message);
+          console.error('Full error:', error.stack);
+          if (error.loc) {
+            console.error('Error location:', error.loc);
+          }
           // Fallback App component
           App = () => React.createElement('div', { 
             style: { padding: '20px', textAlign: 'center' }
