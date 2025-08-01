@@ -111,32 +111,32 @@ const axios = require('axios');
 const getSEOData = async (pathname) => {
   const routes = {
     '/': {
-      title: 'Dawahnigeria - Your Source for Islamic Knowledge',
-      description: 'Access a vast library of Islamic lectures, Quran recitations, videos, and playlists from various scholars and genres on Dawahnigeria.',
+      title: 'dawahnigeria - Your Source for Islamic Knowledge',
+      description: 'Access a vast library of Islamic lectures, Quran recitations, videos, and playlists from various scholars and genres on dawahnigeria.',
       keywords: 'Islamic lectures, Quran, Islamic education, dawah, Nigeria'
     },
     '/dawahcast': {
-      title: 'Dawahnigeria - Your Source for Islamic Knowledge',
-      description: 'Access a vast library of Islamic lectures, Quran recitations, videos, and playlists from various scholars and genres on Dawahnigeria.',
+      title: 'dawahnigeria - Your Source for Islamic Knowledge',
+      description: 'Access a vast library of Islamic lectures, Quran recitations, videos, and playlists from various scholars and genres on dawahnigeria.',
       keywords: 'Islamic lectures, Quran, Islamic education, dawah, Nigeria'
     },
     '/dawahcast/trending': {
-      title: 'Trending Islamic Content - Dawahnigeria',
-      description: 'Discover the most popular Islamic lectures, videos, and content trending on Dawahnigeria.',
+      title: 'Trending Islamic Content - dawahnigeria',
+      description: 'Discover the most popular Islamic lectures, videos, and content trending on dawahnigeria.',
       keywords: 'trending Islamic content, popular lectures, viral Islamic videos'
     },
     '/dawahcast/lecturers': {
-      title: 'Islamic Lecturers & Scholars - Dawahnigeria',
+      title: 'Islamic Lecturers & Scholars - dawahnigeria',
       description: 'Browse our collection of renowned Islamic lecturers and scholars from around the world.',
       keywords: 'Islamic scholars, lecturers, Islamic teachers, religious speakers'
     },
     '/dawahcast/genres': {
-      title: 'Islamic Content by Genre - Dawahnigeria',
+      title: 'Islamic Content by Genre - dawahnigeria',
       description: 'Explore Islamic content organized by topics and genres including Quran, Hadith, Fiqh, and more.',
       keywords: 'Islamic genres, Quran, Hadith, Fiqh, Islamic topics'
     },
     '/dawahcast/recitations': {
-      title: 'Quran Recitations - Dawahnigeria',
+      title: 'Quran Recitations - dawahnigeria',
       description: 'Listen to beautiful Quran recitations from various reciters and learn from Quranic teachings.',
       keywords: 'Quran recitation, Quranic verses, Islamic recitation, Holy Quran'
     }
@@ -167,10 +167,10 @@ const getSEOData = async (pathname) => {
         const title = lecture.title || lecture.Title || 'Islamic Lecture';
         const lecturer = lecture.rpname || 'Islamic Scholar';
         const description = lecture.description || 
-          `Listen to "${title}" by ${lecturer} on Dawahnigeria. Explore Islamic lectures, teachings, and spiritual guidance.`;
+          `Listen to "${title}" by ${lecturer} on dawahnigeria. Explore Islamic lectures, teachings, and spiritual guidance.`;
         
         return {
-          title: `${title} - ${lecturer} | Dawahnigeria`,
+          title: `${title} - ${lecturer} | dawahnigeria`,
           description: description.substring(0, 160), // SEO optimal length
           keywords: `${title}, ${lecturer}, Islamic lecture, Islamic education, dawah, Nigeria, ${lecture.cats || 'Islamic teachings'}`,
           ogImage: lecture.img || 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg',
@@ -184,8 +184,8 @@ const getSEOData = async (pathname) => {
     
     // Fallback SEO data for lecture pages
     return {
-      title: `Islamic Lecture ${lectureId} | Dawahnigeria`,
-      description: 'Explore Islamic lectures and teachings on Dawahnigeria - Your source for Islamic knowledge and spiritual guidance.',
+      title: `Islamic Lecture ${lectureId} | dawahnigeria`,
+      description: 'Explore Islamic lectures and teachings on dawahnigeria - Your source for Islamic knowledge and spiritual guidance.',
       keywords: 'Islamic lecture, Islamic education, dawah, Nigeria, Islamic teachings',
       ogImage: 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg',
       ogType: 'article',
@@ -219,10 +219,10 @@ const getSEOData = async (pathname) => {
         const author = album.rp_name || 'Islamic Scholar';
         const lectureCount = album.lec_no || 0;
         const category = album.categories || 'Islamic Content';
-        const description = `Explore "${title}" by ${author}. This Islamic album contains ${lectureCount} lectures in ${category}. Listen to quality Islamic content on Dawahnigeria.`;
+        const description = `Explore "${title}" by ${author}. This Islamic album contains ${lectureCount} lectures in ${category}. Listen to quality Islamic content on dawahnigeria.`;
         
         return {
-          title: `${title} - ${author} | Dawahnigeria`,
+          title: `${title} - ${author} | dawahnigeria`,
           description: description.substring(0, 160), // SEO optimal length
           keywords: `${title}, ${author}, Islamic album, ${category}, Islamic lectures, dawah, Nigeria, ${album.lang || 'Islamic content'}`,
           ogImage: album.img || 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg',
@@ -236,8 +236,8 @@ const getSEOData = async (pathname) => {
     
     // Fallback SEO data for album pages
     return {
-      title: `Islamic Album ${albumId} | Dawahnigeria`,
-      description: 'Explore Islamic albums and lecture collections on Dawahnigeria - Your source for Islamic knowledge and spiritual guidance.',
+      title: `Islamic Album ${albumId} | dawahnigeria`,
+      description: 'Explore Islamic albums and lecture collections on dawahnigeria - Your source for Islamic knowledge and spiritual guidance.',
       keywords: 'Islamic album, Islamic lectures, dawah, Nigeria, Islamic content',
       ogImage: 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg',
       ogType: 'website',
@@ -271,10 +271,10 @@ const getSEOData = async (pathname) => {
         const totalAudio = lecturer.total_audio || 0;
         const totalAlbums = lecturer.total_albums || 0;
         const views = lecturer.views || 0;
-        const description = `Explore Islamic lectures by ${name}. Listen to ${totalAudio} lectures across ${totalAlbums} albums with over ${views} views. Discover quality Islamic content and spiritual guidance on Dawahnigeria.`;
+        const description = `Explore Islamic lectures by ${name}. Listen to ${totalAudio} lectures across ${totalAlbums} albums with over ${views} views. Discover quality Islamic content and spiritual guidance on dawahnigeria.`;
         
         return {
-          title: `${name} - Islamic Scholar | Dawahnigeria`,
+          title: `${name} - Islamic Scholar | dawahnigeria`,
           description: description.substring(0, 160), // SEO optimal length
           keywords: `${name}, Islamic scholar, Islamic lectures, dawah, Nigeria, Islamic education, ${totalAudio > 0 ? 'Islamic audio' : 'Islamic content'}`,
           ogImage: lecturer.img || lecturer.rp_thumbnail || 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg',
@@ -288,8 +288,8 @@ const getSEOData = async (pathname) => {
     
     // Fallback SEO data for lecturer pages
     return {
-      title: `Islamic Scholar ${lecturerId} | Dawahnigeria`,
-      description: 'Discover Islamic scholars and their teachings on Dawahnigeria - Your source for Islamic knowledge and spiritual guidance.',
+      title: `Islamic Scholar ${lecturerId} | dawahnigeria`,
+      description: 'Discover Islamic scholars and their teachings on dawahnigeria - Your source for Islamic knowledge and spiritual guidance.',
       keywords: 'Islamic scholar, Islamic lectures, dawah, Nigeria, Islamic education',
       ogImage: 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg',
       ogType: 'profile',
@@ -358,7 +358,7 @@ app.get('*', async (req, res) => {
           <meta property="og:description" content="${seoData.description}">
           <meta property="og:url" content="${req.protocol}://${req.get('host')}${req.originalUrl}">
           <meta property="og:type" content="${seoData.ogType || 'website'}">
-          <meta property="og:site_name" content="Dawahnigeria">
+          <meta property="og:site_name" content="dawahnigeria">
           <meta property="og:image" content="${seoData.ogImage || 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg'}">
           <meta name="twitter:card" content="summary_large_image">
           <meta name="twitter:title" content="${seoData.title}">
