@@ -193,6 +193,58 @@ const getSEOData = async (pathname) => {
     };
   }
 
+  // Handle dynamic album routes (/dawahcast/a/:id)
+  const albumMatch = pathname.match(/^\/dawahcast\/a\/(\d+)$/);
+  if (albumMatch) {
+    const albumId = albumMatch[1];
+    try {
+      const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/albumlisting_multi_nid_api.php?id=${albumId}`;
+      
+      // Fetch album data from API
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'x-project': '206cf92c-8a46-45ef-bf3f-a6ef92fc6f25',
+          'Origin': 'https://dawahnigeria.com',
+          'Referer': 'https://dawahnigeria.com/',
+          'User-Agent': 'DawahNigeria-SSR/1.0'
+        },
+        timeout: 8000
+      });
+      
+      if (response.data && response.data[0]) {
+        const album = response.data[0];
+        const title = album.title || 'Islamic Album';
+        const author = album.rp_name || 'Islamic Scholar';
+        const lectureCount = album.lec_no || 0;
+        const category = album.categories || 'Islamic Content';
+        const description = `Explore "${title}" by ${author}. This Islamic album contains ${lectureCount} lectures in ${category}. Listen to quality Islamic content on Dawahnigeria.`;
+        
+        return {
+          title: `${title} - ${author} | Dawahnigeria`,
+          description: description.substring(0, 160), // SEO optimal length
+          keywords: `${title}, ${author}, Islamic album, ${category}, Islamic lectures, dawah, Nigeria, ${album.lang || 'Islamic content'}`,
+          ogImage: album.img || 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg',
+          ogType: 'website',
+          albumData: album // Pass album data for additional meta tags
+        };
+      }
+    } catch (error) {
+      console.error(`Error fetching album data for ID ${albumId}:`, error.message);
+    }
+    
+    // Fallback SEO data for album pages
+    return {
+      title: `Islamic Album ${albumId} | Dawahnigeria`,
+      description: 'Explore Islamic albums and lecture collections on Dawahnigeria - Your source for Islamic knowledge and spiritual guidance.',
+      keywords: 'Islamic album, Islamic lectures, dawah, Nigeria, Islamic content',
+      ogImage: 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg',
+      ogType: 'website',
+      albumData: null
+    };
+  }
+
   return routes[pathname] || routes['/'];
 };
 
@@ -265,8 +317,16 @@ app.get('*', async (req, res) => {
           <meta property="article:section" content="${seoData.lectureData.cats || 'Islamic Education'}">
           <meta name="audio" content="${seoData.lectureData.audio || ''}">
           ` : ''}
+          ${seoData.albumData ? `
+          <meta property="article:author" content="${seoData.albumData.rp_name || ''}">
+          <meta property="article:section" content="${seoData.albumData.categories || 'Islamic Content'}">
+          <meta name="album:lectures" content="${seoData.albumData.lec_no || ''}">
+          <meta name="album:language" content="${seoData.albumData.lang || ''}">
+          <meta name="album:views" content="${seoData.albumData.views || ''}">
+          ` : ''}
           <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState).replace(/</g, '\\u003c')};</script>
           <script>window.__LECTURE_DATA__ = ${seoData.lectureData ? JSON.stringify(seoData.lectureData).replace(/</g, '\\u003c') : 'null'};</script>
+          <script>window.__ALBUM_DATA__ = ${seoData.albumData ? JSON.stringify(seoData.albumData).replace(/</g, '\\u003c') : 'null'};</script>
           </head>`
         );
 
