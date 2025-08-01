@@ -13,6 +13,12 @@ RUN yarn install --frozen-lockfile
 # Copy source code
 COPY . .
 
+# Set build-time environment variables
+ARG REACT_APP_API_BASE_URL=https://backend.dawahbox.com/api
+ARG REACT_APP_API_ADMINISTER_BASE_URL=https://backend.dawahbox.com/administer/api
+ENV REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL
+ENV REACT_APP_API_ADMINISTER_BASE_URL=$REACT_APP_API_ADMINISTER_BASE_URL
+
 # Build the React application
 RUN yarn build
 

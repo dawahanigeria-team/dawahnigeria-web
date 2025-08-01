@@ -1,3 +1,10 @@
+// Load environment variables first for SSR
+require('dotenv').config();
+
+// Set React environment variables for server-side rendering
+process.env.REACT_APP_API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://backend.dawahbox.com/api';
+process.env.REACT_APP_API_ADMINISTER_BASE_URL = process.env.REACT_APP_API_ADMINISTER_BASE_URL || 'https://backend.dawahbox.com/administer/api';
+
 // Full SSR Server with React 19
 require('@babel/register')({
   presets: [
@@ -20,6 +27,17 @@ global.window = {
   navigator: { userAgent: 'SSR' },
   document: { getElementById: () => null, addEventListener: () => {} }
 };
+
+// Mock fetch for SSR to prevent API calls during server rendering
+global.fetch = global.fetch || (() => {
+  console.log('🚫 API call intercepted during SSR - using fallback');
+  return Promise.resolve({
+    ok: false,
+    status: 503,
+    json: () => Promise.resolve({ data: [] }),
+    text: () => Promise.resolve('')
+  });
+});
 
 global.document = {
   getElementById: () => null,
@@ -277,4 +295,6 @@ app.listen(PORT, () => {
   console.log(`🚀 Full SSR Server with React 19 running on port ${PORT}`);
   console.log(`📍 Health check: http://localhost:${PORT}/health`);
   console.log(`🔍 SEO-optimized pages ready for crawling`);
+  console.log(`🔧 API Base URL: ${process.env.REACT_APP_API_BASE_URL}`);
+  console.log(`🔧 Admin API URL: ${process.env.REACT_APP_API_ADMINISTER_BASE_URL}`);
 });
