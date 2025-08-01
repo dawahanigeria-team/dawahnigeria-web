@@ -359,7 +359,10 @@ const AudioDetail = () => {
   ////*********************************************************** */
   // Enhanced SEO data generation for lecture pages
   const generateSEOData = () => {
-    if (!lectureData && !currentAudioInfo) {
+    // Priority: lectureData (SSR) > currentAudioInfo (client) > defaults
+    const data = lectureData || currentAudioInfo;
+    
+    if (!data) {
       return {
         title: 'Islamic Lecture | Dawahnigeria - Home of Islamic Resources',
         description: 'Explore Islamic lectures, teachings, and spiritual guidance on Dawahnigeria.',
@@ -368,7 +371,6 @@ const AudioDetail = () => {
       };
     }
     
-    const data = lectureData || currentAudioInfo;
     const title = (data.title || data.Title || 'Islamic Lecture').trim();
     const lecturer = (data.rpname || 'Islamic Scholar').trim();
     const category = (data.cats || 'Islamic Education').trim();
