@@ -55,7 +55,7 @@
     "build:all": "yarn build && yarn build:server",
     "start:ssr": "node server/ssr.js",
     "start:simple": "node server/simple.js",
-    "dev:ssr": "concurrently \"yarn build\" \"nodemon server/ssr.js\"",
+    "dev:ssr": "yarn build && nodemon server/ssr.js",
     "dev:simple": "concurrently \"yarn build\" \"nodemon server/simple.js\"",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
