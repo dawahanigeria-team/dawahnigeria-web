@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./sidenav.scss";
-import Logo from "../../assets/png/dn logo.png";
+// PNG and SVG imports moved to conditional loading to prevent SSR errors
+// import Logo from "../../assets/png/dn logo.png";
 import { Link, useLocation } from "react-router-dom";
-import avatar from "../../assets/svg/avatar.svg";
+// import avatar from "../../assets/svg/avatar.svg";
 import { lectures, library } from "./data";
 import IconText from "../iconText/IconText";
 import { RiAwardFill } from "react-icons/ri";
@@ -16,6 +17,23 @@ const SideNav = ({ res, handleSideBar, setisOpen }) => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
+  
+  // State for conditionally loaded assets to prevent SSR errors
+  const [logoImg, setLogoImg] = useState(null);
+  const [avatarSvg, setAvatarSvg] = useState(null);
+  
+  // Load assets only on client side
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      import('../../assets/png/dn logo.png').then(module => {
+        setLogoImg(module.default);
+      }).catch(() => {});
+      
+      import('../../assets/svg/avatar.svg').then(module => {
+        setAvatarSvg(module.default);
+      }).catch(() => {});
+    }
+  }, []);
 
   function handleLogout() {
     dispatch({ type: "LOGOUT" });
@@ -26,7 +44,7 @@ const SideNav = ({ res, handleSideBar, setisOpen }) => {
     <div className="sidenav_wrapper bg-background border-r dark:border-r-0 shadow-md">
       <div className="sidenav_logo">
         <Link to="/">
-          <img src={Logo} alt="logo" />
+          <img src={logoImg} alt="logo" />
         </Link>
         <ThemeDropDown />
       </div>
@@ -42,7 +60,7 @@ const SideNav = ({ res, handleSideBar, setisOpen }) => {
       )}
       <div className="sidenav_auth">
         <div className="sidenav_avatar">
-          <img src={avatar} alt="avatar" />
+          <img src={avatarSvg} alt="avatar" />
         </div>
         {!currentUser?.id && (
           <div className="sidenav_auth_text ">

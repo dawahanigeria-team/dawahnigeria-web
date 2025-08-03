@@ -27,7 +27,7 @@ import {
 } from "../../utils/routes/constants";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 import { MdDownload } from "react-icons/md";
-import { toast } from "react-hot-toast";
+import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
 
 export const NavContext = createContext();
 

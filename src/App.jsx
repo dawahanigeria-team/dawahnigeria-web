@@ -12,7 +12,7 @@ import {
 
 import "./App.css";
 
-import { Toaster } from "react-hot-toast";
+// import { Toaster } from "react-hot-toast"; // Moved to conditional import to prevent SSR errors
 import ErrorBoundary from "./components/UI/ErrorBoundary";
 
 import {
@@ -90,6 +90,41 @@ export const SearchContext = createContext();
 export const ThemeProvider = createContext();
 // Create a client
 const queryClient = new QueryClient();
+
+// Conditional Toaster component that only loads on client side
+const ConditionalToaster = () => {
+  const [ToasterComponent, setToasterComponent] = useState(null);
+
+  useEffect(() => {
+    // Only import and use Toaster on the client side
+    if (typeof window !== 'undefined') {
+      import('react-hot-toast').then(({ Toaster }) => {
+        setToasterComponent(() => Toaster);
+      });
+    }
+  }, []);
+
+  if (!ToasterComponent) return null;
+
+  return (
+    <ToasterComponent
+      position="top-center"
+      reverseOrder={false}
+      gutter={8}
+      containerClassName=""
+      containerStyle={{}}
+      toastOptions={{
+        // Define default options
+        className: "",
+        duration: 5000,
+        style: {
+          background: "#363636",
+          color: "#fff",
+        },
+      }}
+    />
+  );
+};
 
 Sentry.init({
   dsn: "https://39f51c39cd7f76985eac0998370570fb@o4505749236875264.ingest.sentry.io/4505764791451648",
@@ -200,22 +235,7 @@ const App = () => {
       {/* Add a default image URL if available, e.g., <meta property="og:image" content="URL_TO_DEFAULT_IMAGE" /> */}
       <div className="App">
         <Scrolltotop />
-        <Toaster
-          position="top-center"
-          reverseOrder={false}
-          gutter={8}
-          containerClassName=""
-          containerStyle={{}}
-          toastOptions={{
-            // Define default options
-            className: "",
-            duration: 5000,
-            style: {
-              background: "#363636",
-              color: "#fff",
-            },
-          }}
-        />
+
         <QueryClientProvider client={queryClient}>
           <SearchContext.Provider
             value={{
@@ -313,6 +333,7 @@ const App = () => {
                   </Routes>
                 </ErrorBoundary>
                 <ClientOnly>
+                  <ConditionalToaster />
                   <TawkMessengerReact
                     propertyId="5cd3dd3ed07d7e0c6392ad09"
                     widgetId="default"

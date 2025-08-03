@@ -1,5 +1,38 @@
 import axios from "axios";
-import { toast } from "react-hot-toast";
+// import { toast } from "../utils/conditionalToast"; // SSR-safe toast utility // Moved to conditional import to prevent SSR errors
+
+// Conditional toast helper that only works on client side to prevent SSR errors
+const conditionalToast = {
+  success: (message) => {
+    if (typeof window !== 'undefined') {
+      import('react-hot-toast').then(({ toast }) => {
+        toast.success(message);
+      }).catch(() => {});
+    }
+  },
+  error: (message) => {
+    if (typeof window !== 'undefined') {
+      import('react-hot-toast').then(({ toast }) => {
+        toast.error(message);
+      }).catch(() => {});
+    }
+  },
+  loading: (message) => {
+    if (typeof window !== 'undefined') {
+      import('react-hot-toast').then(({ toast }) => {
+        return toast.loading(message);
+      }).catch(() => {});
+    }
+    return null;
+  },
+  dismiss: (toastId) => {
+    if (typeof window !== 'undefined') {
+      import('react-hot-toast').then(({ toast }) => {
+        toast.dismiss(toastId);
+      }).catch(() => {});
+    }
+  }
+};
 
 // Network error messages for different scenarios
 const NETWORK_ERROR_MESSAGES = {
@@ -34,7 +67,7 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
     const now = Date.now();
     // Only show the error if it's different from the last one or if enough time has passed
     if (message !== lastErrorMessage || now - lastErrorTime > ERROR_COOLDOWN) {
-      toast.error(message);
+      conditionalToast.error(message);
       lastErrorMessage = message;
       lastErrorTime = now;
     }

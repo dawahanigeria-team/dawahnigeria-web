@@ -13,7 +13,7 @@ import { BiMessageMinus } from "react-icons/bi";
 import { RiDownload2Fill, RiPlayListFill } from "react-icons/ri";
 import { FaPlay } from "react-icons/fa";
 import { FiChevronsRight } from "react-icons/fi";
-import { toast } from "react-hot-toast";
+import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
 import { SlOptionsVertical } from "react-icons/sl";
 import { GiPauseButton } from "react-icons/gi";
 import { formatNumber } from "../../components/UI/formatter";

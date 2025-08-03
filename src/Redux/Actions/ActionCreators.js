@@ -1,8 +1,26 @@
 import axios from "axios";
-import { toast } from "react-hot-toast";
+// import { toast } from "react-hot-toast"; // Moved to conditional import to prevent SSR errors
 
 // Action Creators
 import * as type from "./Types";
+
+// Conditional toast helper that only works on client side to prevent SSR errors
+const conditionalToast = {
+  success: (message) => {
+    if (typeof window !== 'undefined') {
+      import('react-hot-toast').then(({ toast }) => {
+        toast.success(message);
+      }).catch(() => {});
+    }
+  },
+  error: (message) => {
+    if (typeof window !== 'undefined') {
+      import('react-hot-toast').then(({ toast }) => {
+        toast.error(message);
+      }).catch(() => {});
+    }
+  }
+};
 
 const GetUsersSuccess = (data) => {
   return {
@@ -155,7 +173,7 @@ const LoginAction = (loginParams, isSocial, navigate, setLoading) => {
           dispatch(GetUsersSuccess(res.data));
           navigate("/");
           setLoading(false);
-          toast.success("Login successful");
+          conditionalToast.success("Login successful");
         });
     } else {
       setLoading(true);
@@ -176,13 +194,13 @@ const LoginAction = (loginParams, isSocial, navigate, setLoading) => {
 
           dispatch(GetUsersSuccess(data));
           navigate("/");
-          toast.success("Login Successful");
+          conditionalToast.success("Login Successful");
           setLoading(false);
         })
         .catch((error) => {
           setLoading(false);
 
-          toast.error(error.response.data.message);
+          conditionalToast.error(error.response.data.message);
         });
     }
   };
@@ -214,7 +232,7 @@ const registration = (
           dispatch(GetUsersSuccess(res.data));
           navigate("/");
           setLoading(false);
-          toast.success("Registration Successful");
+          conditionalToast.success("Registration Successful");
         } else {
           axios
             .post(
@@ -234,7 +252,7 @@ const registration = (
               dispatch(GetUsersSuccess(data));
               navigate("/");
               setLoading(false);
-              toast.success("Registration Successful");
+              conditionalToast.success("Registration Successful");
             })
             .catch(() => {
               setLoading(false);
@@ -244,7 +262,7 @@ const registration = (
       .catch((error) => {
         setLoading(false);
 
-        toast.error(error.response.data.message);
+        conditionalToast.error(error.response.data.message);
       });
   };
 };

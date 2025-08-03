@@ -7,7 +7,7 @@ import twitter from "../../assets/png/social/twitter.png";
 
 import GetGoogleOAuth from "./socials/googleauth";
 import GetFacebookAuth from "./socials/facebookauth";
-import { toast } from "react-hot-toast";
+import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
 import axios from "../../utils/useAxios";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";

@@ -4,10 +4,28 @@ import { RiWhatsappFill } from "react-icons/ri";
 import { FaFacebookMessenger, FaTelegram } from "react-icons/fa";
 import { RiTwitterFill } from "react-icons/ri";
 import { BsLink45Deg } from "react-icons/bs";
-import { toast } from "react-hot-toast";
+// import { toast } from "react-hot-toast"; // Moved to conditional import to prevent SSR errors
 import copy from "copy-to-clipboard";
 import axios from "../../utils/useAxios";
 import { updateAudioShareCount } from "../../Redux/Actions/ActionCreators";
+
+// Conditional toast helper that only works on client side to prevent SSR errors
+const conditionalToast = {
+  success: (message) => {
+    if (typeof window !== 'undefined') {
+      import('react-hot-toast').then(({ toast }) => {
+        toast.success(message);
+      }).catch(() => {});
+    }
+  },
+  error: (message) => {
+    if (typeof window !== 'undefined') {
+      import('react-hot-toast').then(({ toast }) => {
+        toast.error(message);
+      }).catch(() => {});
+    }
+  }
+};
 
 export const shareAudio = (key, socalLink, linkToShare) => {
   if (key !== "Copy to clipboard") {
@@ -16,7 +34,7 @@ export const shareAudio = (key, socalLink, linkToShare) => {
   }
 
   copy(linkToShare);
-  toast.success(`successfully copied`);
+  conditionalToast.success(`successfully copied`);
 };
 
 export const sharingChanels = [
@@ -61,7 +79,7 @@ export const shareLink = (id, currentUserId, type) => {
   return (dispatch) => {
     dispatch(updateAudioShareCount());
     if (!id) {
-      toast.error("No audio to be shared");
+      conditionalToast.error("No audio to be shared");
       return;
     }
     const payload = {

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Logo from "../../assets/svg/close.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "../../utils/useAxios";
-import { toast } from "react-hot-toast";
+import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
 import Loader from "../../components/UI/loader/loader";
 import ResetPassword from "./resetpassword/resetPassword";
 import HeadMeta from "../../components/head-meta";

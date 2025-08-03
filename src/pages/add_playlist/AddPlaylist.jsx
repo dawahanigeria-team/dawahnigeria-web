@@ -5,7 +5,7 @@ import cloase from "../../assets/svg/cloase.svg";
 import { showaddPlaylist } from "../../Redux/Actions/ActionCreators";
 import createplay from "../../assets/svg/createplay.svg";
 import playfolder from "../../assets/svg/folder.svg";
-import { toast } from "react-hot-toast";
+import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
 import axios from "../../utils/useAxios";
 import Loader from "../../components/UI/loader/loader";
 import { MdClose } from "react-icons/md";

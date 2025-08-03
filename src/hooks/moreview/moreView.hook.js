@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { moreViewApi } from "../../services";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import toast from "../../utils/conditionalToast"; // SSR-safe toast utility
 
 export const useMoreViewHook = (keyParam, currentdata) => {
   const [querydata, setquerydata] = useState([]);
