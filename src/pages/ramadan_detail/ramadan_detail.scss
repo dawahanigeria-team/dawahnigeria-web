@@ -322,9 +322,7 @@
           .leclistdet_fav {
         
             @include button_style;
-            &:hover {
-             
-            }
+
             .fav_btn {
               background: none;
               margin: 0;
@@ -363,9 +361,7 @@
           .lecdet_share {
           //  background-color: #ffffff17;
             @include button_style;
-            &:hover {
-              //background-color: #ffffff2d;
-            }
+
             .fav_btn {
               background: none;
               margin: 0;
@@ -395,9 +391,7 @@
           .lecdet_comment {
            
             @include button_style;
-            &:hover {
-            
-            }
+
             .lecdet_comment_icon {
               font-size: 25px;
               @media screen and (max-width: 600px) {
@@ -663,8 +657,7 @@
         align-items: flex-start;
         font-family: "Poppins";
         margin-bottom: 13%;
-        .lecdet_head_mob_head {
-        }
+
         .mob_like {
           display: flex;
           flex-direction: row;
