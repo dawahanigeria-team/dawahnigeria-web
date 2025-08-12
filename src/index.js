@@ -20,7 +20,7 @@ Sentry.init({
   release: process.env.REACT_APP_SENTRY_RELEASE,
   integrations: [
     browserTracingIntegration(),
-    Sentry.consoleLoggingIntegration({ 
+    Sentry.captureConsoleIntegration({ 
       levels: process.env.NODE_ENV === 'production' ? ["warn", "error"] : ["log", "warn", "error"]
     }),
   ],
