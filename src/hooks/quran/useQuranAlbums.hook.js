@@ -1,6 +1,6 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { quranApi } from "../../services";
-import toast from "react-hot-toast";
+import toast from "../../utils/conditionalToast"; // SSR-safe toast utility
 import { useEffect, useState } from "react";
 
 export const useQuranAlbums = (page = 1) => {

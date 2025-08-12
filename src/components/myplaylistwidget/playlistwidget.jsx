@@ -14,7 +14,7 @@ import dmobile from "../../../src/assets/svg/downloadmobile.svg";
 import { useNavigate } from "react-router-dom";
 import { formatNumber } from "../UI/formatter";
 import adfav from "../../../src/assets/svg/adfav.svg";
-import { toast } from "react-hot-toast";
+import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
 import { AudioContext } from "../../App";
 import { useSelector } from "react-redux";
 import axios from "../../utils/useAxios";

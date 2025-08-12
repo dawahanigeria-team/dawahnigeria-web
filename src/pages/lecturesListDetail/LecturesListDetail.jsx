@@ -39,6 +39,7 @@ import { lectureListDetailApi } from "../../services";
 import { DesktopFavoriteButton } from "../../components/UI/favoritebuttons/desktopfavoriteButtons";
 import { MobileFavoriteButton } from "../../components/UI/favoritebuttons/mobilefavoriteButton";
 
+import HeadMeta from "../../components/head-meta";
 import { AudioDownloadModal } from "../../components/audioDownloadModal/AudioDownloadModal";
 import { CommentIcon } from "../../components/svgcomponent/svgComponent";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
@@ -158,68 +159,78 @@ const LecturesListDetail = () => {
   };
 
   return (
-    <>
-      {/* React 19 Metadata */}
-      {querieddata && (
-        <>
-          <title>
-            {`${lectureTitleExtractor(querieddata[0]?.title, 2) || "Album"} - ${
-              querieddata[0]?.rp_name || "Dawahnigeria"
-            }`}
-          </title>
-          <meta
-            name="description"
-            content={`Listen to the album '${querieddata[0]?.title || 'Unknown Album'}' by ${
-              querieddata[0]?.rp_name || "various scholars"
-            } on Dawahnigeria. Explore Islamic lectures and resources.`}
-          />
-          {/* Open Graph Meta Tags for Link Previews */}
-          <meta
-            property="og:title"
-            content={`${lectureTitleExtractor(querieddata[0]?.title, 2) ||
-              "Album"} - ${querieddata[0]?.rp_name || "Dawahnigeria"}`}
-          />
-          <meta
-            property="og:description"
-            content={`Listen to the album '${querieddata[0]?.title ||
-              "Unknown Album"}' by ${querieddata[0]?.rp_name ||
-              "various scholars"} on Dawahnigeria.`}
-          />
-          <meta
-            property="og:image"
-            content={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
-          />
-          <meta property="og:type" content="music.album" />
-          {/* Optionally add og:url with the canonical URL */}
-        </>
-      )}
-      <Container>
-        {Array.isArray(querieddata) && (
-          <div className="leclistdet_wrapper">
+    <Container>
+      <HeadMeta
+        title={`${
+          lectureTitleExtractor(querieddata?.title, 2) || "Album"
+        } on Dawah Nigeria - Home of islamic resources`}
+      />
+
+      {Array.isArray(querieddata) && (
+        <div className="leclistdet_wrapper">
+          {
             <img
               ref={leclistdet}
               id="hero"
-              className={`${theme === "dark" ? "leclistdet_hero" : "leclistdet_hero_light"}`}
+              className={`${
+                theme === "dark" ? "leclistdet_hero" : "leclistdet_hero_light"
+              }`}
               src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
               alt="audiohero"
             />
+          }
 
-            <div className="leclistdet_container">
-              {/* Make sure all the sections (breadcrumbs, head_wrap, mobile view, song list, similar audio, comments, share) are present here */}
+          <div className="leclistdet_container">
+            {/* ------------------------------Desktop------ Bread Crumbs -------------------------------------- */}
 
-              {/* Breadcrumb part */}
-              <div className="leclistdet_breadcrumb">
-                <button
-                  onClick={() => {
-                    navigate(-1);
-                  }}
-                  className="leclistdet_breadcrumb_first"
-                >
-                  Back
-                </button>
+            <div className="leclistdet_breadcrumb">
+              <button
+                onClick={() => {
+                  navigate(-1);
+                }}
+                className="leclistdet_breadcrumb_first"
+              >
+                Back
+              </button>
+
+              {/*
+                <p className="leclistdet_breadcrumb_second text-foreground">
+                  {querieddata[0]?.title || "Unknown"}
+                </p>
+              */}
+            </div>
+
+            {/* -------------------Desktop----------------- Section 1 -------------------------------------- */}
+            <div className="leclistdet_head_wrap">
+              <div className="leclistdet_head_left">
+                <img
+                  className="leclistdet_head_left_img"
+                  src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
+                  ref={leclistdet}
+                  id="hero"
+                  alt="head"
+                />
               </div>
-              
-              <div className="leclistdet_head_wrap">
+              <div className="leclistdet_head_right">
+                <p className="leclistdet_head_right_head text-foreground">
+                  {/*  lectureTitleExtractor(querieddata[0]?.title, 2) */}
+                  {querieddata[0]?.title || "Unknown"}
+                </p>
+                <div className="leclistdet_head_right_text">
+                  <div className="rpimage_wrap">
+                    <div className="rpimage_circle">
+                      <img
+                        className="rpimage_sz"
+                        src={albumlectures[0]?.rp_image || lazy}
+                        alt=""
+                      />
+                    </div>
+                    <p className="leclistdet_head_right_text1 text-color">
+                      {querieddata[0]?.rp_name}
+                    </p>
+                  </div>
+                </div>
+
                 <div className="leclistdet_head_right_actions_wrap">
                   <div>
                     <button
@@ -293,18 +304,18 @@ const LecturesListDetail = () => {
 
                 </div>
               </div>
-              <p className="leclistdet_head_right_text2 text-color">
-                {" "}
-                Audio
-                <span className="braces text-color">
-                  (
-                  <span className="braces_text text-color">
-                    {formatNumber(querieddata[0]?.lec_no || 0)}
-                  </span>
-                  )
-                </span>
-              </p>
             </div>
+            <p className="leclistdet_head_right_text2 text-color">
+              {" "}
+              Audio
+              <span className="braces text-color">
+                (
+                <span className="braces_text text-color">
+                  {formatNumber(querieddata[0]?.lec_no || 0)}
+                </span>
+                )
+              </span>
+            </p>
             {/* ------------------------------------ mobile view -------------------------------------- */}
 
             <div className="leclistdet_head_mobile">
@@ -602,20 +613,20 @@ const LecturesListDetail = () => {
               />
 
               <CommentBox audioComment={audioComment} id={id} type={"album"} />
+            </div>
 
-              <div className={isShare ? "share_wrapper" : "hide_share_wrapper"}>
-                <ShareAudio
-                  isShare={isShare}
-                  setisShare={setisShare}
-                  nid={id}
-                  type={"album"}
-                />
-              </div>
+            <div className={isShare ? "share_wrapper" : "hide_share_wrapper"}>
+              <ShareAudio
+                isShare={isShare}
+                setisShare={setisShare}
+                nid={id}
+                type={"album"}
+              />
             </div>
           </div>
-        )}
-      </Container>
-    </>
+        </div>
+      )}
+    </Container>
   );
 };
 

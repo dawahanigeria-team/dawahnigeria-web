@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { toast } from "react-hot-toast";
+import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
 import { playlistdetailApi } from "../../services";
 
 export const useAllPlaylistHook = () => {

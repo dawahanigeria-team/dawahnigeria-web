@@ -94,14 +94,14 @@ const Landing = () => {
     <Container>
       <HeadMeta title="Welcome to Dawah Nigeria - Home of Islamic resources" />
       <div className="landing_wrapper px-[2%]  max-[615px]:py-[5%] py-[8%] min-[690px]:py-[2%]">
-        {sliders?.data?.length > 1 ? (
+        {sliders?.data && Array.isArray(sliders.data) && sliders.data.length > 1 ? (
           <>
             <div className="carousel  h-[250px] min-[950px]:h-[250px] min-[1050px]:h-[250px] min-[1283px]:h-[300px]">
-              <MyCarousel images={sliders?.data} />
+              <MyCarousel images={sliders.data} />
             </div>
 
             <Slider className="landing_carousel landing_space" {...settings}>
-              {sliders?.data?.map((image, index) => {
+              {sliders.data.map((image, index) => {
                 return (
                   <div key={image} className="landing_carousel_img">
                     <MobileImageWidget image={image} className="" />

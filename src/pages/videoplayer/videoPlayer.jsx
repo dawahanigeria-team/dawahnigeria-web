@@ -18,7 +18,7 @@ import {
 import OthersWidget from "./othersWidget";
 import CommentBox from "../../components/comment/comment";
 import { useSelector } from "react-redux";
-import { toast } from "react-hot-toast";
+import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
 import YouTube from "react-youtube";
 import { formatNumber } from "../../components/UI/formatter";
 import { FaClosedCaptioning } from "react-icons/fa";

@@ -11,7 +11,12 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.3.4",
+    "compression": "^1.8.1",
+    "cors": "^2.8.5",
     "date-fns": "^4.1.0",
+    "dotenv": "^17.2.1",
+    "express": "^4.18.0",
+    "helmet": "^8.1.0",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
     "prop-types": "^15.7.2",
@@ -43,8 +48,15 @@
   },
   "scripts": {
     "preinstall": "npx only-allow yarn",
-    "start": "react-scripts start",
+    "dev": "react-scripts start",
+    "start": "node server/ssr.js",
     "build": "CI=false react-scripts build",
+    "build:server": "webpack --config webpack.server.js",
+    "build:all": "yarn build && yarn build:server",
+    "start:ssr": "node server/ssr.js",
+    "start:simple": "node server/simple.js",
+    "dev:ssr": "yarn build && nodemon server/ssr.js",
+    "dev:simple": "concurrently \"yarn build\" \"nodemon server/simple.js\"",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -66,14 +78,27 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.28.0",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.18.6",
+    "@babel/plugin-proposal-optional-chaining": "^7.21.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.27.1",
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-react": "^7.27.1",
+    "@babel/register": "^7.27.1",
     "@tanstack/eslint-plugin-query": "^4.34.1",
     "autoprefixer": "^10.4.14",
+    "babel-loader": "^10.0.0",
+    "concurrently": "^9.2.0",
     "eslint": "^9.25.0",
+    "ignore-loader": "^0.1.2",
+    "nodemon": "^3.1.10",
     "postcss": "^8.4.24",
     "sass": "^1.63.3",
     "sass-loader": "^13.3.2",
     "tailwindcss": "^3.3.2",
-    "webpack": "^5.86.0"
+    "webpack": "^5.86.0",
+    "webpack-cli": "^6.0.1",
+    "webpack-node-externals": "^3.0.0"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

@@ -10,7 +10,7 @@ import { LoginAction } from "../../Redux/Actions/ActionCreators";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/UI/loader/loader";
 import { useDispatch } from "react-redux";
-import { toast } from "react-hot-toast";
+import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
 import HeadMeta from "../../components/head-meta";
 import { FORGOTPASSWORD } from "../../utils/routes/constants";
 const LoginForm = () => {

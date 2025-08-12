@@ -7,13 +7,13 @@ import React, {
 } from "react";
 import "./audioAction.css";
 import { SlArrowDown, SlShare } from "react-icons/sl";
-import lazys from "../../assets/png/lazysong.jpeg";
+// import lazys from "../../assets/png/lazysong.jpeg"; // Moved to conditional import to prevent SSR errors
 import ShareAudio from "../shareaudio/shareAudio";
 import {
   TbPlayerSkipForwardFilled,
   TbPlayerSkipBackFilled,
 } from "react-icons/tb";
-import { toast } from "react-hot-toast";
+import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
 import { GiPauseButton } from "react-icons/gi";
 import { FaPlay } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
@@ -53,6 +53,18 @@ const AudioActionDesktop = () => {
   const navigate = useNavigate();
   const { audioRef, setinitial, initial, loading, setLoading } =
     useContext(AudioContext);
+  
+  // State for conditionally loaded image asset to prevent SSR errors
+  const [lazysImg, setLazysImg] = useState(null);
+  
+  // Load image asset only on client side
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      import('../../assets/png/lazysong.jpeg').then(module => {
+        setLazysImg(module.default);
+      }).catch(() => {});
+    }
+  }, []);
 
   const [isComplete, setIsComplete] = useState(false);
   const playAnimation = useRef();
@@ -280,7 +292,7 @@ const AudioActionDesktop = () => {
               album: "Islamic Lecture",
               artwork: [
                 {
-                  src: currentaudio?.image || lazys,
+                  src: currentaudio?.image || lazysImg,
                   sizes: "512x512",
                   type: "image/jpeg",
                 },
@@ -682,7 +694,7 @@ const AudioActionDesktop = () => {
             <div className="w-[60px] h-[60px] rounded-[8px]">
               <img
                 className="w-full h-full rounded-[8px]"
-                src={currentaudio?.img || lazys}
+                src={currentaudio?.img || lazysImg}
                 alt="disk"
               />
             </div>

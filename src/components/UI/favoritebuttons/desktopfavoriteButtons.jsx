@@ -4,7 +4,7 @@ import favbig from "../../../assets/svg/boom-fav.svg";
 import { formatNumber } from "../formatter";
 import { useAddFavoritesHook, useFetchFavoritesHook } from "../../../hooks";
 import { useSelector } from "react-redux";
-import toast, { LoaderIcon } from "react-hot-toast";
+import toast, { LoaderIcon   } from "../../../utils/conditionalToast"; // SSR-safe toast utility
 import { AddFavourites } from "../../svgcomponent/svgComponent";
 export function DesktopFavoriteButton({ favorites, id, type, refetch }) {
   const [isdisabled, setdisabled] = useState(false);

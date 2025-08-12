@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { lectureApi } from "../../services";
-import toast from "react-hot-toast";
+import toast from "../../utils/conditionalToast"; // SSR-safe toast utility
 import { useCallback } from "react";
 
 export const useDownloadLecture = (lecid) => {

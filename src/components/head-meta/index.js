@@ -4,6 +4,9 @@ const HeadMeta = ({
   title,
   description,
   ogImage = "https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg",
+  keywords,
+  ogType = "website",
+  canonicalUrl
 }) => {
   return (
     <>
@@ -17,12 +20,13 @@ const HeadMeta = ({
       />
       <meta
         name="keywords"
-        content="Islamic education, Dawah Nigeria, articles, lectures, videos, e-books, Islam, guidance, knowledge, online platform, religious resources, Quran, Islamic teachings"
+        content={keywords || "Islamic education, Dawah Nigeria, articles, lectures, videos, e-books, Islam, guidance, knowledge, online platform, religious resources, Quran, Islamic teachings"}
       />
       <meta property="og:image" content={ogImage} />
-
+      <meta property="og:type" content={ogType} />
       <meta name="author" content="Edawah" />
       <title>{title || "Dawah Nigeria"}</title>
+      {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
     </>
   );
 };

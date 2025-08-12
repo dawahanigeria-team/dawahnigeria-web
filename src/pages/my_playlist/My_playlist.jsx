@@ -13,7 +13,7 @@ import Loader from "../../components/UI/loader/loader";
 import infinitePlayFavScroll from "../../components/UI/infinitePlayFavScroll";
 import _ from "lodash";
 import playfolder from "../../assets/svg/folder.svg";
-import { toast } from "react-hot-toast";
+import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
 import MusicList from "../../components/miscList/musicList";
 import HeadMeta from "../../components/head-meta";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";

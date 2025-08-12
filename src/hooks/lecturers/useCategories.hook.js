@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { lecturersApi } from "../../services";
-import { toast } from "react-hot-toast";
+import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
 import { category } from "../../pages/playlists/data";
 
 export const useCategoriesHook = () => {

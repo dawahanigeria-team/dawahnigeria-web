@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Loader from "../../../components/UI/loader/loader";
-import { toast } from "react-hot-toast";
+import { toast } from "../../../utils/conditionalToast"; // SSR-safe toast utility
 import axios from "../../../utils/useAxios";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";

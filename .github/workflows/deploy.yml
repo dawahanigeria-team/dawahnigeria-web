@@ -1,0 +1,120 @@
+name: Build and Deploy to VPS
+
+on:
+  push:
+    branches:
+      - yusuf/hosting-ssr
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'yarn'
+
+      - name: Use Yarn 1.x via Corepack
+        run: |
+          corepack enable
+          corepack prepare yarn@1.22.22 --activate
+          yarn -v
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build React client
+        env:
+          NODE_ENV: production
+          CI: false
+          REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
+          REACT_APP_API_ADMINISTER_BASE_URL: ${{ secrets.REACT_APP_API_ADMINISTER_BASE_URL }}
+        run: yarn build
+
+      - name: Create artifact (build.tar.gz)
+        run: tar -czf build.tar.gz -C build .
+
+      - name: Prepare release dir on VPS
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            set -euxo pipefail
+            APP_DIR="/var/www/dawahnig-live"
+            RELEASE_DIR="$APP_DIR/releases/${{ github.sha }}"
+            mkdir -p "$APP_DIR" "$RELEASE_DIR"
+
+      - name: Upload build archive to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          source: build.tar.gz
+          target: /var/www/dawahnig-live/releases/${{ github.sha }}/
+
+      - name: Activate release and reload PM2
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            set -euxo pipefail
+            APP_DIR="/var/www/dawahnig-live"
+            RELEASE_DIR="$APP_DIR/releases/${{ github.sha }}"
+            mkdir -p "$APP_DIR" "$RELEASE_DIR/build"
+            # Ensure github.com is trusted for server-side git operations
+            mkdir -p /root/.ssh && chmod 700 /root/.ssh
+            ssh-keyscan -H github.com >> /root/.ssh/known_hosts || true
+            chmod 600 /root/.ssh/known_hosts || true
+            # Ensure server code exists and is on the correct branch
+            if [ ! -d "$APP_DIR/.git" ]; then
+              GIT_SSH_COMMAND="ssh -i /root/.ssh/github_deploy -o IdentitiesOnly=yes" git clone --branch yusuf/hosting-ssr --depth 1 git@github.com:dawahanigeria-team/dawahnig-live.git "$APP_DIR"
+            else
+              cd "$APP_DIR"
+              GIT_SSH_COMMAND="ssh -i /root/.ssh/github_deploy -o IdentitiesOnly=yes" git fetch origin yusuf/hosting-ssr
+              GIT_SSH_COMMAND="ssh -i /root/.ssh/github_deploy -o IdentitiesOnly=yes" git reset --hard origin/yusuf/hosting-ssr
+            fi
+            cd "$APP_DIR"
+            # Ensure runtime env for SSR
+            cat > "$APP_DIR/.env" <<EOF
+            NODE_ENV=production
+            PORT=3000
+            REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }}
+            REACT_APP_API_ADMINISTER_BASE_URL=${{ secrets.REACT_APP_API_ADMINISTER_BASE_URL }}
+            EOF
+            # Install server deps (safe to rerun; needed for Babel/runtime)
+            if ! command -v yarn >/dev/null 2>&1; then
+              corepack enable || true
+              corepack prepare yarn@1.22.22 --activate || true
+            fi
+            yarn install --frozen-lockfile --production=false
+            # Activate the new static build
+            tar -xzf "$RELEASE_DIR/build.tar.gz" -C "$RELEASE_DIR/build"
+            ln -sfn "$RELEASE_DIR/build" "$APP_DIR/build"
+            # Start or reload SSR via PM2
+            if ! command -v pm2 >/dev/null 2>&1; then
+              npm i -g pm2@5
+            fi
+            if pm2 describe dawahnigeria-ssr >/dev/null 2>&1; then
+              pm2 reload dawahnigeria-ssr
+            else
+              pm2 start "$APP_DIR/server/ssr.js" --name dawahnigeria-ssr --time
+            fi
+            pm2 save
+            pm2 startup systemd -u root --hp /root || true
+            # Local health check
+            curl -fsS http://127.0.0.1:3000/health || (pm2 logs --lines 100 dawahnigeria-ssr || true; exit 1)

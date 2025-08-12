@@ -11,7 +11,7 @@ export const useAudioHook = (id) => {
   const dispatch = useDispatch();
  
   const { data, refetch } = useQuery(["audio", id], () => audioDetailApi.getAudio(id), {
-    enabled: window.innerWidth > 615,
+    enabled: true, // Enable for all devices
     onSuccess: (data) => {
       dispatch(getcurrentAudioInfo(data[0]));
     },
@@ -23,9 +23,8 @@ export const useAudioHook = (id) => {
     }
   }, [id]);
 
-
-
   return {
-    refetch
+    refetch,
+    data // Return data for direct access
   }
 };

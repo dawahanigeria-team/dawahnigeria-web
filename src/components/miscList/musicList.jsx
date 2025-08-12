@@ -12,7 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import Add_playlist from "../../pages/add_playlist/AddPlaylist";
 import ShareAudio from "../shareaudio/shareAudio";
-import { toast } from "react-hot-toast";
+import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
 
 import {
   getaudioData,
