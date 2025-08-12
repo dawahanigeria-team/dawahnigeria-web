@@ -18,7 +18,13 @@ Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
   environment: process.env.REACT_APP_SENTRY_ENVIRONMENT || process.env.NODE_ENV,
   release: process.env.REACT_APP_SENTRY_RELEASE,
-  integrations: [browserTracingIntegration()],
+  integrations: [
+    browserTracingIntegration(),
+    Sentry.consoleLoggingIntegration({ 
+      levels: process.env.NODE_ENV === 'production' ? ["warn", "error"] : ["log", "warn", "error"]
+    }),
+  ],
+  enableLogs: true,
   tracesSampleRate: parseFloat(process.env.REACT_APP_SENTRY_TRACES_SAMPLE_RATE || '0.1'),
   profilesSampleRate: parseFloat(process.env.REACT_APP_SENTRY_PROFILES_SAMPLE_RATE || '0'),
 });
