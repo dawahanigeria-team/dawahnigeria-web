@@ -692,7 +692,7 @@ const AudioActionDesktop = () => {
                 onClick={() => {
                   navigate(`${LECTURE}${audioId}`);
                 }}
-                className="font-semibold text-sm whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px]  lg:max-w-[250px]  xl:max-w-[270px]"
+                className="font-semibold text-sm whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px] lg:max-w-none xl:max-w-none"
               >
                 {currentaudio?.title ||
                   currentaudio?.Title ||
@@ -703,9 +703,9 @@ const AudioActionDesktop = () => {
                   e.stopPropagation();
                   navigate(`${RESOURCE_PERSON}${currentaudio?.rp_id}`);
                 }}
-                className="font-semibold text-[12px] whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px] lg:max-w-[250px]  xl:max-w-[270px]"
-              >
-                {currentaudio?.rpname || "----------------"}
+                  className="font-semibold text-[12px] whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px] lg:max-w-none xl:max-w-none"
+                >
+                  {currentaudio?.rpname || currentaudio?.album_name || "----------------"}
               </div>
             </div>
           </div>
