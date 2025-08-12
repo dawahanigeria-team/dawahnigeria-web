@@ -5,6 +5,25 @@ require('dotenv').config();
 process.env.REACT_APP_API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://backend.dawahbox.com/api';
 process.env.REACT_APP_API_ADMINISTER_BASE_URL = process.env.REACT_APP_API_ADMINISTER_BASE_URL || 'https://backend.dawahbox.com/administer/api';
 
+// Sentry (server) initialization
+const Sentry = require('@sentry/node');
+const { nodeProfilingIntegration } = require('@sentry/profiling-node');
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  environment: process.env.SENTRY_ENVIRONMENT || process.env.NODE_ENV || 'production',
+  release: process.env.SENTRY_RELEASE,
+  integrations: [nodeProfilingIntegration()],
+  tracesSampleRate: parseFloat(process.env.SENTRY_TRACES_SAMPLE_RATE || '0.1'),
+  profilesSampleRate: parseFloat(process.env.SENTRY_PROFILES_SAMPLE_RATE || '0.0'),
+  sendDefaultPii: true,
+});
+process.on('unhandledRejection', (reason) => {
+  try { Sentry.captureException(reason); } catch (e) {}
+});
+process.on('uncaughtException', (err) => {
+  try { Sentry.captureException(err); } catch (e) {}
+});
+
 // Full SSR Server with React 19
 require('@babel/register')({
   presets: [
@@ -329,6 +348,7 @@ app.get('*', async (req, res) => {
   fs.readFile(indexPath, 'utf8', async (err, htmlData) => {
     if (err) {
       console.error('Error reading HTML template:', err);
+      Sentry.captureException(err);
       return res.status(500).send('Internal Server Error');
     }
 
@@ -459,6 +479,7 @@ app.get('*', async (req, res) => {
             },
             onShellError(error) {
               console.error('Shell Error for', req.path, ':', error);
+              Sentry.captureException(error);
               didError = true;
               res.statusCode = 500;
               // Provide fallback content
@@ -479,6 +500,7 @@ app.get('*', async (req, res) => {
             },
             onError(error) {
               console.error('Stream Error for', req.path, ':', error);
+              Sentry.captureException(error);
               didError = true;
             }
           }
@@ -494,6 +516,7 @@ app.get('*', async (req, res) => {
 
       } catch (error) {
         console.error('SSR Error for', req.path, ':', error);
+        Sentry.captureException(error);
         // Fallback with SEO-optimized content
         res.write(`
           <div style="padding: 20px; text-align: center;">
@@ -508,6 +531,7 @@ app.get('*', async (req, res) => {
 
     } catch (error) {
       console.error('Request Error for', req.path, ':', error);
+      Sentry.captureException(error);
       // Final fallback
       const enhancedHtml = htmlData.replace(
         '</head>',
@@ -517,6 +541,9 @@ app.get('*', async (req, res) => {
     }
   });
 });
+
+// Sentry: register the Express error handler after routes
+Sentry.setupExpressErrorHandler(app);
 
 app.listen(PORT, () => {
   console.log(`🚀 Full SSR Server with React 19 running on port ${PORT}`);
