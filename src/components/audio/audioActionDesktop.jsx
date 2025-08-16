@@ -692,20 +692,36 @@ const AudioActionDesktop = () => {
                 onClick={() => {
                   navigate(`${LECTURE}${audioId}`);
                 }}
-                className="font-semibold text-sm whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px] lg:max-w-none xl:max-w-none"
+                className="font-semibold text-sm text-ellipsis overflow-hidden max-w-[420px] xl:max-w-[600px] focus:outline-none"
+                tabIndex={0}
+                aria-label={currentaudio?.title || currentaudio?.Title || currentaudio?.album_name || "Audio title"}
+                title={currentaudio?.title || currentaudio?.Title || currentaudio?.album_name || "Audio title"}
               >
-                {currentaudio?.title ||
-                  currentaudio?.Title ||
-                  "----------------"}
+                {(() => {
+                  const t = (currentaudio?.title || currentaudio?.Title || currentaudio?.album_name || "").trim();
+                  return t.length > 0 ? t : "Unknown";
+                })()}
               </div>
               <div
-                onClick={(e) => {
+                onClick={e => {
                   e.stopPropagation();
                   navigate(`${RESOURCE_PERSON}${currentaudio?.rp_id}`);
                 }}
-                  className="font-semibold text-[12px] whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px] lg:max-w-none xl:max-w-none"
-                >
-                  {currentaudio?.rpname || currentaudio?.album_name || "----------------"}
+                className="font-semibold text-[12px] text-ellipsis overflow-hidden max-w-[320px] xl:max-w-[400px] focus:outline-none"
+                tabIndex={0}
+                aria-label={(() => {
+                  const n = (currentaudio?.rpname || currentaudio?.album_name || "").trim();
+                  return n.length > 0 ? n : "Reciter unknown";
+                })()}
+                title={(() => {
+                  const n = (currentaudio?.rpname || currentaudio?.album_name || "").trim();
+                  return n.length > 0 ? n : "Reciter unknown";
+                })()}
+              >
+                {(() => {
+                  const n = (currentaudio?.rpname || currentaudio?.album_name || "").trim();
+                  return n.length > 0 ? n : "Unknown";
+                })()}
               </div>
             </div>
           </div>

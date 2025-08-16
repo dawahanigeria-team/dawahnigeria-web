@@ -153,8 +153,10 @@
             font-size: 16px;
           }
           line-height: 24px;
-        
-          max-width: 400px;
+          max-width: 600px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
         .audiodetail_head_right_text {
           display: flex;
@@ -171,7 +173,10 @@
               font-size: 14px;
             }
             line-height: 20px;
-           
+            max-width: 400px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
           .audiodetail_head_right_text2 {
             margin: unset;
