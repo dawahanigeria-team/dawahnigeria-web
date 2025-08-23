@@ -1,4 +1,4 @@
-import { FiHeadphones } from "react-icons/fi";
+import { FiEye } from "react-icons/fi";
 import { formatNumber } from "../UI/formatter";
 import { FaPlay } from "react-icons/fa";
 import { useLazyLoadImage } from "../../hooks";
@@ -26,7 +26,7 @@ const QuranAlbum = ({ categories, img, views }) => {
             />
           </div>
           <div className="absolute z-[2] text-[#d4d4d4] bottom-3 left-3 flex gap-x-1 items-center">
-            <FiHeadphones />
+            <FiEye />
             <span>{formattedViews}</span>
           </div>
 

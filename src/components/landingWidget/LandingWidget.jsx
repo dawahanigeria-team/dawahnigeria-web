@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo } from "react";
-import { FiHeadphones } from "react-icons/fi";
+import { FiEye } from "react-icons/fi";
 import { FaPlay } from "react-icons/fa";
 import { formatNumber } from "../UI/formatter";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
@@ -61,7 +61,7 @@ const LandingWidget = ({ categories, img, views, nid, styling, rpname }) => {
         />
         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300 rounded-md" />
         <div className="absolute bottom-2 left-2 flex items-center space-x-1">
-          <FiHeadphones className="text-white" />
+          <FiEye className="text-white" />
           <p className="text-white text-sm">{formattedViews}</p>
         </div>
         <button

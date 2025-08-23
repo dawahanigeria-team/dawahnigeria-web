@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./lecturersWidget.scss";
-import { FiHeadphones } from "react-icons/fi";
+import { FiEye } from "react-icons/fi";
 
 import { formatNumber } from "../UI/formatter";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
@@ -50,7 +50,7 @@ const LecturersWidget = ({ img, rp, rpname, views, styling }) => {
        
         <div className={!styling ? "lecturerWidget_views_wrapper text-foreground" : "hidden"}>
 
-          <FiHeadphones className="lecturerWidget_views_icon" />
+          <FiEye className="lecturerWidget_views_icon" />
           <p className="lecturerWidget_views_text">
             {formatNumber(parseInt(views) || 0)}
           </p>
