@@ -3,8 +3,8 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import * as Sentry from "@sentry/react";
+import { BrowserTracing } from "@sentry/browser";
 import { BrowserRouter as Router } from "react-router-dom";
-import { browserTracingIntegration } from "@sentry/browser";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import { createStore, applyMiddleware, compose } from "redux";
@@ -19,12 +19,9 @@ Sentry.init({
   environment: process.env.REACT_APP_SENTRY_ENVIRONMENT || process.env.NODE_ENV,
   release: process.env.REACT_APP_SENTRY_RELEASE,
   integrations: [
-    browserTracingIntegration(),
-    Sentry.captureConsoleIntegration({ 
-      levels: process.env.NODE_ENV === 'production' ? ["warn", "error"] : ["log", "warn", "error"]
-    }),
+    new BrowserTracing(),
   ],
-  enableLogs: true,
+  enableTracing: true,
   tracesSampleRate: parseFloat(process.env.REACT_APP_SENTRY_TRACES_SAMPLE_RATE || '0.1'),
   profilesSampleRate: parseFloat(process.env.REACT_APP_SENTRY_PROFILES_SAMPLE_RATE || '0'),
 });
@@ -114,12 +111,17 @@ if (container.hasChildNodes()) {
   
   try {
     ReactDOM.hydrateRoot(container, AppComponent, {
-      // React 19 error hooks wired to Sentry
-      onUncaughtError: Sentry.reactErrorHandler((error, errorInfo) => {
+      // React 19 error hooks: Sentry does not provide reactErrorHandler, so fallback to default logging
+      onUncaughtError: (error, errorInfo) => {
+        Sentry.captureException(error);
         console.warn('Uncaught error', error, errorInfo?.componentStack);
-      }),
-      onCaughtError: Sentry.reactErrorHandler(),
-      onRecoverableError: Sentry.reactErrorHandler(),
+      },
+      onCaughtError: (error, errorInfo) => {
+        Sentry.captureException(error);
+      },
+      onRecoverableError: (error, errorInfo) => {
+        Sentry.captureException(error);
+      },
     });
     console.log('✅ Hydration successful');
   } catch (error) {
@@ -127,11 +129,16 @@ if (container.hasChildNodes()) {
     // Clear the container and render normally
     container.innerHTML = '';
     const root = ReactDOM.createRoot(container, {
-      onUncaughtError: Sentry.reactErrorHandler((error, errorInfo) => {
+      onUncaughtError: (error, errorInfo) => {
+        Sentry.captureException(error);
         console.warn('Uncaught error', error, errorInfo?.componentStack);
-      }),
-      onCaughtError: Sentry.reactErrorHandler(),
-      onRecoverableError: Sentry.reactErrorHandler(),
+      },
+      onCaughtError: (error, errorInfo) => {
+        Sentry.captureException(error);
+      },
+      onRecoverableError: (error, errorInfo) => {
+        Sentry.captureException(error);
+      },
     });
     root.render(AppComponent);
   }
