@@ -5,7 +5,7 @@ import {
   HiOutlineClock,
   HiOutlineEye,
   HiOutlineCalendar,
-  HiOutlineMusicalNote,
+  HiOutlineEye as FiEye,
 } from "react-icons/hi2";
 
 const AlbumWidget = ({
@@ -52,10 +52,10 @@ const AlbumWidget = ({
         )}
         {categories && <h3 className="album_widget_name">{categories}</h3>}
       </div>
-      {lec_no && (
+      {views && (
         <div className="album_categories">
-          <HiOutlineMusicalNote className="inline-block mr-1" />
-          {lec_no} lectures
+          <FiEye className="inline-block mr-1" />
+          {formatViews(views)} views
         </div>
       )}
     </div>

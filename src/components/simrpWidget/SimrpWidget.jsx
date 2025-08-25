@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { FiHeadphones } from "react-icons/fi";
+
 import "./simrpWidget.scss";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 const SimrpWidget = ({ img, rp }) => {
