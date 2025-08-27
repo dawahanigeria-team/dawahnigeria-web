@@ -283,7 +283,7 @@ const getSEOData = async (pathname) => {
           'Referer': 'https://dawahnigeria.com/',
           'User-Agent': 'DawahNigeria-SSR/1.0'
         },
-        timeout: 8000
+        timeout: 5000
       });
       
       if (response.data && response.data[0]) {
@@ -334,7 +334,7 @@ const getSEOData = async (pathname) => {
           'Referer': 'https://dawahnigeria.com/',
           'User-Agent': 'DawahNigeria-SSR/1.0'
         },
-        timeout: 8000
+        timeout: 5000
       });
       
       if (response.data && response.data[0]) {
@@ -386,7 +386,7 @@ const getSEOData = async (pathname) => {
           'Referer': 'https://dawahnigeria.com/',
           'User-Agent': 'DawahNigeria-SSR/1.0'
         },
-        timeout: 8000
+        timeout: 5000
       });
       
       if (response.data && response.data[0]) {
@@ -641,6 +641,7 @@ app.get('*', async (req, res) => {
           {
             onShellReady() {
               console.log('Shell ready for:', req.path);
+              // Start streaming immediately when shell is ready
               stream.pipe(res, { end: false });
             },
             onShellError(error) {
@@ -648,12 +649,16 @@ app.get('*', async (req, res) => {
               Sentry.captureException(error);
               didError = true;
               res.statusCode = 500;
-              // Provide fallback content
+              // Provide fallback content with proper styling
               res.write(`
-                <div style="padding: 20px; text-align: center;">
-                  <h1>${seoData.title}</h1>
-                  <p>${seoData.description}</p>
-                  <div id="fallback-loading">Loading application...</div>
+                <div style="padding: 20px; text-align: center; background-color: #000; color: #fff; min-height: 100vh;">
+                  <h1 style="color: #fff;">${seoData.title}</h1>
+                  <p style="color: #ccc;">${seoData.description}</p>
+                  <div id="fallback-loading" style="color: #888; margin-top: 20px;">Loading application...</div>
+                  <script>
+                    // Auto-reload the page after 3 seconds
+                    setTimeout(() => window.location.reload(), 3000);
+                  </script>
                 </div>
               `);
               res.write('</div>' + htmlEnd);
@@ -661,24 +666,50 @@ app.get('*', async (req, res) => {
             },
             onAllReady() {
               console.log('All ready for:', req.path);
-              res.write('</div>' + htmlEnd);
-              res.end();
+              if (!didError) {
+                res.write('</div>' + htmlEnd);
+                res.end();
+              }
             },
             onError(error) {
               console.error('Stream Error for', req.path, ':', error);
               Sentry.captureException(error);
               didError = true;
+              // Don't end the response here, let onAllReady or timeout handle it
             }
           }
         );
 
-        // Handle timeout
-        setTimeout(() => {
-          if (!didError) {
+        // Handle timeout - increased to 30 seconds for better stability
+        const timeoutId = setTimeout(() => {
+          if (!didError && !res.headersSent) {
             console.log('Stream timeout for:', req.path);
-            stream.abort();
+            try {
+              stream.abort();
+              // Provide fallback content on timeout
+              res.write(`
+                <div style="padding: 20px; text-align: center; background-color: #000; color: #fff;">
+                  <h1 style="color: #fff;">${seoData.title}</h1>
+                  <p style="color: #ccc;">${seoData.description}</p>
+                  <div style="color: #888; margin-top: 20px;">Loading application...</div>
+                  <script>
+                    // Auto-reload after timeout
+                    setTimeout(() => window.location.reload(), 2000);
+                  </script>
+                </div>
+              `);
+              res.write('</div>' + htmlEnd);
+              res.end();
+            } catch (timeoutError) {
+              console.error('Timeout cleanup error:', timeoutError);
+            }
           }
-        }, 10000);
+        }, 30000);
+
+        // Clear timeout if response completes normally
+        res.on('finish', () => {
+          clearTimeout(timeoutId);
+        });
 
       } catch (error) {
         console.error('SSR Error for', req.path, ':', error);
