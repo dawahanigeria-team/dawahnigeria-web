@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import * as Sentry from "@sentry/react";
-import { BrowserTracing } from "@sentry/browser";
 import { BrowserRouter as Router } from "react-router-dom";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
@@ -19,7 +18,7 @@ Sentry.init({
   environment: process.env.REACT_APP_SENTRY_ENVIRONMENT || process.env.NODE_ENV,
   release: process.env.REACT_APP_SENTRY_RELEASE,
   integrations: [
-    new BrowserTracing(),
+    new Sentry.browserTracingIntegration(),
   ],
   enableTracing: true,
   tracesSampleRate: parseFloat(process.env.REACT_APP_SENTRY_TRACES_SAMPLE_RATE || '0.1'),
