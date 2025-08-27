@@ -21,19 +21,18 @@ import axios from "axios";
 import debounce from "lodash/debounce";
 
 const Search = () => {
+  // SSR safety check - return placeholder during SSR
+  const [isClient, setIsClient] = useState(false);
+  
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const { pathname } = useLocation();
   const navigate = useNavigate();
   
-  // SSR-safe context usage
-  let searchCtx = {};
-  try {
-    // Only use context on client-side
-    if (typeof window !== 'undefined') {
-      searchCtx = useContext(SearchContext) || {};
-    }
-  } catch (error) {
-    console.log('SearchContext not available during SSR');
-  }
+  // Always call useContext to maintain hook order
+  const searchCtx = useContext(SearchContext) || {};
   
   const {
     setText = () => {},
@@ -183,6 +182,21 @@ const Search = () => {
       }
     }
   };
+
+  // Return placeholder during SSR
+  if (!isClient) {
+    return (
+      <div className="search_wrapper bg-input relative">
+        <FiSearch className="search_icon" />
+        <input
+          type="search"
+          className="search_input text-color"
+          placeholder="Search"
+          disabled
+        />
+      </div>
+    );
+  }
 
   return (
     <div ref={searchRef} className="search_wrapper bg-input relative">
