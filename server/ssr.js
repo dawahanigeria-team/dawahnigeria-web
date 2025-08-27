@@ -62,46 +62,6 @@ require.extensions['.jpeg'] = createAssetHandler('.jpeg');
 require.extensions['.gif'] = createAssetHandler('.gif');
 require.extensions['.ico'] = createAssetHandler('.ico');
 
-// Create a simple react-hot-toast mock module
-const mockToastModule = {
-  toast: {
-    success: () => {},
-    error: () => {},
-    loading: () => null,
-    dismiss: () => {},
-    promise: (promise) => promise,
-    custom: () => {},
-  },
-  Toaster: () => null,
-  LoaderIcon: () => null,
-  default: {
-    success: () => {},
-    error: () => {},
-    loading: () => null,
-    dismiss: () => {},
-    promise: (promise) => promise,
-    custom: () => {},
-  }
-};
-
-// Override module resolution for react-hot-toast
-const Module = require('module');
-const originalResolveFilename = Module._resolveFilename;
-Module._resolveFilename = function(request, parent) {
-  if (request === 'react-hot-toast') {
-    // Return a dummy path that we'll handle
-    return 'react-hot-toast-mock';
-  }
-  return originalResolveFilename.apply(this, arguments);
-};
-
-const originalLoad = Module._load;
-Module._load = function(request, parent) {
-  if (request === 'react-hot-toast' || request === 'react-hot-toast-mock') {
-    return mockToastModule;
-  }
-  return originalLoad.apply(this, arguments);
-};
 
 // Setup browser globals for SSR compatibility
 global.window = {
