@@ -23,7 +23,18 @@ import debounce from "lodash/debounce";
 const Search = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const searchCtx = useContext(SearchContext) || {};
+  
+  // SSR-safe context usage
+  let searchCtx = {};
+  try {
+    // Only use context on client-side
+    if (typeof window !== 'undefined') {
+      searchCtx = useContext(SearchContext) || {};
+    }
+  } catch (error) {
+    console.log('SearchContext not available during SSR');
+  }
+  
   const {
     setText = () => {},
     setSearchType = () => {},

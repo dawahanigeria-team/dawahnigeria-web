@@ -548,11 +548,72 @@ app.get('*', async (req, res) => {
           );
         }
 
-        // Use React 19's streaming SSR
+        // Create context providers for SSR
+        const SearchContext = React.createContext({
+          text: "",
+          setText: () => {},
+          lecturerId: [],
+          setLecturerId: () => {},
+          albumId: [],
+          setAlbumId: () => {},
+          languageId: [],
+          setLanguageId: () => {},
+          categoryId: [],
+          setCategoryId: () => {},
+          searchType: "general",
+          setSearchType: () => {},
+        });
+
+        const AudioContext = React.createContext({
+          audioRef: { current: null },
+          rangeRef: { current: null },
+          initial: true,
+          setinitial: () => {},
+          loading: false,
+          setLoading: () => {},
+          playing: false,
+          setPlaying: () => {},
+        });
+
+        const ThemeProvider = React.createContext({ darkQuery: false });
+
+        // Use React 19's streaming SSR with proper context providers
         const stream = renderToPipeableStream(
           React.createElement(Provider, { store },
             React.createElement(StaticRouter, { location: req.url },
-              React.createElement(App)
+              React.createElement(SearchContext.Provider, {
+                value: {
+                  text: "",
+                  setText: () => {},
+                  lecturerId: [],
+                  setLecturerId: () => {},
+                  albumId: [],
+                  setAlbumId: () => {},
+                  languageId: [],
+                  setLanguageId: () => {},
+                  categoryId: [],
+                  setCategoryId: () => {},
+                  searchType: "general",
+                  setSearchType: () => {},
+                }
+              },
+                React.createElement(AudioContext.Provider, {
+                  value: {
+                    audioRef: { current: null },
+                    rangeRef: { current: null },
+                    initial: true,
+                    setinitial: () => {},
+                    loading: false,
+                    setLoading: () => {},
+                    playing: false,
+                    setPlaying: () => {},
+                  }
+                },
+                  React.createElement(ThemeProvider.Provider, { value: { darkQuery: false } },
+                    React.createElement(App)
+                  )
+                )
+              )
             )
           ),
           {
