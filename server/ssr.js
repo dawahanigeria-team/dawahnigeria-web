@@ -42,10 +42,25 @@ require('@babel/register')({
   cache: false
 });
 
-// Setup CSS import handling for SSR
+// Setup CSS and asset import handling for SSR
 require.extensions['.css'] = () => {};
 require.extensions['.scss'] = () => {};
 require.extensions['.sass'] = () => {};
+
+// Setup asset import handling for SSR - return placeholder paths
+const createAssetHandler = (ext) => (module, filename) => {
+  const path = require('path');
+  const relativePath = path.relative(process.cwd(), filename).replace(/\\/g, '/');
+  const publicPath = '/' + relativePath.replace(/^src\//, '');
+  module.exports = publicPath;
+};
+
+require.extensions['.svg'] = createAssetHandler('.svg');
+require.extensions['.png'] = createAssetHandler('.png');
+require.extensions['.jpg'] = createAssetHandler('.jpg');
+require.extensions['.jpeg'] = createAssetHandler('.jpeg');
+require.extensions['.gif'] = createAssetHandler('.gif');
+require.extensions['.ico'] = createAssetHandler('.ico');
 
 // Setup browser globals for SSR compatibility
 global.window = {
