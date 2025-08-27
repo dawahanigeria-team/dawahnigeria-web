@@ -139,9 +139,10 @@ jobs:
               npm i -g pm2@5
             fi
             if pm2 describe dawahnigeria-ssr >/dev/null 2>&1; then
-              pm2 reload dawahnigeria-ssr
+              pm2 stop dawahnigeria-ssr
+              pm2 start "$APP_DIR/server/simple.js" --name dawahnigeria-ssr --time
             else
-              pm2 start "$APP_DIR/server/ssr.js" --name dawahnigeria-ssr --time
+              pm2 start "$APP_DIR/server/simple.js" --name dawahnigeria-ssr --time
             fi
             pm2 save
             pm2 startup systemd -u root --hp /root || true
