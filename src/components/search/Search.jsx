@@ -23,7 +23,12 @@ import debounce from "lodash/debounce";
 const Search = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { setText, setSearchType, searchType } = useContext(SearchContext);
+  const searchCtx = useContext(SearchContext) || {};
+  const {
+    setText = () => {},
+    setSearchType = () => {},
+    searchType = "lectures",
+  } = searchCtx;
   const [inputValue, setInputValue] = useState("");
   const [dropdownResults, setDropdownResults] = useState([]);
   const [loading, setLoading] = useState(false);
