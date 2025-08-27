@@ -3,7 +3,7 @@ name: Build and Deploy to VPS
 on:
   push:
     branches:
-      - master
+      - yusuf/hosting-ssr
   workflow_dispatch:
 
 concurrency:
@@ -105,11 +105,11 @@ jobs:
             chmod 600 /root/.ssh/known_hosts || true
             # Ensure server code exists and is on the correct branch
             if [ ! -d "$APP_DIR/.git" ]; then
-              GIT_SSH_COMMAND="ssh -i /root/.ssh/github_deploy -o IdentitiesOnly=yes" git clone --branch master --depth 1 git@github.com:dawahanigeria-team/dawahnig-live.git "$APP_DIR"
+              GIT_SSH_COMMAND="ssh -i /root/.ssh/github_deploy -o IdentitiesOnly=yes" git clone --branch yusuf/hosting-ssr --depth 1 git@github.com:dawahanigeria-team/dawahnig-live.git "$APP_DIR"
             else
               cd "$APP_DIR"
-              GIT_SSH_COMMAND="ssh -i /root/.ssh/github_deploy -o IdentitiesOnly=yes" git fetch origin master
-              GIT_SSH_COMMAND="ssh -i /root/.ssh/github_deploy -o IdentitiesOnly=yes" git reset --hard origin/master
+              GIT_SSH_COMMAND="ssh -i /root/.ssh/github_deploy -o IdentitiesOnly=yes" git fetch origin yusuf/hosting-ssr
+              GIT_SSH_COMMAND="ssh -i /root/.ssh/github_deploy -o IdentitiesOnly=yes" git reset --hard origin/yusuf/hosting-ssr
             fi
             cd "$APP_DIR"
             # Ensure runtime env for SSR
