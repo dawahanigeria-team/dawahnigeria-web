@@ -70,7 +70,17 @@ global.window = {
   addEventListener: () => {},
   removeEventListener: () => {},
   navigator: { userAgent: 'SSR' },
-  document: { getElementById: () => null, addEventListener: () => {} }
+  document: { getElementById: () => null, addEventListener: () => {} },
+  getComputedStyle: () => ({}),
+  matchMedia: () => ({ matches: false, addListener: () => {}, removeListener: () => {} }),
+  requestAnimationFrame: (cb) => setTimeout(cb, 0),
+  cancelAnimationFrame: () => {},
+  performance: { now: () => Date.now() },
+  history: { pushState: () => {}, replaceState: () => {}, go: () => {} },
+  screen: { width: 1024, height: 768 },
+  innerWidth: 1024,
+  innerHeight: 768,
+  devicePixelRatio: 1
 };
 
 // Mock fetch for SSR to prevent API calls during server rendering
@@ -87,23 +97,81 @@ global.fetch = global.fetch || (() => {
 global.document = {
   getElementById: () => null,
   getElementsByTagName: () => [],
+  querySelector: () => null,
+  querySelectorAll: () => [],
   createElement: () => ({ 
     appendChild: () => {}, 
     setAttribute: () => {},
+    getAttribute: () => null,
+    removeAttribute: () => {},
+    classList: { add: () => {}, remove: () => {}, contains: () => false, toggle: () => {} },
     style: {},
     id: '',
     src: '',
+    className: '',
+    textContent: '',
+    innerHTML: '',
     async: false,
-    defer: false
+    defer: false,
+    nodeType: 1,
+    childNodes: [],
+    parentNode: null
   }),
+  createTextNode: (text) => ({ textContent: text, nodeType: 3 }),
   addEventListener: () => {},
-  head: { appendChild: () => {} },
-  body: { appendChild: () => {} }
+  removeEventListener: () => {},
+  head: { 
+    appendChild: () => {},
+    removeChild: () => {},
+    insertBefore: () => {},
+    childNodes: []
+  },
+  body: { 
+    appendChild: () => {},
+    removeChild: () => {},
+    insertBefore: () => {},
+    childNodes: [],
+    style: {}
+  },
+  documentElement: {
+    style: {},
+    classList: { add: () => {}, remove: () => {}, contains: () => false }
+  },
+  defaultView: global.window
 };
 
 global.navigator = { userAgent: 'SSR' };
 global.localStorage = global.window.localStorage;
 global.sessionStorage = global.window.sessionStorage;
+
+// Additional globals for CSS-in-JS libraries like goober
+global.getComputedStyle = global.window.getComputedStyle;
+global.matchMedia = global.window.matchMedia;
+global.requestAnimationFrame = global.window.requestAnimationFrame;
+global.cancelAnimationFrame = global.window.cancelAnimationFrame;
+global.performance = global.window.performance;
+global.history = global.window.history;
+global.screen = global.window.screen;
+
+// Ensure Object.assign exists and works properly
+if (!Object.assign) {
+  Object.assign = function(target, ...sources) {
+    if (target == null) {
+      throw new TypeError('Cannot convert undefined or null to object');
+    }
+    const to = Object(target);
+    for (let source of sources) {
+      if (source != null) {
+        for (let key in source) {
+          if (source.hasOwnProperty && source.hasOwnProperty(key)) {
+            to[key] = source[key];
+          }
+        }
+      }
+    }
+    return to;
+  };
+}
 
 const express = require('express');
 const React = require('react');
