@@ -1,7 +1,8 @@
 import React,{useState} from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { lecturersApi } from '../../services'
-import { toast } from 'react-hot-toast'
+// Use client-only toast to avoid SSR errors
+import { toast } from '../../utils/conditionalToast'
 import { language } from '../../pages/lecturers/data'
 
 export const useLanguagesHook = () => {

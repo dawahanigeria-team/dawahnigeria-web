@@ -73,10 +73,11 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
     }
   };
 
-  // Global error handler for uncaught XHR errors
-  window.addEventListener(
-    "error",
-    function (event) {
+  // Global error handler for uncaught XHR errors (client-only)
+  if (typeof window !== 'undefined') {
+    window.addEventListener(
+      "error",
+      function (event) {
       // Check if it's a BufferLoader XHR error (common with audio/media content)
       if (event.message && event.message.includes("BufferLoader: XHR error")) {
         // Prevent default error handling
@@ -112,30 +113,33 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
       }
 
       // Let other errors propagate normally
-      return false;
-    },
-    true
-  );
+        return false;
+      },
+      true
+    );
+  }
 
-  // Handle audio playback interruption errors
-  window.addEventListener("unhandledrejection", function (event) {
-    if (event.reason && typeof event.reason.message === "string") {
-      // Check for audio play interruption error
-      if (event.reason.message.includes("The play() request was interrupted")) {
-        // Prevent default error handling
-        event.preventDefault();
+  // Handle audio playback interruption errors (client-only)
+  if (typeof window !== 'undefined') {
+    window.addEventListener("unhandledrejection", function (event) {
+      if (event.reason && typeof event.reason.message === "string") {
+        // Check for audio play interruption error
+        if (event.reason.message.includes("The play() request was interrupted")) {
+          // Prevent default error handling
+          event.preventDefault();
 
-        // Log for debugging
-        console.warn("Audio playback interrupted:", event.reason);
+          // Log for debugging
+          console.warn("Audio playback interrupted:", event.reason);
 
-        // Don't show a toast for this - it's usually not a critical error
-        // and happens during normal navigation between audio content
+          // Don't show a toast for this - it's usually not a critical error
+          // and happens during normal navigation between audio content
 
-        return true;
+          return true;
+        }
       }
-    }
-    return false;
-  });
+      return false;
+    });
+  }
 
   service.interceptors.request.use((config) => {
     // Add x-project to the header if the request METHOD is not GET

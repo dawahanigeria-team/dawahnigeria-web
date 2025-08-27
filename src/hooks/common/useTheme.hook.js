@@ -5,7 +5,11 @@ import { setTheme } from "../../Redux/Actions/ActionCreators";
 export function useThemeHook() {
   const { theme } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  // Guard against SSR: window is undefined on the server
+  const darkQuery =
+    typeof window !== "undefined"
+      ? window.matchMedia("(prefers-color-scheme: dark)")
+      : { matches: false };
  
 
   function onWindowMatch() {

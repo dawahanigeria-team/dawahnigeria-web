@@ -81,7 +81,7 @@ import {
 } from "./utils/routes/constants";
 import ForgotPassword from "./pages/forgotpassword/forgotPassword";
 import { usePageTracking } from "./utils/tracking";
-import { useThemeHook } from "./hooks";
+import { useThemeHook } from "./hooks/common/useTheme.hook";
 import RamadanDetail from "./pages/ramadan_detail/Ramadan_detail";
 import { RamadanYearTafseer } from "./components/ramadan-details/ramadanYearTafseer/RamadanYearTafseer";
 export const AudioContext = createContext();
