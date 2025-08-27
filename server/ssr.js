@@ -62,27 +62,6 @@ require.extensions['.jpeg'] = createAssetHandler('.jpeg');
 require.extensions['.gif'] = createAssetHandler('.gif');
 require.extensions['.ico'] = createAssetHandler('.ico');
 
-// Mock react-hot-toast to prevent goober issues during SSR
-const Module = require('module');
-const originalRequire = Module.prototype.require;
-
-Module.prototype.require = function(id) {
-  if (id === 'react-hot-toast') {
-    return {
-      toast: {
-        success: () => {},
-        error: () => {},
-        loading: () => {},
-        dismiss: () => {},
-        promise: (promise) => promise,
-        custom: () => {}
-      },
-      Toaster: () => null,
-      LoaderIcon: () => null
-    };
-  }
-  return originalRequire.apply(this, arguments);
-};
 
 // Setup browser globals for SSR compatibility
 global.window = {
