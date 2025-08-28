@@ -42,10 +42,26 @@ require('@babel/register')({
   cache: false
 });
 
-// Setup CSS import handling for SSR
+// Setup CSS and asset import handling for SSR
 require.extensions['.css'] = () => {};
 require.extensions['.scss'] = () => {};
 require.extensions['.sass'] = () => {};
+
+// Setup asset import handling for SSR - return placeholder paths
+const createAssetHandler = (ext) => (module, filename) => {
+  const path = require('path');
+  const relativePath = path.relative(process.cwd(), filename).replace(/\\/g, '/');
+  const publicPath = '/' + relativePath.replace(/^src\//, '');
+  module.exports = publicPath;
+};
+
+require.extensions['.svg'] = createAssetHandler('.svg');
+require.extensions['.png'] = createAssetHandler('.png');
+require.extensions['.jpg'] = createAssetHandler('.jpg');
+require.extensions['.jpeg'] = createAssetHandler('.jpeg');
+require.extensions['.gif'] = createAssetHandler('.gif');
+require.extensions['.ico'] = createAssetHandler('.ico');
+
 
 // Setup browser globals for SSR compatibility
 global.window = {
@@ -55,7 +71,17 @@ global.window = {
   addEventListener: () => {},
   removeEventListener: () => {},
   navigator: { userAgent: 'SSR' },
-  document: { getElementById: () => null, addEventListener: () => {} }
+  document: { getElementById: () => null, addEventListener: () => {} },
+  getComputedStyle: () => ({}),
+  matchMedia: () => ({ matches: false, addListener: () => {}, removeListener: () => {} }),
+  requestAnimationFrame: (cb) => setTimeout(cb, 0),
+  cancelAnimationFrame: () => {},
+  performance: { now: () => Date.now() },
+  history: { pushState: () => {}, replaceState: () => {}, go: () => {} },
+  screen: { width: 1024, height: 768 },
+  innerWidth: 1024,
+  innerHeight: 768,
+  devicePixelRatio: 1
 };
 
 // Mock fetch for SSR to prevent API calls during server rendering
@@ -72,23 +98,81 @@ global.fetch = global.fetch || (() => {
 global.document = {
   getElementById: () => null,
   getElementsByTagName: () => [],
+  querySelector: () => null,
+  querySelectorAll: () => [],
   createElement: () => ({ 
     appendChild: () => {}, 
     setAttribute: () => {},
+    getAttribute: () => null,
+    removeAttribute: () => {},
+    classList: { add: () => {}, remove: () => {}, contains: () => false, toggle: () => {} },
     style: {},
     id: '',
     src: '',
+    className: '',
+    textContent: '',
+    innerHTML: '',
     async: false,
-    defer: false
+    defer: false,
+    nodeType: 1,
+    childNodes: [],
+    parentNode: null
   }),
+  createTextNode: (text) => ({ textContent: text, nodeType: 3 }),
   addEventListener: () => {},
-  head: { appendChild: () => {} },
-  body: { appendChild: () => {} }
+  removeEventListener: () => {},
+  head: { 
+    appendChild: () => {},
+    removeChild: () => {},
+    insertBefore: () => {},
+    childNodes: []
+  },
+  body: { 
+    appendChild: () => {},
+    removeChild: () => {},
+    insertBefore: () => {},
+    childNodes: [],
+    style: {}
+  },
+  documentElement: {
+    style: {},
+    classList: { add: () => {}, remove: () => {}, contains: () => false }
+  },
+  defaultView: global.window
 };
 
 global.navigator = { userAgent: 'SSR' };
 global.localStorage = global.window.localStorage;
 global.sessionStorage = global.window.sessionStorage;
+
+// Additional globals for CSS-in-JS libraries like goober
+global.getComputedStyle = global.window.getComputedStyle;
+global.matchMedia = global.window.matchMedia;
+global.requestAnimationFrame = global.window.requestAnimationFrame;
+global.cancelAnimationFrame = global.window.cancelAnimationFrame;
+global.performance = global.window.performance;
+global.history = global.window.history;
+global.screen = global.window.screen;
+
+// Ensure Object.assign exists and works properly
+if (!Object.assign) {
+  Object.assign = function(target, ...sources) {
+    if (target == null) {
+      throw new TypeError('Cannot convert undefined or null to object');
+    }
+    const to = Object(target);
+    for (let source of sources) {
+      if (source != null) {
+        for (let key in source) {
+          if (source.hasOwnProperty && source.hasOwnProperty(key)) {
+            to[key] = source[key];
+          }
+        }
+      }
+    }
+    return to;
+  };
+}
 
 const express = require('express');
 const React = require('react');
@@ -178,7 +262,7 @@ const getSEOData = async (pathname) => {
           'Referer': 'https://dawahnigeria.com/',
           'User-Agent': 'DawahNigeria-SSR/1.0'
         },
-        timeout: 8000
+        timeout: 5000
       });
       
       if (response.data && response.data[0]) {
@@ -229,7 +313,7 @@ const getSEOData = async (pathname) => {
           'Referer': 'https://dawahnigeria.com/',
           'User-Agent': 'DawahNigeria-SSR/1.0'
         },
-        timeout: 8000
+        timeout: 5000
       });
       
       if (response.data && response.data[0]) {
@@ -281,7 +365,7 @@ const getSEOData = async (pathname) => {
           'Referer': 'https://dawahnigeria.com/',
           'User-Agent': 'DawahNigeria-SSR/1.0'
         },
-        timeout: 8000
+        timeout: 5000
       });
       
       if (response.data && response.data[0]) {
@@ -465,16 +549,78 @@ app.get('*', async (req, res) => {
           );
         }
 
-        // Use React 19's streaming SSR
+        // Create context providers for SSR
+        const SearchContext = React.createContext({
+          text: "",
+          setText: () => {},
+          lecturerId: [],
+          setLecturerId: () => {},
+          albumId: [],
+          setAlbumId: () => {},
+          languageId: [],
+          setLanguageId: () => {},
+          categoryId: [],
+          setCategoryId: () => {},
+          searchType: "general",
+          setSearchType: () => {},
+        });
+
+        const AudioContext = React.createContext({
+          audioRef: { current: null },
+          rangeRef: { current: null },
+          initial: true,
+          setinitial: () => {},
+          loading: false,
+          setLoading: () => {},
+          playing: false,
+          setPlaying: () => {},
+        });
+
+        const ThemeProvider = React.createContext({ darkQuery: false });
+
+        // Use React 19's streaming SSR with proper context providers
         const stream = renderToPipeableStream(
           React.createElement(Provider, { store },
             React.createElement(StaticRouter, { location: req.url },
-              React.createElement(App)
+              React.createElement(SearchContext.Provider, {
+                value: {
+                  text: "",
+                  setText: () => {},
+                  lecturerId: [],
+                  setLecturerId: () => {},
+                  albumId: [],
+                  setAlbumId: () => {},
+                  languageId: [],
+                  setLanguageId: () => {},
+                  categoryId: [],
+                  setCategoryId: () => {},
+                  searchType: "general",
+                  setSearchType: () => {},
+                }
+              },
+                React.createElement(AudioContext.Provider, {
+                  value: {
+                    audioRef: { current: null },
+                    rangeRef: { current: null },
+                    initial: true,
+                    setinitial: () => {},
+                    loading: false,
+                    setLoading: () => {},
+                    playing: false,
+                    setPlaying: () => {},
+                  }
+                },
+                  React.createElement(ThemeProvider.Provider, { value: { darkQuery: false } },
+                    React.createElement(App)
+                  )
+                )
+              )
             )
           ),
           {
             onShellReady() {
               console.log('Shell ready for:', req.path);
+              // Start streaming immediately when shell is ready
               stream.pipe(res, { end: false });
             },
             onShellError(error) {
@@ -482,12 +628,16 @@ app.get('*', async (req, res) => {
               Sentry.captureException(error);
               didError = true;
               res.statusCode = 500;
-              // Provide fallback content
+              // Provide fallback content with proper styling
               res.write(`
-                <div style="padding: 20px; text-align: center;">
-                  <h1>${seoData.title}</h1>
-                  <p>${seoData.description}</p>
-                  <div id="fallback-loading">Loading application...</div>
+                <div style="padding: 20px; text-align: center; background-color: #000; color: #fff; min-height: 100vh;">
+                  <h1 style="color: #fff;">${seoData.title}</h1>
+                  <p style="color: #ccc;">${seoData.description}</p>
+                  <div id="fallback-loading" style="color: #888; margin-top: 20px;">Loading application...</div>
+                  <script>
+                    // Auto-reload the page after 3 seconds
+                    setTimeout(() => window.location.reload(), 3000);
+                  </script>
                 </div>
               `);
               res.write('</div>' + htmlEnd);
@@ -495,24 +645,50 @@ app.get('*', async (req, res) => {
             },
             onAllReady() {
               console.log('All ready for:', req.path);
-              res.write('</div>' + htmlEnd);
-              res.end();
+              if (!didError) {
+                res.write('</div>' + htmlEnd);
+                res.end();
+              }
             },
             onError(error) {
               console.error('Stream Error for', req.path, ':', error);
               Sentry.captureException(error);
               didError = true;
+              // Don't end the response here, let onAllReady or timeout handle it
             }
           }
         );
 
-        // Handle timeout
-        setTimeout(() => {
-          if (!didError) {
+        // Handle timeout - increased to 30 seconds for better stability
+        const timeoutId = setTimeout(() => {
+          if (!didError && !res.headersSent) {
             console.log('Stream timeout for:', req.path);
-            stream.abort();
+            try {
+              stream.abort();
+              // Provide fallback content on timeout
+              res.write(`
+                <div style="padding: 20px; text-align: center; background-color: #000; color: #fff;">
+                  <h1 style="color: #fff;">${seoData.title}</h1>
+                  <p style="color: #ccc;">${seoData.description}</p>
+                  <div style="color: #888; margin-top: 20px;">Loading application...</div>
+                  <script>
+                    // Auto-reload after timeout
+                    setTimeout(() => window.location.reload(), 2000);
+                  </script>
+                </div>
+              `);
+              res.write('</div>' + htmlEnd);
+              res.end();
+            } catch (timeoutError) {
+              console.error('Timeout cleanup error:', timeoutError);
+            }
           }
-        }, 10000);
+        }, 30000);
+
+        // Clear timeout if response completes normally
+        res.on('finish', () => {
+          clearTimeout(timeoutId);
+        });
 
       } catch (error) {
         console.error('SSR Error for', req.path, ':', error);

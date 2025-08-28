@@ -21,7 +21,7 @@ import { SEARCH } from "../../utils/routes/constants";
 import HeadMeta from "../../components/head-meta";
 
 const SearchPage = () => {
-  const { setText } = useContext(SearchContext);
+  const { setText = () => {} } = useContext(SearchContext) || {};
   const { searchData } = useSelector((state) => state.search);
   const navigate = useNavigate();
   const { setRes, setisOpen } = useContext(NavContext);

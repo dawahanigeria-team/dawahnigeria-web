@@ -81,12 +81,35 @@ import {
 } from "./utils/routes/constants";
 import ForgotPassword from "./pages/forgotpassword/forgotPassword";
 import { usePageTracking } from "./utils/tracking";
-import { useThemeHook } from "./hooks";
+import { useThemeHook } from "./hooks/common/useTheme.hook";
 import RamadanDetail from "./pages/ramadan_detail/Ramadan_detail";
 import { RamadanYearTafseer } from "./components/ramadan-details/ramadanYearTafseer/RamadanYearTafseer";
-export const AudioContext = createContext();
-export const SearchContext = createContext();
-export const ThemeProvider = createContext();
+const noop = () => {};
+export const AudioContext = createContext({
+  audioRef: { current: null },
+  rangeRef: { current: null },
+  initial: true,
+  setinitial: noop,
+  loading: false,
+  setLoading: noop,
+  playing: false,
+  setPlaying: noop,
+});
+export const SearchContext = createContext({
+  text: "",
+  setText: noop,
+  lecturerId: [],
+  setLecturerId: noop,
+  albumId: [],
+  setAlbumId: noop,
+  languageId: [],
+  setLanguageId: noop,
+  categoryId: [],
+  setCategoryId: noop,
+  searchType: "general",
+  setSearchType: noop,
+});
+export const ThemeProvider = createContext({ darkQuery: false });
 // Create a client
 const queryClient = new QueryClient();
 
