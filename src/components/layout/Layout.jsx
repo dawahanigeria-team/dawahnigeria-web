@@ -44,27 +44,32 @@ const Layout = () => {
   const [isShare, setisShare] = useState(false);
   const islayout = true;
   const [res, setRes] = useState(() => {
-    return (
-      Number(localStorage.getItem("navControl")) ||
-      (window.innerWidth > 890 ? 2 : 1)
-    );
+    if (typeof window !== 'undefined') {
+      return (
+        Number(localStorage.getItem("navControl")) ||
+        (window.innerWidth > 890 ? 2 : 1)
+      );
+    }
+    return 2; // Default value for SSR
   });
 
   useEffect(() => {
-    localStorage.setItem("navControl", JSON.stringify(res));
-    const handleResize = () => {
-      if (window.innerWidth <= 890) {
-        setRes(1);
-      } else {
-        setRes(2);
-      }
-    };
-    window.addEventListener("load", handleResize);
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("load", handleResize);
-    };
+    if (typeof window !== 'undefined') {
+      localStorage.setItem("navControl", JSON.stringify(res));
+      const handleResize = () => {
+        if (window.innerWidth <= 890) {
+          setRes(1);
+        } else {
+          setRes(2);
+        }
+      };
+      window.addEventListener("load", handleResize);
+      window.addEventListener("resize", handleResize);
+      return () => {
+        window.removeEventListener("resize", handleResize);
+        window.removeEventListener("load", handleResize);
+      };
+    }
   }, [res]);
 
   useEffect(() => {
@@ -106,7 +111,7 @@ const Layout = () => {
           audioRef.current.setAttribute("x-webkit-airplay", "allow");
           audioRef.current.setAttribute("preload", "auto");
 
-          if ("mediaSession" in navigator) {
+          if (typeof window !== 'undefined' && "mediaSession" in navigator) {
             navigator.mediaSession.setActionHandler("play", () => {
               if (audioRef.current) {
                 audioRef.current.play().catch((error) => {
@@ -161,7 +166,7 @@ const Layout = () => {
       dispatch(setPlaying(false));
     } else {
       try {
-        if ("mediaSession" in navigator) {
+        if (typeof window !== 'undefined' && "mediaSession" in navigator) {
           navigator.mediaSession.metadata = new MediaMetadata({
             title: currentAudioInfo?.title || "Unknown Title",
             artist: currentAudioInfo?.rpname || "Unknown Artist",
@@ -176,7 +181,7 @@ const Layout = () => {
         }
 
         // Request audio focus if possible
-        if ("audioFocus" in navigator) {
+        if (typeof window !== 'undefined' && "audioFocus" in navigator) {
           try {
             await navigator.audioFocus.request({
               audioType: "media",

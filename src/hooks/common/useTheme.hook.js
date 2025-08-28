@@ -15,24 +15,30 @@ export function useThemeHook() {
   function onWindowMatch() {
     if (theme === "dark" || darkQuery.matches) {
       dispatch(setTheme("dark"));
-      document.documentElement.classList.add("dark");
+      if (typeof window !== 'undefined') {
+        document.documentElement.classList.add("dark");
+      }
     } else {
-      document.documentElement.classList.remove("dark");
+      if (typeof window !== 'undefined') {
+        document.documentElement.classList.remove("dark");
+      }
       dispatch(setTheme("light"));
     }
   }
 
   useEffect(() => {
-    switch (theme) {
-      case "dark":
-        document.documentElement.classList.add("dark");
-        break;
-      case "light":
-        document.documentElement.classList.remove("dark");
-        break;
-      default:
-        onWindowMatch();
-        break;
+    if (typeof window !== 'undefined') {
+      switch (theme) {
+        case "dark":
+          document.documentElement.classList.add("dark");
+          break;
+        case "light":
+          document.documentElement.classList.remove("dark");
+          break;
+        default:
+          onWindowMatch();
+          break;
+      }
     }
   }, [theme]);
 
