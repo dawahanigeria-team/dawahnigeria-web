@@ -56,20 +56,24 @@ const GroupWidget = ({
 
   const [isprev, setisprev] = useState(false);
   const [isnext, setisnext] = useState(true);
-  const [size, setSize] = useState(window.innerWidth);
+  const [size, setSize] = useState(() => {
+    return typeof window !== 'undefined' ? window.innerWidth : 1024;
+  });
   const [, setSettingsresponsive] = useState(() => {
     return size < 513 ? { ...settings4 } : { ...settings3 };
   });
   //const data=[]
   useEffect(() => {
-    const handleResize = () => {
-      setSize(window.innerWidth);
-      setSettingsresponsive(() => {
-        return window.innerWidth < 513 ? { ...settings4 } : { ...settings3 };
-      });
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    if (typeof window !== 'undefined') {
+      const handleResize = () => {
+        setSize(window.innerWidth);
+        setSettingsresponsive(() => {
+          return window.innerWidth < 513 ? { ...settings4 } : { ...settings3 };
+        });
+      };
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
   }, [size]);
 
   function prev() {
@@ -224,7 +228,7 @@ const GroupWidget = ({
                             );
                           } else {
                             // navigate(`/l/${nid}`);
-                            if (window.innerWidth <= 615) {
+                            if (typeof window !== 'undefined' && window.innerWidth <= 615) {
                               dispatch(getPack(null));
                               dispatch(getPage(currentPage));
                               dispatch(getPack(data));
@@ -296,7 +300,7 @@ const GroupWidget = ({
                           }`}
                           onClick={() => {
                             // navigate(`/l/${nid || id}`);
-                            if (window.innerWidth <= 615) {
+                            if (typeof window !== 'undefined' && window.innerWidth <= 615) {
                               dispatch(getPack(null));
                               dispatch(getPage(currentPage));
                               dispatch(getCount(idx));

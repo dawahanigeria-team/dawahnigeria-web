@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./list.scss";
+import { FiEye } from "react-icons/fi";
 import love from "../../../src/assets/svg/love-d.svg";
 import comment from "../../../src/assets/svg/com-d.svg";
 import headpmobile from "../../../src/assets/svg/headpmobile.svg";
 import sharesvg from "../../../src/assets/svg/share-d.svg";
 import adfav from "../../../src/assets/svg/adfav.svg";
 import { AiOutlineShareAlt } from "react-icons/ai";
-import headp from "../../../src/assets/svg/hp-d.svg";
+
 import { CiSquarePlus } from "react-icons/ci";
 import pmobile from "../../../src/assets/svg/playmobile.svg";
 import { SlShare } from "react-icons/sl";
@@ -228,7 +229,7 @@ function List({
               <div className="like_others text-color">
                 <div className="likeys">
                   <button className="likeys_img">
-                    <img className="likeys_img_sz" src={headp} alt="" />
+                    <FiEye className="likeys_img_sz" />
                   </button>
                   <span className="likeys_text">
                     {formatNumber(views) || 0}
@@ -345,7 +346,7 @@ function List({
               </div>
               <div className="likeys">
                 <button className="text-color-primary likeys_img dark:text-[#ddff2b] hover:text-color-foreground">
-                  <img className="likeys_img_sz" src={headpmobile} alt="" />
+                  <FiEye className="likeys_img_sz" />
                 </button>
                 <span className="likeys_text text-[#e0e0e0]">
                   {formatNumber(views)}

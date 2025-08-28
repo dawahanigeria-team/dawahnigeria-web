@@ -9,7 +9,9 @@ const appReducer = combineReducers({
 const rootReducer = (state, action) => {
   if (action.type === "LOGOUT") {
     // storage.removeItem('persist:otherKey')
-    localStorage.removeItem("persist:root");
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem("persist:root");
+    }
 
     return appReducer(undefined, action);
   }

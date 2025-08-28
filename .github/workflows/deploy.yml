@@ -3,7 +3,7 @@ name: Build and Deploy to VPS
 on:
   push:
     branches:
-      - yusuf/hosting-ssr
+      - master
   workflow_dispatch:
 
 concurrency:
@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch full history for Sentry commits
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -39,7 +41,28 @@ jobs:
           CI: false
           REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
           REACT_APP_API_ADMINISTER_BASE_URL: ${{ secrets.REACT_APP_API_ADMINISTER_BASE_URL }}
+          # Sentry client env
+          REACT_APP_SENTRY_DSN: ${{ secrets.SENTRY_BROWSER_DSN }}
+          REACT_APP_SENTRY_ENVIRONMENT: production
+          REACT_APP_SENTRY_RELEASE: ${{ github.sha }}
+          REACT_APP_SENTRY_TRACES_SAMPLE_RATE: "0.1"
+          REACT_APP_SENTRY_PROFILES_SAMPLE_RATE: "0"
         run: yarn build
+
+      - name: Create Sentry release and upload sourcemaps
+        uses: getsentry/action-release@v3
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+        with:
+          environment: production
+          version: ${{ github.sha }}
+          sourcemaps: ./build
+          url_prefix: "~/"
+          finalize: true
+          inject: true
+          ignore_missing: true
 
       - name: Create artifact (build.tar.gz)
         run: tar -czf build.tar.gz -C build .
@@ -82,11 +105,11 @@ jobs:
             chmod 600 /root/.ssh/known_hosts || true
             # Ensure server code exists and is on the correct branch
             if [ ! -d "$APP_DIR/.git" ]; then
-              GIT_SSH_COMMAND="ssh -i /root/.ssh/github_deploy -o IdentitiesOnly=yes" git clone --branch yusuf/hosting-ssr --depth 1 git@github.com:dawahanigeria-team/dawahnig-live.git "$APP_DIR"
+              GIT_SSH_COMMAND="ssh -i /root/.ssh/github_deploy -o IdentitiesOnly=yes" git clone --branch master --depth 1 git@github.com:dawahanigeria-team/dawahnig-live.git "$APP_DIR"
             else
               cd "$APP_DIR"
-              GIT_SSH_COMMAND="ssh -i /root/.ssh/github_deploy -o IdentitiesOnly=yes" git fetch origin yusuf/hosting-ssr
-              GIT_SSH_COMMAND="ssh -i /root/.ssh/github_deploy -o IdentitiesOnly=yes" git reset --hard origin/yusuf/hosting-ssr
+              GIT_SSH_COMMAND="ssh -i /root/.ssh/github_deploy -o IdentitiesOnly=yes" git fetch origin master
+              GIT_SSH_COMMAND="ssh -i /root/.ssh/github_deploy -o IdentitiesOnly=yes" git reset --hard FETCH_HEAD
             fi
             cd "$APP_DIR"
             # Ensure runtime env for SSR
@@ -95,6 +118,12 @@ jobs:
             PORT=3000
             REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }}
             REACT_APP_API_ADMINISTER_BASE_URL=${{ secrets.REACT_APP_API_ADMINISTER_BASE_URL }}
+            # Sentry server env
+            SENTRY_DSN=${{ secrets.SENTRY_BACKEND_DSN }}
+            SENTRY_ENVIRONMENT=production
+            SENTRY_TRACES_SAMPLE_RATE=0.1
+            SENTRY_PROFILES_SAMPLE_RATE=0
+            SENTRY_RELEASE=${{ github.sha }}
             EOF
             # Install server deps (safe to rerun; needed for Babel/runtime)
             if ! command -v yarn >/dev/null 2>&1; then

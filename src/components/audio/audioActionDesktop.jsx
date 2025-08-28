@@ -220,7 +220,7 @@ const AudioActionDesktop = () => {
         try {
           // Handle mobile audio context
           let audioContext;
-          if (window.AudioContext || window.webkitAudioContext) {
+          if (typeof window !== 'undefined' && (window.AudioContext || window.webkitAudioContext)) {
             audioContext = new (window.AudioContext ||
               window.webkitAudioContext)();
             if (audioContext.state === "suspended") {
@@ -239,7 +239,7 @@ const AudioActionDesktop = () => {
             audioRef.current.setAttribute("data-keepalive", "true");
 
             // Mobile-specific settings
-            if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            if (typeof window !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
               audioRef.current.volume = 1.0; // Ensure full volume on mobile
               // Enable background playback for iOS
               try {
@@ -265,7 +265,7 @@ const AudioActionDesktop = () => {
           const acquireWakeLock = async (retries = 3) => {
             for (let i = 0; i < retries; i++) {
               try {
-                if ("wakeLock" in navigator) {
+                if (typeof window !== 'undefined' && "wakeLock" in navigator) {
                   wakeLock = await navigator.wakeLock.request("screen");
                   break;
                 }
@@ -285,7 +285,7 @@ const AudioActionDesktop = () => {
           }
 
           // Set up MediaSession API for mobile controls with enhanced metadata
-          if ("mediaSession" in navigator) {
+          if (typeof window !== 'undefined' && "mediaSession" in navigator) {
             navigator.mediaSession.metadata = new MediaMetadata({
               title: currentaudio?.title || "Audio Track",
               artist: currentaudio?.rpname || "Unknown Artist",
@@ -392,7 +392,7 @@ const AudioActionDesktop = () => {
       // Mobile-optimized visibility handling
       const handleVisibilityChange = () => {
         // On mobile, only attempt to resume if we were playing
-        if (!document.hidden && playing && !initial && audioRef.current) {
+        if (typeof window !== 'undefined' && !document.hidden && playing && !initial && audioRef.current) {
           audioRef.current.play().catch((error) => {
             if (error.name === 'AbortError') {
               console.log('Visibility resume was aborted - this is normal');
@@ -427,44 +427,48 @@ const AudioActionDesktop = () => {
       };
 
       // Mobile interruption handlers
-      document.addEventListener("visibilitychange", handleVisibilityChange);
-      window.addEventListener("focus", handleAudioFocus);
+      if (typeof window !== 'undefined') {
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+        window.addEventListener("focus", handleAudioFocus);
 
-      // Handle mobile-specific interruptions
-      window.addEventListener("pagehide", () => {
-        // Save current playback state before page hide
-        if (audioRef.current) {
-          localStorage.setItem("audioPosition", audioRef.current.currentTime);
-          localStorage.setItem("wasPlaying", playing);
-        }
-      });
-
-      window.addEventListener("pageshow", () => {
-        // Restore playback state after page show
-        const savedPosition = localStorage.getItem("audioPosition");
-        const wasPlaying = localStorage.getItem("wasPlaying") === "true";
-        if (savedPosition && audioRef.current) {
-          audioRef.current.currentTime = parseFloat(savedPosition);
-          if (wasPlaying) {
-            audioRef.current.play().catch((error) => {
-              if (error.name === 'AbortError') {
-                console.log('Page show resume was aborted - this is normal');
-              } else if (error.name !== "NotAllowedError") {
-                console.error("Page show resume failed:", error);
-              }
-            });
+        // Handle mobile-specific interruptions
+        window.addEventListener("pagehide", () => {
+          // Save current playback state before page hide
+          if (audioRef.current) {
+            localStorage.setItem("audioPosition", audioRef.current.currentTime);
+            localStorage.setItem("wasPlaying", playing);
           }
-        }
-      });
+        });
+
+        window.addEventListener("pageshow", () => {
+          // Restore playback state after page show
+          const savedPosition = localStorage.getItem("audioPosition");
+          const wasPlaying = localStorage.getItem("wasPlaying") === "true";
+          if (savedPosition && audioRef.current) {
+            audioRef.current.currentTime = parseFloat(savedPosition);
+            if (wasPlaying) {
+              audioRef.current.play().catch((error) => {
+                if (error.name === 'AbortError') {
+                  console.log('Page show resume was aborted - this is normal');
+                } else if (error.name !== "NotAllowedError") {
+                  console.error("Page show resume failed:", error);
+                }
+              });
+            }
+          }
+        });
+      }
 
       return () => {
-        document.removeEventListener(
-          "visibilitychange",
-          handleVisibilityChange
-        );
-        window.removeEventListener("focus", handleAudioFocus);
-        window.removeEventListener("pagehide", () => {});
-        window.removeEventListener("pageshow", () => {});
+        if (typeof window !== 'undefined') {
+          document.removeEventListener(
+            "visibilitychange",
+            handleVisibilityChange
+          );
+          window.removeEventListener("focus", handleAudioFocus);
+          window.removeEventListener("pagehide", () => {});
+          window.removeEventListener("pageshow", () => {});
+        }
         if (playAnimation.current) {
           cancelAnimationFrame(playAnimation.current);
         }
@@ -704,20 +708,36 @@ const AudioActionDesktop = () => {
                 onClick={() => {
                   navigate(`${LECTURE}${audioId}`);
                 }}
-                className="font-semibold text-sm whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px]  lg:max-w-[250px]  xl:max-w-[270px]"
+                className="font-semibold text-sm text-ellipsis overflow-hidden max-w-[420px] xl:max-w-[600px] focus:outline-none"
+                tabIndex={0}
+                aria-label={currentaudio?.title || currentaudio?.Title || currentaudio?.album_name || "Audio title"}
+                title={currentaudio?.title || currentaudio?.Title || currentaudio?.album_name || "Audio title"}
               >
-                {currentaudio?.title ||
-                  currentaudio?.Title ||
-                  "----------------"}
+                {(() => {
+                  const t = (currentaudio?.title || currentaudio?.Title || currentaudio?.album_name || "").trim();
+                  return t.length > 0 ? t : "Unknown";
+                })()}
               </div>
               <div
-                onClick={(e) => {
+                onClick={e => {
                   e.stopPropagation();
                   navigate(`${RESOURCE_PERSON}${currentaudio?.rp_id}`);
                 }}
-                className="font-semibold text-[12px] whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px] lg:max-w-[250px]  xl:max-w-[270px]"
+                className="font-semibold text-[12px] text-ellipsis overflow-hidden max-w-[320px] xl:max-w-[400px] focus:outline-none"
+                tabIndex={0}
+                aria-label={(() => {
+                  const n = (currentaudio?.rpname || currentaudio?.album_name || "").trim();
+                  return n.length > 0 ? n : "Reciter unknown";
+                })()}
+                title={(() => {
+                  const n = (currentaudio?.rpname || currentaudio?.album_name || "").trim();
+                  return n.length > 0 ? n : "Reciter unknown";
+                })()}
               >
-                {currentaudio?.rpname || "----------------"}
+                {(() => {
+                  const n = (currentaudio?.rpname || currentaudio?.album_name || "").trim();
+                  return n.length > 0 ? n : "Unknown";
+                })()}
               </div>
             </div>
           </div>

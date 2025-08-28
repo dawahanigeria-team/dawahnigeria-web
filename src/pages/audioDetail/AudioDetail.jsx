@@ -550,13 +550,17 @@ const AudioDetail = () => {
             </div>
             <div className="audiodetail_head_right">
               <p className="audiodetail_head_right_head text-foreground">
-                {currentAudioInfo?.title ||
-                  currentAudioInfo?.Title ||
-                  "Unknown"}
+                {(() => {
+                  const t = (currentAudioInfo?.title || currentAudioInfo?.Title || currentAudioInfo?.album_name || "").trim();
+                  return t.length > 0 ? t : "Unknown";
+                })()}
               </p>
               <div className="audiodetail_head_right_text">
                 <p className="audiodetail_head_right_text1 text-color-foreground">
-                  {currentAudioInfo?.rpname || "unknown"}
+                  {(() => {
+                    const n = (currentAudioInfo?.rpname || currentAudioInfo?.album_name || "").trim();
+                    return n.length > 0 ? n : "Unknown";
+                  })()}
                 </p>
                 <p className="audiodetail_head_right_text2 text-color-foreground">
                   {currentAudioInfo?.album_name?.split("-")[0] ||
@@ -629,14 +633,14 @@ const AudioDetail = () => {
                     downloads={currentAudioInfo?.downloads}
                     nid={currentAudioInfo?.nid}
                     triggerInnerChild={
-                      <div className="flex flex-col items-center">
-                        <RiDownload2Fill className="audiores_download text-color" />
-                        <div className="dark:text-white text-center text-sm">
-                          Download
-                        </div>
+                      <div className="audiodetail_share bg-gray-200 dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
+                        <RiDownload2Fill className="text-[25px] text-color-primary" />
                       </div>
                     }
                   />
+                   <div className="dark:text-white text-center text-sm">
+                          Download
+                        </div>
                 </div>
               </div>
             </div>
@@ -746,14 +750,14 @@ const AudioDetail = () => {
                   downloads={currentAudioInfo?.downloads}
                   nid={currentAudioInfo?.nid}
                   triggerInnerChild={
-                    <div className="flex flex-col items-center">
-                      <RiDownload2Fill className="audiores_download text-color" />
-                      <div className="dark:text-white text-center text-sm">
-                        Download
-                      </div>
+                    <div className="audiodetail_share bg-gray-200 dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
+                      <RiDownload2Fill className="text-[25px] text-color-primary" />
                     </div>
                   }
                 />
+                <div className="dark:text-white text-center text-sm">
+                  Download
+                </div>
               </div>
               <div className="audiores_play_control">
                 <button

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./nav.scss";
 import Search from "../search/Search";
+import ClientOnly from "../ClientOnly";
 // SVG imports moved to conditional loading to prevent SSR errors
 // import apple from "../../assets/svg/apple.svg";
 // import googleplay from "../../assets/svg/googleplay.svg";
@@ -74,7 +75,9 @@ const Nav = () => {
 
           <div className="hide"></div>
           <div className="nav_search">
-            <Search />
+            <ClientOnly>
+              <Search />
+            </ClientOnly>
           </div>
           <div className="hide"></div>
           <div className="nav_download">
@@ -118,7 +121,9 @@ const Nav = () => {
           </div>
         </div>
         <div className={"max-[615px]:block hidden mt-2"}>
-          <Search />
+          <ClientOnly>
+            <Search />
+          </ClientOnly>
         </div>
       </div>
       {showComingSoon && (

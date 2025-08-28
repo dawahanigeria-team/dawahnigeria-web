@@ -2,17 +2,30 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import * as Sentry from "@sentry/react";
+import { BrowserRouter as Router } from "react-router-dom";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./Redux/Reducer/index";
 import { PersistGate } from "redux-persist/integration/react";
 import { composeWithDevTools } from "redux-devtools-extension";
 
+// Initialize Sentry (client)
+Sentry.init({
+  dsn: process.env.REACT_APP_SENTRY_DSN,
+  environment: process.env.REACT_APP_SENTRY_ENVIRONMENT || process.env.NODE_ENV,
+  release: process.env.REACT_APP_SENTRY_RELEASE,
+  integrations: [
+    new Sentry.browserTracingIntegration(),
+  ],
+  enableTracing: true,
+  tracesSampleRate: parseFloat(process.env.REACT_APP_SENTRY_TRACES_SAMPLE_RATE || '0.1'),
+  profilesSampleRate: parseFloat(process.env.REACT_APP_SENTRY_PROFILES_SAMPLE_RATE || '0'),
+});
 import { createLogger } from "redux-logger";
 import thunk from "redux-thunk";
-import { BrowserRouter as Router } from "react-router-dom";
 
 
 
@@ -42,11 +55,21 @@ if (process.env.NODE_ENV === "development") {
   store = createStore(
     persistedReducer,
     initialState,
-    composeWithDevTools(applyMiddleware(...middleware))
+    composeWithDevTools(
+      applyMiddleware(...middleware),
+      Sentry.createReduxEnhancer()
+    )
   );
 } else {
   // In production keep middleware minimal
-  store = createStore(persistedReducer, initialState, applyMiddleware(...middleware));
+  store = createStore(
+    persistedReducer,
+    initialState,
+    compose(
+      applyMiddleware(...middleware),
+      Sentry.createReduxEnhancer()
+    )
+  );
 }
 
 let persistor = persistStore(store);
@@ -87,16 +110,35 @@ if (container.hasChildNodes()) {
   
   try {
     ReactDOM.hydrateRoot(container, AppComponent, {
-      onRecoverableError: (error) => {
-        console.warn('Hydration recoverable error:', error);
-      }
+      // React 19 error hooks: Sentry does not provide reactErrorHandler, so fallback to default logging
+      onUncaughtError: (error, errorInfo) => {
+        Sentry.captureException(error);
+        console.warn('Uncaught error', error, errorInfo?.componentStack);
+      },
+      onCaughtError: (error, errorInfo) => {
+        Sentry.captureException(error);
+      },
+      onRecoverableError: (error, errorInfo) => {
+        Sentry.captureException(error);
+      },
     });
     console.log('✅ Hydration successful');
   } catch (error) {
     console.error('❌ Hydration failed, falling back to client render:', error);
     // Clear the container and render normally
     container.innerHTML = '';
-    const root = ReactDOM.createRoot(container);
+    const root = ReactDOM.createRoot(container, {
+      onUncaughtError: (error, errorInfo) => {
+        Sentry.captureException(error);
+        console.warn('Uncaught error', error, errorInfo?.componentStack);
+      },
+      onCaughtError: (error, errorInfo) => {
+        Sentry.captureException(error);
+      },
+      onRecoverableError: (error, errorInfo) => {
+        Sentry.captureException(error);
+      },
+    });
     root.render(AppComponent);
   }
 } else {
