@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - yusuf/hosting-ssr
   workflow_dispatch:
 
 concurrency:
