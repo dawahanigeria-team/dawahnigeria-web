@@ -202,13 +202,13 @@ app.use(helmet({
 }));
 app.use(cors());
 
-// Serve static files from the React app build directory
-app.use(express.static(path.join(__dirname, '../build')));
-
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', message: 'Full SSR Server with React 19 running' });
 });
+
+// Serve static files from the React app build directory
+app.use(express.static(path.join(__dirname, '../build')));
 
 // Route-specific SEO data
 // Add axios for server-side API calls
