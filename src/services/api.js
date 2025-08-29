@@ -53,11 +53,19 @@ const ERROR_COOLDOWN = 3000; // 3 seconds cooldown between same error messages
 
 // see usage in apiService function definition below
 const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
+  // Determine if we're in development or production
+  const isDevelopment = process.env.NODE_ENV === 'development' || 
+                       (typeof window !== 'undefined' && window.location.hostname === 'localhost');
+  
   const service = axios.create({
     baseURL,
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      "Origin": isDevelopment ? "https://dawahnigeria.com" : "https://dawahnigeria.com",
+      "Referer": isDevelopment ? "https://dawahnigeria.com/" : "https://dawahnigeria.com/",
+      "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
+      "User-Agent": "DawahNigeria-Web/1.0"
     },
     timeout: 30000, // 30 second timeout
   });
