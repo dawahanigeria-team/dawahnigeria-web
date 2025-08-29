@@ -133,8 +133,9 @@ jobs:
             fi
             yarn install --frozen-lockfile --production=false
             # Activate the new static build
-            tar -xzf "$RELEASE_DIR/build.tar.gz" -C "$RELEASE_DIR/build"
-            ln -sfn "$RELEASE_DIR/build" "$APP_DIR/build"
+            tar -xzf "$RELEASE_DIR/build.tar.gz" -C "$RELEASE_DIR" --strip-components=1
+            rm -rf "$APP_DIR/build"
+            ln -sfn "$RELEASE_DIR" "$APP_DIR/build"
             # Start or reload SSR via PM2
             if ! command -v pm2 >/dev/null 2>&1; then
               npm i -g pm2@5
