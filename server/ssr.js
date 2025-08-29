@@ -190,6 +190,10 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Ensure reverse proxy headers are respected (e.g., X-Forwarded-Proto)
+// This makes req.protocol reflect https when behind a proxy/CDN
+app.set('trust proxy', true);
+
 // Middleware
 app.use(compression());
 app.use(helmet({
@@ -429,6 +433,164 @@ app.get('*', async (req, res) => {
     return res.status(404).send('Build not found. Please run yarn build first.');
   }
 
+  // Check if this is a social media crawler
+  const userAgent = req.get('User-Agent') || '';
+  const isSocialCrawler = /facebookexternalhit|Twitterbot|WhatsApp|LinkedInBot|Pinterest|TelegramBot/i.test(userAgent);
+  
+  // For social crawlers, prioritize SEO and meta tags
+  if (isSocialCrawler) {
+    console.log(`Social crawler detected: ${userAgent} for path: ${req.path}`);
+    
+    // For social crawlers, provide immediate response with SEO content
+    const socialCrawlerHtml = htmlStart
+      .replace(/<title>.*?<\/title>/, `<title>${seoData.title}</title>`)
+      .replace(/<meta name="description" content=".*?"/, `<meta name="description" content="${seoData.description}"`)
+      .replace(
+        '</head>',
+        `<meta name="keywords" content="${seoData.keywords}">
+        <meta property="og:title" content="${seoData.title}">
+        <meta property="og:description" content="${seoData.description}">
+        <meta property="og:url" content="${req.protocol}://${req.get('host')}${req.originalUrl}">
+        <meta property="og:type" content="${seoData.ogType || 'website'}">
+        <meta property="og:site_name" content="dawahnigeria">
+        <meta property="og:image" content="${seoData.ogImage || 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg'}">
+        <meta property="og:image:secure_url" content="${seoData.ogImage || 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg'}">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:alt" content="${seoData.title}">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:locale:alternate" content="ar_AR">
+        <meta property="fb:app_id" content="your-facebook-app-id">
+        <link rel="canonical" href="${req.protocol}://${req.get('host')}${req.originalUrl}">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:site" content="@dawahnigeria">
+        <meta name="twitter:creator" content="@dawahnigeria">
+        <meta name="twitter:title" content="${seoData.title}">
+        <meta name="twitter:description" content="${seoData.description}">
+        <meta name="twitter:image" content="${seoData.ogImage || 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg'}">
+        <meta name="twitter:image:alt" content="${seoData.title}">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <meta name="googlebot" content="index, follow">
+        <meta name="theme-color" content="#000000">
+        <meta name="msapplication-TileColor" content="#000000">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="format-detection" content="telephone=no">
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "${seoData.ogType === 'article' ? 'Article' : seoData.ogType === 'profile' ? 'Person' : 'WebSite'}",
+          "name": "${seoData.title}",
+          "description": "${seoData.description}",
+          "url": "${req.protocol}://${req.get('host')}${req.originalUrl}",
+          "image": "${seoData.ogImage || 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg'}",
+          "publisher": {
+            "@type": "Organization",
+            "name": "dawahnigeria",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg"
+            }
+          }
+          ${seoData.lectureData ? `,
+          "author": {
+            "@type": "Person",
+            "name": "${seoData.lectureData.rpname || 'Islamic Scholar'}"
+          },
+          "articleSection": "${seoData.lectureData.cats || 'Islamic Education'}",
+          "audio": "${seoData.lectureData.audio || ''}"` : ''}
+          ${seoData.albumData ? `,
+          "author": {
+            "@type": "Person",
+            "name": "${seoData.albumData.rp_name || 'Islamic Scholar'}"
+          },
+          "numberOfItems": ${seoData.albumData.lec_no || 0},
+          "inLanguage": "${seoData.albumData.lang || 'en'}"` : ''}
+          ${seoData.lecturerData ? `,
+          "givenName": "${seoData.lecturerData.name ? seoData.lecturerData.name.split(' ')[0] : ''}",
+          "familyName": "${seoData.lecturerData.name ? seoData.lecturerData.name.split(' ').slice(1).join(' ') : ''}",
+          "jobTitle": "Islamic Scholar",
+          "worksFor": {
+            "@type": "Organization",
+            "name": "dawahnigeria"
+          }` : ''}
+        }
+        </script>
+        ${seoData.lectureData ? `
+        <meta property="article:author" content="${seoData.lectureData.rpname || ''}">
+        <meta property="article:section" content="${seoData.lectureData.cats || 'Islamic Education'}">
+        <meta name="audio" content="${seoData.lectureData.audio || ''}">
+        ` : ''}
+        ${seoData.albumData ? `
+        <meta property="article:author" content="${seoData.albumData.rp_name || ''}">
+        <meta property="article:section" content="${seoData.albumData.categories || 'Islamic Content'}">
+        <meta name="album:lectures" content="${seoData.albumData.lec_no || ''}">
+        <meta name="album:language" content="${seoData.albumData.lang || ''}">
+        <meta name="album:views" content="${seoData.albumData.views || ''}">
+        ` : ''}
+        ${seoData.lecturerData ? `
+        <meta property="profile:first_name" content="${seoData.lecturerData.name ? seoData.lecturerData.name.split(' ')[0] : ''}">
+        <meta property="profile:last_name" content="${seoData.lecturerData.name ? seoData.lecturerData.name.split(' ').slice(1).join(' ') : ''}">
+        <meta name="lecturer:total_audio" content="${seoData.lecturerData.total_audio || ''}">
+        <meta name="lecturer:total_albums" content="${seoData.lecturerData.total_albums || ''}">
+        <meta name="lecturer:views" content="${seoData.lecturerData.views || ''}">
+        <meta name="lecturer:favorites" content="${seoData.lecturerData.favorites || ''}">
+        ` : ''}
+        <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState).replace(/</g, '\\u003c')};</script>
+        <script>window.__LECTURE_DATA__ = ${seoData.lectureData ? JSON.stringify(seoData.lectureData).replace(/</g, '\\u003c') : 'null'};</script>
+        <script>window.__ALBUM_DATA__ = ${seoData.albumData ? JSON.stringify(seoData.albumData).replace(/</g, '\\u003c') : 'null'};</script>
+        <script>window.__LECTURER_DATA__ = ${seoData.lecturerData ? JSON.stringify(seoData.lecturerData).replace(/</g, '\\u003c') : 'null'};</script>
+        <style>
+          /* Prevent white flash during SSR hydration */
+          body { background-color: #000 !important; color: #fff !important; }
+          #root { background-color: transparent !important; }
+          div[style*="background"] { background-color: transparent !important; }
+          .white-bg, [style*="white"] { background-color: transparent !important; }
+          #app-loading, #fallback-loading, #ssr-fallback { display: none !important; }
+        </style>
+        </head>`
+      );
+
+    // For social crawlers, provide immediate content with SEO data
+    const socialContent = `
+      <div id="root">
+        <div style="padding: 20px; text-align: center; background-color: #000; color: #fff; min-height: 100vh; font-family: Arial, sans-serif;">
+          <img src="${seoData.ogImage || 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg'}" 
+               alt="${seoData.title}" 
+               style="max-width: 100%; height: auto; margin-bottom: 20px; border-radius: 8px;">
+          <h1 style="color: #fff; font-size: 24px; margin-bottom: 15px;">${seoData.title}</h1>
+          <p style="color: #ccc; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">${seoData.description}</p>
+          ${seoData.lectureData ? `
+          <div style="background-color: #1a1a1a; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <p style="color: #fff; margin: 5px 0;"><strong>Lecturer:</strong> ${seoData.lectureData.rpname || 'Islamic Scholar'}</p>
+            <p style="color: #ccc; margin: 5px 0;"><strong>Category:</strong> ${seoData.lectureData.cats || 'Islamic Education'}</p>
+          </div>
+          ` : ''}
+          ${seoData.albumData ? `
+          <div style="background-color: #1a1a1a; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <p style="color: #fff; margin: 5px 0;"><strong>Author:</strong> ${seoData.albumData.rp_name || 'Islamic Scholar'}</p>
+            <p style="color: #ccc; margin: 5px 0;"><strong>Lectures:</strong> ${seoData.albumData.lec_no || 0}</p>
+            <p style="color: #ccc; margin: 5px 0;"><strong>Category:</strong> ${seoData.albumData.categories || 'Islamic Content'}</p>
+          </div>
+          ` : ''}
+          ${seoData.lecturerData ? `
+          <div style="background-color: #1a1a1a; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <p style="color: #fff; margin: 5px 0;"><strong>Scholar:</strong> ${seoData.lecturerData.name || 'Islamic Scholar'}</p>
+            <p style="color: #ccc; margin: 5px 0;"><strong>Total Audio:</strong> ${seoData.lecturerData.total_audio || 0}</p>
+            <p style="color: #ccc; margin: 5px 0;"><strong>Total Albums:</strong> ${seoData.lecturerData.total_albums || 0}</p>
+          </div>
+          ` : ''}
+          <div style="margin-top: 30px;">
+            <p style="color: #888; font-size: 14px;">Visit dawahnigeria.com for more Islamic content</p>
+          </div>
+        </div>
+      </div>
+    `;
+
+    return res.send(socialCrawlerHtml + socialContent + htmlEnd);
+  }
+
   fs.readFile(indexPath, 'utf8', async (err, htmlData) => {
     if (err) {
       console.error('Error reading HTML template:', err);
@@ -464,10 +626,69 @@ app.get('*', async (req, res) => {
           <meta property="og:type" content="${seoData.ogType || 'website'}">
           <meta property="og:site_name" content="dawahnigeria">
           <meta property="og:image" content="${seoData.ogImage || 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg'}">
+          <meta property="og:image:secure_url" content="${seoData.ogImage || 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg'}">
+          <meta property="og:image:width" content="1200">
+          <meta property="og:image:height" content="630">
+          <meta property="og:image:type" content="image/jpeg">
+          <meta property="og:image:alt" content="${seoData.title}">
+          <meta property="og:locale" content="en_US">
+          <meta property="og:locale:alternate" content="ar_AR">
+          <meta property="fb:app_id" content="your-facebook-app-id">
+          <link rel="canonical" href="${req.protocol}://${req.get('host')}${req.originalUrl}">
           <meta name="twitter:card" content="summary_large_image">
+          <meta name="twitter:site" content="@dawahnigeria">
+          <meta name="twitter:creator" content="@dawahnigeria">
           <meta name="twitter:title" content="${seoData.title}">
           <meta name="twitter:description" content="${seoData.description}">
           <meta name="twitter:image" content="${seoData.ogImage || 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg'}">
+          <meta name="twitter:image:alt" content="${seoData.title}">
+          <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+          <meta name="googlebot" content="index, follow">
+          <meta name="theme-color" content="#000000">
+          <meta name="msapplication-TileColor" content="#000000">
+          <meta name="apple-mobile-web-app-capable" content="yes">
+          <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+          <meta name="format-detection" content="telephone=no">
+          <script type="application/ld+json">
+          {
+            "@context": "https://schema.org",
+            "@type": "${seoData.ogType === 'article' ? 'Article' : seoData.ogType === 'profile' ? 'Person' : 'WebSite'}",
+            "name": "${seoData.title}",
+            "description": "${seoData.description}",
+            "url": "${req.protocol}://${req.get('host')}${req.originalUrl}",
+            "image": "${seoData.ogImage || 'https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg'}",
+            "publisher": {
+              "@type": "Organization",
+              "name": "dawahnigeria",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg"
+              }
+            }
+            ${seoData.lectureData ? `,
+            "author": {
+              "@type": "Person",
+              "name": "${seoData.lectureData.rpname || 'Islamic Scholar'}"
+            },
+            "articleSection": "${seoData.lectureData.cats || 'Islamic Education'}",
+            "audio": "${seoData.lectureData.audio || ''}"` : ''}
+            ${seoData.albumData ? `,
+            "author": {
+              "@type": "Person",
+              "name": "${seoData.albumData.rp_name || 'Islamic Scholar'}"
+            },
+            "numberOfItems": ${seoData.albumData.lec_no || 0},
+            "inLanguage": "${seoData.albumData.lang || 'en'}"` : ''}
+            ${seoData.lecturerData ? `,
+            "givenName": "${seoData.lecturerData.name ? seoData.lecturerData.name.split(' ')[0] : ''}",
+            "familyName": "${seoData.lecturerData.name ? seoData.lecturerData.name.split(' ').slice(1).join(' ') : ''}",
+            "jobTitle": "Islamic Scholar",
+            "worksFor": {
+              "@type": "Organization",
+              "name": "dawahnigeria"
+            }` : ''}
+          }
+          </script>
           ${seoData.lectureData ? `
           <meta property="article:author" content="${seoData.lectureData.rpname || ''}">
           <meta property="article:section" content="${seoData.lectureData.cats || 'Islamic Education'}">
@@ -578,40 +799,54 @@ app.get('*', async (req, res) => {
 
         const ThemeProvider = React.createContext({ darkQuery: false });
 
+        // Create QueryClient for SSR
+        const { QueryClient, QueryClientProvider } = require('@tanstack/react-query');
+        const queryClient = new QueryClient({
+          defaultOptions: {
+            queries: {
+              retry: false,
+              staleTime: Infinity,
+              cacheTime: Infinity,
+            },
+          },
+        });
+
         // Use React 19's streaming SSR with proper context providers
         const stream = renderToPipeableStream(
-          React.createElement(Provider, { store },
-            React.createElement(StaticRouter, { location: req.url },
-              React.createElement(SearchContext.Provider, {
-                value: {
-                  text: "",
-                  setText: () => {},
-                  lecturerId: [],
-                  setLecturerId: () => {},
-                  albumId: [],
-                  setAlbumId: () => {},
-                  languageId: [],
-                  setLanguageId: () => {},
-                  categoryId: [],
-                  setCategoryId: () => {},
-                  searchType: "general",
-                  setSearchType: () => {},
-                }
-              },
-                React.createElement(AudioContext.Provider, {
+          React.createElement(QueryClientProvider, { client: queryClient },
+            React.createElement(Provider, { store },
+              React.createElement(StaticRouter, { location: req.url },
+                React.createElement(SearchContext.Provider, {
                   value: {
-                    audioRef: { current: null },
-                    rangeRef: { current: null },
-                    initial: true,
-                    setinitial: () => {},
-                    loading: false,
-                    setLoading: () => {},
-                    playing: false,
-                    setPlaying: () => {},
+                    text: "",
+                    setText: () => {},
+                    lecturerId: [],
+                    setLecturerId: () => {},
+                    albumId: [],
+                    setAlbumId: () => {},
+                    languageId: [],
+                    setLanguageId: () => {},
+                    categoryId: [],
+                    setCategoryId: () => {},
+                    searchType: "general",
+                    setSearchType: () => {},
                   }
                 },
-                  React.createElement(ThemeProvider.Provider, { value: { darkQuery: false } },
-                    React.createElement(App)
+                  React.createElement(AudioContext.Provider, {
+                    value: {
+                      audioRef: { current: null },
+                      rangeRef: { current: null },
+                      initial: true,
+                      setinitial: () => {},
+                      loading: false,
+                      setLoading: () => {},
+                      playing: false,
+                      setPlaying: () => {},
+                    }
+                  },
+                    React.createElement(ThemeProvider.Provider, { value: { darkQuery: false } },
+                      React.createElement(App)
+                    )
                   )
                 )
               )

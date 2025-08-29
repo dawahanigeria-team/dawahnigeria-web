@@ -48,7 +48,9 @@ jobs:
           REACT_APP_SENTRY_RELEASE: ${{ github.sha }}
           REACT_APP_SENTRY_TRACES_SAMPLE_RATE: "0.1"
           REACT_APP_SENTRY_PROFILES_SAMPLE_RATE: "0"
-        run: yarn build
+        run: |
+          yarn build
+          echo "Build completed successfully"
 
       - name: Create Sentry release and upload sourcemaps
         uses: getsentry/action-release@v3
@@ -136,15 +138,42 @@ jobs:
             tar -xzf "$RELEASE_DIR/build.tar.gz" -C "$RELEASE_DIR" --strip-components=1
             rm -rf "$APP_DIR/build"
             ln -sfn "$RELEASE_DIR" "$APP_DIR/build"
+            # Stop any existing PM2 processes
+            pm2 stop dawahnigeria-ssr || true
+            pm2 delete dawahnigeria-ssr || true
+            
             # Start or reload SSR via PM2
             if ! command -v pm2 >/dev/null 2>&1; then
               npm i -g pm2@5
             fi
-            if pm2 describe dawahnigeria-ssr >/dev/null 2>&1; then
-              pm2 reload dawahnigeria-ssr
-            else
-              pm2 start "$APP_DIR/server/ssr.js" --name dawahnigeria-ssr --time
+            
+            echo "Starting SSR server with PM2..."
+            pm2 start "$APP_DIR/server/ssr.js" --name dawahnigeria-ssr --time --max-memory-restart 1G || {
+              echo "Failed to start SSR server. Checking logs..."
+              pm2 logs dawahnigeria-ssr --lines 50 || true
+              exit 1
+            }
+            
+            # Wait for server to start
+            sleep 10
+            
+            # Verify the server is running and showing correct message
+            if ! pm2 describe dawahnigeria-ssr >/dev/null 2>&1; then
+              echo "SSR server failed to start"
+              pm2 logs dawahnigeria-ssr --lines 50 || true
+              exit 1
             fi
+            
+            # Check if it's the correct server by testing the health endpoint
+            HEALTH_RESPONSE=$(curl -s http://127.0.0.1:3000/health || echo "FAILED")
+            if [[ "$HEALTH_RESPONSE" == *"Full SSR Server with React 19 running"* ]]; then
+              echo "✅ SSR server is running correctly"
+            else
+              echo "❌ Wrong server is running. Expected SSR server but got: $HEALTH_RESPONSE"
+              pm2 logs dawahnigeria-ssr --lines 50 || true
+              exit 1
+            fi
+            
             pm2 save
             pm2 startup systemd -u root --hp /root || true
             # Local health check
