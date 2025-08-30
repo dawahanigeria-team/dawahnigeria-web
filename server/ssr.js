@@ -210,6 +210,10 @@ app.get('/health', (req, res) => {
 // Serve static files from the React app build directory
 app.use(express.static(path.join(__dirname, '../build')));
 
+// Serve static assets referenced by SSR asset handler
+// This maps requests like /assets/svg/icon.svg to files under src/assets
+app.use('/assets', express.static(path.join(__dirname, '../src/assets')));
+
 // Route-specific SEO data
 // Add axios for server-side API calls
 const axios = require('axios');
@@ -482,6 +486,8 @@ app.get('*', async (req, res) => {
           <meta name="googlebot" content="index, follow">
           <meta name="theme-color" content="#000000">
           <meta name="msapplication-TileColor" content="#000000">
+          <meta name="mobile-web-app-capable" content="yes">
+          <meta name="mobile-web-app-capable" content="yes">
           <meta name="apple-mobile-web-app-capable" content="yes">
           <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
           <meta name="format-detection" content="telephone=no">

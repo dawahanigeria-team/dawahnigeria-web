@@ -57,16 +57,23 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
   const isDevelopment = process.env.NODE_ENV === 'development' || 
                        (typeof window !== 'undefined' && window.location.hostname === 'localhost');
   
+  // Base headers allowed in browsers
+  const defaultHeaders = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
+  };
+
+  // Add server-only headers (browsers forbid setting these)
+  if (typeof window === 'undefined') {
+    defaultHeaders["Origin"] = "https://dawahnigeria.com";
+    defaultHeaders["Referer"] = "https://dawahnigeria.com/";
+    defaultHeaders["User-Agent"] = "DawahNigeria-SSR/1.0";
+  }
+
   const service = axios.create({
     baseURL,
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      "Origin": isDevelopment ? "https://dawahnigeria.com" : "https://dawahnigeria.com",
-      "Referer": isDevelopment ? "https://dawahnigeria.com/" : "https://dawahnigeria.com/",
-      "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
-      "User-Agent": "DawahNigeria-Web/1.0"
-    },
+    headers: defaultHeaders,
     timeout: 30000, // 30 second timeout
   });
 
