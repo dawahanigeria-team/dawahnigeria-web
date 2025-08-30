@@ -15,15 +15,24 @@ export const useQueryGetRequest = (keyName, queryParam = {}, queryFunction) => {
       onSuccess: (data) => {
         setIsLoadingNextPage(false);
 
+        // Normalize response into an array shape consistently
+        const dataArray = Array.isArray(data)
+          ? data
+          : Array.isArray(data?.data)
+          ? data.data
+          : data != null
+          ? [data]
+          : [];
+
         // ensure subsequent requests are not sent when the last one doesn't have data
-        if (data?.length === 0) {
+        if (dataArray.length === 0) {
           setHasReachedLastPage(true);
           return;
         }
 
         queryParam.page
-          ? setQueriedData((prev) => [...prev, ...data])
-          : setQueriedData(data);
+          ? setQueriedData((prev) => [...prev, ...dataArray])
+          : setQueriedData(dataArray);
         
       },
       onError: (error) => {
