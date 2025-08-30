@@ -50,6 +50,9 @@ jobs:
           REACT_APP_SENTRY_PROFILES_SAMPLE_RATE: "0"
         run: |
           yarn build
+          # Copy static assets imported at runtime by SSR
+          mkdir -p build/assets
+          cp -R src/assets/* build/assets/ || true
           echo "Build completed successfully"
 
       - name: Create Sentry release and upload sourcemaps

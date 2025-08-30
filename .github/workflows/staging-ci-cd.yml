@@ -43,6 +43,11 @@ jobs:
             REACT_APP_GOOGLE_PLAY_URL: ${{ secrets.GOOGLE_PLAY_URL }}
             REACT_APP_APPLE_STORE_URL: ${{ secrets.APPLE_STORE_URL}}
 
+    - name: Copy static assets into build
+      run: |
+        mkdir -p build/assets
+        cp -R src/assets/* build/assets/ || true
+
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
