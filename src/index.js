@@ -5,7 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 import * as Sentry from "@sentry/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
+import storage from "redux-persist/lib/storage"; 
 import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./Redux/Reducer/index";
@@ -18,7 +18,7 @@ Sentry.init({
   environment: process.env.REACT_APP_SENTRY_ENVIRONMENT || process.env.NODE_ENV,
   release: process.env.REACT_APP_SENTRY_RELEASE,
   integrations: [
-    new Sentry.browserTracingIntegration(),
+    Sentry.browserTracingIntegration(),
   ],
   enableTracing: true,
   tracesSampleRate: parseFloat(process.env.REACT_APP_SENTRY_TRACES_SAMPLE_RATE || '0.1'),
