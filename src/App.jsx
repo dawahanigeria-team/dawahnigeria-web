@@ -122,10 +122,10 @@ const queryClient = new QueryClient({
       refetchOnReconnect: true,
       refetchOnMount: true,
       onError: (error) => {
-        console.error('React Query error:', error);
+        console.error("React Query error:", error);
         // Add client-side error handling
-        if (typeof window !== 'undefined') {
-          console.log('Client-side API error detected, attempting recovery...');
+        if (typeof window !== "undefined") {
+          console.log("Client-side API error detected, attempting recovery...");
         }
       },
     },
@@ -138,8 +138,8 @@ const ConditionalToaster = () => {
 
   useEffect(() => {
     // Only import and use Toaster on the client side
-    if (typeof window !== 'undefined') {
-      import('react-hot-toast').then(({ Toaster }) => {
+    if (typeof window !== "undefined") {
+      import("react-hot-toast").then(({ Toaster }) => {
         setToasterComponent(() => Toaster);
       });
     }
@@ -198,36 +198,42 @@ const App = () => {
 
   // Add loading state detection and recovery
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       // Check if app is stuck in loading state after 10 seconds
       const loadingTimeout = setTimeout(() => {
-        const loadingElements = document.querySelectorAll('[class*="loading"], [class*="Loading"]');
-        const skeletonElements = document.querySelectorAll('[class*="skeleton"], [class*="Skeleton"]');
-        
+        const loadingElements = document.querySelectorAll(
+          '[class*="loading"], [class*="Loading"]'
+        );
+        const skeletonElements = document.querySelectorAll(
+          '[class*="skeleton"], [class*="Skeleton"]'
+        );
+
         if (loadingElements.length > 5 || skeletonElements.length > 5) {
-          console.warn('App appears to be stuck in loading state. Attempting recovery...');
-          
+          console.warn(
+            "App appears to be stuck in loading state. Attempting recovery..."
+          );
+
           // Force refetch all queries
           queryClient.invalidateQueries();
-          
+
           // Show user-friendly message
-          if (typeof window !== 'undefined') {
-            const recoveryDiv = document.createElement('div');
+          if (typeof window !== "undefined") {
+            const recoveryDiv = document.createElement("div");
             recoveryDiv.innerHTML = `
-              <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-                         background: #1a1a1a; color: white; padding: 20px; border-radius: 8px; 
+              <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                         background: #1a1a1a; color: white; padding: 20px; border-radius: 8px;
                          z-index: 9999; text-align: center; border: 1px solid #333;">
                 <h3>Loading Issue Detected</h3>
                 <p>We're having trouble loading the content. Click below to retry.</p>
-                <button onclick="window.location.reload()" 
-                        style="background: #ddff2b; color: black; border: none; padding: 10px 20px; 
+                <button onclick="window.location.reload()"
+                        style="background: #ddff2b; color: black; border: none; padding: 10px 20px;
                                border-radius: 4px; cursor: pointer; margin-top: 10px;">
                   Retry Loading
                 </button>
               </div>
             `;
             document.body.appendChild(recoveryDiv);
-            
+
             // Auto-remove after 10 seconds
             setTimeout(() => {
               if (recoveryDiv.parentNode) {
@@ -237,7 +243,7 @@ const App = () => {
           }
         }
       }, 10000);
-      
+
       return () => clearTimeout(loadingTimeout);
     }
   }, [queryClient]);
@@ -299,10 +305,19 @@ const App = () => {
   return (
     <>
       <title>Dawahnigeria - Your Source for Islamic Knowledge</title>
-      <meta name="description" content="Access a vast library of Islamic lectures, Quran recitations, videos, and playlists from various scholars and genres on Dawahnigeria." />
+      <meta
+        name="description"
+        content="Access a vast library of Islamic lectures, Quran recitations, videos, and playlists from various scholars and genres on Dawahnigeria."
+      />
       {/* Default Open Graph Meta Tags */}
-      <meta property="og:title" content="Dawahnigeria - Your Source for Islamic Knowledge" />
-      <meta property="og:description" content="Access a vast library of Islamic lectures, Quran recitations, videos, and playlists from various scholars and genres on Dawahnigeria." />
+      <meta
+        property="og:title"
+        content="Dawahnigeria - Your Source for Islamic Knowledge"
+      />
+      <meta
+        property="og:description"
+        content="Access a vast library of Islamic lectures, Quran recitations, videos, and playlists from various scholars and genres on Dawahnigeria."
+      />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content="Dawahnigeria" />
       {/* Add a default image URL if available, e.g., <meta property="og:image" content="URL_TO_DEFAULT_IMAGE" /> */}
@@ -417,6 +432,19 @@ const App = () => {
                     onChatMessageVisitor={() => {}}
                     onChatMessageAgent={() => {}}
                     onUnreadCountChanged={() => {}}
+                    onChatStarted={() => {}}
+                    onChatHidden={() => {}}
+                    onChatEnded={() => {}}
+                    onChatMaximized={() => {}}
+                    onChatMinimized={() => {}}
+                    onPrechatSubmit={() => {}}
+                    onOfflineSubmit={() => {}}
+                    onAgentJoinChat={() => {}}
+                    onAgentLeaveChat={() => {}}
+                    onChatSatisfaction={() => {}}
+                    onVisitorNameChanged={() => {}}
+                    onFileUpload={() => {}}
+                    onTagsUpdated={() => {}}
                   />
                 </ClientOnly>
               </ThemeProvider.Provider>
