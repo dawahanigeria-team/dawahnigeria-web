@@ -439,7 +439,15 @@ app.get('*', async (req, res) => {
 
   // Check if this is a social media crawler
   const userAgent = req.get('User-Agent') || '';
-  const isSocialCrawler = /facebookexternalhit|Twitterbot|WhatsApp|LinkedInBot|Pinterest|TelegramBot/i.test(userAgent);
+  // Detect only real crawler/bot UAs. Do NOT match generic app UAs (e.g. WhatsApp in-app browser)
+  // Examples of real crawlers that fetch link previews/meta:
+  // - Facebook: facebookexternalhit, Facebot
+  // - Twitter: Twitterbot
+  // - Telegram: TelegramBot
+  // - LinkedIn: LinkedInBot
+  // - Pinterest: Pinterestbot
+  // - Others: Slackbot, Discordbot, bingbot, YandexBot
+  const isSocialCrawler = /(facebookexternalhit|facebot|twitterbot|telegrambot|linkedinbot|pinterestbot|slackbot|discordbot|bingbot|yandexbot)/i.test(userAgent);
   
   // For social crawlers, prioritize SEO and meta tags
   if (isSocialCrawler) {
