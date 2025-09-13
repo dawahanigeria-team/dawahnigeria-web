@@ -462,6 +462,10 @@ app.get('*', async (req, res) => {
       const [htmlStart, htmlEnd] = htmlData.split('<div id="root"></div>');
       
       // For social crawlers, provide immediate response with SEO content
+      // IMPORTANT: prevent caches from serving crawler HTML to real users
+      res.set('Vary', 'User-Agent');
+      res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+      res.set('X-SSR-Variant', 'social');
       const socialCrawlerHtml = htmlStart
         .replace(/<title>.*?<\/title>/, `<title>${seoData.title}</title>`)
         .replace(/<meta name="description" content=".*?"/, `<meta name="description" content="${seoData.description}"`)
@@ -837,6 +841,12 @@ app.get('*', async (req, res) => {
         });
 
         // Use React 19's streaming SSR with proper context providers
+        // Prevent CDN/proxy caching of SSR HTML; static assets remain cached via express.static
+        try {
+          res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+          res.set('X-SSR-Variant', 'ssr');
+        } catch (e) {}
+
         const stream = renderToPipeableStream(
           React.createElement(QueryClientProvider, { client: queryClient },
             React.createElement(Provider, { store },
