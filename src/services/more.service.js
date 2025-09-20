@@ -1,10 +1,28 @@
 import { apiService } from "./api";
 
 export const moreViewApi = {
-  moreDatas: async ({ endpoint_url, page }) =>
-  {
-    if (!endpoint_url) return // don't allow empty endpoint url
-    return await apiService().get(`${endpoint_url}${page}`)
-  }
-   
+  getRecentlyViewed: async ({ page = 1, langid = 6 }) => {
+    const response = await apiService().get(
+      `/leclisting_lang.php?langid=${langid}&page=${page}`
+    );
+    return response;
+  },
+  getTrending: async ({ page = 1, langid = 6 }) => {
+    const response = await apiService().get(
+      `/trending_new.php?langid=${langid}&page=${page}`
+    );
+    return response;
+  },
+  getRecentlyPosted: async ({ page = 1, langid = 6 }) => {
+    const response = await apiService().get(
+      `/leclisting_new.php?langid=${langid}&page=${page}`
+    );
+    return response;
+  },
+  getRecommended: async ({ page = 1, langid = 6 }) => {
+    const response = await apiService().get(
+      `/leclisting_rec.php?langid=${langid}&page=${page}`
+    );
+    return response;
+  },
 };
