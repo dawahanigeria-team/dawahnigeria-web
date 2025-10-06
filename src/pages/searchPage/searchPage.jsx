@@ -21,7 +21,14 @@ import { SEARCH } from "../../utils/routes/constants";
 import HeadMeta from "../../components/head-meta";
 
 const SearchPage = () => {
-  const { setText = () => {} } = useContext(SearchContext) || {};
+  const searchContext = useContext(SearchContext) || {};
+  const {
+    setText = () => {},
+    languageId = [],
+    lecturerId = [],
+    categoryId = [],
+    albumId = []
+  } = searchContext;
   const { searchData } = useSelector((state) => state.search);
   const navigate = useNavigate();
   const { setRes, setisOpen } = useContext(NavContext);
@@ -37,6 +44,87 @@ const SearchPage = () => {
     setisOpen(true);
   };
 
+  // Extract filter options from search results
+  useEffect(() => {
+    if (!searchData || searchData.length === 0) return;
+
+    console.log("Sample search result item:", searchData[0]);
+
+    const languages = new Map();
+    const lecturers = new Map();
+    const categories = new Map();
+    const albums = new Map();
+
+    searchData.forEach(item => {
+      // Extract language
+      if (item.language_name && item.lang_id) {
+        const key = item.lang_id.toString();
+        if (languages.has(key)) {
+          languages.get(key).count++;
+        } else {
+          languages.set(key, {
+            id: item.lang_id,
+            name: item.language_name,
+            count: 1
+          });
+        }
+      }
+
+      // Extract lecturer
+      if (item.lecturer_name && item.rp_id) {
+        const key = item.rp_id.toString();
+        if (lecturers.has(key)) {
+          lecturers.get(key).count++;
+        } else {
+          lecturers.set(key, {
+            id: item.rp_id,
+            name: item.lecturer_name,
+            count: 1
+          });
+        }
+      }
+
+      // Extract category/type
+      if (item.type) {
+        const key = item.type.toLowerCase();
+        if (categories.has(key)) {
+          categories.get(key).count++;
+        } else {
+          categories.set(key, {
+            id: key,
+            name: item.type,
+            count: 1
+          });
+        }
+      }
+
+      // Extract album
+      if (item.album_id) {
+        const key = item.album_id.toString();
+        const albumName = item.album_name || item.mp3_title || `Album ${item.album_id}`;
+        if (albums.has(key)) {
+          albums.get(key).count++;
+        } else {
+          albums.set(key, {
+            id: item.album_id,
+            name: albumName,
+            count: 1
+          });
+        }
+      }
+    });
+
+    const filterOptions = {
+      lang: Array.from(languages.values()).sort((a, b) => b.count - a.count),
+      rp: Array.from(lecturers.values()).sort((a, b) => b.count - a.count),
+      cat: Array.from(categories.values()).sort((a, b) => b.count - a.count),
+      alb: Array.from(albums.values()).sort((a, b) => b.count - a.count).slice(0, 20) // Limit albums to top 20
+    };
+
+    console.log("Extracted filter options:", filterOptions);
+    dispatch(getSearchOptions(filterOptions));
+  }, [searchData, dispatch]);
+
   function fetchData(page = 1) {
     const searchValue = searchParams.get("query");
     if (!searchValue) {
@@ -45,31 +133,50 @@ const SearchPage = () => {
     }
 
     setLoading(true);
-    setText(searchValue); // Now setText is properly defined from SearchContext
+    setText(searchValue);
 
     const baseUrl = `${process.env.REACT_APP_API_BASE_URL}/searchApi.php`;
     const params = new URLSearchParams({
-      type: "global",
+      type: "all",
       value: searchValue,
       page: page.toString(),
       limit: "20",
     });
 
+    // Add filters if any are selected
+    if (languageId.length > 0) {
+      params.append("lang_id", languageId.join(","));
+    }
+    if (lecturerId.length > 0) {
+      params.append("rp_id", lecturerId.join(","));
+    }
+    if (categoryId.length > 0) {
+      params.append("cat_id", categoryId.join(","));
+    }
+    if (albumId.length > 0) {
+      params.append("album_id", albumId.join(","));
+    }
+
     axios
       .get(`${baseUrl}?${params.toString()}`)
       .then((res) => {
+        console.log("API Response:", res.data);
+        console.log("API URL:", `${baseUrl}?${params.toString()}`);
         setLoading(false);
-        if (res.data.status === "success") {
-          // Handle both possible response structures
-          const results = res.data.results || res.data.data || [];
+        if (res.data.success === true || res.data.status === "success") {
+          const results = res.data.data || res.data.results || [];
           const total = res.data.total || 0;
           const page = res.data.page || 1;
-          
+
+          console.log("Results:", results);
+          console.log("Total:", total);
+
           dispatch(getSearchData(results));
           dispatch(getSearchRecord(total));
           setTotalResults(total);
           setCurrentPage(parseInt(page));
         } else {
+          console.log("API returned non-success status:", res.data);
           dispatch(getSearchData([]));
           dispatch(getSearchRecord(0));
           setTotalResults(0);
@@ -77,6 +184,7 @@ const SearchPage = () => {
       })
       .catch((err) => {
         console.error("Search error:", err);
+        console.error("Error response:", err.response?.data);
         setLoading(false);
         dispatch(getSearchData([]));
         dispatch(getSearchRecord(0));
@@ -87,7 +195,7 @@ const SearchPage = () => {
   useEffect(() => {
     const page = parseInt(searchParams.get("page")) || 1;
     fetchData(page);
-  }, [searchParams]);
+  }, [searchParams, languageId, lecturerId, categoryId, albumId]);
 
   const handlePageChange = (newPage) => {
     const newSearchParams = new URLSearchParams(searchParams);
@@ -158,17 +266,20 @@ const SearchPage = () => {
 
           {!loading && searchData && searchData.length > 0 && (
             <>
-              <div className="space-y-2">
+              <div className="space-y-0">
                 {searchData.map((item, idx) => (
                   <SearchDataWidget
                     key={item._id.$oid || idx}
                     lec_img={item.lecturer_image}
                     cat_name={item.type}
-                    mp3_title={item.title}
-                    mp3_description={item.description}
+                    mp3_title={item.mp3_title || item.title || item.name}
+                    mp3_description={item.mp3_description || item.description}
                     lecturer_name={item.lecturer_name}
                     id={item.id}
-                    duration={item.duration}
+                    duration={item.mp3_duration || item.duration}
+                    views={item.views}
+                    language={item.language_name}
+                    uploadDate={item.upload_date || item.created_at}
                   />
                 ))}
               </div>
