@@ -21,7 +21,14 @@ import { SEARCH } from "../../utils/routes/constants";
 import HeadMeta from "../../components/head-meta";
 
 const SearchPage = () => {
-  const { setText = () => {} } = useContext(SearchContext) || {};
+  const searchContext = useContext(SearchContext) || {};
+  const {
+    setText = () => {},
+    languageId = [],
+    lecturerId = [],
+    categoryId = [],
+    albumId = []
+  } = searchContext;
   const { searchData } = useSelector((state) => state.search);
   const navigate = useNavigate();
   const { setRes, setisOpen } = useContext(NavContext);
@@ -37,6 +44,87 @@ const SearchPage = () => {
     setisOpen(true);
   };
 
+  // Extract filter options from search results
+  useEffect(() => {
+    if (!searchData || searchData.length === 0) return;
+
+    console.log("Sample search result item:", searchData[0]);
+
+    const languages = new Map();
+    const lecturers = new Map();
+    const categories = new Map();
+    const albums = new Map();
+
+    searchData.forEach(item => {
+      // Extract language
+      if (item.language_name && item.lang_id) {
+        const key = item.lang_id.toString();
+        if (languages.has(key)) {
+          languages.get(key).count++;
+        } else {
+          languages.set(key, {
+            id: item.lang_id,
+            name: item.language_name,
+            count: 1
+          });
+        }
+      }
+
+      // Extract lecturer
+      if (item.lecturer_name && item.rp_id) {
+        const key = item.rp_id.toString();
+        if (lecturers.has(key)) {
+          lecturers.get(key).count++;
+        } else {
+          lecturers.set(key, {
+            id: item.rp_id,
+            name: item.lecturer_name,
+            count: 1
+          });
+        }
+      }
+
+      // Extract category/type
+      if (item.type) {
+        const key = item.type.toLowerCase();
+        if (categories.has(key)) {
+          categories.get(key).count++;
+        } else {
+          categories.set(key, {
+            id: key,
+            name: item.type,
+            count: 1
+          });
+        }
+      }
+
+      // Extract album
+      if (item.album_id) {
+        const key = item.album_id.toString();
+        const albumName = item.album_name || item.mp3_title || `Album ${item.album_id}`;
+        if (albums.has(key)) {
+          albums.get(key).count++;
+        } else {
+          albums.set(key, {
+            id: item.album_id,
+            name: albumName,
+            count: 1
+          });
+        }
+      }
+    });
+
+    const filterOptions = {
+      lang: Array.from(languages.values()).sort((a, b) => b.count - a.count),
+      rp: Array.from(lecturers.values()).sort((a, b) => b.count - a.count),
+      cat: Array.from(categories.values()).sort((a, b) => b.count - a.count),
+      alb: Array.from(albums.values()).sort((a, b) => b.count - a.count).slice(0, 20) // Limit albums to top 20
+    };
+
+    console.log("Extracted filter options:", filterOptions);
+    dispatch(getSearchOptions(filterOptions));
+  }, [searchData, dispatch]);
+
   function fetchData(page = 1) {
     const searchValue = searchParams.get("query");
     if (!searchValue) {
@@ -45,7 +133,7 @@ const SearchPage = () => {
     }
 
     setLoading(true);
-    setText(searchValue); // Now setText is properly defined from SearchContext
+    setText(searchValue);
 
     const baseUrl = `${process.env.REACT_APP_API_BASE_URL}/searchApi.php`;
     const params = new URLSearchParams({
@@ -54,6 +142,20 @@ const SearchPage = () => {
       page: page.toString(),
       limit: "20",
     });
+
+    // Add filters if any are selected
+    if (languageId.length > 0) {
+      params.append("lang_id", languageId.join(","));
+    }
+    if (lecturerId.length > 0) {
+      params.append("rp_id", lecturerId.join(","));
+    }
+    if (categoryId.length > 0) {
+      params.append("cat_id", categoryId.join(","));
+    }
+    if (albumId.length > 0) {
+      params.append("album_id", albumId.join(","));
+    }
 
     axios
       .get(`${baseUrl}?${params.toString()}`)
@@ -93,7 +195,7 @@ const SearchPage = () => {
   useEffect(() => {
     const page = parseInt(searchParams.get("page")) || 1;
     fetchData(page);
-  }, [searchParams]);
+  }, [searchParams, languageId, lecturerId, categoryId, albumId]);
 
   const handlePageChange = (newPage) => {
     const newSearchParams = new URLSearchParams(searchParams);
