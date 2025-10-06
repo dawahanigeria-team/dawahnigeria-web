@@ -49,7 +49,7 @@ const SearchPage = () => {
 
     const baseUrl = `${process.env.REACT_APP_API_BASE_URL}/searchApi.php`;
     const params = new URLSearchParams({
-      type: "global",
+      type: "all",
       value: searchValue,
       page: page.toString(),
       limit: "20",
@@ -58,18 +58,23 @@ const SearchPage = () => {
     axios
       .get(`${baseUrl}?${params.toString()}`)
       .then((res) => {
+        console.log("API Response:", res.data);
+        console.log("API URL:", `${baseUrl}?${params.toString()}`);
         setLoading(false);
-        if (res.data.status === "success") {
-          // Handle both possible response structures
-          const results = res.data.results || res.data.data || [];
+        if (res.data.success === true || res.data.status === "success") {
+          const results = res.data.data || res.data.results || [];
           const total = res.data.total || 0;
           const page = res.data.page || 1;
-          
+
+          console.log("Results:", results);
+          console.log("Total:", total);
+
           dispatch(getSearchData(results));
           dispatch(getSearchRecord(total));
           setTotalResults(total);
           setCurrentPage(parseInt(page));
         } else {
+          console.log("API returned non-success status:", res.data);
           dispatch(getSearchData([]));
           dispatch(getSearchRecord(0));
           setTotalResults(0);
@@ -77,6 +82,7 @@ const SearchPage = () => {
       })
       .catch((err) => {
         console.error("Search error:", err);
+        console.error("Error response:", err.response?.data);
         setLoading(false);
         dispatch(getSearchData([]));
         dispatch(getSearchRecord(0));
@@ -158,17 +164,20 @@ const SearchPage = () => {
 
           {!loading && searchData && searchData.length > 0 && (
             <>
-              <div className="space-y-2">
+              <div className="space-y-0">
                 {searchData.map((item, idx) => (
                   <SearchDataWidget
                     key={item._id.$oid || idx}
                     lec_img={item.lecturer_image}
                     cat_name={item.type}
-                    mp3_title={item.title}
-                    mp3_description={item.description}
+                    mp3_title={item.mp3_title || item.title || item.name}
+                    mp3_description={item.mp3_description || item.description}
                     lecturer_name={item.lecturer_name}
                     id={item.id}
-                    duration={item.duration}
+                    duration={item.mp3_duration || item.duration}
+                    views={item.views}
+                    language={item.language_name}
+                    uploadDate={item.upload_date || item.created_at}
                   />
                 ))}
               </div>

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { IMAGE_PLACEHOLDERS } from "../../../utils/imagePlaceholders";
+import { FaPlay, FaEye } from "react-icons/fa";
 
 const SearchDataWidget = ({
   lec_img,
@@ -10,23 +11,34 @@ const SearchDataWidget = ({
   lecturer_name,
   id,
   duration,
+  views,
+  language,
+  uploadDate,
 }) => {
   const navigate = useNavigate();
 
-  // Parse description to get language and size
-  const parseDescription = (description) => {
-    if (!description) return {};
+  const getNavigationUrl = () => {
+    const type = cat_name?.toLowerCase();
 
-    const languageMatch = description.match(/Language:\s*([^.]+)\./);
-    const sizeMatch = description.match(/Size:\s*([^[]+)/);
-
-    return {
-      language: languageMatch ? languageMatch[1].trim() : null,
-      size: sizeMatch ? sizeMatch[1].trim() : null,
-    };
+    switch (type) {
+      case 'album':
+        return `/dawahcast/a/${id}`;
+      case 'video':
+        return `/dawahcast/videos/${id}`;
+      case 'playlist':
+        return `/dawahcast/playlists/${id}`;
+      case 'lecturer':
+      case 'resource_person':
+        return `/dawahcast/rp/${id}`;
+      case 'recitation':
+      case 'quran':
+        return `/dawahcast/quran/${id}`;
+      case 'lecture':
+      default:
+        return `/dawahcast/l/${id}`;
+    }
   };
 
-  const { language, size } = parseDescription(mp3_description);
 
   useEffect(() => {
     function lazyImages() {
@@ -46,54 +58,62 @@ const SearchDataWidget = ({
 
   return (
     <div
-      onClick={() => navigate(`/dawahcast/l/${id}`)}
-      className="w-full cursor-pointer bg-black/90 hover:bg-black/80 transition-all duration-200 p-4"
+      onClick={() => navigate(getNavigationUrl())}
+      className="w-full cursor-pointer bg-black/90 hover:bg-black/70 active:bg-black/60 transition-all duration-200 p-3 sm:p-4 border-b border-gray-800 hover:border-gray-700 group"
     >
-      <div className="flex gap-4">
-        {lec_img && (
-          <div className="shrink-0">
-            <img
-              src={lec_img}
-              alt={lecturer_name}
-              className="w-16 h-16 rounded object-cover"
-              id="search"
-              src-data={lec_img}
-            />
+      <div className="flex gap-3 sm:gap-4">
+        <div className="shrink-0 relative">
+          <img
+            src={lec_img || IMAGE_PLACEHOLDERS.lecture}
+            alt={lecturer_name}
+            className="w-16 h-16 sm:w-20 sm:h-20 rounded object-cover"
+            id="search"
+            src-data={lec_img}
+          />
+          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded">
+            <FaPlay className="text-white text-xl sm:text-2xl" />
           </div>
-        )}
+        </div>
+
         <div className="flex-1 min-w-0">
-          <h3 className="text-base font-normal text-white mb-1">
+          <h3 className="text-sm sm:text-base font-medium text-white mb-1 line-clamp-2 group-hover:text-gray-100">
             {mp3_title}
-            {language && (
-              <span className="text-gray-400 text-sm"> ({language})</span>
-            )}
           </h3>
 
-          <div className="space-y-0.5 text-sm">
+          <div className="space-y-0.5 sm:space-y-1 text-xs sm:text-sm">
             {lecturer_name && (
-              <p className="text-gray-400 flex items-center gap-2">
-                <span>By:</span>
-                <span>{lecturer_name}</span>
+              <p className="text-gray-400 flex items-center gap-1.5 sm:gap-2">
+                <span className="font-semibold shrink-0">By:</span>
+                <span className="truncate">{lecturer_name}</span>
               </p>
             )}
-            {cat_name && (
-              <p className="text-gray-400 flex items-center gap-2">
-                <span>Type:</span>
-                <span className="capitalize">{cat_name}</span>
-              </p>
-            )}
-            <div className="flex items-center gap-4">
-              {size && (
-                <p className="text-gray-400 flex items-center gap-2">
-                  <span>Size:</span>
-                  <span>{size}</span>
-                </p>
+
+            <div className="flex items-center gap-2 sm:gap-4 flex-wrap">
+              {cat_name && (
+                <span className="text-gray-400 flex items-center gap-1">
+                  <span className="font-semibold">Type:</span>
+                  <span className="capitalize">{cat_name}</span>
+                </span>
               )}
               {duration && (
-                <p className="text-gray-400 flex items-center gap-2">
-                  <span>Duration:</span>
+                <span className="text-gray-400 flex items-center gap-1">
+                  <span className="font-semibold">Duration:</span>
                   <span>{duration}</span>
-                </p>
+                </span>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap pt-0.5">
+              {views && (
+                <span className="text-gray-400 flex items-center gap-1">
+                  <FaEye className="text-xs" />
+                  <span className="text-xs">{views.toLocaleString()}</span>
+                </span>
+              )}
+              {language && (
+                <span className="px-1.5 sm:px-2 py-0.5 bg-gray-700 text-gray-300 rounded-full text-[10px] sm:text-xs">
+                  {language}
+                </span>
               )}
             </div>
           </div>
