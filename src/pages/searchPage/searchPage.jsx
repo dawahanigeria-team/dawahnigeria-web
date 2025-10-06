@@ -44,6 +44,65 @@ const SearchPage = () => {
     setisOpen(true);
   };
 
+  // Get active filter count
+  const getActiveFilterCount = () => {
+    return languageId.length + lecturerId.length + categoryId.length + albumId.length;
+  };
+
+  // Get filter labels for display
+  const getFilterLabel = (type, id) => {
+    const { searchOptions } = useSelector((state) => state.search);
+    if (!searchOptions) return null;
+
+    let items = [];
+    switch (type) {
+      case 'language':
+        items = searchOptions.lang || [];
+        break;
+      case 'lecturer':
+        items = searchOptions.rp || [];
+        break;
+      case 'category':
+        items = searchOptions.cat || [];
+        break;
+      case 'album':
+        items = searchOptions.alb || [];
+        break;
+    }
+
+    const item = items.find(i => i.id?.toString() === id?.toString());
+    return item?.name;
+  };
+
+  // Clear all filters
+  const clearAllFilters = () => {
+    const { setLanguageId, setLecturerId, setCategoryId, setAlbumId } = searchContext;
+    setLanguageId([]);
+    setLecturerId([]);
+    setCategoryId([]);
+    setAlbumId([]);
+  };
+
+  // Remove individual filter
+  const removeFilter = (type, id) => {
+    const { setLanguageId, setLecturerId, setCategoryId, setAlbumId } = searchContext;
+
+    switch (type) {
+      case 'language':
+        setLanguageId(prev => prev.filter(item => item !== id));
+        break;
+      case 'lecturer':
+        setLecturerId(prev => prev.filter(item => item !== id));
+        break;
+      case 'category':
+        setCategoryId(prev => prev.filter(item => item !== id));
+        break;
+      case 'album':
+        setAlbumId(prev => prev.filter(item => item !== id));
+        break;
+    }
+  };
+
   // Extract filter options from search results
   useEffect(() => {
     if (!searchData || searchData.length === 0) return;
@@ -237,18 +296,130 @@ const SearchPage = () => {
           {`Search for ${searchValue || ""}`}
         </div>
         <div className="flex text-color text-sm font-normal flex-col px-2 py-12 min-[615px]:px-6 min-[615px]:py-6 w-full">
+          {/* Enhanced Filter Button for Mobile */}
           <div
             onClick={handleSideBar}
-            className="my-3 w-fit space-x-2 border px-2 py-1 rounded-md min-[890px]:hidden flex items-center border-border"
+            className="my-3 w-fit space-x-2 border px-3 py-2 rounded-lg min-[890px]:hidden flex items-center border-border hover:bg-gray-800 transition-colors cursor-pointer"
           >
-            <FaFilter className="text-[22px]" />
-            <div>Filter</div>
+            <FaFilter className="text-[18px]" />
+            <div className="font-medium">Filters</div>
+            {getActiveFilterCount() > 0 && (
+              <span className="bg-[#ddff2b] text-black rounded-full px-2 py-0.5 text-xs font-bold">
+                {getActiveFilterCount()}
+              </span>
+            )}
           </div>
+
+          {/* Results Count */}
           <div className="text-lg text-foreground mb-3 min-[615px]:text-xl">
-            {`${totalResults?.toLocaleString() || 0} results for '${
-              searchValue || ""
-            }'`}
+            {getActiveFilterCount() > 0 ? (
+              <>
+                Showing {searchData?.length || 0} of {totalResults?.toLocaleString() || 0} results for '{searchValue || ""}'
+              </>
+            ) : (
+              <>
+                {totalResults?.toLocaleString() || 0} results for '{searchValue || ""}'
+              </>
+            )}
           </div>
+
+          {/* Active Filter Chips */}
+          {getActiveFilterCount() > 0 && (
+            <div className="flex flex-wrap gap-2 mb-4 items-center">
+              {languageId.map(id => {
+                const label = getFilterLabel('language', id);
+                return label ? (
+                  <div
+                    key={`lang-${id}`}
+                    className="flex items-center gap-1.5 bg-gray-800 text-white px-3 py-1.5 rounded-full text-sm border border-gray-700"
+                  >
+                    <span>{label}</span>
+                    <button
+                      onClick={() => removeFilter('language', id)}
+                      className="hover:bg-gray-700 rounded-full p-0.5 transition-colors"
+                      aria-label={`Remove ${label} filter`}
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                ) : null;
+              })}
+
+              {lecturerId.map(id => {
+                const label = getFilterLabel('lecturer', id);
+                return label ? (
+                  <div
+                    key={`lec-${id}`}
+                    className="flex items-center gap-1.5 bg-gray-800 text-white px-3 py-1.5 rounded-full text-sm border border-gray-700"
+                  >
+                    <span>{label}</span>
+                    <button
+                      onClick={() => removeFilter('lecturer', id)}
+                      className="hover:bg-gray-700 rounded-full p-0.5 transition-colors"
+                      aria-label={`Remove ${label} filter`}
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                ) : null;
+              })}
+
+              {categoryId.map(id => {
+                const label = getFilterLabel('category', id);
+                return label ? (
+                  <div
+                    key={`cat-${id}`}
+                    className="flex items-center gap-1.5 bg-gray-800 text-white px-3 py-1.5 rounded-full text-sm border border-gray-700"
+                  >
+                    <span className="capitalize">{label}</span>
+                    <button
+                      onClick={() => removeFilter('category', id)}
+                      className="hover:bg-gray-700 rounded-full p-0.5 transition-colors"
+                      aria-label={`Remove ${label} filter`}
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                ) : null;
+              })}
+
+              {albumId.map(id => {
+                const label = getFilterLabel('album', id);
+                return label ? (
+                  <div
+                    key={`alb-${id}`}
+                    className="flex items-center gap-1.5 bg-gray-800 text-white px-3 py-1.5 rounded-full text-sm border border-gray-700"
+                  >
+                    <span className="truncate max-w-[200px]">{label}</span>
+                    <button
+                      onClick={() => removeFilter('album', id)}
+                      className="hover:bg-gray-700 rounded-full p-0.5 transition-colors"
+                      aria-label={`Remove ${label} filter`}
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                ) : null;
+              })}
+
+              {/* Clear All Button */}
+              <button
+                onClick={clearAllFilters}
+                className="text-[#ddff2b] hover:text-[#c5e625] text-sm font-medium underline transition-colors"
+              >
+                Clear all
+              </button>
+            </div>
+          )}
+
 
           {loading && (
             <div className="w-full h-[300px] flex items-center justify-center">
