@@ -18,7 +18,7 @@ const SOCIAL_BOTS = [
   'facebookexternalhit',
   'facebookcatalog',
   'Facebot',
-  'WhatsApp',
+  'WhatsApp/0.', // WhatsApp crawler (not in-app browser)
   'Twitterbot',
   'LinkedInBot',
   'TelegramBot',
