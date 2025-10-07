@@ -18,7 +18,7 @@ const SOCIAL_BOTS = [
   'facebookexternalhit',
   'facebookcatalog',
   'Facebot',
-  'WhatsApp/0.', // WhatsApp crawler (not in-app browser)
+  'WhatsApp', // WhatsApp crawler
   'Twitterbot',
   'LinkedInBot',
   'TelegramBot',
@@ -173,9 +173,6 @@ function generateHtmlWithOgTags(metadata, originalUrl) {
   ${author ? `<meta name="author" content="${escapeHtml(author)}">` : ''}
   ${duration ? `<meta property="video:duration" content="${escapeHtml(duration)}">` : ''}
 
-  <!-- Redirect to actual page after bot reads metadata -->
-  <meta http-equiv="refresh" content="0; url=${escapeHtml(url)}">
-
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
@@ -195,34 +192,16 @@ function generateHtmlWithOgTags(metadata, originalUrl) {
       color: #ddff2b;
       margin-bottom: 1rem;
     }
-    .spinner {
-      border: 3px solid #333;
-      border-top: 3px solid #ddff2b;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-      margin: 2rem auto;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    p {
+      color: #ccc;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Dawah Nigeria</h1>
-    <div class="spinner"></div>
-    <p>Redirecting...</p>
+    <p>Islamic lectures, Quran recitations, and educational content</p>
   </div>
-
-  <script>
-    // Fallback redirect if meta refresh fails
-    setTimeout(function() {
-      window.location.href = '${escapeHtml(url)}';
-    }, 1000);
-  </script>
 </body>
 </html>`;
 }
