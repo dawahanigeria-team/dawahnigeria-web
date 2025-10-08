@@ -26,8 +26,20 @@ const SOCIAL_BOTS = [
   'Discordbot',
   'SkypeUriPreview',
   'Pinterest',
+];
+
+// Search engine crawlers for SEO
+const SEARCH_ENGINE_BOTS = [
   'Googlebot',
   'bingbot',
+  'Bingbot',
+  'Yahoo! Slurp',
+  'DuckDuckBot',
+  'Baiduspider',
+  'YandexBot',
+  'Sogou',
+  'Exabot',
+  'ia_archiver', // Alexa
 ];
 
 /**
@@ -37,6 +49,15 @@ function isSocialBot(userAgent) {
   if (!userAgent) return false;
   const lowerUA = userAgent.toLowerCase();
   return SOCIAL_BOTS.some(bot => lowerUA.includes(bot.toLowerCase()));
+}
+
+/**
+ * Check if the request is from a search engine crawler
+ */
+function isSearchEngineCrawler(userAgent) {
+  if (!userAgent) return false;
+  const lowerUA = userAgent.toLowerCase();
+  return SEARCH_ENGINE_BOTS.some(bot => lowerUA.includes(bot.toLowerCase()));
 }
 
 /**
@@ -207,6 +228,176 @@ function generateHtmlWithOgTags(metadata, originalUrl) {
 }
 
 /**
+ * Generate SEO-optimized HTML with structured data for search engines
+ */
+function generateSeoHtml(metadata, originalUrl) {
+  const {
+    title = 'Dawah Nigeria',
+    description = 'Islamic lectures, Quran recitations, and educational content',
+    image = 'https://dawahnigeria.com/default-og-image.jpg',
+    url = originalUrl,
+    type = 'website',
+    author = '',
+    duration = '',
+    language = 'en',
+    publishedDate = new Date().toISOString(),
+  } = metadata;
+
+  // Escape HTML entities
+  const escapeHtml = (str) => {
+    if (!str) return '';
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  };
+
+  // Generate JSON-LD structured data based on content type
+  let jsonLd = {};
+
+  if (type === 'article' || type === 'lecture') {
+    jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": title,
+      "description": description,
+      "image": image,
+      "author": {
+        "@type": "Person",
+        "name": author || "Dawah Nigeria"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Dawah Nigeria",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dawahnigeria.com/logo.png"
+        }
+      },
+      "datePublished": publishedDate,
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": url
+      }
+    };
+  } else if (type === 'video' || duration) {
+    jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "name": title,
+      "description": description,
+      "thumbnailUrl": image,
+      "uploadDate": publishedDate,
+      "duration": duration ? `PT${duration}S` : undefined,
+      "contentUrl": url,
+      "embedUrl": url
+    };
+  } else {
+    jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": title,
+      "description": description,
+      "url": url,
+      "image": image
+    };
+  }
+
+  return `<!DOCTYPE html>
+<html lang="${language}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+
+  <!-- Primary Meta Tags -->
+  <title>${escapeHtml(title)}</title>
+  <meta name="title" content="${escapeHtml(title)}">
+  <meta name="description" content="${escapeHtml(description)}">
+  ${author ? `<meta name="author" content="${escapeHtml(author)}">` : ''}
+  <link rel="canonical" href="${escapeHtml(url)}">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="${escapeHtml(type)}">
+  <meta property="og:url" content="${escapeHtml(url)}">
+  <meta property="og:title" content="${escapeHtml(title)}">
+  <meta property="og:description" content="${escapeHtml(description)}">
+  <meta property="og:image" content="${escapeHtml(image)}">
+  <meta property="og:site_name" content="Dawah Nigeria">
+  ${language ? `<meta property="og:locale" content="${escapeHtml(language)}">` : ''}
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="${escapeHtml(url)}">
+  <meta property="twitter:title" content="${escapeHtml(title)}">
+  <meta property="twitter:description" content="${escapeHtml(description)}">
+  <meta property="twitter:image" content="${escapeHtml(image)}">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+${JSON.stringify(jsonLd, null, 2)}
+  </script>
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      line-height: 1.6;
+      background: #1a1a1a;
+      color: #e0e0e0;
+    }
+    h1 {
+      color: #ddff2b;
+      margin-bottom: 0.5rem;
+      font-size: 2rem;
+    }
+    .meta {
+      color: #999;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+    .content {
+      margin-top: 2rem;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    .cta {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.75rem 1.5rem;
+      background: #ddff2b;
+      color: #1a1a1a;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <article>
+    <h1>${escapeHtml(title)}</h1>
+    ${author ? `<div class="meta">By ${escapeHtml(author)}</div>` : ''}
+
+    ${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(title)}">` : ''}
+
+    <div class="content">
+      <p>${escapeHtml(description)}</p>
+    </div>
+
+    <a href="${escapeHtml(url)}" class="cta">View Full Content</a>
+  </article>
+</body>
+</html>`;
+}
+
+/**
  * Main Lambda handler
  */
 exports.handler = async (event, context) => {
@@ -217,15 +408,18 @@ exports.handler = async (event, context) => {
   console.log('Request URI:', uri);
   console.log('User-Agent:', headers['user-agent']?.[0]?.value);
 
-  // Check if request is from a social bot
+  // Check if request is from a bot (social media or search engine)
   const userAgent = headers['user-agent']?.[0]?.value || '';
+  const isSocialMediaBot = isSocialBot(userAgent);
+  const isSearchBot = isSearchEngineCrawler(userAgent);
 
-  if (!isSocialBot(userAgent)) {
-    console.log('Not a social bot, returning original request');
+  if (!isSocialMediaBot && !isSearchBot) {
+    console.log('Not a bot, returning original request');
     return request; // Continue to S3
   }
 
-  console.log('Social bot detected:', userAgent);
+  const botType = isSocialMediaBot ? 'Social media bot' : 'Search engine crawler';
+  console.log(`${botType} detected:`, userAgent);
 
   // Parse URL to get content type and ID
   const parsed = parseUrl(uri);
@@ -242,14 +436,20 @@ exports.handler = async (event, context) => {
     const metadata = await fetchMetadata(parsed.type, parsed.id);
     console.log('Metadata fetched:', metadata);
 
-    // Generate HTML with OG tags
     // Note: Host header is not forwarded for S3 compatibility
     // We use the domain from environment variable instead
     const host = SITE_DOMAIN;
     const protocol = headers['cloudfront-forwarded-proto']?.[0]?.value || 'https';
     const fullUrl = `${protocol}://${host}${uri}`;
 
-    const html = generateHtmlWithOgTags(metadata, fullUrl);
+    // Generate different HTML based on bot type
+    // Search engines get full SEO HTML with structured data
+    // Social media bots get minimal HTML with OG tags only
+    const html = isSearchBot
+      ? generateSeoHtml(metadata, fullUrl)
+      : generateHtmlWithOgTags(metadata, fullUrl);
+
+    console.log(`Serving ${isSearchBot ? 'SEO' : 'OG tags'} HTML`);
 
     // Return custom response with generated HTML
     return {
