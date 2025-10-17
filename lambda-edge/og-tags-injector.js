@@ -135,9 +135,63 @@ function fetchMetadata(type, id) {
 }
 
 /**
+ * Format metadata for better social media display
+ */
+function formatMetadataForSocial(metadata) {
+  let { title, description, author, language, duration } = metadata;
+
+  // Extract lecture name from title (remove author if it's at the end after " - ")
+  let lectureName = title;
+  let speaker = author;
+
+  // Check if title contains " - Author" pattern at the end
+  const dashIndex = title.lastIndexOf(' - ');
+  if (dashIndex !== -1) {
+    lectureName = title.substring(0, dashIndex).trim();
+    if (!speaker) {
+      speaker = title.substring(dashIndex + 3).trim();
+    }
+  }
+
+  // Build formatted description: "Speaker | Language | Duration: X"
+  let descriptionParts = [];
+
+  if (speaker) {
+    descriptionParts.push(speaker);
+  }
+
+  if (language) {
+    // Clean up language (remove locale codes like ha_NG, keep just the language name)
+    const languageName = language.replace(/_.*$/, '').trim();
+    const languageMap = {
+      'ha': 'Hausa',
+      'yo': 'Yoruba',
+      'ar': 'Arabic',
+      'en': 'English'
+    };
+    descriptionParts.push(languageMap[languageName] || languageName);
+  }
+
+  if (duration) {
+    descriptionParts.push(`Duration: ${duration}`);
+  }
+
+  const formattedDescription = descriptionParts.join(' | ');
+
+  return {
+    ...metadata,
+    title: lectureName,
+    description: formattedDescription || description
+  };
+}
+
+/**
  * Generate HTML with OG tags
  */
 function generateHtmlWithOgTags(metadata, originalUrl) {
+  // Format metadata for better social media display
+  const formattedMetadata = formatMetadataForSocial(metadata);
+
   const {
     title = 'Dawah Nigeria',
     description = 'Islamic lectures, Quran recitations, and educational content',
@@ -147,7 +201,7 @@ function generateHtmlWithOgTags(metadata, originalUrl) {
     author = '',
     duration = '',
     language = ''
-  } = metadata;
+  } = formattedMetadata;
 
   // Escape HTML entities
   const escapeHtml = (str) => {

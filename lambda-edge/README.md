@@ -1,9 +1,10 @@
-# Lambda@Edge Dynamic OG Tags Solution
+# Lambda@Edge Dynamic OG Tags & SEO Solution
 
-> **Dynamic Open Graph meta tags for social media sharing using Lambda@Edge on CloudFront + S3**
+> **Dynamic Open Graph meta tags and SEO optimization for social media sharing and search engines using Lambda@Edge on CloudFront + S3**
 
 ## 🎯 What This Does
 
+### For Social Media
 When users share links from your site on Facebook, WhatsApp, Twitter, or LinkedIn, this solution ensures they see:
 - ✅ **Dynamic titles** specific to each lecture/album/lecturer
 - ✅ **Relevant descriptions** pulled from your database
@@ -11,6 +12,15 @@ When users share links from your site on Facebook, WhatsApp, Twitter, or LinkedI
 - ✅ **Rich previews** that increase engagement
 
 Instead of seeing a generic "Dawah Nigeria" preview, users see the actual content details!
+
+### For Search Engines
+When Google, Bing, and other search engines crawl your content, they receive:
+- ✅ **Structured data (JSON-LD)** for rich search results
+- ✅ **Semantic HTML** with proper article markup
+- ✅ **SEO-optimized meta tags** (title, description, canonical)
+- ✅ **Indexable content** with speaker, language, and duration info
+
+This improves your search rankings and helps users discover content like "Tafseer Surah Qiyamah - Shaykh Jabata"!
 
 ## 📋 Quick Overview
 
@@ -112,22 +122,34 @@ Regular browsers get the normal React SPA from S3.
 ## 💡 Key Features
 
 ### ✅ Smart Bot Detection
-Only executes for social media bots, not regular users → minimal Lambda costs
+Detects and serves different content to:
+- **Search engine crawlers** (Googlebot, Bingbot) → SEO HTML with structured data
+- **Social media bots** (Facebook, WhatsApp, Twitter) → OG tags
+- **Regular users** → React SPA
+
+Only executes for bots → minimal Lambda costs
+
+### ✅ Intelligent Formatting
+Automatically improves metadata display:
+- **Before**: "Good treatment of parents 02 - Ustadh Sulayman | Language: Yoruba. Size: 37.2 MB"
+- **After**: "Good treatment of parents 02" with description "Ustadh Sulayman | Yoruba | Duration: 1:21:07"
+
+### ✅ Dual Environment Setup
+- **Dev Lambda** + **Dev CloudFront** for testing
+- **Prod Lambda** + **Prod CloudFront** for live site
+- Safe deployment workflow: test on dev, promote to prod
 
 ### ✅ Fallback to SPA
 If anything fails (API error, timeout, etc.), serves the normal React app
 
-### ✅ Proper Caching
-Generated HTML is cached for 24 hours → faster subsequent shares
+### ✅ User-Agent Based Caching
+CloudFront caches bot responses separately from user responses → no conflicts
 
 ### ✅ Character Encoding
-Properly handles Arabic, Hausa, special characters, quotes, etc.
+Properly handles Arabic, Hausa, Yoruba, special characters, quotes, etc.
 
-### ✅ SEO Friendly
-Also includes standard `<title>` and `<meta name="description">` tags
-
-### ✅ Auto-Redirect
-After bots read metadata, users are redirected to the actual SPA
+### ✅ SEO Optimized
+Includes JSON-LD structured data for Google rich results and knowledge panels
 
 ## 📊 Performance
 
