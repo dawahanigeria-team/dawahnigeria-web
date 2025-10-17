@@ -1,0 +1,117 @@
+{
+  "_comment": "CloudFront Behavior Configuration for Lambda@Edge OG Tags",
+  "_instructions": [
+    "This is a reference configuration for your CloudFront behavior.",
+    "Use this to configure your CloudFront distribution via the AWS Console.",
+    "",
+    "IMPORTANT: Replace YOUR_LAMBDA_ARN with the actual ARN from deploy.sh output",
+    "",
+    "Steps:",
+    "1. Go to CloudFront Console",
+    "2. Select your distribution",
+    "3. Go to Behaviors tab",
+    "4. Edit default behavior (or create new for /dawahcast/*)",
+    "5. Add the Lambda function association and headers as shown below"
+  ],
+
+  "LambdaFunctionAssociations": {
+    "Quantity": 1,
+    "Items": [
+      {
+        "LambdaFunctionARN": "arn:aws:lambda:us-east-1:YOUR_ACCOUNT_ID:function:DawahNigeria-OG-Tags-Injector:1",
+        "EventType": "origin-request",
+        "IncludeBody": false
+      }
+    ]
+  },
+
+  "ForwardedHeaders": {
+    "_note": "These headers MUST be forwarded to Lambda@Edge (Host excluded for S3 compatibility)",
+    "Headers": [
+      "User-Agent",
+      "CloudFront-Forwarded-Proto"
+    ],
+    "_excluded": {
+      "Host": "Not forwarded - S3 origins cannot resolve distribution host. Lambda uses hardcoded 'dawahnigeria.com' instead."
+    }
+  },
+
+  "CacheSettings": {
+    "_note": "Recommended cache settings for optimal performance",
+    "CachePolicyId": "4135ea2d-6df8-44a3-9df3-4b5a84be39ad",
+    "_cachePolicyName": "Managed-CachingDisabled",
+    "_reason": "We want Lambda to execute on every bot request to get fresh metadata",
+
+    "_alternative": {
+      "MinTTL": 0,
+      "DefaultTTL": 86400,
+      "MaxTTL": 31536000,
+      "ForwardQueryStrings": false,
+      "ForwardCookies": "none",
+      "_note": "If using legacy cache settings instead of cache policy"
+    }
+  },
+
+  "ViewerProtocolPolicy": "redirect-to-https",
+
+  "AllowedMethods": {
+    "Quantity": 2,
+    "Items": ["GET", "HEAD"],
+    "CachedMethods": {
+      "Quantity": 2,
+      "Items": ["GET", "HEAD"]
+    }
+  },
+
+  "Compress": true,
+
+  "_testing": {
+    "test_urls": [
+      "https://dawahnigeria.com/dawahcast/l/304761",
+      "https://dawahnigeria.com/dawahcast/a/165389",
+      "https://dawahnigeria.com/dawahcast/rp/49991"
+    ],
+    "test_user_agents": [
+      "facebookexternalhit/1.1",
+      "WhatsApp/2.0",
+      "Twitterbot/1.0",
+      "LinkedInBot/1.0",
+      "Mozilla/5.0 (regular browser - should NOT trigger Lambda)"
+    ]
+  },
+
+  "_monitoring": {
+    "cloudwatch_log_group": "/aws/lambda/us-east-1.DawahNigeria-OG-Tags-Injector",
+    "metrics_to_watch": [
+      "Invocations (should only be bot requests)",
+      "Errors (should be near zero)",
+      "Duration (should be < 2000ms p99)",
+      "Throttles (should be zero)"
+    ],
+    "recommended_alarms": [
+      {
+        "alarm_name": "OG-Tags-Error-Rate",
+        "metric": "Errors",
+        "threshold": "1% of invocations",
+        "period": "5 minutes"
+      },
+      {
+        "alarm_name": "OG-Tags-Duration",
+        "metric": "Duration",
+        "threshold": "3000ms (p99)",
+        "period": "5 minutes"
+      }
+    ]
+  },
+
+  "_cost_estimation": {
+    "lambda_edge_requests": "$0.60 per 1M requests",
+    "lambda_edge_duration": "$0.00005001 per GB-second",
+    "example_1M_bot_requests_per_month": {
+      "requests_cost": "$0.60",
+      "duration_cost": "$0.50 (128MB, 500ms avg)",
+      "total": "$1.10/month"
+    },
+    "cloudfront_costs": "No additional costs - same as before"
+  }
+}

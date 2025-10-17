@@ -33,7 +33,9 @@ export const shareAudio = (key, socalLink, linkToShare) => {
     return;
   }
 
-  copy(linkToShare);
+  // Decode the URL before copying to clipboard
+  const decodedLink = decodeURIComponent(linkToShare);
+  copy(decodedLink);
   conditionalToast.success(`successfully copied`);
 };
 
