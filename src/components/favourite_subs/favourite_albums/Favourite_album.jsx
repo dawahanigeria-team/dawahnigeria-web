@@ -4,7 +4,7 @@ import "./favourite_album.scss";
 import AlbumWidget from "../../albumWidget/AlbumWidget";
 import { useSelector } from "react-redux";
 import Loader from "../../../components/UI/loader/loader";
-import _ from "lodash";
+import uniqBy from "lodash/uniqBy";
 import axios from "../../../utils/useAxios";
 import { useNavigate } from "react-router-dom";
 import infinitePlayFavScroll from "../../UI/infinitePlayFavScroll";
@@ -50,7 +50,7 @@ const Favourite_album = ({ setCount2 }) => {
           .then((res) => {
             setMyFavAlbum(res.data);
             setLoading(false);
-            setdata(_.uniqBy(res.data?.slice(0, 10), "nid"));
+            setdata(uniqBy(res.data?.slice(0, 10), "nid"));
           })
           .catch((err) => {});
       });
@@ -66,7 +66,7 @@ const Favourite_album = ({ setCount2 }) => {
       setIsEmpty(true);
     }
     setNextPageLoad(false);
-    setdata((prev) => _.uniqBy([...prev, ...additionalData], "nid"));
+    setdata((prev) => uniqBy([...prev, ...additionalData], "nid"));
   }, [page]);
 
   const lastElement = useCallback(

@@ -6,7 +6,6 @@ import AlbumWidget from "../../components/albumWidget/AlbumWidget";
 import { useNavigate } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import Loader from "../../components/UI/loader/loader";
-import _ from "lodash";
 import { PLAYLISTS } from "../../utils/routes/constants";
 
 import { useCategoriesHook, useLanguagesHook } from "../../hooks/lecturers";

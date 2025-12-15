@@ -1,14 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, memo } from "react";
 import "./lecturersWidget.scss";
 import { FiEye } from "react-icons/fi";
-
 import { formatNumber } from "../UI/formatter";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
-const LecturersWidget = ({ img, rp, rpname, views, styling }) => {
-  //const lazy = useRef()
-
-  ////not contented but under presssure by DN project manager
+const LecturersWidget = memo(({ img, rp, rpname, views, styling }) => {
   useEffect(() => {
     const lazy = document.querySelectorAll("#lect");
     function lazyImages() {
@@ -26,58 +22,40 @@ const LecturersWidget = ({ img, rp, rpname, views, styling }) => {
   }, []);
 
   return (
-    <>
-      <div className="lecturerWidget_wrapper ">
-        <div className="lecturerWidget_circle">
-          <img
-            className="lecturerWidget_img"
-            id="lect"
-            src-data={img}
-            src={IMAGE_PLACEHOLDERS.lecturer}
-            alt="circleImg"
-          />
-        </div>
+    <div className="lecturerWidget_wrapper">
+      <div className="lecturerWidget_circle">
+        <img
+          className="lecturerWidget_img"
+          id="lect"
+          src-data={img}
+          src={IMAGE_PLACEHOLDERS.lecturer}
+          alt={rp || "Lecturer"}
+          loading="lazy"
+        />
+      </div>
 
-        <p className="lecturerWidget_text text-foreground">
-          {rp ? rp : "undefined"}
+      <p className="lecturerWidget_text text-foreground">
+        {rp ? rp : "undefined"}
+      </p>
+
+      {rpname && (
+        <p className="lecturerWidget_rpname text-foreground">{rpname}</p>
+      )}
+
+      <div
+        className={
+          !styling ? "lecturerWidget_views_wrapper text-foreground" : "hidden"
+        }
+      >
+        <FiEye className="lecturerWidget_views_icon" />
+        <p className="lecturerWidget_views_text">
+          {formatNumber(parseInt(views) || 0)}
         </p>
-        
-        {rpname && (
-          <p className="lecturerWidget_rpname text-foreground">
-            {rpname}
-          </p>
-        )}
-       
-        <div className={!styling ? "lecturerWidget_views_wrapper text-foreground" : "hidden"}>
-
-          <FiEye className="lecturerWidget_views_icon" />
-          <p className="lecturerWidget_views_text">
-            {formatNumber(parseInt(views) || 0)}
-          </p>
-        </div>
-      
       </div>
-
-      {/* ------
-      <div className="lecwidres_wrapper">
-        <div className="lecwidres_img_wrap">
-          <img className="lecwidres_img" src={img} alt="lect" />
-        </div>
-        <div className="lecwidres_text_wrap">
-        <div className="lecwidres_text">
-          {rp
-            ? `${rp.split(" ")[0]} ${rp.split(" ")[1]} ${rp.split(" ")[2]}`
-            : "undefined"}
-        </div>
-        </div>
-        
-      </div>
-      
-      -----------responsive lecturer widget----------------- */}
-
-      {/* -----------------responsive lecturer widget Ends----------------- */}
-    </>
+    </div>
   );
-};
+});
+
+LecturersWidget.displayName = "LecturersWidget";
 
 export default LecturersWidget;

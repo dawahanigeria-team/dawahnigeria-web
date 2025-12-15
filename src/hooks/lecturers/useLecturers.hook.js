@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
-import _ from "lodash";
+import uniqBy from "lodash/uniqBy";
 export const useLecturersHook = (
   keyName,
   queryParam = {},
@@ -39,7 +39,7 @@ export const useLecturersHook = (
 
         setinitialLangId(queryParam.langid);
 
-        setQueriedData((prev) => _.uniqBy([...prev, ...data], "id"));
+        setQueriedData((prev) => uniqBy([...prev, ...data], "id"));
       },
       onError: (error) => {
         setIsLoadingNextPage(false);
