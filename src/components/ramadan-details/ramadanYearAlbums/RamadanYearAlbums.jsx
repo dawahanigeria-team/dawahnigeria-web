@@ -1,6 +1,5 @@
 import "./ramadanYearAlbums.scss";
 import { Link } from "react-router-dom";
-import _ from "lodash";
 import Loader from "../../UI/loader/loader";
 import AlbumWidget from "../../albumWidget/AlbumWidget";
 import { ALBUMS } from "../../../utils/routes/constants";

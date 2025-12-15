@@ -5,7 +5,7 @@ import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import { useNavigate, useLocation, useParams, Link } from "react-router-dom";
 import axios from "../../utils/useAxios";
 import { BiSolidShareAlt, BiMessageMinus } from "react-icons/bi";
-import _ from "lodash";
+import uniqBy from "lodash/uniqBy";
 import comvideo from "../../assets/svg/comment-video.svg";
 import sharevideo from "../../assets/svg/share-video.svg";
 import { MdOutlineFavoriteBorder } from "react-icons/md";
@@ -75,7 +75,7 @@ const VideoPlayer = () => {
           }
 
           setsubdata((prev) =>
-            _.uniqBy(
+            uniqBy(
               [...prev, ...res.data.filter((value) => value.id !== id)],
               "id"
             )

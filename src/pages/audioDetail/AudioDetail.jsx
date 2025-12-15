@@ -26,7 +26,6 @@ import {
 import Add_playlist from "../add_playlist/AddPlaylist";
 import { durationFormat, playTimingRes } from "./UI_audiodetail/playtiming";
 import axios from "../../utils/useAxios";
-import _ from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import ShareAudio from "../../components/shareaudio/shareAudio";
 import { getLecid, showaddPlaylist } from "../../Redux/Actions/ActionCreators";

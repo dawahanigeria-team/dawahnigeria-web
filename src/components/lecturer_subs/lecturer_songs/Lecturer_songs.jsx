@@ -4,7 +4,6 @@ import MobileList from "../../../components/list/mobileList";
 import "./lecturer_song.scss";
 import { SlEmotsmile } from "react-icons/sl";
 import Loader from "../../UI/loader/loader";
-import _ from "lodash";
 import { useSelector } from "react-redux";
 import MusicList from "../../miscList/musicList";
 import { LECTURE } from "../../../utils/routes/constants";

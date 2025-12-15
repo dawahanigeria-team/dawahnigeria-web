@@ -112,6 +112,7 @@ const SimilarAudio = ({
                   >
                     <LandingWidget
                       key={idx}
+                      nid={id}
                       views={views || 0}
                       categories={name}
                       img={img || lec_img}

@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
-import _ from "lodash";
 export const useQueryGetRequest = (keyName, queryParam = {}, queryFunction) => {
   const [querieddata, setQueriedData] = useState([] || null);
   const [isLoadingNextPage, setIsLoadingNextPage] = useState(false);

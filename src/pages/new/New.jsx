@@ -5,7 +5,6 @@ import MusicList from "../../components/miscList/musicList";
 //import { useNavigate } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import Loader from "../../components/UI/loader/loader";
-import _ from "lodash";
 import { BsFillPlayFill } from "react-icons/bs";
 import { LECTURE, TRENDING, NEW } from "../../utils/routes/constants";
 import { useNavigate } from "react-router-dom";

@@ -5,7 +5,6 @@ import LecturersWidget from "../../lecturersWidget/LecturersWidget";
 import { Link } from "react-router-dom";
 import { RESOURCE_PERSON } from "../../../utils/routes/constants";
 import Loader from "../../UI/loader/loader";
-import _ from "lodash";
 import { useInfiniteScrollPagination } from "../../../hooks";
 import GenreMobileLecturer from "../../../pages/genredetail/genreMobileLecturer";
 import { lecturersApi } from "../../../services";

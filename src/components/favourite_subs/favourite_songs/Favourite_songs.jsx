@@ -3,7 +3,7 @@ import empty from "../../../assets/png/musicEmptyState.png";
 import "./favourite_song.scss";
 import { useSelector } from "react-redux";
 import Loader from "../../../components/UI/loader/loader";
-import _ from "lodash";
+import uniqBy from "lodash/uniqBy";
 import axios from "../../../utils/useAxios";
 import { useNavigate } from "react-router-dom";
 import infinitePlayFavScroll from "../../UI/infinitePlayFavScroll";
@@ -50,7 +50,7 @@ const Favourite_songs = ({ setCount1 }) => {
           .then((res) => {
             setLoading(false);
             setMyFavSong(res.data);
-            setdata(_.uniqBy(res.data?.slice(0, 10), "nid"));
+            setdata(uniqBy(res.data?.slice(0, 10), "nid"));
           })
           .catch((err) => {});
       })
@@ -68,7 +68,7 @@ const Favourite_songs = ({ setCount1 }) => {
       return;
     }
     setNextPageLoad(false);
-    setdata((prev) => _.uniqBy([...prev, ...additionalData], "nid"));
+    setdata((prev) => uniqBy([...prev, ...additionalData], "nid"));
   }, [page]);
 
   const lastElement = useCallback(
