@@ -6,6 +6,7 @@ import { useDownloadLecture } from "../../hooks";
 import { FaCheckCircle } from "react-icons/fa";
 import Loader from "../UI/loader/loader";
 import { DownloadIcon } from "../svgcomponent/svgComponent";
+import toast from "../../utils/conditionalToast"; // SSR-safe toast utility
 
 export const AudioDownloadModal = ({
   downloads,
@@ -18,10 +19,15 @@ export const AudioDownloadModal = ({
 
   const { data, isLoading, download } = useDownloadLecture(nid, showModal);
 
+  const selectedUrlKey = selectedFormat === "amr" ? "amr_url" : "mp3_url";
+  const fileUrl = data?.[selectedUrlKey];
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const fileUrl = selectedFormat === "amr" ? data?.amr_url : data?.mp3_url;
-    if (!fileUrl) return;
+    if (!fileUrl) {
+      toast.error("Download link is not available for this format yet.");
+      return;
+    }
     download(fileUrl);
   };
 
@@ -101,10 +107,18 @@ export const AudioDownloadModal = ({
             <div>
               <button
                 type="submit"
-                className="text-center bg-dncolor-500 hover:bg-dncolor-500/90 text-[#030303] py-4 lg:py-6 w-full mt-3"
+                disabled={!fileUrl}
+                className={`text-center bg-dncolor-500 hover:bg-dncolor-500/90 text-[#030303] py-4 lg:py-6 w-full mt-3 ${
+                  !fileUrl ? "opacity-60 cursor-not-allowed" : ""
+                }`}
               >
                 Download
               </button>
+              {!isLoading && !fileUrl && (
+                <p className="text-sm text-color mt-2">
+                  Select a format with an available file.
+                </p>
+              )}
             </div>
           </form>
         )}
