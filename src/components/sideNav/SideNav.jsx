@@ -43,7 +43,7 @@ const SideNav = ({ res, handleSideBar, setisOpen }) => {
   return (
     <div className="sidenav_wrapper bg-background border-r dark:border-r-0 shadow-md">
       <div className="sidenav_logo">
-        <Link to="/">
+        <Link to="/dawahcast">
           <img src={logoImg} alt="logo" />
         </Link>
         <ThemeDropDown />

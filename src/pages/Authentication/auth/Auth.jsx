@@ -31,7 +31,7 @@ const Login = () => {
         >
           <button
             onClick={() => {
-              navigate("/");
+              navigate("/dawahcast");
             }}
           >
 

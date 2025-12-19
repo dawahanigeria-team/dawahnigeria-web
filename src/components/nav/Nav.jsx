@@ -65,7 +65,7 @@ const Nav = () => {
             />
             <div
               onClick={() => {
-                navigate("/");
+                navigate("/dawahcast");
               }}
               className="nav_logo"
             >

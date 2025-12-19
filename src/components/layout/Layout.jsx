@@ -353,20 +353,20 @@ const Layout = () => {
         <div className="layout_buttom_menue2 px-6 py-2">
           <div
             onClick={() => {
-              navigate("/");
+              navigate("/dawahcast");
             }}
             className="layout_buttom_menue2_home"
           >
             <FaHome
               className={
-                location.pathname === "/"
+                location.pathname === "/dawahcast"
                   ? "layout_buttom_menue2_homeIcon_active dark:text-[#ddff2b] text-color-foreground"
                   : "layout_buttom_menue2_homeIcon text-color"
               }
             />
             <p
               className={
-                location.pathname === "/"
+                location.pathname === "/dawahcast"
                   ? "layout_buttom_menue2_homeText_active font-semibold dark:text-[#ddff2b] text-color-foreground"
                   : "layout_buttom_menue2_homeText text-color"
               }
