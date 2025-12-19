@@ -49,6 +49,7 @@ const Search = () => {
           type="search"
           className="search_input text-color"
           placeholder="Search"
+          value={inputValue}
           disabled
         />
       </div>

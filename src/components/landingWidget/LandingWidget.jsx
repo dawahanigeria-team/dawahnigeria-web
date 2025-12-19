@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext, useMemo, useCallback, memo } from "react";
 import { FiEye } from "react-icons/fi";
 import { FaPlay } from "react-icons/fa";
 import { formatNumber } from "../UI/formatter";
@@ -8,36 +8,20 @@ import { useDispatch } from "react-redux";
 import AudioLoader from "../UI/audioLoader/audioLoader";
 import { getaudioId, setPlaying } from "../../Redux/Actions/ActionCreators";
 
-const LandingWidget = ({ categories, img, views, nid, styling, rpname }) => {
+const LandingWidget = memo(({ categories, img, views, nid, styling, rpname }) => {
   const formattedViews = useMemo(() => formatNumber(views), [views]);
-  const { audioRef, setinitial, loading } = useContext(AudioContext);
+  const { setinitial, loading } = useContext(AudioContext);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    function lazyImage() {
-      const lazy = document.querySelectorAll("#song");
-      lazy.forEach((im) => {
-        const newurl = im.getAttribute("src-data");
-        im.src = newurl;
-
-        im.addEventListener("error", () => {
-          im.src = IMAGE_PLACEHOLDERS.lecture;
-        });
-      });
-    }
-    lazyImage();
-  }, []);
-
-  const handlePlayClick = (e) => {
+  const handlePlayClick = useCallback((e) => {
     e.stopPropagation();
     e.preventDefault();
-    
+
     dispatch(setPlaying(false));
     dispatch(getaudioId(nid));
     setinitial(false);
-  }
+  }, [dispatch, nid, setinitial]);
 
-  // Format the title to remove any unwanted characters or patterns
   const formatTitle = (title) => {
     if (!title) return "";
     return title.trim();
@@ -45,19 +29,17 @@ const LandingWidget = ({ categories, img, views, nid, styling, rpname }) => {
 
   return (
     <div
-      className={`flex flex-col justify-start items-start space-y-2 ${
-        styling
-          ? "w-[220px] h-fit sm:w-[220px]"
-          : "w-[220px] h-fit sm:w-[220px]"
-      }`}
+      className={`flex flex-col justify-start items-start space-y-2 flex-shrink-0 min-w-[150px] w-[150px] sm:min-w-[220px] sm:w-[220px] h-fit`}
     >
       <div className="group w-full h-[115px] sm:h-[165px] relative rounded-md">
         <img
-          src-data={img}
-          src={IMAGE_PLACEHOLDERS.lecture}
-          id="song"
-          alt=""
+          src={img || IMAGE_PLACEHOLDERS.lecture}
+          alt={categories || "Audio thumbnail"}
           className="w-full h-full object-cover rounded-md"
+          loading="lazy"
+          onError={(e) => {
+            e.currentTarget.src = IMAGE_PLACEHOLDERS.lecture;
+          }}
         />
         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300 rounded-md" />
         <div className="absolute bottom-2 left-2 flex items-center space-x-1">
@@ -66,7 +48,8 @@ const LandingWidget = ({ categories, img, views, nid, styling, rpname }) => {
         </div>
         <button
           onClick={handlePlayClick}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-[#d6ff00] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300"
+          aria-label={`Play ${categories}`}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-dncolor-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300"
         >
           {loading ? (
             <AudioLoader />
@@ -87,6 +70,8 @@ const LandingWidget = ({ categories, img, views, nid, styling, rpname }) => {
       </div>
     </div>
   );
-};
+});
+
+LandingWidget.displayName = "LandingWidget";
 
 export default LandingWidget;

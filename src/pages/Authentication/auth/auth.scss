@@ -1,18 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@200..800&display=swap');
+
 @mixin header_link_style {
-  font-family: "Nunito Sans";
+  font-family: "Manrope", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@mixin header_link_style_active {
+  font-family: "DM Serif Display", serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 18px;
-  // line-height: 42px;
-  //color: #cfcfcf80;
-}
-@mixin header_link_style_active {
-  font-family: "Nunito Sans";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 25px;
-  // line-height: 68px;
-  //color: #f2f2f2;
+  font-size: 28px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .auth_wrapper {
@@ -20,123 +21,467 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-
- 
   width: 100%;
   height: 100%;
-  .auth_container {
-    overflow: hidden;
-    //overflow: scroll;
-    padding: 1rem 1.6rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    position: relative;
-    height: 100vh;
-    position: relative;
-    @media screen and (min-width: 690px) {
-      width: 650px;
-      overflow: unset;
-      
-    }
-    .auth_hero_image {
-      position: absolute;
-      top: 0;
-      left: 0;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
+
+  .auth_geometric_bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.6;
+
+    .geometric_pattern {
       width: 100%;
-      z-index: 0;
-      @media screen and (min-width: 690px) {
-        display: none;
+      height: 100%;
+      color: var(--foreground, #f2f2f2);
+
+      .floating_orb {
+        animation: float 20s ease-in-out infinite;
+        filter: blur(60px);
+
+        &.orb_1 {
+          animation-delay: 0s;
+        }
+
+        &.orb_2 {
+          animation-delay: -7s;
+        }
+
+        &.orb_3 {
+          animation-delay: -14s;
+        }
       }
     }
+  }
+
+  .auth_container {
+    overflow: hidden;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    position: relative;
+    min-height: 100vh;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+
+    &.auth_mounted {
+      animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @media screen and (min-width: 690px) {
+      grid-template-columns: 45% 55%;
+      width: 95%;
+      max-width: 1200px;
+      min-height: 90vh;
+      height: auto;
+      border-radius: 24px;
+      padding: 0;
+      box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.3),
+        0 0 100px rgba(214, 255, 0, 0.1);
+      backdrop-filter: blur(20px);
+    }
+
+    @media screen and (min-width: 1024px) {
+      max-width: 1300px;
+    }
+
+    .auth_hero_section {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 35vh;
+      order: 2;
+      z-index: 0;
+
+      @media screen and (min-width: 690px) {
+        position: relative;
+        height: auto;
+        order: 1;
+        border-radius: 24px 0 0 24px;
+        overflow: hidden;
+      }
+
+      .auth_hero_content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        @media screen and (min-width: 690px) {
+          position: relative;
+          height: 100%;
+        }
+      }
+
+      .auth_hero_image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+
+        @media screen and (min-width: 690px) {
+          display: block;
+          position: relative;
+          border-radius: 24px 0 0 24px;
+        }
+      }
+
+      .auth_hero_overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+
+        &.gradientauth {
+          background: linear-gradient(
+            180deg,
+            rgba(10, 14, 26, 0.5) 0%,
+            rgba(10, 14, 26, 0.95) 100%
+          );
+        }
+
+        &.gradientauth_light {
+          background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.5) 0%,
+            rgba(255, 255, 255, 0.95) 100%
+          );
+        }
+
+        @media screen and (min-width: 690px) {
+          background: linear-gradient(
+            135deg,
+            rgba(214, 255, 0, 0.15) 0%,
+            rgba(10, 14, 26, 0.7) 100%
+          ) !important;
+        }
+      }
+
+      .hero_geometric_accent {
+        position: absolute;
+        bottom: 10%;
+        right: 10%;
+        z-index: 2;
+        display: none;
+
+        @media screen and (min-width: 690px) {
+          display: block;
+        }
+
+        .geometric_line {
+          width: 80px;
+          height: 2px;
+          background: #d6ff00;
+          margin-bottom: 12px;
+          transform-origin: left;
+          animation: expandLine 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+          box-shadow: 0 0 20px rgba(214, 255, 0, 0.5);
+
+          &.line_1 {
+            animation-delay: 0.3s;
+            width: 0;
+          }
+
+          &.line_2 {
+            animation-delay: 0.5s;
+            width: 0;
+            opacity: 0.7;
+          }
+
+          &.line_3 {
+            animation-delay: 0.7s;
+            width: 0;
+            opacity: 0.4;
+          }
+        }
+      }
+    }
+
     .auth_header_logo {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.25rem;
+      z-index: 50;
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: flex-end;
-      width: 100%;
-      z-index: 1;
-      * {
+
+      @media screen and (min-width: 690px) {
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+        order: 2;
+      }
+
+      .close_button {
+        background: none;
+        border: none;
         cursor: pointer;
+        padding: 0.625rem;
+        border-radius: 14px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(10px);
+        -webkit-tap-highlight-color: transparent;
+        min-width: 48px;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        @media screen and (min-width: 690px) {
+          padding: 0.5rem;
+          border-radius: 12px;
+          min-width: auto;
+          min-height: auto;
+        }
+
+        &:hover {
+          background: rgba(214, 255, 0, 0.1);
+          transform: rotate(90deg);
+        }
+
+        &:active {
+          transform: rotate(90deg) scale(0.95);
+        }
       }
     }
+
     .auth_header_logo_none {
       display: none;
     }
-    .sl_wrapper::-webkit-scrollbar {
-      width: 3px;
-      height: 18px;
-      margin-left: 3px;
-    }
-    .sl_wrapper::-moz-scrollbar {
-      width: 3px;
-      height: 18px;
-      margin-left: 3px;
-    }
+
     .sl_wrapper {
       width: 100%;
-      height: 100%;
+      min-height: 100vh;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
       z-index: 10;
-      @media screen and (max-width: 450px) {
-        overflow-y: hidden;
-        height: 100%;
-        z-index: 10;
+      padding: 0;
+      order: 1;
+      position: relative;
+      margin-top: 30vh;
+      background: var(--background);
+      border-radius: 32px 32px 0 0;
+      box-shadow:
+        0 -10px 40px rgba(0, 0, 0, 0.3),
+        0 0 60px rgba(214, 255, 0, 0.05);
+      backdrop-filter: blur(20px);
+      padding: 2.5rem max(1.5rem, env(safe-area-inset-right)) max(3rem, env(safe-area-inset-bottom)) max(1.5rem, env(safe-area-inset-left));
+
+      @media screen and (min-width: 690px) {
+        margin-top: 0;
+        border-radius: 0;
+        order: 2;
+        padding: 3rem 3rem 2rem;
+        display: flex;
+        flex-direction: column;
+        box-shadow: none;
+        backdrop-filter: none;
       }
+
+      @media screen and (min-width: 1024px) {
+        padding: 4rem 4rem 3rem;
+      }
+
+      &::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba(214, 255, 0, 0.3);
+        border-radius: 4px;
+
+        &:hover {
+          background: rgba(214, 255, 0, 0.5);
+        }
+      }
+
       .auth_links_none {
         display: none;
       }
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 2px;
+        display: block;
+
+        @media screen and (min-width: 690px) {
+          display: none;
+        }
+      }
+
       .auth_links {
         display: flex;
-        width: 98%;
-        @media screen and (max-width: 450px) {
-          width: 100%;
-        }
+        width: 100%;
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        gap: 2rem;
-        z-index: 1;
-        margin-top: 1rem;
-        margin-bottom: 1rem;
-        height: 2.5rem;
+        gap: 2.5rem;
+        margin-bottom: 2.5rem;
+        height: auto;
+        animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+
+        @media screen and (min-width: 690px) {
+          margin-bottom: 2.5rem;
+          gap: 4rem;
+        }
+
         a {
           text-decoration: none;
-          .auth_login_link {
-            @include header_link_style;
-            transition: font-size 0.4s ease-in-out;
-            margin: unset;
-            padding: unset;
+          position: relative;
+          -webkit-tap-highlight-color: transparent;
+          padding: 0.5rem;
+          margin: -0.5rem;
+
+          @media screen and (min-width: 690px) {
+            padding: 0;
+            margin: 0;
           }
-          .auth_login_link_active {
-            @include header_link_style_active;
-            transition: font-size 0.4s ease-in-out;
-            margin: unset;
-            padding: unset;
-          }
-          .auth_signup_link {
-            @include header_link_style;
-            transition: font-size 0.4s ease-in-out;
-            margin: unset;
-            padding: unset;
-          }
-          .auth_signup_link_active {
-            @include header_link_style_active;
-            transition: font-size 0.4s ease-in-out;
-            margin: unset;
-            padding: unset;
+
+          .auth_link_wrapper {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+
+            .auth_login_link,
+            .auth_signup_link {
+              @include header_link_style;
+              margin: 0;
+              padding: 0;
+              position: relative;
+              opacity: 0.6;
+              font-size: 17px;
+
+              @media screen and (min-width: 690px) {
+                font-size: 16px;
+              }
+
+              &:hover {
+                opacity: 1;
+              }
+            }
+
+            .auth_login_link_active,
+            .auth_signup_link_active {
+              @include header_link_style_active;
+              margin: 0;
+              padding: 0;
+              opacity: 1;
+              background: linear-gradient(135deg, #d6ff00 0%, #8faa00 100%);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;
+              font-size: 30px;
+
+              @media screen and (min-width: 690px) {
+                font-size: 28px;
+              }
+            }
+
+            .auth_link_indicator {
+              position: absolute;
+              bottom: -8px;
+              left: 0;
+              right: 0;
+              height: 3px;
+              background: linear-gradient(90deg, #d6ff00 0%, #8faa00 100%);
+              border-radius: 2px;
+              box-shadow: 0 0 12px rgba(214, 255, 0, 0.6);
+              animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+              @media screen and (min-width: 690px) {
+                height: 2px;
+                box-shadow: 0 0 10px rgba(214, 255, 0, 0.5);
+              }
+            }
           }
         }
       }
+
       .auth_outlet {
-        width: 98%;
-        @media screen and (max-width: 450px) {
-          width: 100%;
-        }
-        z-index: 2;
-        margin-top: 1rem;
+        width: 100%;
+        flex: 1;
+        animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
       }
     }
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  33% {
+    transform: translate(30px, -30px);
+  }
+  66% {
+    transform: translate(-20px, 20px);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes expandLine {
+  from {
+    width: 0;
+  }
+  to {
+    width: 80px;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
   }
 }

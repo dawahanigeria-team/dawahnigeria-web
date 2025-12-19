@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./signupform.scss";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
-//import facebook from "../../assets/png/social/facebook.png";
-import twitter from "../../assets/png/social/twitter.png";
-//import google from "../../assets/png/social/google.png";
-
+import { MdEmail, MdLock, MdPerson, MdLanguage, MdCheck } from "react-icons/md";
+import { IoChevronDown } from "react-icons/io5";
 import GetGoogleOAuth from "./socials/googleauth";
 import GetFacebookAuth from "./socials/facebookauth";
-import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
+import { toast } from "../../utils/conditionalToast";
 import axios from "../../utils/useAxios";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -21,11 +19,13 @@ const SignupForm = () => {
   const [show, setShow] = useState("password");
   const [show2, setShow2] = useState("password");
   const [isdrop, setisdrop] = useState(false);
-  const [langData, setLangData] = useState();
-  const [terms, setTerms] = useState(0);
+  const [langData, setLangData] = useState([]);
+  const [terms, setTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [langid, setlangid] = useState("");
   const [lang, setLang] = useState("");
+  const [mounted, setMounted] = useState(false);
+  const [focusedField, setFocusedField] = useState(null);
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -33,7 +33,9 @@ const SignupForm = () => {
     confirm_password: "",
   });
   const isSocial = false;
+
   useEffect(() => {
+    setMounted(true);
     axios
       .get(`/all_lang_api.php`)
       .then((res) => {
@@ -45,9 +47,7 @@ const SignupForm = () => {
   const handleInput = (e) => {
     e.preventDefault();
     const newData = { ...data };
-
     newData[e.target.id] = e.target.value;
-
     setData(newData);
   };
 
@@ -70,7 +70,6 @@ const SignupForm = () => {
 
     if (password.length < 6 || confirm_password.length < 6) {
       toast.error("Password must be at least 6 characters");
-
       return;
     }
     if (confirm_password !== password) {
@@ -105,115 +104,156 @@ const SignupForm = () => {
           handleSubmit(e);
         }}
         style={{ height: `${Math.floor(0.7 * window.innerHeight)}px` }}
-        className="signupform_form"
+        className={`signupform_form ${mounted ? 'form_mounted' : ''}`}
       >
-        <div className="w-full">
-          <input
-            onChange={(e) => {
-              handleInput(e);
-            }}
-            type="text"
-            name="text"
-            placeholder="Username"
-            required
-            value={name}
-            id="name"
-            className="signupform_fullname text-foreground"
-          />
-          <input
-            onChange={(e) => {
-              handleInput(e);
-            }}
-            type="email"
-            name="email"
-            placeholder="Email Address"
-            required
-            value={email}
-            id="email"
-            className="signupform_name text-foreground"
-          />
+        <div className="w-full form_content">
+          {/* Welcome Text */}
+          <div className="welcome_text">
+            <h2 className="text-foreground">Create account</h2>
+            <p className="text-color">Join the Dawah Nigeria community</p>
+          </div>
 
-          <div className="signupform_password_wrap">
+          {/* Username Input */}
+          <div className={`input_group ${focusedField === 'name' ? 'focused' : ''} ${name ? 'has_value' : ''}`}>
+            <div className="input_icon">
+              <MdPerson />
+            </div>
             <input
               onChange={(e) => {
                 handleInput(e);
               }}
-              type={show}
-              placeholder="Password"
-              name="password"
+              onFocus={() => setFocusedField('name')}
+              onBlur={() => setFocusedField(null)}
+              type="text"
+              name="text"
+              placeholder="Username"
               required
-              value={password}
-              id="password"
-              className="signupform_password text-foreground"
+              value={name}
+              id="name"
+              className="signupform_fullname text-foreground"
             />
-            {show === "password" && (
-              <div className="signupform_password_icon_show_wrap">
-                <AiFillEye
-                  onClick={() => setShow("text")}
-                  className="signupform_password_icon_show text-color"
-                />
-              </div>
-            )}
-            {show !== "password" && (
-              <div className="signupform_password_icon_hide_wrap">
-                <AiFillEyeInvisible
-                  onClick={() => setShow("password")}
-                  className="signupform_password_icon_hide text-color"
-                />
-              </div>
-            )}
+            <div className="input_border"></div>
           </div>
-          <div className="signupform_confpassword_wrap">
+
+          {/* Email Input */}
+          <div className={`input_group ${focusedField === 'email' ? 'focused' : ''} ${email ? 'has_value' : ''}`}>
+            <div className="input_icon">
+              <MdEmail />
+            </div>
             <input
               onChange={(e) => {
                 handleInput(e);
               }}
-              type={show2}
-              placeholder="Confirm Password"
-              name="confirm_password"
+              onFocus={() => setFocusedField('email')}
+              onBlur={() => setFocusedField(null)}
+              type="email"
+              name="email"
+              placeholder="Email Address"
               required
-              value={confirm_password}
-              id="confirm_password"
-              className="signupform_confpassword text-foreground"
+              value={email}
+              id="email"
+              className="signupform_name text-foreground"
             />
-            {show2 === "password" && (
-              <div className="signupform_confpassword_icon_show_wrap">
-                <AiFillEye
-                  onClick={() => setShow2("text")}
-                  className="signupform_confpassword_icon_show text-color"
-                />
-              </div>
-            )}
-            {show2 !== "password" && (
-              <div className="signupform_confpassword_icon_hide_wrap">
-                <AiFillEyeInvisible
-                  onClick={() => setShow2("password")}
-                  className="signupform_confpassword_icon_hide text-color"
-                />
-              </div>
-            )}
+            <div className="input_border"></div>
           </div>
-          <div
-            onClick={() => {
-              setisdrop(!isdrop);
-            }}
-            className={
-              isdrop ? "signupform_lang rbb z-[20]" : "signupform_lang bb"
-            }
-          >
-            <span className={lang ? "selected_lang" : "selected_lang_none"}>
-              {lang || "-select a language-"}
-            </span>
+
+          {/* Password Input */}
+          <div className={`input_group ${focusedField === 'password' ? 'focused' : ''} ${password ? 'has_value' : ''}`}>
+            <div className="input_icon">
+              <MdLock />
+            </div>
+            <div className="signupform_password_wrap">
+              <input
+                onChange={(e) => {
+                  handleInput(e);
+                }}
+                onFocus={() => setFocusedField('password')}
+                onBlur={() => setFocusedField(null)}
+                type={show}
+                placeholder="Password"
+                name="password"
+                required
+                value={password}
+                id="password"
+                className="signupform_password text-foreground"
+              />
+              <button
+                type="button"
+                onClick={() => setShow(show === "password" ? "text" : "password")}
+                className="password_toggle"
+              >
+                {show === "password" ? (
+                  <AiFillEye className="text-color" />
+                ) : (
+                  <AiFillEyeInvisible className="text-color" />
+                )}
+              </button>
+            </div>
+            <div className="input_border"></div>
+          </div>
+
+          {/* Confirm Password Input */}
+          <div className={`input_group ${focusedField === 'confirm_password' ? 'focused' : ''} ${confirm_password ? 'has_value' : ''}`}>
+            <div className="input_icon">
+              <MdLock />
+            </div>
+            <div className="signupform_confpassword_wrap">
+              <input
+                onChange={(e) => {
+                  handleInput(e);
+                }}
+                onFocus={() => setFocusedField('confirm_password')}
+                onBlur={() => setFocusedField(null)}
+                type={show2}
+                placeholder="Confirm Password"
+                name="confirm_password"
+                required
+                value={confirm_password}
+                id="confirm_password"
+                className="signupform_confpassword text-foreground"
+              />
+              <button
+                type="button"
+                onClick={() => setShow2(show2 === "password" ? "text" : "password")}
+                className="password_toggle"
+              >
+                {show2 === "password" ? (
+                  <AiFillEye className="text-color" />
+                ) : (
+                  <AiFillEyeInvisible className="text-color" />
+                )}
+              </button>
+            </div>
+            <div className="input_border"></div>
+          </div>
+
+          {/* Language Selector */}
+          <div className={`input_group language_select ${isdrop ? 'dropdown_open' : ''} ${lang ? 'has_value' : ''}`}>
+            <div className="input_icon">
+              <MdLanguage />
+            </div>
+            <div
+              onClick={() => {
+                setisdrop(!isdrop);
+              }}
+              className="language_selector"
+            >
+              <span className={lang ? "selected_lang" : "selected_lang_none"}>
+                {lang || "Select a language"}
+              </span>
+              <IoChevronDown className={`dropdown_icon ${isdrop ? 'rotated' : ''}`} />
+            </div>
             {isdrop && (
-              <div className="selected_lang_drop">
+              <div className="language_dropdown">
                 <button
+                  type="button"
                   onClick={() => {
                     setisdrop(!isdrop);
                   }}
-                  className="fixed z-[50] inset-0 bg-none w-full h-full"
+                  className="dropdown_backdrop"
                 ></button>
-                <div className="relative z-[60] w-full h-[200px] overflow-y-auto shadow-lg">
-                  <div className="flex flex-col w-full h-full">
+                <div className="dropdown_menu">
+                  <div className="dropdown_items">
                     {langData.map(({ name, id }, index) => {
                       return (
                         <div
@@ -223,9 +263,10 @@ const SignupForm = () => {
                             setLang(name);
                             setisdrop(!isdrop);
                           }}
-                          className="drops hover:bg-gray-100 cursor-pointer"
+                          className={`dropdown_item ${langid === id ? 'selected' : ''}`}
                         >
-                          {name}
+                          <span>{name}</span>
+                          {langid === id && <MdCheck className="check_icon" />}
                         </div>
                       );
                     })}
@@ -233,81 +274,54 @@ const SignupForm = () => {
                 </div>
               </div>
             )}
+            <div className="input_border"></div>
           </div>
 
-          {/**
-         <div className="signupform_gender_wrap">
-          <div className="signupform_male">
-            <div
-              onClick={() => setGender("male")}
-              className={`signupform_male_button ${
-                gender === "male"
-                  ? "signupform_male_button_active"
-                  : "signupform_male_button_inactive"
-              }`}
-            >
-              {gender === "male" ? (
-                <GrCheckmark className="signupform_male_icon" />
-              ) : (
-                ""
-              )}
-            </div>
-            <p className="signupform_male_text">Male</p>
-          </div>
-          <div className="signupform_female">
-            <div
-              onClick={() => setGender("female")}
-              className={`signupform_female_button ${
-                gender === "female"
-                  ? "signupform_female_button_active"
-                  : "signupform_female_button_inactive"
-              }`}
-            >
-              {gender === "female" ? (
-                <GrCheckmark className="signupform_female_icon" />
-              ) : (
-                ""
-              )}
-            </div>
-            <p className="signupform_female_text">Female</p>
-          </div>
-        </div>
-         
-         */}
-
-          <button className="signupform_button">
-            {loading ? <Loader /> : <span>Sign up</span>}
-          </button>
+          {/* Terms Checkbox */}
           <div className="signupform_terms">
-            <div
+            <button
+              type="button"
               onClick={() => {
                 setTerms(!terms);
               }}
-              className={`signupform_terms_button ${
-                terms
-                  ? "signupform_terms_button_active"
-                  : "signupform_terms_button_inactive"
-              }`}
-            ></div>
+              className={`terms_checkbox ${terms ? 'checked' : ''}`}
+            >
+              {terms && <MdCheck className="check_icon" />}
+            </button>
             <div className="signupform_terms_text">
-              <p className="signupform_terms_text1 text-color">
+              <p className="text-color">
                 I have read and accept the{" "}
-              </p>
-              <p className="signupform_terms_text2 text-foreground dark:text-[#ddff2b]">
-                Terms and Condition
+                <span className="terms_link text-foreground">Terms and Conditions</span>
               </p>
             </div>
           </div>
+
+          {/* Submit Button */}
+          <button className="signupform_button" disabled={loading}>
+            {loading ? (
+              <Loader />
+            ) : (
+              <span className="button_content">
+                <span>Create account</span>
+                <svg className="button_arrow" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </span>
+            )}
+          </button>
         </div>
 
-        <span className="signupform_or text-color">- or -</span>
+        {/* Divider */}
+        <div className="divider_wrapper">
+          <div className="divider_line"></div>
+          <span className="signupform_or text-color">or continue with</span>
+          <div className="divider_line"></div>
+        </div>
+
+        {/* Social Login */}
         <div className="login_socials inset-x-0 flex items-center w-full mx-auto h-fit">
           <div className="hidden">
             <GetFacebookAuth data={data} setData={setData} />
-          </div>
-
-          <div className="hidden w-[45px] h-[45px]">
-            <img className="w-full h-full" src={twitter} alt="twitter" />
           </div>
 
           <div className="z-[1] w-full">

@@ -150,7 +150,7 @@ const ResetPassword = () => {
 
         <button
           onClick={handleSubmit}
-          className="flex justify-center items-center h-[3.2rem] w-full rounded-[5px] text-[#070707] font-medium bg-[#d6ff00]"
+          className="flex justify-center items-center h-[3.2rem] w-full rounded-[5px] text-[#070707] font-medium bg-dncolor-500"
         >
           {loading ? <Loader /> : <span> Reset Password</span>}
         </button>

@@ -11,7 +11,7 @@ import { LECTURE } from "../../utils/routes/constants";
 import LandingWidget from "../../components/landingWidget/LandingWidget";
 import Loader from "../../components/UI/loader/loader";
 import infinitePlayFavScroll from "../../components/UI/infinitePlayFavScroll";
-import _ from "lodash";
+import uniqBy from "lodash/uniqBy";
 import playfolder from "../../assets/svg/folder.svg";
 import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
 import MusicList from "../../components/miscList/musicList";
@@ -48,7 +48,7 @@ const My_playlist = () => {
         }
       )
       .then((res) => {
-        setmyFolders(_.uniqBy(res.data, "name"));
+        setmyFolders(uniqBy(res.data, "name"));
       })
       .catch((err) => {});
   }, []);
@@ -93,7 +93,7 @@ const My_playlist = () => {
             }
             setmyplaylist(res.data);
             setLoading(false);
-            setdata(_.uniqBy(res.data?.slice(0, 10), "nid"));
+            setdata(uniqBy(res.data?.slice(0, 10), "nid"));
           })
           .catch((err) => {});
       })
@@ -110,7 +110,7 @@ const My_playlist = () => {
       setIsEmpty(true);
     }
     setNextPageLoad(false);
-    setdata((prev) => _.uniqBy([...prev, ...additionalData], "nid"));
+    setdata((prev) => uniqBy([...prev, ...additionalData], "nid"));
   }, [page]);
 
   const lastElement = useCallback(

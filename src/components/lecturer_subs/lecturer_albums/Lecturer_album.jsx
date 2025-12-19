@@ -6,7 +6,6 @@ import lazyalbum from "../../../assets/png/album.jpeg";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Loader from "../../UI/loader/loader";
-import _ from "lodash";
 import CommentBox from "../../comment/comment";
 import { ALBUMS } from "../../../utils/routes/constants";
 import { useQueryGetRequest } from "../../../hooks/getqueries";

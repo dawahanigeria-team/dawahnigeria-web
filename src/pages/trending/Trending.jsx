@@ -8,7 +8,7 @@ import { BsFillPlayFill } from "react-icons/bs";
 import Loader from "../../components/UI/loader/loader";
 import { LECTURE, TRENDING } from "../../utils/routes/constants";
 import { useInfiniteScrollPagination } from "../../hooks";
-import _ from "lodash";
+import uniqBy from "lodash/uniqBy";
 import { useQueryGetRequest } from "../../hooks/getqueries";
 import { trendingApi } from "../../services/trending.service";
 import HeadMeta from "../../components/head-meta";
@@ -77,7 +77,7 @@ const Trending = () => {
         )}
         {
           <div className="table">
-            {_.uniqBy(querieddata, "nid")?.map(
+            {uniqBy(querieddata, "nid")?.map(
               (
                 {
                   mp3_thumbnail,

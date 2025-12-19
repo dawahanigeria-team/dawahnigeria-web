@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
 import "./audiodetail.scss";
+import "../../components/similaraudio/similarAudio.scss";
 import Container from "../../components/container/Container";
 import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
 import { CiPlay1 } from "react-icons/ci";
@@ -26,7 +27,6 @@ import {
 import Add_playlist from "../add_playlist/AddPlaylist";
 import { durationFormat, playTimingRes } from "./UI_audiodetail/playtiming";
 import axios from "../../utils/useAxios";
-import _ from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import ShareAudio from "../../components/shareaudio/shareAudio";
 import { getLecid, showaddPlaylist } from "../../Redux/Actions/ActionCreators";
@@ -39,7 +39,6 @@ import {
   getRepeat,
   getValue,
 } from "../../Redux/Actions/ActionCreators";
-import { useSimilarAudioHook } from "../../hooks";
 import { GENRES, LECTURE, MORE } from "../../utils/routes/constants";
 import CurrentPlayData from "../../components/currentData/currentPlayData";
 import Loader from "../../components/UI/loader/loader";
@@ -89,7 +88,6 @@ const AudioDetail = () => {
   const [isEmpty, setIsEmpty] = useState(false);
   const [isPrevious, setIsPrevious] = useState(false);
   const [isAddedToFavorite, setisAddedToFavorite] = useState(false);
-  const [similarAudio, setSimilarAudio] = useState([]);
   const [addFav, setaddFav] = useState(false);
   const [isdisabled, setdisabled] = useState(false);
   const [getFavs, setgetfavs] = useState([]);
@@ -110,9 +108,7 @@ const AudioDetail = () => {
     }
   }, []);
   
-  const { refetch } = useAudioHook(id);
-  const keyParam = { id: currentAudioInfo?.rp_id, page: 1 };
-  const { querieddata: similarAudios } = useSimilarAudioHook(keyParam);
+  useAudioHook(id);
 
   const handlePlay = () => {
     dispatch(getaudioId(id));
@@ -357,6 +353,8 @@ const AudioDetail = () => {
     "get",
     `/genre_api.php?cat_id=${currentAudioInfo?.cat_id}`
   );
+
+  const similarAudioList = similarLecture?.audio ?? [];
 
   const shareAudio = () => {
     setisShare(!isShare);
@@ -976,7 +974,7 @@ const AudioDetail = () => {
               <img src={foward} alt="foward" />
             </div>
             <div ref={slide} className="overflow_auto_wrapper">
-              {(similarLecture?.audio ?? []).map(
+              {similarAudioList.map(
                 (
                   {
                     img,
@@ -997,22 +995,22 @@ const AudioDetail = () => {
                     <div
                       className="similarWidget_album_item"
                       onClick={() => {
-                        navigate(`${LECTURE}${id}`);
+                        navigate(`${LECTURE}${nid}`);
 
                         // setendpUrl(similarAudioUrl);
                         dispatch(getPack(null));
                         dispatch(getPage(1));
                         dispatch(getaudioId(nid));
                         dispatch(getCount(idx));
-                        dispatch(getPack(similarAudio));
+                        dispatch(getPack(similarAudioList));
 
                         setCurUser(currentUser);
-                        window.location.reload();
                       }}
                       key={idx + 1}
                     >
                       <LandingWidget
                         key={idx}
+                        nid={nid}
                         categories={mp3_title || categories || cats}
                         img={img || lec_img}
                         views={views}

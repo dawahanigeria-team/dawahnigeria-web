@@ -25,7 +25,6 @@ import { formatNumber } from "../../components/UI/formatter";
 import { useSelector, useDispatch } from "react-redux";
 import useaxios from "../../utils/useAxios";
 import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
-import _ from "lodash";
 import CommentBox from "../../components/comment/comment";
 import SimilarAudio from "../../components/similaraudio/similarAudio";
 import ShareAudio from "../../components/shareaudio/shareAudio";
