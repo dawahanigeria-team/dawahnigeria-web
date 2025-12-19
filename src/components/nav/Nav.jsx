@@ -82,8 +82,8 @@ const Nav = () => {
           <div className="hide"></div>
           <div className="nav_download">
             <div className="nav_download1">
-              <Link
-                to={process.env.REACT_APP_GOOGLE_PLAY_URL}
+              <button
+                type="button"
                 aria-label="Download app on Google play"
                 onClick={(e) => {
                   e.preventDefault();
@@ -92,11 +92,11 @@ const Nav = () => {
                 }}
               >
                 <img src={googleplaySvg} alt="" />
-              </Link>
+              </button>
             </div>
             <div className="nav_download2">
-              <Link
-                to={process.env.REACT_APP_APPLE_STORE_URL}
+              <button
+                type="button"
                 aria-label="Download app on Applestore"
                 onClick={(e) => {
                   e.preventDefault();
@@ -105,7 +105,7 @@ const Nav = () => {
                 }}
               >
                 <img src={appleSvg} alt="" />
-              </Link>
+              </button>
             </div>
           </div>
 

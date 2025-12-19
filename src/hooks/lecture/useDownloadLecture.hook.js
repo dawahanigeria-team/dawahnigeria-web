@@ -3,7 +3,7 @@ import { lectureApi } from "../../services";
 import toast from "../../utils/conditionalToast"; // SSR-safe toast utility
 import { useCallback } from "react";
 
-export const useDownloadLecture = (lecid) => {
+export const useDownloadLecture = (lecid, enabled = true) => {
   const { isLoading, data, error } = useQuery(
     ["lecture", "download", lecid],
     () => {
@@ -11,7 +11,7 @@ export const useDownloadLecture = (lecid) => {
       return lectureApi.downloadFile(payload);
     },
     {
-      enabled: !!lecid,
+      enabled: Boolean(enabled) && !!lecid,
       onError: (error) => {
         
         toast.error("Unable to load lecture file");

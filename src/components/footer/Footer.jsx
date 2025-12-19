@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./footer.scss";
-import { Link } from "react-router-dom";
 import apple from "../../assets/svg/apple.svg";
 import googleplay from "../../assets/svg/googleplay.svg";
 import { FaFacebook, FaYoutube } from "react-icons/fa";
@@ -31,8 +30,8 @@ const Footer = () => {
             <div className="flex space-y-6 sm:col-span-2 flex-col justify-start items-start">
               {/* App Store Links */}
               <div className="w-full flex items-center space-x-4">
-                <Link
-                  to={process.env.REACT_APP_APPLE_STORE_URL}
+                <button
+                  type="button"
                   aria-label="Download app on Applestore"
                   onClick={(e) => {
                     e.preventDefault();
@@ -46,9 +45,9 @@ const Footer = () => {
                     src={apple}
                     alt="Download on App Store"
                   />
-                </Link>
-                <Link
-                  to={process.env.REACT_APP_GOOGLE_PLAY_URL}
+                </button>
+                <button
+                  type="button"
                   aria-label="Download app on Google play"
                   onClick={(e) => {
                     e.preventDefault();
@@ -62,7 +61,7 @@ const Footer = () => {
                     src={googleplay}
                     alt="Get it on Google Play"
                   />
-                </Link>
+                </button>
               </div>
 
               {/* Social Links */}
@@ -110,14 +109,16 @@ const Footer = () => {
 
 // Social Link Component
 const SocialLink = ({ href, icon }) => (
-  <Link
-    to={href}
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
     className="group flex items-center justify-center w-10 h-10 rounded-full bg-zinc-800/50 hover:bg-zinc-700/50 transition-all duration-300"
   >
     <div className="text-2xl text-zinc-400 group-hover:text-[#ddff2b] transition-colors duration-300">
       {icon}
     </div>
-  </Link>
+  </a>
 );
 
 export default Footer;
