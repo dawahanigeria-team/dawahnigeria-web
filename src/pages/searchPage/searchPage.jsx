@@ -187,7 +187,7 @@ const SearchPage = () => {
   function fetchData(page = 1) {
     const searchValue = searchParams.get("query");
     if (!searchValue) {
-      navigate("/");
+      navigate("/dawahcast");
       return;
     }
 
