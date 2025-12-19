@@ -13,14 +13,16 @@ export const AudioDownloadModal = ({
   triggerInnerChild,
   className = "",
 }) => {
-  const [showModal, setShowModal] = useState();
+  const [showModal, setShowModal] = useState(false);
   const [selectedFormat, setSelectedFormat] = useState("mp3");
 
-  const { data, isLoading, download } = useDownloadLecture(nid);
+  const { data, isLoading, download } = useDownloadLecture(nid, showModal);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    download(selectedFormat === "amr" ? data?.amr_url : data?.mp3_url);
+    const fileUrl = selectedFormat === "amr" ? data?.amr_url : data?.mp3_url;
+    if (!fileUrl) return;
+    download(fileUrl);
   };
 
   const downloadOptions = useMemo(
