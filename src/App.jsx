@@ -45,6 +45,7 @@ import {
   RECO1,
   RECO2,
   RAMADAN,
+  DOWNLOAD,
 } from "./utils/routes/constants";
 import { usePageTracking } from "./utils/tracking";
 import { useThemeHook } from "./hooks/common/useTheme.hook";
@@ -78,6 +79,7 @@ const VideoPlayer = lazy(() => import("./pages/videoplayer/videoPlayer"));
 const Favourite = lazy(() => import("./pages/favourite/Favourite"));
 const Myplaylist = lazy(() => import("./pages/my_playlist/My_playlist"));
 const LecturesListDetail = lazy(() => import("./pages/lecturesListDetail/LecturesListDetail"));
+const Download = lazy(() => import("./pages/download/Download"));
 const PlaylistDetail = lazy(() => import("./pages/lecturesListDetail/playlistdetail"));
 const More = lazy(() => import("./components/moreView/more"));
 const Library = lazy(() => import("./pages/library/library"));
@@ -334,6 +336,7 @@ const App = () => {
                         <Route path={RECOMMENDED_MORE} element={<More />} />
                         <Route path={SEARCH} element={<SearchPage />} />
                         <Route path={LIBRARY} element={<Library />} />
+                        <Route path={DOWNLOAD} element={<Download />} />
                         <Route path={GENRES} element={<Genres />} />
                         <Route path={`${GENRES}/:id`} element={<GenreDetail />} />
                         <Route path={RECO2} element={<Podcast />} />

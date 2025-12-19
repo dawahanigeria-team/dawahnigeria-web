@@ -32,7 +32,7 @@ import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
 export const NavContext = createContext();
 
 const Layout = () => {
-  const { currentAudioInfo, playing, audioId, value } = useSelector(
+  const { currentAudioInfo, playing, audioId, value, token } = useSelector(
     (state) => state.user
   );
   const navigate = useNavigate();
@@ -422,6 +422,11 @@ const Layout = () => {
           </div>
           <div
             onClick={() => {
+              if (!token) {
+                navigate("/auth/login");
+                return;
+              }
+
               navigate(DOWNLOAD);
             }}
             className="layout_buttom_menue2_download"
