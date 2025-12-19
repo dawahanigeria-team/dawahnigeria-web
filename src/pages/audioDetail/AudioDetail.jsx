@@ -39,7 +39,6 @@ import {
   getRepeat,
   getValue,
 } from "../../Redux/Actions/ActionCreators";
-import { useSimilarAudioHook } from "../../hooks";
 import { GENRES, LECTURE, MORE } from "../../utils/routes/constants";
 import CurrentPlayData from "../../components/currentData/currentPlayData";
 import Loader from "../../components/UI/loader/loader";
@@ -89,7 +88,6 @@ const AudioDetail = () => {
   const [isEmpty, setIsEmpty] = useState(false);
   const [isPrevious, setIsPrevious] = useState(false);
   const [isAddedToFavorite, setisAddedToFavorite] = useState(false);
-  const [similarAudio, setSimilarAudio] = useState([]);
   const [addFav, setaddFav] = useState(false);
   const [isdisabled, setdisabled] = useState(false);
   const [getFavs, setgetfavs] = useState([]);
@@ -110,9 +108,7 @@ const AudioDetail = () => {
     }
   }, []);
   
-  const { refetch } = useAudioHook(id);
-  const keyParam = { id: currentAudioInfo?.rp_id, page: 1 };
-  const { querieddata: similarAudios } = useSimilarAudioHook(keyParam);
+  useAudioHook(id);
 
   const handlePlay = () => {
     dispatch(getaudioId(id));

@@ -1,32 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./loginform.scss";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
-//import facebook from "../../assets/png/social/facebook.png";
-import twitter from "../../assets/png/social/twitter.png";
-//import google from "../../assets/png/social/google.png";
+import { MdEmail, MdLock } from "react-icons/md";
 import GetGoogleOAuth from "./socials/googleauth";
 import GetFacebookAuth from "./socials/facebookauth";
 import { LoginAction } from "../../Redux/Actions/ActionCreators";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/UI/loader/loader";
 import { useDispatch } from "react-redux";
-import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
+import { toast } from "../../utils/conditionalToast";
 import HeadMeta from "../../components/head-meta";
 import { FORGOTPASSWORD } from "../../utils/routes/constants";
+
 const LoginForm = () => {
   const [show, setShow] = useState("password");
   const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [focusedField, setFocusedField] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [data, setData] = useState({
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const handleInput = (e) => {
     const newData = { ...data };
     newData[e.target.id] = e.target.value;
     setData(newData);
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = data;
@@ -45,7 +52,6 @@ const LoginForm = () => {
 
     if (password.length < 6) {
       toast.error("Password must be at least 6 characters");
-
       return;
     }
 
@@ -60,6 +66,7 @@ const LoginForm = () => {
   };
 
   const { email, password } = data;
+
   return (
     <div className="loginform_wrapper">
       <HeadMeta title="Sign in to Dawah Nigeria | Home of Islamic resources" />
@@ -68,81 +75,111 @@ const LoginForm = () => {
           handleSubmit(e);
         }}
         style={{ height: `${Math.floor(0.7 * window.innerHeight)}px` }}
-        className="loginform_form"
+        className={`loginform_form ${mounted ? 'form_mounted' : ''}`}
       >
-        <div className="w-full">
-          <input
-            onChange={(e) => {
-              handleInput(e);
-            }}
-            type="email"
-            name="email"
-            placeholder="Email Address"
-            required
-            value={email}
-            id="email"
-            className="loginform_name text-foreground "
-          />
-          <div className="loginform_password_wrap ">
+        <div className="w-full form_content">
+          {/* Welcome Text */}
+          <div className="welcome_text">
+            <h2 className="text-foreground">Welcome back</h2>
+            <p className="text-color">Continue your journey with Dawah Nigeria</p>
+          </div>
+
+          {/* Email Input */}
+          <div className={`input_group ${focusedField === 'email' ? 'focused' : ''} ${email ? 'has_value' : ''}`}>
+            <div className="input_icon">
+              <MdEmail />
+            </div>
             <input
               onChange={(e) => {
                 handleInput(e);
               }}
-              type={show}
-              placeholder="Password"
-              name="password"
+              onFocus={() => setFocusedField('email')}
+              onBlur={() => setFocusedField(null)}
+              type="email"
+              name="email"
+              placeholder="Email Address"
               required
-              value={password}
-              id="password"
-              className="loginform_password text-foreground "
+              value={email}
+              id="email"
+              className="loginform_name text-foreground"
             />
-            {show === "password" && (
-              <div className="loginform_password_icon_show_wrap">
-                <AiFillEye
-                  onClick={() => setShow("text")}
-                  className="loginform_password_icon_show text-color"
-                />
-              </div>
-            )}
-            {show !== "password" && (
-              <div className="loginform_password_icon_hide_wrap ">
-                <AiFillEyeInvisible
-                  onClick={() => setShow("password")}
-                  className="loginform_password_icon_hide text-color"
-                />
-              </div>
-            )}
+            <div className="input_border"></div>
           </div>
+
+          {/* Password Input */}
+          <div className={`input_group ${focusedField === 'password' ? 'focused' : ''} ${password ? 'has_value' : ''}`}>
+            <div className="input_icon">
+              <MdLock />
+            </div>
+            <div className="loginform_password_wrap">
+              <input
+                onChange={(e) => {
+                  handleInput(e);
+                }}
+                onFocus={() => setFocusedField('password')}
+                onBlur={() => setFocusedField(null)}
+                type={show}
+                placeholder="Password"
+                name="password"
+                required
+                value={password}
+                id="password"
+                className="loginform_password text-foreground"
+              />
+              <button
+                type="button"
+                onClick={() => setShow(show === "password" ? "text" : "password")}
+                className="password_toggle"
+              >
+                {show === "password" ? (
+                  <AiFillEye className="text-color" />
+                ) : (
+                  <AiFillEyeInvisible className="text-color" />
+                )}
+              </button>
+            </div>
+            <div className="input_border"></div>
+          </div>
+
+          {/* Forgot Password */}
           <div className="loginform_forgot_wrap">
-            <p
+            <button
+              type="button"
               onClick={() => {
                 navigate(FORGOTPASSWORD);
               }}
               className="loginform_forgot"
             >
               Forgot password?
-            </p>
+            </button>
           </div>
-          <button className="loginform_button">
-            {" "}
-            {loading ? <Loader /> : <span>Log in</span>}
+
+          {/* Submit Button */}
+          <button className="loginform_button" disabled={loading}>
+            {loading ? (
+              <Loader />
+            ) : (
+              <span className="button_content">
+                <span>Log in</span>
+                <svg className="button_arrow" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </span>
+            )}
           </button>
         </div>
 
-        <span className="loginform_or text-color">- or -</span>
+        {/* Divider */}
+        <div className="divider_wrapper">
+          <div className="divider_line"></div>
+          <span className="loginform_or text-color">or continue with</span>
+          <div className="divider_line"></div>
+        </div>
 
-        <div className=" login_socials inset-x-0 w-full items-center mx-auto h-fit">
+        {/* Social Login */}
+        <div className="login_socials inset-x-0 w-full items-center mx-auto h-fit">
           <div className="hidden">
             <GetFacebookAuth data={data} setData={setData} />
-          </div>
-
-          <div
-            onClick={() => {
-              toast.error("Feature not yet available");
-            }}
-            className="hidden w-[45px] h-[45px]"
-          >
-            <img className="w-full h-full" src={twitter} alt="twitter" />
           </div>
 
           <div className="z-[1] w-full">

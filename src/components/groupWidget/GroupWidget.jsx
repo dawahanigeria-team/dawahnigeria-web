@@ -158,8 +158,8 @@ const GroupWidget = ({
               }}
               className={
                 styling && endpoint_url
-                  ? "flex dark:text-[#d6ff00] text-color-primary text-[15px] items-center"
-                  : `flex dark:text-[#d6ff00] text-color-primary text-[15px] items-center ${
+                  ? "flex dark:text-dncolor-500 text-color-primary text-[15px] items-center"
+                  : `flex dark:text-dncolor-500 text-color-primary text-[15px] items-center ${
                       nav1?.title === "Charts" ? "max-[615px]:hidden" : ""
                     }  `
               }
