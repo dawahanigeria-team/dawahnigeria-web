@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
 import "./audiodetail.scss";
+import "../../components/similaraudio/similarAudio.scss";
 import Container from "../../components/container/Container";
 import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
 import { CiPlay1 } from "react-icons/ci";
@@ -356,6 +357,8 @@ const AudioDetail = () => {
     "get",
     `/genre_api.php?cat_id=${currentAudioInfo?.cat_id}`
   );
+
+  const similarAudioList = similarLecture?.audio ?? [];
 
   const shareAudio = () => {
     setisShare(!isShare);
@@ -975,7 +978,7 @@ const AudioDetail = () => {
               <img src={foward} alt="foward" />
             </div>
             <div ref={slide} className="overflow_auto_wrapper">
-              {(similarLecture?.audio ?? []).map(
+              {similarAudioList.map(
                 (
                   {
                     img,
@@ -996,22 +999,22 @@ const AudioDetail = () => {
                     <div
                       className="similarWidget_album_item"
                       onClick={() => {
-                        navigate(`${LECTURE}${id}`);
+                        navigate(`${LECTURE}${nid}`);
 
                         // setendpUrl(similarAudioUrl);
                         dispatch(getPack(null));
                         dispatch(getPage(1));
                         dispatch(getaudioId(nid));
                         dispatch(getCount(idx));
-                        dispatch(getPack(similarAudio));
+                        dispatch(getPack(similarAudioList));
 
                         setCurUser(currentUser);
-                        window.location.reload();
                       }}
                       key={idx + 1}
                     >
                       <LandingWidget
                         key={idx}
+                        nid={nid}
                         categories={mp3_title || categories || cats}
                         img={img || lec_img}
                         views={views}
