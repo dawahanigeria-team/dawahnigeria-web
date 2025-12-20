@@ -71,7 +71,7 @@ const New = lazy(() => import("./pages/new/New"));
 const Auth = lazy(() => import("./pages/Authentication/auth/Auth"));
 const LoginForm = lazy(() => import("./pages/Authentication/LoginForm"));
 const SignupForm = lazy(() => import("./pages/Authentication/SignupForm"));
-const ForgotPassword = lazy(() => import("./pages/forgotpassword/forgotPassword"));
+const ForgotPassword = lazy(() => import("./pages/Authentication/ForgotPassword"));
 const SelectLanguage = lazy(() => import("./pages/Authentication/selectLanguage"));
 const AudioDetail = lazy(() => import("./pages/audioDetail/AudioDetail"));
 const LecturerDetail = lazy(() => import("./components/lecturer_detail/Lecturer_detail"));
