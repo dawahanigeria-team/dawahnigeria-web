@@ -86,7 +86,6 @@ const Nav = () => {
                 type="button"
                 aria-label="Download app on Google play"
                 onClick={(e) => {
-                  e.preventDefault();
                   e.nativeEvent.stopImmediatePropagation();
                   setShowComingSoon((prev) => !prev);
                 }}
@@ -99,7 +98,6 @@ const Nav = () => {
                 type="button"
                 aria-label="Download app on Applestore"
                 onClick={(e) => {
-                  e.preventDefault();
                   e.nativeEvent.stopImmediatePropagation();
                   setShowComingSoon((prev) => !prev);
                 }}

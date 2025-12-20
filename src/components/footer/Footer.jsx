@@ -34,7 +34,6 @@ const Footer = () => {
                   type="button"
                   aria-label="Download app on Applestore"
                   onClick={(e) => {
-                    e.preventDefault();
                     e.nativeEvent.stopImmediatePropagation();
                     setShowComingSoon(true);
                   }}
@@ -50,7 +49,6 @@ const Footer = () => {
                   type="button"
                   aria-label="Download app on Google play"
                   onClick={(e) => {
-                    e.preventDefault();
                     e.nativeEvent.stopImmediatePropagation();
                     setShowComingSoon(true);
                   }}
