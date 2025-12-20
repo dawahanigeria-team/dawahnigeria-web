@@ -107,8 +107,8 @@ const AudioDetail = () => {
       setLectureData(window.__LECTURE_DATA__);
     }
   }, []);
-  
-  useAudioHook(id);
+
+  const { refetch } = useAudioHook(id);
 
   const handlePlay = () => {
     dispatch(getaudioId(id));
