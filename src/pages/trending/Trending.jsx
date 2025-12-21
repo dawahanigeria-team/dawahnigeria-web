@@ -159,7 +159,7 @@ const Trending = () => {
         {!isLoading && uniqueData.length === 0 && (
           <div className="trending_empty_state">
             <div className="trending_empty_icon" aria-hidden="true">
-              <FiTrendingUp />
+              <FiTrendingUp aria-hidden="true" />
             </div>
             <h3 className="trending_empty_title">No Trending Content Yet</h3>
             <p className="trending_empty_text">
@@ -270,7 +270,7 @@ const Trending = () => {
           {!isLoading && querieddata && querieddata.length === 0 && (
             <div className="trending_empty_state_mobile">
               <div className="trending_empty_icon" aria-hidden="true">
-                <FiTrendingUp />
+                <FiTrendingUp aria-hidden="true" />
               </div>
               <h3 className="trending_empty_title">No Trending Content</h3>
               <p className="trending_empty_text">
