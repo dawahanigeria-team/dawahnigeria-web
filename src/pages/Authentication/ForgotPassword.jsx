@@ -9,6 +9,7 @@ import HeadMeta from "../../components/head-meta";
 import axios from "../../utils/useAxios";
 
 const RESEND_COOLDOWN_SECONDS = 60;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -43,8 +44,7 @@ const ForgotPassword = () => {
     }
 
     // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    if (!EMAIL_REGEX.test(email)) {
       toast.error("Please enter a valid email address");
       return;
     }
@@ -54,7 +54,7 @@ const ForgotPassword = () => {
     try {
       const payload = {
         action: "reset_password",
-        email: email,
+        email,
       };
 
       const response = await axios.post("/password_reset.php", payload, {
