@@ -9,7 +9,7 @@ import HeadMeta from "../../components/head-meta";
 import axios from "../../utils/useAxios";
 
 const RESEND_COOLDOWN_SECONDS = 60;
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");

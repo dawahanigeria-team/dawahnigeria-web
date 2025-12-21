@@ -13,6 +13,9 @@ import Loader from "../../components/UI/loader/loader";
 import { registration } from "../../Redux/Actions/ActionCreators";
 import HeadMeta from "../../components/head-meta";
 
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+
 const SignupForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -68,12 +71,20 @@ const SignupForm = () => {
       }
     }
 
-    if (password.length < 6 || confirm_password.length < 6) {
-      toast.error("Password must be at least 6 characters");
+    // Email format validation
+    if (!EMAIL_REGEX.test(email)) {
+      toast.error("Please enter a valid email address");
       return;
     }
+
+    // Strong password policy validation
+    if (!PASSWORD_REGEX.test(password)) {
+      toast.error("Password must be at least 8 characters long and contain both letters and numbers");
+      return;
+    }
+
     if (confirm_password !== password) {
-      toast.error("Same password is required");
+      toast.error("Passwords do not match");
       return;
     }
 
