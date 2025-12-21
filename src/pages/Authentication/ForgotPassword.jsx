@@ -8,13 +8,15 @@ import { toast } from "../../utils/conditionalToast";
 import HeadMeta from "../../components/head-meta";
 import axios from "../../utils/useAxios";
 
+const RESEND_COOLDOWN_SECONDS = 60;
+
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [focusedField, setFocusedField] = useState(null);
   const [success, setSuccess] = useState(false);
-  const [countdown, setCountdown] = useState(60);
+  const [countdown, setCountdown] = useState(RESEND_COOLDOWN_SECONDS);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,9 +36,7 @@ const ForgotPassword = () => {
     setEmail(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const submitPasswordReset = async () => {
     if (!email) {
       toast.error("Email cannot be empty");
       return;
@@ -68,7 +68,7 @@ const ForgotPassword = () => {
 
       if (response.data.success) {
         setSuccess(true);
-        setCountdown(60);
+        setCountdown(RESEND_COOLDOWN_SECONDS);
         toast.success("Password reset link sent to your email");
       } else {
         toast.error(response.data.message || "Failed to send reset link");
@@ -79,11 +79,16 @@ const ForgotPassword = () => {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await submitPasswordReset();
+  };
+
   const handleResend = () => {
     if (countdown === 0) {
       setSuccess(false);
-      setCountdown(60);
-      handleSubmit({ preventDefault: () => {} });
+      setCountdown(RESEND_COOLDOWN_SECONDS);
+      submitPasswordReset();
     }
   };
 
@@ -96,7 +101,7 @@ const ForgotPassword = () => {
       <HeadMeta title="Reset Password | Dawah Nigeria - Home of Islamic resources" />
       <form
         onSubmit={handleSubmit}
-        style={{ height: `${Math.floor(0.7 * window.innerHeight)}px` }}
+        style={{ minHeight: "70vh" }}
         className={`forgotpassword_form ${mounted ? 'form_mounted' : ''}`}
       >
         <div className="w-full form_content">
@@ -159,8 +164,8 @@ const ForgotPassword = () => {
               {/* Success State */}
               <div className="success_content">
                 <div className="success_icon_wrapper">
-                  <MdCheckCircle className="success_icon" />
-                  <div className="success_glow"></div>
+                  <MdCheckCircle className="success_icon" aria-hidden="true" />
+                  <div className="success_glow" aria-hidden="true"></div>
                 </div>
 
                 <div className="success_text">

@@ -16,6 +16,8 @@ import { trendingApi } from "../../services/trending.service";
 import HeadMeta from "../../components/head-meta";
 import { formatNumber } from "../../components/UI/formatter";
 
+const TOP_TRENDING_COUNT = 3;
+
 const Trending = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
@@ -40,8 +42,14 @@ const Trending = () => {
     if (!querieddata || querieddata.length === 0) return null;
     
     const uniqueData = uniqBy(querieddata, "nid");
-    const totalViews = uniqueData.reduce((sum, item) => sum + (parseInt(item.views) || 0), 0);
-    const totalFavorites = uniqueData.reduce((sum, item) => sum + (parseInt(item.favorites) || 0), 0);
+    const totalViews = uniqueData.reduce((sum, item) => {
+      const views = parseInt(item.views);
+      return sum + (isNaN(views) ? 0 : views);
+    }, 0);
+    const totalFavorites = uniqueData.reduce((sum, item) => {
+      const favorites = parseInt(item.favorites);
+      return sum + (isNaN(favorites) ? 0 : favorites);
+    }, 0);
     const topItem = uniqueData[0];
     
     return {
@@ -80,9 +88,9 @@ const Trending = () => {
 
         {/* Enhanced Trending Hero Section */}
         {!isLoading && trendingStats && uniqueData.length > 0 && (
-          <div className="trending_hero_section">
+          <div className="trending_hero_section" role="region" aria-label="Trending Overview">
             <div className="trending_hero_content">
-              <div className="trending_hero_icon">
+              <div className="trending_hero_icon" aria-hidden="true">
                 <HiFire className="trending_fire_icon" />
               </div>
               <div className="trending_hero_text">
@@ -92,32 +100,32 @@ const Trending = () => {
                 </p>
               </div>
             </div>
-            <div className="trending_stats_grid">
-              <div className="trending_stat_card">
-                <div className="trending_stat_icon">
+            <div className="trending_stats_grid" role="list">
+              <div className="trending_stat_card" role="listitem" aria-label={`Total Trending Items: ${formatNumber(trendingStats.totalItems)}`}>
+                <div className="trending_stat_icon" aria-hidden="true">
                   <FiTrendingUp />
                 </div>
                 <div className="trending_stat_content">
-                  <p className="trending_stat_value">{formatNumber(trendingStats.totalItems)}</p>
-                  <p className="trending_stat_label">Trending Items</p>
+                  <p className="trending_stat_value" aria-hidden="true">{formatNumber(trendingStats.totalItems)}</p>
+                  <p className="trending_stat_label" aria-hidden="true">Trending Items</p>
                 </div>
               </div>
-              <div className="trending_stat_card">
-                <div className="trending_stat_icon">
+              <div className="trending_stat_card" role="listitem" aria-label={`Total Views: ${formatNumber(trendingStats.totalViews)}`}>
+                <div className="trending_stat_icon" aria-hidden="true">
                   <HiFire />
                 </div>
                 <div className="trending_stat_content">
-                  <p className="trending_stat_value">{formatNumber(trendingStats.totalViews)}</p>
-                  <p className="trending_stat_label">Total Views</p>
+                  <p className="trending_stat_value" aria-hidden="true">{formatNumber(trendingStats.totalViews)}</p>
+                  <p className="trending_stat_label" aria-hidden="true">Total Views</p>
                 </div>
               </div>
-              <div className="trending_stat_card">
-                <div className="trending_stat_icon">
+              <div className="trending_stat_card" role="listitem" aria-label={`Total Favorites: ${formatNumber(trendingStats.totalFavorites)}`}>
+                <div className="trending_stat_icon" aria-hidden="true">
                   <HiFire />
                 </div>
                 <div className="trending_stat_content">
-                  <p className="trending_stat_value">{formatNumber(trendingStats.totalFavorites)}</p>
-                  <p className="trending_stat_label">Total Favorites</p>
+                  <p className="trending_stat_value" aria-hidden="true">{formatNumber(trendingStats.totalFavorites)}</p>
+                  <p className="trending_stat_label" aria-hidden="true">Total Favorites</p>
                 </div>
               </div>
             </div>
@@ -150,7 +158,7 @@ const Trending = () => {
         {/* Desktop Content */}
         {!isLoading && uniqueData.length === 0 && (
           <div className="trending_empty_state">
-            <div className="trending_empty_icon">
+            <div className="trending_empty_icon" aria-hidden="true">
               <FiTrendingUp />
             </div>
             <h3 className="trending_empty_title">No Trending Content Yet</h3>
@@ -178,7 +186,7 @@ const Trending = () => {
                 },
                 idx
               ) => {
-                const isTopTrending = idx < 3;
+                                const isTopTrending = idx < TOP_TRENDING_COUNT;
                 return (
                   <div
                     ref={
@@ -230,9 +238,10 @@ const Trending = () => {
         <div className="mobile_lists">
           {/* Mobile Play All Button */}
           {!isLoading && querieddata && querieddata.length > 0 && (
-            <div
+            <button
               onClick={playAll}
               className="header pb-2 border-b border-color-primary w-full trending_play_all"
+              aria-label={`Play all ${querieddata.length} trending items`}
             >
               <div className="w-fit h-fit border border-color-primary p-[2px] rounded-full trending_play_icon">
                 <BsFillPlayFill className="text-[22px] text-color-primary" />
@@ -243,7 +252,7 @@ const Trending = () => {
                   {formatNumber(querieddata.length)} trending items
                 </p>
               </div>
-            </div>
+            </button>
           )}
 
           <div className="bg-none h-1 w-1"></div>
@@ -260,7 +269,7 @@ const Trending = () => {
           {/* Mobile Empty State */}
           {!isLoading && querieddata && querieddata.length === 0 && (
             <div className="trending_empty_state_mobile">
-              <div className="trending_empty_icon">
+              <div className="trending_empty_icon" aria-hidden="true">
                 <FiTrendingUp />
               </div>
               <h3 className="trending_empty_title">No Trending Content</h3>
@@ -289,7 +298,7 @@ const Trending = () => {
               },
               idx
             ) => {
-              const isTopTrending = idx < 3;
+                              const isTopTrending = idx < TOP_TRENDING_COUNT;
               return (
                 <div
                   ref={
