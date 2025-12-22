@@ -51,9 +51,7 @@ const Lecturers = () => {
     <Container>
       <HeadMeta title={`Lecturers - Get islamic resources on Dawah Nigeria`} />
       <div className="lecturers_wrapper">
-        <div className="lecturers_head_link max-[615px]:border-b border-zinc-700">
-          <HeaderRouter title={"Lecturer"} />
-        </div>
+        <HeaderRouter title={"Lecturer"} />
         <div className="lecturers_filter">
           <div className="lecturers_filter_name">
             {lecturers.map(({ name, id }, idx) => {

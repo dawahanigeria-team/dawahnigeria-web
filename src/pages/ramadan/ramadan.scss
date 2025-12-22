@@ -1,13 +1,661 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+
+.ramadan-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  padding: 5rem 2% 8rem;
+  overflow: hidden;
+
+  @media screen and (max-width: 615px) {
+    padding: 4rem 4% 6rem;
+  }
+}
+
+.ramadan-geometric-bg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 600px;
+  height: 600px;
+  opacity: 0.03;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(45deg, transparent, transparent 35px, currentColor 35px, currentColor 36px),
+    repeating-linear-gradient(-45deg, transparent, transparent 35px, currentColor 35px, currentColor 36px);
+  animation: rotatePattern 60s linear infinite;
+  color: var(--color-primary, #0D6170);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+
+  @media screen and (max-width: 615px) {
+    width: 400px;
+    height: 400px;
+    opacity: 0.02;
+  }
+}
+
+@keyframes rotatePattern {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ramadan-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.ramadan-header {
+  margin-bottom: 4rem;
+  text-align: center;
+  animation: fadeInUp 0.8s ease-out;
+
+  @media screen and (max-width: 615px) {
+    margin-bottom: 2.5rem;
+  }
+}
+
+.ramadan-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ramadan-title-main {
+  font-family: 'Cormorant', serif;
+  font-size: clamp(3rem, 8vw, 5rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background: linear-gradient(135deg,
+    var(--color-primary, #0D6170) 0%,
+    #D4AF37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg,
+      transparent,
+      #D4AF37,
+      transparent);
+    border-radius: 2px;
+  }
+}
+
+.ramadan-title-sub {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: clamp(0.875rem, 2vw, 1.125rem);
+  font-weight: 400;
+  color: var(--text-secondary, #64748b);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-top: 1rem;
+}
+
+.ramadan-hero {
+  margin-bottom: 5rem;
+  animation: fadeInUp 0.8s ease-out 0.2s backwards;
+
+  @media screen and (max-width: 615px) {
+    margin-bottom: 3rem;
+  }
+}
+
+.ramadan-hero-card {
+  position: relative;
+  background: linear-gradient(135deg,
+    rgba(13, 97, 112, 0.03) 0%,
+    rgba(212, 175, 55, 0.05) 100%);
+  border: 1px solid rgba(13, 97, 112, 0.1);
+  border-radius: 24px;
+  padding: 3rem;
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+
+  @media (hover: hover) {
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow:
+        0 20px 60px rgba(13, 97, 112, 0.1),
+        0 0 0 1px rgba(212, 175, 55, 0.2);
+    }
+  }
+
+  @media screen and (max-width: 690px) {
+    padding: 2rem;
+    border-radius: 16px;
+  }
+
+  @media screen and (max-width: 615px) {
+    padding: 1.5rem;
+  }
+}
+
+.ramadan-hero-pattern {
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 400px;
+  height: 400px;
+  opacity: 0.04;
+  background-image:
+    radial-gradient(circle at 20% 50%, transparent 20%, currentColor 21%, currentColor 22%, transparent 23%),
+    radial-gradient(circle at 80% 50%, transparent 20%, currentColor 21%, currentColor 22%, transparent 23%);
+  background-size: 50px 50px;
+  color: #0D6170;
+  transform: rotate(30deg);
+  pointer-events: none;
+
+  @media screen and (max-width: 690px) {
+    width: 300px;
+    height: 300px;
+    top: -50px;
+    right: -50px;
+  }
+}
+
+.ramadan-hero-content {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 2.5rem;
+
+  @media screen and (max-width: 690px) {
+    margin-bottom: 2rem;
+  }
+}
+
+.ramadan-hero-label {
+  display: inline-block;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #D4AF37;
+  background: rgba(212, 175, 55, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+}
+
+.ramadan-hero-year {
+  font-family: 'Cormorant', serif;
+  font-size: clamp(3.5rem, 10vw, 6rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text-primary, #0f172a);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+
+  .dark & {
+    color: var(--text-primary-dark, #f8fafc);
+  }
+}
+
+.ramadan-hero-year-suffix {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: 500;
+  color: #D4AF37;
+  margin-left: 0.25rem;
+}
+
+.ramadan-hero-name {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+  font-weight: 500;
+  color: var(--text-secondary, #64748b);
+  margin-bottom: 2rem;
+
+  .dark & {
+    color: var(--text-secondary-dark, #94a3b8);
+  }
+}
+
+.ramadan-hero-meta {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.ramadan-hero-count {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-family: 'Cormorant', serif;
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: var(--color-primary, #0D6170);
+
+  .dark & {
+    color: #5eafc1;
+  }
+}
+
+.ramadan-hero-count-label {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text-secondary, #64748b);
+
+  .dark & {
+    color: var(--text-secondary-dark, #94a3b8);
+  }
+}
+
+.ramadan-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #0D6170 0%, #0a4d5a 100%);
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(13, 97, 112, 0.2);
+
+  &:hover {
+    transform: translateX(4px);
+    box-shadow: 0 6px 20px rgba(13, 97, 112, 0.3);
+    background: linear-gradient(135deg, #0a4d5a 0%, #0D6170 100%);
+  }
+
+  &:active {
+    transform: translateX(2px);
+  }
+
+  svg {
+    transition: transform 0.3s ease;
+  }
+
+  &:hover svg {
+    transform: translateX(4px);
+  }
+
+  @media screen and (max-width: 615px) {
+    width: 100%;
+    justify-content: center;
+    padding: 0.875rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+}
+
+.ramadan-hero-preview {
+  position: relative;
+  z-index: 2;
+  margin-top: 2rem;
+}
+
+.ramadan-hero-preview-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(13, 97, 112, 0.1);
+
+  .dark & {
+    border-bottom-color: rgba(94, 175, 193, 0.1);
+  }
+
+  @media screen and (max-width: 615px) {
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+  }
+}
+
+.ramadan-hero-preview-title {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-primary, #0D6170);
+  margin-bottom: 0.25rem;
+
+  .dark & {
+    color: #5eafc1;
+  }
+
+  @media screen and (max-width: 615px) {
+    font-size: 0.8125rem;
+  }
+}
+
+.ramadan-hero-preview-subtitle {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--text-secondary, #64748b);
+
+  .dark & {
+    color: var(--text-secondary-dark, #94a3b8);
+  }
+
+  @media screen and (max-width: 615px) {
+    font-size: 0.8125rem;
+  }
+}
+
+.ramadan-timeline {
+  animation: fadeInUp 0.8s ease-out 0.4s backwards;
+}
+
+.ramadan-timeline-heading {
+  font-family: 'Cormorant', serif;
+  font-size: clamp(1.75rem, 5vw, 3rem);
+  font-weight: 700;
+  color: var(--text-primary, #0f172a);
+  margin-bottom: 3rem;
+  text-align: center;
+  position: relative;
+
+  .dark & {
+    color: var(--text-primary-dark, #f8fafc);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent,
+      var(--color-primary, #0D6170),
+      transparent);
+  }
+
+  @media screen and (max-width: 615px) {
+    margin-bottom: 2rem;
+    text-align: left;
+
+    &::after {
+      left: 0;
+      transform: none;
+    }
+  }
+}
+
+.ramadan-timeline-list {
+  position: relative;
+}
+
+.ramadan-timeline-item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 2rem;
+  margin-bottom: 4rem;
+  animation: fadeInUp 0.6s ease-out backwards;
+
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{0.5 + ($i * 0.1)}s;
+    }
+  }
+
+  @media screen and (max-width: 690px) {
+    grid-template-columns: 60px 1fr;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  @media screen and (max-width: 615px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+.ramadan-timeline-marker {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0.5rem;
+
+  @media screen and (max-width: 615px) {
+    flex-direction: row;
+    padding-top: 0;
+    padding-left: 1rem;
+  }
+}
+
+.ramadan-timeline-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0D6170 0%, #5eafc1 100%);
+  box-shadow:
+    0 0 0 4px rgba(13, 97, 112, 0.1),
+    0 4px 12px rgba(13, 97, 112, 0.2);
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+  }
+}
+
+.ramadan-timeline-line {
+  width: 2px;
+  flex: 1;
+  background: linear-gradient(180deg,
+    rgba(13, 97, 112, 0.3) 0%,
+    rgba(13, 97, 112, 0.1) 100%);
+  margin-top: 8px;
+
+  .dark & {
+    background: linear-gradient(180deg,
+      rgba(94, 175, 193, 0.2) 0%,
+      rgba(94, 175, 193, 0.05) 100%);
+  }
+
+  @media screen and (max-width: 615px) {
+    display: none;
+  }
+}
+
+.ramadan-timeline-content {
+  background: rgba(248, 250, 252, 0.5);
+  border: 1px solid rgba(13, 97, 112, 0.08);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+
+  .dark & {
+    background: rgba(30, 41, 59, 0.3);
+    border-color: rgba(94, 175, 193, 0.1);
+  }
+
+  &:hover {
+    border-color: rgba(13, 97, 112, 0.2);
+    box-shadow: 0 8px 24px rgba(13, 97, 112, 0.08);
+    transform: translateX(4px);
+
+    .dark & {
+      border-color: rgba(94, 175, 193, 0.2);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  @media screen and (max-width: 690px) {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
+  @media screen and (max-width: 615px) {
+    padding: 1.25rem;
+  }
+}
+
+.ramadan-timeline-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(13, 97, 112, 0.1);
+
+  .dark & {
+    border-bottom-color: rgba(94, 175, 193, 0.1);
+  }
+
+  @media screen and (max-width: 615px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+  }
+}
+
+.ramadan-timeline-year-badge {
+  display: flex;
+  align-items: baseline;
+  gap: 0.375rem;
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(135deg,
+    rgba(13, 97, 112, 0.08) 0%,
+    rgba(212, 175, 55, 0.08) 100%);
+  border: 1px solid rgba(13, 97, 112, 0.15);
+  border-radius: 10px;
+  flex-shrink: 0;
+
+  .dark & {
+    background: linear-gradient(135deg,
+      rgba(94, 175, 193, 0.1) 0%,
+      rgba(212, 175, 55, 0.1) 100%);
+    border-color: rgba(94, 175, 193, 0.2);
+  }
+}
+
+.ramadan-timeline-year {
+  font-family: 'Cormorant', serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-primary, #0D6170);
+
+  .dark & {
+    color: #5eafc1;
+  }
+}
+
+.ramadan-timeline-year-label {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #D4AF37;
+}
+
+.ramadan-timeline-info {
+  flex: 1;
+}
+
+.ramadan-timeline-name {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary, #0f172a);
+  margin-bottom: 0.25rem;
+
+  .dark & {
+    color: var(--text-primary-dark, #f8fafc);
+  }
+}
+
+.ramadan-timeline-count {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--text-secondary, #64748b);
+
+  .dark & {
+    color: var(--text-secondary-dark, #94a3b8);
+  }
+}
+
+.ramadan-timeline-widget {
+  margin-top: 1rem;
+}
+
+.ramadan-loading {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.ramadan-loading-item {
+  animation: pulse 1.5s ease-in-out infinite;
+
+  @for $i from 1 through 4 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{($i - 1) * 0.2}s;
+    }
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
 .landing_wrapper {
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
- 
 
   .carousel {
     width: 100%;
-    //height:40%;
     @media screen and (max-width: 615px) {
       display: none;
     }
@@ -16,7 +664,6 @@
   .landing_carousel {
     width: 96vw;
     height: 162px;
-    //border-radius:3px ;
     @media screen and (min-width: 615px) {
       display: none;
     }
@@ -46,8 +693,6 @@
   }
   .landing_options {
     padding: 0rem 0.1rem 0rem 0.1rem;
-
-    //margin-top:1.8rem;
     .slick-prev:before,
     .slick-next:before {
       display: none;
