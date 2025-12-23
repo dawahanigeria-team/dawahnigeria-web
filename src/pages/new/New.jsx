@@ -1,22 +1,23 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+// ═══════════════════════════════════════════════════════════════════════════
+// NEW PAGE — Contemporary Editorial Design
+// Fresh audio uploads with sophisticated magazine-inspired presentation
+// ═══════════════════════════════════════════════════════════════════════════
+
+import React, { useState } from "react";
 import "./new.scss";
 import Container from "../../components/container/Container";
 import MusicList from "../../components/miscList/musicList";
-//import { useNavigate } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import Loader from "../../components/UI/loader/loader";
-import { BsFillPlayFill } from "react-icons/bs";
-import { LECTURE, TRENDING, NEW } from "../../utils/routes/constants";
-import { useNavigate } from "react-router-dom";
+import { IoMusicalNotesOutline } from "react-icons/io5";
+import { LECTURE, NEW } from "../../utils/routes/constants";
 import { useQueryGetRequest } from "../../hooks/getqueries";
 import { newApi } from "../../services";
-
 import HeadMeta from "../../components/head-meta";
 
 const New = () => {
   const [page] = useState(1);
   const [drop, setDrop] = useState(false);
-  const navigate = useNavigate();
   const queryParam = { page };
   const { isLoading, querieddata } = useQueryGetRequest(
     "new",
@@ -24,168 +25,109 @@ const New = () => {
     newApi.getNewLectures
   );
 
-  //play all audio filesF
-  const playAll = () => {
-    navigate(`${LECTURE}${querieddata[0?.nid]}`, {
-      state: {
-        idx: 0,
-        nid: querieddata[0].nid,
-        nav1: { title: "playAll", link: NEW },
-      },
-    });
-  };
+  const totalTracks = querieddata?.length || 0;
 
-  //const newData = data.filter((a) => a.duration !== "0");
   return (
     <Container>
       <HeadMeta
-        title={`New resources on Dawah Nigeria - Home of islamic contents`}
+        title="New Releases — Dawah Nigeria | Fresh Islamic Content"
       />
       <div className="new_wrapper">
-        <div className="new_header_link bg-background max-[615px]:border-b border-zinc-700">
-          <HeaderRouter title={"New"} />
+        <div className="new_header_link">
+          <HeaderRouter title="New" />
         </div>
 
-        <div className="new_title_wrap">
-          <div className="new_title1">
-            <p className="new_hash">#</p>
-            <p>Title</p>
-          </div>
-          <p className="new_title2">
-            <span>Lecturer</span>
-          </p>
-
-          <p className="new_title4">
-            <span>Time</span>
-          </p>
-        </div>
-        {isLoading && (
-          <div className="load_desktop">
-            <div className="load">
-              <Loader />
-            </div>
-          </div>
-        )}
-        {!isLoading && (
-          <div className="table">
-            {querieddata.map(
-              (
-                {
-                  Title,
-                  rpname,
-                  cats,
-                  nid,
-                  lec_thumbnail,
-                  comments,
-                  favorites,
-                  rp_id,
-                  duration,
-                  mp3_duration,
-                  mp3_title,
-                  share,
-                  views,
-                },
-                idx
-              ) => {
-                return (
-                  <div key={idx} className="">
-                    <MusicList
-                      key={idx}
-                      id={idx}
-                      image={lec_thumbnail}
-                      comments={comments}
-                      favorites={favorites}
-                      duration={mp3_duration || duration}
-                      title={mp3_title || Title}
-                      lecturer={rpname}
-                      drop={drop}
-                      setDrop={setDrop}
-                      url={`${LECTURE}${nid}`}
-                      Title={mp3_title || Title}
-                      rpid={rp_id}
-                      rpname={rpname}
-                      currentPage={page}
-                      cats={cats}
-                      nid={nid}
-                      navName={"Trending"}
-                      navLink={TRENDING}
-                      controlData={querieddata}
-                      views={views}
-                      share={share}
-                    />
-                  </div>
-                );
-              }
-            )}
-          </div>
-        )}
-
-        {/*************** moobile **********/}
-        <div className="mobile_lists">
-          <div
-            onClick={playAll}
-            className="header pb-2 border-b border-color-primary  w-full"
-          >
-            <div className="w-fit h-fit border border-color-primary p-[2px] rounded-full">
-              <BsFillPlayFill className="text-[22px] text-color-primary" />
-            </div>
-
-            <p className="text-color-primary font-medium">Play All</p>
-          </div>
-          <div className="bg-none h-1 w-1"></div>
-          {isLoading && (
-            <div className="load_mobile">
-              <div className="loads">
-                <Loader />
+        <section className="new_hero">
+          <div className="new_hero_content">
+            <div className="new_hero_header">
+              <div className="new_hero_text">
+                <div className="new_hero_badge">
+                  <span className="badge_dot" />
+                  <span className="badge_text">Latest Uploads</span>
+                </div>
+                <h1 className="new_hero_title">
+                  <span className="new_hero_title_inner">New Releases</span>
+                </h1>
               </div>
+              {!isLoading && totalTracks > 0 && (
+                <div className="new_hero_meta">
+                  <span className="new_meta_count">{totalTracks} lectures</span>
+                  <span className="new_meta_divider">•</span>
+                  <span className="new_meta_updated">Updated today</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+
+        <div className="new_content_section">
+          <div className="new_title_wrap">
+            <div className="new_title1">
+              <span className="new_hash">#</span>
+              <span>Title</span>
+            </div>
+            <p className="new_title2">Lecturer</p>
+            <p className="new_title4">Duration</p>
+          </div>
+
+          {isLoading && (
+            <div className="new_loading_state">
+              <Loader />
+              <p className="new_loading_text">Loading latest lectures...</p>
             </div>
           )}
-          {!isLoading &&
-            querieddata.map(
-              (
-                {
-                  Title,
-                  rpname,
-                  img,
-                  mp3_thumbnail,
-                  comments,
-                  rp_id,
-                  mp3_title,
-                  cats,
-                  favorites,
-                  nid,
-                  views,
-                  duration,
-                },
-                idx
-              ) => {
+
+          {!isLoading && querieddata?.length === 0 && (
+            <div className="new_empty">
+              <div className="new_empty_icon_wrapper">
+                <IoMusicalNotesOutline className="new_empty_icon" />
+              </div>
+              <p className="new_empty_title">No new releases yet</p>
+              <p className="new_empty_subtitle">
+                New lectures are uploaded regularly. Check back soon for fresh content.
+              </p>
+            </div>
+          )}
+
+          {!isLoading && querieddata?.length > 0 && (
+            <div className="new_list">
+              {querieddata.map((item, idx) => {
+                const nid = item?.nid;
+                const title = item?.mp3_title || item?.Title;
+                const lecturer = item?.rpname;
+                const duration = item?.mp3_duration || item?.duration;
+                const image = item?.lec_thumbnail || item?.mp3_thumbnail || item?.img;
+                const rpId = item?.rp_id;
+
                 return (
-                  <div key={idx} className="each_mobile_list">
-                    <MusicList
-                      key={idx}
-                      id={idx}
-                      duration={duration}
-                      image={mp3_thumbnail || img}
-                      title={mp3_title || Title}
-                      lecturer={rpname}
-                      favorites={favorites}
-                      comments={comments}
-                      url={`${LECTURE}${nid}`}
-                      Title={mp3_title || Title}
-                      rpname={rpname}
-                      currentPage={page}
-                      cats={cats}
-                      rpid={rp_id}
-                      nid={nid}
-                      navName={"Trending"}
-                      navLink={TRENDING}
-                      controlData={querieddata}
-                      views={views}
-                    />
-                  </div>
+                  <MusicList
+                    key={nid ?? idx}
+                    id={idx}
+                    image={image}
+                    comments={item?.comments}
+                    favorites={item?.favorites}
+                    duration={duration}
+                    title={title}
+                    lecturer={lecturer}
+                    drop={drop}
+                    setDrop={setDrop}
+                    url={`${LECTURE}${nid}`}
+                    Title={title}
+                    rpid={rpId}
+                    rpname={lecturer}
+                    currentPage={page}
+                    cats={item?.cats}
+                    nid={nid}
+                    navName="New"
+                    navLink={NEW}
+                    controlData={querieddata}
+                    views={item?.views}
+                    share={item?.share}
+                  />
                 );
-              }
-            )}
+              })}
+            </div>
+          )}
         </div>
       </div>
     </Container>

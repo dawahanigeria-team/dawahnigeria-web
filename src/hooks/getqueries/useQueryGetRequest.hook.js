@@ -29,7 +29,12 @@ export const useQueryGetRequest = (keyName, queryParam = {}, queryFunction) => {
           return;
         }
 
-        queryParam.page
+        const page = queryParam?.page;
+        const isPaginatedNextPage = typeof page === "number" && page > 1;
+
+        // Only append when explicitly loading subsequent pages.
+        // For page 1 (or non-paginated requests), replace to avoid duplicates on refetch.
+        isPaginatedNextPage
           ? setQueriedData((prev) => [...prev, ...dataArray])
           : setQueriedData(dataArray);
         
