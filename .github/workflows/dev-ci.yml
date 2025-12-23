@@ -40,6 +40,9 @@ jobs:
             REACT_APP_API_ADMINISTER_BASE_URL: ${{ secrets.ADMIN_BASE_URL_DEV }}
             REACT_APP_GOOGLE_PLAY_URL: ${{ secrets.GOOGLE_PLAY_URL }}
             REACT_APP_APPLE_STORE_URL: ${{ secrets.APPLE_STORE_URL}}
+            REACT_APP_POSTHOG_KEY: ${{secrets.REACT_APP_POSTHOG_KEY}}
+            REACT_APP_POSTHOG_HOST: ${{secrets.REACT_APP_POSTHOG_HOST}}
+            GENERATE_SOURCEMAP: ${{secrets.GENERATE_SOURCEMAP}}
 
       - name: Copy static assets into build
         run: |
