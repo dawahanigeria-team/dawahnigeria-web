@@ -43,8 +43,20 @@ export const AudioDownloadModal = ({
       });
     }
 
+    // Initiate download
     download(fileUrl);
-    setShowModal(false);
+    
+    // Show success feedback to user
+    const fileSize = data?.[selectedFormat + "_size"] || "";
+    const formatLabel = selectedFormat.toUpperCase();
+    toast.success(
+      `Download started${fileSize ? ` (${fileSize} ${formatLabel})` : ` (${formatLabel})`}`
+    );
+    
+    // Close modal after brief delay to allow user to see the feedback
+    setTimeout(() => {
+      setShowModal(false);
+    }, 300);
   };
 
   const downloadOptions = useMemo(

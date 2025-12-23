@@ -171,12 +171,19 @@ export const trackLectureView = (lecture) => {
  * Track lecture completion
  */
 export const trackLectureCompletion = (lecture, listenDuration) => {
+  const totalDuration = lecture.mp3_duration || lecture.duration;
+  // Calculate completion rate only if total duration is valid and greater than 0
+  const completionRate = totalDuration && totalDuration > 0
+    ? listenDuration / totalDuration
+    : null;
+
   trackEvent(EVENTS.LECTURE_COMPLETED, {
     lecture_id: lecture.nid || lecture.id,
     lecture_title: lecture.mp3_title || lecture.Title,
     lecturer: lecture.rpname,
     listen_duration: listenDuration,
-    completion_rate: listenDuration / (lecture.mp3_duration || lecture.duration),
+    completion_rate: completionRate,
+    total_duration: totalDuration || null,
   });
 };
 

@@ -54,7 +54,7 @@ import CommentBox from "../../components/comment/comment";
 import { CommentIcon } from "../../components/svgcomponent/svgComponent";
 import LandingWidget from "../../components/landingWidget/LandingWidget";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders.js";
-import { trackLectureView, trackLecturePlay, trackLecturePause, trackFavorite, trackShare, trackDownload } from "../../utils/posthog";
+import { trackLectureView, trackLecturePlay, trackLecturePause, trackFavorite } from "../../utils/posthog";
 
 const AudioDetail = () => {
   const { id } = useParams();
@@ -83,6 +83,7 @@ const AudioDetail = () => {
   const [curUser, setCurUser] = useState(currentUser || null);
   const [iscurrents, setcurrents] = useState(false);
   const rangeRef = useRef();
+  const lastTrackedLectureId = useRef(null);
   const [isprev, setisprev] = useState(false);
   const [isnext, setisnext] = useState(true);
   const [isComment, setIsComment] = useState(false);
@@ -219,12 +220,13 @@ const AudioDetail = () => {
     fetchFavorites(addFav, currentAudioInfo?.nid);
   }, [addFav, currentAudioInfo?.nid]);
 
-  // Track lecture view when page loads
+  // Track lecture view - only once per unique lecture ID
   useEffect(() => {
-    if (currentAudioInfo) {
+    if (currentAudioInfo?.nid && currentAudioInfo.nid !== lastTrackedLectureId.current) {
       trackLectureView(currentAudioInfo);
+      lastTrackedLectureId.current = currentAudioInfo.nid;
     }
-  }, [currentAudioInfo?.nid]);
+  }, [currentAudioInfo?.nid, currentAudioInfo]);
 
   const addToFav = async (e, lecid) => {
     /// add to favorites

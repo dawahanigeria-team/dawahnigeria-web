@@ -50,30 +50,68 @@ const store = createStore(
 const persistor = persistStore(store);
 const container = document.getElementById("root");
 
-// Log PostHog configuration for debugging
-console.log('PostHog Config:', {
-  apiKey: process.env.REACT_APP_POSTHOG_KEY ? '✓ Set' : '✗ Missing',
-  apiHost: process.env.REACT_APP_POSTHOG_HOST,
-  env: process.env.NODE_ENV,
-});
+// Check PostHog configuration
+const postHogApiKey = process.env.REACT_APP_POSTHOG_KEY;
+const postHogHost = process.env.REACT_APP_POSTHOG_HOST;
+
+if (!postHogApiKey || !postHogHost) {
+  // Only log detailed configuration info in development
+  if (process.env.NODE_ENV === 'development') {
+    console.warn(
+      '⚠️ PostHog is not configured. Missing environment variables:',
+      {
+        apiKey: postHogApiKey ? '✓ Set' : '✗ Missing (REACT_APP_POSTHOG_KEY)',
+        apiHost: postHogHost ? '✓ Set' : '✗ Missing (REACT_APP_POSTHOG_HOST)',
+        env: process.env.NODE_ENV,
+      }
+    );
+  } else {
+    // In production, only log a generic error without exposing config details
+    console.error(
+      'PostHog analytics is not configured. Please set REACT_APP_POSTHOG_KEY and REACT_APP_POSTHOG_HOST environment variables.'
+    );
+  }
+} else if (process.env.NODE_ENV === 'development') {
+  // Only log configuration details in development
+  console.log('PostHog Config:', {
+    apiKey: '✓ Set',
+    apiHost: postHogHost,
+    env: process.env.NODE_ENV,
+  });
+}
+
+// Wrapper component to conditionally render PostHogProvider
+const AppWithProviders = ({ children }) => {
+  if (postHogApiKey && postHogHost) {
+    return (
+      <PostHogProvider
+        apiKey={postHogApiKey}
+        options={{
+          api_host: postHogHost,
+          capture_pageview: true,
+          capture_pageleave: true,
+          autocapture: true,
+          disable_session_recording: false,
+          loaded: (posthog) => {
+            if (process.env.NODE_ENV === 'development') {
+              console.log('✅ PostHog loaded successfully!', posthog);
+              posthog.debug();
+            }
+          },
+          // Add error handling for PostHog initialization failures
+          capture_metrics: true,
+        }}
+      >
+        {children}
+      </PostHogProvider>
+    );
+  }
+  // Render without PostHogProvider if configuration is missing
+  return <>{children}</>;
+};
 
 const AppComponent = (
-  <PostHogProvider
-    apiKey={process.env.REACT_APP_POSTHOG_KEY}
-    options={{
-      api_host: process.env.REACT_APP_POSTHOG_HOST,
-      capture_pageview: true,
-      capture_pageleave: true,
-      autocapture: true,
-      disable_session_recording: false,
-      loaded: (posthog) => {
-        if (process.env.NODE_ENV === 'development') {
-          console.log('✅ PostHog loaded successfully!', posthog);
-          posthog.debug();
-        }
-      },
-    }}
-  >
+  <AppWithProviders>
     <Router
       future={{
         v7_startTransition: true,
@@ -86,7 +124,7 @@ const AppComponent = (
         </PersistGate>
       </Provider>
     </Router>
-  </PostHogProvider>
+  </AppWithProviders>
 );
 
 const root = ReactDOM.createRoot(container);

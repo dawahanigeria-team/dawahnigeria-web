@@ -1,7 +1,7 @@
 // PostHog Testing Utility
 // Open browser console and run: window.testPostHog()
 
-import { trackEvent, identifyUser, EVENTS } from './posthog';
+import { trackEvent, identifyUser } from './posthog';
 
 export const testPostHog = () => {
   console.log('🧪 Testing PostHog Integration...\n');

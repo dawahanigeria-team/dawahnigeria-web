@@ -19,17 +19,30 @@ const ShareAudio = ({ isShare, setisShare, nid, type }) => {
     shareAudio(item.key, item.link, encodeURIComponent(link));
     dispatch(shareLink(nid, currentUser?.id, type));
 
-    // Track share event
-    if (currentAudioInfo) {
-      trackShare(
-        {
+    // Track share event - use currentAudioInfo if available, otherwise fallback to props
+    const shareContent = currentAudioInfo
+      ? {
           ...currentAudioInfo,
-          type: type || 'lecture',
+          type: type || currentAudioInfo.type || 'lecture',
+          nid: nid || currentAudioInfo.nid || currentAudioInfo.id,
+        }
+      : {
+          // Fallback when currentAudioInfo is not available
           nid: nid,
-        },
-        item.key // Platform: whatsapp, facebook, twitter, etc.
+          id: nid,
+          type: type || 'lecture',
+        };
+
+    // Warn in development if currentAudioInfo is missing
+    if (!currentAudioInfo && process.env.NODE_ENV === 'development') {
+      console.warn(
+        '⚠️ ShareAudio: currentAudioInfo not available in Redux state. Using fallback data for tracking.',
+        { nid, type }
       );
     }
+
+    // Always track the share event, even with minimal data
+    trackShare(shareContent, item.key); // Platform: whatsapp, facebook, twitter, etc.
   };
 
   return (

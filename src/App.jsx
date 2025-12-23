@@ -18,7 +18,10 @@ import ErrorBoundary from "./components/UI/ErrorBoundary";
 
 // Import PostHog test utility in development
 if (process.env.NODE_ENV === 'development') {
-  import('./utils/posthog-test');
+  import('./utils/posthog-test').catch((error) => {
+    // Silently handle import errors for optional development utility
+    console.debug('PostHog test utility could not be loaded:', error);
+  });
 }
 import { Route, Routes, Navigate } from "react-router-dom";
 import Layout from "./components/layout/Layout";
