@@ -19,6 +19,7 @@ import {
 } from "../../Redux/Actions/ActionCreators";
 import { SEARCH } from "../../utils/routes/constants";
 import HeadMeta from "../../components/head-meta";
+import { trackSearch } from "../../utils/posthog";
 
 const SearchPage = () => {
   const searchContext = useContext(SearchContext) || {};
@@ -234,6 +235,17 @@ const SearchPage = () => {
           dispatch(getSearchRecord(total));
           setTotalResults(total);
           setCurrentPage(parseInt(page));
+
+          // Track search event
+          trackSearch(searchValue, {
+            lecturerId: lecturerId,
+            albumId: albumId,
+            languageId: languageId,
+            categoryId: categoryId,
+            searchType: 'all',
+            results_count: total,
+            page: page,
+          });
         } else {
           console.log("API returned non-success status:", res.data);
           dispatch(getSearchData([]));

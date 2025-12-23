@@ -1,117 +1,221 @@
-@mixin scroll_mobile {
-  @media screen and (max-width: 870px) {
-    display: flex;
-    flex-wrap: nowrap;
-  }
-}
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+// Legacy scrollbar styles
 .lecturers_filter::-webkit-scrollbar {
   display: none;
 }
 .lecturers_filter::-moz-scrollbar {
   display: none;
 }
+
+// ============================================
+// WORLD-CLASS LECTURERS PAGE REDESIGN
+// ============================================
+
 .lecturers_wrapper {
-  padding: 5% 3% 1% 3%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  position: relative;
+  min-height: 100vh;
   width: 100%;
-  overflow: hidden;
+  padding: 2rem 3% 4rem;
+  font-family: 'DM Sans', sans-serif;
+  background: linear-gradient(180deg,
+    #0a0a0a 0%,
+    #0d0d0d 50%,
+    #0a0a0a 100%
+  );
+
   @media screen and (max-width: 600px) {
-    padding: 10% 3% 1% 3%;
+    padding: 1.5rem 4% 3rem;
   }
-  .lecturers_head_link {
-    width: 100%;
+
+  // Subtle Islamic geometric pattern background
+  &::before {
+    content: '';
     position: fixed;
+    top: 0;
     left: 0;
     right: 0;
-    padding: unset;
-    background: #090909;
+    bottom: 0;
+    opacity: 0.015;
+    pointer-events: none;
+    background-image:
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 50px,
+        rgba(221, 255, 43, 0.1) 50px,
+        rgba(221, 255, 43, 0.1) 51px
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 50px,
+        rgba(221, 255, 43, 0.1) 50px,
+        rgba(221, 255, 43, 0.1) 51px
+      );
+    z-index: 0;
   }
+
+  // Filter section
   .lecturers_filter {
+    position: relative;
+    z-index: 10;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: linear-gradient(135deg,
+      rgba(24, 24, 27, 0.6) 0%,
+      rgba(18, 18, 20, 0.8) 100%
+    );
+    border: 1px solid rgba(63, 63, 70, 0.3);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    animation: fadeInScale 0.6s ease-out;
+
+    @media screen and (max-width: 615px) {
+      padding: 1.5rem 1rem;
+      border-radius: 12px;
+    }
 
     @media screen and (max-width: 870px) {
-      width: 105%;
-      padding-right: 5%;
-      overflow-x: scroll;
+      width: 100%;
+      overflow-x: auto;
       scroll-behavior: smooth;
-    }
-    @media screen and (max-width: 615px) {
-      padding-top: 64px;
+
+      &::-webkit-scrollbar {
+        height: 6px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: rgba(39, 39, 42, 0.3);
+        border-radius: 3px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba(221, 255, 43, 0.3);
+        border-radius: 3px;
+
+        &:hover {
+          background: rgba(221, 255, 43, 0.5);
+        }
+      }
     }
 
-    .lecturers_filter_name {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-      @include scroll_mobile;
+    // Decorative accent
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(221, 255, 43, 0.6) 50%,
+        transparent 100%
+      );
+      border-radius: 16px 16px 0 0;
     }
+
+    .lecturers_filter_name,
     .lecturers_filter_language {
       display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 0.8rem;
       flex-wrap: wrap;
-      margin-top: 0.8rem;
-      @include scroll_mobile;
+      gap: 0.75rem;
+      align-items: center;
+
+      @media screen and (max-width: 870px) {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+      }
+    }
+
+    .lecturers_filter_language {
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(63, 63, 70, 0.2);
     }
   }
+
+  // Loading states
   .load_desktop {
-    width: 100%;
-    height: 100px;
     position: relative;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     @media screen and (max-width: 615px) {
-      height: 400px;
+      height: 300px;
     }
+
     .load {
       width: 100%;
-      height: 50%;
-      position: absolute;
-      inset: 0;
-
-      margin: minmax(0, 1fr) minmax(0, 1fr);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
+
+  // Main grid
   .lecturers_widget {
+    position: relative;
+    z-index: 10;
     display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 2rem;
     width: 100%;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    @media screen and (max-width: 1238px) {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 2rem;
-    }
-    @media screen and (max-width: 1010px) {
-      gap: 3rem;
-    }
-    @media screen and (max-width: 768px) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1em;
-    }
-    @media screen and (max-width: 650px) {
-      gap: 0.5em;
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+
+    @media screen and (min-width: 1400px) {
+      grid-template-columns: repeat(5, 1fr);
     }
 
-    @media screen and (max-width: 512px) {
-      // justify-content: center;
+    @media screen and (max-width: 1238px) {
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1.75rem;
     }
-    //flex-direction: row;
-    //align-items: center;
-    //justify-content: space-between;
-    gap: 4rem;
-    flex-wrap: wrap;
-    margin-top: 3rem;
-    @media screen and (max-width: 615px) {
-      grid-template-columns: repeat(1, minmax(0, 1fr));
+
+    @media screen and (max-width: 1010px) {
       gap: 1.5rem;
     }
+
+    @media screen and (max-width: 768px) {
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1.25rem;
+    }
+
+    @media screen and (max-width: 615px) {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
     .lecturers_item {
       cursor: pointer;
+      text-decoration: none;
+      display: block;
+      animation: fadeInUp 0.6s ease-out backwards;
+
+      @for $i from 1 through 20 {
+        &:nth-child(#{$i}) {
+          animation-delay: #{0.3 + ($i * 0.03)}s;
+        }
+      }
+
+      &:hover {
+        transform: translateY(-4px);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+
+        &:hover {
+          transform: none;
+        }
+      }
     }
   }
 
@@ -120,6 +224,47 @@
     width: 100%;
     justify-content: center;
     align-items: center;
-    height: 100px;
+    height: 120px;
+    margin-top: 2rem;
+
+    .loads {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+// ============================================
+// ANIMATIONS
+// ============================================
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.98) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Legacy mixin support
+@mixin scroll_mobile {
+  @media screen and (max-width: 870px) {
+    display: flex;
+    flex-wrap: nowrap;
   }
 }

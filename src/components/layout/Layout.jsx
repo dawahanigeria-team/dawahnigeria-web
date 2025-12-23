@@ -28,6 +28,7 @@ import {
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 import { MdDownload } from "react-icons/md";
 import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
+import { trackLecturePlay, trackLecturePause, trackLectureCompletion, trackEvent, EVENTS } from "../../utils/posthog";
 
 export const NavContext = createContext();
 
@@ -157,14 +158,51 @@ const Layout = () => {
     if (audioRef.current) {
       const newTime = parseFloat(e.target.value);
       audioRef.current.currentTime = newTime;
+
+      // Track seek event
+      if (currentAudioInfo) {
+        trackEvent(EVENTS.LECTURE_SEEKED, {
+          lecture_id: currentAudioInfo.nid || currentAudioInfo.id,
+          lecture_title: currentAudioInfo.mp3_title || currentAudioInfo.Title,
+          seek_to: newTime,
+          lecturer: currentAudioInfo.rpname,
+        });
+      }
     }
   };
 
+  // Track audio completion and other events
+  useEffect(() => {
+    const audioElement = audioRef.current;
+    if (!audioElement) return;
+
+    const handleEnded = () => {
+      if (currentAudioInfo) {
+        const duration = audioElement.duration || currentAudioInfo.mp3_duration || 0;
+        trackLectureCompletion(currentAudioInfo, duration);
+      }
+    };
+
+    audioElement.addEventListener('ended', handleEnded);
+
+    return () => {
+      audioElement.removeEventListener('ended', handleEnded);
+    };
+  }, [audioRef, currentAudioInfo]);
+
   const handlePlay = async () => {
     if (playing) {
+      // Track pause event
+      if (currentAudioInfo) {
+        trackLecturePause(currentAudioInfo, audioRef.current?.currentTime || 0);
+      }
       audioRef.current?.pause();
       dispatch(setPlaying(false));
     } else {
+      // Track play event
+      if (currentAudioInfo) {
+        trackLecturePlay(currentAudioInfo);
+      }
       try {
         if (typeof window !== 'undefined' && "mediaSession" in navigator) {
           navigator.mediaSession.metadata = new MediaMetadata({

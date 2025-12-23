@@ -1,176 +1,390 @@
-.lecturerWidget_wrapper:hover .lecturerWidget_text {
-  font-family: "Nunito Sans";
-  font-style: normal;
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
 
-  font-weight: 400;
-  font-size: 14px;
-  display: block;
-  line-height: 18px;
-  text-align: center;
- 
-
-  margin: unset;
-}
+// ============================================
+// WORLD-CLASS LECTURER CARD DESIGN
+// ============================================
 
 .lecturerWidget_wrapper {
-  width: 180px;
-  height: 260px;
+  position: relative;
   display: flex;
-
-  @media screen and (max-width: 615px) {
-    display: none;
-  }
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  //justify-content: space-between;
-  @media screen and (max-width: 1238px) {
-    width: 130px;
-    height: 260px;
-  }
-  @media screen and (max-width: 1010px) {
-    width: 130px;
-    height: 260px;
-  }
-  @media screen and (max-width: 890px) {
-    width: 130px;
-    height: 260px;
-  }
-  @media screen and (max-width: 768px) {
-    width: 140px;
-    height: 220px;
-  }
+  gap: 1rem;
+  width: 100%;
+  max-width: 220px;
+  padding: 1.5rem 1rem 1.25rem;
+  margin: 0 auto;
+  background: linear-gradient(135deg,
+    rgba(24, 24, 27, 0.5) 0%,
+    rgba(18, 18, 20, 0.7) 100%
+  );
+  border: 1px solid rgba(63, 63, 70, 0.3);
+  border-radius: 16px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 
   @media screen and (max-width: 615px) {
     display: none;
   }
 
-  .lecturerWidget_circle {
-   
-    width: 165px;
-    height: 165px;
-    margin-top: 3px;
-    @media screen and (max-width: 1238px) {
-      width: 120px;
-      height: 120px;
-    }
-    @media screen and (max-width: 1010px) {
-      width: 120px;
-      height: 120px;
+  // Subtle glow effect
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(135deg,
+      rgba(221, 255, 43, 0.1) 0%,
+      transparent 50%,
+      rgba(221, 255, 43, 0.05) 100%
+    );
+    border-radius: 16px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+  }
+
+  &:hover {
+    transform: translateY(-8px);
+    border-color: rgba(221, 255, 43, 0.4);
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(221, 255, 43, 0.1),
+      0 0 30px rgba(221, 255, 43, 0.1);
+
+    &::before {
+      opacity: 1;
     }
 
-    @media screen and (max-width: 890px) {
-      width: 120px;
-      height: 120px;
+    .lecturerWidget_circle {
+      transform: scale(1.05);
+      box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(221, 255, 43, 0.15),
+        inset 0 0 20px rgba(221, 255, 43, 0.05);
     }
-    @media screen and (max-width: 768px) {
-      width: 140px;
-      height: 140px;
+
+    .lecturerWidget_text {
+      color: #f4f4f5;
     }
-    @media screen and (max-width: 650px) {
-      width: 140px;
-      height: 140px;
+
+    .lecturerWidget_views_wrapper {
+      color: #ddff2b;
     }
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+
+  @media screen and (max-width: 1238px) {
+    max-width: 180px;
+    padding: 1.25rem 0.875rem 1rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    max-width: 160px;
+    padding: 1rem 0.75rem 0.875rem;
+    gap: 0.75rem;
+  }
+
+  // Profile image container
+  .lecturerWidget_circle {
+    position: relative;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
-    @media screen and (max-width: 615px) {
+    overflow: hidden;
+    border: 3px solid rgba(63, 63, 70, 0.3);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+    @media screen and (max-width: 1238px) {
+      width: 110px;
+      height: 110px;
     }
+
+    @media screen and (max-width: 768px) {
+      width: 100px;
+      height: 100px;
+      border-width: 2px;
+    }
+
+    // Decorative ring
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      padding: 4px;
+      background: linear-gradient(135deg,
+        rgba(221, 255, 43, 0.3) 0%,
+        transparent 50%,
+        rgba(221, 255, 43, 0.1) 100%
+      );
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .lecturerWidget_wrapper:hover &::before {
+      opacity: 1;
+    }
+
     .lecturerWidget_img {
       width: 100%;
       height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: brightness(0.95) contrast(1.05);
+    }
+
+    .lecturerWidget_wrapper:hover .lecturerWidget_img {
+      transform: scale(1.08);
+      filter: brightness(1) contrast(1.1);
     }
   }
-  .lecturerWidget_text {
-    font-family: "Nunito Sans";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 18px;
-    display: block;
 
-    margin: unset;
+  // Lecturer name
+  .lecturerWidget_text {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
     text-align: center;
+    color: #e4e4e7;
+    margin: 0;
+    width: 100%;
+    transition: color 0.3s ease;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @media screen and (max-width: 768px) {
+      font-size: 0.9375rem;
+    }
   }
+
+  // Additional name field
   .lecturerWidget_rpname {
-    font-size: 0.85rem;
-    color: #a7a7a7;
-    margin-top: -0.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: #a1a1aa;
     text-align: center;
+    margin: -0.5rem 0 0;
+    width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%;
+    transition: color 0.3s ease;
+
+    .lecturerWidget_wrapper:hover & {
+      color: #d4d4d8;
+    }
   }
+
+  // View count
   .lecturerWidget_views_wrapper {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    width: 100%;
     justify-content: center;
-    gap: 0.6rem;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.5rem;
+    background: rgba(39, 39, 42, 0.4);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+
     .lecturerWidget_views_icon {
-      font-size: 16px;
-      //color: #868686;
+      font-size: 1rem;
+      color: #a1a1aa;
+      transition: color 0.3s ease;
     }
+
     .lecturerWidget_views_text {
-      font-family: "Nunito Sans";
-      font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 24px;
-      //color: #868686;
-      margin: unset;
-      text-shadow: 0px 3px 4px rgba(44, 44, 44, 0.25);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #a1a1aa;
+      margin: 0;
+      transition: color 0.3s ease;
+    }
+
+    .lecturerWidget_wrapper:hover & {
+      background: rgba(221, 255, 43, 0.1);
+
+      .lecturerWidget_views_icon,
+      .lecturerWidget_views_text {
+        color: #ddff2b;
+      }
     }
   }
 }
 
-// ---------------responsive lec widget--------------
-.lecwidres_wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  // justify-content: space-between;
-  width: 100%;
-  gap: 1rem;
+// ============================================
+// MOBILE RESPONSIVE LECTURER CARD
+// ============================================
 
-  @media screen and (min-width: 615px) {
-    display: none;
-  }
-  .lecwidres_img_wrap {
-    width: 60px;
-    height: 60px;
-    overflow: hidden;
+.lecwidres_wrapper {
+  display: none;
+  position: relative;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.25rem 1rem;
+  background: linear-gradient(135deg,
+    rgba(24, 24, 27, 0.6) 0%,
+    rgba(18, 18, 20, 0.8) 100%
+  );
+  border: 1px solid rgba(63, 63, 70, 0.3);
+  border-radius: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  overflow: hidden;
+
+  @media screen and (max-width: 615px) {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+  }
+
+  // Decorative accent (subtle left border)
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg,
+      rgba(221, 255, 43, 0.6) 0%,
+      rgba(221, 255, 43, 0.1) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:active {
+    transform: scale(0.98);
+    background: linear-gradient(135deg,
+      rgba(32, 32, 35, 0.7) 0%,
+      rgba(24, 24, 27, 0.9) 100%
+    );
+    border-color: rgba(221, 255, 43, 0.3);
+
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  // Profile image container
+  .lecwidres_img_wrap {
+    position: relative;
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid rgba(63, 63, 70, 0.4);
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+
+    // Subtle ring on active
+    &::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      border: 2px solid rgba(221, 255, 43, 0);
+      transition: border-color 0.3s ease;
+    }
+
+    .lecwidres_wrapper:active &::after {
+      border-color: rgba(221, 255, 43, 0.4);
+    }
+
     .lecwidres_img {
       width: 100%;
       height: 100%;
+      object-fit: cover;
+      filter: brightness(0.95) contrast(1.05);
+      transition: all 0.3s ease;
+    }
+
+    .lecwidres_wrapper:active & .lecwidres_img {
+      filter: brightness(1) contrast(1.1);
+      transform: scale(1.05);
     }
   }
+
+  // Text content
   .lecwidres_text_wrap {
-    font-family: "Poppins";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    //width: 100%;
+    flex: 1;
+    min-width: 0;
+    padding-right: 0.5rem;
+
     .lecwidres_text {
-      @media screen and (max-width: 615px) {
-        font-size: 12px;
-      }
-      color: #aeaeae;
+      font-family: 'Crimson Pro', serif;
+      font-size: 1.0625rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #e4e4e7;
       margin: 0;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      width: 200px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       overflow: hidden;
+      text-overflow: ellipsis;
+      transition: color 0.3s ease;
+
+      @media screen and (max-width: 480px) {
+        font-size: 1rem;
+      }
+
+      .lecwidres_wrapper:active & {
+        color: #f4f4f5;
+      }
     }
   }
+
+  // Arrow indicator with circle background
+  &::after {
+    content: '→';
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    font-size: 1.125rem;
+    color: #a1a1aa;
+    background: rgba(39, 39, 42, 0.5);
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &:active::after {
+    transform: translateX(2px) scale(1.1);
+    color: #ddff2b;
+    background: rgba(221, 255, 43, 0.15);
+    box-shadow: 0 0 12px rgba(221, 255, 43, 0.3);
+  }
+}
+
+// Legacy hover support
+.lecturerWidget_wrapper:hover .lecturerWidget_text {
+  font-family: 'Crimson Pro', serif;
+  font-weight: 600;
 }

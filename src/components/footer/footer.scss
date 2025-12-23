@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+// Legacy mixins for backward compatibility
 @mixin footer_text_header {
   font-family: "Nunito Sans";
   font-style: normal;
@@ -8,6 +11,7 @@
   align-items: center;
   color: #ffffff;
 }
+
 @mixin footer_text {
   font-family: "Nunito Sans";
   font-style: normal;
@@ -24,5 +28,454 @@
   width: 100%;
   font-family: "Nunito Sans";
   bottom: 0px;
- 
+}
+
+// ============================================
+// WORLD-CLASS FOOTER REDESIGN
+// ============================================
+
+.dn-footer {
+  position: relative;
+  width: 100%;
+  background: linear-gradient(180deg,
+    #0a0a0a 0%,
+    #111111 50%,
+    #0d0d0d 100%
+  );
+  overflow: hidden;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  // Noise texture overlay
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+}
+
+// Islamic geometric pattern background
+.dn-footer-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.02;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      rgba(221, 255, 43, 0.1) 40px,
+      rgba(221, 255, 43, 0.1) 41px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 40px,
+      rgba(221, 255, 43, 0.1) 40px,
+      rgba(221, 255, 43, 0.1) 41px
+    );
+  animation: patternShift 60s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+// Gradient overlay
+.dn-footer-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: radial-gradient(
+    ellipse at top,
+    rgba(221, 255, 43, 0.05) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+@keyframes patternShift {
+  0% {
+    transform: translateX(0) translateY(0);
+  }
+  100% {
+    transform: translateX(80px) translateY(80px);
+  }
+}
+
+.dn-footer-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+
+  @media screen and (min-width: 640px) {
+    padding: 0 2rem;
+  }
+}
+
+.dn-footer-content {
+  padding: 4rem 0 2rem;
+
+  @media screen and (max-width: 500px) {
+    padding: 3rem 0 9rem;
+  }
+}
+
+// ============================================
+// FOOTER GRID
+// ============================================
+
+.dn-footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  margin-bottom: 4rem;
+
+  @media screen and (min-width: 450px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+
+  @media screen and (min-width: 768px) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  @media screen and (min-width: 1024px) {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 3rem;
+  }
+}
+
+// ============================================
+// APP DOWNLOADS & SOCIAL SECTION
+// ============================================
+
+.dn-footer-apps-social {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+
+  @media screen and (min-width: 768px) {
+    grid-column: span 2;
+  }
+
+  @media screen and (min-width: 1024px) {
+    grid-column: span 2;
+  }
+}
+
+.dn-footer-apps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.dn-footer-apps-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #ddff2b;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.dn-footer-app-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.dn-footer-app-button {
+  position: relative;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    background: linear-gradient(135deg,
+      rgba(221, 255, 43, 0.2),
+      rgba(221, 255, 43, 0)
+    );
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #ddff2b;
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+}
+
+.dn-footer-app-img {
+  height: 44px;
+  width: auto;
+  display: block;
+  position: relative;
+  z-index: 1;
+  filter: brightness(0.95);
+  transition: filter 0.3s ease;
+
+  .dn-footer-app-button:hover & {
+    filter: brightness(1.05);
+  }
+}
+
+// ============================================
+// SOCIAL LINKS
+// ============================================
+
+.dn-footer-social {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.dn-footer-social-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #ddff2b;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.dn-footer-social-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.dn-footer-social-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    transform: translateY(-4px) scale(1.05);
+  }
+
+  &:active {
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #ddff2b;
+    outline-offset: 4px;
+  }
+}
+
+.dn-footer-social-icon-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+    rgba(39, 39, 42, 0.6) 0%,
+    rgba(24, 24, 27, 0.8) 100%
+  );
+  border: 1px solid rgba(63, 63, 70, 0.4);
+  border-radius: 12px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  .dn-footer-social-link:hover & {
+    background: linear-gradient(135deg,
+      rgba(221, 255, 43, 0.15) 0%,
+      rgba(221, 255, 43, 0.05) 100%
+    );
+    border-color: rgba(221, 255, 43, 0.3);
+    box-shadow:
+      0 0 20px rgba(221, 255, 43, 0.2),
+      0 8px 24px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(221, 255, 43, 0.2);
+  }
+}
+
+.dn-footer-social-icon {
+  position: relative;
+  z-index: 1;
+  font-size: 1.5rem;
+  color: #a1a1aa;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  .dn-footer-social-link:hover & {
+    color: #ddff2b;
+    filter: drop-shadow(0 0 8px rgba(221, 255, 43, 0.6));
+  }
+}
+
+// ============================================
+// DIVIDER
+// ============================================
+
+.dn-footer-divider {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  margin: 3rem 0 2rem;
+}
+
+.dn-footer-divider-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(63, 63, 70, 0.5) 20%,
+    rgba(63, 63, 70, 0.5) 80%,
+    transparent 100%
+  );
+}
+
+.dn-footer-divider-accent {
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(221, 255, 43, 0.6) 50%,
+    transparent 100%
+  );
+  filter: blur(2px);
+  animation: accentPulse 3s ease-in-out infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes accentPulse {
+  0%, 100% {
+    opacity: 0.4;
+    width: 100px;
+  }
+  50% {
+    opacity: 0.8;
+    width: 140px;
+  }
+}
+
+// ============================================
+// COPYRIGHT
+// ============================================
+
+.dn-footer-copyright {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 1.5rem 0;
+
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.dn-footer-copyright-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #71717a;
+  font-weight: 400;
+}
+
+.dn-footer-copyright-icon {
+  font-size: 1rem;
+  color: #52525b;
+}
+
+.dn-footer-copyright-year {
+  font-weight: 500;
+  color: #a1a1aa;
+}
+
+.dn-footer-copyright-text {
+  color: #71717a;
+}
+
+.dn-footer-copyright-tagline {
+  font-size: 0.8125rem;
+  color: #52525b;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.01em;
+
+  @media screen and (max-width: 767px) {
+    text-align: center;
+  }
+}
+
+// ============================================
+// FADE-IN ANIMATIONS
+// ============================================
+
+.dn-footer-grid > * {
+  animation: fadeInUp 0.6s ease-out backwards;
+
+  @for $i from 1 through 6 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{0.1 + ($i * 0.05)}s;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

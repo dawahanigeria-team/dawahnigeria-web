@@ -189,13 +189,15 @@
 
   /*************** moobile **********/
   .mobile_musicslist {
-    @include desktop_hide;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
-    font-family: "Poppins";
+    display: none;
     
-    font-size: 12px;
+      @media screen and (max-width: 690px) {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+        font-family: "Poppins";
+      font-size: 12px;
+    
 
     .music_list {
       display: flex;
@@ -376,6 +378,7 @@
       }
     }
   }
+  }
 
   .download_wrapper {
     display: block;
@@ -388,5 +391,74 @@
   }
   .hide_share_wrapper {
     display: none;
+  }
+}
+
+// Editorial theme compatibility for /new page
+.new_wrapper .musicslist_wrapper {
+  .table .td {
+    background: rgba(37, 41, 57, 0.3);
+    border-radius: 8px;
+    margin-bottom: 4px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+      background: rgba(37, 41, 57, 0.6);
+      transform: translateY(-1px);
+    }
+
+    .tr {
+      .num {
+        color: #7a7768;
+        font-family: 'Public Sans', sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+      }
+
+      .trend_lect_data {
+        .rel_text {
+          color: #f5f3ef;
+          font-family: 'Public Sans', sans-serif;
+          font-weight: 500;
+          font-size: 14px;
+        }
+
+        .main_txt_wrap {
+          color: #f5f3ef;
+          width: auto !important;
+          max-width: 600px;
+          white-space: normal;
+          text-overflow: unset;
+          overflow: visible;
+          line-height: 1.5;
+
+          @media screen and (max-width: 1200px) {
+            max-width: 450px;
+          }
+
+          @media screen and (max-width: 890px) {
+            max-width: 300px;
+          }
+
+          @media screen and (max-width: 690px) {
+            max-width: 60vw;
+          }
+        }
+      }
+    }
+
+    .tr2 {
+      color: #b8b5ad;
+      font-family: 'Public Sans', sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+    }
+
+    .tr3 {
+      color: #7a7768;
+      font-family: 'Public Sans', sans-serif;
+      font-weight: 400;
+      font-size: 13px;
+    }
   }
 }

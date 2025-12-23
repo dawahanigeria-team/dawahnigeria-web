@@ -1,40 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+// ============================================
+// WORLD-CLASS HEADER ROUTER DESIGN
+// ============================================
+
 .hroute_title_res_wrap {
-  //background:#090909;
-  margin-bottom: 2px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
+  padding: 1.25rem 1rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg,
+    rgba(24, 24, 27, 0.4) 0%,
+    rgba(18, 18, 20, 0.6) 100%
+  );
+  border: 1px solid rgba(63, 63, 70, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  animation: fadeInDown 0.5s ease-out;
+
   @media screen and (min-width: 600px) {
     display: none;
   }
-  display: flex;
-  //grid-template-columns: repeat(3, 1fr);
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 4%;
-  @media screen and (max-width: 615px) {
-    margin-bottom: 3%;
+
+  // Decorative accent line
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(221, 255, 43, 0.5) 50%,
+      transparent 100%
+    );
+    border-radius: 12px 12px 0 0;
   }
-  justify-content: space-between;
+
+  // Back button
   .hroute_title_res_icon {
-    font-size: 40px;
-   
+    flex-shrink: 0;
+    font-size: 2rem;
     cursor: pointer;
-  }
-  .hroute_title_res_text {
-    font-family: "Poppins";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 0px;
-   
-    text-align: center;
-    @media screen and (max-width: 615px) {
-      font-size: 17px;
+    color: #e4e4e7;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0.25rem;
+    border-radius: 8px;
+
+    &:hover {
+      color: #ddff2b;
+      background: rgba(221, 255, 43, 0.1);
+      transform: translateX(-2px);
     }
-    // grid-column: span 2;
-    //margin-left: 1.5rem;
+
+    &:active {
+      transform: translateX(-4px) scale(0.95);
+    }
   }
+
+  // Title text
+  .hroute_title_res_text {
+    flex: 1;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #f4f4f5;
+    text-align: center;
+    margin: 0;
+    letter-spacing: -0.01em;
+
+    @media screen and (max-width: 480px) {
+      font-size: 1.125rem;
+    }
+  }
+
+  // Spacer for symmetry
   .hides {
-    width: 40px;
-    background: none;
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+// Fade in animation
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Respect reduced motion preferences
+@media (prefers-reduced-motion: reduce) {
+  .hroute_title_res_wrap {
+    animation: none;
+  }
+
+  .hroute_title_res_icon {
+    &:hover,
+    &:active {
+      transform: none;
+    }
   }
 }

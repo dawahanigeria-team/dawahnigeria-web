@@ -19,77 +19,106 @@ const Footer = () => {
 
   return (
     <>
-      <footer className="footer_wrapper text-color bg-footer px-6 sm:px-8 pt-12 max-[500px]:pb-[9rem] pb-24">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid w-full max-[450px]:grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-8 lg:gap-12">
-            <Explore />
-            <ForUser />
-            <ForRp />
-            <Company />
+      <footer className="dn-footer">
+        <div className="dn-footer-pattern" aria-hidden="true"></div>
+        <div className="dn-footer-gradient" aria-hidden="true"></div>
 
-            <div className="flex space-y-6 sm:col-span-2 flex-col justify-start items-start">
-              {/* App Store Links */}
-              <div className="w-full flex items-center space-x-4">
-                <button
-                  type="button"
-                  aria-label="Download app on Applestore"
-                  onClick={(e) => {
-                    e.nativeEvent.stopImmediatePropagation();
-                    setShowComingSoon(true);
-                  }}
-                  className="transition-transform hover:scale-105"
-                >
-                  <img
-                    className="h-[40px]"
-                    src={apple}
-                    alt="Download on App Store"
-                  />
-                </button>
-                <button
-                  type="button"
-                  aria-label="Download app on Google play"
-                  onClick={(e) => {
-                    e.nativeEvent.stopImmediatePropagation();
-                    setShowComingSoon(true);
-                  }}
-                  className="transition-transform hover:scale-105"
-                >
-                  <img
-                    className="h-[40px]"
-                    src={googleplay}
-                    alt="Get it on Google Play"
-                  />
-                </button>
-              </div>
+        <div className="dn-footer-container">
+          <div className="dn-footer-content">
+            {/* Main Footer Grid */}
+            <div className="dn-footer-grid">
+              <Explore />
+              <ForUser />
+              <ForRp />
+              <Company />
 
-              {/* Social Links */}
-              <div className="flex items-center space-x-4 py-3 w-full">
-                <SocialLink
-                  href="https://web.facebook.com/dawahnigeria"
-                  icon={<FaFacebook />}
-                />
-                <SocialLink
-                  href="https://twitter.com/dawahnigeria"
-                  icon={<AiOutlineTwitter />}
-                />
-                <SocialLink
-                  href="https://www.instagram.com/dawahnigeria/"
-                  icon={<AiFillInstagram />}
-                />
-                <SocialLink
-                  href="https://www.youtube.com/@DawahNigeria"
-                  icon={<FaYoutube />}
-                />
+              {/* App Downloads & Social */}
+              <div className="dn-footer-apps-social">
+                <div className="dn-footer-apps">
+                  <h3 className="dn-footer-apps-title">Download Our App</h3>
+                  <div className="dn-footer-app-buttons">
+                    <button
+                      type="button"
+                      aria-label="Download app on App Store"
+                      onClick={(e) => {
+                        e.nativeEvent.stopImmediatePropagation();
+                        setShowComingSoon(true);
+                      }}
+                      className="dn-footer-app-button"
+                    >
+                      <img
+                        className="dn-footer-app-img"
+                        src={apple}
+                        alt="Download on App Store"
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      aria-label="Download app on Google Play"
+                      onClick={(e) => {
+                        e.nativeEvent.stopImmediatePropagation();
+                        setShowComingSoon(true);
+                      }}
+                      className="dn-footer-app-button"
+                    >
+                      <img
+                        className="dn-footer-app-img"
+                        src={googleplay}
+                        alt="Get it on Google Play"
+                      />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Social Links */}
+                <div className="dn-footer-social">
+                  <h3 className="dn-footer-social-title">Connect With Us</h3>
+                  <div className="dn-footer-social-links">
+                    <SocialLink
+                      href="https://web.facebook.com/dawahnigeria"
+                      icon={<FaFacebook />}
+                      label="Facebook"
+                    />
+                    <SocialLink
+                      href="https://twitter.com/dawahnigeria"
+                      icon={<AiOutlineTwitter />}
+                      label="Twitter"
+                    />
+                    <SocialLink
+                      href="https://www.instagram.com/dawahnigeria/"
+                      icon={<AiFillInstagram />}
+                      label="Instagram"
+                    />
+                    <SocialLink
+                      href="https://www.youtube.com/@DawahNigeria"
+                      icon={<FaYoutube />}
+                      label="YouTube"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Copyright */}
-          <div className="py-6 mt-8 border-t border-zinc-700/50">
-            <div className="flex items-center space-x-2 text-sm text-zinc-400">
-              <AiOutlineCopyrightCircle className="text-lg" />
-              <span>{new Date().getFullYear()}</span>
-              <span>Dawah Nigeria. All rights reserved.</span>
+            {/* Decorative Divider */}
+            <div className="dn-footer-divider" aria-hidden="true">
+              <div className="dn-footer-divider-line"></div>
+              <div className="dn-footer-divider-accent"></div>
+            </div>
+
+            {/* Copyright */}
+            <div className="dn-footer-copyright">
+              <div className="dn-footer-copyright-content">
+                <AiOutlineCopyrightCircle className="dn-footer-copyright-icon" />
+                <span className="dn-footer-copyright-year">
+                  {new Date().getFullYear()}
+                </span>
+                <span className="dn-footer-copyright-text">
+                  Dawah Nigeria. All rights reserved.
+                </span>
+              </div>
+              <div className="dn-footer-copyright-tagline">
+                Empowering minds through Islamic knowledge
+              </div>
             </div>
           </div>
         </div>
@@ -105,15 +134,16 @@ const Footer = () => {
   );
 };
 
-// Social Link Component
-const SocialLink = ({ href, icon }) => (
+const SocialLink = ({ href, icon, label }) => (
   <a
     href={href}
     target="_blank"
     rel="noopener noreferrer"
-    className="group flex items-center justify-center w-10 h-10 rounded-full bg-zinc-800/50 hover:bg-zinc-700/50 transition-all duration-300"
+    className="dn-footer-social-link"
+    aria-label={label}
   >
-    <div className="text-2xl text-zinc-400 group-hover:text-[#ddff2b] transition-colors duration-300">
+    <div className="dn-footer-social-icon-bg"></div>
+    <div className="dn-footer-social-icon">
       {icon}
     </div>
   </a>

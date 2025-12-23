@@ -1,59 +1,287 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+// ============================================
+// WORLD-CLASS LANDING PAGE REDESIGN
+// ============================================
+
 .landing_wrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
- 
+  min-height: 100vh;
+  padding: 2rem 2% 4rem;
+  background: linear-gradient(180deg,
+    #0a0a0a 0%,
+    #0d0d0d 40%,
+    #0a0a0a 100%
+  );
+  font-family: 'DM Sans', sans-serif;
+
+  @media screen and (max-width: 615px) {
+    padding: 1.5rem 4% 3rem;
+  }
+
+  @media screen and (min-width: 690px) {
+    padding: 2rem 3% 4rem;
+  }
+
+  // Subtle Islamic geometric pattern
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.015;
+    pointer-events: none;
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 60px,
+        rgba(221, 255, 43, 0.1) 60px,
+        rgba(221, 255, 43, 0.1) 61px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 60px,
+        rgba(221, 255, 43, 0.1) 60px,
+        rgba(221, 255, 43, 0.1) 61px
+      );
+    z-index: 0;
+  }
+
+  // Radial gradient overlay for depth
+  &::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 400px;
+    background: radial-gradient(
+      ellipse at top,
+      rgba(221, 255, 43, 0.04) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // All children above background
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  // ============================================
+  // HERO CAROUSEL SECTION
+  // ============================================
 
   .carousel {
     width: 100%;
-    //height:40%;
+    margin-bottom: 3rem;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow:
+      0 20px 60px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(63, 63, 70, 0.3);
+    animation: fadeInScale 0.8s ease-out;
+
     @media screen and (max-width: 615px) {
       display: none;
     }
+
+    @media screen and (min-width: 1283px) {
+      border-radius: 24px;
+    }
   }
 
+  // Mobile carousel
   .landing_carousel {
-    width: 96vw;
-    height: 162px;
-    //border-radius:3px ;
+    width: 100%;
+    height: 180px;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(63, 63, 70, 0.3);
+    animation: fadeInScale 0.8s ease-out;
+
     @media screen and (min-width: 615px) {
       display: none;
     }
-    margin-top: 42px;
-    margin-bottom: 8px;
+
     .landing_carousel_img {
       width: 100%;
-      border-radius: 3px;
-      height: 162px;
+      border-radius: 16px;
+      height: 180px;
     }
+
     .slick-prev:before,
     .slick-next:before {
       display: none;
     }
+
     .slick-dots {
       position: absolute;
-      bottom: 11px;
+      bottom: 16px;
+
       li {
-        margin: 0px 0px;
-        width: 16px;
-        height: 16px;
-      }
-      li button:before {
-        color: white;
+        margin: 0 4px;
+        width: 8px;
+        height: 8px;
+
+        button {
+          width: 8px;
+          height: 8px;
+          padding: 0;
+
+          &:before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            opacity: 1;
+          }
+        }
+
+        &.slick-active button:before {
+          background: #ddff2b;
+          box-shadow: 0 0 8px rgba(221, 255, 43, 0.6);
+        }
       }
     }
   }
-  .landing_options {
-    padding: 0rem 0.1rem 0rem 0.1rem;
 
-    //margin-top:1.8rem;
+  // ============================================
+  // QUICK ACCESS NAVIGATION (MOBILE)
+  // ============================================
+
+  .landing_options {
+    display: none;
+    padding: 0;
+    margin-bottom: 2rem;
+
+    @media screen and (max-width: 615px) {
+      display: block;
+    }
+
     .slick-prev:before,
     .slick-next:before {
       display: none;
     }
-    @media screen and (min-width: 615px) {
+
+    .slick-slide {
+      padding: 0 0.25rem;
+    }
+
+    .slick-track {
+      display: flex;
+      gap: 0.5rem;
+    }
+  }
+
+  // ============================================
+  // CONTENT SECTIONS
+  // ============================================
+
+  .landing_recent,
+  .landing_tafsir {
+    margin: 2.5rem 0;
+    animation: fadeInUp 0.8s ease-out backwards;
+
+    @media screen and (max-width: 615px) {
+      margin: 1.5rem 0;
+    }
+
+    // Staggered animation delays
+    @for $i from 1 through 10 {
+      &:nth-of-type(#{$i}) {
+        animation-delay: #{0.2 + ($i * 0.1)}s;
+      }
+    }
+  }
+
+  .landing_space {
+    position: relative;
+    padding: 2rem 0;
+
+    // Decorative separator
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(63, 63, 70, 0.4) 20%,
+        rgba(63, 63, 70, 0.4) 80%,
+        transparent 100%
+      );
+    }
+
+    &:first-of-type::before {
       display: none;
     }
+
+    @media screen and (max-width: 615px) {
+      padding: 1.5rem 0;
+    }
+  }
+}
+
+// ============================================
+// ANIMATIONS
+// ============================================
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+// Respect reduced motion preferences
+@media (prefers-reduced-motion: reduce) {
+  .landing_wrapper,
+  .carousel,
+  .landing_carousel,
+  .landing_recent,
+  .landing_tafsir {
+    animation: none !important;
   }
 }

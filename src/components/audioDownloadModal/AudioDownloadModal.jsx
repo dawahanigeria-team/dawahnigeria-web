@@ -7,6 +7,8 @@ import { FaCheckCircle } from "react-icons/fa";
 import Loader from "../UI/loader/loader";
 import { DownloadIcon } from "../svgcomponent/svgComponent";
 import toast from "../../utils/conditionalToast"; // SSR-safe toast utility
+import { trackDownload } from "../../utils/posthog";
+import { useSelector } from "react-redux";
 
 export const AudioDownloadModal = ({
   downloads,
@@ -18,6 +20,7 @@ export const AudioDownloadModal = ({
   const [selectedFormat, setSelectedFormat] = useState("mp3");
 
   const { data, isLoading, download } = useDownloadLecture(nid, showModal);
+  const { currentAudioInfo } = useSelector((state) => state.user);
 
   const selectedUrlKey = selectedFormat === "amr" ? "amr_url" : "mp3_url";
   const fileUrl = data?.[selectedUrlKey];
@@ -28,7 +31,32 @@ export const AudioDownloadModal = ({
       toast.error("Download link is not available for this format yet.");
       return;
     }
+
+    // Track download event
+    const lectureData = currentAudioInfo || data;
+    if (lectureData) {
+      trackDownload({
+        ...lectureData,
+        nid: nid,
+        download_format: selectedFormat,
+        file_size: data?.[selectedFormat + "_size"],
+      });
+    }
+
+    // Initiate download
     download(fileUrl);
+    
+    // Show success feedback to user
+    const fileSize = data?.[selectedFormat + "_size"] || "";
+    const formatLabel = selectedFormat.toUpperCase();
+    toast.success(
+      `Download started${fileSize ? ` (${fileSize} ${formatLabel})` : ` (${formatLabel})`}`
+    );
+    
+    // Close modal after brief delay to allow user to see the feedback
+    setTimeout(() => {
+      setShowModal(false);
+    }, 300);
   };
 
   const downloadOptions = useMemo(
