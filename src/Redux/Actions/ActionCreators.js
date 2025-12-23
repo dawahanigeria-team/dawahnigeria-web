@@ -3,6 +3,7 @@ import axios from "axios";
 
 // Action Creators
 import * as type from "./Types";
+import { identifyUser, resetUser, trackEvent, EVENTS } from "../../utils/posthog";
 
 // Conditional toast helper that only works on client side to prevent SSR errors
 const conditionalToast = {
@@ -129,6 +130,10 @@ const loginSuccess = (data) => {
   };
 };
 const logout = () => {
+  // Reset PostHog user identity on logout
+  resetUser();
+  trackEvent(EVENTS.USER_LOGGED_OUT);
+
   return {
     type: type.LOGOUT,
   };
@@ -170,7 +175,23 @@ const LoginAction = (loginParams, isSocial, navigate, setLoading) => {
           }
         )
         .then((res) => {
-          dispatch(GetUsersSuccess(res.data));
+          const userData = res.data;
+          dispatch(GetUsersSuccess(userData));
+
+          // Track user login and identify in PostHog
+          if (userData?.id || userData?.user_id) {
+            identifyUser(userData.id || userData.user_id, {
+              email: userData.email,
+              username: userData.username || userData.user_name,
+              name: userData.name || userData.display_name,
+              login_method: 'social',
+            });
+            trackEvent(EVENTS.USER_LOGGED_IN, {
+              method: 'social',
+              provider: loginParams.provider || 'unknown',
+            });
+          }
+
           navigate("/");
           setLoading(false);
           conditionalToast.success("Login successful");
@@ -193,6 +214,20 @@ const LoginAction = (loginParams, isSocial, navigate, setLoading) => {
           const { data } = res;
 
           dispatch(GetUsersSuccess(data));
+
+          // Track user login and identify in PostHog
+          if (data?.id || data?.user_id) {
+            identifyUser(data.id || data.user_id, {
+              email: data.email,
+              username: data.username || data.user_name,
+              name: data.name || data.display_name,
+              login_method: 'email',
+            });
+            trackEvent(EVENTS.USER_LOGGED_IN, {
+              method: 'email',
+            });
+          }
+
           navigate("/");
           conditionalToast.success("Login Successful");
           setLoading(false);
@@ -229,7 +264,23 @@ const registration = (
       )
       .then((res) => {
         if (isSocial) {
-          dispatch(GetUsersSuccess(res.data));
+          const userData = res.data;
+          dispatch(GetUsersSuccess(userData));
+
+          // Track user signup and identify in PostHog
+          if (userData?.id || userData?.user_id) {
+            identifyUser(userData.id || userData.user_id, {
+              email: userData.email,
+              username: userData.username || userData.user_name,
+              name: userData.name || userData.display_name,
+              signup_method: 'social',
+            });
+            trackEvent(EVENTS.USER_SIGNED_UP, {
+              method: 'social',
+              provider: registrationParams.provider || 'unknown',
+            });
+          }
+
           navigate("/");
           setLoading(false);
           conditionalToast.success("Registration Successful");
@@ -250,6 +301,20 @@ const registration = (
               const { data } = res;
 
               dispatch(GetUsersSuccess(data));
+
+              // Track user signup and identify in PostHog
+              if (data?.id || data?.user_id) {
+                identifyUser(data.id || data.user_id, {
+                  email: data.email,
+                  username: data.username || data.user_name,
+                  name: data.name || data.display_name,
+                  signup_method: 'email',
+                });
+                trackEvent(EVENTS.USER_SIGNED_UP, {
+                  method: 'email',
+                });
+              }
+
               navigate("/");
               setLoading(false);
               conditionalToast.success("Registration Successful");

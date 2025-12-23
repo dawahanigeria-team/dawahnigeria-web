@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { shareLink, shareAudio, sharingChanels } from "./utils";
+import { trackShare } from "../../utils/posthog";
 
 const ShareAudio = ({ isShare, setisShare, nid, type }) => {
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, currentAudioInfo } = useSelector((state) => state.user);
   const [link, setLink] = useState(true);
 
   ///**** share audio ******** */
@@ -17,6 +18,18 @@ const ShareAudio = ({ isShare, setisShare, nid, type }) => {
   const handleShareAdiolInk = (item) => {
     shareAudio(item.key, item.link, encodeURIComponent(link));
     dispatch(shareLink(nid, currentUser?.id, type));
+
+    // Track share event
+    if (currentAudioInfo) {
+      trackShare(
+        {
+          ...currentAudioInfo,
+          type: type || 'lecture',
+          nid: nid,
+        },
+        item.key // Platform: whatsapp, facebook, twitter, etc.
+      );
+    }
   };
 
   return (

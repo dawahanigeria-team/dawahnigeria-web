@@ -15,6 +15,11 @@ import {
 import "./App.css";
 
 import ErrorBoundary from "./components/UI/ErrorBoundary";
+
+// Import PostHog test utility in development
+if (process.env.NODE_ENV === 'development') {
+  import('./utils/posthog-test');
+}
 import { Route, Routes, Navigate } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import Scrolltotop from "./components/UI/scrollToTop";
