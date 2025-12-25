@@ -11,14 +11,14 @@ const conditionalToast = {
     if (typeof window !== 'undefined') {
       import('react-hot-toast').then(({ toast }) => {
         toast.success(message);
-      }).catch(() => {});
+      }).catch(() => { });
     }
   },
   error: (message) => {
     if (typeof window !== 'undefined') {
       import('react-hot-toast').then(({ toast }) => {
         toast.error(message);
-      }).catch(() => {});
+      }).catch(() => { });
     }
   }
 };
@@ -179,11 +179,11 @@ const LoginAction = (loginParams, isSocial, navigate, setLoading) => {
           dispatch(GetUsersSuccess(userData));
 
           // Track user login and identify in PostHog
-          if (userData?.id || userData?.user_id) {
-            identifyUser(userData.id || userData.user_id, {
+          if ((userData?.id ?? userData?.user_id) != null) {
+            identifyUser(userData.id ?? userData.user_id, {
               email: userData.email,
-              username: userData.username || userData.user_name,
-              name: userData.name || userData.display_name,
+              username: userData.username ?? userData.user_name,
+              name: userData.name ?? userData.display_name,
               login_method: 'social',
             });
             trackEvent(EVENTS.USER_LOGGED_IN, {
@@ -216,11 +216,11 @@ const LoginAction = (loginParams, isSocial, navigate, setLoading) => {
           dispatch(GetUsersSuccess(data));
 
           // Track user login and identify in PostHog
-          if (data?.id || data?.user_id) {
-            identifyUser(data.id || data.user_id, {
+          if ((data?.id ?? data?.user_id) != null) {
+            identifyUser(data.id ?? data.user_id, {
               email: data.email,
-              username: data.username || data.user_name,
-              name: data.name || data.display_name,
+              username: data.username ?? data.user_name,
+              name: data.name ?? data.display_name,
               login_method: 'email',
             });
             trackEvent(EVENTS.USER_LOGGED_IN, {
@@ -268,11 +268,11 @@ const registration = (
           dispatch(GetUsersSuccess(userData));
 
           // Track user signup and identify in PostHog
-          if (userData?.id || userData?.user_id) {
-            identifyUser(userData.id || userData.user_id, {
+          if ((userData?.id ?? userData?.user_id) != null) {
+            identifyUser(userData.id ?? userData.user_id, {
               email: userData.email,
-              username: userData.username || userData.user_name,
-              name: userData.name || userData.display_name,
+              username: userData.username ?? userData.user_name,
+              name: userData.name ?? userData.display_name,
               signup_method: 'social',
             });
             trackEvent(EVENTS.USER_SIGNED_UP, {
@@ -303,11 +303,11 @@ const registration = (
               dispatch(GetUsersSuccess(data));
 
               // Track user signup and identify in PostHog
-              if (data?.id || data?.user_id) {
-                identifyUser(data.id || data.user_id, {
+              if ((data?.id ?? data?.user_id) != null) {
+                identifyUser(data.id ?? data.user_id, {
                   email: data.email,
-                  username: data.username || data.user_name,
-                  name: data.name || data.display_name,
+                  username: data.username ?? data.user_name,
+                  name: data.name ?? data.display_name,
                   signup_method: 'email',
                 });
                 trackEvent(EVENTS.USER_SIGNED_UP, {

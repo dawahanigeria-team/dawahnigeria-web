@@ -26,11 +26,12 @@ const User = (state = initailState, action) => {
       };
     case type.FETCH_USER_SUCCESS:
       const userData = action.payload;
-      // Normalize user data to always have 'id' field
+      // Normalize user data to always have consistent fields.
+      // Use `??` (not `||`) so valid falsy values like 0 aren't treated as missing.
       const normalizedUser = userData ? {
         ...userData,
-        id: userData.id || userData.user_id,
-        username: userData.username || userData.user_name,
+        id: userData.id ?? userData.user_id,
+        username: userData.username ?? userData.user_name,
       } : null;
 
       return {
