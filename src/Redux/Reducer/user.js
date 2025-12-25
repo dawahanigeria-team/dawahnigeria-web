@@ -25,9 +25,17 @@ const User = (state = initailState, action) => {
         token: action.payload,
       };
     case type.FETCH_USER_SUCCESS:
+      const userData = action.payload;
+      // Normalize user data to always have 'id' field
+      const normalizedUser = userData ? {
+        ...userData,
+        id: userData.id || userData.user_id,
+        username: userData.username || userData.user_name,
+      } : null;
+
       return {
         ...state,
-        currentUser: action.payload,
+        currentUser: normalizedUser,
       };
     case type.GET_TYPE:
       return {
