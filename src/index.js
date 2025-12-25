@@ -54,11 +54,13 @@ const container = document.getElementById("root");
 const postHogApiKey = process.env.REACT_APP_POSTHOG_KEY;
 const postHogHost = process.env.REACT_APP_POSTHOG_HOST;
 
-console.log('🔍 PostHog Environment Check:', {
-  apiKey: postHogApiKey,
-  apiHost: postHogHost,
-  allEnvVars: Object.keys(process.env).filter(key => key.includes('POSTHOG')),
-});
+if (process.env.NODE_ENV === 'development') {
+  console.log('🔍 PostHog Environment Check:', {
+    apiKey: postHogApiKey ? '✓ Set' : '✗ Missing (REACT_APP_POSTHOG_KEY)',
+    apiHost: postHogHost,
+    allEnvVars: Object.keys(process.env).filter(key => key.includes('POSTHOG')),
+  });
+}
 
 if (!postHogApiKey || !postHogHost) {
   // Only log detailed configuration info in development

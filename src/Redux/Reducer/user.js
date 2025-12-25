@@ -29,8 +29,8 @@ const User = (state = initailState, action) => {
       // Normalize user data to always have 'id' field
       const normalizedUser = userData ? {
         ...userData,
-        id: userData.id || userData.user_id,
-        username: userData.username || userData.user_name,
+        id: userData.id ?? userData.user_id,
+        username: userData.username ?? userData.user_name,
       } : null;
 
       return {
