@@ -179,7 +179,7 @@ const LoginAction = (loginParams, isSocial, navigate, setLoading) => {
           dispatch(GetUsersSuccess(userData));
 
           // Track user login and identify in PostHog
-          if (userData?.id || userData?.user_id) {
+          if ((userData?.id ?? userData?.user_id) != null) {
             identifyUser(userData.id ?? userData.user_id, {
               email: userData.email,
               username: userData.username ?? userData.user_name,
@@ -216,7 +216,7 @@ const LoginAction = (loginParams, isSocial, navigate, setLoading) => {
           dispatch(GetUsersSuccess(data));
 
           // Track user login and identify in PostHog
-          if (data?.id || data?.user_id) {
+          if ((data?.id ?? data?.user_id) != null) {
             identifyUser(data.id ?? data.user_id, {
               email: data.email,
               username: data.username ?? data.user_name,
@@ -268,7 +268,7 @@ const registration = (
           dispatch(GetUsersSuccess(userData));
 
           // Track user signup and identify in PostHog
-          if (userData?.id || userData?.user_id) {
+          if ((userData?.id ?? userData?.user_id) != null) {
             identifyUser(userData.id ?? userData.user_id, {
               email: userData.email,
               username: userData.username ?? userData.user_name,
@@ -303,7 +303,7 @@ const registration = (
               dispatch(GetUsersSuccess(data));
 
               // Track user signup and identify in PostHog
-              if (data?.id || data?.user_id) {
+              if ((data?.id ?? data?.user_id) != null) {
                 identifyUser(data.id ?? data.user_id, {
                   email: data.email,
                   username: data.username ?? data.user_name,
