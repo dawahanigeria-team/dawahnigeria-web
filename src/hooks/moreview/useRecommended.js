@@ -1,5 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { moreViewApi } from "../../services/more.service";
+import { extractArrayData } from "../../utils/dataHelpers";
 
 export const useRecommended = (langid = 6) => {
   const {
@@ -11,10 +12,13 @@ export const useRecommended = (langid = 6) => {
     hasNextPage,
   } = useInfiniteQuery({
     queryKey: ["recommended", langid],
-    queryFn: ({ pageParam = 1 }) =>
-      moreViewApi.getRecommended({ page: pageParam, langid }),
+    queryFn: async ({ pageParam = 1 }) => {
+      const response = await moreViewApi.getRecommended({ page: pageParam, langid });
+      return extractArrayData(response);
+    },
     getNextPageParam: (lastPage, pages) => {
-      if (lastPage.length === 0) {
+      const pageData = Array.isArray(lastPage) ? lastPage : [];
+      if (pageData.length === 0) {
         return undefined;
       }
       return pages.length + 1;
