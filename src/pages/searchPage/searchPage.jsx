@@ -40,6 +40,10 @@ const SearchPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
 
+  // Extract primitive values from searchParams for reliable dependency tracking
+  const pageParam = searchParams.get("page");
+  const queryParam = searchParams.get("query");
+
   const handleSideBar = () => {
     setRes(1);
     setisOpen(true);
@@ -185,24 +189,23 @@ const SearchPage = () => {
     dispatch(getSearchOptions(filterOptions));
   }, [searchData, dispatch]);
 
-  function fetchData(page = 1) {
-    const searchValue = searchParams.get("query");
-    if (!searchValue) {
+  const fetchData = useCallback((page = 1) => {
+    if (!queryParam) {
       navigate("/dawahcast");
       return;
     }
 
     setLoading(true);
-    setText(searchValue);
+    setText(queryParam);
 
     const baseUrl = `${process.env.REACT_APP_API_BASE_URL}/searchApi.php`;
     const params = new URLSearchParams({
       type: "all",
-      value: searchValue,
+      value: queryParam,
       page: page.toString(),
       limit: "20",
-      // Add timestamp to prevent caching issues
-      _t: Date.now().toString(),
+      offset: ((page - 1) * 20).toString(),
+      _t: Date.now().toString(), // Cache buster
     });
 
     // Add filters if any are selected
@@ -238,7 +241,8 @@ const SearchPage = () => {
           const results = res.data.data || res.data.results || [];
           const total = res.data.total || 0;
           // Use the page parameter passed to fetchData, not from API response
-          const responsePage = res.data.page || page;
+          // Prioritize the requested page parameter over API response
+          const responsePage = page || res.data.page || 1;
 
           console.log("Results count:", results.length);
           console.log("Total results:", total);
@@ -250,7 +254,7 @@ const SearchPage = () => {
           setCurrentPage(parseInt(responsePage));
 
           // Track search event
-          trackSearch(searchValue, {
+          trackSearch(queryParam, {
             lecturerId: lecturerId,
             albumId: albumId,
             languageId: languageId,
@@ -274,23 +278,35 @@ const SearchPage = () => {
         dispatch(getSearchRecord(0));
         setTotalResults(0);
       });
-  }
+  }, [queryParam, languageId, lecturerId, categoryId, albumId, navigate, setText, dispatch]);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    // Only reset if we're not on page 1 and we have filters applied
+    const currentPage = parseInt(pageParam) || 1;
+    if (currentPage !== 1 && (languageId.length > 0 || lecturerId.length > 0 || categoryId.length > 0 || albumId.length > 0)) {
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set("page", "1");
+      navigate(`${pathname}?${newSearchParams.toString()}`, { replace: true });
+    }
+  }, [languageId, lecturerId, categoryId, albumId]);
 
   useEffect(() => {
-    const page = parseInt(searchParams.get("page")) || 1;
-    const query = searchParams.get("query");
-    
+    const page = parseInt(pageParam) || 1;
+
     // Only fetch if we have a query
-    if (query) {
-      console.log("useEffect triggered - Page:", page, "Query:", query);
+    if (queryParam) {
+      console.log("useEffect triggered - Page:", page, "Query:", queryParam);
       fetchData(page);
     }
-  }, [fetchData, searchParams]);
+  }, [pageParam, queryParam, fetchData]);
 
   const handlePageChange = (newPage) => {
     const newSearchParams = new URLSearchParams(searchParams);
     newSearchParams.set("page", newPage.toString());
     navigate(`${pathname}?${newSearchParams.toString()}`);
+    // Scroll to top when page changes
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const totalPages = Math.ceil(totalResults / 20);
