@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import "./more.scss";
 import Container from "../../components/container/Container";
 import { useNavigate, useLocation, Link } from "react-router-dom";
@@ -13,43 +13,72 @@ import {
 } from "../../utils/routes/constants";
 import HeadMeta from "../head-meta";
 import Loader from "../UI/loader/loader";
-import { useRecentlyViewed } from "../../hooks/moreview/useRecentlyViewed";
-import { useTrending } from "../../hooks/moreview/useTrending";
-import { useRecentlyPosted } from "../../hooks/moreview/useRecentlyPosted";
-import { useRecommended } from "../../hooks/moreview/useRecommended";
-
-const useMoreData = (pathname) => {
-  if (pathname.includes("/more/recently-viewed")) {
-    return useRecentlyViewed();
-  } else if (pathname.includes("/more/trending")) {
-    return useTrending();
-  } else if (pathname.includes("/more/recent")) {
-    return useRecentlyPosted();
-  } else if (pathname.includes("/more/recommended")) {
-    return useRecommended();
-  }
-  return {};
-};
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { moreViewApi } from "../../services/more.service";
 
 function More() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const { data, isLoading, isError, fetchNextPage, hasNextPage, isFetchingNextPage } = useMoreData(pathname);
-
-  const getSectionTitle = () => {
-    const path = pathname;
-    if (path.includes("/more/recent")) {
-      return "Recently Posted";
-    } else if (path.includes("/more/recently-viewed")) {
-      return "Recently Viewed";
-    } else if (path.includes("/more/trending")) {
-      return "Trending";
-    } else if (path.includes("/more/recommended")) {
-      return "Recommended";
+  const { queryKey, apiFn, title } = useMemo(() => {
+    if (pathname.includes("/more/recently-viewed")) {
+      return { 
+        queryKey: "recently-viewed", 
+        apiFn: moreViewApi.getRecentlyViewed,
+        title: "Recently Viewed"
+      };
+    } else if (pathname.includes("/more/trending")) {
+      return { 
+        queryKey: "trending", 
+        apiFn: moreViewApi.getTrending,
+        title: "Trending"
+      };
+    } else if (pathname.includes("/more/recent")) {
+      return { 
+        queryKey: "recently-posted", 
+        apiFn: moreViewApi.getRecentlyPosted,
+        title: "Recently Posted"
+      };
+    } else if (pathname.includes("/more/recommended")) {
+      return { 
+        queryKey: "recommended", 
+        apiFn: moreViewApi.getRecommended,
+        title: "Recommended"
+      };
     }
-    return "More";
-  };
+    return { 
+      queryKey: "more", 
+      apiFn: async () => [], 
+      title: "More" 
+    };
+  }, [pathname]);
+
+  const langid = 6; // Default language ID from original hooks
+
+  const {
+    data,
+    isLoading,
+    isError,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
+    queryKey: [queryKey, langid],
+    queryFn: async ({ pageParam = 1 }) => {
+      if (!apiFn) return [];
+      const response = await apiFn({ page: pageParam, langid });
+      // Extract data array from response object
+      return Array.isArray(response?.data) ? response.data : Array.isArray(response) ? response : [];
+    },
+    getNextPageParam: (lastPage, pages) => {
+      const pageData = Array.isArray(lastPage) ? lastPage : [];
+      if (pageData.length === 0) {
+        return undefined;
+      }
+      return pages.length + 1;
+    },
+    enabled: !!apiFn
+  });
 
   const handleLoadMore = () => {
     if (hasNextPage && !isFetchingNextPage) {
@@ -57,16 +86,21 @@ function More() {
     }
   };
 
+  const isEmpty = useMemo(() => {
+    if (isLoading || isError || !data?.pages) return false;
+    return data.pages.every(page => !Array.isArray(page) || page.length === 0);
+  }, [data, isLoading, isError]);
+
   return (
     <Container>
       <HeadMeta
-        title={`${getSectionTitle() ?? "Islamic"} resources on Dawah Nigeria `}
+        title={`${title} resources on Dawah Nigeria `}
       />
       <div className="more_wrapper">
         {/* Header Section */}
         <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
           <div className="more_wrap_link">
-            <HeaderRouter title={getSectionTitle()} />
+            <HeaderRouter title={title} />
           </div>
 
           {/* Controls */}
@@ -95,7 +129,7 @@ function More() {
               <div className="flex items-center space-x-2 text-sm">
                 <span className="text-muted-foreground">Home</span>
                 <span className="text-muted-foreground">/</span>
-                <span className="text-foreground font-medium">{getSectionTitle()}</span>
+                <span className="text-foreground font-medium">{title}</span>
               </div>
             </div>
           </nav>
@@ -128,14 +162,15 @@ function More() {
                   {pageItems.map((item, idx) => (
                   <Link
                     to={`${LECTURE}${item.nid || item.id}`}
-                    key={idx + 1}
+                    key={item.nid || item.id || `${pageIndex}-${idx}`}
                     className="widget_list_items"
                   >
                     <div className="widget_img_wrap">
                       <img
-                        src={item.img || item.lec_img}
+                        src={item.img_url || item.img || item.lec_img}
                         alt={item.title || "Lecture"}
                         className="widget_img"
+                        loading="lazy"
                       />
                       <div className="widget_views">
                         <HiOutlineEye className="widget_views_icon" />
@@ -147,7 +182,7 @@ function More() {
                         {item.title || item.Title || item.mp3_title}
                       </h3>
                       <p className="widget_lecturer">
-                        {item.rpname || "Unknown Lecturer"}
+                        {item.rpname || item.lecturer || "Unknown Lecturer"}
                       </p>
                     </div>
                   </Link>
@@ -172,12 +207,12 @@ function More() {
         )}
 
         {/* Empty State */}
-        {!isLoading && !isError && (!data?.pages || data.pages.length === 0 || (Array.isArray(data.pages[0]) && data.pages[0].length === 0)) && (
+        {isEmpty && (
           <div className="flex flex-col items-center justify-center h-[50vh] text-center">
             <p className="text-xl font-medium text-foreground mb-2">
               No content found
             </p>
-            <p className="text-muted-foreground">There are no recently viewed lectures.</p>
+            <p className="text-muted-foreground">There are no {title.toLowerCase()} lectures.</p>
           </div>
         )}
       </div>
