@@ -1,5 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { moreViewApi } from "../../services/more.service";
+import { extractArrayData } from "../../utils/dataHelpers";
 
 export const useRecentlyViewed = (langid = 6) => {
   const {
@@ -13,8 +14,7 @@ export const useRecentlyViewed = (langid = 6) => {
     queryKey: ["recently-viewed", langid],
     queryFn: async ({ pageParam = 1 }) => {
       const response = await moreViewApi.getRecentlyViewed({ page: pageParam, langid });
-      // Extract data array from response object
-      return Array.isArray(response?.data) ? response.data : Array.isArray(response) ? response : [];
+      return extractArrayData(response);
     },
     getNextPageParam: (lastPage, pages) => {
       const pageData = Array.isArray(lastPage) ? lastPage : [];

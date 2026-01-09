@@ -15,6 +15,7 @@ import HeadMeta from "../head-meta";
 import Loader from "../UI/loader/loader";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { moreViewApi } from "../../services/more.service";
+import { extractArrayData } from "../../utils/dataHelpers";
 
 function More() {
   const { pathname } = useLocation();
@@ -67,8 +68,7 @@ function More() {
     queryFn: async ({ pageParam = 1 }) => {
       if (!apiFn) return [];
       const response = await apiFn({ page: pageParam, langid });
-      // Extract data array from response object
-      return Array.isArray(response?.data) ? response.data : Array.isArray(response) ? response : [];
+      return extractArrayData(response);
     },
     getNextPageParam: (lastPage, pages) => {
       const pageData = Array.isArray(lastPage) ? lastPage : [];
