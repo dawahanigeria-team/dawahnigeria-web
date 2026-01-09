@@ -11,9 +11,14 @@ export const useRecentlyViewed = (langid = 6) => {
     hasNextPage,
   } = useInfiniteQuery({
     queryKey: ["recently-viewed", langid],
-    queryFn: ({ pageParam = 1 }) => moreViewApi.getRecentlyViewed({ page: pageParam, langid }),
+    queryFn: async ({ pageParam = 1 }) => {
+      const response = await moreViewApi.getRecentlyViewed({ page: pageParam, langid });
+      // Extract data array from response object
+      return Array.isArray(response?.data) ? response.data : Array.isArray(response) ? response : [];
+    },
     getNextPageParam: (lastPage, pages) => {
-      if (lastPage.length === 0) {
+      const pageData = Array.isArray(lastPage) ? lastPage : [];
+      if (pageData.length === 0) {
         return undefined;
       }
       return pages.length + 1;

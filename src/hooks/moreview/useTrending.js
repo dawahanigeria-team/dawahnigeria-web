@@ -11,10 +11,14 @@ export const useTrending = (langid = 6) => {
     hasNextPage,
   } = useInfiniteQuery({
     queryKey: ["trending", langid],
-    queryFn: ({ pageParam = 1 }) =>
-      moreViewApi.getTrending({ page: pageParam, langid }),
+    queryFn: async ({ pageParam = 1 }) => {
+      const response = await moreViewApi.getTrending({ page: pageParam, langid });
+      // Extract data array from response object
+      return Array.isArray(response?.data) ? response.data : Array.isArray(response) ? response : [];
+    },
     getNextPageParam: (lastPage, pages) => {
-      if (lastPage.length === 0) {
+      const pageData = Array.isArray(lastPage) ? lastPage : [];
+      if (pageData.length === 0) {
         return undefined;
       }
       return pages.length + 1;

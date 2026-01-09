@@ -120,9 +120,12 @@ function More() {
           </div>
         ) : (
           <div className="more_widget">
-            {data?.pages.map((pageData, pageIndex) => (
-              <React.Fragment key={pageIndex}>
-                {pageData.map((item, idx) => (
+            {data?.pages.map((pageData, pageIndex) => {
+              // Ensure pageData is an array
+              const pageItems = Array.isArray(pageData) ? pageData : [];
+              return (
+                <React.Fragment key={pageIndex}>
+                  {pageItems.map((item, idx) => (
                   <Link
                     to={`${LECTURE}${item.nid || item.id}`}
                     key={idx + 1}
@@ -148,9 +151,10 @@ function More() {
                       </p>
                     </div>
                   </Link>
-                ))}
-              </React.Fragment>
-            ))}
+                  ))}
+                </React.Fragment>
+              );
+            })}
           </div>
         )}
 
@@ -168,7 +172,7 @@ function More() {
         )}
 
         {/* Empty State */}
-        {!isLoading && !isError && data?.pages[0]?.length === 0 && (
+        {!isLoading && !isError && (!data?.pages || data.pages.length === 0 || (Array.isArray(data.pages[0]) && data.pages[0].length === 0)) && (
           <div className="flex flex-col items-center justify-center h-[50vh] text-center">
             <p className="text-xl font-medium text-foreground mb-2">
               No content found
