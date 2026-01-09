@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import Container from "../../components/container/Container";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import { useDispatch, useSelector } from "react-redux";
@@ -201,6 +201,8 @@ const SearchPage = () => {
       value: searchValue,
       page: page.toString(),
       limit: "20",
+      // Add timestamp to prevent caching issues
+      _t: Date.now().toString(),
     });
 
     // Add filters if any are selected
@@ -217,24 +219,35 @@ const SearchPage = () => {
       params.append("album_id", albumId.join(","));
     }
 
+    const requestUrl = `${baseUrl}?${params.toString()}`;
+    console.log("Fetching search data - Page:", page, "URL:", requestUrl);
+
     axios
-      .get(`${baseUrl}?${params.toString()}`)
+      .get(requestUrl, {
+        // Prevent caching to ensure fresh data on each page change
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
+        }
+      })
       .then((res) => {
         console.log("API Response:", res.data);
-        console.log("API URL:", `${baseUrl}?${params.toString()}`);
+        console.log("Requested Page:", page);
         setLoading(false);
         if (res.data.success === true || res.data.status === "success") {
           const results = res.data.data || res.data.results || [];
           const total = res.data.total || 0;
-          const page = res.data.page || 1;
+          // Use the page parameter passed to fetchData, not from API response
+          const responsePage = res.data.page || page;
 
-          console.log("Results:", results);
-          console.log("Total:", total);
+          console.log("Results count:", results.length);
+          console.log("Total results:", total);
+          console.log("Setting current page to:", responsePage);
 
           dispatch(getSearchData(results));
           dispatch(getSearchRecord(total));
           setTotalResults(total);
-          setCurrentPage(parseInt(page));
+          setCurrentPage(parseInt(responsePage));
 
           // Track search event
           trackSearch(searchValue, {
@@ -265,8 +278,14 @@ const SearchPage = () => {
 
   useEffect(() => {
     const page = parseInt(searchParams.get("page")) || 1;
-    fetchData(page);
-  }, [searchParams, languageId, lecturerId, categoryId, albumId]);
+    const query = searchParams.get("query");
+    
+    // Only fetch if we have a query
+    if (query) {
+      console.log("useEffect triggered - Page:", page, "Query:", query);
+      fetchData(page);
+    }
+  }, [fetchData, searchParams]);
 
   const handlePageChange = (newPage) => {
     const newSearchParams = new URLSearchParams(searchParams);
