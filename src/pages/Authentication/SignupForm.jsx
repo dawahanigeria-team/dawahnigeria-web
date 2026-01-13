@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import "./signupform.scss";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { MdEmail, MdLock, MdPerson, MdLanguage, MdCheck } from "react-icons/md";
@@ -19,6 +20,7 @@ const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
 const SignupForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const languageSelectorRef = useRef(null);
   const [show, setShow] = useState("password");
   const [show2, setShow2] = useState("password");
   const [isdrop, setisdrop] = useState(false);
@@ -29,6 +31,7 @@ const SignupForm = () => {
   const [lang, setLang] = useState("");
   const [mounted, setMounted] = useState(false);
   const [focusedField, setFocusedField] = useState(null);
+  const [dropdownPosition, setDropdownPosition] = useState(null);
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -46,6 +49,23 @@ const SignupForm = () => {
       })
       .catch((err) => {});
   }, []);
+
+  const openDropdown = () => {
+    if (languageSelectorRef.current) {
+      const rect = languageSelectorRef.current.getBoundingClientRect();
+      setDropdownPosition({
+        top: rect.bottom + 8,
+        left: rect.left,
+        width: rect.width,
+      });
+    }
+    setisdrop(true);
+  };
+
+  const closeDropdown = () => {
+    setisdrop(false);
+    setDropdownPosition(null);
+  };
 
   const handleInput = (e) => {
     e.preventDefault();
@@ -244,9 +264,8 @@ const SignupForm = () => {
               <MdLanguage />
             </div>
             <div
-              onClick={() => {
-                setisdrop(!isdrop);
-              }}
+              ref={languageSelectorRef}
+              onClick={() => isdrop ? closeDropdown() : openDropdown()}
               className="language_selector"
             >
               <span className={lang ? "selected_lang" : "selected_lang_none"}>
@@ -254,36 +273,39 @@ const SignupForm = () => {
               </span>
               <IoChevronDown className={`dropdown_icon ${isdrop ? 'rotated' : ''}`} />
             </div>
-            {isdrop && (
-              <div className="language_dropdown">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setisdrop(!isdrop);
-                  }}
+            {isdrop && dropdownPosition && createPortal(
+              <div className="language_dropdown_portal">
+                <div
                   className="dropdown_backdrop"
-                ></button>
-                <div className="dropdown_menu">
+                  onClick={closeDropdown}
+                />
+                <div
+                  className="language_dropdown"
+                  style={{
+                    top: dropdownPosition.top,
+                    left: dropdownPosition.left,
+                    width: dropdownPosition.width,
+                  }}
+                >
                   <div className="dropdown_items">
-                    {langData.map(({ name, id }, index) => {
-                      return (
-                        <div
-                          key={index}
-                          onClick={() => {
-                            setlangid(id);
-                            setLang(name);
-                            setisdrop(!isdrop);
-                          }}
-                          className={`dropdown_item ${langid === id ? 'selected' : ''}`}
-                        >
-                          <span>{name}</span>
-                          {langid === id && <MdCheck className="check_icon" />}
-                        </div>
-                      );
-                    })}
+                    {langData.map(({ name, id }, index) => (
+                      <div
+                        key={index}
+                        onClick={() => {
+                          setlangid(id);
+                          setLang(name);
+                          closeDropdown();
+                        }}
+                        className={`dropdown_item ${langid === id ? 'selected' : ''}`}
+                      >
+                        <span>{name}</span>
+                        {langid === id && <MdCheck className="check_icon" />}
+                      </div>
+                    ))}
                   </div>
                 </div>
-              </div>
+              </div>,
+              document.body
             )}
             <div className="input_border"></div>
           </div>

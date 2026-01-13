@@ -244,90 +244,6 @@
               }
             }
           }
-
-          .language_dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            z-index: 60;
-            margin-top: 0.5rem;
-
-            .dropdown_backdrop {
-              position: fixed;
-              inset: 0;
-              z-index: 50;
-              background: none;
-              border: none;
-              cursor: default;
-            }
-
-            .dropdown_menu {
-              position: relative;
-              z-index: 60;
-              background: var(--auth, rgba(15, 20, 30, 0.95));
-              backdrop-filter: blur(20px);
-              border: 1px solid rgba(255, 255, 255, 0.1);
-              border-radius: 12px;
-              overflow: hidden;
-              box-shadow:
-                0 10px 40px rgba(0, 0, 0, 0.4),
-                0 0 20px rgba(214, 255, 0, 0.1);
-              animation: dropdownSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-              .dropdown_items {
-                max-height: 250px;
-                overflow-y: auto;
-                padding: 0.5rem;
-
-                &::-webkit-scrollbar {
-                  width: 4px;
-                }
-
-                &::-webkit-scrollbar-track {
-                  background: rgba(255, 255, 255, 0.05);
-                }
-
-                &::-webkit-scrollbar-thumb {
-                  background: rgba(214, 255, 0, 0.3);
-                  border-radius: 4px;
-
-                  &:hover {
-                    background: rgba(214, 255, 0, 0.5);
-                  }
-                }
-
-                .dropdown_item {
-                  padding: 0.75rem 1rem;
-                  cursor: pointer;
-                  border-radius: 8px;
-                  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-                  font-family: "Manrope", sans-serif;
-                  font-size: 14px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: space-between;
-
-                  &:hover {
-                    background: rgba(214, 255, 0, 0.1);
-                  }
-
-                  &.selected {
-                    background: rgba(214, 255, 0, 0.15);
-                    color: #d6ff00;
-
-                    .check_icon {
-                      color: #d6ff00;
-                    }
-                  }
-
-                  .check_icon {
-                    font-size: 18px;
-                  }
-                }
-              }
-            }
-          }
         }
       }
 
@@ -552,5 +468,82 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+// Portal-based language dropdown (renders at document.body)
+.language_dropdown_portal {
+  .dropdown_backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    background: transparent;
+  }
+
+  .language_dropdown {
+    position: fixed;
+    z-index: 9999;
+    background: var(--auth, rgba(15, 20, 30, 0.98));
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow:
+      0 10px 40px rgba(0, 0, 0, 0.4),
+      0 0 20px rgba(214, 255, 0, 0.1);
+    animation: dropdownSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    .dropdown_items {
+      max-height: 250px;
+      overflow-y: auto;
+      padding: 0.5rem;
+
+      &::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba(214, 255, 0, 0.3);
+        border-radius: 4px;
+
+        &:hover {
+          background: rgba(214, 255, 0, 0.5);
+        }
+      }
+
+      .dropdown_item {
+        padding: 0.75rem 1rem;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        font-family: "Manrope", sans-serif;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--foreground, #f2f2f2);
+
+        &:hover {
+          background: rgba(214, 255, 0, 0.1);
+        }
+
+        &.selected {
+          background: rgba(214, 255, 0, 0.15);
+          color: #d6ff00;
+
+          .check_icon {
+            color: #d6ff00;
+          }
+        }
+
+        .check_icon {
+          font-size: 18px;
+        }
+      }
+    }
   }
 }

@@ -112,6 +112,8 @@ const SearchPage = () => {
   useEffect(() => {
     if (!searchData || searchData.length === 0) return;
 
+    console.log("Sample search result item:", searchData[0]);
+
     const languages = new Map();
     const lecturers = new Map();
     const categories = new Map();
@@ -183,6 +185,7 @@ const SearchPage = () => {
       alb: Array.from(albums.values()).sort((a, b) => b.count - a.count).slice(0, 20) // Limit albums to top 20
     };
 
+    console.log("Extracted filter options:", filterOptions);
     dispatch(getSearchOptions(filterOptions));
   }, [searchData, dispatch]);
 
@@ -220,22 +223,30 @@ const SearchPage = () => {
     }
 
     const requestUrl = `${baseUrl}?${params.toString()}`;
+    console.log("Fetching search data - Page:", page, "URL:", requestUrl);
 
     axios
       .get(requestUrl, {
         // Prevent caching to ensure fresh data on each page change
         headers: {
-          "Cache-Control": "no-cache",
-          "Pragma": "no-cache"
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
         }
       })
       .then((res) => {
+        console.log("API Response:", res.data);
+        console.log("Requested Page:", page);
         setLoading(false);
         if (res.data.success === true || res.data.status === "success") {
           const results = res.data.data || res.data.results || [];
           const total = res.data.total || 0;
-          // Use the page parameter passed to fetchData
-          const responsePage = page;
+          // Use the page parameter passed to fetchData, not from API response
+          // Prioritize the requested page parameter over API response
+          const responsePage = page || res.data.page || 1;
+
+          console.log("Results count:", results.length);
+          console.log("Total results:", total);
+          console.log("Setting current page to:", responsePage);
 
           dispatch(getSearchData(results));
           dispatch(getSearchRecord(total));
@@ -253,6 +264,7 @@ const SearchPage = () => {
             page: page,
           });
         } else {
+          console.log("API returned non-success status:", res.data);
           dispatch(getSearchData([]));
           dispatch(getSearchRecord(0));
           setTotalResults(0);
@@ -277,13 +289,14 @@ const SearchPage = () => {
       newSearchParams.set("page", "1");
       navigate(`${pathname}?${newSearchParams.toString()}`, { replace: true });
     }
-  }, [languageId, lecturerId, categoryId, albumId, pageParam, searchParams, navigate, pathname]);
+  }, [languageId, lecturerId, categoryId, albumId]);
 
   useEffect(() => {
     const page = parseInt(pageParam) || 1;
 
     // Only fetch if we have a query
     if (queryParam) {
+      console.log("useEffect triggered - Page:", page, "Query:", queryParam);
       fetchData(page);
     }
   }, [pageParam, queryParam, fetchData]);
