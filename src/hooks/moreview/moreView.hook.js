@@ -15,8 +15,15 @@ export const useMoreViewHook = (keyParam, currentdata) => {
     fetchNextPage,
   } = useInfiniteQuery({
     queryKey: ["more-view", keyParam.endpoint_url],
-    queryFn: ({ pageParam = 1 }) =>
-      moreViewApi.moreDatas({ ...keyParam, page: pageParam }),
+    queryFn: async ({ pageParam = 1 }) => {
+      try {
+        const result = await moreViewApi.moreDatas({ ...keyParam, page: pageParam });
+        // Ensure we never return undefined - React Query requires defined values
+        return result ?? [];
+      } catch (err) {
+        return [];
+      }
+    },
     getNextPageParam: (lastPage, allPages) => {
       const responseData = Array.isArray(lastPage) ? lastPage : [];
       if (responseData.length === 0) return undefined;
@@ -49,13 +56,13 @@ export const useMoreViewHook = (keyParam, currentdata) => {
 
   // Auto-fetch when page changes
   useEffect(() => {
-    if (hasEndpoint && keyParam.page > 1 && hasNextPage) {
+    if (hasEndpoint && keyParam.page > 1 && hasNextPage && !isFetchingNextPage) {
       const currentPages = data?.pages?.length || 1;
       if (keyParam.page > currentPages) {
         fetchNextPage();
       }
     }
-  }, [keyParam.page, hasEndpoint, hasNextPage, data?.pages?.length, fetchNextPage]);
+  }, [keyParam.page, hasEndpoint, hasNextPage, data?.pages?.length, fetchNextPage, isFetchingNextPage]);
 
   return {
     data: querydata,
@@ -63,5 +70,6 @@ export const useMoreViewHook = (keyParam, currentdata) => {
     error,
     isLoadingNextPage: isFetchingNextPage,
     isLastPage: !hasNextPage || !hasEndpoint,
+    isFetching: isLoading || isFetchingNextPage,
   };
 };

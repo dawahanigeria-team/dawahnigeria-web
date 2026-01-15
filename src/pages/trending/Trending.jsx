@@ -22,19 +22,21 @@ const Trending = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const queryParam = { page };
-  const { isLoading, isLoadingNextPage, isLastPage, querieddata } =
+  const { isLoading, isLoadingNextPage, isLastPage, querieddata, isFetching } =
     useQueryGetRequest("trending", queryParam, trendingApi.getTrendings);
 
   const { ref: infiniteScrollRef } = useInfiniteScrollPagination(
     querieddata?.length,
     page,
-    setPage
+    setPage,
+    isFetching
   );
 
   const { ref: infiniteScrollRefMobile } = useInfiniteScrollPagination(
     querieddata?.length,
     page,
-    setPage
+    setPage,
+    isFetching
   );
 
   // Calculate trending statistics

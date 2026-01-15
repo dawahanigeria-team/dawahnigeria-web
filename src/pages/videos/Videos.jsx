@@ -29,13 +29,14 @@ const Videos = () => {
 
   const queryParam = { page };
 
-  const { isLoading, querieddata, isLastPage, isLoadingNextPage } =
+  const { isLoading, querieddata, isLastPage, isLoadingNextPage, isFetching } =
     useQueryGetRequest("videos", queryParam, videoApis.getVideos);
 
   const { ref: infiniteScrollRef } = useInfiniteScrollPagination(
     querieddata?.length,
     page,
-    setPage
+    setPage,
+    isFetching
   );
 
   return (

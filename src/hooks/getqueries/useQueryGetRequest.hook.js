@@ -19,8 +19,16 @@ export const useQueryGetRequest = (keyName, queryParam = {}, queryFunction) => {
     refetch,
   } = useInfiniteQuery({
     queryKey: [keyName, { ...queryParam, page: undefined }],
-    queryFn: ({ pageParam = initialPage }) =>
-      queryFunction({ ...queryParam, page: pageParam }),
+    queryFn: async ({ pageParam = initialPage }) => {
+      try {
+        const result = await queryFunction({ ...queryParam, page: pageParam });
+        // Ensure we never return undefined - React Query requires defined values
+        return result ?? [];
+      } catch (err) {
+        // Return empty array on error to satisfy React Query's requirement
+        return [];
+      }
+    },
     getNextPageParam: (lastPage, allPages) => {
       const dataArray = normalizeData(lastPage);
       if (dataArray.length === 0) return undefined;
@@ -40,13 +48,13 @@ export const useQueryGetRequest = (keyName, queryParam = {}, queryFunction) => {
   // Auto-fetch next page when queryParam.page changes
   useEffect(() => {
     const targetPage = queryParam?.page;
-    if (typeof targetPage === "number" && targetPage > 1 && hasNextPage) {
+    if (typeof targetPage === "number" && targetPage > 1 && hasNextPage && !isFetchingNextPage) {
       const currentPages = data?.pages?.length || 1;
       if (targetPage > currentPages) {
         fetchNextPage();
       }
     }
-  }, [queryParam?.page, hasNextPage, data?.pages?.length, fetchNextPage]);
+  }, [queryParam?.page, hasNextPage, data?.pages?.length, fetchNextPage, isFetchingNextPage]);
 
   return {
     isLoading,
@@ -56,6 +64,7 @@ export const useQueryGetRequest = (keyName, queryParam = {}, queryFunction) => {
     data: data?.pages?.[data.pages.length - 1],
     querieddata,
     refetch,
+    isFetching: isLoading || isFetchingNextPage,
   };
 };
 
