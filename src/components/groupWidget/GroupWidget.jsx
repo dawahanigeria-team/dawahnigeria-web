@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext, useCallback, memo } from "react";
+import React, { useState, useEffect, useRef, useContext, useCallback, memo, useMemo } from "react";
 import "./groupWidget.scss";
 import LandingWidget from "../landingWidget/LandingWidget";
 import { FiChevronsRight } from "react-icons/fi";
@@ -36,6 +36,18 @@ import {
   RECOMMENDED_MORE,
 } from "../../utils/routes/constants";
 
+// Throttle utility for resize events
+const throttle = (func, limit) => {
+  let inThrottle;
+  return function(...args) {
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  };
+};
+
 const GroupWidget = ({
   data,
   heading,
@@ -62,19 +74,22 @@ const GroupWidget = ({
   const [, setSettingsresponsive] = useState(() => {
     return size < 513 ? { ...settings4 } : { ...settings3 };
   });
-  //const data=[]
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const handleResize = () => {
-        setSize(window.innerWidth);
+      // Throttled resize handler - fires at most once per 150ms
+      const handleResize = throttle(() => {
+        const newWidth = window.innerWidth;
+        setSize(newWidth);
         setSettingsresponsive(() => {
-          return window.innerWidth < 513 ? { ...settings4 } : { ...settings3 };
+          return newWidth < 513 ? { ...settings4 } : { ...settings3 };
         });
-      };
+      }, 150);
+
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
     }
-  }, [size]);
+  }, []);
 
   function prev() {
     slide.current.scrollBy({
