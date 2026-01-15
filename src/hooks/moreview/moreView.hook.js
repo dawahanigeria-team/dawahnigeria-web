@@ -1,78 +1,67 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { moreViewApi } from "../../services";
-import { useEffect, useState } from "react";
-import toast from "../../utils/conditionalToast"; // SSR-safe toast utility
+import { useMemo, useEffect } from "react";
+import toast from "../../utils/conditionalToast";
 
 export const useMoreViewHook = (keyParam, currentdata) => {
-  const [querydata, setquerydata] = useState([]);
-  const [isLoadingNextPage, setIsLoadingNextPage] = useState(false);
-  const [hasReachedLastPage, setHasReachedLastPage] = useState(false);
+  const hasEndpoint = !!keyParam.endpoint_url;
 
-  const { data, isLoading, error } = useQuery(
-    ["more-view", keyParam],
-    () => moreViewApi.moreDatas(keyParam),
-    {
-      enabled: !!keyParam.endpoint_url && !hasReachedLastPage,
-      onSuccess: (data) => {
-        setIsLoadingNextPage(false);
+  const {
+    data,
+    isLoading,
+    error,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["more-view", keyParam.endpoint_url],
+    queryFn: ({ pageParam = 1 }) =>
+      moreViewApi.moreDatas({ ...keyParam, page: pageParam }),
+    getNextPageParam: (lastPage, allPages) => {
+      const responseData = Array.isArray(lastPage) ? lastPage : [];
+      if (responseData.length === 0) return undefined;
+      return allPages.length + 1;
+    },
+    enabled: hasEndpoint,
+    onError: () => {
+      toast.error("Unable to load data");
+    },
+  });
 
-        // Ensure data is an array and has content
-        const responseData = Array.isArray(data) ? data : [];
-
-        // ensure subsequent requests are not sent when the last one doesn't have data
-        if (!responseData || responseData.length === 0) {
-          setHasReachedLastPage(true);
-          return;
-        }
-
-        // Only append new data if it's a subsequent page
-        if (keyParam.page === 1) {
-          setquerydata(responseData);
-        } else {
-          setquerydata((prev) => {
-            // Ensure prev is an array
-            const prevData = Array.isArray(prev) ? prev : [];
-
-            // Filter out duplicates based on nid
-            const newData = responseData.filter(
-              (item) => !prevData.some((prevItem) => prevItem.nid === item.nid)
-            );
-            return [...prevData, ...newData];
-          });
-        }
-      },
-      onError: (error) => {
-        setIsLoadingNextPage(false);
-        toast.error("Unable to load data");
-      },
+  // Flatten pages and deduplicate by nid
+  const querydata = useMemo(() => {
+    if (!hasEndpoint) {
+      return Array.isArray(currentdata) ? currentdata : [];
     }
-  );
 
-  // handles when page changes
+    if (!data?.pages) return [];
+
+    const seen = new Set();
+    return data.pages.flatMap((page) => {
+      const pageData = Array.isArray(page) ? page : [];
+      return pageData.filter((item) => {
+        if (seen.has(item.nid)) return false;
+        seen.add(item.nid);
+        return true;
+      });
+    });
+  }, [data?.pages, hasEndpoint, currentdata]);
+
+  // Auto-fetch when page changes
   useEffect(() => {
-    if (!keyParam.page) return;
-    if (keyParam.page !== 1 && !hasReachedLastPage) {
-      setIsLoadingNextPage(true);
+    if (hasEndpoint && keyParam.page > 1 && hasNextPage) {
+      const currentPages = data?.pages?.length || 1;
+      if (keyParam.page > currentPages) {
+        fetchNextPage();
+      }
     }
-  }, [keyParam.page]);
-
-  useEffect(() => {
-    if (!keyParam.endpoint_url) {
-      // Ensure currentdata is an array
-      setquerydata(Array.isArray(currentdata) ? currentdata : []);
-      setHasReachedLastPage(true);
-    } else {
-      // Reset state when endpoint changes
-      setquerydata([]);
-      setHasReachedLastPage(false);
-    }
-  }, [keyParam.endpoint_url]);
+  }, [keyParam.page, hasEndpoint, hasNextPage, data?.pages?.length, fetchNextPage]);
 
   return {
     data: querydata,
     isLoading,
     error,
-    isLoadingNextPage,
-    isLastPage: hasReachedLastPage,
+    isLoadingNextPage: isFetchingNextPage,
+    isLastPage: !hasNextPage || !hasEndpoint,
   };
 };

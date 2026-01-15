@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef, useContext, useCallback, memo } from "react";
 import "./groupWidget.scss";
 import LandingWidget from "../landingWidget/LandingWidget";
 import { FiChevronsRight } from "react-icons/fi";
@@ -602,4 +602,6 @@ const GroupWidget = ({
   );
 };
 
-export default GroupWidget;
+GroupWidget.displayName = "GroupWidget";
+
+export default memo(GroupWidget);

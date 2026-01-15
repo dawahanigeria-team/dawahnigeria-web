@@ -4,10 +4,7 @@ function infiniteScroll(node, observer, page, setPage) {
   observer.current = new IntersectionObserver(
     (entries) => {
       if (entries[0].isIntersecting) {
-       
-        setTimeout(() => {
-          setPage(page + 1);
-        }, 2000);
+        setPage(page + 1);
       }
     },
     {

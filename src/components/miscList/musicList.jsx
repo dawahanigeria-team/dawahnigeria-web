@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, memo } from "react";
 import "./musicList.scss";
 import headpmobile from "../../../src/assets/svg/headpmobile.svg";
 import { AiOutlineShareAlt } from "react-icons/ai";
@@ -383,4 +383,6 @@ function MusicList({
   );
 }
 
-export default MusicList;
+MusicList.displayName = "MusicList";
+
+export default memo(MusicList);
