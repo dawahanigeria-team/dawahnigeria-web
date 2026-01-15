@@ -8,11 +8,12 @@ export const useQuranAlbums = (page = 1) => {
   const [isLoadingNextPage, setIsLoadingNextPage] = useState(false);
   const [hasReachedLastPage, setHasReachedLastPage] = useState(false);
 
-  const { isLoading, data, error } = useQuery(
+  const { isLoading, data, error, isFetching } = useQuery(
     ["qurans", page],
     () => quranApi.getQuranAlbums(page),
     {
-      enabled: !hasReachedLastPage, // don't make request if last page has been loaded
+      enabled: !hasReachedLastPage,
+      keepPreviousData: true,
       onSuccess: (data) => {
         setIsLoadingNextPage(false);
 
@@ -44,6 +45,7 @@ export const useQuranAlbums = (page = 1) => {
     error,
     data,
     cummulatedData,
+    isFetching,
   };
 };
 
