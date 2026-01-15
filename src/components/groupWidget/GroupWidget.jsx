@@ -140,7 +140,8 @@ const GroupWidget = ({
             {heading}
           </p>
           {!hideMore && (
-            <div
+            <button
+              type="button"
               onClick={() => {
                 navigate(getMoreRoute(heading) || MORE, {
                   state: {
@@ -158,27 +159,38 @@ const GroupWidget = ({
               }}
               className={
                 styling && endpoint_url
-                  ? "flex dark:text-dncolor-500 text-color-primary text-[15px] items-center"
-                  : `flex dark:text-dncolor-500 text-color-primary text-[15px] items-center ${
+                  ? "flex dark:text-dncolor-500 text-color-primary text-[15px] items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dncolor-500 rounded"
+                  : `flex dark:text-dncolor-500 text-color-primary text-[15px] items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dncolor-500 rounded ${
                       nav1?.title === "Charts" ? "max-[615px]:hidden" : ""
-                    }  `
+                    }`
               }
+              aria-label={`View more ${heading}`}
             >
-              <p className="cursor-pointer">more</p>
-              <FiChevronsRight className=" cursor-pointer text-[20px] pt-1" />
-            </div>
+              <span>more</span>
+              <FiChevronsRight className="text-[20px] pt-1" aria-hidden="true" />
+            </button>
           )}
         </div>
       )}
 
       {type === "recent" && (
         <div className="overflow_hidden_wrapper">
-          <div className={isprev ? "prev" : "prev_none"} onClick={prev}>
-            <img src={back} alt="back" />
-          </div>
-          <div className={isnext ? "next" : "next_none"} onClick={next}>
-            <img src={foward} alt="foward" />
-          </div>
+          <button
+            type="button"
+            className={isprev ? "prev" : "prev_none"}
+            onClick={prev}
+            aria-label="Scroll left"
+          >
+            <img src={back} alt="" width={24} height={24} />
+          </button>
+          <button
+            type="button"
+            className={isnext ? "next" : "next_none"}
+            onClick={next}
+            aria-label="Scroll right"
+          >
+            <img src={foward} alt="" width={24} height={24} />
+          </button>
           <div ref={slide} className="overflow_auto_wrapper">
             <div
               className={`overflow_auto_after ${
@@ -259,12 +271,22 @@ const GroupWidget = ({
 
       {type === "lectures" && (
         <div className="overflow_hidden_wrapper">
-          <div className={isprev ? "prev" : "prev_none"} onClick={prev}>
-            <img src={back} alt="back" />
-          </div>
-          <div className={isnext ? "next" : "next_none"} onClick={next}>
-            <img src={foward} alt="foward" />
-          </div>
+          <button
+            type="button"
+            className={isprev ? "prev" : "prev_none"}
+            onClick={prev}
+            aria-label="Scroll left"
+          >
+            <img src={back} alt="" width={24} height={24} />
+          </button>
+          <button
+            type="button"
+            className={isnext ? "next" : "next_none"}
+            onClick={next}
+            aria-label="Scroll right"
+          >
+            <img src={foward} alt="" width={24} height={24} />
+          </button>
           <div ref={slide} className={`overflow_auto_wrapper `}>
             <div
               className={`overflow_auto_after  ${
@@ -383,12 +405,22 @@ const GroupWidget = ({
       )}
       {type === "album" && (
         <div className="overflow_hidden_wrapper">
-          <div className={isprev ? "prev" : "prev_none"} onClick={prev}>
-            <img src={back} alt="back" />
-          </div>
-          <div className={isnext ? "next" : "next_none"} onClick={next}>
-            <img src={foward} alt="foward" />
-          </div>
+          <button
+            type="button"
+            className={isprev ? "prev" : "prev_none"}
+            onClick={prev}
+            aria-label="Scroll left"
+          >
+            <img src={back} alt="" width={24} height={24} />
+          </button>
+          <button
+            type="button"
+            className={isnext ? "next" : "next_none"}
+            onClick={next}
+            aria-label="Scroll right"
+          >
+            <img src={foward} alt="" width={24} height={24} />
+          </button>
           <div ref={slide} className="overflow_auto_wrapper">
             <div
               className={`overflow_auto_after  ${
@@ -453,12 +485,22 @@ const GroupWidget = ({
 
       {type === "playlist" && (
         <div className="overflow_hidden_wrapper">
-          <div className={isprev ? "prev" : "prev_none"} onClick={prev}>
-            <img src={back} alt="back" />
-          </div>
-          <div className={isnext ? "next" : "next_none"} onClick={next}>
-            <img src={foward} alt="foward" />
-          </div>
+          <button
+            type="button"
+            className={isprev ? "prev" : "prev_none"}
+            onClick={prev}
+            aria-label="Scroll left"
+          >
+            <img src={back} alt="" width={24} height={24} />
+          </button>
+          <button
+            type="button"
+            className={isnext ? "next" : "next_none"}
+            onClick={next}
+            aria-label="Scroll right"
+          >
+            <img src={foward} alt="" width={24} height={24} />
+          </button>
           <div ref={slide} className="overflow_auto_wrapper">
             <div className="overflow_auto_after">
               {Array.isArray(data) &&
@@ -531,12 +573,22 @@ const GroupWidget = ({
 
       {type === "lecturer" && (
         <div className="overflow_hidden_wrapper_lect">
-          <div className={isprev ? "prev" : "prev_none"} onClick={prev}>
-            <img src={back} alt="back" />
-          </div>
-          <div className={isnext ? "next" : "next_none"} onClick={next}>
-            <img src={foward} alt="foward" />
-          </div>
+          <button
+            type="button"
+            className={isprev ? "prev" : "prev_none"}
+            onClick={prev}
+            aria-label="Scroll left"
+          >
+            <img src={back} alt="" width={24} height={24} />
+          </button>
+          <button
+            type="button"
+            className={isnext ? "next" : "next_none"}
+            onClick={next}
+            aria-label="Scroll right"
+          >
+            <img src={foward} alt="" width={24} height={24} />
+          </button>
           <div
             ref={slide}
             className={`overflow_auto_wrapper_lect ${
@@ -564,34 +616,28 @@ const GroupWidget = ({
                   idx
                 ) => {
                   return (
-                    <>
-                      <Link
-                        to={`${RESOURCE_PERSON}${id || nid}`}
-                        className="max-[615px]:hidden relative"
-                        onClick={() => {
-                          // navigate(`${RESOURCE_PERSON}${id || nid}`);
-                        }}
-                        key={idx + 1}
-                      >
-                        <LecturersWidget
-                          views={views}
-                          key={idx}
-                          rp={name}
-                          img={img}
-                          styling={styling}
-                        />
-                        <div
-                          className={`absolute right-[-18px] bottom-[100px] rounded-full h-[38px] w-[38px] flex justify-center items-center text-white text-xl ${
-                            idx === 2 ? "bg-[#96734a]" : ""
-                          } ${idx === 1 ? "bg-[#76a8d7]" : ""}${
-                            idx === 0 ? "bg-[#ffa736]" : ""
-                          }
+                    <Link
+                      key={idx + 1}
+                      to={`${RESOURCE_PERSON}${id || nid}`}
+                      className="max-[615px]:hidden relative"
+                    >
+                      <LecturersWidget
+                        views={views}
+                        rp={name}
+                        img={img}
+                        styling={styling}
+                      />
+                      <div
+                        className={`absolute right-[-18px] bottom-[100px] rounded-full h-[38px] w-[38px] flex justify-center items-center text-white text-xl ${
+                          idx === 2 ? "bg-[#96734a]" : ""
+                        } ${idx === 1 ? "bg-[#76a8d7]" : ""}${
+                          idx === 0 ? "bg-[#ffa736]" : ""
+                        }
                         ${styling && idx < 3 ? "block" : "hidden"}`}
-                        >
-                          <span>{idx + 1}</span>
-                        </div>
-                      </Link>
-                    </>
+                      >
+                        <span>{idx + 1}</span>
+                      </div>
+                    </Link>
                   );
                 }
               )}
