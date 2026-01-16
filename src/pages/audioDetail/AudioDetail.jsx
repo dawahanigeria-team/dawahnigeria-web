@@ -64,7 +64,6 @@ const AudioDetail = () => {
     curDuration,
     value,
     audioData,
-    currentAudioInfo,
     page,
     playing,
     count,
@@ -123,9 +122,7 @@ const AudioDetail = () => {
   const resolvedAudioInfo =
     fetchedAudioInfo && String(fetchedAudioInfo?.nid) === String(id)
       ? fetchedAudioInfo
-      : currentAudioInfo?.nid && String(currentAudioInfo.nid) === String(id)
-        ? currentAudioInfo
-        : null;
+      : null;
 
   // CRITICAL: Check if displayed data matches the URL
   // This prevents showing stale data from redux-persist when navigating to a new lecture
