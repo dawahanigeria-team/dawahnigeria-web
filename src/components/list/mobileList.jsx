@@ -4,6 +4,8 @@ import { AudioContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getPack, getPage, getCount, setPlaying, getaudioData } from "../../Redux/Actions/ActionCreators";
+import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
+
 const MobileList = memo(function MobileList({
   lecturer,
   id,
@@ -44,13 +46,38 @@ const MobileList = memo(function MobileList({
     <div
       className={
         audioId === nid
-          ? `mobilelist_wrapper text-primary border-l-2 border-gray-400 dark:border-[#ddff2b]`
+          ? `mobilelist_wrapper is-playing`
           : "mobilelist_wrapper"
       }
     >
       <div onClick={handleClick} className="mobiletd">
-        <div className="lecture text-foreground">{title || Title}</div>
-        <div className="lecturer">{rpname}</div>
+        {/* Lecture Image */}
+        <div className="lecture-image">
+          <img 
+            src={image || IMAGE_PLACEHOLDERS.lecture} 
+            alt=""
+            className="lecture-image-img"
+            onError={(e) => {
+              e.target.src = IMAGE_PLACEHOLDERS.lecture;
+            }}
+          />
+          {audioId === nid && (
+            <div className="playing-indicator">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          )}
+        </div>
+        
+        {/* Lecture Info */}
+        <div className="lecture-info">
+          <div className="lecture-title">{title || Title}</div>
+          <div className="lecture-meta">
+            <span className="lecturer-name">{rpname}</span>
+            {duration && <span className="lecture-duration">{duration}</span>}
+          </div>
+        </div>
       </div>
     </div>
   );
