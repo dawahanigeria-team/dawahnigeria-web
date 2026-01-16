@@ -1,19 +1,296 @@
-@mixin title_text {
-  font-family: "Nunito Sans";
+// =============================================================================
+// LECTURER SONGS TAB - Premium Audio List Design
+// World-class audio listing with animations and micro-interactions
+// =============================================================================
+
+// Brand Colors
+$accent-primary: #ddff2b;
+$accent-secondary: #ffa736;
+
+// =============================================================================
+// ANIMATIONS
+// =============================================================================
+
+@keyframes lecsongFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes lecsongSpinnerRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes lecsongButtonShine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+// =============================================================================
+// MIXINS
+// =============================================================================
+
+@mixin hide_for_mobile {
+  @media screen and (max-width: 690px) {
+    display: none;
+  }
+}
+
+@mixin hide_for_desktop {
+  @media screen and (min-width: 691px) {
+    display: none;
+  }
+}
+
+@mixin header_text {
+  font-family: "Nunito Sans", system-ui, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 22px;
   color: #5e5e5e;
 }
-@mixin mobile_hide {
+
+// =============================================================================
+// SECTION WRAPPER
+// =============================================================================
+
+.lecsong_section {
+  width: 100%;
+  min-height: 200px;
+  padding: 1rem 0 2rem;
+
   @media screen and (max-width: 615px) {
-    display: none;
+    padding: 0.5rem 0 1.5rem;
   }
 }
 
+// =============================================================================
+// AUDIO LIST HEADER (Desktop)
+// =============================================================================
+
+.lecsong_header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  padding: 0 11px;
+
+  @include hide_for_mobile;
+
+  .lecsong_header_left {
+    display: flex;
+    align-items: center;
+    width: 35%;
+    margin-right: 15%;
+    gap: 5px;
+
+    @media screen and (max-width: 1238px) {
+      margin-right: 10%;
+    }
+  }
+
+  .lecsong_header_hash {
+    @include header_text;
+    width: 30px;
+  }
+
+  .lecsong_header_title {
+    @include header_text;
+  }
+
+  .lecsong_header_lecturer {
+    @include header_text;
+    width: 45%;
+  }
+
+  .lecsong_header_time {
+    @include header_text;
+  }
+}
+
+// =============================================================================
+// AUDIO LIST CONTENT
+// =============================================================================
+
+.lecsong_content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+// =============================================================================
+// AUDIO LIST ITEM
+// =============================================================================
+
+.lecsong_item {
+  width: 100%;
+  animation: lecsongFadeInUp 0.4s ease-out forwards;
+  opacity: 0;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+// =============================================================================
+// LOAD MORE BUTTON
+// =============================================================================
+
+.lecsong_load_more_wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0 16px;
+
+  @media screen and (max-width: 615px) {
+    padding: 24px 0 12px;
+  }
+}
+
+.lecsong_load_more_btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 32px;
+  min-width: 180px;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  color: var(--text-color-primary, #fff);
+  font-family: "Poppins", system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+
+  @media screen and (max-width: 615px) {
+    padding: 12px 28px;
+    min-width: 160px;
+    font-size: 14px;
+    gap: 8px;
+  }
+
+  // Shine effect overlay
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%
+    );
+    transition: left 0.5s ease;
+  }
+
+  &:hover {
+    border-color: $accent-primary;
+    color: $accent-primary;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba($accent-primary, 0.15);
+
+    &::before {
+      left: 100%;
+    }
+
+    .lecsong_load_more_icon {
+      transform: rotate(15deg) scale(1.1);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba($accent-primary, 0.1);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accent-primary;
+    outline-offset: 4px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+    border-color: rgba(255, 255, 255, 0.1);
+
+    &:hover {
+      transform: none;
+      box-shadow: none;
+      color: var(--text-color-primary, #fff);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+.lecsong_load_more_icon {
+  font-size: 18px;
+  transition: transform 0.3s ease;
+
+  @media screen and (max-width: 615px) {
+    font-size: 16px;
+  }
+}
+
+.lecsong_load_more_spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: $accent-primary;
+  border-radius: 50%;
+  animation: lecsongSpinnerRotate 0.8s linear infinite;
+
+  @media screen and (max-width: 615px) {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+// =============================================================================
+// COMMENTS SECTION
+// =============================================================================
+
+.lecsong_comments_section {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  @media screen and (max-width: 615px) {
+    margin-top: 32px;
+    padding-top: 24px;
+  }
+}
+
+// =============================================================================
+// LEGACY SUPPORT - Keep existing styles working
+// =============================================================================
+
 .lecsong_wrapper {
   padding: 1rem 0rem 3rem;
+
   .lecsong_title_res_wrap {
     @media screen and (min-width: 1221px) {
       display: none;
@@ -22,13 +299,15 @@
     flex-direction: row;
     align-items: center;
     margin-bottom: 2rem;
+
     .lecsong_title_res_icon {
       font-size: 40px;
       color: #d4d4d4;
       cursor: pointer;
     }
+
     .lecsong_title_res_text {
-      font-family: "Poppins";
+      font-family: "Poppins", sans-serif;
       font-style: normal;
       font-weight: 500;
       font-size: 20px;
@@ -37,41 +316,40 @@
       margin-left: 40%;
     }
   }
+
   .lect_title_wrap {
-    @media screen and (max-width: 690px) {
-      display: none;
-    }
+    @include hide_for_mobile;
     display: flex;
-    //gap: 1rem;
-    // grid-template-columns: repeat(11, minmax(0, 1fr));
     justify-items: flex-start;
     width: 100%;
     margin-bottom: 2rem;
+
     .lect_title2,
     .lect_title3,
     .lect_title4 {
-      @include title_text;
+      @include header_text;
       margin: unset;
       padding: unset;
     }
+
     .lect_title1 {
       display: flex;
       flex-direction: row;
       align-items: center;
       width: 45%;
-      // grid-column: span 5 / span 5;
+
       * {
-        @include title_text;
+        @include header_text;
         margin: unset;
         padding: unset;
       }
+
       .lect_hash {
-        // margin-right: 1.6rem;
         width: 30px;
       }
     }
+
     .lect_title2 {
-      /// grid-column: span 2 / span 2;
       width: 40%;
       display: flex;
       align-items: flex-start;
@@ -79,52 +357,59 @@
     }
 
     .lect_title4 {
-      // grid-column: span 2 / span 2;
       display: flex;
       align-items: flex-start;
       justify-content: flex-start;
     }
   }
+
   .load_desktop {
     width: 100%;
     height: 400px;
     position: relative;
-    @include mobile_hide;
+    @include hide_for_mobile;
+
     .load {
       width: 100%;
       height: 50%;
       position: absolute;
       inset: 0;
-
       margin: auto auto;
     }
   }
+
   .lecsong_content {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.25rem;
     width: 100%;
+
     .lecsong_content_item {
       cursor: pointer;
+
       .desktops_item {
         @media screen and (max-width: 615px) {
           display: none;
         }
       }
+
       .mobile_item {
         font-size: 14px;
         color: white;
         width: 100%;
-        font-family: "Poppins";
+        font-family: "Poppins", sans-serif;
         padding: 2%;
-        border-bottom: 1px solid #999999;
+        border-bottom: 1px solid rgba(153, 153, 153, 0.3);
         margin-bottom: 3px;
+
         @media screen and (min-width: 615px) {
           display: none;
         }
+
         .lecture {
           margin-bottom: 3px;
         }
+
         .lecturer {
           color: #868686;
           font-size: 12px;
@@ -140,28 +425,33 @@
     gap: 1rem;
     margin: 1rem 0 1rem;
     width: 70%;
+
     @media screen and (max-width: 1096px) {
       width: 100%;
     }
+
     .lecsong_comments_header {
-      font-family: "Nunito Sans";
+      font-family: "Nunito Sans", sans-serif;
       font-style: normal;
       font-weight: 600;
       font-size: 24px;
+
       @media screen and (max-width: 615px) {
         font-size: 15px;
       }
+
       line-height: 42px;
       color: #d4d4d4;
       margin: unset;
     }
+
     .lecsong_comment_input {
       background: #222222;
       border: 1px solid rgba(212, 212, 212, 0.5);
       border-radius: 4px;
       width: 100%;
       padding: 1rem;
-      font-family: "Nunito Sans";
+      font-family: "Nunito Sans", sans-serif;
       font-style: normal;
       font-weight: 400;
       resize: none;
@@ -170,57 +460,70 @@
       color: #d4d4d4;
 
       &::placeholder {
-        font-family: "Nunito Sans";
+        font-family: "Nunito Sans", sans-serif;
         font-style: normal;
         font-weight: 400;
         font-size: 16px;
         color: #999999;
       }
     }
+
     .lecsong_comment_action {
       display: flex;
       flex-direction: row;
       align-items: center;
       gap: 0.5rem;
       align-self: flex-end;
+
       .lecsong_comment_moji {
         color: #d4d4d4;
         font-size: 20px;
         cursor: pointer;
       }
+
       .lecsong_comment_button {
-        background: #ddff2b;
+        background: $accent-primary;
         border-radius: 12px;
         border: none;
         width: 108px;
         height: 29px;
-        font-family: "Nunito Sans";
+        font-family: "Nunito Sans", sans-serif;
         font-style: normal;
         font-weight: 400;
         font-size: 14px;
         line-height: 21px;
         color: #000000;
         cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: darken($accent-primary, 5%);
+          transform: translateY(-1px);
+        }
       }
     }
 
     .aud_comment_texts {
       margin-top: 1rem;
       width: 100%;
-      font-family: "Poppins";
+      font-family: "Poppins", sans-serif;
+
       .com_wrap {
         padding: 3% 2%;
         border-bottom: 1px solid #353535;
         width: 100%;
+
         .com_date {
           display: flex;
           gap: 1rem;
           align-items: center;
           justify-content: flex-start;
           margin-bottom: 1rem;
+
           .logo_img {
             width: 18px;
             height: 18px;
+
             @media screen and (max-width: 615px) {
               width: 16px;
               height: 16px;
@@ -241,14 +544,17 @@
               font-size: 12px;
             }
           }
+
           .comment_date {
             font-size: 12px;
             color: #5e5e5e;
+
             @media screen and (max-width: 615px) {
               font-size: 10px;
             }
           }
         }
+
         .comment_content {
           color: #d4d4d4;
           font-size: 14px;
@@ -260,5 +566,125 @@
         }
       }
     }
+  }
+}
+
+// =============================================================================
+// LIGHT THEME ADJUSTMENTS
+// =============================================================================
+
+:root[data-theme="light"],
+.light {
+  .lecsong_header {
+    .lecsong_header_hash,
+    .lecsong_header_title,
+    .lecsong_header_lecturer,
+    .lecsong_header_time {
+      color: #888;
+    }
+  }
+
+  .lecsong_load_more_btn {
+    border-color: rgba(0, 0, 0, 0.15);
+    color: #333;
+
+    &:hover {
+      border-color: #96734a;
+      color: #96734a;
+      box-shadow: 0 8px 24px rgba(150, 115, 74, 0.15);
+    }
+
+    &:disabled {
+      border-color: rgba(0, 0, 0, 0.1);
+
+      &:hover {
+        color: #333;
+        border-color: rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  .lecsong_load_more_spinner {
+    border-color: rgba(0, 0, 0, 0.1);
+    border-top-color: #96734a;
+  }
+
+  .lecsong_comments_section {
+    border-top-color: rgba(0, 0, 0, 0.08);
+  }
+
+  // Legacy light theme support
+  .lecsong_wrapper {
+    .lect_title_wrap {
+      .lect_title1,
+      .lect_title2,
+      .lect_title3,
+      .lect_title4 {
+        color: #888;
+      }
+    }
+
+    .lecsong_comments {
+      .lecsong_comments_header {
+        color: #333;
+      }
+
+      .lecsong_comment_input {
+        background: #f5f5f5;
+        border-color: rgba(0, 0, 0, 0.15);
+        color: #333;
+
+        &::placeholder {
+          color: #999;
+        }
+      }
+
+      .aud_comment_texts {
+        .com_wrap {
+          border-bottom-color: #e5e5e5;
+
+          .com_date {
+            .commentor {
+              color: #666;
+            }
+
+            .comment_date {
+              color: #999;
+            }
+          }
+
+          .comment_content {
+            color: #333;
+          }
+        }
+      }
+    }
+  }
+}
+
+// =============================================================================
+// REDUCED MOTION
+// =============================================================================
+
+@media (prefers-reduced-motion: reduce) {
+  .lecsong_item {
+    animation: none;
+    opacity: 1;
+  }
+
+  .lecsong_load_more_btn {
+    transition: none;
+
+    &::before {
+      display: none;
+    }
+
+    &:hover {
+      transform: none;
+    }
+  }
+
+  .lecsong_load_more_spinner {
+    animation-duration: 1.5s;
   }
 }

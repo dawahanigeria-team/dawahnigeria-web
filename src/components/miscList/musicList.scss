@@ -187,197 +187,241 @@
     }
   }
 
-  /*************** moobile **********/
+  /*************** Mobile - Premium Enhanced **********/
   .mobile_musicslist {
     display: none;
-    
-      @media screen and (max-width: 690px) {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5em;
-        font-family: "Poppins";
-      font-size: 12px;
-    
 
-    .music_list {
+    @media screen and (max-width: 690px) {
       display: flex;
-      width: 100%;
-      max-height: 100px;
-      margin-bottom: 6px;
-      justify-content: space-between;
-      align-items: center;
-      .wrapped_right {
+      flex-direction: column;
+      gap: 0.5em;
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 12px;
+
+      .music_list {
         display: flex;
-        flex-direction: row;
-        gap: 0.5em;
+        width: 100%;
+        max-height: 100px;
+        margin-bottom: 6px;
+        justify-content: space-between;
         align-items: center;
-        width: 80vw;
+        padding: 8px;
+        border-radius: 10px;
+        transition: background 0.2s ease;
 
-        .wrap_image {
-          width: 70px;
-          height: 80px;
-          border-radius: 6px;
-          position: relative;
-
-          .img_wr {
-            width: 70px;
-            height: 80px;
-            border-radius: 6px;
-            .img_wrp {
-              width: 100%;
-              height: 100%;
-              border-radius: 6px;
-              object-fit: cover;
-            }
-          }
-          .likeys {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            position: absolute;
-            justify-content: center;
-            background: linear-gradient(
-              180deg,
-              rgba(217, 217, 217, 0) 0%,
-              rgba(25, 25, 26, 0.88) 71.74%
-            );
-            left: 0px;
-            bottom: 0px;
-            gap: 6px;
-            border-bottom-right-radius: 6px;
-            border-bottom-left-radius: 6px;
-            width: 100%;
-            .likeys_img {
-              width: 13px;
-              height: 13px;
-              background: none;
-              border: 0;
-              margin-right: 6px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              .likeys_img_sz {
-                width: 13px;
-                height: 13px;
-              }
-            }
-          }
+        &:active {
+          background: rgba(255, 255, 255, 0.05);
         }
 
-        .wrap_text {
+        .wrapped_right {
           display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          justify-content: flex-start;
-          gap: 5px;
-          width: 100%;
+          flex-direction: row;
+          gap: 12px;
+          align-items: center;
+          width: 80vw;
 
-          .title_wrap {
-            width: 60vw;
-            .texta {
-              font-size: 13px;
-             // text-overflow: ellipsis;
-              //white-space: nowrap;
-              //width:50vw;
-              //overflow: hidden;
-            }
-          }
-          .lect_name_wrap {
-            width: 60vw;
-            .textb {
-              font-size: 12px;
-              
-              margin: 0;
-             // text-overflow: ellipsis;
-              //white-space: nowrap;
-              //width:50vw;
-              //overflow: hidden;
-            }
-          }
+          .wrap_image {
+            width: 70px;
+            height: 80px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 
-          .likey_wrap {
-            display: flex;
-            flex-direction: row;
-            gap: 0.8em;
-            width: 100%;
-            //height:20px;
-            //color: #868686;
+            .img_wr {
+              width: 70px;
+              height: 80px;
+              border-radius: 8px;
+
+              .img_wrp {
+                width: 100%;
+                height: 100%;
+                border-radius: 8px;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+              }
+            }
+
             .likeys {
               display: flex;
               flex-direction: row;
               align-items: center;
-              gap: 5px;
+              position: absolute;
               justify-content: center;
+              background: linear-gradient(
+                180deg,
+                rgba(217, 217, 217, 0) 0%,
+                rgba(25, 25, 26, 0.92) 71.74%
+              );
+              left: 0px;
+              bottom: 0px;
+              gap: 6px;
+              border-bottom-right-radius: 8px;
+              border-bottom-left-radius: 8px;
+              width: 100%;
+              padding: 4px 0;
+
               .likeys_img {
                 width: 13px;
                 height: 13px;
                 background: none;
-                margin-right: 6px;
                 border: 0;
+                margin-right: 4px;
                 display: flex;
                 align-items: center;
+                justify-content: center;
 
                 .likeys_img_sz {
                   width: 13px;
                   height: 13px;
+                  opacity: 0.9;
+                }
+              }
+
+              .likeys_text {
+                font-size: 11px;
+                font-weight: 500;
+              }
+            }
+          }
+
+          .wrap_text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            min-width: 0;
+
+            .title_wrap {
+              width: 100%;
+              max-width: 55vw;
+
+              .texta {
+                font-size: 14px;
+                font-weight: 500;
+                line-height: 1.3;
+                color: var(--text-color-primary, #fff);
+              }
+            }
+
+            .lect_name_wrap {
+              width: 100%;
+              max-width: 55vw;
+
+              .textb {
+                font-size: 12px;
+                font-weight: 400;
+                margin: 0;
+                color: var(--text-color-secondary, #868686);
+              }
+            }
+
+            .likey_wrap {
+              display: flex;
+              flex-direction: row;
+              gap: 0.8em;
+              width: 100%;
+
+              .likeys {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 5px;
+                justify-content: center;
+
+                .likeys_img {
+                  width: 13px;
+                  height: 13px;
+                  background: none;
+                  margin-right: 4px;
+                  border: 0;
+                  display: flex;
+                  align-items: center;
+
+                  .likeys_img_sz {
+                    width: 13px;
+                    height: 13px;
+                  }
                 }
               }
             }
           }
         }
-      }
 
-      .wrap_left {
-        display: flex;
-        flex-direction: row;
-        gap: 10px;
-        width: 13vw;
-        align-items: flex-start;
-        justify-content: flex-start;
+        .wrap_left {
+          display: flex;
+          flex-direction: row;
+          gap: 12px;
+          width: auto;
+          min-width: 50px;
+          align-items: center;
+          justify-content: flex-end;
 
-        .likeys_img_left {
-          position: relative;
-          width: 18px;
-          height: 18px;
-          .likeys_img_sz_left {
-            width: 100%;
-            height: 100%;
-          }
-        }
-        .hidden_drops {
-          display: block;
-          position: absolute;
-          left: -95px;
-          background: black;
-          color: #cfcfcf;
-          padding: 0.5rem;
-          display: block;
-          width: max-content;
-          .hidden_wrapper {
+          .likeys_img_left {
+            position: relative;
+            width: 22px;
+            height: 22px;
             display: flex;
             align-items: center;
-            width: 100%;
-            margin-bottom: 3px;
-            .hidden_img {
-              width: 12px;
-              height: 12px;
+            justify-content: center;
 
-              .h_img {
-                width: 100%;
-                height: 100%;
-              }
-            }
-            .hidden_text {
-              padding-left: 4px;
+            .likeys_img_sz_left {
+              width: 100%;
+              height: 100%;
             }
           }
-        }
-        .hidden_drops_none {
-          display: none;
+
+          .hidden_drops {
+            display: block;
+            position: absolute;
+            left: -100px;
+            background: var(--background-elevated, #1a1a1a);
+            color: #cfcfcf;
+            padding: 8px;
+            border-radius: 8px;
+            width: max-content;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+
+            .hidden_wrapper {
+              display: flex;
+              align-items: center;
+              width: 100%;
+              margin-bottom: 4px;
+              padding: 6px 8px;
+              border-radius: 6px;
+              transition: background 0.15s ease;
+
+              &:active {
+                background: rgba(255, 255, 255, 0.1);
+              }
+
+              .hidden_img {
+                width: 14px;
+                height: 14px;
+
+                .h_img {
+                  width: 100%;
+                  height: 100%;
+                }
+              }
+
+              .hidden_text {
+                padding-left: 8px;
+                font-size: 13px;
+              }
+            }
+          }
+
+          .hidden_drops_none {
+            display: none;
+          }
         }
       }
     }
-  }
   }
 
   .download_wrapper {
