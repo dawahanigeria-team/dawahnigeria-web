@@ -11,5 +11,6 @@ export const useRamadanYears = () => {
     error,
     isError,
     data: data?.data || [],
+    totalCount: data?.total_count,
   };
 };

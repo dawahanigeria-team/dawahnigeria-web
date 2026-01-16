@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import RowSkeletonContainer from "../../components/skeletion/skeleton.container";
 
 const Ramadan = () => {
-  const { data: ramadanYears, isLoading } = useRamadanYears();
+  const { data: ramadanYears, isLoading, totalCount } = useRamadanYears();
   const navigate = useNavigate();
 
   const extractYear = (name) => {
@@ -18,6 +18,9 @@ const Ramadan = () => {
 
   const featuredYear = ramadanYears?.[0];
   const otherYears = ramadanYears?.slice(1);
+
+  // Use root-level totalCount for featured year if per-year total_count isn't available
+  const featuredYearCount = featuredYear?.total_count || totalCount || featuredYear?.documents?.length || 0;
 
   return (
     <Container>
@@ -47,16 +50,16 @@ const Ramadan = () => {
                   <p className="ramadan-hero-name">{featuredYear.name}</p>
                   <div className="ramadan-hero-meta">
                     <span className="ramadan-hero-count">
-                      {featuredYear.documents?.length || 0}
-                      <span className="ramadan-hero-count-label">Lectures</span>
+                      {featuredYearCount}
+                      <span className="ramadan-hero-count-label">Albums</span>
                     </span>
                   </div>
                   <button
                     onClick={() => navigate(`${RAMADAN}/year/${extractYear(featuredYear.name)}`)}
                     className="ramadan-hero-cta"
-                    aria-label={`View all ${featuredYear.documents?.length || 0} lectures from ${featuredYear.name}`}
+                    aria-label={`View all ${featuredYearCount} albums from ${featuredYear.name}`}
                   >
-                    <span>View All {featuredYear.documents?.length || 0} Lectures</span>
+                    <span>View All {featuredYearCount} Albums</span>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                       <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
@@ -67,7 +70,7 @@ const Ramadan = () => {
                   <div className="ramadan-hero-preview-header">
                     <h3 className="ramadan-hero-preview-title">Preview</h3>
                     <p className="ramadan-hero-preview-subtitle">
-                      Showing {Math.min(6, featuredYear.documents?.length || 0)} of {featuredYear.documents?.length || 0} lectures
+                      Showing {Math.min(6, featuredYear.documents?.length || 0)} of {featuredYearCount} albums
                     </p>
                   </div>
                   <GroupWidget
@@ -88,7 +91,8 @@ const Ramadan = () => {
               <h2 className="ramadan-timeline-heading">Previous Years</h2>
 
               <div className="ramadan-timeline-list">
-                {otherYears.map(({ key_id, documents, name }, index) => {
+                {otherYears.map((yearData, index) => {
+                  const { key_id, documents, name, total_count } = yearData;
                   const year = extractYear(name);
                   const isLast = index === otherYears.length - 1;
 
@@ -108,7 +112,7 @@ const Ramadan = () => {
                           <div className="ramadan-timeline-info">
                             <h3 className="ramadan-timeline-name">{name}</h3>
                             <p className="ramadan-timeline-count">
-                              {documents?.length || 0} lectures available
+                              {total_count || documents?.length || 0} albums available
                             </p>
                           </div>
                         </div>
