@@ -3,7 +3,6 @@ import * as type from "../Actions/Types";
 const initailState = {
   currentUser: null,
   type: null,
-  currentAudioInfo: null,
   playing: false,
   addplaylist: false,
   lecid: "",
@@ -43,18 +42,9 @@ const User = (state = initailState, action) => {
         ...state,
         type: action.payload,
       };
-    case type.GET_CURRENT_PLAY:
-      return {
-        ...state,
-        currentAudioInfo: action.payload,
-      };
     case type.UPDATE_AUDIO_SHARE_COUNT:
       return {
         ...state,
-        currentAudioInfo: {
-          ...state.currentAudioInfo,
-          share: (state.currentAudioInfo?.share ?? 0) + 1,
-        },
         sharedAlbum: state.sharedAlbum + 1,
       };
     case type.SET_PLAYING:
@@ -121,7 +111,6 @@ const User = (state = initailState, action) => {
         ...state,
         currentUser: null,
         token: "",
-        currentAudioInfo: null,
         type: null,
       };
 

@@ -16,6 +16,7 @@ import { SiApplemusic } from "react-icons/si";
 import { GiPauseButton } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { useLectureById } from "../../hooks";
 import { AudioContext } from "../../App.jsx";
 import AudioActionDesktop from "../audio/audioActionDesktop";
 import { setPlaying } from "../../Redux/Actions/ActionCreators";
@@ -33,9 +34,10 @@ import { trackLecturePlay, trackLecturePause, trackLectureCompletion, trackEvent
 export const NavContext = createContext();
 
 const Layout = () => {
-  const { currentAudioInfo, playing, audioId, value, token } = useSelector(
+  const { playing, audioId, value, token } = useSelector(
     (state) => state.user
   );
+  const { lecture: currentLecture } = useLectureById(audioId);
   const navigate = useNavigate();
   const rangeRef = useRef();
   const dispatch = useDispatch();
@@ -130,14 +132,14 @@ const Layout = () => {
               dispatch(setPlaying(false));
             });
 
-            if (currentAudioInfo) {
+            if (currentLecture) {
               navigator.mediaSession.metadata = new MediaMetadata({
                 title:
-                  currentAudioInfo.title || currentAudioInfo.Title || "Unknown",
-                artist: currentAudioInfo.rpname || "Unknown Artist",
+                  currentLecture.title || currentLecture.Title || "Unknown",
+                artist: currentLecture.rpname || "Unknown Artist",
                 artwork: [
                   {
-                    src: currentAudioInfo.img || IMAGE_PLACEHOLDERS.lecture,
+                    src: currentLecture.img || IMAGE_PLACEHOLDERS.lecture,
                     sizes: "512x512",
                     type: "image/jpeg",
                   },
@@ -152,7 +154,7 @@ const Layout = () => {
     };
 
     setupAudioContext();
-  }, [audioRef, currentAudioInfo, dispatch]);
+  }, [audioRef, currentLecture, dispatch]);
 
   const handleRangeChange = (e) => {
     if (audioRef.current) {
@@ -160,12 +162,12 @@ const Layout = () => {
       audioRef.current.currentTime = newTime;
 
       // Track seek event
-      if (currentAudioInfo) {
+      if (currentLecture) {
         trackEvent(EVENTS.LECTURE_SEEKED, {
-          lecture_id: currentAudioInfo.nid || currentAudioInfo.id,
-          lecture_title: currentAudioInfo.mp3_title || currentAudioInfo.Title,
+          lecture_id: currentLecture.nid || currentLecture.id,
+          lecture_title: currentLecture.mp3_title || currentLecture.Title,
           seek_to: newTime,
-          lecturer: currentAudioInfo.rpname,
+          lecturer: currentLecture.rpname,
         });
       }
     }
@@ -177,9 +179,9 @@ const Layout = () => {
     if (!audioElement) return;
 
     const handleEnded = () => {
-      if (currentAudioInfo) {
-        const duration = audioElement.duration || currentAudioInfo.mp3_duration || 0;
-        trackLectureCompletion(currentAudioInfo, duration);
+      if (currentLecture) {
+        const duration = audioElement.duration || currentLecture.mp3_duration || 0;
+        trackLectureCompletion(currentLecture, duration);
       }
     };
 
@@ -188,29 +190,29 @@ const Layout = () => {
     return () => {
       audioElement.removeEventListener('ended', handleEnded);
     };
-  }, [audioRef, currentAudioInfo]);
+  }, [audioRef, currentLecture]);
 
   const handlePlay = async () => {
     if (playing) {
       // Track pause event
-      if (currentAudioInfo) {
-        trackLecturePause(currentAudioInfo, audioRef.current?.currentTime || 0);
+      if (currentLecture) {
+        trackLecturePause(currentLecture, audioRef.current?.currentTime || 0);
       }
       audioRef.current?.pause();
       dispatch(setPlaying(false));
     } else {
       // Track play event
-      if (currentAudioInfo) {
-        trackLecturePlay(currentAudioInfo);
+      if (currentLecture) {
+        trackLecturePlay(currentLecture);
       }
       try {
         if (typeof window !== 'undefined' && "mediaSession" in navigator) {
           navigator.mediaSession.metadata = new MediaMetadata({
-            title: currentAudioInfo?.title || "Unknown Title",
-            artist: currentAudioInfo?.rpname || "Unknown Artist",
+            title: currentLecture?.title || "Unknown Title",
+            artist: currentLecture?.rpname || "Unknown Artist",
             artwork: [
               {
-                src: currentAudioInfo?.img || "",
+                src: currentLecture?.img || "",
                 sizes: "512x512",
                 type: "image/jpeg",
               },
@@ -352,7 +354,7 @@ const Layout = () => {
           >
             <img
               className="curr_lect_img_sz"
-              src={currentAudioInfo?.img || IMAGE_PLACEHOLDERS.lecture}
+              src={currentLecture?.img || IMAGE_PLACEHOLDERS.lecture}
               alt="disk"
             />
           </div>
@@ -363,10 +365,10 @@ const Layout = () => {
             className="layout_buttom_text_wrap"
           >
             <p className="layout_buttom_text1 text-color">
-              {currentAudioInfo?.title || currentAudioInfo?.Title}
+              {currentLecture?.title || currentLecture?.Title}
             </p>
             <p className="layout_buttom_text2 text-color">
-              {currentAudioInfo?.rpname}
+              {currentLecture?.rpname}
             </p>
           </marquee>
           <div
