@@ -3,6 +3,8 @@
 // Fonts are loaded via index.html for better performance
 // ============================================
 
+@use '../../styles/breakpoints' as *;
+
 .landing_wrapper {
   position: relative;
   display: flex;
@@ -17,7 +19,7 @@
   );
   font-family: 'DM Sans', sans-serif;
 
-  @media screen and (max-width: 615px) {
+  @include mobile {
     padding: 1.5rem 4% 3rem;
   }
 
@@ -43,7 +45,7 @@
     z-index: 0;
     will-change: auto;
 
-    @media screen and (max-width: 615px) {
+    @include mobile {
       display: none; // Remove on mobile for better performance
     }
   }
@@ -64,7 +66,7 @@
     pointer-events: none;
     z-index: 0;
 
-    @media screen and (max-width: 615px) {
+    @include mobile {
       height: 150px;
     }
   }
@@ -89,7 +91,7 @@
       0 0 0 1px rgba(63, 63, 70, 0.3);
     animation: fadeInScale 0.8s ease-out;
 
-    @media screen and (max-width: 615px) {
+    @include mobile {
       display: none;
     }
 
@@ -111,7 +113,7 @@
       0 0 0 1px rgba(63, 63, 70, 0.3);
     animation: fadeInScale 0.8s ease-out;
 
-    @media screen and (min-width: 615px) {
+    @include mobile-up {
       display: none;
     }
 
@@ -167,7 +169,7 @@
     padding: 0;
     margin-bottom: 2rem;
 
-    @media screen and (max-width: 615px) {
+    @include mobile {
       display: block;
     }
 
@@ -195,7 +197,7 @@
     margin: 2.5rem 0;
     animation: fadeInUp 0.8s ease-out backwards;
 
-    @media screen and (max-width: 615px) {
+    @include mobile {
       margin: 1.5rem 0;
     }
 
@@ -231,7 +233,7 @@
       display: none;
     }
 
-    @media screen and (max-width: 615px) {
+    @include mobile {
       padding: 1.5rem 0;
     }
   }

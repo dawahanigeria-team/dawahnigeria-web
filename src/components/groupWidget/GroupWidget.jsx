@@ -176,7 +176,7 @@ const GroupWidget = ({
                 styling && endpoint_url
                   ? "flex dark:text-dncolor-500 text-color-primary text-[15px] items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dncolor-500 rounded"
                   : `flex dark:text-dncolor-500 text-color-primary text-[15px] items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dncolor-500 rounded ${
-                      nav1?.title === "Charts" ? "max-[615px]:hidden" : ""
+                      nav1?.title === "Charts" ? "mobile:hidden" : ""
                     }`
               }
               aria-label={`View more ${heading}`}
@@ -209,7 +209,7 @@ const GroupWidget = ({
           <div ref={slide} className="overflow_auto_wrapper">
             <div
               className={`overflow_auto_after ${
-                styling ? "min-[615px]:space-x-3" : "space-x-4"
+                styling ? "mobile-up:space-x-3" : "space-x-4"
               }`}
             >
               {Array.isArray(data) &&
@@ -305,7 +305,7 @@ const GroupWidget = ({
           <div ref={slide} className={`overflow_auto_wrapper `}>
             <div
               className={`overflow_auto_after  ${
-                styling ? "min-[615px]:space-x-3 space-x-3" : ""
+                styling ? "mobile-up:space-x-3 space-x-3" : ""
               }`}
             >
               {Array.isArray(data) &&
@@ -333,7 +333,7 @@ const GroupWidget = ({
                           to={`${LECTURE}${nid || id}`}
                           id={idx}
                           className={`groupWidget_album_item  ${
-                            styling ? "relative max-[615px]:hidden" : ""
+                            styling ? "relative mobile:hidden" : ""
                           }`}
                           onClick={() => {
                             // navigate(`/l/${nid || id}`);
@@ -387,7 +387,7 @@ const GroupWidget = ({
         <div
           className={
             styling
-              ? "hidden mx-auto w-full max-[615px]:flex flex-col justify-center"
+              ? "hidden mx-auto w-full mobile:flex flex-col justify-center"
               : "hidden"
           }
         >
@@ -399,7 +399,7 @@ const GroupWidget = ({
         <div
           className={
             styling
-              ? "hidden mx-auto w-full max-[615px]:flex flex-col justify-center"
+              ? "hidden mx-auto w-full mobile:flex flex-col justify-center"
               : "hidden"
           }
         >
@@ -411,7 +411,7 @@ const GroupWidget = ({
         <div
           className={
             styling
-              ? "hidden mx-auto w-full max-[615px]:flex flex-col justify-center"
+              ? "hidden mx-auto w-full mobile:flex flex-col justify-center"
               : "hidden"
           }
         >
@@ -439,7 +439,7 @@ const GroupWidget = ({
           <div ref={slide} className="overflow_auto_wrapper">
             <div
               className={`overflow_auto_after  ${
-                styling ? "min-[615px]:space-x-3 space-x-3" : ""
+                styling ? "mobile-up:space-x-3 space-x-3" : ""
               }`}
             >
               {Array.isArray(data) &&
@@ -466,7 +466,7 @@ const GroupWidget = ({
                         to={`${ALBUMS}${id || nid}`}
                         id={idx}
                         className={`groupWidget_album_item  ${
-                          styling ? "relative max-[615px]:hidden" : ""
+                          styling ? "relative mobile:hidden" : ""
                         }`}
                         onClick={() => {}}
                         key={idx + 1}
@@ -568,7 +568,7 @@ const GroupWidget = ({
         </div>
       )}
       {nav1?.title === "Genres" && type === "lecturer" && (
-        <div className="w-full h-full overflow-hidden min-[615px]:hidden">
+        <div className="w-full h-full overflow-hidden mobile-up:hidden">
           <div className="w-full overflow-x-auto flex items-center space-x-4 h-full">
             {Array.isArray(data) &&
               data.map(({ img, name, id, nid }, idx) => {
@@ -608,7 +608,7 @@ const GroupWidget = ({
             ref={slide}
             className={`overflow_auto_wrapper_lect ${
               nav1?.title === "Genres" ? "hidden" : ""
-            } min-[615px]:space-x-20 `}
+            } mobile-up:space-x-20 `}
           >
             {Array.isArray(data) &&
               data.map(
@@ -634,7 +634,7 @@ const GroupWidget = ({
                     <Link
                       key={idx + 1}
                       to={`${RESOURCE_PERSON}${id || nid}`}
-                      className="max-[615px]:hidden relative"
+                      className="mobile:hidden relative"
                     >
                       <LecturersWidget
                         views={views}

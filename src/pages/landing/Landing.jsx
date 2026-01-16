@@ -35,6 +35,7 @@ import HeadMeta from "../../components/head-meta";
 import { useLandingPageHook } from "../../hooks/landing";
 import RowSkeletonContainer from "../../components/skeletion/skeleton.container";
 import { useMediaQuery } from "../../hooks/common/useMediaQuery.hook";
+import { MEDIA_QUERIES } from "../../utils/breakpoints";
 
 const MOBILE_CAROUSEL_SETTINGS = {
   dots: true,
@@ -84,7 +85,7 @@ const Landing = () => {
   const { currentUser } = useSelector((state) => state.user);
   const id = currentUser?.id;
   const page = 1;
-  const isMobile = useMediaQuery("(max-width: 615px)");
+  const isMobile = useMediaQuery(MEDIA_QUERIES.mobile);
 
   const [sliders, recentlyPosted, specialFeatures, recentlyviewed] =
     useLandingPageHook(id, page);
@@ -106,7 +107,7 @@ const Landing = () => {
   return (
     <Container>
       <HeadMeta title="Welcome to Dawah Nigeria - Home of Islamic resources" />
-      <div className="landing_wrapper px-[2%] max-[615px]:py-[5%] py-[8%] min-[690px]:py-[2%]">
+      <div className="landing_wrapper px-[2%] mobile:py-[5%] py-[8%] min-[690px]:py-[2%]">
         {hasSliderData ? (
           <>
             {/* Desktop Carousel - only render on desktop */}
@@ -145,7 +146,7 @@ const Landing = () => {
         )}
 
         {recentlyPosted?.isSuccess && Array.isArray(recentlyPosted?.data) && (
-          <div className="landing_recent landing_space my-1 min-[615px]:my-3">
+          <div className="landing_recent landing_space my-1 mobile-up:my-3">
             <GroupWidget
               data={recentlyPosted.data.slice(0, 10)}
               heading="Recently Posted"
@@ -159,7 +160,7 @@ const Landing = () => {
         )}
 
         {recentlyviewed?.isSuccess && Array.isArray(recentlyViewedData) && (
-          <div className="landing_recent landing_space my-1 min-[615px]:my-3">
+          <div className="landing_recent landing_space my-1 mobile-up:my-3">
             <GroupWidget
               data={recentlyViewedData}
               heading="Recently Viewed"
@@ -178,7 +179,7 @@ const Landing = () => {
           .map(({ name, more }) => (
             <div
               key={name}
-              className="landing_tafsir landing_space my-1 min-[615px]:my-3"
+              className="landing_tafsir landing_space my-1 mobile-up:my-3"
             >
               <GroupWidget
                 data={more}
@@ -196,7 +197,7 @@ const Landing = () => {
           Array.from({ length: SKELETON_COUNT }, (_, i) => (
             <div
               key={i}
-              className="landing_recent landing_space my-1 min-[615px]:my-3"
+              className="landing_recent landing_space my-1 mobile-up:my-3"
             >
               <RowSkeletonContainer />
             </div>
