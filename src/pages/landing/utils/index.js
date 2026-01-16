@@ -7,6 +7,12 @@ export const useRequest = (requestType, routeName, payload = null) => {
   const [data, setData] = useState(null);
 
   const handleRequest = (type, route, payloadData) => {
+    if (!type || !route) {
+      setIsLoading(false);
+      setData(null);
+      return;
+    }
+
     setIsLoading(true);
     axios[type](`${process.env.REACT_APP_API_BASE_URL}${route}`, payloadData)
       .then((res) => {
@@ -20,6 +26,12 @@ export const useRequest = (requestType, routeName, payload = null) => {
   };
 
   useEffect(() => {
+    if (!requestType || !routeName) {
+      setIsLoading(false);
+      setData(null);
+      return;
+    }
+
     handleRequest(requestType, routeName, payload);
   }, [requestType, routeName, payload]);
 
