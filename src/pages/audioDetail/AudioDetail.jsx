@@ -598,18 +598,27 @@ const AudioDetail = () => {
                   <div
                     id="player"
                     onClick={() => {
-                      dispatch(setPlaying(false));
-                      dispatch(getaudioId(id));
-                      setinitial(false);
-                      ///this is not coming with audio pack
+                      if (playing && String(audioId) === String(id)) {
+                        dispatch(setPlaying(false));
+                      } else {
+                        dispatch(getaudioId(id));
+                        setinitial(false);
+                        dispatch(setPlaying(true));
+                      }
                     }}
                     className="audiodetail_play"
                   >
-                    <CiPlay1 className="audiodetail_play_icon" />
-                    <p className="audiodetail_play_text">{"play"}</p>
+                    {playing && String(audioId) === String(id) ? (
+                      <GiPauseButton className="audiodetail_play_icon" />
+                    ) : (
+                      <CiPlay1 className="audiodetail_play_icon" />
+                    )}
+                    <p className="audiodetail_play_text">
+                      {playing && String(audioId) === String(id) ? "pause" : "play"}
+                    </p>
                   </div>
                   <div className="dark:text-white text-center text-sm">
-                    Play
+                    {playing && String(audioId) === String(id) ? "Pause" : "Play"}
                   </div>
                 </div>
 
@@ -802,7 +811,7 @@ const AudioDetail = () => {
                     onClick={handlePlay}
                     className="audiores_play_start dark:bg-[#ddff2b] bg-gray-400"
                   >
-                    {!playing ? (
+                    {!(playing && String(audioId) === String(id)) ? (
                       <FaPlay className="audiores_play_start_icon text-background" />
                     ) : (
                       <GiPauseButton className="audiores_play_start_icon text-background" />

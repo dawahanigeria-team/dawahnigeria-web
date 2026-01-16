@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback, memo } from "react";
 import "./list.scss";
 import { FiEye } from "react-icons/fi";
 import love from "../../../src/assets/svg/love-d.svg";
@@ -491,4 +491,6 @@ function List({
   );
 }
 
-export default List;
+List.displayName = "List";
+
+export default memo(List);

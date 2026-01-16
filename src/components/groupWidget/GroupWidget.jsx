@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef, useContext, useCallback, memo, useMemo } from "react";
 import "./groupWidget.scss";
 import LandingWidget from "../landingWidget/LandingWidget";
 import { FiChevronsRight } from "react-icons/fi";
@@ -36,6 +36,18 @@ import {
   RECOMMENDED_MORE,
 } from "../../utils/routes/constants";
 
+// Throttle utility for resize events
+const throttle = (func, limit) => {
+  let inThrottle;
+  return function(...args) {
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  };
+};
+
 const GroupWidget = ({
   data,
   heading,
@@ -62,19 +74,22 @@ const GroupWidget = ({
   const [, setSettingsresponsive] = useState(() => {
     return size < 513 ? { ...settings4 } : { ...settings3 };
   });
-  //const data=[]
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const handleResize = () => {
-        setSize(window.innerWidth);
+      // Throttled resize handler - fires at most once per 150ms
+      const handleResize = throttle(() => {
+        const newWidth = window.innerWidth;
+        setSize(newWidth);
         setSettingsresponsive(() => {
-          return window.innerWidth < 513 ? { ...settings4 } : { ...settings3 };
+          return newWidth < 513 ? { ...settings4 } : { ...settings3 };
         });
-      };
+      }, 150);
+
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
     }
-  }, [size]);
+  }, []);
 
   function prev() {
     slide.current.scrollBy({
@@ -140,7 +155,8 @@ const GroupWidget = ({
             {heading}
           </p>
           {!hideMore && (
-            <div
+            <button
+              type="button"
               onClick={() => {
                 navigate(getMoreRoute(heading) || MORE, {
                   state: {
@@ -158,31 +174,42 @@ const GroupWidget = ({
               }}
               className={
                 styling && endpoint_url
-                  ? "flex dark:text-dncolor-500 text-color-primary text-[15px] items-center"
-                  : `flex dark:text-dncolor-500 text-color-primary text-[15px] items-center ${
-                      nav1?.title === "Charts" ? "max-[615px]:hidden" : ""
-                    }  `
+                  ? "flex dark:text-dncolor-500 text-color-primary text-[15px] items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dncolor-500 rounded"
+                  : `flex dark:text-dncolor-500 text-color-primary text-[15px] items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dncolor-500 rounded ${
+                      nav1?.title === "Charts" ? "mobile:hidden" : ""
+                    }`
               }
+              aria-label={`View more ${heading}`}
             >
-              <p className="cursor-pointer">more</p>
-              <FiChevronsRight className=" cursor-pointer text-[20px] pt-1" />
-            </div>
+              <span>more</span>
+              <FiChevronsRight className="text-[20px] pt-1" aria-hidden="true" />
+            </button>
           )}
         </div>
       )}
 
       {type === "recent" && (
         <div className="overflow_hidden_wrapper">
-          <div className={isprev ? "prev" : "prev_none"} onClick={prev}>
-            <img src={back} alt="back" />
-          </div>
-          <div className={isnext ? "next" : "next_none"} onClick={next}>
-            <img src={foward} alt="foward" />
-          </div>
+          <button
+            type="button"
+            className={isprev ? "prev" : "prev_none"}
+            onClick={prev}
+            aria-label="Scroll left"
+          >
+            <img src={back} alt="" width={24} height={24} />
+          </button>
+          <button
+            type="button"
+            className={isnext ? "next" : "next_none"}
+            onClick={next}
+            aria-label="Scroll right"
+          >
+            <img src={foward} alt="" width={24} height={24} />
+          </button>
           <div ref={slide} className="overflow_auto_wrapper">
             <div
               className={`overflow_auto_after ${
-                styling ? "min-[615px]:space-x-3" : "space-x-4"
+                styling ? "mobile-up:space-x-3" : "space-x-4"
               }`}
             >
               {Array.isArray(data) &&
@@ -259,16 +286,26 @@ const GroupWidget = ({
 
       {type === "lectures" && (
         <div className="overflow_hidden_wrapper">
-          <div className={isprev ? "prev" : "prev_none"} onClick={prev}>
-            <img src={back} alt="back" />
-          </div>
-          <div className={isnext ? "next" : "next_none"} onClick={next}>
-            <img src={foward} alt="foward" />
-          </div>
+          <button
+            type="button"
+            className={isprev ? "prev" : "prev_none"}
+            onClick={prev}
+            aria-label="Scroll left"
+          >
+            <img src={back} alt="" width={24} height={24} />
+          </button>
+          <button
+            type="button"
+            className={isnext ? "next" : "next_none"}
+            onClick={next}
+            aria-label="Scroll right"
+          >
+            <img src={foward} alt="" width={24} height={24} />
+          </button>
           <div ref={slide} className={`overflow_auto_wrapper `}>
             <div
               className={`overflow_auto_after  ${
-                styling ? "min-[615px]:space-x-3 space-x-3" : ""
+                styling ? "mobile-up:space-x-3 space-x-3" : ""
               }`}
             >
               {Array.isArray(data) &&
@@ -296,7 +333,7 @@ const GroupWidget = ({
                           to={`${LECTURE}${nid || id}`}
                           id={idx}
                           className={`groupWidget_album_item  ${
-                            styling ? "relative max-[615px]:hidden" : ""
+                            styling ? "relative mobile:hidden" : ""
                           }`}
                           onClick={() => {
                             // navigate(`/l/${nid || id}`);
@@ -350,7 +387,7 @@ const GroupWidget = ({
         <div
           className={
             styling
-              ? "hidden mx-auto w-full max-[615px]:flex flex-col justify-center"
+              ? "hidden mx-auto w-full mobile:flex flex-col justify-center"
               : "hidden"
           }
         >
@@ -362,7 +399,7 @@ const GroupWidget = ({
         <div
           className={
             styling
-              ? "hidden mx-auto w-full max-[615px]:flex flex-col justify-center"
+              ? "hidden mx-auto w-full mobile:flex flex-col justify-center"
               : "hidden"
           }
         >
@@ -374,7 +411,7 @@ const GroupWidget = ({
         <div
           className={
             styling
-              ? "hidden mx-auto w-full max-[615px]:flex flex-col justify-center"
+              ? "hidden mx-auto w-full mobile:flex flex-col justify-center"
               : "hidden"
           }
         >
@@ -383,16 +420,26 @@ const GroupWidget = ({
       )}
       {type === "album" && (
         <div className="overflow_hidden_wrapper">
-          <div className={isprev ? "prev" : "prev_none"} onClick={prev}>
-            <img src={back} alt="back" />
-          </div>
-          <div className={isnext ? "next" : "next_none"} onClick={next}>
-            <img src={foward} alt="foward" />
-          </div>
+          <button
+            type="button"
+            className={isprev ? "prev" : "prev_none"}
+            onClick={prev}
+            aria-label="Scroll left"
+          >
+            <img src={back} alt="" width={24} height={24} />
+          </button>
+          <button
+            type="button"
+            className={isnext ? "next" : "next_none"}
+            onClick={next}
+            aria-label="Scroll right"
+          >
+            <img src={foward} alt="" width={24} height={24} />
+          </button>
           <div ref={slide} className="overflow_auto_wrapper">
             <div
               className={`overflow_auto_after  ${
-                styling ? "min-[615px]:space-x-3 space-x-3" : ""
+                styling ? "mobile-up:space-x-3 space-x-3" : ""
               }`}
             >
               {Array.isArray(data) &&
@@ -419,7 +466,7 @@ const GroupWidget = ({
                         to={`${ALBUMS}${id || nid}`}
                         id={idx}
                         className={`groupWidget_album_item  ${
-                          styling ? "relative max-[615px]:hidden" : ""
+                          styling ? "relative mobile:hidden" : ""
                         }`}
                         onClick={() => {}}
                         key={idx + 1}
@@ -453,12 +500,22 @@ const GroupWidget = ({
 
       {type === "playlist" && (
         <div className="overflow_hidden_wrapper">
-          <div className={isprev ? "prev" : "prev_none"} onClick={prev}>
-            <img src={back} alt="back" />
-          </div>
-          <div className={isnext ? "next" : "next_none"} onClick={next}>
-            <img src={foward} alt="foward" />
-          </div>
+          <button
+            type="button"
+            className={isprev ? "prev" : "prev_none"}
+            onClick={prev}
+            aria-label="Scroll left"
+          >
+            <img src={back} alt="" width={24} height={24} />
+          </button>
+          <button
+            type="button"
+            className={isnext ? "next" : "next_none"}
+            onClick={next}
+            aria-label="Scroll right"
+          >
+            <img src={foward} alt="" width={24} height={24} />
+          </button>
           <div ref={slide} className="overflow_auto_wrapper">
             <div className="overflow_auto_after">
               {Array.isArray(data) &&
@@ -511,7 +568,7 @@ const GroupWidget = ({
         </div>
       )}
       {nav1?.title === "Genres" && type === "lecturer" && (
-        <div className="w-full h-full overflow-hidden min-[615px]:hidden">
+        <div className="w-full h-full overflow-hidden mobile-up:hidden">
           <div className="w-full overflow-x-auto flex items-center space-x-4 h-full">
             {Array.isArray(data) &&
               data.map(({ img, name, id, nid }, idx) => {
@@ -531,17 +588,27 @@ const GroupWidget = ({
 
       {type === "lecturer" && (
         <div className="overflow_hidden_wrapper_lect">
-          <div className={isprev ? "prev" : "prev_none"} onClick={prev}>
-            <img src={back} alt="back" />
-          </div>
-          <div className={isnext ? "next" : "next_none"} onClick={next}>
-            <img src={foward} alt="foward" />
-          </div>
+          <button
+            type="button"
+            className={isprev ? "prev" : "prev_none"}
+            onClick={prev}
+            aria-label="Scroll left"
+          >
+            <img src={back} alt="" width={24} height={24} />
+          </button>
+          <button
+            type="button"
+            className={isnext ? "next" : "next_none"}
+            onClick={next}
+            aria-label="Scroll right"
+          >
+            <img src={foward} alt="" width={24} height={24} />
+          </button>
           <div
             ref={slide}
             className={`overflow_auto_wrapper_lect ${
               nav1?.title === "Genres" ? "hidden" : ""
-            } min-[615px]:space-x-20 `}
+            } mobile-up:space-x-20 `}
           >
             {Array.isArray(data) &&
               data.map(
@@ -564,34 +631,28 @@ const GroupWidget = ({
                   idx
                 ) => {
                   return (
-                    <>
-                      <Link
-                        to={`${RESOURCE_PERSON}${id || nid}`}
-                        className="max-[615px]:hidden relative"
-                        onClick={() => {
-                          // navigate(`${RESOURCE_PERSON}${id || nid}`);
-                        }}
-                        key={idx + 1}
-                      >
-                        <LecturersWidget
-                          views={views}
-                          key={idx}
-                          rp={name}
-                          img={img}
-                          styling={styling}
-                        />
-                        <div
-                          className={`absolute right-[-18px] bottom-[100px] rounded-full h-[38px] w-[38px] flex justify-center items-center text-white text-xl ${
-                            idx === 2 ? "bg-[#96734a]" : ""
-                          } ${idx === 1 ? "bg-[#76a8d7]" : ""}${
-                            idx === 0 ? "bg-[#ffa736]" : ""
-                          }
+                    <Link
+                      key={idx + 1}
+                      to={`${RESOURCE_PERSON}${id || nid}`}
+                      className="mobile:hidden relative"
+                    >
+                      <LecturersWidget
+                        views={views}
+                        rp={name}
+                        img={img}
+                        styling={styling}
+                      />
+                      <div
+                        className={`absolute right-[-18px] bottom-[100px] rounded-full h-[38px] w-[38px] flex justify-center items-center text-white text-xl ${
+                          idx === 2 ? "bg-[#96734a]" : ""
+                        } ${idx === 1 ? "bg-[#76a8d7]" : ""}${
+                          idx === 0 ? "bg-[#ffa736]" : ""
+                        }
                         ${styling && idx < 3 ? "block" : "hidden"}`}
-                        >
-                          <span>{idx + 1}</span>
-                        </div>
-                      </Link>
-                    </>
+                      >
+                        <span>{idx + 1}</span>
+                      </div>
+                    </Link>
                   );
                 }
               )}
@@ -602,4 +663,6 @@ const GroupWidget = ({
   );
 };
 
-export default GroupWidget;
+GroupWidget.displayName = "GroupWidget";
+
+export default memo(GroupWidget);

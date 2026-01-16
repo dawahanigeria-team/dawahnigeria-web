@@ -16,7 +16,7 @@ const Simillarrp = ({ langid }) => {
   const issimilarrp = true;
   const queryParam = { page, langid };
 
-  const { isLoading, isLoadingNextPage, isLastPage, querieddata } =
+  const { isLoading, isLoadingNextPage, isLastPage, querieddata, isFetching } =
     useLecturersHook(
       "lecturers",
       queryParam,
@@ -27,7 +27,8 @@ const Simillarrp = ({ langid }) => {
   const { ref: infiniteScrollRef } = useInfiniteScrollPagination(
     querieddata?.length,
     page,
-    setPage
+    setPage,
+    isFetching
   );
 
   return (

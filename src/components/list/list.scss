@@ -216,10 +216,14 @@
 
   /*************** moobile **********/
   .mobile_list {
-    @include desktop_hide;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
+    display: none;
+
+    @media screen and (max-width: 689px) {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+    }
+
     font-family: "Poppins";
     font-size: 12px;
 

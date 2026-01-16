@@ -1,0 +1,360 @@
+// =============================================================================
+// AUDIO LIST SKELETON - Premium Loading States
+// Shimmer animation with staggered entry for audio list items
+// =============================================================================
+
+// Brand Colors
+$accent-primary: #ddff2b;
+
+// Animations
+@keyframes audioSkeletonShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes audioSkeletonFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// =============================================================================
+// SKELETON LIST CONTAINER
+// =============================================================================
+
+.audio_skeleton_list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 0;
+}
+
+// =============================================================================
+// HEADER (Desktop only)
+// =============================================================================
+
+.audio_skeleton_header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  padding: 0 11px;
+
+  @media screen and (max-width: 690px) {
+    display: none;
+  }
+
+  .audio_skeleton_header_left {
+    display: flex;
+    align-items: center;
+    width: 35%;
+    margin-right: 15%;
+    gap: 5px;
+
+    @media screen and (max-width: 1238px) {
+      margin-right: 10%;
+    }
+  }
+
+  .audio_skeleton_header_hash,
+  .audio_skeleton_header_title,
+  .audio_skeleton_header_lecturer,
+  .audio_skeleton_header_time {
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #5e5e5e;
+  }
+
+  .audio_skeleton_header_hash {
+    width: 30px;
+  }
+
+  .audio_skeleton_header_lecturer {
+    width: 45%;
+  }
+
+  .audio_skeleton_header_time {
+    width: 10%;
+  }
+}
+
+// =============================================================================
+// SKELETON ITEM
+// =============================================================================
+
+.audio_skeleton_item {
+  width: 100%;
+  animation: audioSkeletonFadeIn 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+// =============================================================================
+// DESKTOP SKELETON
+// =============================================================================
+
+.audio_skeleton_desktop {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 11px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.02);
+
+  @media screen and (max-width: 690px) {
+    display: none;
+  }
+
+  .audio_skeleton_row {
+    display: flex;
+    align-items: center;
+    width: 35%;
+    margin-right: 15%;
+    gap: 8px;
+
+    @media screen and (max-width: 1238px) {
+      margin-right: 10%;
+    }
+  }
+
+  .audio_skeleton_num {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .audio_skeleton_image {
+    width: 43px;
+    height: 43px;
+    border-radius: 6px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.04) 0%,
+      rgba(255, 255, 255, 0.08) 50%,
+      rgba(255, 255, 255, 0.04) 100%
+    );
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .audio_skeleton_title {
+    flex: 1;
+    height: 16px;
+    max-width: 200px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+    position: relative;
+
+    @media screen and (max-width: 1050px) {
+      max-width: 160px;
+    }
+  }
+
+  .audio_skeleton_lecturer {
+    width: 25%;
+    height: 14px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    position: relative;
+    margin-right: 5%;
+  }
+
+  .audio_skeleton_actions {
+    display: flex;
+    gap: 16px;
+    margin-right: 5%;
+  }
+
+  .audio_skeleton_action_dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .audio_skeleton_duration {
+    width: 45px;
+    height: 14px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+    position: relative;
+  }
+}
+
+// =============================================================================
+// MOBILE SKELETON
+// =============================================================================
+
+.audio_skeleton_mobile {
+  display: none;
+
+  @media screen and (max-width: 690px) {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .audio_skeleton_mobile_image {
+    width: 70px;
+    height: 80px;
+    border-radius: 8px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.04) 0%,
+      rgba(255, 255, 255, 0.08) 50%,
+      rgba(255, 255, 255, 0.04) 100%
+    );
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .audio_skeleton_mobile_content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .audio_skeleton_mobile_title {
+    width: 80%;
+    height: 14px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .audio_skeleton_mobile_lecturer {
+    width: 50%;
+    height: 12px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .audio_skeleton_mobile_actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+}
+
+// =============================================================================
+// SHIMMER EFFECT
+// =============================================================================
+
+.audio_skeleton_shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: audioSkeletonShimmer 1.8s ease-in-out infinite;
+}
+
+// Staggered shimmer delays for visual interest
+.audio_skeleton_image .audio_skeleton_shimmer {
+  animation-delay: 0s;
+}
+
+.audio_skeleton_title .audio_skeleton_shimmer,
+.audio_skeleton_mobile_title .audio_skeleton_shimmer {
+  animation-delay: 0.1s;
+}
+
+.audio_skeleton_lecturer .audio_skeleton_shimmer,
+.audio_skeleton_mobile_lecturer .audio_skeleton_shimmer {
+  animation-delay: 0.2s;
+}
+
+.audio_skeleton_duration .audio_skeleton_shimmer {
+  animation-delay: 0.3s;
+}
+
+// =============================================================================
+// LIGHT THEME ADJUSTMENTS
+// =============================================================================
+
+:root[data-theme="light"],
+.light {
+  .audio_skeleton_desktop {
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .audio_skeleton_num,
+  .audio_skeleton_title,
+  .audio_skeleton_lecturer,
+  .audio_skeleton_action_dot,
+  .audio_skeleton_duration,
+  .audio_skeleton_mobile_title,
+  .audio_skeleton_mobile_lecturer {
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  .audio_skeleton_image,
+  .audio_skeleton_mobile_image {
+    background: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.04) 0%,
+      rgba(0, 0, 0, 0.08) 50%,
+      rgba(0, 0, 0, 0.04) 100%
+    );
+  }
+
+  .audio_skeleton_shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.6) 50%,
+      transparent 100%
+    );
+  }
+
+  .audio_skeleton_mobile {
+    border-bottom-color: rgba(0, 0, 0, 0.06);
+  }
+}
+
+// =============================================================================
+// REDUCED MOTION
+// =============================================================================
+
+@media (prefers-reduced-motion: reduce) {
+  .audio_skeleton_item {
+    animation: none;
+    opacity: 1;
+  }
+
+  .audio_skeleton_shimmer {
+    animation: none;
+    background: rgba(255, 255, 255, 0.08);
+  }
+}

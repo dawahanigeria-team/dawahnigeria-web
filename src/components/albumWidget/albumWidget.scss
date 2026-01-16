@@ -1,358 +1,567 @@
-.album_wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  //width: 12.5rem;
-  //height: 14.313rem;
-  overflow-x: hidden;
-  width: 100%;
-  height: 100%;
+// =============================================================================
+// ALBUM WIDGET - WORLD CLASS DESIGN
+// Premium album card with micro-interactions, animations, and depth
+// =============================================================================
 
-  border-radius: 6px;
-  @media screen and (max-width: 615px) {
-    width: 100%;
-    height: 100%;
+// Brand Colors
+$accent-primary: #ddff2b;
+$accent-secondary: #ffa736;
+
+// Animations
+@keyframes albumFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
   }
-  .album_container .album_play_super_wrap .album_play_wrapper {
-    display: none;
-  }
-
-  .album_container:hover .album_play_super_wrap {
-    width: 100%;
-    height: 100%;
-    border-radius: 6px;
-    inset: 0;
-    position: absolute;
-    transition-timing-function: ease-in;
-    transition: 0.3s;
-    transform: translateY(0);
-    background: rgba(0, 0, 0, 0.5);
-    .album_play_wrapper {
-      position: absolute;
-      width: fit-content;
-      height: fit-content;
-      display: block;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      border-radius: 6px;
-
-      margin: auto;
-
-      .album_play {
-        cursor: pointer;
-
-        transition-timing-function: ease-in;
-        transition: 0.3s;
-        transform: translateY(0);
-        width: 62.07px;
-        height: 62.07px;
-        background: rgba(34, 34, 34, 0.4);
-        border-radius: 50%;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        .album_play_icon {
-          color: #cfcfcf;
-          font-size: 30px;
-        }
-      }
-    }
-  }
-  .album_playing {
-    width: 100%;
-    height: 100%;
-    border-radius: 8px;
-    position: absolute;
-    inset: 0;
-    transition-timing-function: ease-in;
-    transition: 0.3s;
-    transform: translateY(0);
-    background: rgba(0, 0, 0, 0.5);
-    .album_playing_wrapper {
-      position: absolute;
-      width: fit-content;
-      height: fit-content;
-      display: block;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-
-      margin: auto;
-
-      .album_play {
-        cursor: pointer;
-
-        transition-timing-function: ease-in;
-        transition: 0.3s;
-        transform: translateY(0);
-        width: 62.07px;
-        height: 62.07px;
-        background: rgba(34, 34, 34, 0.4);
-        border-radius: 50%;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-      }
-    }
-  }
-  .album_container {
-    width: 100%;
-    height: 100%;
-    //overflow: hidden;
-
-    border-radius: 6px;
-    position: relative;
-    @media screen and (max-width: 600px) {
-      //width: 90px;
-      //height: 94.19px;
-    }
-    .album_img {
-      width: 100%;
-
-      height: 100%;
-      .album_background_image {
-        position: absolute;
-        width: 100%;
-
-        height: 100%;
-        top: 0;
-        left: 0;
-        border-radius: 6px;
-      }
-    }
-
-    .album_overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 35%;
-      border-radius: 6px;
-      background: linear-gradient(
-        180deg,
-        rgba(217, 217, 217, 0) 0%,
-        rgb(25, 25, 26) 71.74%
-      );
-      @media screen and (max-width: 500px) {
-        height: 50%;
-      }
-    }
-    .album_widget_name {
-      font-family: "Poppins";
-      font-style: normal;
-      font-weight: 700;
-      font-size: 24px;
-      line-height: 36px;
-      display: flex;
-      align-items: center;
-      color: #040404;
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      margin: unset;
-      padding: unset;
-      @media screen and (max-width: 600px) {
-        font-size: 10px;
-        line-height: 0px;
-        top: 1rem;
-      }
-    }
-    .album_listen_wrapper {
-      position: absolute;
-      bottom: 0.5rem;
-      left: 0.5rem;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      .album_listen_icon {
-        font-size: 16px;
-        color: #d4d4d4;
-        @media screen and (max-width: 600px) {
-          font-size: 10px;
-        }
-      }
-      .album_listen_text {
-        margin-left: 0.5rem;
-        font-family: "Nunito Sans";
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 24px;
-        color: #d4d4d4;
-        text-shadow: 0px 3px 4px rgba(44, 44, 44, 0.25);
-        margin-bottom: unset;
-        margin-top: unset;
-        @media screen and (max-width: 600px) {
-          font-size: 10px;
-          line-height: 0px;
-          margin-left: 0.2rem;
-        }
-      }
-    }
-  }
-  .album_categories {
-    font-family: "Nunito Sans";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 21px;
-  
-    text-overflow: ellipsis;
-    width:100%;
-    text-shadow: 0px 3px 4px rgba(44, 44, 44, 0.25);
-    white-space: nowrap;
-    overflow: hidden;
-    padding-left: 3%;
-    @media screen and (max-width: 600px) {
-      font-size: 12px;
-     
-    }
-  }
-
-  .show {
-    display: block;
-  }
-  .hide {
-    display: none;
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
-.album_widget_wrapper {
+@keyframes eqBarAnimation {
+  0%, 100% { height: 4px; }
+  25% { height: 16px; }
+  50% { height: 8px; }
+  75% { height: 20px; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(221, 255, 43, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(221, 255, 43, 0);
+  }
+}
+
+@keyframes rippleExpand {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+// =============================================================================
+// ALBUM CARD
+// =============================================================================
+
+.album_card {
+  --card-radius: 16px;
+  --card-radius-mobile: 12px;
+
   width: 100%;
   cursor: pointer;
-  transition: all 0.3s ease;
-  
-  .album_widget_img_wrap {
-    width: 100%;
-    aspect-ratio: 1;
-    border-radius: 12px;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  position: relative;
+  animation: albumFadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+  transform-origin: center bottom;
 
-    .album_widget_img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
+  // Smooth transitions for interactions
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 
-    .album_overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 35%;
-      background: linear-gradient(
-        180deg,
-        rgba(217, 217, 217, 0) 0%,
-        rgba(0, 0, 0, 0.8) 71.74%
-      );
-    }
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    opacity: 1;
+    transition: none;
+  }
 
-    .duration-overlay {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      padding: 6px 10px;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(4px);
-      border-radius: 4px;
-      color: white;
-      font-size: 12px;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      z-index: 2;
-    }
+  // Hover state - desktop only
+  @media (hover: hover) {
+    &:hover {
+      transform: translateY(-6px);
 
-    .album_widget_name {
-      position: absolute;
-      bottom: 40px;
-      left: 12px;
-      right: 12px;
-      margin: 0;
-      color: white;
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 1.4;
-      z-index: 2;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
-
-    .album_listen_wrapper {
-      position: absolute;
-      bottom: 12px;
-      left: 12px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      z-index: 2;
-      
-      .album_listen_icon {
-        color: white;
-        font-size: 16px;
+      .album_card__image {
+        transform: scale(1.08);
       }
-      
-      .album_listen_text {
-        color: white;
-        font-size: 14px;
-        font-weight: 500;
-        margin: 0;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+
+      .album_card__play_overlay {
+        opacity: 1;
+      }
+
+      .album_card__gradient {
+        opacity: 0.9;
+      }
+
+      .album_card__badge {
+        transform: translateY(-2px);
+        background: $accent-primary;
+        color: #000;
       }
     }
   }
+
+  // Pressed state - touch feedback
+  &--pressed {
+    transform: scale(0.97);
+
+    .album_card__ripple {
+      animation: rippleExpand 0.6s ease-out forwards;
+    }
+
+    .album_card__image_container {
+      &::after {
+        opacity: 0.1;
+      }
+    }
+  }
+
+  // Now Playing state
+  &--playing {
+    .album_card__image_container {
+      &::before {
+        content: '';
+        position: absolute;
+        inset: -3px;
+        border-radius: calc(var(--card-radius) + 3px);
+        background: linear-gradient(135deg, $accent-primary, $accent-secondary);
+        z-index: -1;
+        animation: pulseGlow 2s ease-in-out infinite;
+
+        @media screen and (max-width: 615px) {
+          border-radius: calc(var(--card-radius-mobile) + 3px);
+          inset: -2px;
+        }
+      }
+    }
+
+    .album_card__now_playing {
+      opacity: 1;
+    }
+  }
+}
+
+// =============================================================================
+// IMAGE CONTAINER
+// =============================================================================
+
+.album_card__image_container {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    0 20px 25px -5px rgba(0, 0, 0, 0.15);
+
+  @media screen and (max-width: 615px) {
+    border-radius: var(--card-radius-mobile);
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.1),
+      0 8px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  // Overlay for pressed state
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #fff;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+    z-index: 10;
+  }
+}
+
+// =============================================================================
+// PLACEHOLDER
+// =============================================================================
+
+.album_card__placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.06) 50%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  z-index: 1;
+}
+
+.album_card__placeholder_icon {
+  font-size: 48px;
+  color: rgba(255, 255, 255, 0.15);
+
+  @media screen and (max-width: 615px) {
+    font-size: 32px;
+  }
+}
+
+// =============================================================================
+// IMAGE
+// =============================================================================
+
+.album_card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+  opacity: 0;
+  will-change: transform;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: opacity 0.3s ease;
+  }
+
+  &--loaded {
+    opacity: 1;
+  }
+}
+
+// =============================================================================
+// GRADIENT OVERLAY
+// =============================================================================
+
+.album_card__gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.4) 50%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+// =============================================================================
+// NOW PLAYING INDICATOR
+// =============================================================================
+
+.album_card__now_playing {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 5;
+
+  @media screen and (max-width: 615px) {
+    top: 8px;
+    left: 8px;
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+}
+
+.album_card__equalizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 20px;
+
+  @media screen and (max-width: 615px) {
+    height: 16px;
+    gap: 2px;
+  }
+}
+
+.album_card__eq_bar {
+  width: 4px;
+  background: $accent-primary;
+  border-radius: 2px;
+  animation: eqBarAnimation 0.8s ease-in-out infinite;
+
+  @media screen and (max-width: 615px) {
+    width: 3px;
+  }
+
+  &:nth-child(1) { animation-delay: 0s; }
+  &:nth-child(2) { animation-delay: 0.2s; }
+  &:nth-child(3) { animation-delay: 0.4s; }
+  &:nth-child(4) { animation-delay: 0.1s; }
+}
+
+// =============================================================================
+// TRACK COUNT BADGE
+// =============================================================================
+
+.album_card__badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: "Poppins", system-ui, sans-serif;
+  letter-spacing: 0.02em;
+  z-index: 4;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+
+  @media screen and (max-width: 615px) {
+    top: 8px;
+    right: 8px;
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+}
+
+.album_card__badge_icon {
+  font-size: 12px;
+
+  @media screen and (max-width: 615px) {
+    font-size: 10px;
+  }
+}
+
+// =============================================================================
+// PLAY BUTTON OVERLAY
+// =============================================================================
+
+.album_card__play_overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 3;
+
+  // Always visible on touch devices
+  @media (hover: none) {
+    opacity: 1;
+    background: transparent;
+
+    .album_card__play_btn {
+      width: 44px;
+      height: 44px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+    }
+  }
+}
+
+.album_card__play_btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: $accent-primary;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 4px 12px rgba(221, 255, 43, 0.3);
 
   &:hover {
-    .album_widget_img {
-      transform: scale(1.05);
-    }
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(221, 255, 43, 0.4);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
+  @media screen and (max-width: 615px) {
+    width: 44px;
+    height: 44px;
   }
 }
 
-// Mobile adjustments
-@media (max-width: 768px) {
-  .album_widget_wrapper {
-    .album_widget_img_wrap {
-      .duration-overlay {
-        padding: 4px 8px;
-        font-size: 11px;
-      }
+.album_card__play_icon {
+  font-size: 28px;
+  color: #000;
+  margin-left: 3px; // Visual centering for play icon
 
-      .album_widget_name {
-        font-size: 14px;
-        bottom: 36px;
-      }
-
-      .album_listen_wrapper {
-        .album_listen_icon {
-          font-size: 14px;
-        }
-        
-        .album_listen_text {
-          font-size: 12px;
-        }
-      }
-    }
+  @media screen and (max-width: 615px) {
+    font-size: 22px;
+    margin-left: 2px;
   }
 }
 
-// Grid layout for the container
-.recommended2_wrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 24px;
-  padding: 24px;
+// =============================================================================
+// RIPPLE EFFECT
+// =============================================================================
+
+.album_card__ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(221, 255, 43, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  pointer-events: none;
+  z-index: 11;
+}
+
+// =============================================================================
+// CONTENT SECTION
+// =============================================================================
+
+.album_card__content {
+  padding: 14px 6px 4px;
+
+  @media screen and (max-width: 615px) {
+    padding: 10px 4px 2px;
+  }
+}
+
+.album_card__title {
+  margin: 0 0 4px;
+  font-family: "Poppins", system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text-color-primary, #fff);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  transition: color 0.2s ease;
+
+  @media screen and (max-width: 615px) {
+    font-size: 13px;
+    -webkit-line-clamp: 2;
+    margin-bottom: 2px;
+  }
+
+  .album_card:hover & {
+    color: $accent-primary;
+  }
+}
+
+.album_card__artist {
+  margin: 0 0 4px;
+  font-family: "Nunito Sans", system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-color, #a0a0a0);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @media screen and (max-width: 615px) {
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+}
+
+.album_card__meta {
+  margin: 0;
+  font-family: "Nunito Sans", system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-color-secondary, #666);
+
+  @media screen and (max-width: 615px) {
+    font-size: 11px;
+  }
+}
+
+// =============================================================================
+// LIGHT THEME ADJUSTMENTS
+// =============================================================================
+
+:root[data-theme="light"],
+.light {
+  .album_card__image_container {
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.08),
+      0 2px 4px -1px rgba(0, 0, 0, 0.04),
+      0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+
+  .album_card__placeholder {
+    background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+  }
+
+  .album_card__placeholder_icon {
+    color: rgba(0, 0, 0, 0.15);
+  }
+
+  .album_card__badge {
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .album_card__title {
+    color: #1a1a1a;
+
+    .album_card:hover & {
+      color: #96734a;
+    }
+  }
+
+  .album_card__artist {
+    color: #666;
+  }
+
+  .album_card__meta {
+    color: #999;
+  }
+
+  .album_card__play_btn {
+    background: #96734a;
+    box-shadow: 0 4px 12px rgba(150, 115, 74, 0.3);
+
+    &:hover {
+      box-shadow: 0 6px 20px rgba(150, 115, 74, 0.4);
+    }
+  }
+
+  .album_card__play_icon {
+    color: #fff;
+  }
+}
+
+// =============================================================================
+// LEGACY SUPPORT - Keep old class names working
+// =============================================================================
+
+.album_widget_wrapper {
+  @extend .album_card;
+}
+
+.album_wrapper {
+  @extend .album_card;
 }

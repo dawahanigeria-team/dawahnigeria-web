@@ -13,11 +13,12 @@ export const useLecturersHook = (
   const [hasReachedLastPage, setHasReachedLastPage] = useState(false);
   const [intialLangId, setinitialLangId] = useState("");
 
-  const { isLoading, data, error } = useQuery(
+  const { isLoading, data, error, isFetching } = useQuery(
     [keyName, queryParam],
     () => queryFunction(queryParam),
     {
       enabled: !hasReachedLastPage,
+      keepPreviousData: true,
       onSuccess: (data) => {
         setIsLoadingNextPage(false);
 
@@ -80,10 +81,11 @@ export const useLecturersHook = (
   }, [queryParam.langid]);
   return {
     isLoading,
-    isLoadingNextPage,
+    isLoadingNextPage: isFetching && queryParam.page > 1,
     isLastPage: hasReachedLastPage,
     error,
     data,
     querieddata,
+    isFetching,
   };
 };

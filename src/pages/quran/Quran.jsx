@@ -29,12 +29,14 @@ const Playlists = () => {
     isLoading: isLoadingAlbums,
     isLoadingNextPage,
     isLastPage,
+    isFetching,
   } = useQuranAlbums(page);
 
   const { ref: infiniteScrollRef } = useInfiniteScrollPagination(
     albums?.length,
     page,
-    setPage
+    setPage,
+    isFetching
   );
 
   // console.log({ data });

@@ -29,7 +29,7 @@ const Lecturers = () => {
   const [lectId, setlectId] = useState("");
   const queryParam = { lectId, langid, page, typeName, active };
 
-  const { isLoading, isLoadingNextPage, isLastPage, querieddata } =
+  const { isLoading, isLoadingNextPage, isLastPage, querieddata, isFetching } =
     useLecturersHook(
       "lecturers",
       queryParam,
@@ -44,7 +44,8 @@ const Lecturers = () => {
   const { ref: infiniteScrollRef } = useInfiniteScrollPagination(
     filter?.length,
     page,
-    setPage
+    setPage,
+    isFetching
   );
 
   return (
