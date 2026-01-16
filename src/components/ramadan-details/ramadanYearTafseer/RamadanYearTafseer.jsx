@@ -1,71 +1,49 @@
-import { useState, useEffect, useMemo } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import Loader from "../../UI/loader/loader";
+import { useState, useEffect, useMemo, useCallback } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { ALBUMS, RAMADAN } from "../../../utils/routes/constants";
 import { useKeywordAlbums } from "../../../hooks/albums";
-import arrow from "../../../assets/svg/arrowleft.svg";
 import { IMAGE_PLACEHOLDERS } from "../../../utils/imagePlaceholders";
-import { HiOutlinePlay } from "react-icons/hi2";
-import { HiMagnifyingGlass } from "react-icons/hi2";
-import { HiWifi, HiArrowPath } from "react-icons/hi2";
-import HeaderRouter from "../../headerRouter/HeaderRouter";
+import { HiOutlinePlay, HiMagnifyingGlass, HiWifi, HiArrowPath, HiBookOpen } from "react-icons/hi2";
+import { FiChevronLeft, FiPlay } from "react-icons/fi";
 import ErrorBoundary from "../../UI/ErrorBoundary";
+import Container from "../../container/Container";
+import HeadMeta from "../../head-meta";
+import "./ramadanYearTafseer.scss";
 
 export const RamadanYearTafseer = () => {
   return (
     <ErrorBoundary>
-      <RamadanYearTafseerContent />
+      <Container>
+        <RamadanYearTafseerContent />
+      </Container>
     </ErrorBoundary>
   );
 };
 
-// Separate the main component content for error boundary wrapping
 const RamadanYearTafseerContent = () => {
   const { year } = useParams();
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  const [scrolled, setScrolled] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
 
-  // Debounce search query to avoid too many API calls
+  // Debounce search query
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(searchQuery);
-      setPage(1); // Reset to first page when search changes
+      setPage(1);
     }, 300);
-
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  // Add scroll listener to detect when user scrolls
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Add error handling for media errors
+  // Handle media errors
   useEffect(() => {
     const handleMediaError = (event) => {
-      if (event.target.tagName === "IMG" || event.target.tagName === "AUDIO") {
-        console.warn("Media error caught:", event);
-        // Replace with placeholder if it's an image
-        if (event.target.tagName === "IMG") {
-          event.target.src = IMAGE_PLACEHOLDERS.album;
-        }
+      if (event.target.tagName === "IMG") {
+        event.target.src = IMAGE_PLACEHOLDERS.album;
       }
     };
-
     document.addEventListener("error", handleMediaError, true);
     return () => document.removeEventListener("error", handleMediaError, true);
   }, []);
@@ -82,191 +60,220 @@ const RamadanYearTafseerContent = () => {
     search: debouncedSearch,
   });
 
-  // Extract unique languages and count lectures per language
+  // Extract unique languages with counts
   const languageStats = useMemo(() => {
     if (!albums?.length) return [];
-
     const stats = albums.reduce((acc, album) => {
       const lang = album.lang || "Unknown";
       acc[lang] = (acc[lang] || 0) + 1;
       return acc;
     }, {});
-
     return Object.entries(stats)
-      .map(([lang, count]) => ({
-        lang,
-        count,
-      }))
+      .map(([lang, count]) => ({ lang, count }))
       .sort((a, b) => b.count - a.count);
   }, [albums]);
 
-  // Filter albums only by language since search is now handled by the server
+  // Filter albums by language
   const filteredAlbums = useMemo(() => {
     if (!albums) return [];
-
-    // Filter by language
-    if (selectedLanguage !== "all") {
-      return albums.filter((album) => album.lang === selectedLanguage);
-    }
-
-    return albums;
+    if (selectedLanguage === "all") return albums;
+    return albums.filter((album) => album.lang === selectedLanguage);
   }, [albums, selectedLanguage]);
 
-  const loadMore = () => {
+  const loadMore = useCallback(() => {
     if (!isLoading && hasMore && !debouncedSearch) {
       setPage((prev) => prev + 1);
     }
-  };
+  }, [isLoading, hasMore, debouncedSearch]);
 
-  // Function to extract title parts similar to lectureTitleExtractor in LecturesListDetail
-  const extractTitle = (fullTitle) => {
-    if (!fullTitle) return "Untitled Album";
-
-    if (fullTitle.includes("-")) {
-      const parts = fullTitle.split("-");
-      return parts[0].trim();
-    }
-
-    return fullTitle;
-  };
+  const totalLectures = useMemo(() => {
+    if (!albums?.length) return 0;
+    return albums.reduce((sum, album) => sum + (parseInt(album.lec_no) || 0), 0);
+  }, [albums]);
 
   return (
-    <div className="bg-background min-h-screen">
-      <div className="max-w-7xl mx-auto px-4">
-        {/* Header with back button */}
-        <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
-          <HeaderRouter title={`Ramadan Tafseer ${year}`} link={RAMADAN} />
-        </div>
+    <div className="ramadan-tafseer-page">
+      <HeadMeta title={`Ramadan Tafseer ${year} - Dawah Nigeria`} />
+      
+      {/* Geometric Background */}
+      <div className="ramadan-tafseer-geometric-bg" aria-hidden="true" />
 
-        {/* Search and Filter Section */}
-        <div className="sticky top-16 z-40 bg-background/80 backdrop-blur-lg border-b border-border">
-          {/* Search Input */}
-          <div className="p-4">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search by title or lecturer..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-2 pl-10 bg-accent rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-              <HiMagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground text-lg" />
-              {debouncedSearch && !isLoading && (
-                <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-muted-foreground">
-                  {total} results
-                </div>
-              )}
+      <div className="ramadan-tafseer-container">
+        {/* Header */}
+        <header className="ramadan-tafseer-header">
+          <div className="ramadan-tafseer-header-inner">
+            <button
+              onClick={() => navigate(RAMADAN)}
+              className="ramadan-tafseer-back-btn"
+              aria-label="Back to Ramadan"
+            >
+              <FiChevronLeft />
+            </button>
+            <div className="ramadan-tafseer-title-group">
+              <h1 className="ramadan-tafseer-title">
+                Ramadan Tafseer{" "}
+                <span className="ramadan-tafseer-year">{year}</span>
+                <span className="ramadan-tafseer-year-suffix">AH</span>
+              </h1>
             </div>
           </div>
+        </header>
 
-          {/* Language filter */}
+        {/* Hero Section */}
+        <section className="ramadan-tafseer-hero">
+          <div className="ramadan-tafseer-hero-badge">
+            <HiBookOpen />
+            <span>Tafseer Collection</span>
+          </div>
+          <h2 className="ramadan-tafseer-hero-title">
+            Ramadan {year}
+          </h2>
+          <p className="ramadan-tafseer-hero-subtitle">
+            Explore the blessed month's teachings and reflections
+          </p>
+        </section>
+
+        {/* Stats */}
+        {!isLoading && !error && albums?.length > 0 && (
+          <div className="ramadan-tafseer-stats">
+            <div className="ramadan-tafseer-stat">
+              <span className="ramadan-tafseer-stat-value">{total || albums.length}</span>
+              <span className="ramadan-tafseer-stat-label">Albums</span>
+            </div>
+            <div className="ramadan-tafseer-stat">
+              <span className="ramadan-tafseer-stat-value">{totalLectures}</span>
+              <span className="ramadan-tafseer-stat-label">Lectures</span>
+            </div>
+            <div className="ramadan-tafseer-stat">
+              <span className="ramadan-tafseer-stat-value">{languageStats.length}</span>
+              <span className="ramadan-tafseer-stat-label">Languages</span>
+            </div>
+          </div>
+        )}
+
+        {/* Search & Filters */}
+        <div className="ramadan-tafseer-search-section">
+          <div className="ramadan-tafseer-search-wrapper">
+            <HiMagnifyingGlass className="ramadan-tafseer-search-icon" />
+            <input
+              type="text"
+              placeholder="Search by title or lecturer..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="ramadan-tafseer-search-input"
+            />
+            {debouncedSearch && !isLoading && (
+              <span className="ramadan-tafseer-search-results">
+                {total} found
+              </span>
+            )}
+          </div>
+
+          {/* Language Pills */}
           {languageStats.length > 0 && (
-            <div className="overflow-x-auto scrollbar-hide py-2 px-4">
-              <div className="flex gap-2 min-w-max">
+            <div className="ramadan-tafseer-languages">
+              <button
+                onClick={() => setSelectedLanguage("all")}
+                className={`ramadan-tafseer-language-pill ${selectedLanguage === "all" ? "active" : ""}`}
+              >
+                All
+                <span className="ramadan-tafseer-language-count">
+                  ({albums?.length || 0})
+                </span>
+              </button>
+              {languageStats.map(({ lang, count }) => (
                 <button
-                  onClick={() => setSelectedLanguage("all")}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors
-                    ${
-                      selectedLanguage === "all"
-                        ? "bg-primary text-white"
-                        : "bg-accent hover:bg-accent/80 text-foreground"
-                    }`}
+                  key={lang}
+                  onClick={() => setSelectedLanguage(lang)}
+                  className={`ramadan-tafseer-language-pill ${selectedLanguage === lang ? "active" : ""}`}
                 >
-                  All ({albums?.length || 0}/{total})
+                  {lang}
+                  <span className="ramadan-tafseer-language-count">({count})</span>
                 </button>
-                {languageStats.map(({ lang, count }) => (
-                  <button
-                    key={lang}
-                    onClick={() => setSelectedLanguage(lang)}
-                    className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors
-                      ${
-                        selectedLanguage === lang
-                          ? "bg-primary text-white"
-                          : "bg-accent hover:bg-accent/80 text-foreground"
-                      }`}
-                  >
-                    {lang} ({count})
-                  </button>
-                ))}
-              </div>
+              ))}
             </div>
           )}
         </div>
 
-        {/* Main content */}
-        <div className="py-8 pb-32 md:pb-8">
-          {/* Error state */}
+        {/* Main Content */}
+        <main className="ramadan-tafseer-content">
+          {/* Error State */}
           {error && (
-            <div className="flex flex-col items-center justify-center py-8 px-4 text-center">
-              <div className="bg-red-100 dark:bg-red-900/20 p-6 rounded-lg max-w-md w-full">
-                <HiWifi className="text-red-500 text-4xl mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-red-600 dark:text-red-400 mb-2">
-                  Connection Error
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  {error?.message ||
-                    "Unable to establish connection to server. Please check your internet connection and try again."}
+            <div className="ramadan-tafseer-error">
+              <div className="ramadan-tafseer-error-card">
+                <div className="ramadan-tafseer-error-icon">
+                  <HiWifi />
+                </div>
+                <h3 className="ramadan-tafseer-error-title">Connection Error</h3>
+                <p className="ramadan-tafseer-error-text">
+                  {error?.message || "Unable to load content. Please check your connection."}
                 </p>
                 <button
                   onClick={() => window.location.reload()}
-                  className="flex items-center justify-center gap-2 mx-auto px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition-colors"
+                  className="ramadan-tafseer-retry-btn"
                 >
-                  <HiArrowPath className="text-lg" />
-                  <span>Retry</span>
+                  <HiArrowPath />
+                  <span>Try Again</span>
                 </button>
               </div>
             </div>
           )}
 
-          {/* Empty state */}
+          {/* Empty State */}
           {!isLoading && !error && filteredAlbums?.length === 0 && (
-            <div className="text-center text-gray-500 py-4">
-              {debouncedSearch
-                ? `No Ramadan Tafseer ${year} found matching "${debouncedSearch}"${
-                    selectedLanguage !== "all" ? ` in ${selectedLanguage}` : ""
-                  }`
-                : `No lectures found${
-                    selectedLanguage !== "all" ? ` in ${selectedLanguage}` : ""
-                  }`}
+            <div className="ramadan-tafseer-empty">
+              <div className="ramadan-tafseer-empty-icon">
+                <HiBookOpen />
+              </div>
+              <h3 className="ramadan-tafseer-empty-title">No Albums Found</h3>
+              <p className="ramadan-tafseer-empty-text">
+                {debouncedSearch
+                  ? `No results for "${debouncedSearch}"${selectedLanguage !== "all" ? ` in ${selectedLanguage}` : ""}`
+                  : `No Tafseer albums available${selectedLanguage !== "all" ? ` in ${selectedLanguage}` : ""}`}
+              </p>
             </div>
           )}
 
-          {/* Results summary when searching */}
+          {/* Results Summary */}
           {debouncedSearch && !error && filteredAlbums?.length > 0 && (
-            <div className="text-sm text-muted-foreground mb-4">
-              Showing {filteredAlbums.length} of {total} results
-              {selectedLanguage !== "all" ? ` in ${selectedLanguage}` : ""}
-            </div>
+            <p className="ramadan-tafseer-results-summary">
+              Showing <span className="ramadan-tafseer-results-highlight">{filteredAlbums.length}</span> of{" "}
+              <span className="ramadan-tafseer-results-highlight">{total}</span> results
+              {selectedLanguage !== "all" && ` in ${selectedLanguage}`}
+            </p>
           )}
 
-          {/* data grid */}
-          {!error && (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-4">
-              {filteredAlbums?.map((album) => (
+          {/* Albums Grid */}
+          {!error && filteredAlbums?.length > 0 && (
+            <div className="ramadan-tafseer-grid">
+              {filteredAlbums.map((album) => (
                 <Link
                   key={album.nid}
                   to={`${ALBUMS}${album.nid}`}
-                  className="block hover:opacity-90 transition-opacity"
+                  className="ramadan-tafseer-album-card"
                 >
-                  <div className="relative aspect-square">
+                  <div className="ramadan-tafseer-album-image-wrapper">
                     <img
                       src={album.img || IMAGE_PLACEHOLDERS.album}
                       alt={album.title}
-                      className="w-full h-full object-cover rounded-lg"
+                      className="ramadan-tafseer-album-image"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.src = IMAGE_PLACEHOLDERS.album;
+                      }}
                     />
-                    <div className="absolute inset-0 bg-black bg-opacity-20 rounded-lg flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                      <HiOutlinePlay className="text-white text-4xl" />
+                    <div className="ramadan-tafseer-album-overlay" />
+                    <div className="ramadan-tafseer-album-play">
+                      <FiPlay />
                     </div>
                   </div>
-                  <div className="mt-2">
-                    <h3 className="text-sm font-medium text-foreground whitespace-normal break-words">
-                      {album.title}
-                    </h3>
-                    <div className="flex flex-col text-xs text-color gap-0.5">
-                      <div className="flex items-center gap-1">
-                        <span>Lectures:</span>
-                        <span>{album.lec_no}</span>
-                      </div>
+                  <div className="ramadan-tafseer-album-content">
+                    <h3 className="ramadan-tafseer-album-title">{album.title}</h3>
+                    <div className="ramadan-tafseer-album-meta">
+                      <span className="ramadan-tafseer-album-lectures">
+                        <HiOutlinePlay />
+                        {album.lec_no} lectures
+                      </span>
                     </div>
                   </div>
                 </Link>
@@ -274,30 +281,26 @@ const RamadanYearTafseerContent = () => {
             </div>
           )}
 
-          {/* Loading state */}
-          {isLoading && !error && (
-            <div className="flex justify-center py-8">
-              <Loader />
+          {/* Loading State */}
+          {isLoading && (
+            <div className="ramadan-tafseer-loading">
+              <div className="ramadan-tafseer-loader" />
+              <p className="ramadan-tafseer-loading-text">Loading Tafseer albums...</p>
             </div>
           )}
 
-          {/* Load more button - only show if there are no active filters */}
-          {!isLoading &&
-            !error &&
-            hasMore &&
-            !debouncedSearch &&
-            selectedLanguage === "all" && (
-              <div className="flex justify-center mt-4 mb-8">
-                <button
-                  onClick={loadMore}
-                  className="px-6 py-2 bg-primary text-white rounded-full hover:bg-opacity-90 transition-colors"
-                >
-                  Load More
-                </button>
-              </div>
-            )}
-        </div>
+          {/* Load More */}
+          {!isLoading && !error && hasMore && !debouncedSearch && selectedLanguage === "all" && (
+            <div className="ramadan-tafseer-load-more">
+              <button onClick={loadMore} className="ramadan-tafseer-load-more-btn">
+                Load More Albums
+              </button>
+            </div>
+          )}
+        </main>
       </div>
     </div>
   );
 };
+
+export default RamadanYearTafseer;

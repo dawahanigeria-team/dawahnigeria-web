@@ -1,7 +1,7 @@
 import { useQueries } from "@tanstack/react-query";
 import { landingPageApis } from "../../services";
 
-export const useLandingPageHook = (id, page, setisrecent, setcurPlay) => {
+export const useLandingPageHook = (id, page) => {
   return useQueries({
     queries: [
       {
@@ -35,9 +35,8 @@ export const useLandingPageHook = (id, page, setisrecent, setcurPlay) => {
         },
       },
       {
-        queryKey: ["recentlyviewed"],
-        queryFn: () =>
-          landingPageApis.getRecentlyViewed(id, page, setisrecent, setcurPlay),
+        queryKey: ["recentlyviewed", id],
+        queryFn: () => landingPageApis.getRecentlyViewed(id, page),
         retry: 2,
         retryDelay: 1000,
         staleTime: 5 * 60 * 1000, // 5 minutes

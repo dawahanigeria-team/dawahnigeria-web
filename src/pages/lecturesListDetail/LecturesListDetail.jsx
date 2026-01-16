@@ -166,17 +166,20 @@ const LecturesListDetail = () => {
 
       {Array.isArray(querieddata) && (
         <div className="leclistdet_wrapper">
-          {
-            <img
-              ref={leclistdet}
-              id="hero"
-              className={`${
-                theme === "dark" ? "leclistdet_hero" : "leclistdet_hero_light"
-              }`}
-              src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
-              alt="audiohero"
-            />
-          }
+          {/* Geometric Background Pattern */}
+          <div className="album-detail-geometric-bg" aria-hidden="true" />
+          
+          {/* Hero Background */}
+          <img
+            ref={leclistdet}
+            id="hero"
+            className={`${
+              theme === "dark" ? "leclistdet_hero" : "leclistdet_hero_light"
+            }`}
+            src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
+            alt=""
+            aria-hidden="true"
+          />
 
           <div className="leclistdet_container">
             {/* ------------------------------Desktop------ Bread Crumbs -------------------------------------- */}
@@ -357,27 +360,21 @@ const LecturesListDetail = () => {
                     alt=""
                   />
                 </span>
-                <p className="leclistdet_head_right_head text-foreground">
-                  {/*  lectureTitleExtractor(querieddata[0]?.title, 2) */}
-                  {querieddata[0]?.title || "Unknown"}
-                </p>
 
                 <div className="mob_like">
                   <div className="leclistdet_head_mob_head">
-                    {lectureTitleExtractor(querieddata[0]?.title, 2)}
+                    {querieddata[0]?.title || "Unknown"}
                   </div>
                   <div className="rp_img_name">
                     <span className="likeys_img">
                       <img
                         className="likeys_img_sz"
-                        ref={leclistdet}
-                        id="hero"
-                        src={querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
+                        src={albumlectures?.[0]?.rp_image || querieddata[0]?.img || IMAGE_PLACEHOLDERS.lecture}
                         alt=""
                       />
                     </span>
                     <span className="likeys_text">
-                      {querieddata[0]?.categories}
+                      {querieddata[0]?.rp_name || querieddata[0]?.categories}
                     </span>
                   </div>
                 </div>

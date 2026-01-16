@@ -1,0 +1,17 @@
+// Centralized breakpoint definitions for consistent responsive design
+// Import this file in SCSS files that need responsive breakpoints
+
+$mobile-breakpoint: 615px;
+
+// Mixins for easy media query usage
+@mixin mobile {
+  @media screen and (max-width: $mobile-breakpoint) {
+    @content;
+  }
+}
+
+@mixin mobile-up {
+  @media screen and (min-width: $mobile-breakpoint) {
+    @content;
+  }
+}

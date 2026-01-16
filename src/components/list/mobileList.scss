@@ -1,21 +1,204 @@
+// ============================================
+// MOBILE LIST - WORLD-CLASS DESIGN
+// Consistent with Album Detail page aesthetic
+// ============================================
+
+// Design System Variables
+$font-body: 'IBM Plex Sans', sans-serif;
+$primary: #0D6170;
+$primary-light: #5eafc1;
+$accent-gold: #D4AF37;
+$text-primary-light: #1a1a1a;
+$text-secondary-light: #666666;
+$text-primary-dark: #f5f5f5;
+$text-secondary-dark: #a0a0a0;
+
+// Playing indicator animation
+@keyframes soundWave {
+  0%, 100% { height: 4px; }
+  50% { height: 12px; }
+}
+
 .mobilelist_wrapper {
   width: 100%;
-  height: 100%;
-  padding: 2%;
-  font-size: 14px;
- 
-  font-family: "Poppins";
+  padding: 0.75rem 0;
+  font-family: $font-body;
   position: relative;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  &:active {
+    background: rgba($primary, 0.05);
+
+    .dark & {
+      background: rgba($primary-light, 0.08);
+    }
+  }
+
+  // Currently playing state
+  &.is-playing {
+    background: rgba($primary, 0.06);
+    border-left: 3px solid $accent-gold;
+    padding-left: calc(0.75rem - 3px);
+    border-radius: 0 12px 12px 0;
+
+    .dark & {
+      background: rgba($primary-light, 0.08);
+    }
+
+    .lecture-title {
+      color: $primary !important;
+
+      .dark & {
+        color: $primary-light !important;
+      }
+    }
+  }
 
   .mobiletd {
     width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
 
-    .lecture {
-      margin-bottom: 3px;
+    // Lecture Image
+    .lecture-image {
+      position: relative;
+      width: 56px;
+      height: 56px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+      .dark & {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      .lecture-image-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+
+      // Playing indicator overlay
+      .playing-indicator {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 20px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 2px;
+        padding-bottom: 4px;
+
+        span {
+          width: 3px;
+          height: 4px;
+          background: $accent-gold;
+          border-radius: 2px;
+          animation: soundWave 0.6s ease-in-out infinite;
+
+          &:nth-child(1) { animation-delay: 0s; }
+          &:nth-child(2) { animation-delay: 0.2s; }
+          &:nth-child(3) { animation-delay: 0.4s; }
+        }
+      }
     }
+
+    // Lecture Info
+    .lecture-info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+
+      .lecture-title {
+        font-family: $font-body;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.4;
+        color: $text-primary-light;
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        transition: color 0.2s ease;
+
+        .dark & {
+          color: $text-primary-dark;
+        }
+      }
+
+      .lecture-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        .lecturer-name {
+          font-family: $font-body;
+          font-size: 12px;
+          font-weight: 400;
+          color: $text-secondary-light;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 150px;
+
+          .dark & {
+            color: $text-secondary-dark;
+          }
+        }
+
+        .lecture-duration {
+          font-family: $font-body;
+          font-size: 11px;
+          font-weight: 500;
+          color: $primary;
+          background: rgba($primary, 0.1);
+          padding: 0.125rem 0.5rem;
+          border-radius: 10px;
+          white-space: nowrap;
+
+          .dark & {
+            color: $primary-light;
+            background: rgba($primary-light, 0.15);
+          }
+        }
+      }
+    }
+
+    // Legacy classes for backwards compatibility
+    .lecture {
+      font-family: $font-body;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.4;
+      color: $text-primary-light;
+      margin-bottom: 0;
+
+      .dark & {
+        color: $text-primary-dark;
+      }
+    }
+
     .lecturer {
-     
+      font-family: $font-body;
       font-size: 12px;
+      font-weight: 400;
+      color: $text-secondary-light;
+      margin: 0;
+
+      .dark & {
+        color: $text-secondary-dark;
+      }
     }
   }
 }

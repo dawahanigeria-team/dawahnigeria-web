@@ -38,18 +38,11 @@ const LecturerDetail = () => {
   const observeEl = useRef();
   const lecdet = useRef();
   const [isVisible, setIsVisible] = useState(false);
-  const [choice, setChoice] = useState("Audio");
   const [isShare, setisShare] = useState(false);
-  const [count1, setCount1] = useState(0);
-  const [count2, setCount2] = useState(0);
-  const [count3, setCount3] = useState(0);
   const { theme } = useSelector((state) => state.user);
 
   const queryParam = { id };
 
-  const [, setImg] = useState(
-    "https://backend.dawahnigeria.com/sites/default/files/600-800/700.jpg"
-  );
 
   const { querieddata, refetch } = useQueryGetRequest(
     "lecturer-detail",
@@ -384,10 +377,7 @@ const LecturerDetail = () => {
 
               <div className="mobile_lecdet_tab">
                 <div
-                  onClick={() => {
-                    setTab(1);
-                    setChoice("Audio");
-                  }}
+                  onClick={() => setTab(1)}
                   className="mobile_lecdet_tab_song"
                 >
                   <p
@@ -410,10 +400,7 @@ const LecturerDetail = () => {
                   </p>
                 </div>
                 <div
-                  onClick={() => {
-                    setTab(2);
-                    setChoice("Albums");
-                  }}
+                  onClick={() => setTab(2)}
                   className="mobile_lecdet_tab_album"
                 >
                   <p
@@ -436,10 +423,7 @@ const LecturerDetail = () => {
                   </p>
                 </div>
                 <div
-                  onClick={() => {
-                    setTab(3);
-                    setChoice("Playlist");
-                  }}
+                  onClick={() => setTab(3)}
                   className="mobile_lecdet_tab_playlist"
                 >
                   <p
@@ -465,45 +449,26 @@ const LecturerDetail = () => {
                 
               </div>
 
-              <div className="set_choice text-foreground">
-                <span>{choice}</span>
-                <span className="nums text-color">
-                  {tab === 1 ? `(${count1})` : false}
-                </span>
-                <span className="nums text-color ">
-                  {tab === 2 ? `(${count2})` : false}
-                </span>
-                <span className=" text-color nums">
-                  {tab === 3 ? `(${count3})` : false}
-                </span>
-              </div>
-
               <div className="mobile_color_vid bg-secondary">
                 {tab === 1 && (
                   <LecturerSongs
                     rpname={querieddata[0]?.name}
                     id={id}
-                    setCount1={setCount1}
-                    count1={count1}
-                    setImg={setImg}
+                    totalData={querieddata[0]?.total_audio}
                   />
                 )}
                 {tab === 2 && (
                   <LecturerAlbum
                     rpname={querieddata[0]?.name}
                     id={id}
-                    setCount2={setCount2}
-                    count2={count2}
-                    setImg={setImg}
+                    totalData={querieddata[0]?.total_albums}
                   />
                 )}
                 {tab === 3 && (
                   <LecturerPlaylist
                     rpname={querieddata[0]?.name}
                     id={id}
-                    setCount3={setCount3}
-                    count3={count3}
-                    setImg={setImg}
+                    totalData={querieddata[0]?.total_playlist}
                   />
                 )}
 
