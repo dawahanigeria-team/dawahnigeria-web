@@ -110,7 +110,7 @@ const AudioDetail = () => {
     }
   }, []);
 
-  const { refetch } = useAudioHook(id);
+  const { refetch, isLoading: isLoadingLecture } = useAudioHook(id);
 
   const handlePlay = () => {
     dispatch(getaudioId(id));
@@ -550,13 +550,13 @@ const AudioDetail = () => {
               }}
               className="audiodetail_breadcrumb_first"
             >
-              {audioData?.navName && audioData.navName !== "Home" 
-                ? `← Back to ${audioData.navName}` 
-                : audioData?.navName === "Home" 
-                  ? "← Back to Home" 
+              {audioData?.navName && audioData.navName !== "Home"
+                ? `← Back to ${audioData.navName}`
+                : audioData?.navName === "Home"
+                  ? "← Back to Home"
                   : "← Back"}
             </p>
-            {audioData?.navName && (
+            {audioData?.navName && !isLoadingLecture && (
               <p className="audiodetail_breadcrumb_second text-foreground">
                 {currentAudioInfo?.title?.split("-")[0] ||
                   currentAudioInfo?.Title ||
@@ -564,6 +564,30 @@ const AudioDetail = () => {
               </p>
             )}
           </div>
+
+          {/* Loading skeleton while fetching new lecture data */}
+          {isLoadingLecture || !currentAudioInfo ? (
+            <div className="audiodetail_head_wrap">
+              <div className="audiodetail_head_left">
+                <div className="audiodetail_head_left_img bg-gray-300 dark:bg-gray-700 animate-pulse" />
+              </div>
+              <div className="audiodetail_head_right">
+                <div className="h-8 w-3/4 bg-gray-300 dark:bg-gray-700 animate-pulse rounded mb-4" />
+                <div className="audiodetail_head_right_text">
+                  <div className="h-4 w-1/2 bg-gray-300 dark:bg-gray-700 animate-pulse rounded mb-2" />
+                  <div className="h-4 w-1/3 bg-gray-300 dark:bg-gray-700 animate-pulse rounded" />
+                </div>
+                <div className="audiodetail_head_right_actions_wrap mt-4">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <div key={i} className="flex flex-col items-center">
+                      <div className="w-12 h-12 bg-gray-300 dark:bg-gray-700 animate-pulse rounded-full" />
+                      <div className="h-3 w-10 bg-gray-300 dark:bg-gray-700 animate-pulse rounded mt-2" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
           <div className="audiodetail_head_wrap">
             <div className="audiodetail_head_left">
               <img
@@ -678,9 +702,12 @@ const AudioDetail = () => {
               </div>
             </div>
           </div>
+          )}
           {/* -------------------------- Audio Detial play ------------------- */}
 
           {/* -------------------------- End ------------------- */}
+          {!isLoadingLecture && currentAudioInfo && (
+          <>
           <div className="audiodetail_info">
             <div className="audiodetail_info_wrap">
               <div className="audiodetail_info_name text-color dark:text-muted">
@@ -714,7 +741,7 @@ const AudioDetail = () => {
             >
               {currentAudioInfo?.description || "unknown"}
             </p>
-            {/* 
+            {/*
            ${
                 more
                   ? "audiodetail_summary_body_open "
@@ -726,6 +753,8 @@ const AudioDetail = () => {
               <FiChevronsRight className="audiodetail_more_icon" />
             </div>*/}
           </div>
+          </>
+          )}
 
           {/* // ----------------------- audiores --------------------- // */}
           <div className="audiores_wrapper">
