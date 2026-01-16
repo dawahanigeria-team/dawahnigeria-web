@@ -110,7 +110,12 @@ const AudioDetail = () => {
     }
   }, []);
 
-  const { refetch, isLoading: isLoadingLecture } = useAudioHook(id);
+  const { refetch, isLoading: isHookLoading } = useAudioHook(id);
+
+  // CRITICAL: Check if displayed data matches the URL
+  // This prevents showing stale data from redux-persist when navigating to a new lecture
+  const dataMatchesUrl = currentAudioInfo?.nid && String(currentAudioInfo.nid) === String(id);
+  const isLoadingLecture = isHookLoading || !dataMatchesUrl;
 
   const handlePlay = () => {
     dispatch(getaudioId(id));
@@ -539,7 +544,7 @@ const AudioDetail = () => {
           className={`${
             theme === "dark" ? "audiodetail_hero" : "audiodetail_hero_light"
           }`}
-          src={currentAudioInfo?.img || IMAGE_PLACEHOLDERS.lecture}
+          src={dataMatchesUrl ? (currentAudioInfo?.img || IMAGE_PLACEHOLDERS.lecture) : IMAGE_PLACEHOLDERS.lecture}
           alt="audiohero"
         />
         <div className="audiodetail_container">
@@ -758,25 +763,39 @@ const AudioDetail = () => {
 
           {/* // ----------------------- audiores --------------------- // */}
           <div className="audiores_wrapper">
-            <div className="audiores_image_wrap">
-              <img
-                className="audiores_image"
-                src={currentAudioInfo?.img || IMAGE_PLACEHOLDERS.lecture}
-                alt="head"
-              />
-            </div>
-            <div className="audiores_text text-color">
-              <p className="audiores_text1">
-                {currentAudioInfo?.title ||
-                  currentAudioInfo?.Title ||
-                  "Unknown"}
-              </p>
-              <p className="audiores_text2">
-                {currentAudioInfo?.cats ||
-                  currentAudioInfo?.categories ||
-                  "unknow"}
-              </p>
-            </div>
+            {isLoadingLecture ? (
+              <>
+                <div className="audiores_image_wrap">
+                  <div className="audiores_image bg-gray-300 dark:bg-gray-700 animate-pulse" />
+                </div>
+                <div className="audiores_text text-color">
+                  <div className="h-4 w-32 bg-gray-300 dark:bg-gray-700 animate-pulse rounded mb-2" />
+                  <div className="h-3 w-24 bg-gray-300 dark:bg-gray-700 animate-pulse rounded" />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="audiores_image_wrap">
+                  <img
+                    className="audiores_image"
+                    src={currentAudioInfo?.img || IMAGE_PLACEHOLDERS.lecture}
+                    alt="head"
+                  />
+                </div>
+                <div className="audiores_text text-color">
+                  <p className="audiores_text1">
+                    {currentAudioInfo?.title ||
+                      currentAudioInfo?.Title ||
+                      "Unknown"}
+                  </p>
+                  <p className="audiores_text2">
+                    {currentAudioInfo?.cats ||
+                      currentAudioInfo?.categories ||
+                      "unknow"}
+                  </p>
+                </div>
+              </>
+            )}
             {/**to be adjusted */}
             <div className="audiores_scroll_wrap">
               <p className="audiores_scroll_start text-color">
@@ -971,6 +990,7 @@ const AudioDetail = () => {
             </div>
 
             {/**cnbfmg */}
+            {!isLoadingLecture && currentAudioInfo && (
             <div className="mobile text-color">
               <div className="audiodetail_info_mob">
                 <p className="audiodetail_info_mob_head text-color-foreground">
@@ -1011,6 +1031,7 @@ const AudioDetail = () => {
                 {/**data={data}  data={data}*/}
               </div>
             </div>
+            )}
           </div>
         </div>
 
