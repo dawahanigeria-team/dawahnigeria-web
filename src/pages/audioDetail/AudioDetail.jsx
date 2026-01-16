@@ -398,7 +398,11 @@ const AudioDetail = () => {
       : null
   );
 
-  const similarAudioList = resolvedAudioInfo ? similarLecture?.audio ?? [] : [];
+  const similarAudioList = resolvedAudioInfo
+    ? (similarLecture?.audio ?? []).filter(
+      (item) => item?.nid != null || item?.lecid != null || item?.id != null
+    )
+    : [];
 
   const shareAudio = () => {
     setisShare(!isShare);
@@ -1087,32 +1091,37 @@ const AudioDetail = () => {
                     Title,
                     rpname,
                     nid,
+                    lecid,
+                    id: itemId,
                     audio,
                     mp3_title,
                     views,
                   },
                   idx
                 ) => {
+                  const lectureId = nid ?? lecid ?? itemId;
                   return (
                     <div
                       className="similarWidget_album_item"
                       onClick={() => {
-                        navigate(`${LECTURE}${nid}`);
+                        if (!lectureId) return;
+
+                        navigate(`${LECTURE}${lectureId}`);
 
                         // setendpUrl(similarAudioUrl);
                         dispatch(getPack(null));
                         dispatch(getPage(1));
-                        dispatch(getaudioId(nid));
+                        dispatch(getaudioId(lectureId));
                         dispatch(getCount(idx));
                         dispatch(getPack(similarAudioList));
 
                         setCurUser(currentUser);
                       }}
-                      key={idx + 1}
+                      key={lectureId ?? idx + 1}
                     >
                       <LandingWidget
                         key={idx}
-                        nid={nid}
+                        nid={lectureId}
                         categories={mp3_title || categories || cats}
                         img={img || lec_img}
                         views={views}
