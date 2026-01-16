@@ -126,7 +126,6 @@ const AudioDetail = () => {
 
   // CRITICAL: Check if displayed data matches the URL
   // This prevents showing stale data from redux-persist when navigating to a new lecture
-  const dataMatchesUrl = resolvedAudioInfo?.nid && String(resolvedAudioInfo.nid) === String(id);
   const isLoadingLecture = isHookLoading || !resolvedAudioInfo;
 
   const handlePlay = () => {
@@ -558,7 +557,7 @@ const AudioDetail = () => {
           className={`${
             theme === "dark" ? "audiodetail_hero" : "audiodetail_hero_light"
           }`}
-          src={dataMatchesUrl ? (resolvedAudioInfo?.img || IMAGE_PLACEHOLDERS.lecture) : IMAGE_PLACEHOLDERS.lecture}
+          src={resolvedAudioInfo ? (resolvedAudioInfo?.img || IMAGE_PLACEHOLDERS.lecture) : IMAGE_PLACEHOLDERS.lecture}
           alt="audiohero"
         />
         <div className="audiodetail_container">
