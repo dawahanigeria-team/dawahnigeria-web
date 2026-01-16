@@ -2,13 +2,12 @@ import { useMemo, useState } from "react";
 import downbig from "../../assets/svg/boom-download.svg";
 import { formatNumber } from "../UI/formatter";
 import { Modal } from "../modal/Modal.component";
-import { useDownloadLecture } from "../../hooks";
+import { useDownloadLecture, useLectureById } from "../../hooks";
 import { FaCheckCircle } from "react-icons/fa";
 import Loader from "../UI/loader/loader";
 import { DownloadIcon } from "../svgcomponent/svgComponent";
 import toast from "../../utils/conditionalToast"; // SSR-safe toast utility
 import { trackDownload } from "../../utils/posthog";
-import { useSelector } from "react-redux";
 
 export const AudioDownloadModal = ({
   downloads,
@@ -20,7 +19,7 @@ export const AudioDownloadModal = ({
   const [selectedFormat, setSelectedFormat] = useState("mp3");
 
   const { data, isLoading, download } = useDownloadLecture(nid, showModal);
-  const { currentAudioInfo } = useSelector((state) => state.user);
+  const { lecture: currentLecture } = useLectureById(nid);
 
   const selectedUrlKey = selectedFormat === "amr" ? "amr_url" : "mp3_url";
   const fileUrl = data?.[selectedUrlKey];
@@ -33,7 +32,7 @@ export const AudioDownloadModal = ({
     }
 
     // Track download event
-    const lectureData = currentAudioInfo || data;
+    const lectureData = currentLecture || data;
     if (lectureData) {
       trackDownload({
         ...lectureData,

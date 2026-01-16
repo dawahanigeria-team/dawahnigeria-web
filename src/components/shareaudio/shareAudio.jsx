@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLectureById } from "../../hooks";
 import { shareLink, shareAudio, sharingChanels } from "./utils";
 import { trackShare } from "../../utils/posthog";
 
 const ShareAudio = ({ isShare, setisShare, nid, type }) => {
   const dispatch = useDispatch();
-  const { currentUser, currentAudioInfo } = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.user);
+  const shouldFetchLecture = Boolean(nid) && (!type || type === "audio" || type === "lecture");
+  const { lecture: currentLecture } = useLectureById(shouldFetchLecture ? nid : null);
   const [link, setLink] = useState(true);
 
   ///**** share audio ******** */
@@ -19,24 +22,24 @@ const ShareAudio = ({ isShare, setisShare, nid, type }) => {
     shareAudio(item.key, item.link, encodeURIComponent(link));
     dispatch(shareLink(nid, currentUser?.id, type));
 
-    // Track share event - use currentAudioInfo if available, otherwise fallback to props
-    const shareContent = currentAudioInfo
+    // Track share event - use lecture data if available, otherwise fallback to props
+    const shareContent = currentLecture
       ? {
-          ...currentAudioInfo,
-          type: type || currentAudioInfo.type || 'lecture',
-          nid: nid || currentAudioInfo.nid || currentAudioInfo.id,
+        ...currentLecture,
+        type: type || currentLecture.type || 'lecture',
+        nid: nid || currentLecture.nid || currentLecture.id,
         }
       : {
-          // Fallback when currentAudioInfo is not available
+        // Fallback when lecture data is not available
           nid: nid,
           id: nid,
           type: type || 'lecture',
         };
 
-    // Warn in development if currentAudioInfo is missing
-    if (!currentAudioInfo && process.env.NODE_ENV === 'development') {
+    // Warn in development if lecture data is missing
+    if (!currentLecture && process.env.NODE_ENV === 'development') {
       console.warn(
-        '⚠️ ShareAudio: currentAudioInfo not available in Redux state. Using fallback data for tracking.',
+        '⚠️ ShareAudio: lecture data not available. Using fallback data for tracking.',
         { nid, type }
       );
     }

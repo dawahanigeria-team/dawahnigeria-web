@@ -50,12 +50,6 @@ const getType = (data) => {
     payload: data,
   };
 };
-const getcurrentAudioInfo = (data) => {
-  return {
-    type: type.GET_CURRENT_PLAY,
-    payload: data,
-  };
-};
 
 const getaudioData = (data) => {
   return {
@@ -342,7 +336,6 @@ export {
   setPlaying,
   logout,
   getType,
-  getcurrentAudioInfo,
   getaudioId,
   updateAudioShareCount,
   getCount,

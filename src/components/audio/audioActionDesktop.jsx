@@ -25,7 +25,6 @@ import {
   getValue,
   setPlaying,
   getPage,
-  getcurrentAudioInfo,
   getLecid,
   showaddPlaylist,
   getRepeat,
@@ -137,7 +136,6 @@ const AudioActionDesktop = () => {
       .then((res) => {
         setcurrentaudio(res.data[0]);
 
-        dispatch(getcurrentAudioInfo(res.data[0]));
         setLoading(false);
 
         if (initial) {
