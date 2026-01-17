@@ -64,7 +64,6 @@ const AudioDetail = () => {
     curDuration,
     value,
     audioData,
-    currentAudioInfo,
     page,
     playing,
     count,
@@ -104,27 +103,44 @@ const AudioDetail = () => {
   const [lectureData, setLectureData] = useState(null);
 
   useEffect(() => {
-    // Check for server-side data
-    if (typeof window !== 'undefined' && window.__LECTURE_DATA__) {
-      setLectureData(window.__LECTURE_DATA__);
-    }
-  }, []);
+    // Check for server-side data and ensure it matches the current lecture ID
+    if (typeof window === 'undefined') return;
 
-  const { refetch } = useAudioHook(id);
+    const serverData = window.__LECTURE_DATA__;
+    const serverId = serverData?.nid ?? serverData?.id ?? serverData?.lecid;
+
+    if (serverData && String(serverId) === String(id)) {
+      setLectureData(serverData);
+    } else {
+      setLectureData(null);
+    }
+  }, [id]);
+
+  const { refetch, isLoading: isHookLoading, data: audioQueryData } = useAudioHook(id);
+
+  const fetchedAudioInfo = Array.isArray(audioQueryData) ? audioQueryData[0] : null;
+  const resolvedAudioInfo =
+    fetchedAudioInfo && String(fetchedAudioInfo?.nid) === String(id)
+      ? fetchedAudioInfo
+      : null;
+
+  // CRITICAL: Check if displayed data matches the URL
+  // This prevents showing stale data from redux-persist when navigating to a new lecture
+  const isLoadingLecture = isHookLoading || !resolvedAudioInfo;
 
   const handlePlay = () => {
     dispatch(getaudioId(id));
     setinitial(false);
     if (playing) {
       // Track pause event
-      if (currentAudioInfo) {
-        trackLecturePause(currentAudioInfo, audioRef.current?.currentTime || 0);
+      if (resolvedAudioInfo) {
+        trackLecturePause(resolvedAudioInfo, audioRef.current?.currentTime || 0);
       }
       dispatch(setPlaying(!playing));
     } else {
       // Track play event
-      if (currentAudioInfo) {
-        trackLecturePlay(currentAudioInfo);
+      if (resolvedAudioInfo) {
+        trackLecturePlay(resolvedAudioInfo);
       }
       dispatch(setPlaying(!playing));
     }
@@ -217,16 +233,16 @@ const AudioDetail = () => {
     }
   }
   useEffect(() => {
-    fetchFavorites(addFav, currentAudioInfo?.nid);
-  }, [addFav, currentAudioInfo?.nid]);
+    fetchFavorites(addFav, resolvedAudioInfo?.nid);
+  }, [addFav, resolvedAudioInfo?.nid]);
 
   // Track lecture view - only once per unique lecture ID
   useEffect(() => {
-    if (currentAudioInfo?.nid && currentAudioInfo.nid !== lastTrackedLectureId.current) {
-      trackLectureView(currentAudioInfo);
-      lastTrackedLectureId.current = currentAudioInfo.nid;
+    if (resolvedAudioInfo?.nid && resolvedAudioInfo.nid !== lastTrackedLectureId.current) {
+      trackLectureView(resolvedAudioInfo);
+      lastTrackedLectureId.current = resolvedAudioInfo.nid;
     }
-  }, [currentAudioInfo?.nid, currentAudioInfo]);
+  }, [resolvedAudioInfo?.nid, resolvedAudioInfo]);
 
   const addToFav = async (e, lecid) => {
     /// add to favorites
@@ -256,14 +272,14 @@ const AudioDetail = () => {
         if (!getFavs?.includes(parseInt(lecid))) {
           setsumofFav(sumofFav + 1);
           // Track favorite added
-          if (currentAudioInfo) {
-            trackFavorite(currentAudioInfo, 'add');
+          if (resolvedAudioInfo) {
+            trackFavorite(resolvedAudioInfo, 'add');
           }
         } else {
           setsumofFav(sumofFav - 1);
           // Track favorite removed
-          if (currentAudioInfo) {
-            trackFavorite(currentAudioInfo, 'remove');
+          if (resolvedAudioInfo) {
+            trackFavorite(resolvedAudioInfo, 'remove');
           }
         }
       })
@@ -280,7 +296,7 @@ const AudioDetail = () => {
 
     axios
       .get(
-        `/commentApi.php?user_id=${curUser?.id}&item_id=${currentAudioInfo?.nid}&type=audio`,
+        `/commentApi.php?user_id=${curUser?.id}&item_id=${resolvedAudioInfo?.nid}&type=audio`,
         {
           headers: {
             Accept: "application/json",
@@ -293,7 +309,7 @@ const AudioDetail = () => {
         setaudioComment(res.data.reverse());
       })
       .catch((err) => {});
-  }, [currentAudioInfo?.nid]);
+  }, [resolvedAudioInfo?.nid]);
 
   const postComment = () => {
     if (!curUser?.id) {
@@ -306,7 +322,7 @@ const AudioDetail = () => {
 
     const payload = {
       user_id: curUser?.id,
-      item_id: currentAudioInfo?.nid,
+      item_id: resolvedAudioInfo?.nid,
       type: "audio",
       comment: comment,
     };
@@ -377,10 +393,16 @@ const AudioDetail = () => {
 
   const { data: similarLecture, isLoading } = useRequest(
     "get",
-    `/genre_api.php?cat_id=${currentAudioInfo?.cat_id}`
+    resolvedAudioInfo?.cat_id
+      ? `/genre_api.php?cat_id=${resolvedAudioInfo?.cat_id}`
+      : null
   );
 
-  const similarAudioList = similarLecture?.audio ?? [];
+  const similarAudioList = resolvedAudioInfo
+    ? (similarLecture?.audio ?? []).filter(
+      (item) => item?.nid != null || item?.lecid != null || item?.id != null
+    )
+    : [];
 
   const shareAudio = () => {
     setisShare(!isShare);
@@ -390,8 +412,8 @@ const AudioDetail = () => {
   ////*********************************************************** */
   // Enhanced SEO data generation for lecture pages
   const generateSEOData = () => {
-    // Priority: lectureData (SSR) > currentAudioInfo (client) > defaults
-    const data = lectureData || currentAudioInfo;
+    // Priority: lectureData (SSR) > resolvedAudioInfo (client) > defaults
+    const data = lectureData || resolvedAudioInfo;
     
     if (!data) {
       return {
@@ -445,13 +467,13 @@ const AudioDetail = () => {
   return (
     <Container>
       <HeadMeta
-        title={seoData.title || `${currentAudioInfo?.title?.split("-")[0] || currentAudioInfo?.Title || "Audio"} on Dawah Nigeria - Home of islamic resources`}
+        title={seoData.title || `${resolvedAudioInfo?.title?.split("-")[0] || resolvedAudioInfo?.Title || "Audio"} on Dawah Nigeria - Home of islamic resources`}
         description={seoData.description}
         ogImage={seoData.ogImage}
       />
       
       {/* Enhanced meta tags for better SEO */}
-      {(lectureData || currentAudioInfo) && (
+      {(lectureData || resolvedAudioInfo) && (
         <>
           <meta name="keywords" content={seoData.keywords} />
           <meta name="author" content={seoData.lecturer} />
@@ -481,7 +503,7 @@ const AudioDetail = () => {
           {seoData.publishDate && <meta property="article:published_time" content={seoData.publishDate} />}
           
           {/* Audio specific tags */}
-          <meta name="audio" content={(lectureData || currentAudioInfo).audio || ''} />
+          <meta name="audio" content={(lectureData || resolvedAudioInfo).audio || ''} />
           {seoData.duration && <meta name="duration" content={seoData.duration} />}
           
           <link rel="canonical" href={`${window.location.origin}/dawahcast/l/${id}`} />
@@ -489,12 +511,12 @@ const AudioDetail = () => {
       )}
       
       {/* Enhanced JSON-LD structured data for rich snippets */}
-      {(lectureData || currentAudioInfo) && (
+      {(lectureData || resolvedAudioInfo) && (
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "AudioObject",
-            "name": (lectureData || currentAudioInfo).title || (lectureData || currentAudioInfo).Title,
+            "name": (lectureData || resolvedAudioInfo).title || (lectureData || resolvedAudioInfo).Title,
             "description": seoData.description,
             "creator": {
               "@type": "Person",
@@ -510,7 +532,7 @@ const AudioDetail = () => {
                 "url": "https://dawahnigeria.com/logo.png"
               }
             },
-            "contentUrl": (lectureData || currentAudioInfo).audio,
+            "contentUrl": (lectureData || resolvedAudioInfo).audio,
             "thumbnailUrl": seoData.ogImage,
             "uploadDate": seoData.publishDate,
             "datePublished": seoData.publishDate,
@@ -539,7 +561,7 @@ const AudioDetail = () => {
           className={`${
             theme === "dark" ? "audiodetail_hero" : "audiodetail_hero_light"
           }`}
-          src={currentAudioInfo?.img || IMAGE_PLACEHOLDERS.lecture}
+          src={resolvedAudioInfo ? (resolvedAudioInfo?.img || IMAGE_PLACEHOLDERS.lecture) : IMAGE_PLACEHOLDERS.lecture}
           alt="audiohero"
         />
         <div className="audiodetail_container">
@@ -550,45 +572,69 @@ const AudioDetail = () => {
               }}
               className="audiodetail_breadcrumb_first"
             >
-              {audioData?.navName && audioData.navName !== "Home" 
-                ? `← Back to ${audioData.navName}` 
-                : audioData?.navName === "Home" 
-                  ? "← Back to Home" 
+              {audioData?.navName && audioData.navName !== "Home"
+                ? `← Back to ${audioData.navName}`
+                : audioData?.navName === "Home"
+                  ? "← Back to Home"
                   : "← Back"}
             </p>
-            {audioData?.navName && (
+            {audioData?.navName && !isLoadingLecture && (
               <p className="audiodetail_breadcrumb_second text-foreground">
-                {currentAudioInfo?.title?.split("-")[0] ||
-                  currentAudioInfo?.Title ||
+                {resolvedAudioInfo?.title?.split("-")[0] ||
+                  resolvedAudioInfo?.Title ||
                   "Unknown"}
               </p>
             )}
           </div>
+
+          {/* Loading skeleton while fetching new lecture data */}
+          {isLoadingLecture || !resolvedAudioInfo ? (
+            <div className="audiodetail_head_wrap">
+              <div className="audiodetail_head_left">
+                <div className="audiodetail_head_left_img bg-gray-300 dark:bg-gray-700 animate-pulse" />
+              </div>
+              <div className="audiodetail_head_right">
+                <div className="h-8 w-3/4 bg-gray-300 dark:bg-gray-700 animate-pulse rounded mb-4" />
+                <div className="audiodetail_head_right_text">
+                  <div className="h-4 w-1/2 bg-gray-300 dark:bg-gray-700 animate-pulse rounded mb-2" />
+                  <div className="h-4 w-1/3 bg-gray-300 dark:bg-gray-700 animate-pulse rounded" />
+                </div>
+                <div className="audiodetail_head_right_actions_wrap mt-4">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <div key={i} className="flex flex-col items-center">
+                      <div className="w-12 h-12 bg-gray-300 dark:bg-gray-700 animate-pulse rounded-full" />
+                      <div className="h-3 w-10 bg-gray-300 dark:bg-gray-700 animate-pulse rounded mt-2" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
           <div className="audiodetail_head_wrap">
             <div className="audiodetail_head_left">
               <img
                 className="audiodetail_head_left_img"
-                src={currentAudioInfo?.img || IMAGE_PLACEHOLDERS.lecture}
+                    src={resolvedAudioInfo?.img || IMAGE_PLACEHOLDERS.lecture}
                 alt="head"
               />
             </div>
             <div className="audiodetail_head_right">
               <p className="audiodetail_head_right_head text-foreground">
                 {(() => {
-                  const t = (currentAudioInfo?.title || currentAudioInfo?.Title || currentAudioInfo?.album_name || "").trim();
+                      const t = (resolvedAudioInfo?.title || resolvedAudioInfo?.Title || resolvedAudioInfo?.album_name || "").trim();
                   return t.length > 0 ? t : "Unknown";
                 })()}
               </p>
               <div className="audiodetail_head_right_text">
                 <p className="audiodetail_head_right_text1 text-color-foreground">
                   {(() => {
-                    const n = (currentAudioInfo?.rpname || currentAudioInfo?.album_name || "").trim();
+                        const n = (resolvedAudioInfo?.rpname || resolvedAudioInfo?.album_name || "").trim();
                     return n.length > 0 ? n : "Unknown";
                   })()}
                 </p>
                 <p className="audiodetail_head_right_text2 text-color-foreground">
-                  {currentAudioInfo?.album_name?.split("-")[0] ||
-                    currentAudioInfo?.cats ||
+                      {resolvedAudioInfo?.album_name?.split("-")[0] ||
+                        resolvedAudioInfo?.cats ||
                     "unknown"}
                 </p>
               </div>
@@ -624,7 +670,7 @@ const AudioDetail = () => {
 
                 <div>
                   <DesktopFavoriteButton
-                    favorites={currentAudioInfo?.favorites}
+                        favorites={resolvedAudioInfo?.favorites}
                     id={id}
                     type={"audio"}
                     refetch={refetch}
@@ -643,7 +689,7 @@ const AudioDetail = () => {
                   >
                     <SlShare className="text-[22px] text-color-primary" />
                     <p className="audiodetail_share_text text-color-primary">
-                      {formatNumber(currentAudioInfo?.share || 0)}
+                          {formatNumber(resolvedAudioInfo?.share || 0)}
                     </p>
                   </div>
                   <div className="dark:text-white text-center text-sm">
@@ -654,7 +700,7 @@ const AudioDetail = () => {
                   <div className="audiodetail_comment bg-gray-200  dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
                     <CommentIcon />
                     <p className="audiodetail_comment_text text-color-primary">
-                      {formatNumber(currentAudioInfo?.comment || 0)}
+                          {formatNumber(resolvedAudioInfo?.comment || 0)}
                     </p>
                   </div>
                   <div className="dark:text-white text-center text-sm">
@@ -663,8 +709,8 @@ const AudioDetail = () => {
                 </div>
                 <div>
                   <AudioDownloadModal
-                    downloads={currentAudioInfo?.downloads}
-                    nid={currentAudioInfo?.nid}
+                        downloads={resolvedAudioInfo?.downloads}
+                        nid={resolvedAudioInfo?.nid}
                     triggerInnerChild={
                       <div className="audiodetail_share bg-gray-200 dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
                         <RiDownload2Fill className="text-[25px] text-color-primary" />
@@ -678,9 +724,12 @@ const AudioDetail = () => {
               </div>
             </div>
           </div>
+          )}
           {/* -------------------------- Audio Detial play ------------------- */}
 
           {/* -------------------------- End ------------------- */}
+          {!isLoadingLecture && resolvedAudioInfo && (
+          <>
           <div className="audiodetail_info">
             <div className="audiodetail_info_wrap">
               <div className="audiodetail_info_name text-color dark:text-muted">
@@ -689,11 +738,11 @@ const AudioDetail = () => {
 
               <Link
                 to={`${GENRES}/${parseInt(
-                  currentAudioInfo?.cat_id?.toString()
+                  resolvedAudioInfo?.cat_id?.toString()
                 )}`}
                 className="audiodetail_info_value text-color dark:text-muted  hover:text-foreground dark:hover:text-[#ddff2b] hover:underline"
               >
-                {currentAudioInfo?.cats || "unknown"}
+                    {resolvedAudioInfo?.cats || "unknown"}
               </Link>
             </div>
             <div className="audiodetail_info_wrap">
@@ -701,7 +750,7 @@ const AudioDetail = () => {
                 Date of Release:{" "}
               </div>
               <div className="audiodetail_info_value text-color dark:text-muted">
-                {currentAudioInfo?.post_date?.split("-")[0] || "no date"}
+                    {resolvedAudioInfo?.post_date?.split("-")[0] || "no date"}
               </div>
             </div>
           </div>
@@ -712,9 +761,9 @@ const AudioDetail = () => {
             <p
               className={`audiodetail_summary_body audiodetail_summary_body_open text-foreground`}
             >
-              {currentAudioInfo?.description || "unknown"}
+                  {resolvedAudioInfo?.description || "unknown"}
             </p>
-            {/* 
+            {/*
            ${
                 more
                   ? "audiodetail_summary_body_open "
@@ -726,28 +775,44 @@ const AudioDetail = () => {
               <FiChevronsRight className="audiodetail_more_icon" />
             </div>*/}
           </div>
+          </>
+          )}
 
           {/* // ----------------------- audiores --------------------- // */}
           <div className="audiores_wrapper">
-            <div className="audiores_image_wrap">
-              <img
-                className="audiores_image"
-                src={currentAudioInfo?.img || IMAGE_PLACEHOLDERS.lecture}
-                alt="head"
-              />
-            </div>
-            <div className="audiores_text text-color">
-              <p className="audiores_text1">
-                {currentAudioInfo?.title ||
-                  currentAudioInfo?.Title ||
-                  "Unknown"}
-              </p>
-              <p className="audiores_text2">
-                {currentAudioInfo?.cats ||
-                  currentAudioInfo?.categories ||
-                  "unknow"}
-              </p>
-            </div>
+            {isLoadingLecture ? (
+              <>
+                <div className="audiores_image_wrap">
+                  <div className="audiores_image bg-gray-300 dark:bg-gray-700 animate-pulse" />
+                </div>
+                <div className="audiores_text text-color">
+                  <div className="h-4 w-32 bg-gray-300 dark:bg-gray-700 animate-pulse rounded mb-2" />
+                  <div className="h-3 w-24 bg-gray-300 dark:bg-gray-700 animate-pulse rounded" />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="audiores_image_wrap">
+                  <img
+                    className="audiores_image"
+                      src={resolvedAudioInfo?.img || IMAGE_PLACEHOLDERS.lecture}
+                    alt="head"
+                  />
+                </div>
+                <div className="audiores_text text-color">
+                  <p className="audiores_text1">
+                      {resolvedAudioInfo?.title ||
+                        resolvedAudioInfo?.Title ||
+                      "Unknown"}
+                  </p>
+                  <p className="audiores_text2">
+                      {resolvedAudioInfo?.cats ||
+                        resolvedAudioInfo?.categories ||
+                      "unknow"}
+                  </p>
+                </div>
+              </>
+            )}
             {/**to be adjusted */}
             <div className="audiores_scroll_wrap">
               <p className="audiores_scroll_start text-color">
@@ -780,8 +845,8 @@ const AudioDetail = () => {
             <div className="audiores_play_control_wrap">
               <div className="flex flex-col items-center justify-center">
                 <AudioDownloadModal
-                  downloads={currentAudioInfo?.downloads}
-                  nid={currentAudioInfo?.nid}
+                  downloads={resolvedAudioInfo?.downloads}
+                  nid={resolvedAudioInfo?.nid}
                   triggerInnerChild={
                     <div className="audiodetail_share bg-gray-200 dark:bg-[#ffffff17] dark:hover:bg-[#ffffff2d]">
                       <RiDownload2Fill className="text-[25px] text-color-primary" />
@@ -942,6 +1007,7 @@ const AudioDetail = () => {
             </div>
 
             {/**cnbfmg */}
+            {!isLoadingLecture && resolvedAudioInfo && (
             <div className="mobile text-color">
               <div className="audiodetail_info_mob">
                 <p className="audiodetail_info_mob_head text-color-foreground">
@@ -951,17 +1017,17 @@ const AudioDetail = () => {
                   <p className="audiodetail_info_name_mob">Genre: </p>
                   <Link
                     to={`${GENRES}/${parseInt(
-                      currentAudioInfo?.cat_id?.toString()
+                      resolvedAudioInfo?.cat_id?.toString()
                     )}`}
                     className="audiodetail_info_value_mob dark:hover:text-[#ddff2b] hover:underline"
                   >
-                    {currentAudioInfo?.cats || "unknown"}
+                      {resolvedAudioInfo?.cats || "unknown"}
                   </Link>
                 </div>
                 <div className="audiodetail_info_wrap_mob">
                   <p className="audiodetail_info_name_mob">Date of Release: </p>
                   <p className="audiodetail_info_value_mob">
-                    {currentAudioInfo?.post_date?.split("-")[0] || "no date"}
+                      {resolvedAudioInfo?.post_date?.split("-")[0] || "no date"}
                   </p>
                 </div>
               </div>
@@ -972,7 +1038,7 @@ const AudioDetail = () => {
                 <div
                   className={`audiodetail_summary_body audiodetail_summary_body_open_mob`}
                 >
-                  {currentAudioInfo?.description || "unknown"}
+                    {resolvedAudioInfo?.description || "unknown"}
                 </div>
               </div>
 
@@ -982,6 +1048,7 @@ const AudioDetail = () => {
                 {/**data={data}  data={data}*/}
               </div>
             </div>
+            )}
           </div>
         </div>
 
@@ -992,7 +1059,11 @@ const AudioDetail = () => {
             </p>
 
             <Link
-              to={`${GENRES}/${parseInt(currentAudioInfo?.cat_id?.toString())}`}
+              to={
+                resolvedAudioInfo?.cat_id
+                  ? `${GENRES}/${parseInt(resolvedAudioInfo?.cat_id?.toString())}`
+                  : GENRES
+              }
               className="similarWidget_more "
             >
               <p className="similarWidget_more_text text-foreground dark:text-[#ddff2b]">
@@ -1020,32 +1091,37 @@ const AudioDetail = () => {
                     Title,
                     rpname,
                     nid,
+                    lecid,
+                    id: itemId,
                     audio,
                     mp3_title,
                     views,
                   },
                   idx
                 ) => {
+                  const lectureId = nid ?? lecid ?? itemId;
                   return (
                     <div
                       className="similarWidget_album_item"
                       onClick={() => {
-                        navigate(`${LECTURE}${nid}`);
+                        if (!lectureId) return;
+
+                        navigate(`${LECTURE}${lectureId}`);
 
                         // setendpUrl(similarAudioUrl);
                         dispatch(getPack(null));
                         dispatch(getPage(1));
-                        dispatch(getaudioId(nid));
+                        dispatch(getaudioId(lectureId));
                         dispatch(getCount(idx));
                         dispatch(getPack(similarAudioList));
 
                         setCurUser(currentUser);
                       }}
-                      key={idx + 1}
+                      key={lectureId ?? idx + 1}
                     >
                       <LandingWidget
                         key={idx}
-                        nid={nid}
+                        nid={lectureId}
                         categories={mp3_title || categories || cats}
                         img={img || lec_img}
                         views={views}
@@ -1072,7 +1148,7 @@ const AudioDetail = () => {
           <div className="audioCommentBoxWrap">
             <CommentBox
               audioComment={audioComment}
-              id={currentAudioInfo?.nid}
+              id={resolvedAudioInfo?.nid}
               type={"audio"}
             />
           </div>
@@ -1087,7 +1163,7 @@ const AudioDetail = () => {
         >
           <CommentBox
             type={"audio"}
-            id={currentAudioInfo?.nid}
+            id={resolvedAudioInfo?.nid}
             audioComment={audioComment}
           />
         </div>

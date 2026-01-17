@@ -11,7 +11,6 @@ export const LOGOUT = "LOGOUT";
 export const GET_GALLERY_SUCCESS = "GET_GALLERY_SUCCESS";
 export const GET_JOB_SUCCESS = "GET_JOB_SUCCESS";
 export const GET_TYPE = "GET_TYPE";
-export const GET_CURRENT_PLAY = "GET_CURRENT_PLAY";
 export const SET_PLAYING = "SET_PLAYING";
 export const SHOW_ADD_PLAYLIST = "SHOW_ADD_PLAYLIST";
 export const GET_LECID = "GET_LECID";
