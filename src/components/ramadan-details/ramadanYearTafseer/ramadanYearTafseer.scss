@@ -592,9 +592,14 @@
 
 .ramadan-tafseer-album-content {
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-height: 96px;
 
   @media screen and (max-width: 480px) {
     padding: 0.75rem;
+    min-height: 86px;
   }
 }
 
@@ -619,6 +624,27 @@
   }
 }
 
+.ramadan-tafseer-album-lecturer {
+  margin: 0;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary, #64748b);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  .dark & {
+    color: var(--text-secondary-dark, #94a3b8);
+  }
+
+  @media screen and (max-width: 480px) {
+    font-size: 0.75rem;
+  }
+}
+
 .ramadan-tafseer-album-meta {
   display: flex;
   align-items: center;
@@ -626,6 +652,7 @@
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 0.75rem;
   color: var(--text-secondary, #64748b);
+  margin-top: auto;
 
   .dark & {
     color: var(--text-secondary-dark, #94a3b8);

@@ -61,11 +61,11 @@ const LandingWidget = memo(({ categories, img, views, nid, styling, rpname }) =>
         </button>
       </div>
       <div className="space-y-1 w-full">
-        <p className="text-xs sm:text-sm font-medium text-color-primary pl-[3%] mb-0.5 break-words">
+        <p className="text-xs sm:text-sm font-medium text-foreground pl-[3%] mb-0.5 break-words">
           {formatTitle(categories)}
         </p>
         {rpname && (
-          <p className="text-[11px] sm:text-sm text-gray-500 line-clamp-2 pl-[3%] min-h-[28px]">
+          <p className="text-[11px] sm:text-sm text-muted-foreground line-clamp-2 pl-[3%] min-h-[28px]">
             {rpname}
           </p>
         )}

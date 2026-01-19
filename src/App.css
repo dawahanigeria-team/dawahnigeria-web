@@ -308,6 +308,13 @@
     --color: 240 10% 36%;
     --color-foreground: 240 11% 11%;
     --color-primary: 0 0% 1%;
+    --text-primary: hsl(var(--foreground));
+    --text-secondary: hsl(var(--color));
+    --text-primary-dark: hsl(var(--foreground));
+    --text-secondary-dark: hsl(var(--muted));
+    --text-color-primary: hsl(var(--foreground));
+    --text-color: hsl(var(--color));
+    --text-color-secondary: hsl(var(--muted));
 
     --actions:32 100% 100%;
     --border: 216 5% 86%;

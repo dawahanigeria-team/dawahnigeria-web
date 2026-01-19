@@ -91,6 +91,18 @@ const RamadanYearTafseerContent = () => {
     return albums.reduce((sum, album) => sum + (parseInt(album.lec_no) || 0), 0);
   }, [albums]);
 
+  const parseAlbumTitle = useCallback((title = "") => {
+    const trimmed = title.trim();
+    if (!trimmed) return { displayTitle: "Untitled Album", lecturerName: "" };
+    const parts = trimmed.split(" - ");
+    if (parts.length < 2) {
+      return { displayTitle: trimmed, lecturerName: "" };
+    }
+    const lecturerName = parts.pop().trim();
+    const displayTitle = parts.join(" - ").trim();
+    return { displayTitle, lecturerName };
+  }, []);
+
   return (
     <div className="ramadan-tafseer-page">
       <HeadMeta title={`Ramadan Tafseer ${year} - Dawah Nigeria`} />
@@ -246,38 +258,56 @@ const RamadanYearTafseerContent = () => {
           {/* Albums Grid */}
           {!error && filteredAlbums?.length > 0 && (
             <div className="ramadan-tafseer-grid">
-              {filteredAlbums.map((album) => (
-                <Link
-                  key={album.nid}
-                  to={`${ALBUMS}${album.nid}`}
-                  className="ramadan-tafseer-album-card"
-                >
-                  <div className="ramadan-tafseer-album-image-wrapper">
-                    <img
-                      src={album.img || IMAGE_PLACEHOLDERS.album}
-                      alt={album.title}
-                      className="ramadan-tafseer-album-image"
-                      loading="lazy"
-                      onError={(e) => {
-                        e.currentTarget.src = IMAGE_PLACEHOLDERS.album;
-                      }}
-                    />
-                    <div className="ramadan-tafseer-album-overlay" />
-                    <div className="ramadan-tafseer-album-play">
-                      <FiPlay />
+              {filteredAlbums.map((album) => {
+                const rawTitle = album.title || album.name || "";
+                const parsed = parseAlbumTitle(rawTitle);
+                const lecturerName =
+                  album.rpname ||
+                  album.rp_name ||
+                  album.lecturer ||
+                  album.rp ||
+                  parsed.lecturerName;
+
+                return (
+                  <Link
+                    key={album.nid}
+                    to={`${ALBUMS}${album.nid}`}
+                    className="ramadan-tafseer-album-card"
+                  >
+                    <div className="ramadan-tafseer-album-image-wrapper">
+                      <img
+                        src={album.img || IMAGE_PLACEHOLDERS.album}
+                        alt={rawTitle || "Ramadan Tafseer album"}
+                        className="ramadan-tafseer-album-image"
+                        loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.src = IMAGE_PLACEHOLDERS.album;
+                        }}
+                      />
+                      <div className="ramadan-tafseer-album-overlay" />
+                      <div className="ramadan-tafseer-album-play">
+                        <FiPlay />
+                      </div>
                     </div>
-                  </div>
-                  <div className="ramadan-tafseer-album-content">
-                    <h3 className="ramadan-tafseer-album-title">{album.title}</h3>
-                    <div className="ramadan-tafseer-album-meta">
-                      <span className="ramadan-tafseer-album-lectures">
-                        <HiOutlinePlay />
-                        {album.lec_no} lectures
-                      </span>
+                    <div className="ramadan-tafseer-album-content">
+                      <h3 className="ramadan-tafseer-album-title" title={rawTitle}>
+                        {parsed.displayTitle || rawTitle}
+                      </h3>
+                      {lecturerName && (
+                        <p className="ramadan-tafseer-album-lecturer" title={lecturerName}>
+                          {lecturerName}
+                        </p>
+                      )}
+                      <div className="ramadan-tafseer-album-meta">
+                        <span className="ramadan-tafseer-album-lectures">
+                          <HiOutlinePlay />
+                          {album.lec_no} lectures
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                );
+              })}
             </div>
           )}
 
