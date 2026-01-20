@@ -13,8 +13,6 @@ const Company = () => {
     { text: "About", onClick: () => setcomingSoon(true) },
     { text: "Contact", onClick: () => setcomingSoon(true) },
     { text: "Advertising", onClick: () => setcomingSoon(true) },
-    { text: "News", onClick: () => setcomingSoon(true) },
-    { text: "Visual Identity", onClick: () => setcomingSoon(true) },
     { text: "Privacy Policy", to: PRIVACY },
   ];
 
