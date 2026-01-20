@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { MdNavigateNext } from "react-icons/md";
+import { Link } from "react-router-dom";
 import ComingSoon from "../../comingsoon/comingSoon";
+import { PRIVACY } from "../../../utils/routes/constants";
 import "./footerColumn.scss";
 
 const Company = () => {
@@ -8,11 +10,12 @@ const Company = () => {
   const [comingSoon, setcomingSoon] = useState(false);
 
   const links = [
-    { text: "About" },
-    { text: "Contact" },
-    { text: "Advertising" },
-    { text: "News" },
-    { text: "Visual Identity" },
+    { text: "About", onClick: () => setcomingSoon(true) },
+    { text: "Contact", onClick: () => setcomingSoon(true) },
+    { text: "Advertising", onClick: () => setcomingSoon(true) },
+    { text: "News", onClick: () => setcomingSoon(true) },
+    { text: "Visual Identity", onClick: () => setcomingSoon(true) },
+    { text: "Privacy Policy", to: PRIVACY },
   ];
 
   return (
@@ -40,14 +43,22 @@ const Company = () => {
           }`}
         >
           {links.map((link, index) => (
-            <button
-              key={index}
-              onClick={() => setcomingSoon(true)}
-              className="dn-footer-column-link dn-footer-column-link--button"
-            >
-              <span className="dn-footer-column-link-text">{link.text}</span>
-              <span className="dn-footer-column-link-arrow">→</span>
-            </button>
+            <div key={index}>
+              {link.to ? (
+                <Link to={link.to} className="dn-footer-column-link">
+                  <span className="dn-footer-column-link-text">{link.text}</span>
+                  <span className="dn-footer-column-link-arrow">→</span>
+                </Link>
+              ) : (
+                <button
+                  onClick={link.onClick}
+                  className="dn-footer-column-link dn-footer-column-link--button"
+                >
+                  <span className="dn-footer-column-link-text">{link.text}</span>
+                  <span className="dn-footer-column-link-arrow">→</span>
+                </button>
+              )}
+            </div>
           ))}
         </div>
       </div>

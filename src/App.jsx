@@ -54,6 +54,7 @@ import {
   RECO2,
   RAMADAN,
   DOWNLOAD,
+  PRIVACY,
 } from "./utils/routes/constants";
 import { usePageTracking } from "./utils/tracking";
 import { useThemeHook } from "./hooks/common/useTheme.hook";
@@ -94,6 +95,7 @@ const Library = lazy(() => import("./pages/library/library"));
 const Buzz = lazy(() => import("./pages/buzz/buzz"));
 const Podcast = lazy(() => import("./pages/podcast/podcast"));
 const SearchPage = lazy(() => import("./pages/searchPage/searchPage"));
+const Privacy = lazy(() => import("./pages/privacy/Privacy"));
 
 // Lazy load heavy third-party components
 const TawkMessengerReact = lazy(() => import("@tawk.to/tawk-messenger-react"));
@@ -372,6 +374,7 @@ const App = () => {
                         <Route path={`${VIDEOS}:id`} element={<VideoPlayer />} />
                         <Route path={FAVOURITE} element={<Favourite />} />
                         <Route path={MYPLAYLIIST} element={<Myplaylist />} />
+                        <Route path={PRIVACY} element={<Privacy />} />
                       </Route>
                       <Route path="/" element={<Navigate to="/dawahcast" />} />
                       <Route path="/dawahcast" element={<Layout />} />
