@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import "./filterButton.scss";
 const FilterButton = ({
   setFilter,
-  data1,
+  data1 = [],
   setData1,
-  data2,
+  data2 = [],
   setData2,
   setActiveId,
-  data3,
+  data3 = [],
   setData3,
   title,
   action,
@@ -21,12 +21,18 @@ const FilterButton = ({
   setLangid,
   setCatid,
   setTypeName,
+  onSelect,
 }) => {
   useEffect(() => {
-    setFilter([...data1, ...data2, ...data3]);
-  }, [data1, data2, data3]);
+    if (typeof setFilter === "function") {
+      setFilter([...data1, ...data2, ...data3]);
+    }
+  }, [data1, data2, data3, setFilter]);
 
   const handleFilter = () => {
+    if (typeof onSelect === "function") {
+      onSelect({ title, action, id, lid, lecid });
+    }
     if (typeof setActive === 'function') setActive(title);
     if (typeof setTypeName === 'function') setTypeName(action);
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./videoWidget.scss";
 import { FaPlay } from "react-icons/fa";
 
@@ -7,61 +7,67 @@ import videoButtom from "../../assets/png/videoButtom.png";
 import { formatNumber } from "../UI/formatter";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 
-const VideoWidget = ({ img, favourites, views, lecturer, title, duration }) => {
-  ////not contented but under presssure by DN project manager
-  useEffect(() => {
-    function lazyImage() {
-      const lazy = document.querySelectorAll("#video");
-      lazy.forEach((im) => {
-        const newurl = im.getAttribute("src-data");
-        im.src = newurl;
-
-        im.addEventListener("error", () => {
-          im.src = IMAGE_PLACEHOLDERS.carouselWidget;
-        });
-      });
-    }
-
-    lazyImage();
-  }, []);
+const VideoWidget = ({
+  img,
+  favourites,
+  views,
+  lecturer,
+  title,
+  variant = "default",
+}) => {
+  const safeTitle = title || "Untitled video";
+  const safeLecturer = lecturer || "Dawah Nigeria";
+  const parseCount = (value) => {
+    if (value === null || value === undefined) return null;
+    const raw = String(value).trim().toLowerCase();
+    const base = parseFloat(raw.replace(/,/g, ""));
+    if (!Number.isFinite(base)) return null;
+    if (raw.endsWith("k")) return base * 1000;
+    if (raw.endsWith("m")) return base * 1000000;
+    return base;
+  };
+  const viewCount = parseCount(views);
   return (
-    <div className="videoWidget_wrapper">
+    <div className={`videoWidget_wrapper videoWidget_wrapper--${variant}`}>
       <div className="videoWidget_top">
         <img
-          id="video"
-          src-data={img}
-          src={IMAGE_PLACEHOLDERS.carouselWidget}
-          alt="background"
+          src={img || IMAGE_PLACEHOLDERS.carouselWidget}
+          alt={safeTitle}
           className="videoWidget_background_image"
+          loading="lazy"
+          decoding="async"
+          onError={(event) => {
+            event.currentTarget.src = IMAGE_PLACEHOLDERS.carouselWidget;
+          }}
         />
         <div className="videoWidget_play_wrapper">
           <div className="videoWidget_play">
-            <FaPlay className="videoWidget_play_icon" />
+            <FaPlay className="videoWidget_play_icon" aria-hidden="true" />
           </div>
-        </div>
-
-        <div className="videoWidget_duration px-1">
-          <div className="videoWidget_duration_text">{duration}</div>
         </div>
       </div>
       <div className="videoWidget_buttom">
         <div className="videoWidget_buttom_left">
-          <marquee direction="left" className="videoWidget_buttom_head">
-            {title}
-          </marquee>
+          <div className="videoWidget_buttom_head" title={safeTitle}>
+            {safeTitle}
+          </div>
         </div>
         <div className="videoWidget_bottom_overall">
           <div className="videoWidget_buttom_lecturer_wrapper">
             <div className="vid_widget_image rounded-full">
               <img
                 className="w-full h-full rounded-full"
-                src-data={videoButtom}
-                src={IMAGE_PLACEHOLDERS.lecturer}
-                alt="videoButtom"
+                src={videoButtom}
+                alt={safeLecturer}
+                loading="lazy"
+                decoding="async"
+                onError={(event) => {
+                  event.currentTarget.src = IMAGE_PLACEHOLDERS.lecturer;
+                }}
               />
             </div>
             <div className="rel_text">
-              <div className="videoWidget_buttom_lecturer">{lecturer}</div>
+              <div className="videoWidget_buttom_lecturer">{safeLecturer}</div>
             </div>
           </div>
           <div className="videoWidget_buttom_right">
@@ -69,6 +75,11 @@ const VideoWidget = ({ img, favourites, views, lecturer, title, duration }) => {
             <p className="videoWidget_buttom_right_text">
               {formatNumber(favourites || 0)}
             </p>
+            {viewCount ? (
+              <p className="videoWidget_buttom_views">
+                · {formatNumber(viewCount)} views
+              </p>
+            ) : null}
           </div>
         </div>
       </div>

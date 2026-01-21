@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: flex-start;
   height: 250px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   // width:270px;
   @media screen and (max-width: 1238px) {
     height: 240px;
@@ -25,6 +26,30 @@
     //width: 350px;
     //height: 260.59px;
   }
+
+  &.videoWidget_wrapper--featured {
+    height: 320px;
+    .videoWidget_top {
+      height: 220px;
+      .videoWidget_play {
+        width: 70px;
+        height: 70px;
+        .videoWidget_play_icon {
+          font-size: 34px;
+        }
+      }
+    }
+  }
+
+  &.videoWidget_wrapper--compact {
+    height: 230px;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  }
+
   .videoWidget_top {
     width: 100%;
     height: 177.59px;
@@ -38,6 +63,7 @@
       height: 100%;
       top: 0;
       left: 0;
+      object-fit: cover;
     }
     .videoWidget_play_wrapper {
       position: absolute;
@@ -64,29 +90,6 @@
       }
     }
 
-    .videoWidget_duration {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: fit-content;
-      height: 22px;
-      background: rgba(13, 13, 13, 0.7);
-      border-radius: 1.70936px;
-      position: absolute;
-      bottom: 2px;
-      right: 2px;
-
-      .videoWidget_duration_text {
-        margin: unset;
-        padding: unset;
-        font-family: "Poppins";
-        font-style: normal;
-        font-weight: 500;
-        font-size: 10px;
-        line-height: 13px;
-        color: #ffffff;
-      }
-    }
   }
   .videoWidget_buttom {
     height: fit-content;
@@ -112,7 +115,10 @@
         font-size: 14px;
         line-height: 20px;
         color: #ffffff;
-        //min-width: 100%;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
     }
     .videoWidget_bottom_overall {
@@ -134,9 +140,8 @@
         .rel_text {
           //margin-bottom:6px;
           .videoWidget_buttom_lecturer {
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            width: 120px;
+            white-space: normal;
+            width: auto;
             font-family: "Poppins";
             font-style: normal;
             font-weight: 500;
@@ -144,7 +149,7 @@
             line-height: 18px;
             color: #868686;
             margin-left: 2%;
-            overflow: hidden;
+            overflow: visible;
 
             @media screen and (max-width: 890px) {
             }
@@ -161,12 +166,24 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+        flex-wrap: wrap;
+        gap: 0.2rem;
         .videoWidget_buttom_right_icon {
           font-size: 22px;
           color: #868686;
           margin-right: 0.3rem;
         }
         .videoWidget_buttom_right_text {
+          margin: unset;
+          padding: unset;
+          font-family: "Nunito Sans";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 16px;
+          color: #868686;
+        }
+        .videoWidget_buttom_views {
           margin: unset;
           padding: unset;
           font-family: "Nunito Sans";
