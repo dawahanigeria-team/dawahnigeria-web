@@ -4,7 +4,7 @@ import empty from "../../assets/png/musicEmptyState.png";
 import Container from "../../components/container/Container";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import axios from "../../utils/useAxios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import back from "../../assets/svg/back.svg";
 import foward from "../../assets/svg/foward.svg";
 import { LECTURE } from "../../utils/routes/constants";
@@ -17,7 +17,9 @@ import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
 import MusicList from "../../components/miscList/musicList";
 import HeadMeta from "../../components/head-meta";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
+import { getLecid, showaddPlaylist } from "../../Redux/Actions/ActionCreators";
 const My_playlist = () => {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const observer = useRef();
   const [data, setdata] = useState([]);
@@ -30,6 +32,16 @@ const My_playlist = () => {
   const [myFolders, setmyFolders] = useState([]);
   const { currentUser } = useSelector((state) => state.user);
   const [myplaylist, setmyplaylist] = useState([]);
+
+  const handleAddPlaylist = () => {
+    if (!currentUser?.id) {
+      toast.error("Sign in is required to add playlist");
+      return;
+    }
+
+    dispatch(getLecid(""));
+    dispatch(showaddPlaylist(true));
+  };
 
   // get my playlist
   useEffect(() => {
@@ -177,7 +189,9 @@ const My_playlist = () => {
               You haven&apos;t created any playlists. Create your own playlists
               here.
             </p>
-            <button className="myplay_button">Add Playlist</button>
+            <button className="myplay_button" onClick={handleAddPlaylist}>
+              Add Playlist
+            </button>
           </div>
         )}
 

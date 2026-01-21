@@ -23,6 +23,56 @@ const conditionalToast = {
   }
 };
 
+const resolveAuthPayload = (payload) => {
+  if (!payload) return { user: null, token: null };
+
+  const token =
+    payload.token ||
+    payload.access_token ||
+    payload.auth_token ||
+    payload?.data?.token ||
+    payload?.data?.access_token ||
+    payload?.data?.auth_token ||
+    null;
+
+  const candidates = [
+    payload.user,
+    payload?.data?.user,
+    payload?.data?.data,
+    payload?.data,
+    payload,
+  ];
+
+  const user =
+    candidates
+      .map((candidate) => (Array.isArray(candidate) ? candidate[0] : candidate))
+      .find(
+        (candidate) =>
+          candidate &&
+          (candidate.id ||
+            candidate.user_id ||
+            candidate.username ||
+            candidate.user_name ||
+            candidate.email)
+      ) || null;
+
+  return { user, token };
+};
+
+const resolvePostAuthRedirect = (preferred) => {
+  if (preferred) return preferred;
+  if (typeof window === "undefined") return "/dawahcast";
+  const stored = window.sessionStorage?.getItem("dn:last_path");
+  if (!stored || stored.startsWith("/auth")) return "/dawahcast";
+  return stored;
+};
+
+const clearPostAuthRedirect = () => {
+  if (typeof window !== "undefined") {
+    window.sessionStorage?.removeItem("dn:last_path");
+  }
+};
+
 const GetUsersSuccess = (data) => {
   return {
     type: type.FETCH_USER_SUCCESS,
@@ -152,7 +202,13 @@ const getSearchOptions = (data) => {
     payload: data,
   };
 };
-const LoginAction = (loginParams, isSocial, navigate, setLoading) => {
+const LoginAction = (
+  loginParams,
+  isSocial,
+  navigate,
+  setLoading,
+  redirectTo
+) => {
   return async (dispatch) => {
     if (isSocial) {
       setLoading(true);
@@ -169,15 +225,20 @@ const LoginAction = (loginParams, isSocial, navigate, setLoading) => {
           }
         )
         .then((res) => {
-          const userData = res.data;
-          dispatch(GetUsersSuccess(userData));
+          const { user, token } = resolveAuthPayload(res.data);
+          if (user) {
+            dispatch(GetUsersSuccess(user));
+          }
+          if (token) {
+            dispatch(loginSuccess(token));
+          }
 
           // Track user login and identify in PostHog
-          if ((userData?.id ?? userData?.user_id) != null) {
-            identifyUser(userData.id ?? userData.user_id, {
-              email: userData.email,
-              username: userData.username ?? userData.user_name,
-              name: userData.name ?? userData.display_name,
+          if ((user?.id ?? user?.user_id) != null) {
+            identifyUser(user.id ?? user.user_id, {
+              email: user.email,
+              username: user.username ?? user.user_name,
+              name: user.name ?? user.display_name,
               login_method: 'social',
             });
             trackEvent(EVENTS.USER_LOGGED_IN, {
@@ -186,7 +247,9 @@ const LoginAction = (loginParams, isSocial, navigate, setLoading) => {
             });
           }
 
-          navigate("/");
+          const nextRoute = resolvePostAuthRedirect(redirectTo);
+          clearPostAuthRedirect();
+          navigate(nextRoute);
           setLoading(false);
           conditionalToast.success("Login successful");
         });
@@ -205,16 +268,20 @@ const LoginAction = (loginParams, isSocial, navigate, setLoading) => {
           }
         )
         .then((res) => {
-          const { data } = res;
-
-          dispatch(GetUsersSuccess(data));
+          const { user, token } = resolveAuthPayload(res.data);
+          if (user) {
+            dispatch(GetUsersSuccess(user));
+          }
+          if (token) {
+            dispatch(loginSuccess(token));
+          }
 
           // Track user login and identify in PostHog
-          if ((data?.id ?? data?.user_id) != null) {
-            identifyUser(data.id ?? data.user_id, {
-              email: data.email,
-              username: data.username ?? data.user_name,
-              name: data.name ?? data.display_name,
+          if ((user?.id ?? user?.user_id) != null) {
+            identifyUser(user.id ?? user.user_id, {
+              email: user.email,
+              username: user.username ?? user.user_name,
+              name: user.name ?? user.display_name,
               login_method: 'email',
             });
             trackEvent(EVENTS.USER_LOGGED_IN, {
@@ -222,7 +289,9 @@ const LoginAction = (loginParams, isSocial, navigate, setLoading) => {
             });
           }
 
-          navigate("/");
+          const nextRoute = resolvePostAuthRedirect(redirectTo);
+          clearPostAuthRedirect();
+          navigate(nextRoute);
           conditionalToast.success("Login Successful");
           setLoading(false);
         })

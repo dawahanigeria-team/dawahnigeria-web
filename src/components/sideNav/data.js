@@ -16,6 +16,7 @@ import {
   CHARTS,
   FAVOURITE,
   GENRES,
+  LIBRARY,
   LECTURERS,
   MYPLAYLIIST,
   NEW,
@@ -82,7 +83,7 @@ export const library = [
   {
     name: "Add Playlist",
     icon: <BsFillDiscFill className="icon0 icon" />,
-    //link:,
+    link: LIBRARY,
   },
   {
     name: "Favourites",

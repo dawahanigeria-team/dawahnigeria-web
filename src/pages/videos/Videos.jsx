@@ -96,23 +96,30 @@ const Videos = () => {
   const [page, setPage] = useState(1);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const campaigns = useMemo(
-    () => [
+  const campaignCandidates = useMemo(() => {
+    const ramadanId = categories.find(
+      (item) => item.categories === "Ramadan"
+    )?.id;
+    const jumuahId = categories.find(
+      (item) => item.categories === "Jumuah"
+    )?.id;
+    return [
       {
         title: "Ramadan Focus",
         description: "Tafseer, nightly reflections, and Ramadan reminders.",
         category: "Ramadan",
+        categoryId: ramadanId,
         accent: "ramadan",
       },
       {
         title: "Jumuah Khutbah",
         description: "Friday wisdom, khutbah highlights, and guidance.",
         category: "Jumuah",
+        categoryId: jumuahId,
         accent: "jumuah",
       },
-    ],
-    []
-  );
+    ];
+  }, []);
 
   const queryParam = { page };
 
@@ -130,6 +137,25 @@ const Videos = () => {
   const curatedVideos = useMemo(
     () => normalizeVideoList(curatedResponse),
     [curatedResponse]
+  );
+
+  const campaignVideoPool = useMemo(() => {
+    const main = Array.isArray(querieddata) ? querieddata : [];
+    const curated = Array.isArray(curatedVideos) ? curatedVideos : [];
+    return [...main, ...curated];
+  }, [querieddata, curatedVideos]);
+
+  const campaigns = useMemo(
+    () =>
+      campaignCandidates.filter((campaign) => {
+        const matches = filterByCategory(
+          campaignVideoPool,
+          campaign.category,
+          campaign.categoryId
+        );
+        return matches.length > 0;
+      }),
+    [campaignCandidates, campaignVideoPool]
   );
 
   const categoryParam = searchParams.get("category");
@@ -258,21 +284,23 @@ const Videos = () => {
             Curated Islamic videos for the Ummah, the Nigerian way.
           </div>
         </div>
-        <div className="video_campaigns">
-          {campaigns.map((campaign) => (
-            <Link
-              key={campaign.category}
-              to={categoryLink(campaign.category)}
-              className={`video_campaign video_campaign--${campaign.accent}`}
-            >
-              <div className="video_campaign_label">{campaign.category}</div>
-              <div className="video_campaign_title">{campaign.title}</div>
-              <div className="video_campaign_description">
-                {campaign.description}
-              </div>
-            </Link>
-          ))}
-        </div>
+        {campaigns.length > 0 && (
+          <div className="video_campaigns">
+            {campaigns.map((campaign) => (
+              <Link
+                key={campaign.category}
+                to={categoryLink(campaign.category)}
+                className={`video_campaign video_campaign--${campaign.accent}`}
+              >
+                <div className="video_campaign_label">{campaign.category}</div>
+                <div className="video_campaign_title">{campaign.title}</div>
+                <div className="video_campaign_description">
+                  {campaign.description}
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
         {isLoading && !isLoadingNextPage && (
           <div className="w-full flex items-center justify-center h-[300px]">
             <Loader />
