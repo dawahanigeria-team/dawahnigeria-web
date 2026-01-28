@@ -227,6 +227,11 @@ const LoginAction = (
         )
         .then((res) => {
           const { user, token } = resolveAuthPayload(res.data);
+          if (!user && !token) {
+            setLoading(false);
+            conditionalToast.error("Login failed. Please try again.");
+            return;
+          }
           if (user) {
             dispatch(GetUsersSuccess(user));
           }
@@ -276,6 +281,11 @@ const LoginAction = (
         )
         .then((res) => {
           const { user, token } = resolveAuthPayload(res.data);
+          if (!user && !token) {
+            setLoading(false);
+            conditionalToast.error("Login failed. Please try again.");
+            return;
+          }
           if (user) {
             dispatch(GetUsersSuccess(user));
           }
