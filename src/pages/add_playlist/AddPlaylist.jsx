@@ -138,9 +138,15 @@ const Add_playlist = () => {
       return;
     }
 
+    const parsedAudioId = parseInt(lecid, 10);
+    if (!Number.isFinite(parsedAudioId)) {
+      toast.error("Select a lecture before adding to a playlist");
+      return;
+    }
+
     const payload = {
       user_id: parseInt(currentUser?.id),
-      audio_id: parseInt(lecid),
+      audio_id: parsedAudioId,
       playlist_id: id,
       action: "add_playlist_audio",
     };

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./iconText.scss";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { showaddPlaylist } from "../../Redux/Actions/ActionCreators";
+import { getLecid, showaddPlaylist } from "../../Redux/Actions/ActionCreators";
 
 const IconText = ({ icon, link, name, id, setisOpen }) => {
   const location = useLocation();
@@ -33,6 +33,7 @@ const IconText = ({ icon, link, name, id, setisOpen }) => {
         navigate(link);
         close();
         if (name === "Add Playlist") {
+          dispatch(getLecid(""));
           dispatch(showaddPlaylist(true));
         }
       }}

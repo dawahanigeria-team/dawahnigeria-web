@@ -4,7 +4,7 @@ import GroupWidget from "../../components/groupWidget/GroupWidget";
 import { RAMADAN } from "../../utils/routes/constants";
 import HeadMeta from "../../components/head-meta";
 import { useRamadanYears } from "../../hooks/ramadan";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RowSkeletonContainer from "../../components/skeletion/skeleton.container";
 
 const Ramadan = () => {
@@ -95,6 +95,7 @@ const Ramadan = () => {
                   const { key_id, documents, name, total_count } = yearData;
                   const year = extractYear(name);
                   const isLast = index === otherYears.length - 1;
+                  const yearCount = total_count || documents?.length || 0;
 
                   return (
                     <article key={key_id} className="ramadan-timeline-item">
@@ -105,15 +106,30 @@ const Ramadan = () => {
 
                       <div className="ramadan-timeline-content">
                         <div className="ramadan-timeline-header">
-                          <div className="ramadan-timeline-year-badge">
-                            <span className="ramadan-timeline-year">{year}</span>
-                            <span className="ramadan-timeline-year-label">AH</span>
-                          </div>
-                          <div className="ramadan-timeline-info">
-                            <h3 className="ramadan-timeline-name">{name}</h3>
-                            <p className="ramadan-timeline-count">
-                              {total_count || documents?.length || 0} albums available
-                            </p>
+                          <Link
+                            to={`${RAMADAN}/year/${year}`}
+                            className="ramadan-timeline-title-link"
+                            aria-label={`View all ${yearCount} albums from ${name}`}
+                          >
+                            <div className="ramadan-timeline-year-badge">
+                              <span className="ramadan-timeline-year">{year}</span>
+                              <span className="ramadan-timeline-year-label">AH</span>
+                            </div>
+                            <div className="ramadan-timeline-info">
+                              <h3 className="ramadan-timeline-name">{name}</h3>
+                              <p className="ramadan-timeline-count">
+                                {yearCount} albums available
+                              </p>
+                            </div>
+                          </Link>
+                          <div className="ramadan-timeline-actions">
+                            <Link
+                              to={`${RAMADAN}/year/${year}`}
+                              className="ramadan-timeline-cta"
+                              aria-label={`View all ${yearCount} albums from ${name}`}
+                            >
+                              View all {yearCount} albums
+                            </Link>
                           </div>
                         </div>
 
@@ -124,6 +140,7 @@ const Ramadan = () => {
                             type={"album"}
                             nav1={{ title: "Ramadan", link: RAMADAN }}
                             moreRoute={`${RAMADAN}/year/${year}`}
+                            hideMore={true}
                           />
                         </div>
                       </div>

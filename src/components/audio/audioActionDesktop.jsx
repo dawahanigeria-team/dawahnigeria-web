@@ -190,15 +190,16 @@ const AudioActionDesktop = () => {
   }, [audioRef, repeat]);
 
   useEffect(() => {
-    if (!currentUser) return;
+    if (!currentUser?.id || !audioId) return;
 
     const payload = {
       action: "post_recent",
       audio_id: audioId,
-      user_id: currentUser?.id,
+      user_id: currentUser.id,
     };
-    async function postRecent() {
-      if (audioId) {
+
+    const postRecent = async () => {
+      try {
         await axios.post(`/recentApi.php`, payload, {
           headers: {
             Accept: "application/json",
@@ -206,10 +207,17 @@ const AudioActionDesktop = () => {
             "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
           },
         });
+      } catch (error) {
+        if (process.env.NODE_ENV === "development") {
+          const status = error?.response?.status;
+          const data = error?.response?.data;
+          console.error("postRecent failed", status, data || error.message);
+        }
       }
-    }
+    };
+
     postRecent();
-  }, [audioId]);
+  }, [audioId, currentUser?.id]);
   //************ */
 
   useEffect(() => {

@@ -8,7 +8,14 @@ import uniqBy from "lodash/uniqBy";
 import axios from "../../../utils/useAxios";
 import { useNavigate } from "react-router-dom";
 import infinitePlayFavScroll from "../../UI/infinitePlayFavScroll";
-import { PLAYLISTS, PLAY } from "../../../utils/routes/constants";
+import { FAVOURITE, PLAYLISTS, PLAY } from "../../../utils/routes/constants";
+
+const normalizeIdList = (value) => {
+  if (!value) return [];
+  if (Array.isArray(value)) return value;
+  if (typeof value === "object") return Object.values(value);
+  return [];
+};
 
 const Favourite_playlist = ({ setCount3 }) => {
   const { currentUser } = useSelector((state) => state.user);
@@ -31,26 +38,46 @@ const Favourite_playlist = ({ setCount3 }) => {
       setLoading(true);
     }
     axios
-      .get(`/leclisting_favorites.php?user_id=${currentUser?.id}&type=album`)
+      .get(`/leclisting_favorites.php?user_id=${currentUser?.id}&type=playlist`)
       .then((res) => {
-        if (res.data.length === 0) {
+        const playlistIds = normalizeIdList(
+          res?.data?.playlist ||
+            res?.data?.playlists ||
+            res?.data?.data ||
+            res?.data
+        );
+
+        if (playlistIds.length === 0) {
           setmyAlb([]);
+          setMyFavAlbum([]);
+          setdata([]);
           setLoading(false);
           return;
         }
 
-        const { album } = res.data;
-        setmyAlb(album);
+        setmyAlb(playlistIds);
+        const idSet = new Set(playlistIds.map((id) => String(id)));
 
         axios
-          .get(`/albumlisting_multi_nid_api.php?id=${album.toString()}`)
+          .get(`/playlistApi.php?action=all_public_playlist_data`)
+          .then((playlistRes) => {
+            const allPlaylists = Array.isArray(playlistRes?.data)
+              ? playlistRes.data
+              : [];
+            const filtered = allPlaylists.filter((item) =>
+              idSet.has(String(item?.id))
+            );
 
-          .then((res) => {
             setLoading(false);
-            setMyFavAlbum(res.data);
-            setdata(uniqBy(res.data?.slice(0, 10), "nid"));
+            setMyFavAlbum(filtered);
+            setdata(uniqBy(filtered?.slice(0, 10), "id"));
           })
-          .catch((err) => {});
+          .catch(() => {
+            setLoading(false);
+          });
+      })
+      .catch(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -64,7 +91,7 @@ const Favourite_playlist = ({ setCount3 }) => {
       setIsEmpty(true);
     }
     setNextPageLoad(false);
-    setdata((prev) => uniqBy([...prev, ...additionalData], "nid"));
+    setdata((prev) => uniqBy([...prev, ...additionalData], "id"));
   }, [page]);
 
   const lastElement = useCallback(
@@ -122,6 +149,7 @@ const Favourite_playlist = ({ setCount3 }) => {
                   title,
                   views,
                   favorites,
+                  lec_no,
                 },
                 idx
               ) => {
@@ -133,7 +161,11 @@ const Favourite_playlist = ({ setCount3 }) => {
                       onClick={() => {
                         navigate(`${PLAYLISTS}${id}`, {
                           state: {
-                            title: Title || title || name.split(" - ")[0],
+                            title:
+                              Title ||
+                              title ||
+                              (name && name.split(" - ")[0]) ||
+                              "Untitled",
                             rpname,
                             img,
                             cats: categories,
@@ -144,7 +176,7 @@ const Favourite_playlist = ({ setCount3 }) => {
                             favorites,
                             nav1: {
                               title: "favorite playlist",
-                              link: "/favorite",
+                              link: FAVOURITE,
                             },
                           },
                         });
@@ -166,7 +198,11 @@ const Favourite_playlist = ({ setCount3 }) => {
                       onClick={() => {
                         navigate(`${PLAYLISTS}${id}`, {
                           state: {
-                            title: Title || title || name.split(" - ")[0],
+                            title:
+                              Title ||
+                              title ||
+                              (name && name.split(" - ")[0]) ||
+                              "Untitled",
                             rpname,
                             img,
                             cats: categories,
@@ -177,7 +213,7 @@ const Favourite_playlist = ({ setCount3 }) => {
                             lec_no,
                             nav1: {
                               title: "favourite playlist",
-                              link: "/favorite",
+                              link: FAVOURITE,
                             },
                           },
                         });

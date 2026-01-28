@@ -5,14 +5,29 @@ import avatar from "../../assets/svg/avatar.svg";
 import playlist from "../../assets/svg/playlist.svg";
 import addplay from "../../assets/svg/addplaylist.svg";
 import fav from "../../assets/svg/fav.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FAVOURITE, MYPLAYLIIST } from "../../utils/routes/constants";
 import HeadMeta from "../../components/head-meta";
+import {
+  getLecid,
+  showaddPlaylist,
+} from "../../Redux/Actions/ActionCreators";
 
 const Library = () => {
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleAddPlaylist = () => {
+    if (!currentUser?.id) {
+      navigate("/auth/login");
+      return;
+    }
+
+    dispatch(getLecid(""));
+    dispatch(showaddPlaylist(true));
+  };
 
   return (
     <Container>
@@ -73,7 +88,7 @@ const Library = () => {
             </div>
             <p>Favourites</p>
           </div>
-          <div className="mini_wrapper">
+          <div onClick={handleAddPlaylist} className="mini_wrapper">
             <div className="img_wrap">
               <img className="img_wrap_sz" src={addplay} alt="" />
             </div>

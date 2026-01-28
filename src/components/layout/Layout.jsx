@@ -105,6 +105,14 @@ const Layout = () => {
   }, [location.pathname, audioId]);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    const nextPath = `${location.pathname}${location.search}${location.hash}`;
+    if (nextPath && !nextPath.startsWith("/auth")) {
+      window.sessionStorage?.setItem("dn:last_path", nextPath);
+    }
+  }, [location.pathname, location.search, location.hash]);
+
+  useEffect(() => {
     const setupAudioContext = async () => {
       if (audioRef.current) {
         try {

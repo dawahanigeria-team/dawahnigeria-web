@@ -7,6 +7,7 @@ import Loader from "../../components/UI/loader/loader";
 import { toast } from "../../utils/conditionalToast";
 import HeadMeta from "../../components/head-meta";
 import axios from "../../utils/useAxios";
+import { getAuthErrorMessage } from "../../utils/authError";
 
 const RESEND_COOLDOWN_SECONDS = 60;
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -75,7 +76,9 @@ const ForgotPassword = () => {
       }
     } catch (error) {
       setLoading(false);
-      toast.error("An error occurred. Please try again.");
+      toast.error(
+        getAuthErrorMessage(error, "An error occurred. Please try again.")
+      );
     }
   };
 
