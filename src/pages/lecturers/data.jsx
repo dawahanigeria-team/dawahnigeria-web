@@ -49,3 +49,10 @@ export const language = [
     id: "",
   },
 ];
+
+export const states = [
+  {
+    name: "All",
+    id: "",
+  },
+];

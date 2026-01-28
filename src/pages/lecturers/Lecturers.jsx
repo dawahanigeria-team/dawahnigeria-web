@@ -12,7 +12,7 @@ import { RESOURCE_PERSON } from "../../utils/routes/constants";
 import { useInfiniteScrollPagination } from "../../hooks";
 import { useLecturersHook } from "../../hooks/lecturers/useLecturers.hook";
 import { lecturersApi } from "../../services";
-import { useLanguagesHook } from "../../hooks/lecturers/useLanguage.hook";
+import { useStatesHook } from "../../hooks/lecturers/useStates.hook";
 import HeadMeta from "../../components/head-meta";
 
 const Lecturers = () => {
@@ -23,11 +23,11 @@ const Lecturers = () => {
   const [data3, setData3] = useState([]);
   const [active, setActive] = useState("All");
   const [active1, setActive1] = useState("All");
-  const [langid, setLangid] = useState("");
+  const [state, setState] = useState("");
   const [page, setPage] = useState(1);
   const [typeName, setTypeName] = useState("");
   const [lectId, setlectId] = useState("");
-  const queryParam = { lectId, langid, page, typeName, active };
+  const queryParam = { lectId, state, page, typeName, active };
 
   const { isLoading, isLoadingNextPage, isLastPage, querieddata, isFetching } =
     useLecturersHook(
@@ -36,7 +36,7 @@ const Lecturers = () => {
       lecturersApi.getLecturers,
       setPage
     );
-  const { data } = useLanguagesHook();
+  const { data } = useStatesHook();
   useEffect(() => {
     setData3(querieddata);
   }, [querieddata]);
@@ -99,12 +99,12 @@ const Lecturers = () => {
                       setlectId={setlectId}
                       setActive={setActive1}
                       title={name}
-                      action="language"
+                      action="state"
                       data={querieddata}
                       // setIsEmpty={setIsEmpty}
                       setTypeName={setTypeName}
                       lid={id}
-                      setLangid={setLangid}
+                      setState={setState}
                     />
                   </div>
                 );

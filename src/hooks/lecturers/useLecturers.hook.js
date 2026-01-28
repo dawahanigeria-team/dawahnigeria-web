@@ -11,7 +11,7 @@ export const useLecturersHook = (
   const [querieddata, setQueriedData] = useState([]);
   const [isLoadingNextPage, setIsLoadingNextPage] = useState(false);
   const [hasReachedLastPage, setHasReachedLastPage] = useState(false);
-  const [intialLangId, setinitialLangId] = useState("");
+  const [initialFilter, setInitialFilter] = useState({ langid: "", state: "" });
 
   const { isLoading, data, error, isFetching } = useQuery(
     [keyName, queryParam],
@@ -38,7 +38,10 @@ export const useLecturersHook = (
           return;
         }
 
-        setinitialLangId(queryParam.langid);
+        setInitialFilter({
+          langid: queryParam.langid || "",
+          state: queryParam.state || "",
+        });
 
         setQueriedData((prev) => uniqBy([...prev, ...data], "id"));
       },
@@ -70,15 +73,18 @@ export const useLecturersHook = (
   }, [queryParam.lectId]);
 
   useEffect(() => {
-    if (queryParam.langid) {
+    if (queryParam.langid || queryParam.state) {
       setHasReachedLastPage(false);
     }
-    // start again from the first page whenever there is a change in the language or alphabet selection
-    if (intialLangId !== queryParam.langid) {
+    // start again from the first page whenever there is a change in the filter selection
+    if (
+      initialFilter.langid !== (queryParam.langid || "") ||
+      initialFilter.state !== (queryParam.state || "")
+    ) {
       setQueriedData([]);
       setPage(1);
     }
-  }, [queryParam.langid]);
+  }, [queryParam.langid, queryParam.state]);
   return {
     isLoading,
     isLoadingNextPage: isFetching && queryParam.page > 1,

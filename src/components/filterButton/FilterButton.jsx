@@ -19,6 +19,7 @@ const FilterButton = ({
   setlectId,
   lecid,
   setLangid,
+  setState,
   setCatid,
   setTypeName,
   onSelect,
@@ -65,6 +66,22 @@ const FilterButton = ({
         if (typeof setData2 === 'function') setData2(
           Array.isArray(data) && data.filter((value) => value.lang === title)
         );
+      }
+    } else if (action === "state") {
+      if (typeof setState === "function") setState(title === "All" ? "" : title);
+
+      if (typeof setlectId === "function") setlectId(null);
+      if (typeof setActiveId === "function") setActiveId("All");
+      if (title === "All") {
+        if (typeof setData2 === "function")
+          setData2(
+            Array.isArray(data) && data.filter((value) => value.state)
+          );
+      } else {
+        if (typeof setData2 === "function")
+          setData2(
+            Array.isArray(data) && data.filter((value) => value.state === title)
+          );
       }
     } else if (action === "categories") {
       if (typeof setCatid === 'function') setCatid(id);
