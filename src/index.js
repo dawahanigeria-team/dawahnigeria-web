@@ -100,6 +100,7 @@ const AppWithProviders = ({ children }) => {
           capture_pageleave: true,
           autocapture: true,
           disable_session_recording: false,
+          enable_recording_console_log: true,
           loaded: (posthog) => {
             if (process.env.NODE_ENV === 'development') {
               console.log('✅ PostHog loaded successfully!', posthog);
