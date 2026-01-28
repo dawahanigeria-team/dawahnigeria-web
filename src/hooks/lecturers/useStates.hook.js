@@ -10,8 +10,21 @@ export const useStatesHook = () => {
 
   useQuery(["states"], () => lecturersApi.getStates(), {
     onSuccess: (data) => {
-      const responseStates = data?.states || [];
-      setStatesData([...states, ...responseStates.map((name) => ({ name }))]);
+      const responseStates = Array.isArray(data?.states) ? data.states : [];
+      const normalized = responseStates
+        .filter(
+          (name) =>
+            typeof name === "string" &&
+            name.trim().length > 0 &&
+            name.toLowerCase() !== "all" &&
+            name.toLowerCase() !== "all states"
+        )
+        .map((name) => name.trim());
+
+      const unique = Array.from(new Set(normalized));
+      unique.sort((a, b) => a.localeCompare(b));
+
+      setStatesData([...states, ...unique.map((name) => ({ name }))]);
     },
     onError: () => {
       toast.error("Unable to load data");

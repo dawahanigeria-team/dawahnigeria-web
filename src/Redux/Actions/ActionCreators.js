@@ -4,6 +4,7 @@ import axios from "axios";
 // Action Creators
 import * as type from "./Types";
 import { identifyUser, resetUser, trackEvent, EVENTS } from "../../utils/posthog";
+import { getAuthErrorMessage } from "../../utils/authError";
 
 // Conditional toast helper that only works on client side to prevent SSR errors
 const conditionalToast = {
@@ -252,6 +253,12 @@ const LoginAction = (
           navigate(nextRoute);
           setLoading(false);
           conditionalToast.success("Login successful");
+        })
+        .catch((error) => {
+          setLoading(false);
+          conditionalToast.error(
+            getAuthErrorMessage(error, "Login failed. Please try again.")
+          );
         });
     } else {
       setLoading(true);
@@ -298,7 +305,9 @@ const LoginAction = (
         .catch((error) => {
           setLoading(false);
 
-          conditionalToast.error(error.response.data.message);
+          conditionalToast.error(
+            getAuthErrorMessage(error, "Login failed. Please try again.")
+          );
         });
     }
   };
@@ -390,7 +399,9 @@ const registration = (
       .catch((error) => {
         setLoading(false);
 
-        conditionalToast.error(error.response.data.message);
+        conditionalToast.error(
+          getAuthErrorMessage(error, "Registration failed. Please try again.")
+        );
       });
   };
 };

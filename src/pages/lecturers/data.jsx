@@ -52,7 +52,7 @@ export const language = [
 
 export const states = [
   {
-    name: "All",
+    name: "All states",
     id: "",
   },
 ];

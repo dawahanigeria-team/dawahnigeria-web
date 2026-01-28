@@ -80,7 +80,7 @@ const Lecturers = () => {
               );
             })}
           </div>
-          <div className="lecturers_filter_language">
+          <div className="lecturers_filter_state">
             {Array.isArray(data) &&
               data?.map(({ name, id }, idx) => {
                 return (

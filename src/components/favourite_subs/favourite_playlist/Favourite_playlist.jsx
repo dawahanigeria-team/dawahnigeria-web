@@ -91,7 +91,7 @@ const Favourite_playlist = ({ setCount3 }) => {
       setIsEmpty(true);
     }
     setNextPageLoad(false);
-    setdata((prev) => uniqBy([...prev, ...additionalData], "nid"));
+    setdata((prev) => uniqBy([...prev, ...additionalData], "id"));
   }, [page]);
 
   const lastElement = useCallback(
