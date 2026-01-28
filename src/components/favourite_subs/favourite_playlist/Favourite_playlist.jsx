@@ -161,7 +161,11 @@ const Favourite_playlist = ({ setCount3 }) => {
                       onClick={() => {
                         navigate(`${PLAYLISTS}${id}`, {
                           state: {
-                            title: Title || title || name.split(" - ")[0],
+                            title:
+                              Title ||
+                              title ||
+                              (name && name.split(" - ")[0]) ||
+                              "Untitled",
                             rpname,
                             img,
                             cats: categories,
@@ -194,7 +198,11 @@ const Favourite_playlist = ({ setCount3 }) => {
                       onClick={() => {
                         navigate(`${PLAYLISTS}${id}`, {
                           state: {
-                            title: Title || title || name.split(" - ")[0],
+                            title:
+                              Title ||
+                              title ||
+                              (name && name.split(" - ")[0]) ||
+                              "Untitled",
                             rpname,
                             img,
                             cats: categories,

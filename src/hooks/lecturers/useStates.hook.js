@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { lecturersApi } from "../../services";
 // Use client-only toast to avoid SSR errors
@@ -6,7 +6,7 @@ import { toast } from "../../utils/conditionalToast";
 import { states } from "../../pages/lecturers/data";
 
 export const useStatesHook = () => {
-  const [statesData, setStatesData] = useState([]);
+  const [statesData, setStatesData] = useState(states);
 
   useQuery(["states"], () => lecturersApi.getStates(), {
     onSuccess: (data) => {
