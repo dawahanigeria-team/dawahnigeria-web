@@ -68,11 +68,12 @@ const FilterButton = ({
         );
       }
     } else if (action === "state") {
-      if (typeof setState === "function") setState(title === "All" ? "" : title);
+      const isAllState = title === "All" || title === "All states";
+      if (typeof setState === "function") setState(isAllState ? "" : title);
 
       if (typeof setlectId === "function") setlectId(null);
       if (typeof setActiveId === "function") setActiveId("All");
-      if (title === "All") {
+      if (isAllState) {
         if (typeof setData2 === "function")
           setData2(
             Array.isArray(data) && data.filter((value) => value.state)
