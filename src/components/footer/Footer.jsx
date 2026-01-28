@@ -52,13 +52,11 @@ const Footer = () => {
                         alt="Download on App Store"
                       />
                     </button>
-                    <button
-                      type="button"
+                    <a
+                      href="https://play.google.com/store/apps/details?id=com.dawahnigeria.app&pcampaignid=web_share"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       aria-label="Download app on Google Play"
-                      onClick={(e) => {
-                        e.nativeEvent.stopImmediatePropagation();
-                        setShowComingSoon(true);
-                      }}
                       className="dn-footer-app-button"
                     >
                       <img
@@ -66,7 +64,7 @@ const Footer = () => {
                         src={googleplay}
                         alt="Get it on Google Play"
                       />
-                    </button>
+                    </a>
                   </div>
                 </div>
 
