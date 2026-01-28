@@ -82,16 +82,14 @@ const Nav = () => {
           <div className="hide"></div>
           <div className="nav_download">
             <div className="nav_download1">
-              <button
-                type="button"
+              <a
+                href="https://play.google.com/store/apps/details?id=com.dawahnigeria.app&pcampaignid=web_share"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Download app on Google play"
-                onClick={(e) => {
-                  e.nativeEvent.stopImmediatePropagation();
-                  setShowComingSoon((prev) => !prev);
-                }}
               >
                 <img src={googleplaySvg} alt="" />
-              </button>
+              </a>
             </div>
             <div className="nav_download2">
               <button
@@ -108,14 +106,14 @@ const Nav = () => {
           </div>
 
           <div className="nav_res_download_wrapper bg-background text-color border border-border">
-            <button
-              className="nav_res_download"
-              onClick={() => {
-                setShowComingSoon((prev) => !prev);
-              }}
+            <a
+              href="https://play.google.com/store/apps/details?id=com.dawahnigeria.app&pcampaignid=web_share"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav_res_download flex items-center justify-center"
             >
               Get app
-            </button>
+            </a>
           </div>
         </div>
         <div className={"max-[615px]:block hidden mt-2"}>
