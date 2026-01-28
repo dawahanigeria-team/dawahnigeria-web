@@ -3,7 +3,13 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import * as Sentry from "@sentry/react";
-import { BrowserRouter as Router } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  useLocation,
+  useNavigationType,
+  createRoutesFromChildren,
+  matchRoutes,
+} from "react-router-dom";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { createStore, applyMiddleware, compose } from "redux";
@@ -19,11 +25,28 @@ Sentry.init({
   environment:
     process.env.REACT_APP_SENTRY_ENVIRONMENT || process.env.NODE_ENV,
   release: process.env.REACT_APP_SENTRY_RELEASE,
-  integrations: [Sentry.browserTracingIntegration()],
+  integrations: [
+    Sentry.browserTracingIntegration(),
+    Sentry.reactRouterV6BrowserTracingIntegration({
+      useEffect: React.useEffect,
+      useLocation,
+      useNavigationType,
+      createRoutesFromChildren,
+      matchRoutes,
+    }),
+  ],
   enableTracing: true,
+  // Performance Monitoring
   tracesSampleRate: parseFloat(
     process.env.REACT_APP_SENTRY_TRACES_SAMPLE_RATE || "0.1"
   ),
+  // Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled
+  tracePropagationTargets: [
+    "localhost",
+    /^https:\/\/backend\.dawahbox\.com\/api/,
+    process.env.REACT_APP_API_BASE_URL,
+  ].filter(Boolean),
+  // Session Replay
   profilesSampleRate: parseFloat(
     process.env.REACT_APP_SENTRY_PROFILES_SAMPLE_RATE || "0"
   ),
