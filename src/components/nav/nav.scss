@@ -173,12 +173,4 @@
     }
   }
 
-  .nav_search_mobile {
-    display: none;
-    width: 100%;
-    margin-top: 0.5rem;
-    @media screen and (max-width: 615px) {
-      display: none;
-    }
-  }
 }

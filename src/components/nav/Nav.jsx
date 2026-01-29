@@ -120,11 +120,6 @@ const Nav = () => {
             </a>
           </div>
         </div>
-        <div className="nav_search_mobile">
-          <ClientOnly>
-            <Search />
-          </ClientOnly>
-        </div>
       </div>
       {showComingSoon && (
         <ComingSoon
