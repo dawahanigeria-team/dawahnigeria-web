@@ -73,13 +73,17 @@ const Nav = () => {
             </div>
           </div>
 
-          <div className="hide"></div>
           <div className="nav_search">
             <ClientOnly>
               <Search />
             </ClientOnly>
           </div>
-          <div className="hide"></div>
+          <div className="nav_search_inline_mobile">
+            <ClientOnly>
+              <Search />
+            </ClientOnly>
+          </div>
+
           <div className="nav_download">
             <div className="nav_download1">
               <a
@@ -115,11 +119,6 @@ const Nav = () => {
               Get app
             </a>
           </div>
-        </div>
-        <div className={"max-[615px]:block hidden mt-2"}>
-          <ClientOnly>
-            <Search />
-          </ClientOnly>
         </div>
       </div>
       {showComingSoon && (
