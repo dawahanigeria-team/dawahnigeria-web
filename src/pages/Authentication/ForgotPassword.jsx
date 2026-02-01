@@ -69,6 +69,7 @@ const ForgotPassword = () => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
         },
       });
 
@@ -120,6 +121,7 @@ const ForgotPassword = () => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
         },
       });
 

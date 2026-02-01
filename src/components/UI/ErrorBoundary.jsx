@@ -21,6 +21,18 @@ class ErrorBoundary extends Component {
     console.error("Error caught by ErrorBoundary:", error, errorInfo);
     this.setState({ errorInfo });
 
+    // Auto-reload on ChunkLoadError (stale cache after deployment)
+    if (error?.name === "ChunkLoadError" || error?.message?.includes("Loading chunk")) {
+      const hasReloaded = sessionStorage.getItem("chunk_error_reloaded");
+      if (!hasReloaded) {
+        sessionStorage.setItem("chunk_error_reloaded", "true");
+        window.location.reload();
+        return;
+      }
+      // Clear flag after successful reload attempt
+      sessionStorage.removeItem("chunk_error_reloaded");
+    }
+
     // You could also log to an error reporting service here
   }
 
