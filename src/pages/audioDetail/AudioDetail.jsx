@@ -271,13 +271,13 @@ const AudioDetail = () => {
         setdisabled(false);
 
         if (!getFavs?.includes(parseInt(lecid))) {
-          setsumofFav(sumofFav + 1);
+          setsumofFav((prev) => prev + 1);
           // Track favorite added
           if (resolvedAudioInfo) {
             trackFavorite(resolvedAudioInfo, 'add');
           }
         } else {
-          setsumofFav(sumofFav - 1);
+          setsumofFav((prev) => prev - 1);
           // Track favorite removed
           if (resolvedAudioInfo) {
             trackFavorite(resolvedAudioInfo, 'remove');
