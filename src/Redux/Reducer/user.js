@@ -2,6 +2,7 @@ import * as type from "../Actions/Types";
 
 const initailState = {
   currentUser: null,
+  refreshToken: null,
   type: null,
   playing: false,
   addplaylist: false,
@@ -22,6 +23,12 @@ const User = (state = initailState, action) => {
       return {
         ...state,
         token: action.payload,
+      };
+    case type.SET_TOKENS:
+      return {
+        ...state,
+        token: action.payload?.accessToken || "",
+        refreshToken: action.payload?.refreshToken || null,
       };
     case type.FETCH_USER_SUCCESS:
       const userData = action.payload;
@@ -111,6 +118,7 @@ const User = (state = initailState, action) => {
         ...state,
         currentUser: null,
         token: "",
+        refreshToken: null,
         type: null,
       };
 

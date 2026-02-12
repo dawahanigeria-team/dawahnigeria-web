@@ -17,6 +17,7 @@ import rootReducer from "./Redux/Reducer/index";
 import { PersistGate } from "redux-persist/integration/react";
 import { thunk } from "redux-thunk";
 import { HelmetProvider } from "react-helmet-async";
+import { setStore } from "./store/storeRegistry";
 
 const { Suspense, lazy } = React;
 
@@ -77,6 +78,7 @@ const store = createStore(
   persistedReducer,
   composeEnhancers(applyMiddleware(thunk))
 );
+setStore(store);
 
 const persistor = persistStore(store);
 const container = document.getElementById("root");

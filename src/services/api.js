@@ -1,5 +1,7 @@
 import axios from "axios";
 // import { toast } from "../utils/conditionalToast"; // SSR-safe toast utility // Moved to conditional import to prevent SSR errors
+import { getStore } from "../store/storeRegistry";
+import { refreshAccessToken } from "./tokenRefresh";
 
 // Conditional toast helper that only works on client side to prevent SSR errors
 const conditionalToast = {
@@ -157,9 +159,17 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
   }
 
   service.interceptors.request.use((config) => {
+    config.headers = config.headers || {};
+
     // Add x-project to the header if the request METHOD is not GET
     if (config.method !== "get") {
       config.headers["x-project"] = "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25";
+    }
+
+    const token = getStore()?.getState?.()?.user?.token;
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+      config.headers["X-Authorization"] = `Bearer ${token}`;
     }
 
     return config;
@@ -202,7 +212,24 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
       return responseData;
     },
     // Error handler
-    (error) => {
+    async (error) => {
+      const originalRequest = error?.config || {};
+
+      if (error?.response?.status === 401 && !originalRequest._retry) {
+        originalRequest._retry = true;
+
+        try {
+          const nextAccessToken = await refreshAccessToken();
+          originalRequest.headers = originalRequest.headers || {};
+          originalRequest.headers["Authorization"] = `Bearer ${nextAccessToken}`;
+          originalRequest.headers["X-Authorization"] = `Bearer ${nextAccessToken}`;
+
+          return service(originalRequest);
+        } catch (refreshError) {
+          return Promise.reject(refreshError);
+        }
+      }
+
       // Handle network errors (no response from server)
       if (error?.response === undefined) {
         const errorMessage = getNetworkErrorMessage(error);

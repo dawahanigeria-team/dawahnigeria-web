@@ -25,7 +25,7 @@ const conditionalToast = {
 };
 
 const resolveAuthPayload = (payload) => {
-  if (!payload) return { user: null, token: null };
+  if (!payload) return { user: null, token: null, refreshToken: null };
 
   const token =
     payload.token ||
@@ -34,6 +34,13 @@ const resolveAuthPayload = (payload) => {
     payload?.data?.token ||
     payload?.data?.access_token ||
     payload?.data?.auth_token ||
+    null;
+
+  const refreshToken =
+    payload.refresh_token ||
+    payload.refreshToken ||
+    payload?.data?.refresh_token ||
+    payload?.data?.refreshToken ||
     null;
 
   const candidates = [
@@ -57,7 +64,7 @@ const resolveAuthPayload = (payload) => {
             candidate.email)
       ) || null;
 
-  return { user, token };
+  return { user, token, refreshToken };
 };
 
 const resolvePostAuthRedirect = (preferred) => {
@@ -174,6 +181,17 @@ const loginSuccess = (data) => {
     payload: data,
   };
 };
+
+const setTokens = (accessToken, refreshToken) => {
+  return {
+    type: type.SET_TOKENS,
+    payload: {
+      accessToken,
+      refreshToken,
+    },
+  };
+};
+
 const logout = () => {
   // Reset PostHog user identity on logout
   resetUser();
@@ -226,7 +244,7 @@ const LoginAction = (
           }
         )
         .then((res) => {
-          const { user, token } = resolveAuthPayload(res.data);
+          const { user, token, refreshToken } = resolveAuthPayload(res.data);
           if (!user && !token) {
             setLoading(false);
             conditionalToast.error("Login failed. Please try again.");
@@ -236,7 +254,7 @@ const LoginAction = (
             dispatch(GetUsersSuccess(user));
           }
           if (token) {
-            dispatch(loginSuccess(token));
+            dispatch(setTokens(token, refreshToken));
           }
 
           // Track user login and identify in PostHog
@@ -280,7 +298,7 @@ const LoginAction = (
           }
         )
         .then((res) => {
-          const { user, token } = resolveAuthPayload(res.data);
+          const { user, token, refreshToken } = resolveAuthPayload(res.data);
           if (!user && !token) {
             setLoading(false);
             conditionalToast.error("Login failed. Please try again.");
@@ -290,7 +308,7 @@ const LoginAction = (
             dispatch(GetUsersSuccess(user));
           }
           if (token) {
-            dispatch(loginSuccess(token));
+            dispatch(setTokens(token, refreshToken));
           }
 
           // Track user login and identify in PostHog
@@ -423,6 +441,7 @@ export {
   getaudioData,
   LoginAction,
   loginSuccess,
+  setTokens,
   setPlaying,
   logout,
   getType,
