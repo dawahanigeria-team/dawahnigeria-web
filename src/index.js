@@ -18,6 +18,7 @@ import rootReducer from "./Redux/Reducer/index";
 import { PersistGate } from "redux-persist/integration/react";
 import { thunk } from "redux-thunk";
 import { PostHogProvider } from "posthog-js/react";
+import { HelmetProvider } from "react-helmet-async";
 
 // Initialize Sentry (client)
 Sentry.init({
@@ -143,20 +144,22 @@ const AppWithProviders = ({ children }) => {
 };
 
 const AppComponent = (
-  <AppWithProviders>
-    <Router
-      future={{
-        v7_startTransition: true,
-        v7_relativeSplatPath: true,
-      }}
-    >
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <App />
-        </PersistGate>
-      </Provider>
-    </Router>
-  </AppWithProviders>
+  <HelmetProvider>
+    <AppWithProviders>
+      <Router
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}
+      >
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <App />
+          </PersistGate>
+        </Provider>
+      </Router>
+    </AppWithProviders>
+  </HelmetProvider>
 );
 
 const root = ReactDOM.createRoot(container);

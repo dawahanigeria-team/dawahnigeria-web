@@ -14,6 +14,7 @@ import {
 
 import "./App.css";
 
+import { Helmet } from "react-helmet-async";
 import ErrorBoundary from "./components/UI/ErrorBoundary";
 
 // Import PostHog test utility in development
@@ -289,21 +290,28 @@ const App = () => {
 
   return (
     <>
-      <title>Dawahnigeria - Your Source for Islamic Knowledge</title>
-      <meta
-        name="description"
-        content="Access a vast library of Islamic lectures, Quran recitations, videos, and playlists from various scholars and genres on Dawahnigeria."
-      />
-      <meta
-        property="og:title"
-        content="Dawahnigeria - Your Source for Islamic Knowledge"
-      />
-      <meta
-        property="og:description"
-        content="Access a vast library of Islamic lectures, Quran recitations, videos, and playlists from various scholars and genres on Dawahnigeria."
-      />
-      <meta property="og:type" content="website" />
-      <meta property="og:site_name" content="Dawahnigeria" />
+      <Helmet
+        defaultTitle="Dawahnigeria - Your Source for Islamic Knowledge"
+        titleTemplate="%s | Dawahnigeria"
+      >
+        <meta
+          name="description"
+          content="Access a vast library of Islamic lectures, Quran recitations, videos, and playlists from various scholars and genres on Dawahnigeria."
+        />
+        <meta
+          property="og:title"
+          content="Dawahnigeria - Your Source for Islamic Knowledge"
+        />
+        <meta
+          property="og:description"
+          content="Access a vast library of Islamic lectures, Quran recitations, videos, and playlists from various scholars and genres on Dawahnigeria."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Dawahnigeria" />
+        <meta property="og:image" content="https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@dawahnigeria" />
+      </Helmet>
 
       <div className="App">
         <Scrolltotop />
