@@ -14,6 +14,7 @@ import bgenre from "../../assets/svg/boom-genre.svg";
 import quranIcon from "../../assets/svg/quran.svg";
 import { BsFillPlayBtnFill } from "react-icons/bs";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import LandingOptions from "../../components/landingOptions/LandingOptions";
 import MyCarousel from "../../components/UI/carousel/myCarousel";
 import MobileImageWidget from "./mobileimagewidget/mobileImageWidget";
@@ -30,12 +31,14 @@ import {
   LECTURERS,
   QURAN,
   RAMADAN,
+  LEADERBOARD,
 } from "../../utils/routes/constants";
 import HeadMeta from "../../components/head-meta";
 import { useLandingPageHook } from "../../hooks/landing";
 import RowSkeletonContainer from "../../components/skeletion/skeleton.container";
 import { useMediaQuery } from "../../hooks/common/useMediaQuery.hook";
 import { MEDIA_QUERIES } from "../../utils/breakpoints";
+import { EVENTS, trackEvent } from "../../utils/posthog";
 
 const MOBILE_CAROUSEL_SETTINGS = {
   dots: true,
@@ -82,10 +85,16 @@ const OPTIONS_SLIDER_SETTINGS = {
 const SKELETON_COUNT = 4;
 
 const Landing = () => {
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, token, refreshToken } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const id = currentUser?.id;
   const page = 1;
   const isMobile = useMediaQuery(MEDIA_QUERIES.mobile);
+  const hasAuthSession = Boolean(
+    currentUser?.id ||
+    (typeof token === "string" && token.trim()) ||
+    (typeof refreshToken === "string" && refreshToken.trim())
+  );
 
   const [sliders, recentlyPosted, specialFeatures, recentlyviewed] =
     useLandingPageHook(id, page);
@@ -103,6 +112,17 @@ const Landing = () => {
   }, [specialFeatures?.data]);
 
   const hasSliderData = sliders?.data && Array.isArray(sliders.data) && sliders.data.length > 1;
+
+  const handleLeaderboardCtaClick = () => {
+    trackEvent(EVENTS.LEADERBOARD_CTA_CLICKED, {
+      source: "landing_mobile",
+      is_authenticated: hasAuthSession,
+      has_auth_session: hasAuthSession,
+      target_path: LEADERBOARD,
+    });
+
+    navigate(LEADERBOARD);
+  };
 
   return (
     <Container>
@@ -138,6 +158,21 @@ const Landing = () => {
                   <LandingOptions text={"Trending"} img={btrending} link={TRENDING} />
                   <LandingOptions text={"New"} img={bnew} link={NEW} />
                 </Slider>
+
+                <section className="landing_mobile_leaderboard_cta" aria-label="Ramadan leaderboard call to action">
+                  <p className="landing_mobile_leaderboard_badge">Ramadan challenge</p>
+                  <h2>Check today&apos;s leaderboard</h2>
+                  <p>
+                    Track your listening sessions and climb the daily ranking.
+                  </p>
+                  <button
+                    type="button"
+                    className="landing_mobile_leaderboard_button"
+                    onClick={handleLeaderboardCtaClick}
+                  >
+                    View leaderboard
+                  </button>
+                </section>
               </>
             )}
           </>

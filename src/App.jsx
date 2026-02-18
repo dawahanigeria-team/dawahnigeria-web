@@ -25,6 +25,7 @@ if (process.env.NODE_ENV === 'development') {
   });
 }
 import { Route, Routes, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Layout from "./components/layout/Layout";
 import Scrolltotop from "./components/UI/scrollToTop";
 import {
@@ -55,11 +56,13 @@ import {
   RECO1,
   RECO2,
   RAMADAN,
+  LEADERBOARD,
   DOWNLOAD,
   PRIVACY,
 } from "./utils/routes/constants";
 import { usePageTracking } from "./utils/tracking";
 import { useThemeHook } from "./hooks/common/useTheme.hook";
+import { useUsageSessionTracking } from "./hooks/leaderboard";
 
 // Lazy load all pages for code splitting
 const Landing = lazy(() => import("./pages/landing/Landing"));
@@ -98,6 +101,7 @@ const Buzz = lazy(() => import("./pages/buzz/buzz"));
 const Podcast = lazy(() => import("./pages/podcast/podcast"));
 const SearchPage = lazy(() => import("./pages/searchPage/searchPage"));
 const Privacy = lazy(() => import("./pages/privacy/Privacy"));
+const Leaderboard = lazy(() => import("./pages/leaderboard/Leaderboard"));
 
 // Lazy load heavy third-party components
 const TawkMessengerReact = lazy(() => import("@tawk.to/tawk-messenger-react"));
@@ -186,6 +190,7 @@ const ConditionalToaster = () => {
 
 const App = () => {
   usePageTracking();
+  const { currentUser } = useSelector((state) => state.user);
   const audioRef = useRef(null);
   const rangeRef = useRef();
   const [initial, setinitial] = useState(true);
@@ -198,6 +203,8 @@ const App = () => {
   const { darkQuery } = useThemeHook();
   const [searchType, setSearchType] = useState("general");
   const [playing, setPlaying] = useState(false);
+
+  useUsageSessionTracking(currentUser?.id);
 
   // Memoize context values to prevent unnecessary re-renders
   const searchContextValue = useMemo(
@@ -338,6 +345,7 @@ const App = () => {
                       </Route>
                       <Route path="/dawahcast" element={<Layout />}>
                         <Route path={RAMADAN} element={<Ramadan />} />
+                        <Route path={LEADERBOARD} element={<Leaderboard />} />
                         <Route
                           path={`${RAMADAN}/year/:year`}
                           element={<RamadanYearTafseer />}

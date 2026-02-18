@@ -32,6 +32,9 @@ export const EVENTS = {
   LECTURER_VIEWED: 'lecturer_viewed',
   GENRE_VIEWED: 'genre_viewed',
   PLAYLIST_VIEWED: 'playlist_viewed',
+  LEADERBOARD_CTA_CLICKED: 'leaderboard_cta_clicked',
+  LEADERBOARD_OPENED: 'leaderboard_opened',
+  LEADERBOARD_REFRESHED: 'leaderboard_refreshed',
 
   // Playlist Events
   PLAYLIST_CREATED: 'playlist_created',

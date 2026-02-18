@@ -22,19 +22,45 @@ const resolveRefreshPayload = (payload) => {
   }
 
   const accessToken =
+    payload.accessToken ||
     payload.access_token ||
     payload.token ||
     payload.auth_token ||
+    payload?.tokens?.accessToken ||
+    payload?.tokens?.access_token ||
+    payload?.tokens?.token ||
+    payload?.tokens?.auth_token ||
+    payload?.data?.accessToken ||
     payload?.data?.access_token ||
     payload?.data?.token ||
     payload?.data?.auth_token ||
+    payload?.data?.tokens?.accessToken ||
+    payload?.data?.tokens?.access_token ||
+    payload?.data?.tokens?.token ||
+    payload?.data?.tokens?.auth_token ||
+    payload?.data?.data?.accessToken ||
+    payload?.data?.data?.access_token ||
+    payload?.data?.data?.token ||
+    payload?.data?.data?.auth_token ||
+    payload?.data?.data?.tokens?.accessToken ||
+    payload?.data?.data?.tokens?.access_token ||
+    payload?.data?.data?.tokens?.token ||
+    payload?.data?.data?.tokens?.auth_token ||
     null;
 
   const refreshToken =
     payload.refresh_token ||
     payload.refreshToken ||
-    payload?.data?.refresh_token ||
+    payload?.tokens?.refreshToken ||
+    payload?.tokens?.refresh_token ||
     payload?.data?.refreshToken ||
+    payload?.data?.refresh_token ||
+    payload?.data?.tokens?.refreshToken ||
+    payload?.data?.tokens?.refresh_token ||
+    payload?.data?.data?.refresh_token ||
+    payload?.data?.data?.refreshToken ||
+    payload?.data?.data?.tokens?.refreshToken ||
+    payload?.data?.data?.tokens?.refresh_token ||
     null;
 
   return { accessToken, refreshToken };
@@ -50,7 +76,6 @@ export const refreshAccessToken = async () => {
 
   const currentRefreshToken = getRefreshToken(store);
   if (!currentRefreshToken) {
-    store.dispatch({ type: type.LOGOUT });
     return Promise.reject(new Error("No refresh token available"));
   }
 

@@ -20,7 +20,8 @@ const Ramadan = () => {
   const otherYears = ramadanYears?.slice(1);
 
   // Use root-level totalCount for featured year if per-year total_count isn't available
-  const featuredYearCount = featuredYear?.total_count || totalCount || featuredYear?.documents?.length || 0;
+  const featuredYearCount =
+    featuredYear?.total_count || totalCount || featuredYear?.documents?.length || 0;
 
   return (
     <Container>
@@ -60,8 +61,20 @@ const Ramadan = () => {
                     aria-label={`View all ${featuredYearCount} albums from ${featuredYear.name}`}
                   >
                     <span>View All {featuredYearCount} Albums</span>
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                      <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M7.5 15L12.5 10L7.5 5"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   </button>
                 </div>
@@ -117,9 +130,7 @@ const Ramadan = () => {
                             </div>
                             <div className="ramadan-timeline-info">
                               <h3 className="ramadan-timeline-name">{name}</h3>
-                              <p className="ramadan-timeline-count">
-                                {yearCount} albums available
-                              </p>
+                              <p className="ramadan-timeline-count">{yearCount} albums available</p>
                             </div>
                           </Link>
                           <div className="ramadan-timeline-actions">

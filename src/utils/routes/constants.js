@@ -27,4 +27,5 @@ export const RECO1 = "/dawahcast/recommend1";
 export const RECO2 = "/dawahcast/recommend2";
 export const DOWNLOAD = "/dawahcast/download";
 export const RAMADAN = "/dawahcast/ramadan";
+export const LEADERBOARD = "/dawahcast/ramadan/leaderboard";
 export const PRIVACY = "/dawahcast/privacy";

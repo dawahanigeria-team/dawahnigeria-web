@@ -29,19 +29,114 @@ const resolveAuthPayload = (payload) => {
 
   const token =
     payload.token ||
+    payload.accessToken ||
     payload.access_token ||
     payload.auth_token ||
+    payload?.tokens?.accessToken ||
+    payload?.tokens?.access_token ||
+    payload?.tokens?.token ||
+    payload?.tokens?.auth_token ||
+    payload?.data?.accessToken ||
     payload?.data?.token ||
     payload?.data?.access_token ||
     payload?.data?.auth_token ||
+    payload?.data?.tokens?.accessToken ||
+    payload?.data?.tokens?.access_token ||
+    payload?.data?.tokens?.token ||
+    payload?.data?.tokens?.auth_token ||
+    payload?.data?.data?.accessToken ||
+    payload?.data?.data?.token ||
+    payload?.data?.data?.access_token ||
+    payload?.data?.data?.auth_token ||
+    payload?.data?.data?.tokens?.accessToken ||
+    payload?.data?.data?.tokens?.access_token ||
+    payload?.data?.data?.tokens?.token ||
+    payload?.data?.data?.tokens?.auth_token ||
     null;
 
   const refreshToken =
     payload.refresh_token ||
     payload.refreshToken ||
-    payload?.data?.refresh_token ||
+    payload?.tokens?.refresh_token ||
+    payload?.tokens?.refreshToken ||
     payload?.data?.refreshToken ||
+    payload?.data?.refresh_token ||
+    payload?.data?.tokens?.refreshToken ||
+    payload?.data?.tokens?.refresh_token ||
+    payload?.data?.data?.refresh_token ||
+    payload?.data?.data?.refreshToken ||
+    payload?.data?.data?.tokens?.refreshToken ||
+    payload?.data?.data?.tokens?.refresh_token ||
     null;
+
+  const parseJwtPayload = (jwtToken) => {
+    if (typeof jwtToken !== "string") return null;
+    const parts = jwtToken.split(".");
+    if (parts.length !== 3) return null;
+
+    try {
+      const normalized = parts[1]
+        .replace(/-/g, "+")
+        .replace(/_/g, "/");
+      const padded = normalized + "=".repeat((4 - (normalized.length % 4)) % 4);
+
+      let decoded = "";
+      if (typeof atob === "function") {
+        decoded = atob(padded);
+      } else if (typeof Buffer !== "undefined") {
+        decoded = Buffer.from(padded, "base64").toString("utf-8");
+      } else {
+        return null;
+      }
+
+      return JSON.parse(decoded);
+    } catch {
+      return null;
+    }
+  };
+
+  const deriveUserFromToken = (jwtToken) => {
+    const claims = parseJwtPayload(jwtToken);
+    if (!claims || typeof claims !== "object") return null;
+
+    const rawId =
+      claims.id ??
+      claims.user_id ??
+      claims.userId ??
+      claims.uid ??
+      claims.sub ??
+      null;
+
+    const numericId = Number(rawId);
+    const normalizedId =
+      Number.isFinite(numericId) && rawId !== null && rawId !== ""
+        ? Math.trunc(numericId)
+        : rawId;
+
+    const username =
+      claims.username ??
+      claims.user_name ??
+      claims.userName ??
+      claims?.data?.username ??
+      claims?.data?.user_name ??
+      claims?.data?.userName ??
+      claims.name ??
+      claims.email ??
+      null;
+
+    const email = claims.email ?? claims?.data?.email ?? null;
+
+    if (!normalizedId && !username && !email) {
+      return null;
+    }
+
+    return {
+      id: normalizedId ?? undefined,
+      user_id: normalizedId ?? undefined,
+      username: username || undefined,
+      email: email || undefined,
+    };
+  };
 
   const candidates = [
     payload.user,
@@ -59,10 +154,13 @@ const resolveAuthPayload = (payload) => {
           candidate &&
           (candidate.id ||
             candidate.user_id ||
+            candidate.userId ||
             candidate.username ||
             candidate.user_name ||
+            candidate.userName ||
+            candidate.name ||
             candidate.email)
-      ) || null;
+      ) || deriveUserFromToken(token);
 
   return { user, token, refreshToken };
 };

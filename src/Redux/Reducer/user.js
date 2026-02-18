@@ -36,8 +36,12 @@ const User = (state = initailState, action) => {
       // Use `??` (not `||`) so valid falsy values like 0 aren't treated as missing.
       const normalizedUser = userData ? {
         ...userData,
-        id: userData.id ?? userData.user_id,
-        username: userData.username ?? userData.user_name,
+        id: userData.id ?? userData.user_id ?? userData.userId,
+        username:
+          userData.username ??
+          userData.user_name ??
+          userData.userName ??
+          userData.name,
       } : null;
 
       return {
