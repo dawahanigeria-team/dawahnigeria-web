@@ -19,7 +19,7 @@ import MyCarousel from "../../components/UI/carousel/myCarousel";
 import MobileImageWidget from "./mobileimagewidget/mobileImageWidget";
 import CarouselSkeleton from "../../components/skeletion/carousel.skeleton";
 import {
-  GENRES,
+  CATEGORIES,
   HOME,
   CHARTS,
   TRENDING,
@@ -134,7 +134,7 @@ const Landing = () => {
                   <LandingOptions text={"Quran"} img={quranIcon} link={QURAN} />
                   <LandingOptions text={"Playlists"} img={bplaylist} link={PLAY} />
                   <LandingOptions text={"Video"} icon={<BsFillPlayBtnFill />} link={VIDEO} />
-                  <LandingOptions text={"Genre"} img={bgenre} link={GENRES} />
+                  <LandingOptions text={"Categories"} img={bgenre} link={CATEGORIES} />
                   <LandingOptions text={"Trending"} img={btrending} link={TRENDING} />
                   <LandingOptions text={"New"} img={bnew} link={NEW} />
                 </Slider>

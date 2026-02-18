@@ -43,6 +43,7 @@ import {
   RECOMMENDED_MORE,
   SEARCH,
   LIBRARY,
+  CATEGORIES,
   GENRES,
   CHARTS,
   TRENDING,
@@ -296,7 +297,7 @@ const App = () => {
       >
         <meta
           name="description"
-          content="Access a vast library of Islamic lectures, Quran recitations, videos, and playlists from various scholars and genres on Dawahnigeria."
+          content="Access a vast library of Islamic lectures, Quran recitations, videos, and playlists from various scholars and categories on Dawahnigeria."
         />
         <meta
           property="og:title"
@@ -304,7 +305,7 @@ const App = () => {
         />
         <meta
           property="og:description"
-          content="Access a vast library of Islamic lectures, Quran recitations, videos, and playlists from various scholars and genres on Dawahnigeria."
+          content="Access a vast library of Islamic lectures, Quran recitations, videos, and playlists from various scholars and categories on Dawahnigeria."
         />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Dawahnigeria" />
@@ -355,6 +356,8 @@ const App = () => {
                         <Route path={SEARCH} element={<SearchPage />} />
                         <Route path={LIBRARY} element={<Library />} />
                         <Route path={DOWNLOAD} element={<Download />} />
+                        <Route path={CATEGORIES} element={<Genres />} />
+                        <Route path={`${CATEGORIES}/:id`} element={<GenreDetail />} />
                         <Route path={GENRES} element={<Genres />} />
                         <Route path={`${GENRES}/:id`} element={<GenreDetail />} />
                         <Route path={RECO2} element={<Podcast />} />

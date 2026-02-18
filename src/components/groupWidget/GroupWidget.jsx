@@ -68,6 +68,8 @@ const GroupWidget = ({
 
   const [isprev, setisprev] = useState(false);
   const [isnext, setisnext] = useState(true);
+  const isCategoryContext =
+    nav1?.title === "Genres" || nav1?.title === "Categories";
   const [size, setSize] = useState(() => {
     return typeof window !== 'undefined' ? window.innerWidth : 1024;
   });
@@ -567,7 +569,7 @@ const GroupWidget = ({
           </div>
         </div>
       )}
-      {nav1?.title === "Genres" && type === "lecturer" && (
+      {isCategoryContext && type === "lecturer" && (
         <div className="w-full h-full overflow-hidden mobile-up:hidden">
           <div className="w-full overflow-x-auto flex items-center space-x-4 h-full">
             {Array.isArray(data) &&
@@ -607,7 +609,7 @@ const GroupWidget = ({
           <div
             ref={slide}
             className={`overflow_auto_wrapper_lect ${
-              nav1?.title === "Genres" ? "hidden" : ""
+              isCategoryContext ? "hidden" : ""
             } mobile-up:space-x-20 `}
           >
             {Array.isArray(data) &&

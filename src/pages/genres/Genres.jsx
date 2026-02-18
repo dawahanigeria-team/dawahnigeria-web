@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import HeaderRouter from "../../components/headerRouter/HeaderRouter";
 import Loader from "../../components/UI/loader/loader";
 import GenreWidget from "./genreWidget";
-import { GENRES } from "../../utils/routes/constants";
+import { CATEGORIES } from "../../utils/routes/constants";
 
 import { genresApi } from "../../services";
 import { useQueryGetRequest } from "../../hooks/getqueries";
@@ -23,15 +23,15 @@ const Genres = () => {
   );
 
   const showMore = (id) => {
-    navigate(`${GENRES}/${id}`);
+    navigate(`${CATEGORIES}/${id}`);
   };
 
   return (
     <Container>
-      <HeadMeta title={`Genres of islamic resources on Dawah Nigeria `} />
+      <HeadMeta title={`Categories of islamic resources on Dawah Nigeria `} />
       <div className="genre_wrapper">
         <div className="genre_header_link bg-background max-[615px]:border-b border-zinc-700">
-          <HeaderRouter title={"Genres"} />
+          <HeaderRouter title={"Categories"} />
         </div>
 
         {isLoading && (

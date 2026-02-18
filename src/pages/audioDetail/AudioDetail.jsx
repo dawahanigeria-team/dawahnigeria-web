@@ -39,7 +39,7 @@ import {
   getRepeat,
   getValue,
 } from "../../Redux/Actions/ActionCreators";
-import { GENRES, LECTURE, MORE } from "../../utils/routes/constants";
+import { CATEGORIES, LECTURE, MORE } from "../../utils/routes/constants";
 import CurrentPlayData from "../../components/currentData/currentPlayData";
 import Loader from "../../components/UI/loader/loader";
 
@@ -725,11 +725,11 @@ const AudioDetail = () => {
           <div className="audiodetail_info">
             <div className="audiodetail_info_wrap">
               <div className="audiodetail_info_name text-color dark:text-muted">
-                Genre:{" "}
+                Category:{" "}
               </div>
 
               <Link
-                to={`${GENRES}/${parseInt(
+                to={`${CATEGORIES}/${parseInt(
                   resolvedAudioInfo?.cat_id?.toString()
                 )}`}
                 className="audiodetail_info_value text-color dark:text-muted  hover:text-foreground dark:hover:text-[#ddff2b] hover:underline"
@@ -1006,9 +1006,9 @@ const AudioDetail = () => {
                   Information
                 </p>
                 <div className="audiodetail_info_wrap_mob">
-                  <p className="audiodetail_info_name_mob">Genre: </p>
+                  <p className="audiodetail_info_name_mob">Category: </p>
                   <Link
-                    to={`${GENRES}/${parseInt(
+                    to={`${CATEGORIES}/${parseInt(
                       resolvedAudioInfo?.cat_id?.toString()
                     )}`}
                     className="audiodetail_info_value_mob dark:hover:text-[#ddff2b] hover:underline"
@@ -1053,8 +1053,8 @@ const AudioDetail = () => {
             <Link
               to={
                 resolvedAudioInfo?.cat_id
-                  ? `${GENRES}/${parseInt(resolvedAudioInfo?.cat_id?.toString())}`
-                  : GENRES
+                  ? `${CATEGORIES}/${parseInt(resolvedAudioInfo?.cat_id?.toString())}`
+                  : CATEGORIES
               }
               className="similarWidget_more "
             >

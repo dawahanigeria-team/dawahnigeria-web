@@ -35,8 +35,8 @@ export const optiondata = [
   {
     id: 4,
     icon: <SiApplemusic className="lanicon5" />,
-    link: "/genres",
-    text: "Genres",
+    link: "/categories",
+    text: "Categories",
   },
   {
     id: 5,

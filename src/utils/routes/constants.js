@@ -14,6 +14,7 @@ export const TRENDING_MORE = "/dawahcast/more/trending";
 export const RECOMMENDED_MORE = "/dawahcast/more/recommended";
 export const SEARCH = "/dawahcast/search";
 export const LIBRARY = "/dawahcast/library";
+export const CATEGORIES = "/dawahcast/categories";
 export const GENRES = "/dawahcast/genres";
 export const CHARTS = "/dawahcast/charts";
 export const TRENDING = "/dawahcast/trending";
