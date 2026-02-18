@@ -21,31 +21,24 @@ const GenreDetail = () => {
   const queryParam = { id };
   const { theme } = useSelector((state) => state.user);
 
-  const { querieddata } = useQueryGetRequest(
+  const { data: categoryResponse } = useQueryGetRequest(
     "genre-details",
     queryParam,
     genresApi.getCategoryDetails
   );
+  const categoryName = categoryResponse?.category_details?.[0]?.name || "";
+  const categoryImage =
+    categoryResponse?.category_details?.[0]?.img || IMAGE_PLACEHOLDERS.lecture;
 
   //i/genre_api.php?cat_id=40622
   return (
     <Container>
-      <HeadMeta
-        title={`${
-          (querieddata?.category_details &&
-            querieddata?.category_details[0]?.name) ||
-          ""
-        } - Islamic resources on Dawah Nigeria`}
-      />
+      <HeadMeta title={`${categoryName} - Islamic resources on Dawah Nigeria`} />
       <div className="genredet_wrapper max-[615px]:pt-[10%]">
         <div className="w-full min-[615px]:h-[700px] h-[260px] max-[615px]:brightness-[20%] absolute ">
           <img
             className="w-full h-full bg-cover "
-            src={
-              (querieddata?.category_details &&
-                querieddata?.category_details[0]?.img) ||
-              IMAGE_PLACEHOLDERS.lecture
-            }
+            src={categoryImage}
             alt=""
           />
           {theme === "dark" ? (
@@ -70,21 +63,22 @@ const GenreDetail = () => {
                   navigate(-1);
                 }}
                 className={
-                  pathname === `/genres/${id}` ? "arrows white" : "arrows grey"
+                  pathname === `/dawahcast/categories/${id}` ||
+                  pathname === `/dawahcast/genres/${id}`
+                    ? "arrows white"
+                    : "arrows grey"
                 }
               />
               <VscArrowRight
                 className={pathname === "/" ? "arrows white" : "arrows grey"}
               />
-              <span className="grey">{"Genre"}</span>/ <span></span>
-              {querieddata?.category_details &&
-                querieddata?.category_details[0]?.name}
+              <span className="grey">{"Category"}</span>/ <span></span>
+              {categoryName}
             </div>
 
             <div className="w-full h-fit m-auto absolute inset-0 flex items-center justify-center">
               <span className="text-lg min-[615px]:text-3xl font-semibold text-white">
-                {querieddata?.category_details &&
-                  querieddata?.category_details[0]?.name}
+                {categoryName}
               </span>
             </div>
           </div>
@@ -92,23 +86,23 @@ const GenreDetail = () => {
 
         <div className="genre_items w-full min-[615px]:relative pb-10 min-[615px]:space-y-4 space-y-3 px-4">
           <GroupWidget
-            data={querieddata?.audio}
+            data={categoryResponse?.audio}
             heading="Lectures"
             type={"lectures"}
-            nav1={{ title: "Genres" }}
+            nav1={{ title: "Categories" }}
           />
           <GroupWidget
-            data={querieddata?.rp}
+            data={categoryResponse?.rp}
             heading="Lecturers"
             type={"lecturer"}
-            nav1={{ title: "Genres" }}
+            nav1={{ title: "Categories" }}
           />
 
           <GroupWidget
-            data={querieddata?.album}
+            data={categoryResponse?.album}
             heading="Albums"
             type={"album"}
-            nav1={{ title: "Genres" }}
+            nav1={{ title: "Categories" }}
           />
         </div>
       </div>

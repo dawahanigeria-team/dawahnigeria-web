@@ -9,18 +9,23 @@
   gap: 0.2rem;
   cursor: pointer;
 }
+
 @mixin grid_item_span2 {
   grid-column: span 2 / span 2;
 }
+
 @mixin grid_item_span3 {
   grid-column: span 3 / span 3;
 }
+
 @mixin grid_item_span4 {
   grid-column: span 4 / span 4;
 }
+
 @mixin grid_item_span6 {
   grid-column: span 6 / span 6;
 }
+
 @mixin mobile_tab_text {
   @media screen and (max-width: 615px) {
     font-size: 13px;
@@ -29,6 +34,7 @@
     cursor: pointer;
   }
 }
+
 @mixin mobile_tab_text_align {
   @media screen and (max-width: 615px) {
     display: flex;
@@ -36,12 +42,14 @@
     align-items: center;
   }
 }
+
 @mixin mobile_tab_activetext {
   @media screen and (max-width: 615px) {
     font-size: 15px;
     font-weight: 500;
   }
 }
+
 @mixin tab_text {
   font-family: "Nunito Sans";
   font-style: normal;
@@ -51,19 +59,22 @@
   color: #aeaeae;
   cursor: pointer;
 }
+
 @mixin tab_text_align {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
+
 @mixin tab_activetext {
   font-family: "Nunito Sans";
   font-style: normal;
   font-weight: 800;
   font-size: 21px;
   line-height: 30px;
-  
+
 }
+
 @mixin tab_sub_activetext {
   font-family: "Nunito Sans";
   font-style: normal;
@@ -72,16 +83,19 @@
   line-height: 30px;
   color: #868686;
 }
+
 @mixin hide_for_mobile {
   @media screen and (max-width: 615px) {
     display: none;
   }
 }
+
 @mixin hide_for_desktop {
   @media screen and (min-width: 615px) {
     display: none;
   }
 }
+
 @mixin font_mobile {
   @media screen and (max-width: 615px) {
     font-size: 14px;
@@ -93,11 +107,13 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
   @media screen and (max-width: 615px) {
     align-items: unset;
     //padding-top:13px;
     width: 100%;
   }
+
   .lecdet_header_link {
     width: 100%;
     position: fixed;
@@ -118,53 +134,65 @@
       z-index: -1;
       object-fit: contain;
       inset: 0;
+
       .img {
         width: 100%;
         height: 100%;
       }
     }
   }
+
   .lecdet_header_link_none {
     opacity: 0;
+
     .header_bg {
       display: none;
     }
   }
+
   .lecdet_hero {
     position: absolute;
     top: 0px;
     left: 0px;
     width: 100%;
-   filter: blur(200px);
-    
+    filter: blur(200px);
+
     height: 10%;
+
     @media screen and (max-width: 1096px) {
       height: 12%;
     }
+
     z-index: 0;
     @include hide_for_mobile;
   }
+
   .lecdet_hero_light {
     position: absolute;
     top: 0px;
     left: 0px;
     width: 100%;
-   filter: blur(700px);
-    
+    filter: blur(700px);
+
     height: 10%;
+
     @media screen and (max-width: 1096px) {
       height: 12%;
     }
+
     z-index: 0;
     @include hide_for_mobile;
   }
+
   .lecdet_container {
     z-index: 1;
     padding: 2%;
     width: 100%;
+
     @media screen and (max-width: 615px) {
       padding: 0px;
     }
+
     // ----------- Bread Crumbs --------------
     .lecdet_breadcrumb {
       display: flex;
@@ -173,6 +201,7 @@
       gap: 0.3rem;
       @include hide_for_mobile;
       margin-bottom: 3rem;
+
       .lecdet_breadcrumb_first {
         margin: unset;
         font-family: "Nunito Sans";
@@ -182,10 +211,12 @@
         line-height: 24px;
         color: #868686;
         cursor: pointer;
+
         &:hover {
           color: #d6ff00;
         }
       }
+
       .lecdet_breadcrumb_second {
         margin: unset;
         font-family: "Nunito Sans";
@@ -193,9 +224,10 @@
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
-     
+
       }
     }
+
     // ----------- Bread Crumbs End --------------
 
     // ----------- Section 1 --------------
@@ -205,10 +237,12 @@
       align-items: flex-end;
       gap: 1rem;
       margin-bottom: 2rem;
+
       @media screen and (max-width: 1132px) {
         flex-direction: column;
         align-items: flex-start;
       }
+
       @include hide_for_mobile;
 
       .lecdet_head_left {
@@ -242,6 +276,7 @@
         gap: 1rem;
         margin-bottom: 1rem;
         @include hide_for_mobile;
+
         .lecdet_head_right_head {
           margin: unset;
           font-family: "Nunito Sans";
@@ -249,7 +284,7 @@
           font-weight: 600;
           font-size: 20px;
           line-height: 26px;
-          
+
           //max-width: 350px;
           @media screen and (max-width: 600px) {
             width: 100%;
@@ -257,12 +292,14 @@
             line-height: 18px;
           }
         }
+
         .lecdet_head_right_text {
           display: flex;
           flex-direction: column;
           align-items: flex-start;
 
           gap: 0.1rem;
+
           .lecdet_head_right_text1 {
             margin: unset;
             font-family: "Nunito Sans";
@@ -271,12 +308,14 @@
             font-size: 16px;
             line-height: 20px;
             color: #d4d4d4;
+
             @media screen and (max-width: 600px) {
               margin-top: 0.5rem;
               font-size: 14px;
               line-height: 16px;
             }
           }
+
           .lecdet_head_right_text2 {
             margin: unset;
             font-family: "Nunito Sans";
@@ -285,6 +324,7 @@
             font-size: 16px;
             line-height: 20px;
             color: #d4d4d4;
+
             @media screen and (max-width: 600px) {
               margin-top: 0.5rem;
               font-size: 14px;
@@ -299,16 +339,20 @@
           flex-wrap: wrap;
           align-items: center;
           gap: 1rem;
+
           @media screen and (max-width: 600px) {
             margin-top: 1rem;
           }
+
           .lecdet_play {
             background: #ddff2b;
             @include button_style;
+
             .lecdet_play_icon {
               font-size: 30px;
               color: #000000;
             }
+
             .lecdet_play_text {
               font-family: "Nunito Sans";
               font-style: normal;
@@ -320,117 +364,131 @@
               margin: unset;
             }
           }
+
           .leclistdet_fav {
-        
+
             @include button_style;
-            &:hover {
-             
-            }
+
             .fav_btn {
               background: none;
               margin: 0;
               border: 0;
+
               .leclistdet_fav_icon {
                 font-size: 25px;
 
                 @media screen and (max-width: 600px) {
                   font-size: 20px;
                 }
-                
+
               }
-              .leclistdet_fav_icon_active{
+
+              .leclistdet_fav_icon_active {
                 font-size: 25px;
 
                 @media screen and (max-width: 600px) {
                   font-size: 20px;
                 }
-               
+
               }
             }
+
             .leclistdet_fav_text {
               font-family: "Nunito Sans";
               font-style: normal;
               font-weight: 400;
               font-size: 14px;
               line-height: 24px;
+
               @media screen and (max-width: 600px) {
                 font-size: 12px;
                 line-height: 20px;
               }
-             
+
               margin: unset;
             }
           }
+
           .lecdet_share {
-          //  background-color: #ffffff17;
+            //  background-color: #ffffff17;
             @include button_style;
-            &:hover {
-              //background-color: #ffffff2d;
-            }
+
             .fav_btn {
               background: none;
               margin: 0;
               border: 0;
+
               .lecdet_share_icon {
                 font-size: 25px;
+
                 @media screen and (max-width: 600px) {
                   font-size: 20px;
                 }
-               // color: #cfcfcf;
+
+                // color: #cfcfcf;
               }
             }
+
             .lecdet_share_text {
               font-family: "Nunito Sans";
               font-style: normal;
               font-weight: 400;
               font-size: 14px;
               line-height: 24px;
-             // color: #cfcfcf;
+              // color: #cfcfcf;
               margin: unset;
+
               @media screen and (max-width: 600px) {
                 font-size: 12px;
                 line-height: 20px;
               }
             }
           }
+
           .lecdet_comment {
-           
+
             @include button_style;
-            &:hover {
-            
-            }
+
             .lecdet_comment_icon {
               font-size: 25px;
+
               @media screen and (max-width: 600px) {
                 font-size: 20px;
               }
-              
+
             }
+
             .lecdet_comment_text {
               font-family: "Nunito Sans";
               font-style: normal;
               font-weight: 400;
               font-size: 14px;
               line-height: 24px;
+
               @media screen and (max-width: 600px) {
                 font-size: 12px;
                 line-height: 20px;
               }
-             
+
               margin: unset;
             }
           }
+
           .lecdet_download {
             background-color: #ffffff17;
             @include button_style;
+
             &:hover {
               background-color: #ffffff2d;
             }
+
             .lecdet_download_icon {
               font-size: 25px;
+
               @media screen and (max-width: 600px) {
                 font-size: 20px;
               }
+
               color: #cfcfcf;
             }
           }
@@ -446,13 +504,16 @@
       top: 58px;
       left: 0;
       right: 0;
+
       @media screen and (max-width: 615px) {
         width: 100%;
       }
+
       .lecdet_head_img {
         width: 100%;
         height: 250px;
         position: relative;
+
         .lecdet_head_img_sz {
           width: 100%;
           height: 100%;
@@ -460,6 +521,7 @@
           //filter:blur(80px);
         }
       }
+
       .lecdet_head_img_none {
         display: none;
       }
@@ -480,6 +542,7 @@
           width: 28px;
           height: 28px;
           margin-bottom: 2rem;
+
           .mob_arrow_sz {
             width: 100%;
             height: 100%;
@@ -487,38 +550,47 @@
         }
       }
     }
+
     // ----------- Section1 ends --------------
     // ----------- Section2 --------------
 
     .lecdet_tab_wrap {
       overflow-x: scroll;
       @include hide_for_mobile;
+
       &::-webkit-scrollbar {
         display: none;
       }
+
       &::-moz-scrollbar {
         display: none;
       }
+
       .lecdet_tab {
         display: grid;
         grid-template-columns: repeat(19, minmax(0, 1fr));
         justify-items: center;
         gap: 1rem;
         width: 90%;
+
         // border-bottom: 1px solid #5e5e5e;
         @media screen and (max-width: 1400px) {
           width: 900px;
         }
+
         .lecdet_tab_song {
           @include tab_text_align;
           @include grid_item_span3;
+
           .lecdet_tab_song1 {
             @include tab_text;
             margin: unset;
           }
+
           .lecdet_tab_song1_active {
             @include tab_activetext;
             position: relative;
+
             &::after {
               content: "";
               position: absolute;
@@ -530,24 +602,30 @@
               height: 0.25rem;
             }
           }
+
           .lecdet_tab_song2_active {
             @include tab_sub_activetext;
           }
+
           .lecdet_tab_song2 {
             @include tab_text;
             margin: unset;
           }
         }
+
         .lecdet_tab_album {
           @include tab_text_align;
           @include grid_item_span3;
+
           .lecdet_tab_album1 {
             @include tab_text;
             margin: unset;
           }
+
           .lecdet_tab_album1_active {
             @include tab_activetext;
             position: relative;
+
             &::after {
               content: "";
               position: absolute;
@@ -559,24 +637,30 @@
               height: 0.25rem;
             }
           }
+
           .lecdet_tab_album2_active {
             @include tab_sub_activetext;
           }
+
           .lecdet_tab_album2 {
             @include tab_text;
             margin: unset;
           }
         }
+
         .lecdet_tab_playlist {
           @include tab_text_align;
           @include grid_item_span3;
+
           .lecdet_tab_playlist1 {
             @include tab_text;
             margin: unset;
           }
+
           .lecdet_tab_playlist1_active {
             @include tab_activetext;
             position: relative;
+
             &::after {
               content: "";
               position: absolute;
@@ -588,25 +672,31 @@
               height: 0.25rem;
             }
           }
+
           .lecdet_tab_playlist2_active {
             @include tab_sub_activetext;
           }
+
           .lecdet_tab_playlist2 {
             @include tab_text;
             margin: unset;
           }
         }
+
         .lecdet_tab_video {
           @include tab_text_align;
           @include grid_item_span4;
+
           .lecdet_tab_video1 {
             @include tab_text;
             margin: unset;
           }
+
           .lecdet_tab_video1_active {
             @include grid_item_span4;
             @include tab_activetext;
             position: relative;
+
             &::after {
               content: "";
               position: absolute;
@@ -619,17 +709,21 @@
             }
           }
         }
+
         .lecdet_tab_simrp {
           @include tab_text_align;
           @include grid_item_span4;
+
           .lecdet_tab_simrp1 {
             @include tab_text;
             margin: unset;
           }
+
           .lecdet_tab_simrp1_active {
             @include grid_item_span6;
             @include tab_activetext;
             position: relative;
+
             &::after {
               content: "";
               position: absolute;
@@ -655,6 +749,7 @@
       font-size: 14px;
       width: 100%;
       @include hide_for_desktop;
+
       .mob_txt {
         display: flex;
         flex-direction: column;
@@ -664,8 +759,7 @@
         align-items: flex-start;
         font-family: "Poppins";
         margin-bottom: 13%;
-        .lecdet_head_mob_head {
-        }
+
         .mob_like {
           display: flex;
           flex-direction: row;
@@ -679,16 +773,19 @@
               height: 14px;
             }
           }
+
           .likeys_text {
             padding-left: 3px;
             font-size: 12px;
           }
         }
       }
+
       .rank_and_black_wrap {
         width: 100%;
         position: relative;
         max-height: 159px;
+
         .ranking {
           display: flex;
           flex-direction: row;
@@ -703,20 +800,24 @@
           //position: relative;
           border-top-right-radius: 24px;
           border-top-left-radius: 24px;
+
           .ranks {
             display: flex;
             flex-direction: column;
+
             .num_rank {
               font-size: 20px;
               font-weight: 600;
               margin-bottom: 0px;
             }
+
             .text_rank {
               font-size: 10px;
               color: #aeaeae;
             }
           }
         }
+
         .ranking_none {
           opacity: 0;
           transition: opacity 250ms ease-out;
@@ -747,17 +848,20 @@
           .fixed_mob_arrow {
             width: 28px;
             height: 28px;
+
             //margin-bottom: 2rem;
             .fixed_mob_arrow_sz {
               width: 100%;
               height: 100%;
             }
           }
+
           .fixed_text {
             color: white;
 
             font-weight: 500;
           }
+
           .fixed_bg_none {
             width: 28px;
             height: 28px;
@@ -771,6 +875,7 @@
             z-index: 1;
 
             inset: 0;
+
             .img {
               width: 100%;
               height: 100%;
@@ -780,16 +885,18 @@
             }
           }
         }
+
         .headings_none {
           opacity: 0;
           display: none;
         }
       }
     }
+
     .blacks {
       @include hide_for_desktop;
       width: 100%;
-    
+
       border-top-right-radius: 24px;
       border-top-left-radius: 24px;
       position: relative;
@@ -805,7 +912,7 @@
         align-items: center;
         justify-content: space-around;
         padding: 2%;
-        
+
         border-bottom: 1px solid gray;
 
         .icons_mob_listblack {
@@ -813,6 +920,7 @@
           flex-direction: row;
           align-items: center;
           font-family: "Poppins";
+
           .likeys_img {
             width: 18px;
             height: 17px;
@@ -823,11 +931,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
+
             .likeys_img_sz {
               width: 18px;
               height: 17px;
             }
           }
+
           .likeys_text {
             padding-left: 3px;
             font-size: 14px;
@@ -835,6 +945,7 @@
           }
         }
       }
+
       .fixed_icons_black {
         position: fixed;
         top: 94px;
@@ -842,18 +953,20 @@
         border-top-right-radius: 24px;
         border-top-left-radius: 24px;
         z-index: 10;
-      
+
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-around;
         padding: 2%;
         border-bottom: 1px solid gray;
+
         .icons_mob_listblack {
           display: flex;
           flex-direction: row;
           align-items: center;
           font-family: "Poppins";
+
           .likeys_img {
             width: 18px;
             height: 17px;
@@ -863,11 +976,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
+
             .likeys_img_sz {
               width: 18px;
               height: 17px;
             }
           }
+
           .likeys_text {
             padding-left: 3px;
             font-size: 14px;
@@ -875,14 +990,14 @@
           }
         }
       }
-   
+
       .mobile_lecdet_tab {
         display: flex;
         margin-top: 0.6rem;
         font-family: "Poppins";
         font-size: 14px;
         width: 100%;
-       overflow-x: auto;
+        overflow-x: auto;
         flex-direction: row;
         padding: 0% 3%;
         gap: 1rem;
@@ -891,13 +1006,16 @@
 
         .mobile_lecdet_tab_song {
           @include mobile_tab_text_align;
+
           .lecdet_tab_song1 {
             @include mobile_tab_text;
             margin: unset;
           }
+
           .mobile_lecdet_tab_song1_active {
             @include mobile_tab_activetext;
             position: relative;
+
             &::after {
               content: "";
               position: absolute;
@@ -909,9 +1027,11 @@
               height: 0.25rem;
             }
           }
+
           .mobile_lecdet_tab_song2_active {
             @include mobile_tab_activetext;
           }
+
           .mobile_lecdet_tab_song2 {
             @include mobile_tab_text;
             margin: unset;
@@ -920,13 +1040,16 @@
 
         .mobile_lecdet_tab_album {
           @include mobile_tab_text_align;
+
           .mobile_lecdet_tab_album1 {
             @include mobile_tab_text;
             margin: unset;
           }
+
           .mobile_lecdet_tab_album1_active {
             @include mobile_tab_activetext;
             position: relative;
+
             &::after {
               content: "";
               position: absolute;
@@ -938,23 +1061,29 @@
               height: 0.25rem;
             }
           }
+
           .mobile_lecdet_tab_album1_active {
             @include mobile_tab_activetext;
           }
+
           .mobile_lecdet_tab_album1 {
             @include mobile_tab_text;
             margin: unset;
           }
         }
+
         .mobile_lecdet_tab_playlist {
           @include mobile_tab_text_align;
+
           .lecdet_tab_playlist1 {
             @include mobile_tab_text;
             margin: unset;
           }
+
           .mobile_lecdet_tab_playlist1_active {
             @include mobile_tab_activetext;
             position: relative;
+
             &::after {
               content: "";
               position: absolute;
@@ -966,23 +1095,29 @@
               height: 0.25rem;
             }
           }
+
           .mobile_lecdet_tab_playlist1_active {
             @include mobile_tab_activetext;
           }
+
           .mobile_lecdet_tab_playlist1 {
             @include mobile_tab_text;
             margin: unset;
           }
         }
+
         .mobile_lecdet_tab_video {
           @include mobile_tab_text_align;
+
           .mobile_lecdet_tab_video1 {
             @include mobile_tab_text;
             margin: unset;
           }
+
           .mobile_lecdet_tab_video1_active {
             @include mobile_tab_activetext;
             position: relative;
+
             &::after {
               content: "";
               position: absolute;
@@ -998,13 +1133,16 @@
 
         .mobile_lecdet_tab_simrp {
           @include mobile_tab_text_align;
+
           .lecdet_tab_simrp1 {
             @include mobile_tab_text;
             margin: unset;
           }
+
           .mobile_lecdet_tab_simrp1_active {
             @include mobile_tab_activetext;
             position: relative;
+
             &::after {
               content: "";
               position: absolute;
@@ -1016,10 +1154,12 @@
               height: 0.25rem;
             }
           }
+
           .mobile_lecdet_tab_simrp2_active {
             @include mobile_tab_activetext;
             padding-left: 2px;
           }
+
           .mobile_lecdet_tab_simrp2 {
             @include mobile_tab_text;
             padding-left: 2px;
@@ -1030,16 +1170,18 @@
 
       .set_choice {
         padding: 3%;
-      
+
         font-family: "Poppins";
         font-size: 15px;
+
         .nums {
-         
+
           padding-left: 3px;
         }
       }
+
       .mobile_color_vid {
-       
+
         padding: 3%;
         @include hide_for_desktop;
       }
@@ -1058,9 +1200,11 @@
       // }
     }
   }
+
   .share_wrapper {
     display: block;
   }
+
   .hide_share_wrapper {
     display: none;
   }

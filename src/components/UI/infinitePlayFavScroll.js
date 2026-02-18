@@ -8,7 +8,7 @@ function infinitePlayFavScroll(node, observer, page, setPage, isEmpty) {
     (entries) => {
       if (entries[0].isIntersecting) {
         setTimeout(() => {
-          setPage(page + 10);
+          setPage((prev) => prev + 10);
         }, 2000);
       }
     },

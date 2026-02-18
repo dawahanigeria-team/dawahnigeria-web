@@ -12,10 +12,22 @@
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Preload critical fonts for faster rendering -->
+    <!-- Non-blocking font preloads -->
     <link
       rel="preload"
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800;900&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
       as="style"
       onload="this.onload=null;this.rel='stylesheet'"
     />
@@ -24,30 +36,15 @@
         href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap"
         rel="stylesheet"
       />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800;900&display=swap"
+        rel="stylesheet"
+      />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+      />
     </noscript>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Playfair Display for editorial headings -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Crimson Pro for landing page -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Cormorant & IBM Plex Sans for Ramadan pages -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/dn_logo.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -77,9 +74,20 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <!-- Default OG + Twitter tags for social crawlers that don't execute JS -->
+    <meta property="og:title" content="Dawahnigeria - Your Source for Islamic Knowledge" />
+    <meta property="og:description" content="Explore Islamic educational resources like articles, lectures, videos, and e-books on Dawah Nigeria. Promoting knowledge and guidance for all." />
+    <meta property="og:image" content="https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Dawahnigeria" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Dawahnigeria - Your Source for Islamic Knowledge" />
+    <meta name="twitter:description" content="Explore Islamic educational resources like articles, lectures, videos, and e-books on Dawah Nigeria. Promoting knowledge and guidance for all." />
+    <meta name="twitter:image" content="https://pub-09f814adc0704e7db8ea3d3ad843eb7e.r2.dev/dn-banner.jpeg" />
+    <meta name="twitter:site" content="@dawahnigeria" />
     <title>Dawah Nigeria</title>
   </head>
-  <body className="dark">
+  <body class="dark">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--

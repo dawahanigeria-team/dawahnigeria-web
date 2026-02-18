@@ -1,7 +1,6 @@
 // PostHog Analytics Utility
 // Centralized tracking functions for the Dawah Nigeria app
 
-import { usePostHog } from 'posthog-js/react';
 
 // Event names constants for consistency
 export const EVENTS = {
@@ -289,7 +288,7 @@ export const trackAddToPlaylist = (lecture, playlistId, playlistName) => {
  * Hook to use PostHog in React components
  */
 export const useTracking = () => {
-  const posthog = usePostHog();
+  const posthog = getPostHog();
 
   return {
     posthog,

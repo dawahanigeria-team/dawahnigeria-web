@@ -14,8 +14,8 @@ import {
 } from "react-icons/bs";
 import {
   CHARTS,
+  CATEGORIES,
   FAVOURITE,
-  GENRES,
   LIBRARY,
   LECTURERS,
   MYPLAYLIIST,
@@ -74,9 +74,9 @@ export const lectures = [
     link: CHARTS,
   },
   {
-    name: "Genres",
+    name: "Categories",
     icon: <BsFileEarmarkMusicFill className="icon7 icon" />,
-    link: GENRES,
+    link: CATEGORIES,
   },
 ];
 export const library = [

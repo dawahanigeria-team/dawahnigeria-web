@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./forgotpassword.scss";
-import { MdEmail, MdCheckCircle } from "react-icons/md";
+import { MdEmail, MdCheckCircle, MdLock, MdVpnKey } from "react-icons/md";
 import { IoArrowBack } from "react-icons/io5";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/UI/loader/loader";
 import { toast } from "../../utils/conditionalToast";
@@ -17,8 +18,13 @@ const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [focusedField, setFocusedField] = useState(null);
-  const [success, setSuccess] = useState(false);
+  const [step, setStep] = useState(1); // 1 = email entry, 2 = code entry, 3 = success
   const [countdown, setCountdown] = useState(RESEND_COOLDOWN_SECONDS);
+  const [code, setCode] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,17 +34,18 @@ const ForgotPassword = () => {
   // Countdown timer for resend
   useEffect(() => {
     let timer;
-    if (success && countdown > 0) {
+    if (step === 2 && countdown > 0) {
       timer = setTimeout(() => setCountdown(countdown - 1), 1000);
     }
     return () => clearTimeout(timer);
-  }, [success, countdown]);
+  }, [step, countdown]);
 
   const handleInput = (e) => {
     setEmail(e.target.value);
   };
 
-  const submitPasswordReset = async () => {
+  // Step 1: Request reset code
+  const requestResetCode = async () => {
     if (!email) {
       toast.error("Email cannot be empty");
       return;
@@ -54,25 +61,77 @@ const ForgotPassword = () => {
 
     try {
       const payload = {
-        action: "reset_password",
+        action: "request_reset",
         email,
       };
 
-      const response = await axios.post("/password_reset.php", payload, {
+      const response = await axios.post("/forgot_passwordApi.php", payload, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
         },
       });
 
       setLoading(false);
 
       if (response.data.success) {
-        setSuccess(true);
+        setStep(2);
         setCountdown(RESEND_COOLDOWN_SECONDS);
-        toast.success("Password reset link sent to your email");
+        toast.success(response.data.message || "Verification code sent to your email");
       } else {
-        toast.error(response.data.message || "Failed to send reset link");
+        toast.error(response.data.message || "Failed to send reset code");
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error(
+        getAuthErrorMessage(error, "An error occurred. Please try again.")
+      );
+    }
+  };
+
+  // Step 2: Reset password with code
+  const resetPasswordWithCode = async () => {
+    if (!code || code.length !== 6) {
+      toast.error("Please enter the 6-digit verification code");
+      return;
+    }
+
+    if (!password || password.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const payload = {
+        action: "reset_password",
+        email,
+        code,
+        password,
+      };
+
+      const response = await axios.post("/forgot_passwordApi.php", payload, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "x-project": "206cf92c-8a46-45ef-bf3f-a6ef92fc6f25",
+        },
+      });
+
+      setLoading(false);
+
+      if (response.data.success) {
+        setStep(3);
+        toast.success(response.data.message || "Password reset successfully");
+      } else {
+        toast.error(response.data.message || "Failed to reset password");
       }
     } catch (error) {
       setLoading(false);
@@ -84,14 +143,17 @@ const ForgotPassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await submitPasswordReset();
+    if (step === 1) {
+      await requestResetCode();
+    } else if (step === 2) {
+      await resetPasswordWithCode();
+    }
   };
 
   const handleResend = () => {
     if (countdown === 0) {
-      setSuccess(false);
       setCountdown(RESEND_COOLDOWN_SECONDS);
-      submitPasswordReset();
+      requestResetCode();
     }
   };
 
@@ -118,13 +180,13 @@ const ForgotPassword = () => {
             <span>Back to login</span>
           </button>
 
-          {!success ? (
+          {step === 1 && (
             <>
               {/* Welcome Text */}
               <div className="welcome_text">
                 <h2 className="text-foreground">Forgot password?</h2>
                 <p className="text-color">
-                  No worries, we'll send you reset instructions
+                  No worries, we'll send you a verification code
                 </p>
               </div>
 
@@ -154,7 +216,7 @@ const ForgotPassword = () => {
                   <Loader />
                 ) : (
                   <span className="button_content">
-                    <span>Send reset link</span>
+                    <span>Send verification code</span>
                     <svg className="button_arrow" viewBox="0 0 24 24" fill="none">
                       <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
@@ -162,7 +224,124 @@ const ForgotPassword = () => {
                 )}
               </button>
             </>
-          ) : (
+          )}
+
+          {step === 2 && (
+            <>
+              {/* Step 2: Enter code and new password */}
+              <div className="welcome_text">
+                <h2 className="text-foreground">Reset your password</h2>
+                <p className="text-color">
+                  Enter the 6-digit code sent to <strong>{email}</strong>
+                </p>
+              </div>
+
+              {/* Verification Code Input */}
+              <div className={`input_group ${focusedField === 'code' ? 'focused' : ''} ${code ? 'has_value' : ''}`}>
+                <div className="input_icon">
+                  <MdVpnKey />
+                </div>
+                <input
+                  onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                  onFocus={() => setFocusedField('code')}
+                  onBlur={() => setFocusedField(null)}
+                  type="text"
+                  inputMode="numeric"
+                  name="code"
+                  placeholder="Enter 6-digit code"
+                  required
+                  value={code}
+                  id="code"
+                  className="forgotpassword_email text-foreground"
+                  maxLength={6}
+                />
+                <div className="input_border"></div>
+              </div>
+
+              {/* New Password Input */}
+              <div className={`input_group ${focusedField === 'password' ? 'focused' : ''} ${password ? 'has_value' : ''}`}>
+                <div className="input_icon">
+                  <MdLock />
+                </div>
+                <input
+                  onChange={(e) => setPassword(e.target.value)}
+                  onFocus={() => setFocusedField('password')}
+                  onBlur={() => setFocusedField(null)}
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="New password (min 6 characters)"
+                  required
+                  value={password}
+                  id="password"
+                  className="forgotpassword_email text-foreground"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="password_toggle"
+                >
+                  {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+                </button>
+                <div className="input_border"></div>
+              </div>
+
+              {/* Confirm Password Input */}
+              <div className={`input_group ${focusedField === 'confirmPassword' ? 'focused' : ''} ${confirmPassword ? 'has_value' : ''}`}>
+                <div className="input_icon">
+                  <MdLock />
+                </div>
+                <input
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onFocus={() => setFocusedField('confirmPassword')}
+                  onBlur={() => setFocusedField(null)}
+                  type={showConfirmPassword ? "text" : "password"}
+                  name="confirmPassword"
+                  placeholder="Confirm new password"
+                  required
+                  value={confirmPassword}
+                  id="confirmPassword"
+                  className="forgotpassword_email text-foreground"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="password_toggle"
+                >
+                  {showConfirmPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+                </button>
+                <div className="input_border"></div>
+              </div>
+
+              {/* Reset Password Button */}
+              <button className="forgotpassword_button" type="submit" disabled={loading}>
+                {loading ? (
+                  <Loader />
+                ) : (
+                  <span className="button_content">
+                    <span>Reset password</span>
+                    <svg className="button_arrow" viewBox="0 0 24 24" fill="none">
+                      <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </span>
+                )}
+              </button>
+
+              {/* Resend Code */}
+              <button
+                type="button"
+                onClick={handleResend}
+                disabled={countdown > 0}
+                className="resend_button"
+              >
+                {countdown > 0
+                  ? `Resend code in ${countdown}s`
+                  : "Resend code"
+                }
+              </button>
+            </>
+          )}
+
+          {step === 3 && (
             <>
               {/* Success State */}
               <div className="success_content">
@@ -172,30 +351,15 @@ const ForgotPassword = () => {
                 </div>
 
                 <div className="success_text">
-                  <h2 className="text-foreground">Check your email</h2>
+                  <h2 className="text-foreground">Password reset successful!</h2>
                   <p className="text-color">
-                    We've sent a password reset link to
+                    Your password has been updated.
                   </p>
-                  <p className="email_display text-foreground">{email}</p>
                 </div>
 
                 <div className="success_instructions text-color">
-                  <p>Click the link in the email to reset your password.</p>
-                  <p className="mt-2">Didn't receive the email? Check your spam folder.</p>
+                  <p>You can now log in with your new password.</p>
                 </div>
-
-                {/* Resend Button */}
-                <button
-                  type="button"
-                  onClick={handleResend}
-                  disabled={countdown > 0}
-                  className="resend_button"
-                >
-                  {countdown > 0
-                    ? `Resend in ${countdown}s`
-                    : "Resend email"
-                  }
-                </button>
 
                 {/* Back to Login Button */}
                 <button
@@ -204,7 +368,7 @@ const ForgotPassword = () => {
                   className="back_to_login_button"
                 >
                   <IoArrowBack />
-                  <span>Back to login</span>
+                  <span>Go to login</span>
                 </button>
               </div>
             </>

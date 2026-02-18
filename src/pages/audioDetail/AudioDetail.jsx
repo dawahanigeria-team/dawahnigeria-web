@@ -39,7 +39,7 @@ import {
   getRepeat,
   getValue,
 } from "../../Redux/Actions/ActionCreators";
-import { GENRES, LECTURE, MORE } from "../../utils/routes/constants";
+import { CATEGORIES, LECTURE, MORE } from "../../utils/routes/constants";
 import CurrentPlayData from "../../components/currentData/currentPlayData";
 import Loader from "../../components/UI/loader/loader";
 
@@ -49,6 +49,7 @@ import { AudioDownloadModal } from "../../components/audioDownloadModal/AudioDow
 import { useRequest } from "../landing/utils";
 
 import CardSkeleton from "../../components/skeletion";
+import { Helmet } from "react-helmet-async";
 import HeadMeta from "../../components/head-meta";
 import CommentBox from "../../components/comment/comment";
 import { CommentIcon } from "../../components/svgcomponent/svgComponent";
@@ -270,13 +271,13 @@ const AudioDetail = () => {
         setdisabled(false);
 
         if (!getFavs?.includes(parseInt(lecid))) {
-          setsumofFav(sumofFav + 1);
+          setsumofFav((prev) => prev + 1);
           // Track favorite added
           if (resolvedAudioInfo) {
             trackFavorite(resolvedAudioInfo, 'add');
           }
         } else {
-          setsumofFav(sumofFav - 1);
+          setsumofFav((prev) => prev - 1);
           // Track favorite removed
           if (resolvedAudioInfo) {
             trackFavorite(resolvedAudioInfo, 'remove');
@@ -474,14 +475,12 @@ const AudioDetail = () => {
       
       {/* Enhanced meta tags for better SEO */}
       {(lectureData || resolvedAudioInfo) && (
-        <>
+        <Helmet>
           <meta name="keywords" content={seoData.keywords} />
           <meta name="author" content={seoData.lecturer} />
           <meta name="category" content={seoData.category} />
           <meta name="language" content="en" />
           <meta name="content-type" content="audio/mpeg" />
-          
-          {/* Open Graph tags */}
           <meta property="og:type" content="music.song" />
           <meta property="og:title" content={seoData.title} />
           <meta property="og:description" content={seoData.description} />
@@ -489,25 +488,18 @@ const AudioDetail = () => {
           <meta property="og:url" content={`${window.location.origin}/dawahcast/l/${id}`} />
           <meta property="og:site_name" content="Dawahnigeria" />
           <meta property="og:locale" content="en_US" />
-          
-          {/* Twitter Card tags */}
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:title" content={seoData.title} />
           <meta name="twitter:description" content={seoData.description} />
           <meta name="twitter:image" content={seoData.ogImage} />
           <meta name="twitter:site" content="@dawahnigeria" />
-          
-          {/* Article specific tags */}
           <meta property="article:author" content={seoData.lecturer} />
           <meta property="article:section" content={seoData.category} />
           {seoData.publishDate && <meta property="article:published_time" content={seoData.publishDate} />}
-          
-          {/* Audio specific tags */}
           <meta name="audio" content={(lectureData || resolvedAudioInfo).audio || ''} />
           {seoData.duration && <meta name="duration" content={seoData.duration} />}
-          
           <link rel="canonical" href={`${window.location.origin}/dawahcast/l/${id}`} />
-        </>
+        </Helmet>
       )}
       
       {/* Enhanced JSON-LD structured data for rich snippets */}
@@ -733,11 +725,11 @@ const AudioDetail = () => {
           <div className="audiodetail_info">
             <div className="audiodetail_info_wrap">
               <div className="audiodetail_info_name text-color dark:text-muted">
-                Genre:{" "}
+                Category:{" "}
               </div>
 
               <Link
-                to={`${GENRES}/${parseInt(
+                to={`${CATEGORIES}/${parseInt(
                   resolvedAudioInfo?.cat_id?.toString()
                 )}`}
                 className="audiodetail_info_value text-color dark:text-muted  hover:text-foreground dark:hover:text-[#ddff2b] hover:underline"
@@ -1014,9 +1006,9 @@ const AudioDetail = () => {
                   Information
                 </p>
                 <div className="audiodetail_info_wrap_mob">
-                  <p className="audiodetail_info_name_mob">Genre: </p>
+                  <p className="audiodetail_info_name_mob">Category: </p>
                   <Link
-                    to={`${GENRES}/${parseInt(
+                    to={`${CATEGORIES}/${parseInt(
                       resolvedAudioInfo?.cat_id?.toString()
                     )}`}
                     className="audiodetail_info_value_mob dark:hover:text-[#ddff2b] hover:underline"
@@ -1061,8 +1053,8 @@ const AudioDetail = () => {
             <Link
               to={
                 resolvedAudioInfo?.cat_id
-                  ? `${GENRES}/${parseInt(resolvedAudioInfo?.cat_id?.toString())}`
-                  : GENRES
+                  ? `${CATEGORIES}/${parseInt(resolvedAudioInfo?.cat_id?.toString())}`
+                  : CATEGORIES
               }
               className="similarWidget_more "
             >
