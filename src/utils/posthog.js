@@ -35,6 +35,7 @@ export const EVENTS = {
   LEADERBOARD_CTA_CLICKED: 'leaderboard_cta_clicked',
   LEADERBOARD_OPENED: 'leaderboard_opened',
   LEADERBOARD_REFRESHED: 'leaderboard_refreshed',
+  LEADERBOARD_SHARED: 'leaderboard_shared',
 
   // Playlist Events
   PLAYLIST_CREATED: 'playlist_created',

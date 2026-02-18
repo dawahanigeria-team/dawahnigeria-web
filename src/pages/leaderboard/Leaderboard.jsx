@@ -1,6 +1,8 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { BsTwitterX } from "react-icons/bs";
+import { FaFacebookF, FaLink, FaShareAlt, FaWhatsapp } from "react-icons/fa";
 import Container from "../../components/container/Container";
 import HeadMeta from "../../components/head-meta";
 import { useDailyLeaderboard } from "../../hooks/leaderboard";
@@ -30,6 +32,8 @@ const Leaderboard = () => {
     (typeof refreshToken === "string" && refreshToken.trim())
   );
   const hasTrackedOpenRef = useRef(false);
+  const shareResetTimerRef = useRef(null);
+  const [copyLabel, setCopyLabel] = useState("Copy link");
 
   const {
     data,
@@ -59,6 +63,124 @@ const Leaderboard = () => {
     typeof error?.message === "string" &&
     /access token|expired token|invalid token|unauthorized/i.test(error.message)
   );
+  const canUseNativeShare =
+    typeof navigator !== "undefined" &&
+    typeof navigator.share === "function";
+
+  const sharePayload = useMemo(() => {
+    const fallbackUrl = "https://dawahnigeria.com/dawahcast/ramadan/leaderboard";
+    const url =
+      typeof window !== "undefined" && window.location?.href
+        ? window.location.href
+        : fallbackUrl;
+    const isRanked = Boolean(myStats?.isRanked);
+    const rankCopy = isRanked
+      ? `I am #${myStats?.rank} on Dawah Nigeria's Ramadan leaderboard for ${day}`
+      : `I am taking part in Dawah Nigeria's Ramadan leaderboard for ${day}`;
+    const durationCopy = myStats?.totalSeconds
+      ? ` with ${formatLeaderboardDuration(myStats.totalSeconds)} tracked`
+      : "";
+    const participantsCopy = totalParticipants
+      ? ` among ${totalParticipants} participants`
+      : "";
+
+    return {
+      title: "Dawah Nigeria Ramadan Leaderboard",
+      text: `${rankCopy}${durationCopy}${participantsCopy}.`,
+      url,
+    };
+  }, [day, myStats, totalParticipants]);
+
+  const trackShareEvent = (platform, status = "success", errorMessage = "") => {
+    trackEvent(EVENTS.LEADERBOARD_SHARED, {
+      source: "leaderboard_screen",
+      platform,
+      status,
+      day,
+      rank: myStats?.rank ?? null,
+      is_ranked: Boolean(myStats?.isRanked),
+      total_seconds: myStats?.totalSeconds ?? null,
+      error_message: errorMessage || null,
+    });
+  };
+
+  const resetCopyLabelSoon = () => {
+    if (shareResetTimerRef.current) {
+      window.clearTimeout(shareResetTimerRef.current);
+    }
+
+    shareResetTimerRef.current = window.setTimeout(() => {
+      setCopyLabel("Copy link");
+    }, 1800);
+  };
+
+  const openShareWindow = (url, platform) => {
+    if (typeof window === "undefined") return;
+    window.open(url, "_blank", "noopener,noreferrer");
+    trackShareEvent(platform);
+  };
+
+  const handleNativeShare = async () => {
+    if (!canUseNativeShare) {
+      return;
+    }
+
+    try {
+      await navigator.share(sharePayload);
+      trackShareEvent("native");
+    } catch (shareError) {
+      if (shareError?.name === "AbortError") {
+        return;
+      }
+
+      trackShareEvent("native", "error", shareError?.message);
+    }
+  };
+
+  const handleWhatsappShare = () => {
+    const message = encodeURIComponent(`${sharePayload.text} ${sharePayload.url}`);
+    openShareWindow(`https://wa.me/?text=${message}`, "whatsapp");
+  };
+
+  const handleTwitterShare = () => {
+    const message = encodeURIComponent(`${sharePayload.text} ${sharePayload.url}`);
+    openShareWindow(`https://twitter.com/intent/tweet?text=${message}`, "x");
+  };
+
+  const handleFacebookShare = () => {
+    const url = encodeURIComponent(sharePayload.url);
+    const quote = encodeURIComponent(sharePayload.text);
+    openShareWindow(
+      `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${quote}`,
+      "facebook"
+    );
+  };
+
+  const handleCopyLink = async () => {
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(sharePayload.url);
+      } else if (typeof document !== "undefined") {
+        const textArea = document.createElement("textarea");
+        textArea.value = sharePayload.url;
+        textArea.setAttribute("readonly", "");
+        textArea.style.position = "absolute";
+        textArea.style.left = "-9999px";
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+      }
+
+      setCopyLabel("Copied");
+      trackShareEvent("copy");
+      resetCopyLabelSoon();
+    } catch (copyError) {
+      setCopyLabel("Copy failed");
+      trackShareEvent("copy", "error", copyError?.message);
+      resetCopyLabelSoon();
+    }
+  };
 
   useEffect(() => {
     if (hasTrackedOpenRef.current) {
@@ -74,6 +196,12 @@ const Leaderboard = () => {
 
     hasTrackedOpenRef.current = true;
   }, [day, hasAuthSession]);
+
+  useEffect(() => () => {
+    if (shareResetTimerRef.current && typeof window !== "undefined") {
+      window.clearTimeout(shareResetTimerRef.current);
+    }
+  }, []);
 
   const handleRefresh = () => {
     trackEvent(EVENTS.LEADERBOARD_REFRESHED, {
@@ -165,6 +293,62 @@ const Leaderboard = () => {
                         {myStats?.sessionsCount || 0}
                       </strong>
                     </article>
+                  </section>
+
+                  <section className="leaderboard-share" aria-label="Share leaderboard">
+                    <div className="leaderboard-share-copy">
+                      <h2>Share your progress</h2>
+                      <p>Invite friends to join today's Ramadan challenge.</p>
+                    </div>
+                    <div className="leaderboard-share-actions">
+                      {canUseNativeShare && (
+                        <button
+                          type="button"
+                          className="leaderboard-share-button leaderboard-share-button-native"
+                          onClick={handleNativeShare}
+                          aria-label="Share leaderboard"
+                        >
+                          <FaShareAlt aria-hidden="true" />
+                          <span>Share</span>
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        className="leaderboard-share-button"
+                        onClick={handleWhatsappShare}
+                        aria-label="Share leaderboard on WhatsApp"
+                      >
+                        <FaWhatsapp aria-hidden="true" />
+                        <span>WhatsApp</span>
+                      </button>
+                      <button
+                        type="button"
+                        className="leaderboard-share-button"
+                        onClick={handleTwitterShare}
+                        aria-label="Share leaderboard on X"
+                      >
+                        <BsTwitterX aria-hidden="true" />
+                        <span>X</span>
+                      </button>
+                      <button
+                        type="button"
+                        className="leaderboard-share-button"
+                        onClick={handleFacebookShare}
+                        aria-label="Share leaderboard on Facebook"
+                      >
+                        <FaFacebookF aria-hidden="true" />
+                        <span>Facebook</span>
+                      </button>
+                      <button
+                        type="button"
+                        className="leaderboard-share-button"
+                        onClick={handleCopyLink}
+                        aria-label="Copy leaderboard link"
+                      >
+                        <FaLink aria-hidden="true" />
+                        <span>{copyLabel}</span>
+                      </button>
+                    </div>
                   </section>
 
                   <section className="leaderboard-table" aria-label="Leaderboard ranking list">

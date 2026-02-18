@@ -63,6 +63,58 @@
   margin-bottom: 1rem;
 }
 
+.leaderboard-share {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 0.85rem;
+  margin-bottom: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.leaderboard-share-copy h2 {
+  margin: 0;
+  font-size: 1rem;
+  color: #f6f7fa;
+}
+
+.leaderboard-share-copy p {
+  margin: 0.35rem 0 0;
+  color: #9fa6b2;
+  font-size: 0.82rem;
+}
+
+.leaderboard-share-actions {
+  margin-top: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.leaderboard-share-button {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  color: #e6e9f1;
+  padding: 0.52rem 0.6rem;
+  font-size: 0.78rem;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 38px;
+}
+
+.leaderboard-share-button-native {
+  border-color: rgba(221, 255, 43, 0.45);
+  color: #ddff2b;
+}
+
+.leaderboard-share-button svg {
+  font-size: 0.9rem;
+}
+
 .leaderboard-stat-card {
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
@@ -249,6 +301,14 @@
 
   .leaderboard-stat-card {
     padding: 1rem;
+  }
+
+  .leaderboard-share {
+    padding: 1rem;
+  }
+
+  .leaderboard-share-actions {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .leaderboard-row {
