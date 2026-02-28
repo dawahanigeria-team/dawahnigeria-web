@@ -43,9 +43,10 @@ import {
 import Addplaylist from "../../pages/add_playlist/AddPlaylist";
 import { LECTURE, RESOURCE_PERSON } from "../../utils/routes/constants";
 import { AudioDownloadModal } from "../audioDownloadModal/AudioDownloadModal";
+import { getNextTrackIndex, getTrackIndex } from "../../utils/audioQueue";
 
 const AudioActionDesktop = () => {
-  const { currentUser, audioId, isrepeat, value, page, count, pack, playing } =
+  const { currentUser, audioId, isrepeat, value, page, pack, playing } =
     useSelector((state) => state.user);
   const dispatch = useDispatch();
   const rangeRef = useRef();
@@ -85,25 +86,22 @@ const AudioActionDesktop = () => {
     dispatch(setPlaying(false));
     setnotloaded(true);
 
-    const next = pack?.findIndex((value) => {
-      return value.nid === parseInt(audioId);
-    });
+    const currentTrackIndex = getTrackIndex(pack, audioId);
+    if (currentTrackIndex === -1) return;
 
-    if (!isEmpty && pack?.length - 1 - next <= 2) {
+    if (!isEmpty && pack?.length - 1 - currentTrackIndex <= 2) {
       dispatch(getPage(page + 1));
     }
 
-    if (next === pack?.length - 1) {
-      dispatch(getaudioId(pack[next]?.nid));
-      dispatch(getCount(next));
-    } else if (count < pack?.length - 1) {
-      dispatch(getaudioId(pack[next + 1]?.nid));
-      dispatch(getCount(next + 1));
-    } else {
-      dispatch(getaudioId(pack[0]?.nid));
-      dispatch(getCount(0));
-    }
-  }, [audioId, count, dispatch, isEmpty, pack, page, setinitial]);
+    const nextTrackIndex = getNextTrackIndex(pack, audioId);
+    if (nextTrackIndex === -1) return;
+
+    const nextTrackId = pack?.[nextTrackIndex]?.nid ?? pack?.[nextTrackIndex]?.id;
+    if (!nextTrackId) return;
+
+    dispatch(getaudioId(nextTrackId));
+    dispatch(getCount(nextTrackIndex));
+  }, [audioId, dispatch, isEmpty, pack, page, setinitial]);
 
   const handlePreviousAudio = useCallback(() => {
     setinitial(false);
