@@ -18,7 +18,7 @@ import { GiPauseButton } from "react-icons/gi";
 import { FaPlay } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "../../utils/useAxios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   getaudioId,
   getCount,
@@ -51,8 +51,10 @@ const AudioActionDesktop = () => {
   const dispatch = useDispatch();
   const rangeRef = useRef();
   const navigate = useNavigate();
+  const location = useLocation();
   const { audioRef, setinitial, initial, loading, setLoading } =
     useContext(AudioContext);
+  const latestRequestedAudioIdRef = useRef(null);
   
   // State for conditionally loaded image asset to prevent SSR errors
   const [lazysImg, setLazysImg] = useState(null);
@@ -126,12 +128,19 @@ const AudioActionDesktop = () => {
   }, [audioId, dispatch, pack, page, setinitial]);
 
   const getMusic = (audioId) => {
+    const requestedAudioId = String(audioId);
+    latestRequestedAudioIdRef.current = requestedAudioId;
+
     //dispatch(setPlaying(false));
     setLoading(true);
     ///get lecture audio
     axios
       .get(`/leclistingapi.php?lecid=${audioId}`)
       .then((res) => {
+        if (latestRequestedAudioIdRef.current !== requestedAudioId) {
+          return;
+        }
+
         setcurrentaudio(res.data[0]);
 
         setLoading(false);
@@ -164,7 +173,11 @@ const AudioActionDesktop = () => {
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        if (latestRequestedAudioIdRef.current === requestedAudioId) {
+          setLoading(false);
+        }
+      });
   };
 
   useEffect(() => {
@@ -496,6 +509,22 @@ const AudioActionDesktop = () => {
   ]);
 
   const handlePlay = async () => {
+    const lecturePathMatch = location.pathname.match(/\/dawahcast\/l\/([^/]+)/);
+    const routeLectureId = lecturePathMatch?.[1] ?? null;
+
+    // If the URL is a lecture detail page, always make footer player target that lecture.
+    if (routeLectureId && String(routeLectureId) !== String(audioId)) {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+      dispatch(setPlaying(false));
+      dispatch(getValue(0));
+      setinitial(false);
+      dispatch(getaudioId(routeLectureId));
+      return;
+    }
+
     // Prevent rapid clicking during loading
     if (loading) {
       return;
