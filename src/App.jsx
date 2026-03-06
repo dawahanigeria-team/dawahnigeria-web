@@ -63,6 +63,7 @@ import {
 import { usePageTracking } from "./utils/tracking";
 import { useThemeHook } from "./hooks/common/useTheme.hook";
 import { useUsageSessionTracking } from "./hooks/leaderboard";
+import TawkChat from "./components/TawkChat";
 
 // Lazy load all pages for code splitting
 const Landing = lazy(() => import("./pages/landing/Landing"));
@@ -102,9 +103,6 @@ const Podcast = lazy(() => import("./pages/podcast/podcast"));
 const SearchPage = lazy(() => import("./pages/searchPage/searchPage"));
 const Privacy = lazy(() => import("./pages/privacy/Privacy"));
 const Leaderboard = lazy(() => import("./pages/leaderboard/Leaderboard"));
-
-// Lazy load heavy third-party components
-const TawkMessengerReact = lazy(() => import("@tawk.to/tawk-messenger-react"));
 
 const noop = () => {};
 
@@ -401,32 +399,7 @@ const App = () => {
                   </Suspense>
                 </ErrorBoundary>
                 <ConditionalToaster />
-                <Suspense fallback={null}>
-                  <TawkMessengerReact
-                    propertyId="5cd3dd3ed07d7e0c6392ad09"
-                    widgetId="default"
-                    onLoad={() => {}}
-                    onStatusChange={() => {}}
-                    onBeforeLoad={() => {}}
-                    onChatMaximized={() => {}}
-                    onChatMinimized={() => {}}
-                    onChatHidden={() => {}}
-                    onChatStarted={() => {}}
-                    onChatEnded={() => {}}
-                    onPrechatSubmit={() => {}}
-                    onOfflineSubmit={() => {}}
-                    onChatMessageVisitor={() => {}}
-                    onChatMessageAgent={() => {}}
-                    onChatMessageSystem={() => {}}
-                    onAgentJoinChat={() => {}}
-                    onAgentLeaveChat={() => {}}
-                    onChatSatisfaction={() => {}}
-                    onVisitorNameChanged={() => {}}
-                    onFileUpload={() => {}}
-                    onTagsUpdated={() => {}}
-                    onUnreadCountChanged={() => {}}
-                  />
-                </Suspense>
+                <TawkChat />
               </ThemeProvider.Provider>
             </AudioContext.Provider>
           </SearchContext.Provider>
