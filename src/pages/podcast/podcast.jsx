@@ -3,9 +3,15 @@ import { FaLightbulb } from "react-icons/fa";
 import Container from "../../components/container/Container";
 import { useNavigate } from "react-router-dom";
 import HeadMeta from "../../components/head-meta";
+import { getBackNavigationConfig } from "../../utils/navigation";
 
 const Podcast = () => {
   const navigate = useNavigate();
+  const handleBack = () => {
+    const { to, options } = getBackNavigationConfig("/dawahcast");
+    navigate(to, options);
+  };
+
   return (
     <Container>
       <HeadMeta title={`Podcast is coming soon on Dawah Nigeria `} />
@@ -15,9 +21,7 @@ const Podcast = () => {
           <FaLightbulb className="text-[#ddff2b] text-4xl min-[615px]:text-5xl" />
 
           <button
-            onClick={() => {
-              navigate(-1);
-            }}
+            onClick={handleBack}
             className="text-sm text-foreground transform ease hover:text-zinc-700 hover:bg-gray-200 p-2 rounded-md border border-foreground"
           >
             Go Back

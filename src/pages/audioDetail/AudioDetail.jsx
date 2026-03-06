@@ -57,6 +57,7 @@ import { CommentIcon } from "../../components/svgcomponent/svgComponent";
 import LandingWidget from "../../components/landingWidget/LandingWidget";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders.js";
 import { trackLectureView, trackLecturePlay, trackLecturePause, trackFavorite } from "../../utils/posthog";
+import { getBackNavigationConfig } from "../../utils/navigation";
 
 const AudioDetail = () => {
   const { id } = useParams();
@@ -98,6 +99,10 @@ const AudioDetail = () => {
   const [isShare, setisShare] = useState(false);
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
+  const handleBack = () => {
+    const { to, options } = getBackNavigationConfig("/dawahcast");
+    navigate(to, options);
+  };
 
   const { theme } = useSelector((state) => state.user);
 
@@ -554,9 +559,7 @@ const AudioDetail = () => {
         <div className="audiodetail_container">
           <div className="audiodetail_breadcrumb">
             <p
-              onClick={() => {
-                navigate(-1);
-              }}
+              onClick={handleBack}
               className="audiodetail_breadcrumb_first"
             >
               {audioData?.navName && audioData.navName !== "Home"

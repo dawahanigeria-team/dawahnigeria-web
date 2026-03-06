@@ -45,6 +45,7 @@ import HeadMeta from "../../components/head-meta";
 import { CommentIcon } from "../../components/svgcomponent/svgComponent";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 import { SlShare } from "react-icons/sl";
+import { getBackNavigationConfig } from "../../utils/navigation";
 
 const PlaylistDetail = () => {
   const { id } = useParams();
@@ -56,6 +57,10 @@ const PlaylistDetail = () => {
   const [isShare, setisShare] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
+  const handleBack = () => {
+    const { to, options } = getBackNavigationConfig("/dawahcast/playlists");
+    navigate(to, options);
+  };
 
   const [audioComment, setaudioComment] = useState();
   const queryParam = { id };
@@ -162,9 +167,7 @@ const PlaylistDetail = () => {
 
           <div className="leclistdet_breadcrumb">
             <p
-              onClick={() => {
-                navigate(-1);
-              }}
+              onClick={handleBack}
               className="leclistdet_breadcrumb_first"
             >
               Back/
@@ -251,9 +254,7 @@ const PlaylistDetail = () => {
             </div>
             <div className="leclistdet_min_wrap">
               <div
-                onClick={() => {
-                  navigate(-1);
-                }}
+                onClick={handleBack}
                 className="mob_arrow"
               >
                 <img className="mob_arrow_sz" src={arrow} alt="arrow" />
@@ -328,9 +329,7 @@ const PlaylistDetail = () => {
               </div>
               <div className={isVisible ? "headings pb-7" : "headings_none"}>
                 <div
-                  onClick={() => {
-                    navigate(-1);
-                  }}
+                  onClick={handleBack}
                   className="fixed_mob_arrow"
                 >
                   <img className="fixed_mob_arrow_sz" src={arrow} alt="hun" />

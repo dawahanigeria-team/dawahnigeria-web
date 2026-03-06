@@ -6,8 +6,13 @@ import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
 import Loader from "../../components/UI/loader/loader";
 import ResetPassword from "./resetpassword/resetPassword";
 import HeadMeta from "../../components/head-meta";
+import { getBackNavigationConfig } from "../../utils/navigation";
 const ForgotPassword = () => {
   const navigate = useNavigate();
+  const handleBack = () => {
+    const { to, options } = getBackNavigationConfig("/auth/login");
+    navigate(to, options);
+  };
   const [email, setEmail] = useState();
   const [loading, setLoading] = useState(false);
   const [isreset, setreset] = useState(false);
@@ -51,9 +56,7 @@ const ForgotPassword = () => {
       />
       <div className="bg-[#353535] m-auto h-full inset-0 absolute w-full min-[615px]:w-[600px]">
         <div
-          onClick={() => {
-            navigate(-1);
-          }}
+          onClick={handleBack}
           className="cursor-pointer w-full items-center justify-end flex"
         >
           <img src={Logo} alt="" />

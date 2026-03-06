@@ -13,6 +13,7 @@ import {
 } from "../../utils/routes/constants";
 import HeadMeta from "../head-meta";
 import Loader from "../UI/loader/loader";
+import { getBackNavigationConfig } from "../../utils/navigation";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { moreViewApi } from "../../services/more.service";
 import { extractArrayData } from "../../utils/dataHelpers";
@@ -20,6 +21,10 @@ import { extractArrayData } from "../../utils/dataHelpers";
 function More() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const handleBack = () => {
+    const { to, options } = getBackNavigationConfig("/dawahcast");
+    navigate(to, options);
+  };
 
   const { queryKey, apiFn, title } = useMemo(() => {
     if (pathname.includes("/more/recently-viewed")) {
@@ -120,7 +125,7 @@ function More() {
           <nav className="desktop_heading px-6 py-4">
             <div className="flex items-center space-x-4">
               <button
-                onClick={() => navigate(-1)}
+                onClick={handleBack}
                 className="p-2 hover:bg-accent rounded-full transition-colors"
                 aria-label="Go back"
               >

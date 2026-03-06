@@ -13,11 +13,17 @@ import { genresApi } from "../../services";
 import HeadMeta from "../../components/head-meta";
 import { useSelector } from "react-redux";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
+import { getBackNavigationConfig } from "../../utils/navigation";
 
 const GenreDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const handleBack = () => {
+    const { to, options } = getBackNavigationConfig("/dawahcast/categories");
+    navigate(to, options);
+  };
+
   const queryParam = { id };
   const { theme } = useSelector((state) => state.user);
 
@@ -50,18 +56,14 @@ const GenreDetail = () => {
         <div className="w-full relative top-0 inset-x-0 h-[260px] min-[615px]:h-[350px]">
           <div className="w-full absolute top-0 inset-x-0 h-full">
             <div
-              onClick={() => {
-                navigate(-1);
-              }}
+              onClick={handleBack}
               className="min-[615px]:hidden absolute z-[1] top-4 left-4"
             >
               <MdNavigateBefore className="text-[28px] text-white" />
             </div>
             <div className="desktop_heading absolute z-[1] cursor-pointer top-4 left-4">
               <VscArrowLeft
-                onClick={() => {
-                  navigate(-1);
-                }}
+                onClick={handleBack}
                 className={
                   pathname === `/dawahcast/categories/${id}` ||
                   pathname === `/dawahcast/genres/${id}`

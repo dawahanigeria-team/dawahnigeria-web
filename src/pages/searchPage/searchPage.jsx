@@ -20,6 +20,7 @@ import {
 import { SEARCH } from "../../utils/routes/constants";
 import HeadMeta from "../../components/head-meta";
 import { trackSearch } from "../../utils/posthog";
+import { getBackNavigationConfig } from "../../utils/navigation";
 
 const SearchPage = () => {
   const searchContext = useContext(SearchContext) || {};
@@ -32,6 +33,10 @@ const SearchPage = () => {
   } = searchContext;
   const { searchData } = useSelector((state) => state.search);
   const navigate = useNavigate();
+  const handleBack = () => {
+    const { to, options } = getBackNavigationConfig("/dawahcast");
+    navigate(to, options);
+  };
   const { setRes, setisOpen } = useContext(NavContext);
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -325,7 +330,7 @@ const SearchPage = () => {
         </div>
         <div className="pt-2 pl-2 flex items-center space-x-1 max-[615px]:hidden">
           <HiOutlineArrowLongLeft
-            onClick={() => navigate(-1)}
+            onClick={handleBack}
             className={
               pathname === SEARCH
                 ? "text-[30px] text-color"

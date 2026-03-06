@@ -7,6 +7,7 @@ import lazy from "../../assets/png/lazyrps.jpeg";
 
 import HeadMeta from "../../components/head-meta";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
+import { getBackNavigationConfig } from "../../utils/navigation";
 import {
   RamadamDetailsMobileTabs,
   RamadanDetailsDesktopTabs,
@@ -17,6 +18,10 @@ import { useRamadanYearAlbums } from "../../hooks/ramadan";
 const RamadanDetail = () => {
   const { id: ramadanYearId } = useParams();
   const navigate = useNavigate();
+  const handleBack = () => {
+    const { to, options } = getBackNavigationConfig("/dawahcast/ramadan");
+    navigate(to, options);
+  };
   const [languageTab, setLanguageTab] = useState();
 
   const { yearName } = useRamadanYearAlbums(ramadanYearId);
@@ -35,9 +40,7 @@ const RamadanDetail = () => {
 
           <div className="lecdet_breadcrumb">
             <button
-              onClick={() => {
-                navigate(-1);
-              }}
+              onClick={handleBack}
               className="lecdet_breadcrumb_first"
             >
               Back /
@@ -52,9 +55,7 @@ const RamadanDetail = () => {
             <div className="rank_and_black_wrap ">
               <div className={"pb-7"}>
                 <button
-                  onClick={() => {
-                    navigate(-1);
-                  }}
+                  onClick={handleBack}
                   aria-label="Go back"
                   className="fixed_mob_arrow"
                 >
