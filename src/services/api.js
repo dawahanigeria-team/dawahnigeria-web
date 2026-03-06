@@ -2,6 +2,7 @@ import axios from "axios";
 // import { toast } from "../utils/conditionalToast"; // SSR-safe toast utility // Moved to conditional import to prevent SSR errors
 import { getStore } from "../store/storeRegistry";
 import { refreshAccessToken } from "./tokenRefresh";
+import { isTawkError } from "../utils/thirdPartyErrors";
 
 // Conditional toast helper that only works on client side to prevent SSR errors
 const conditionalToast = {
@@ -111,9 +112,11 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
 
       // Check if it's a third-party script error (like tawk.to)
       if (
-        event.filename &&
-        (event.filename.includes("tawk.to") ||
-          event.filename.includes("embed.tawk.to"))
+        isTawkError({
+          message: event.message,
+          filename: event.filename,
+          stack: event.error?.stack,
+        })
       ) {
         // Prevent default error handling
         event.preventDefault();
