@@ -8,8 +8,8 @@ import { HOME } from "../../utils/routes/constants";
  *
  * This page handles the redirect from Flutterwave after payment.
  * Flow:
- * 1. Read `transaction_id` and `status` from URL query params
- * 2. If status=successful, verify payment via backend
+ * 1. Read `transaction_id` from URL query params
+ * 2. Always verify via backend — redirect status is NOT the source of truth
  * 3. Refresh user features/entitlements
  * 4. Redirect user to app with success/fail message
  */
@@ -39,20 +39,14 @@ const FlutterwaveCallback = () => {
       tx_ref: txRef,
     });
 
-    // Check if payment was cancelled or failed at Flutterwave
-    if (flwStatus && flwStatus !== "successful") {
+    // transaction_id is required to verify — redirect status is not the source of truth
+    if (!transactionId) {
       setStatus("error");
       setMessage(
         flwStatus === "cancelled"
           ? "Payment was cancelled. Please try again."
-          : "Payment was not successful. Please try again."
+          : "Missing transaction ID. Please try again."
       );
-      return;
-    }
-
-    if (!transactionId) {
-      setStatus("error");
-      setMessage("Missing transaction ID. Please try again.");
       return;
     }
 
