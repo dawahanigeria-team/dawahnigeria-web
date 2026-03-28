@@ -59,6 +59,9 @@ import {
   LEADERBOARD,
   DOWNLOAD,
   PRIVACY,
+  PAYSTACK_CALLBACK,
+  FLUTTERWAVE_CALLBACK,
+  ACCOUNT_SETTINGS,
 } from "./utils/routes/constants";
 import { usePageTracking } from "./utils/tracking";
 import { useThemeHook } from "./hooks/common/useTheme.hook";
@@ -103,6 +106,9 @@ const Podcast = lazy(() => import("./pages/podcast/podcast"));
 const SearchPage = lazy(() => import("./pages/searchPage/searchPage"));
 const Privacy = lazy(() => import("./pages/privacy/Privacy"));
 const Leaderboard = lazy(() => import("./pages/leaderboard/Leaderboard"));
+const PaystackCallback = lazy(() => import("./pages/subscription/PaystackCallback"));
+const FlutterwaveCallback = lazy(() => import("./pages/subscription/FlutterwaveCallback"));
+const AccountSettings = lazy(() => import("./pages/account/AccountSettings"));
 
 const noop = () => {};
 
@@ -392,6 +398,9 @@ const App = () => {
                         <Route path={FAVOURITE} element={<Favourite />} />
                         <Route path={MYPLAYLIIST} element={<Myplaylist />} />
                         <Route path={PRIVACY} element={<Privacy />} />
+                        <Route path={PAYSTACK_CALLBACK} element={<PaystackCallback />} />
+                        <Route path={FLUTTERWAVE_CALLBACK} element={<FlutterwaveCallback />} />
+                        <Route path={ACCOUNT_SETTINGS} element={<AccountSettings />} />
                       </Route>
                       <Route path="/" element={<Navigate to="/dawahcast" />} />
                       <Route path="/dawahcast" element={<Layout />} />

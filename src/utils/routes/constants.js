@@ -29,3 +29,6 @@ export const DOWNLOAD = "/dawahcast/download";
 export const RAMADAN = "/dawahcast/ramadan";
 export const LEADERBOARD = "/dawahcast/ramadan/leaderboard";
 export const PRIVACY = "/dawahcast/privacy";
+export const PAYSTACK_CALLBACK = "/dawahcast/subscription/callback";
+export const FLUTTERWAVE_CALLBACK = "/dawahcast/subscription/flutterwave/callback";
+export const ACCOUNT_SETTINGS = "/dawahcast/account";

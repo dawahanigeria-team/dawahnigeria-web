@@ -16,3 +16,4 @@ export * from "./favorite.service";
 export * from "./lecture.service";
 export * from "./ramadan.service";
 export * from "./leaderboard.service";
+export * from "./subscription.service";
