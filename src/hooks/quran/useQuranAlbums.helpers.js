@@ -11,7 +11,9 @@ export const mergeQuranAlbumPage = ({
     : [];
   const nextLoadedPages = new Set(loadedPages);
 
-  const hasReachedLastPage = safeIncomingPageData.length < pageSize;
+  const hasReachedLastPage =
+    safeIncomingPageData.length === 0 ||
+    (page > 1 && safeIncomingPageData.length < pageSize);
   if (nextLoadedPages.has(page)) {
     return {
       accumulated: safeAccumulated,
