@@ -16,7 +16,7 @@
 
     display: none;
     backdrop-filter: blur(1.5px);
-    @media screen and (max-width: 890px) {
+    @media screen and (max-width: 767px) {
       display: flex;
     }
   }
@@ -101,7 +101,7 @@
     display: block;
   }
   .layout_sidenav_close {
-    @media screen and (min-width: 890px) {
+    @media screen and (min-width: 768px) {
       display: none;
     }
     width: 100%;
@@ -162,7 +162,7 @@
       display: none;
     }
 
-    @media screen and (max-width: 890px) {
+    @media screen and (max-width: 767px) {
       position: fixed;
       top: 0px;
       left: 0px;
@@ -182,7 +182,7 @@
     overflow-y: hidden;
     overflow-x: hidden;
     
-    @media screen and (max-width: 890px) {
+    @media screen and (max-width: 767px) {
       width: 100%;
     }
   }
@@ -194,7 +194,7 @@
     bottom: 0px;
     left: 0px;
     z-index: 90;
-    @media screen and (min-width: 500px) {
+    @media screen and (min-width: 768px) {
       display: none;
     }
     display: flex;
@@ -202,163 +202,258 @@
     .layout_buttom_menue1 {
       position: relative;
       width: 100%;
-      padding: 0.5rem 1.5rem;
+      padding: 0.5rem 0.75rem 0.4rem;
       display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
+      flex-direction: column;
+      gap: 0.4rem;
       border-bottom: 1px solid rgba(88, 88, 88, 0.2);
-      .range_progress {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 1px;
-        z-index: 10;
 
-        .audio_mob_bar {
-          position: absolute;
-          top: 0;
-          height: 1px;
-          z-index: 12;
-          left: 0;
-         
-        }
+      .mini_player_top {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+      }
 
-        input[type="range"] {
-          -webkit-appearance: none;
-          appearance: none;
-          -moz-appearance: none;
-          width: 100%;
-          position: absolute;
-          top: 0;
-          left: 0;
-          z-index: 10;
-          outline: none;
-          background-color: black;
-          border-radius: 100px;
-          height: 1px;
-        }
-        input[type="range"]::-webkit-slider-runnable-track {
-          -webkit-appearance: none;
-          height: 1px;
-        }
-        input[type="range"]::-moz-track {
-          -moz-appearance: none;
-          height: 1px;
-        }
-        input[type="range"]::-ms-track {
-          appearance: none;
-          height: 1px;
-        }
-        input[type="range"]::-webkit-slider-thumb {
-          -webkit-appearance: none;
-          height: 0px;
-          width: 0px;
-          border-radius: 50%;
-          margin-top: -1px;
-          background: #ddff2b;
-          cursor: pointer;
-          border: none;
-        }
-        input[type="range"]::-moz-range-thumb {
-          -moz-appearance: none;
-          height: 0px;
-          width: 0px;
-          border-radius: 50%;
-          background: #ddff2b;
-          cursor: pointer;
-          border: none;
-        }
-        input[type="range"]::-ms-range-thumb {
-          appearance: none;
-          height: 0px;
-          width: 0px;
-          margin-top: -1px;
-          border-radius: 50%;
-          background: #ddff2b;
-          cursor: pointer;
-          border: none;
-        }
+      .mini_player_meta {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.6rem;
+        flex: 1 1 auto;
+        min-width: 0;
+        cursor: pointer;
       }
 
       .curr_lect_img {
         width: 40px;
         height: 40px;
-        border-radius: 50%;
+        border-radius: 6px;
+        flex-shrink: 0;
+        overflow: hidden;
         .curr_lect_img_sz {
           width: 100%;
           height: 100%;
-          border-radius: 50%;
+          object-fit: cover;
         }
       }
-      .layout_buttom_text_wrap {
+
+      .mini_player_text {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.4rem;
-        width: 60%;
-        .layout_buttom_text1 {
-          font-family: "Poppins";
-          font-style: normal;
-          font-weight: 500;
-          font-size: 14px;
+        min-width: 0;
+        flex: 1 1 auto;
 
-         
-          margin: unset;
-          // max-width: 210px;
+        .layout_buttom_text1 {
+          font-family: "Poppins", sans-serif;
+          font-weight: 600;
+          font-size: 13px;
+          line-height: 1.2;
+          margin: 0;
+          width: 100%;
           white-space: nowrap;
-          overflow: auto;
-          &::-webkit-scrollbar {
-            display: none;
-          }
-          &::-moz-scrollbar {
-            display: none;
-          }
-          @media screen and (max-width: 389px) {
-            // max-width: 150px;
-          }
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
         .layout_buttom_text2 {
-          font-family: "Poppins";
-          font-style: normal;
-          font-weight: 500;
-          font-size: 13px;
-       
-          margin: unset;
-          //max-width: 190px;
+          font-family: "Poppins", sans-serif;
+          font-weight: 400;
+          font-size: 11px;
+          line-height: 1.3;
+          margin: 0;
+          opacity: 0.75;
+          width: 100%;
           white-space: nowrap;
-          overflow: auto;
-          &::-webkit-scrollbar {
-            display: none;
-          }
-          &::-moz-scrollbar {
-            display: none;
-          }
-          @media screen and (max-width: 389px) {
-            //max-width: 120px;
-          }
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       }
-      .layout_buttom_share {
-        //color: #cfcfcf;
-        font-size: 28px;
-        cursor: pointer;
+
+      .mini_player_controls {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.4rem;
+        flex-shrink: 0;
       }
-      .layout_buttom_play_wrap {
+
+      .mini_player_skip {
+        position: relative;
+        background: none;
+        border: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 25px;
-        height: 25px;
+        font-size: 20px;
+        line-height: 1;
+        padding: 4px 6px;
+        cursor: pointer;
+        &:disabled { opacity: 0.4; cursor: not-allowed; }
+        .mini_player_skip_label {
+          font-size: 8px;
+          font-weight: 700;
+          letter-spacing: 0.04em;
+          margin-top: 1px;
+        }
+      }
+
+      .layout_buttom_play_wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border: 0;
         border-radius: 50%;
-      
+        cursor: pointer;
         .layout_buttom_play_icon {
-          font-size: 15px;
-          
+          font-size: 14px;
+        }
+      }
+
+      .mini_player_progress_row {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        width: 100%;
+      }
+
+      .mini_player_time {
+        font-family: "Poppins", sans-serif;
+        font-size: 10px;
+        opacity: 0.75;
+        font-variant-numeric: tabular-nums;
+        flex-shrink: 0;
+      }
+
+      .mini_player_progress {
+        position: relative;
+        flex: 1 1 auto;
+        height: 20px;
+        display: flex;
+        align-items: center;
+
+        .mini_player_progress_fill {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          left: 0;
+          height: 3px;
+          border-radius: 999px;
+          pointer-events: none;
+        }
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          left: 0;
+          right: 0;
+          height: 3px;
+          border-radius: 999px;
+          background: rgba(128, 128, 128, 0.3);
+        }
+
+        input[type="range"].mini_player_seek {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 100%;
+          background: transparent;
+          outline: none;
+          height: 20px;
+          margin: 0;
+          position: relative;
+          z-index: 2;
           cursor: pointer;
+        }
+        input[type="range"].mini_player_seek::-webkit-slider-runnable-track {
+          -webkit-appearance: none;
+          height: 20px;
+          background: transparent;
+        }
+        input[type="range"].mini_player_seek::-moz-range-track {
+          height: 20px;
+          background: transparent;
+        }
+        input[type="range"].mini_player_seek::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          height: 12px;
+          width: 12px;
+          margin-top: 4px;
+          border-radius: 50%;
+          background: #ddff2b;
+          cursor: pointer;
+          border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+        input[type="range"].mini_player_seek::-moz-range-thumb {
+          height: 12px;
+          width: 12px;
+          border-radius: 50%;
+          background: #ddff2b;
+          cursor: pointer;
+          border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+      }
+
+      .mini_player_speed_wrap {
+        position: relative;
+        flex-shrink: 0;
+      }
+
+      .mini_player_speed_btn {
+        font-family: "Poppins", sans-serif;
+        background: rgba(128, 128, 128, 0.15);
+        border: 0;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 3px 8px;
+        border-radius: 999px;
+        cursor: pointer;
+        line-height: 1.2;
+      }
+
+      .mini_player_speed_menu {
+        position: absolute;
+        bottom: calc(100% + 6px);
+        right: 0;
+        list-style: none;
+        margin: 0;
+        padding: 4px 0;
+        min-width: 70px;
+        border-radius: 8px;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+        border: 1px solid rgba(128, 128, 128, 0.25);
+        z-index: 100;
+
+        li button {
+          width: 100%;
+          background: none;
+          border: 0;
+          text-align: left;
+          padding: 6px 12px;
+          font-size: 12px;
+          font-family: "Poppins", sans-serif;
+          cursor: pointer;
+          color: inherit;
+          &.is-active { font-weight: 700; }
+          &:hover { background: rgba(128, 128, 128, 0.12); }
+        }
+      }
+
+      .mini_player_share_btn {
+        background: none;
+        border: 0;
+        padding: 4px;
+        cursor: pointer;
+        flex-shrink: 0;
+        &:disabled { opacity: 0.4; cursor: not-allowed; }
+        .layout_buttom_share {
+          font-size: 20px;
         }
       }
     }

@@ -39,6 +39,7 @@ const SearchPage = () => {
   const [searchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
+  const [sortBy, setSortBy] = useState("relevance");
 
   // Extract primitive values from searchParams for reliable dependency tracking
   const pageParam = searchParams.get("page");
@@ -312,6 +313,22 @@ const SearchPage = () => {
   const totalPages = Math.ceil(totalResults / 20);
   const searchValue = searchParams.get("query");
 
+  const sortedResults = React.useMemo(() => {
+    if (!Array.isArray(searchData)) return [];
+    if (sortBy === "relevance") return searchData;
+    const arr = [...searchData];
+    if (sortBy === "newest") {
+      arr.sort((a, b) => {
+        const da = new Date(a.upload_date || a.created_at || 0).getTime();
+        const db = new Date(b.upload_date || b.created_at || 0).getTime();
+        return db - da;
+      });
+    } else if (sortBy === "popular") {
+      arr.sort((a, b) => (parseInt(b.views) || 0) - (parseInt(a.views) || 0));
+    }
+    return arr;
+  }, [searchData, sortBy]);
+
   return (
     <Container>
       <div className="w-full h-full max-[615px]:pt-[6px] text-sm min-[615px]:text-[16px] font-thin text-black dark:text-gray-200">
@@ -343,18 +360,35 @@ const SearchPage = () => {
           {`Search for ${searchValue || ""}`}
         </div>
         <div className="flex text-color text-sm font-normal flex-col px-2 py-12 min-[615px]:px-6 min-[615px]:py-6 w-full">
-          {/* Enhanced Filter Button for Mobile */}
-          <div
-            onClick={handleSideBar}
-            className="my-3 w-fit space-x-2 border px-3 py-2 rounded-lg min-[890px]:hidden flex items-center border-border hover:bg-gray-800 transition-colors cursor-pointer"
-          >
-            <FaFilter className="text-[18px]" />
-            <div className="font-medium">Filters</div>
-            {getActiveFilterCount() > 0 && (
-              <span className="bg-[#ddff2b] text-black rounded-full px-2 py-0.5 text-xs font-bold">
-                {getActiveFilterCount()}
-              </span>
-            )}
+          {/* Filters + Sort toolbar */}
+          <div className="my-3 flex items-center gap-2 flex-wrap">
+            <button
+              type="button"
+              onClick={handleSideBar}
+              className="space-x-2 border px-3 py-2 rounded-lg md:hidden flex items-center border-border hover:bg-gray-800 transition-colors cursor-pointer"
+            >
+              <FaFilter className="text-[16px]" />
+              <span className="font-medium">Filters</span>
+              {getActiveFilterCount() > 0 && (
+                <span className="bg-[#ddff2b] text-black rounded-full px-2 py-0.5 text-xs font-bold">
+                  {getActiveFilterCount()}
+                </span>
+              )}
+            </button>
+
+            <label className="flex items-center gap-2 border border-border rounded-lg px-3 py-2 cursor-pointer">
+              <span className="text-xs opacity-70">Sort:</span>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="bg-transparent text-color text-sm font-medium outline-none cursor-pointer"
+                aria-label="Sort search results"
+              >
+                <option value="relevance">Relevance</option>
+                <option value="newest">Newest first</option>
+                <option value="popular">Most played</option>
+              </select>
+            </label>
           </div>
 
           {/* Results Count */}
@@ -485,7 +519,7 @@ const SearchPage = () => {
           {!loading && searchData && searchData.length > 0 && (
             <>
               <div className="space-y-0">
-                {searchData.map((item, idx) => (
+                {sortedResults.map((item, idx) => (
                   <SearchDataWidget
                     key={item._id.$oid || idx}
                     lec_img={item.lecturer_image}

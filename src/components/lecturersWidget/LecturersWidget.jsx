@@ -1,36 +1,19 @@
-import React, { useEffect, memo } from "react";
+import React, { memo } from "react";
 import "./lecturersWidget.scss";
 import { FiEye } from "react-icons/fi";
 import { formatNumber } from "../UI/formatter";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
+import SafeImage from "../UI/safeImage/SafeImage";
 
 const LecturersWidget = memo(({ img, rp, rpname, views, styling }) => {
-  useEffect(() => {
-    const lazy = document.querySelectorAll("#lect");
-    function lazyImages() {
-      lazy.forEach((im) => {
-        const newurl = im.getAttribute("src-data");
-        im.src = newurl;
-
-        im.addEventListener("error", () => {
-          im.src = IMAGE_PLACEHOLDERS.lecturer;
-        });
-      });
-    }
-
-    lazyImages();
-  }, []);
-
   return (
     <div className="lecturerWidget_wrapper">
       <div className="lecturerWidget_circle">
-        <img
-          className="lecturerWidget_img"
-          id="lect"
-          src-data={img}
-          src={IMAGE_PLACEHOLDERS.lecturer}
+        <SafeImage
+          src={img}
+          fallback={IMAGE_PLACEHOLDERS.lecturer}
           alt={rp || "Lecturer"}
-          loading="lazy"
+          imgClassName="lecturerWidget_img"
         />
       </div>
 

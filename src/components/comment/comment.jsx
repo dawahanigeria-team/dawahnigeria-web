@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./comment.scss";
 import { SlEmotsmile } from "react-icons/sl";
-import logo from "../../assets/png/dn logo.png";
+import logo from "../../assets/png/dn-logo.png";
 import axios from "../../utils/useAxios";
 import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
 import { useSelector } from "react-redux";

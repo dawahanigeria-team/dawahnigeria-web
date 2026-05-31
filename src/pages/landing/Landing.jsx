@@ -127,6 +127,7 @@ const Landing = () => {
                     </div>
                   ))}
                 </Slider>
+                <h2 className="landing_browse_heading text-color">Browse</h2>
                 <Slider className="landing_options" {...OPTIONS_SLIDER_SETTINGS}>
                   <LandingOptions text={"Ramadan"} img={bplaylist} link={RAMADAN} />
                   <LandingOptions text={"Charts"} img={bchart} link={CHARTS} />

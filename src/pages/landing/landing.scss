@@ -161,8 +161,21 @@
   }
 
   // ============================================
-  // QUICK ACCESS NAVIGATION (MOBILE)
+  // BROWSE CATEGORIES (MOBILE) — content discovery, not nav
   // ============================================
+
+  .landing_browse_heading {
+    display: none;
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    margin: 0 0 0.5rem 0.25rem;
+
+    @include mobile {
+      display: block;
+    }
+  }
 
   .landing_options {
     display: none;
