@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { IMAGE_PLACEHOLDERS } from "../../../utils/imagePlaceholders";
+import { getResultImage, getResultPlaceholder } from "../../../utils/getResultImage";
 import { FaPlay, FaEye } from "react-icons/fa";
 import { formatLectureDate } from "../../../utils/formatLectureDate";
 
 const SearchDataWidget = ({
-  lec_img,
+  item,
   cat_name,
   mp3_title,
   mp3_description,
@@ -18,6 +18,8 @@ const SearchDataWidget = ({
 }) => {
   const navigate = useNavigate();
   const lectureDate = formatLectureDate(updatedDate);
+  const imgSrc = getResultImage(item);
+  const fallbackSrc = getResultPlaceholder(cat_name);
 
   const getNavigationUrl = () => {
     const type = cat_name?.toLowerCase();
@@ -42,22 +44,6 @@ const SearchDataWidget = ({
   };
 
 
-  useEffect(() => {
-    function lazyImages() {
-      const lazy = document.querySelectorAll("#search");
-      lazy.forEach((im) => {
-        const newurl = im.getAttribute("src-data");
-        im.src = newurl;
-
-        im.addEventListener("error", () => {
-          im.src = IMAGE_PLACEHOLDERS.lecture;
-        });
-      });
-    }
-
-    lazyImages();
-  }, []);
-
   return (
     <div
       onClick={() => navigate(getNavigationUrl())}
@@ -66,11 +52,15 @@ const SearchDataWidget = ({
       <div className="flex gap-3 sm:gap-4">
         <div className="shrink-0 relative">
           <img
-            src={lec_img || IMAGE_PLACEHOLDERS.lecture}
-            alt={lecturer_name}
-            className="w-16 h-16 sm:w-20 sm:h-20 rounded object-cover"
-            id="search"
-            src-data={lec_img}
+            src={imgSrc}
+            alt={lecturer_name || mp3_title || ""}
+            loading="lazy"
+            className="w-16 h-16 sm:w-20 sm:h-20 rounded object-cover bg-gray-800"
+            onError={(e) => {
+              if (e.currentTarget.src !== fallbackSrc) {
+                e.currentTarget.src = fallbackSrc;
+              }
+            }}
           />
           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded">
             <FaPlay className="text-white text-xl sm:text-2xl" />

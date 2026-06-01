@@ -11,6 +11,7 @@ import { SearchContext } from "../../App";
 import { SEARCH } from "../../utils/routes/constants";
 import axios from "../../utils/useAxios";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
+import { getResultImage } from "../../utils/getResultImage";
 
 const SUGGEST_DEBOUNCE_MS = 300;
 const SUGGEST_LIMIT = 6;
@@ -212,7 +213,7 @@ const Search = () => {
               {suggestions.map((item, idx) => {
                 const title = item.mp3_title || item.title || item.name || "Untitled";
                 const subtitle = item.lecturer_name || item.album_name || "";
-                const img = item.lecturer_image || item.img || IMAGE_PLACEHOLDERS.lecture;
+                const img = getResultImage(item);
                 return (
                   <button
                     key={item.id || `${title}-${idx}`}

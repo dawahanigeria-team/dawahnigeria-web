@@ -534,7 +534,7 @@ const SearchPage = () => {
                 {sortedResults.map((item, idx) => (
                   <SearchDataWidget
                     key={item._id.$oid || idx}
-                    lec_img={item.lecturer_image}
+                    item={item}
                     cat_name={item.type}
                     mp3_title={item.mp3_title || item.title || item.name}
                     mp3_description={item.mp3_description || item.description}
