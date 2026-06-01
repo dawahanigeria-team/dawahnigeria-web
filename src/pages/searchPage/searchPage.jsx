@@ -31,7 +31,7 @@ const SearchPage = () => {
     categoryId = [],
     albumId = []
   } = searchContext;
-  const { searchData } = useSelector((state) => state.search);
+  const { searchData, searchOptions } = useSelector((state) => state.search);
   const navigate = useNavigate();
   const handleBack = () => {
     const { to, options } = getBackNavigationConfig("/dawahcast");
@@ -44,6 +44,7 @@ const SearchPage = () => {
   const [searchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
+  const [sortBy, setSortBy] = useState("relevance");
 
   // Extract primitive values from searchParams for reliable dependency tracking
   const pageParam = searchParams.get("page");
@@ -61,7 +62,6 @@ const SearchPage = () => {
 
   // Get filter labels for display
   const getFilterLabel = (type, id) => {
-    const { searchOptions } = useSelector((state) => state.search);
     if (!searchOptions) return null;
 
     let items = [];
@@ -227,6 +227,14 @@ const SearchPage = () => {
       params.append("album_id", albumId.join(","));
     }
 
+    // Server-side date sort. Ignored by the backend on relevance-ranked
+    // free-text queries; honored on scoped/list results (e.g. by lecturer).
+    if (sortBy === "newest") {
+      params.append("sort", "desc");
+    } else if (sortBy === "oldest") {
+      params.append("sort", "asc");
+    }
+
     const requestUrl = `${baseUrl}?${params.toString()}`;
     console.log("Fetching search data - Page:", page, "URL:", requestUrl);
 
@@ -283,7 +291,7 @@ const SearchPage = () => {
         dispatch(getSearchRecord(0));
         setTotalResults(0);
       });
-  }, [queryParam, languageId, lecturerId, categoryId, albumId, navigate, setText, dispatch]);
+  }, [queryParam, languageId, lecturerId, categoryId, albumId, sortBy, navigate, setText, dispatch]);
 
   // Reset to page 1 when filters change
   useEffect(() => {
@@ -295,6 +303,17 @@ const SearchPage = () => {
       navigate(`${pathname}?${newSearchParams.toString()}`, { replace: true });
     }
   }, [languageId, lecturerId, categoryId, albumId]);
+
+  // Changing the sort order re-queries from page 1 (server returns sorted data).
+  const handleSortChange = (value) => {
+    setSortBy(value);
+    const currentPage = parseInt(pageParam) || 1;
+    if (currentPage !== 1) {
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set("page", "1");
+      navigate(`${pathname}?${newSearchParams.toString()}`, { replace: true });
+    }
+  };
 
   useEffect(() => {
     const page = parseInt(pageParam) || 1;
@@ -316,6 +335,11 @@ const SearchPage = () => {
 
   const totalPages = Math.ceil(totalResults / 20);
   const searchValue = searchParams.get("query");
+
+  // Results arrive already ordered from the server (by relevance, or by date
+  // when a sort is chosen). No client-side reordering — that would only reorder
+  // the current page, not the full result set.
+  const sortedResults = Array.isArray(searchData) ? searchData : [];
 
   return (
     <Container>
@@ -348,18 +372,35 @@ const SearchPage = () => {
           {`Search for ${searchValue || ""}`}
         </div>
         <div className="flex text-color text-sm font-normal flex-col px-2 py-12 min-[615px]:px-6 min-[615px]:py-6 w-full">
-          {/* Enhanced Filter Button for Mobile */}
-          <div
-            onClick={handleSideBar}
-            className="my-3 w-fit space-x-2 border px-3 py-2 rounded-lg min-[890px]:hidden flex items-center border-border hover:bg-gray-800 transition-colors cursor-pointer"
-          >
-            <FaFilter className="text-[18px]" />
-            <div className="font-medium">Filters</div>
-            {getActiveFilterCount() > 0 && (
-              <span className="bg-[#ddff2b] text-black rounded-full px-2 py-0.5 text-xs font-bold">
-                {getActiveFilterCount()}
-              </span>
-            )}
+          {/* Filters + Sort toolbar */}
+          <div className="my-3 flex items-center gap-2 flex-wrap">
+            <button
+              type="button"
+              onClick={handleSideBar}
+              className="space-x-2 border px-3 py-2 rounded-lg md:hidden flex items-center border-border hover:bg-gray-800 transition-colors cursor-pointer"
+            >
+              <FaFilter className="text-[16px]" />
+              <span className="font-medium">Filters</span>
+              {getActiveFilterCount() > 0 && (
+                <span className="bg-[#ddff2b] text-black rounded-full px-2 py-0.5 text-xs font-bold">
+                  {getActiveFilterCount()}
+                </span>
+              )}
+            </button>
+
+            <label className="flex items-center gap-2 border border-border rounded-lg px-3 py-2 cursor-pointer">
+              <span className="text-xs opacity-70">Sort:</span>
+              <select
+                value={sortBy}
+                onChange={(e) => handleSortChange(e.target.value)}
+                className="bg-transparent text-color text-sm font-medium outline-none cursor-pointer"
+                aria-label="Sort search results"
+              >
+                <option value="relevance">Relevance</option>
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+              </select>
+            </label>
           </div>
 
           {/* Results Count */}
@@ -490,7 +531,7 @@ const SearchPage = () => {
           {!loading && searchData && searchData.length > 0 && (
             <>
               <div className="space-y-0">
-                {searchData.map((item, idx) => (
+                {sortedResults.map((item, idx) => (
                   <SearchDataWidget
                     key={item._id.$oid || idx}
                     lec_img={item.lecturer_image}
@@ -502,7 +543,7 @@ const SearchPage = () => {
                     duration={item.mp3_duration || item.duration}
                     views={item.views}
                     language={item.language_name}
-                    uploadDate={item.upload_date || item.created_at}
+                    updatedDate={item.updated_date}
                   />
                 ))}
               </div>

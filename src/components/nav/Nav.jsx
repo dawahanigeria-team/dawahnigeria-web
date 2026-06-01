@@ -1,12 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import "./nav.scss";
 import Search from "../search/Search";
 import ClientOnly from "../ClientOnly";
-// SVG imports moved to conditional loading to prevent SSR errors
-// import apple from "../../assets/svg/apple.svg";
-// import googleplay from "../../assets/svg/googleplay.svg";
-// PNG import moved to conditional loading to prevent SSR errors
-// import Logo from "../../assets/png/dn logo.png";
+import apple from "../../assets/svg/apple.svg";
+import googleplay from "../../assets/svg/googleplay.svg";
+import Logo from "../../assets/png/dn-logo.png";
 import { FiMenu } from "react-icons/fi";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { NavContext } from "../layout/Layout";
@@ -15,28 +13,6 @@ const Nav = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { setRes, setisOpen } = useContext(NavContext);
-  
-  // State for conditionally loaded assets to prevent SSR errors
-  const [appleSvg, setAppleSvg] = useState(null);
-  const [googleplaySvg, setGoogleplaySvg] = useState(null);
-  const [logoImg, setLogoImg] = useState(null);
-  
-  // Load assets only on client side
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      import('../../assets/svg/apple.svg').then(module => {
-        setAppleSvg(module.default);
-      }).catch(() => {});
-      
-      import('../../assets/svg/googleplay.svg').then(module => {
-        setGoogleplaySvg(module.default);
-      }).catch(() => {});
-      
-      import('../../assets/png/dn logo.png').then(module => {
-        setLogoImg(module.default);
-      }).catch(() => {});
-    }
-  }, []);
   const handleSideBar = () => {
     setRes(1);
     /**
@@ -66,7 +42,7 @@ const Nav = () => {
               }}
               className="nav_logo"
             >
-              <img className="logo_img" src={logoImg} alt="logo" />
+              <img className="logo_img" src={Logo} alt="DN Dawahcast logo" />
             </div>
           </div>
 
@@ -89,7 +65,7 @@ const Nav = () => {
                 rel="noopener noreferrer"
                 aria-label="Download app on Google play"
               >
-                <img src={googleplaySvg} alt="" />
+                <img src={googleplay} alt="Get it on Google Play" />
               </a>
             </div>
             <div className="nav_download2">

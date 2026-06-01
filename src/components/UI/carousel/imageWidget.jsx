@@ -1,28 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
+import SafeImage from "../safeImage/SafeImage";
 import { IMAGE_PLACEHOLDERS } from "../../../utils/imagePlaceholders";
 
-const ImageWidget = ({ image }) => {
-  useEffect(() => {
-    const lazy = document.querySelectorAll("#carousels");
-    lazy.forEach((im) => {
-      const newurl = im.getAttribute("src-data");
-      im.src = newurl;
-
-      im.addEventListener("error", () => {
-        im.src = IMAGE_PLACEHOLDERS.carouselWidget;
-      });
-    });
-  }, []);
-  return (
-    <img
-      id="carousels"
-      className="w-full h-full object-fill rounded-md"
-      src-data={image}
-      src={IMAGE_PLACEHOLDERS.carouselWidget}
-      // src-data={image}
-      alt="1"
-    />
-  );
-};
+const ImageWidget = ({ image, alt = "carousel" }) => (
+  <SafeImage
+    src={image}
+    fallback={IMAGE_PLACEHOLDERS.carouselWidget}
+    alt={alt}
+    imgClassName="w-full h-full object-fill rounded-md"
+  />
+);
 
 export default ImageWidget;

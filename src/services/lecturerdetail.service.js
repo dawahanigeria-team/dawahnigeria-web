@@ -3,8 +3,10 @@ import { apiService } from "./api";
 export const lecturerDetailApi = {
   getLecturerById: async ({ id }) =>
     apiService().get(`/rplisting_multi_nid_api.php?id=${id}`),
-  getLecturerSongs: async ({ page, id }) =>
-    apiService().get(`/leclisting_rp.php?page=${page}&rpid=${id}`),
+  getLecturerSongs: async ({ page, id, sort }) =>
+    apiService().get(
+      `/leclisting_rp.php?page=${page}&rpid=${id}${sort ? `&sort=${sort}` : ""}`
+    ),
   getLecturerPlaylist: async ({ id }) =>
     apiService().get(
       `/playlistApi.php?action=all_public_playlist_data&rp_id=${id}`

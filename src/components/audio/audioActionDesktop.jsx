@@ -668,7 +668,7 @@ const AudioActionDesktop = () => {
   return (
     <>
       <div
-        className={`fixed bg-background z-[60]  bottom-0 flex items-center gap-4  transform  cursor-pointer ${
+        className={`hidden md:flex fixed bg-background z-[60]  bottom-0 items-center gap-4  transform  cursor-pointer ${
           isminimize
             ? `w-[220px] h-[60px] bg-black right-0 transition-all duartion-300`
             : `w-full h-[80px] left-0 right-0`
@@ -728,11 +728,14 @@ const AudioActionDesktop = () => {
               isminimize ? "notvisibles" : "visibles flex"
             }`}
           >
-            <div className="w-[60px] h-[60px] rounded-[8px]">
+            <div className="w-[60px] h-[60px] rounded-[8px] overflow-hidden">
               <img
-                className="w-full h-full rounded-[8px]"
-                src={currentaudio?.img || lazysImg}
-                alt="disk"
+                className="w-full h-full rounded-[8px] object-cover"
+                src={currentaudio?.img || lazysImg || "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg"}
+                alt={currentaudio?.title || "Now playing"}
+                onError={(e) => {
+                  e.currentTarget.src = "https://res.cloudinary.com/dkdrbjfdt/image/upload/v1709550293/lazysong_abcewr.jpg";
+                }}
               />
             </div>
 

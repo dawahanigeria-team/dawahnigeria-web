@@ -1,13 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { audioDetailApi } from "../../services";
+import { isValidLectureId } from "./useAudio.hook";
 
 export const useLectureById = (id, options = {}) => {
   const { data, isLoading, isFetching } = useQuery(
     ["audio", id],
     () => audioDetailApi.getAudio(id),
     {
-      enabled: Boolean(id),
-      staleTime: 0,
+      enabled: isValidLectureId(id),
+      // Same key + staleTime as useAudioHook so the detail page and the download
+      // modal share one cached result instead of triggering duplicate fetches.
+      staleTime: 5 * 60 * 1000,
       ...options,
     }
   );

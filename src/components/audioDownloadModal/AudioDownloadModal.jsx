@@ -42,9 +42,11 @@ export const AudioDownloadModal = ({
       });
     }
 
-    // Initiate download
-    download(fileUrl);
-    
+    // Initiate download, suggesting a clean filename built from the lecture title
+    const title = currentLecture?.mp3_title || data?.mp3_title || "lecture";
+    const safeName = `${title}`.replace(/[\\/:*?"<>|]+/g, " ").trim();
+    download(fileUrl, `${safeName}.${selectedFormat}`);
+
     // Show success feedback to user
     const fileSize = data?.[selectedFormat + "_size"] || "";
     const formatLabel = selectedFormat.toUpperCase();

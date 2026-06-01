@@ -1,0 +1,43 @@
+.safe_image_wrap {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.safe_image_skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(127, 127, 127, 0.12) 0%,
+    rgba(127, 127, 127, 0.22) 50%,
+    rgba(127, 127, 127, 0.12) 100%
+  );
+  background-size: 200% 100%;
+  animation: safe_image_shimmer 1.2s linear infinite;
+  border-radius: inherit;
+}
+
+.safe_image_img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.25s ease-out;
+
+  &.is-loaded {
+    opacity: 1;
+  }
+}
+
+@keyframes safe_image_shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

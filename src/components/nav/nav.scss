@@ -52,7 +52,7 @@
       .nav_res_hamburger {
         display: none;
         cursor: pointer;
-        @media screen and (max-width: 890px) {
+        @media screen and (max-width: 767px) {
           display: block;
           font-size: 2rem;
         }
@@ -61,7 +61,7 @@
         width: 35px;
         height: 35px;
         cursor: pointer;
-        @media screen and (max-width: 890px) {
+        @media screen and (max-width: 767px) {
           display: block;
           width: 35px;
           height: 35px;
