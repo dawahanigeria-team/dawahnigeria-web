@@ -25,6 +25,7 @@ if (process.env.NODE_ENV === 'development') {
   });
 }
 import { Route, Routes, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Layout from "./components/layout/Layout";
 import Scrolltotop from "./components/UI/scrollToTop";
 import {
@@ -55,11 +56,17 @@ import {
   RECO1,
   RECO2,
   RAMADAN,
+  LEADERBOARD,
   DOWNLOAD,
   PRIVACY,
+  PAYSTACK_CALLBACK,
+  FLUTTERWAVE_CALLBACK,
+  ACCOUNT_SETTINGS,
 } from "./utils/routes/constants";
 import { usePageTracking } from "./utils/tracking";
 import { useThemeHook } from "./hooks/common/useTheme.hook";
+import { useUsageSessionTracking } from "./hooks/leaderboard";
+import TawkChat from "./components/TawkChat";
 
 // Lazy load all pages for code splitting
 const Landing = lazy(() => import("./pages/landing/Landing"));
@@ -98,9 +105,10 @@ const Buzz = lazy(() => import("./pages/buzz/buzz"));
 const Podcast = lazy(() => import("./pages/podcast/podcast"));
 const SearchPage = lazy(() => import("./pages/searchPage/searchPage"));
 const Privacy = lazy(() => import("./pages/privacy/Privacy"));
-
-// Lazy load heavy third-party components
-const TawkMessengerReact = lazy(() => import("@tawk.to/tawk-messenger-react"));
+const Leaderboard = lazy(() => import("./pages/leaderboard/Leaderboard"));
+const PaystackCallback = lazy(() => import("./pages/subscription/PaystackCallback"));
+const FlutterwaveCallback = lazy(() => import("./pages/subscription/FlutterwaveCallback"));
+const AccountSettings = lazy(() => import("./pages/account/AccountSettings"));
 
 const noop = () => {};
 
@@ -186,6 +194,7 @@ const ConditionalToaster = () => {
 
 const App = () => {
   usePageTracking();
+  const { currentUser } = useSelector((state) => state.user);
   const audioRef = useRef(null);
   const rangeRef = useRef();
   const [initial, setinitial] = useState(true);
@@ -198,6 +207,8 @@ const App = () => {
   const { darkQuery } = useThemeHook();
   const [searchType, setSearchType] = useState("general");
   const [playing, setPlaying] = useState(false);
+
+  useUsageSessionTracking(currentUser?.id);
 
   // Memoize context values to prevent unnecessary re-renders
   const searchContextValue = useMemo(
@@ -338,6 +349,7 @@ const App = () => {
                       </Route>
                       <Route path="/dawahcast" element={<Layout />}>
                         <Route path={RAMADAN} element={<Ramadan />} />
+                        <Route path={LEADERBOARD} element={<Leaderboard />} />
                         <Route
                           path={`${RAMADAN}/year/:year`}
                           element={<RamadanYearTafseer />}
@@ -386,6 +398,9 @@ const App = () => {
                         <Route path={FAVOURITE} element={<Favourite />} />
                         <Route path={MYPLAYLIIST} element={<Myplaylist />} />
                         <Route path={PRIVACY} element={<Privacy />} />
+                        <Route path={PAYSTACK_CALLBACK} element={<PaystackCallback />} />
+                        <Route path={FLUTTERWAVE_CALLBACK} element={<FlutterwaveCallback />} />
+                        <Route path={ACCOUNT_SETTINGS} element={<AccountSettings />} />
                       </Route>
                       <Route path="/" element={<Navigate to="/dawahcast" />} />
                       <Route path="/dawahcast" element={<Layout />} />
@@ -393,32 +408,7 @@ const App = () => {
                   </Suspense>
                 </ErrorBoundary>
                 <ConditionalToaster />
-                <Suspense fallback={null}>
-                  <TawkMessengerReact
-                    propertyId="5cd3dd3ed07d7e0c6392ad09"
-                    widgetId="default"
-                    onLoad={() => {}}
-                    onStatusChange={() => {}}
-                    onBeforeLoad={() => {}}
-                    onChatMaximized={() => {}}
-                    onChatMinimized={() => {}}
-                    onChatHidden={() => {}}
-                    onChatStarted={() => {}}
-                    onChatEnded={() => {}}
-                    onPrechatSubmit={() => {}}
-                    onOfflineSubmit={() => {}}
-                    onChatMessageVisitor={() => {}}
-                    onChatMessageAgent={() => {}}
-                    onChatMessageSystem={() => {}}
-                    onAgentJoinChat={() => {}}
-                    onAgentLeaveChat={() => {}}
-                    onChatSatisfaction={() => {}}
-                    onVisitorNameChanged={() => {}}
-                    onFileUpload={() => {}}
-                    onTagsUpdated={() => {}}
-                    onUnreadCountChanged={() => {}}
-                  />
-                </Suspense>
+                <TawkChat />
               </ThemeProvider.Provider>
             </AudioContext.Provider>
           </SearchContext.Provider>

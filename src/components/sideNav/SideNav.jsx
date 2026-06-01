@@ -5,11 +5,10 @@ import { Link, useLocation } from "react-router-dom";
 import avatar from "../../assets/svg/avatar.svg";
 import { lectures, library } from "./data";
 import IconText from "../iconText/IconText";
-import { RiAwardFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import SearchOptions from "../../pages/searchPage/searchOptions";
-import { RECO1, RECO2, SEARCH } from "../../utils/routes/constants";
+import { SEARCH, ACCOUNT_SETTINGS } from "../../utils/routes/constants";
 import ThemeDropDown from "../UI/themedropdown/themeDropDown";
 const SideNav = ({ res, handleSideBar, setisOpen }) => {
   const navigate = useNavigate();
@@ -65,8 +64,15 @@ const SideNav = ({ res, handleSideBar, setisOpen }) => {
           </div>
         )}
         {currentUser?.id && (
-          <div className="user_name text-color dark:hover:text-[#ddff00] hover:text-color-foreground">
+          <div
+            className="user_name text-color dark:hover:text-[#ddff00] hover:text-color-foreground"
+            onClick={() => navigate(ACCOUNT_SETTINGS)}
+            style={{ cursor: "pointer" }}
+          >
             {currentUser?.username?.split(" ")[0] || currentUser?.username}
+            <span style={{ fontSize: "10px", display: "block", color: "#9ca3af" }}>
+              Tap to manage account
+            </span>
           </div>
         )}
       </div>
@@ -103,28 +109,6 @@ const SideNav = ({ res, handleSideBar, setisOpen }) => {
                 />
               );
             })}
-          </div>
-          <div className="sidenav_Buzz">
-            <h1 className="sidenav_Buzz_header text-muted">Buzz</h1>
-            <IconText
-              icon={<RiAwardFill className="icon0 icon" />}
-              id={111}
-              link={RECO1}
-              name={"Recommended"}
-              group={"buzz"}
-              setisOpen={setisOpen}
-            />
-          </div>
-          <div className="sidenav_podcast">
-            <h1 className="sidenav_podcast_header text-muted">Podcast</h1>
-            <IconText
-              icon={<RiAwardFill className="icon0 icon" />}
-              id={112}
-              link={RECO2}
-              name={"Recommended"}
-              group={"podcast"}
-              setisOpen={setisOpen}
-            />
           </div>
         </div>
       )}

@@ -1,0 +1,341 @@
+.account_wrapper {
+  margin-top: 3em;
+  padding: 2% 4%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  gap: 2em;
+  padding-bottom: 100px;
+
+  .account_header_link {
+    display: none;
+  }
+
+  .account_profile_header {
+    width: 100%;
+    padding: 4%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    background: #ddff2b;
+    border-radius: 8px;
+
+    .account_img_wrap {
+      width: 60px;
+      height: 60px;
+      .account_img_wrap_sz {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+      }
+    }
+
+    .account_user_info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: flex-start;
+      color: #222222;
+      font-size: 14px;
+      font-family: "Poppins", sans-serif;
+      font-weight: 400;
+
+      .account_name {
+        text-transform: capitalize;
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      .account_email {
+        font-size: 13px;
+      }
+
+      .account_badge {
+        display: inline-block;
+        padding: 3px 10px;
+        background: #222222;
+        color: #ddff2b;
+        font-size: 11px;
+        font-weight: 600;
+        border-radius: 4px;
+        text-transform: uppercase;
+        margin-top: 4px;
+      }
+    }
+  }
+
+  .account_menu_wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+
+    .account_menu_item {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 1rem 0;
+      border-bottom: 1px solid #333;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.02);
+        padding-left: 0.5rem;
+        margin-left: -0.5rem;
+        padding-right: 0.5rem;
+        border-radius: 8px;
+      }
+
+      &.active {
+        border-bottom: none;
+      }
+
+      &.logout_item {
+        margin-top: 1rem;
+        border-top: 1px solid #333;
+        border-bottom: none;
+
+        .logout_icon .icon {
+          color: #ef4444;
+        }
+        .account_menu_title {
+          color: #ef4444;
+        }
+      }
+
+      .account_menu_icon {
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #333;
+        border-radius: 8px;
+
+        .icon {
+          font-size: 22px;
+          color: #ddff2b;
+        }
+      }
+
+      .account_menu_text {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        .account_menu_title {
+          font-size: 15px;
+          font-family: "Poppins", sans-serif;
+          font-weight: 500;
+          color: #fff;
+          margin: 0;
+        }
+
+        .account_menu_subtitle {
+          font-size: 13px;
+          font-family: "Poppins", sans-serif;
+          color: #aeaeae;
+          margin: 0;
+        }
+      }
+    }
+
+    .account_expand_section {
+      padding: 1.25rem;
+      background: #1a1a1a;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+
+      .account_premium_info {
+        .premium_status_text {
+          font-size: 14px;
+          color: #22c55e;
+          font-family: "Poppins", sans-serif;
+          margin: 0 0 1rem 0;
+        }
+
+        .premium_features {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+
+          li {
+            font-size: 13px;
+            color: #aeaeae;
+            font-family: "Poppins", sans-serif;
+            padding: 6px 0;
+          }
+        }
+      }
+
+      .account_upgrade_section {
+        .upgrade_text {
+          font-size: 14px;
+          color: #aeaeae;
+          font-family: "Poppins", sans-serif;
+          margin: 0 0 1rem 0;
+          line-height: 1.5;
+        }
+
+        .error_text {
+          font-size: 12px;
+          color: #ef4444;
+          margin: 0 0 1rem 0;
+        }
+      }
+
+      .account_form_group {
+        margin-bottom: 1rem;
+
+        label {
+          display: block;
+          font-size: 13px;
+          color: #aeaeae;
+          font-family: "Poppins", sans-serif;
+          margin-bottom: 6px;
+        }
+
+        input {
+          width: 100%;
+          padding: 12px;
+          background: #222;
+          border: 1px solid #333;
+          border-radius: 8px;
+          color: #fff;
+          font-size: 14px;
+          font-family: "Poppins", sans-serif;
+          box-sizing: border-box;
+
+          &::placeholder {
+            color: #666;
+          }
+
+          &:focus {
+            outline: none;
+            border-color: #ddff2b;
+          }
+        }
+      }
+
+      .form_message {
+        font-size: 12px;
+        font-family: "Poppins", sans-serif;
+        margin: 0 0 1rem 0;
+        padding: 10px;
+        border-radius: 4px;
+
+        &.success {
+          color: #22c55e;
+          background: rgba(34, 197, 94, 0.1);
+        }
+
+        &.error {
+          color: #ef4444;
+          background: rgba(239, 68, 68, 0.1);
+        }
+      }
+    }
+
+    .account_btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: "Poppins", sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      margin-bottom: 10px;
+      transition: opacity 0.2s;
+
+      &:hover:not(:disabled) {
+        opacity: 0.9;
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      &.primary_btn {
+        background: #ddff2b;
+        color: #222;
+      }
+
+      &.paystack_btn {
+        background: #00c3f7;
+        color: #fff;
+      }
+
+      &.flutterwave_btn {
+        background: #f5a623;
+        color: #fff;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .account_wrapper {
+    padding: 2%;
+    max-width: 100%;
+
+    .account_header_link {
+      display: block;
+      width: 100%;
+      position: fixed;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      padding: unset;
+    }
+
+    .account_profile_header {
+      margin-top: 7rem;
+
+      .account_img_wrap {
+        width: 50px;
+        height: 50px;
+      }
+
+      .account_user_info {
+        .account_name {
+          font-size: 14px;
+        }
+        .account_email {
+          font-size: 12px;
+        }
+        .account_badge {
+          font-size: 10px;
+          padding: 2px 8px;
+        }
+      }
+    }
+
+    .account_menu_wrap {
+      .account_menu_item {
+        .account_menu_icon {
+          width: 40px;
+          height: 40px;
+          .icon {
+            font-size: 20px;
+          }
+        }
+        .account_menu_text {
+          .account_menu_title {
+            font-size: 14px;
+          }
+          .account_menu_subtitle {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+}

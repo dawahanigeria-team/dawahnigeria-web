@@ -40,6 +40,7 @@ import {
   getValue,
 } from "../../Redux/Actions/ActionCreators";
 import { CATEGORIES, LECTURE, MORE } from "../../utils/routes/constants";
+import { getNextTrackIndex, getTrackIndex } from "../../utils/audioQueue";
 import CurrentPlayData from "../../components/currentData/currentPlayData";
 import Loader from "../../components/UI/loader/loader";
 
@@ -57,6 +58,7 @@ import { CommentIcon } from "../../components/svgcomponent/svgComponent";
 import LandingWidget from "../../components/landingWidget/LandingWidget";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders.js";
 import { trackLectureView, trackLecturePlay, trackLecturePause, trackFavorite } from "../../utils/posthog";
+import { getBackNavigationConfig } from "../../utils/navigation";
 
 const AudioDetail = () => {
   const { id } = useParams();
@@ -98,6 +100,10 @@ const AudioDetail = () => {
   const [isShare, setisShare] = useState(false);
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
+  const handleBack = () => {
+    const { to, options } = getBackNavigationConfig("/dawahcast");
+    navigate(to, options);
+  };
 
   const { theme } = useSelector((state) => state.user);
 
@@ -168,27 +174,21 @@ const AudioDetail = () => {
     setIsPrevious(false);
     dispatch(setPlaying(false));
 
-    const next = pack?.findIndex((value) => {
-      return value.nid === parseInt(id);
-    });
+    const currentTrackIndex = getTrackIndex(pack, id);
+    if (currentTrackIndex === -1) return;
 
-    if (!isEmpty && pack?.length - 1 - next <= 2) {
+    if (!isEmpty && pack?.length - 1 - currentTrackIndex <= 2) {
       dispatch(getPage(page + 1));
     }
 
-    if (next === pack?.length - 1) {
-      navigate(`${LECTURE}${pack[next]?.nid}`);
+    const nextTrackIndex = getNextTrackIndex(pack, id);
+    if (nextTrackIndex === -1) return;
 
-      dispatch(getCount(next));
-    } else if (count < pack?.length - 1) {
-      navigate(`${LECTURE}${pack[next + 1]?.nid}`);
+    const nextTrackId = pack?.[nextTrackIndex]?.nid ?? pack?.[nextTrackIndex]?.id;
+    if (!nextTrackId) return;
 
-      dispatch(getCount(next + 1));
-    } else {
-      navigate(`${LECTURE}${pack[0]?.id}`);
-
-      dispatch(getCount(0));
-    }
+    navigate(`${LECTURE}${nextTrackId}`);
+    dispatch(getCount(nextTrackIndex));
     setinitial(false);
   };
   const handlePreviousAudio = () => {
@@ -568,9 +568,7 @@ const AudioDetail = () => {
         <div className="audiodetail_container">
           <div className="audiodetail_breadcrumb">
             <p
-              onClick={() => {
-                navigate(-1);
-              }}
+              onClick={handleBack}
               className="audiodetail_breadcrumb_first"
             >
               {audioData?.navName && audioData.navName !== "Home"

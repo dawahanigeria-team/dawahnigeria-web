@@ -24,6 +24,7 @@ import { formatNumber } from "../../components/UI/formatter";
 import { FaClosedCaptioning } from "react-icons/fa";
 import HeadMeta from "../../components/head-meta";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
+import { getBackNavigationConfig } from "../../utils/navigation";
 
 const VideoPlayer = () => {
   const { pathname } = useLocation();
@@ -44,6 +45,10 @@ const VideoPlayer = () => {
   const [addFav, setaddFav] = useState(false);
   const [isdisabled, setdisabled] = useState(false);
   const [getFavs, setgetfavs] = useState([]);
+  const handleBack = () => {
+    const { to, options } = getBackNavigationConfig("/dawahcast/videos");
+    navigate(to, options);
+  };
 
   useEffect(() => {
     axios
@@ -201,9 +206,7 @@ const VideoPlayer = () => {
       <div className="w-full boom min-[615px]:px-4 pt-3 pb-20 h-full text-sm min-[615px]:text-[15px]">
         <div className="my-3 max-[615px]:hidden text-sm text-foreground space-x-2 flex items-center">
           <HiOutlineArrowLongLeft
-            onClick={() => {
-              navigate(-1);
-            }}
+            onClick={handleBack}
             className={
               pathname === `${VIDEOS}${id}`
                 ? "text-foreground text-[22px]"
@@ -228,7 +231,7 @@ const VideoPlayer = () => {
               <div
                 onClick={(e) => {
                   e.stopPropagation();
-                  navigate(-1);
+                  handleBack();
                 }}
                 className="cursor-pointer absolute min-[615px]:hidden top-8 left-2 w-fit h-fit"
               >

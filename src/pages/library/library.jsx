@@ -7,7 +7,7 @@ import addplay from "../../assets/svg/addplaylist.svg";
 import fav from "../../assets/svg/fav.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { FAVOURITE, MYPLAYLIIST } from "../../utils/routes/constants";
+import { FAVOURITE, MYPLAYLIIST, ACCOUNT_SETTINGS } from "../../utils/routes/constants";
 import HeadMeta from "../../components/head-meta";
 import {
   getLecid,
@@ -38,9 +38,14 @@ const Library = () => {
             <img className="lib_img_wrap_sz" src={avatar} alt="avt" />
           </div>
           {currentUser ? (
-            <div className="user_name">
+            <div
+              className="user_name"
+              onClick={() => navigate(ACCOUNT_SETTINGS)}
+              style={{ cursor: "pointer" }}
+            >
               <span className="name">{currentUser?.username}</span>
               <span className="social_name">{currentUser?.email}</span>
+              <span className="account_link">Manage Account →</span>
             </div>
           ) : (
             <div className="no_user">

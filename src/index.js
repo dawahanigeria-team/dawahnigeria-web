@@ -18,6 +18,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { thunk } from "redux-thunk";
 import { HelmetProvider } from "react-helmet-async";
 import { setStore } from "./store/storeRegistry";
+import { isTawkError } from "./utils/thirdPartyErrors";
 
 const { Suspense, lazy } = React;
 
@@ -51,6 +52,28 @@ const initSentry = () => {
       profilesSampleRate: parseFloat(
         process.env.REACT_APP_SENTRY_PROFILES_SAMPLE_RATE || "0"
       ),
+      ignoreErrors: ["Unable to store cookie"],
+      beforeSend(event, hint) {
+        const originalError = hint?.originalException;
+
+        if (
+          isTawkError({
+            message:
+              originalError?.message || event?.message || event?.exception?.values?.[0]?.value,
+            filename: event?.request?.url || "",
+            stack:
+              originalError?.stack ||
+              event?.exception?.values?.[0]?.stacktrace?.frames
+                ?.map((frame) => `${frame.filename || ""} ${frame.function || ""}`)
+                .join("\n") ||
+              "",
+          })
+        ) {
+          return null;
+        }
+
+        return event;
+      },
     });
   });
 };

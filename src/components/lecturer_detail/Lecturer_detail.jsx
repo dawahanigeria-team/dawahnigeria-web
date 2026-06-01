@@ -30,6 +30,7 @@ import HeadMeta from "../head-meta";
 import { useSelector } from "react-redux";
 import { CommentIcon } from "../svgcomponent/svgComponent";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
+import { getBackNavigationConfig } from "../../utils/navigation";
 
 const LecturerDetail = () => {
   const { id } = useParams();
@@ -40,6 +41,10 @@ const LecturerDetail = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isShare, setisShare] = useState(false);
   const { theme } = useSelector((state) => state.user);
+  const handleBack = () => {
+    const { to, options } = getBackNavigationConfig("/dawahcast/lecturers");
+    navigate(to, options);
+  };
 
   const queryParam = { id };
 
@@ -121,9 +126,7 @@ const LecturerDetail = () => {
 
             <div className="lecdet_breadcrumb">
               <p
-                onClick={() => {
-                  navigate(-1);
-                }}
+                onClick={handleBack}
                 className="lecdet_breadcrumb_first"
               >
                 {`${"Back"}/`}
@@ -271,9 +274,7 @@ const LecturerDetail = () => {
               </div>
               <div className="lectdet_min_wrap">
                 <div
-                  onClick={() => {
-                    navigate(-1);
-                  }}
+                  onClick={handleBack}
                   className="mob_arrow"
                 >
                   <img className="mob_arrow_sz" src={arrow} alt="hun" />
@@ -312,9 +313,7 @@ const LecturerDetail = () => {
                 </div>
                 <div className={isVisible ? "headings pb-7" : "headings_none"}>
                   <div
-                    onClick={() => {
-                      navigate(-1);
-                    }}
+                    onClick={handleBack}
                     className="fixed_mob_arrow"
                   >
                     <img className="fixed_mob_arrow_sz" src={arrow} alt="hun" />

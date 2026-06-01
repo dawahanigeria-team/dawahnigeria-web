@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./footer.scss";
 import apple from "../../assets/svg/apple.svg";
 import googleplay from "../../assets/svg/googleplay.svg";
@@ -12,11 +12,8 @@ import {
 import ForUser from "./footermodals/forUser";
 import ForRp from "./footermodals/forRps";
 import Company from "./footermodals/company";
-import ComingSoon from "../comingsoon/comingSoon";
 
 const Footer = () => {
-  const [showComingSoon, setShowComingSoon] = useState(false);
-
   return (
     <>
       <footer className="dn-footer">
@@ -37,13 +34,11 @@ const Footer = () => {
                 <div className="dn-footer-apps">
                   <h3 className="dn-footer-apps-title">Download Our App</h3>
                   <div className="dn-footer-app-buttons">
-                    <button
-                      type="button"
+                    <a
+                      href="https://apps.apple.com/ng/app/dawahnigeria-app/id6759193375"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       aria-label="Download app on App Store"
-                      onClick={(e) => {
-                        e.nativeEvent.stopImmediatePropagation();
-                        setShowComingSoon(true);
-                      }}
                       className="dn-footer-app-button"
                     >
                       <img
@@ -51,7 +46,7 @@ const Footer = () => {
                         src={apple}
                         alt="Download on App Store"
                       />
-                    </button>
+                    </a>
                     <a
                       href="https://play.google.com/store/apps/details?id=com.dawahnigeria.app&pcampaignid=web_share"
                       target="_blank"
@@ -121,13 +116,6 @@ const Footer = () => {
           </div>
         </div>
       </footer>
-
-      {showComingSoon && (
-        <ComingSoon
-          comingSoon={showComingSoon}
-          setcomingSoon={setShowComingSoon}
-        />
-      )}
     </>
   );
 };

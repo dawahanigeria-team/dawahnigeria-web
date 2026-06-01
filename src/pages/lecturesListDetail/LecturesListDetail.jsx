@@ -41,6 +41,7 @@ import HeadMeta from "../../components/head-meta";
 import { AudioDownloadModal } from "../../components/audioDownloadModal/AudioDownloadModal";
 import { CommentIcon } from "../../components/svgcomponent/svgComponent";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
+import { getBackNavigationConfig } from "../../utils/navigation";
 
 const LecturesListDetail = () => {
   const { id } = useParams();
@@ -54,6 +55,10 @@ const LecturesListDetail = () => {
   const [isShare, setisShare] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
+  const handleBack = () => {
+    const { to, options } = getBackNavigationConfig("/dawahcast");
+    navigate(to, options);
+  };
   const [audioComment, setaudioComment] = useState();
   const { theme } = useSelector((state) => state.user);
 
@@ -186,9 +191,7 @@ const LecturesListDetail = () => {
 
             <div className="leclistdet_breadcrumb">
               <button
-                onClick={() => {
-                  navigate(-1);
-                }}
+                onClick={handleBack}
                 className="leclistdet_breadcrumb_first"
               >
                 Back
@@ -335,9 +338,7 @@ const LecturesListDetail = () => {
               </div>
               <div className="leclistdet_min_wrap">
                 <div
-                  onClick={() => {
-                    navigate(-1);
-                  }}
+                  onClick={handleBack}
                   className="mob_arrow"
                 >
                   <img className="mob_arrow_sz" src={arrow} alt="arrow" />
@@ -418,9 +419,7 @@ const LecturesListDetail = () => {
                 </div>
                 <div className={isVisible ? "headings pb-7" : "headings_none"}>
                   <div
-                    onClick={() => {
-                      navigate(-1);
-                    }}
+                    onClick={handleBack}
                     className="fixed_mob_arrow"
                   >
                     <img className="fixed_mob_arrow_sz" src={arrow} alt="hun" />

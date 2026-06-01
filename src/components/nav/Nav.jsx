@@ -8,7 +8,6 @@ import Logo from "../../assets/png/dn-logo.png";
 import { FiMenu } from "react-icons/fi";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { NavContext } from "../layout/Layout";
-import ComingSoon from "../comingsoon/comingSoon";
 
 const Nav = () => {
   const navigate = useNavigate();
@@ -25,8 +24,6 @@ const Nav = () => {
    */
     setisOpen(true);
   };
-
-  const [showComingSoon, setShowComingSoon] = useState(false);
 
   return (
     <>
@@ -72,16 +69,14 @@ const Nav = () => {
               </a>
             </div>
             <div className="nav_download2">
-              <button
-                type="button"
-                aria-label="Download app on Applestore"
-                onClick={(e) => {
-                  e.nativeEvent.stopImmediatePropagation();
-                  setShowComingSoon((prev) => !prev);
-                }}
+              <a
+                href="https://apps.apple.com/ng/app/dawahnigeria-app/id6759193375"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Download app on App Store"
               >
-                <img src={apple} alt="Download on the App Store" />
-              </button>
+                <img src={appleSvg} alt="" />
+              </a>
             </div>
           </div>
 
@@ -97,12 +92,6 @@ const Nav = () => {
           </div>
         </div>
       </div>
-      {showComingSoon && (
-        <ComingSoon
-          comingSoon={showComingSoon}
-          setcomingSoon={setShowComingSoon}
-        />
-      )}
     </>
   );
 };

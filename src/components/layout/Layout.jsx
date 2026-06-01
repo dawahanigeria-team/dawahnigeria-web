@@ -24,7 +24,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLectureById } from "../../hooks";
 import { AudioContext } from "../../App.jsx";
 import AudioActionDesktop from "../audio/audioActionDesktop";
-import { setPlaying } from "../../Redux/Actions/ActionCreators";
+import {
+  getValue,
+  getaudioId,
+  setPlaying,
+} from "../../Redux/Actions/ActionCreators";
 import {
   FAVOURITE,
   LECTURE,
@@ -86,22 +90,20 @@ const Layout = () => {
   useEffect(() => {
     const handleRouteChange = () => {
       const newPath = location.pathname;
-      const isLecturePath = newPath.includes("/dawahcast/l/");
-      const newLectureId = isLecturePath ? newPath.split("/").pop() : null;
+      const lecturePathMatch = newPath.match(/\/dawahcast\/l\/([^/]+)/);
+      const newLectureId = lecturePathMatch?.[1] ?? null;
+      const audioIdStr =
+        audioId !== undefined && audioId !== null ? audioId.toString() : null;
 
-      // Defensive: Only call .toString() if audioId is not null/undefined
-      const audioIdStr = (audioId !== undefined && audioId !== null) ? audioId.toString() : null;
-
-      if (
-        isLecturePath &&
-        newLectureId &&
-        audioIdStr &&
-        newLectureId !== audioIdStr
-      ) {
+      if (newLectureId && newLectureId !== audioIdStr) {
         try {
           audioRef.current?.pause();
-          audioRef.current.currentTime = 0;
+          if (audioRef.current) {
+            audioRef.current.currentTime = 0;
+          }
           dispatch(setPlaying(false));
+          dispatch(getValue(0));
+          dispatch(getaudioId(newLectureId));
           setinitial(true);
         } catch (error) {
           console.error("Error cleaning up audio:", error);
@@ -110,7 +112,7 @@ const Layout = () => {
     };
 
     handleRouteChange();
-  }, [location.pathname, audioId]);
+  }, [location.pathname]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;

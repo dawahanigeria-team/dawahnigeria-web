@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { HiExclamationTriangle, HiArrowPath } from "react-icons/hi2";
+import { isTawkError } from "../../utils/thirdPartyErrors";
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -58,9 +59,10 @@ class ErrorBoundary extends Component {
         this.state.error?.message?.includes("media");
 
       // Check if it's a third-party error
-      const isThirdPartyError =
-        this.state.error?.message?.includes("tawk.to") ||
-        (this.state.errorInfo?.componentStack || "").includes("tawk.to");
+      const isThirdPartyError = isTawkError({
+        message: this.state.error?.message,
+        stack: `${this.state.error?.stack || ""}\n${this.state.errorInfo?.componentStack || ""}`,
+      });
 
       // Customize message based on error type
       let errorTitle = "Something went wrong";

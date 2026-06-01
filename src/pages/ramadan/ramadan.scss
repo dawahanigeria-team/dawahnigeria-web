@@ -109,6 +109,184 @@
   margin-top: 1rem;
 }
 
+.ramadan-leaderboard-preview {
+  margin: 0 auto 2.5rem;
+  border-radius: 18px;
+  padding: 1rem;
+  background:
+    radial-gradient(circle at top right, rgba(212, 175, 55, 0.18), transparent 42%),
+    linear-gradient(135deg, rgba(13, 97, 112, 0.1) 0%, rgba(9, 13, 18, 0.92) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  animation: fadeInUp 0.8s ease-out 0.1s backwards;
+
+  @media screen and (min-width: 690px) {
+    padding: 1.25rem;
+    margin-bottom: 3rem;
+  }
+}
+
+.ramadan-leaderboard-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+
+  h2 {
+    margin: 0.2rem 0;
+    color: #f8fafc;
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+  }
+
+  @media screen and (min-width: 690px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.ramadan-leaderboard-kicker {
+  margin: 0;
+  color: #D4AF37;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.69rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 600;
+}
+
+.ramadan-leaderboard-subtitle {
+  margin: 0;
+  color: #b8c0cb;
+  font-size: 0.82rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.ramadan-leaderboard-view-btn {
+  border: none;
+  border-radius: 999px;
+  background: #D4AF37;
+  color: #111316;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.83rem;
+  padding: 0.52rem 0.9rem;
+  cursor: pointer;
+}
+
+.ramadan-leaderboard-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.ramadan-leaderboard-item {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.55rem;
+  border-radius: 12px;
+  padding: 0.65rem 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  strong {
+    color: #f8fafc;
+    font-size: 0.82rem;
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+}
+
+.ramadan-leaderboard-item-current {
+  border-color: rgba(212, 175, 55, 0.6);
+  background: rgba(212, 175, 55, 0.15);
+}
+
+.ramadan-leaderboard-rank {
+  color: #D4AF37;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.86rem;
+}
+
+.ramadan-leaderboard-user {
+  min-width: 0;
+
+  p {
+    margin: 0;
+    color: #f8fafc;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  small {
+    color: #b7c0cb;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.72rem;
+  }
+}
+
+.ramadan-leaderboard-empty {
+  border-radius: 12px;
+  border: 1px dashed rgba(212, 175, 55, 0.45);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.85rem;
+
+  p {
+    margin: 0;
+    color: #d0d7e2;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.84rem;
+  }
+}
+
+.ramadan-leaderboard-login-btn {
+  margin-top: 0.65rem;
+  border: none;
+  border-radius: 10px;
+  padding: 0.45rem 0.75rem;
+  background: rgba(212, 175, 55, 0.9);
+  color: #121416;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ramadan-leaderboard-loading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.ramadan-leaderboard-loading-row {
+  height: 48px;
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05)
+  );
+  background-size: 180% 100%;
+  animation: shimmer 1.1s linear infinite;
+}
+
+.ramadan-leaderboard-my-rank {
+  margin: 0.65rem 0 0;
+  color: #d4dbe5;
+  font-size: 0.8rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
 .ramadan-hero {
   margin-bottom: 5rem;
   animation: fadeInUp 0.8s ease-out 0.2s backwards;
@@ -723,6 +901,15 @@
   }
   50% {
     opacity: 0.5;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
   }
 }
 

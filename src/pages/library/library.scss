@@ -84,5 +84,16 @@
         }
       }
     }
+
+    .account_link {
+      display: block;
+      font-size: 11px;
+      color: #ddff2b;
+      margin-top: 4px;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }
