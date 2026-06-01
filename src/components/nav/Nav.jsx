@@ -75,7 +75,7 @@ const Nav = () => {
                 rel="noopener noreferrer"
                 aria-label="Download app on App Store"
               >
-                <img src={appleSvg} alt="" />
+                <img src={apple} alt="Download on the App Store" />
               </a>
             </div>
           </div>
