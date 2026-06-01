@@ -11,6 +11,8 @@ import CommentBox from "../../comment/comment";
 import { AudioListSkeleton } from "./AudioListSkeleton";
 import AudioEmptyState from "./AudioEmptyState";
 import { HiOutlineSparkles } from "react-icons/hi2";
+import SortToggle from "../../UI/sortToggle/SortToggle";
+import { useSortParam } from "../../../hooks/common/useSortParam.hook";
 
 /**
  * Load More Button Component
@@ -104,6 +106,7 @@ const AudioItem = memo(({ item, index, id, page, querieddata }) => {
         controlData={querieddata}
         views={views}
         duration={duration}
+        updatedDate={item.updated_date}
       />
     </div>
   );
@@ -119,7 +122,17 @@ const Lecturer_songs = ({ id, totalData, rpname }) => {
   const { currentUser } = useSelector((state) => state.user);
   const [page, setPage] = useState(1);
   const [audioComment, setaudioComment] = useState();
-  const queryParam = { page, id: parseInt(id) };
+  const [sort, setSort] = useSortParam();
+  const queryParam = { page, id: parseInt(id), sort };
+
+  // Changing sort restarts the list, so reset pagination back to page 1.
+  const handleSortChange = useCallback(
+    (next) => {
+      setPage(1);
+      setSort(next);
+    },
+    [setSort]
+  );
 
   const { isLoading, isLoadingNextPage, isLastPage, querieddata } =
     useQueryGetRequest(
@@ -167,6 +180,9 @@ const Lecturer_songs = ({ id, totalData, rpname }) => {
       {/* Audio Content */}
       {hasAudio && (
         <>
+          <div className="lecsong_toolbar flex justify-end mb-2">
+            <SortToggle sort={sort} onChange={handleSortChange} />
+          </div>
           <AudioListHeader />
           <div
             className="lecsong_content"

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { IMAGE_PLACEHOLDERS } from "../../../utils/imagePlaceholders";
 import { FaPlay, FaEye } from "react-icons/fa";
+import { formatLectureDate } from "../../../utils/formatLectureDate";
 
 const SearchDataWidget = ({
   lec_img,
@@ -13,9 +14,10 @@ const SearchDataWidget = ({
   duration,
   views,
   language,
-  uploadDate,
+  updatedDate,
 }) => {
   const navigate = useNavigate();
+  const lectureDate = formatLectureDate(updatedDate);
 
   const getNavigationUrl = () => {
     const type = cat_name?.toLowerCase();
@@ -114,6 +116,9 @@ const SearchDataWidget = ({
                 <span className="px-1.5 sm:px-2 py-0.5 bg-gray-700 text-gray-300 rounded-full text-[10px] sm:text-xs">
                   {language}
                 </span>
+              )}
+              {lectureDate && (
+                <span className="text-gray-400 text-xs">{lectureDate}</span>
               )}
             </div>
           </div>

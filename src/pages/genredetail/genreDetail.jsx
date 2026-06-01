@@ -13,12 +13,15 @@ import { genresApi } from "../../services";
 import HeadMeta from "../../components/head-meta";
 import { useSelector } from "react-redux";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
+import SortToggle from "../../components/UI/sortToggle/SortToggle";
+import { useSortParam } from "../../hooks/common/useSortParam.hook";
 
 const GenreDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const queryParam = { id };
+  const [sort, setSort] = useSortParam();
+  const queryParam = { id, sort };
   const { theme } = useSelector((state) => state.user);
 
   const { data: categoryResponse } = useQueryGetRequest(
@@ -85,6 +88,12 @@ const GenreDetail = () => {
         </div>
 
         <div className="genre_items w-full min-[615px]:relative pb-10 min-[615px]:space-y-4 space-y-3 px-4">
+          {categoryResponse?.audio?.length > 0 && (
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-color">Lectures</span>
+              <SortToggle sort={sort} onChange={setSort} />
+            </div>
+          )}
           <GroupWidget
             data={categoryResponse?.audio}
             heading="Lectures"

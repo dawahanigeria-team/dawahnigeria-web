@@ -44,6 +44,7 @@ import CurrentPlayData from "../../components/currentData/currentPlayData";
 import Loader from "../../components/UI/loader/loader";
 
 import { useAudioHook } from "../../hooks";
+import { isValidLectureId } from "../../hooks/audio/useAudio.hook";
 import { DesktopFavoriteButton } from "../../components/UI/favoritebuttons/desktopfavoriteButtons";
 import { AudioDownloadModal } from "../../components/audioDownloadModal/AudioDownloadModal";
 import { useRequest } from "../landing/utils";
@@ -116,6 +117,14 @@ const AudioDetail = () => {
       setLectureData(null);
     }
   }, [id]);
+
+  // Guard against links built with a bad id (the /dawahcast/l/undefined pages):
+  // send the user home instead of rendering a broken, never-loading detail page.
+  useEffect(() => {
+    if (!isValidLectureId(id)) {
+      navigate("/", { replace: true });
+    }
+  }, [id, navigate]);
 
   const { refetch, isLoading: isHookLoading, data: audioQueryData } = useAudioHook(id);
 

@@ -30,7 +30,7 @@ const SearchPage = () => {
     categoryId = [],
     albumId = []
   } = searchContext;
-  const { searchData } = useSelector((state) => state.search);
+  const { searchData, searchOptions } = useSelector((state) => state.search);
   const navigate = useNavigate();
   const { setRes, setisOpen } = useContext(NavContext);
   const { pathname } = useLocation();
@@ -57,7 +57,6 @@ const SearchPage = () => {
 
   // Get filter labels for display
   const getFilterLabel = (type, id) => {
-    const { searchOptions } = useSelector((state) => state.search);
     if (!searchOptions) return null;
 
     let items = [];
@@ -223,6 +222,14 @@ const SearchPage = () => {
       params.append("album_id", albumId.join(","));
     }
 
+    // Server-side date sort. Ignored by the backend on relevance-ranked
+    // free-text queries; honored on scoped/list results (e.g. by lecturer).
+    if (sortBy === "newest") {
+      params.append("sort", "desc");
+    } else if (sortBy === "oldest") {
+      params.append("sort", "asc");
+    }
+
     const requestUrl = `${baseUrl}?${params.toString()}`;
     console.log("Fetching search data - Page:", page, "URL:", requestUrl);
 
@@ -279,7 +286,7 @@ const SearchPage = () => {
         dispatch(getSearchRecord(0));
         setTotalResults(0);
       });
-  }, [queryParam, languageId, lecturerId, categoryId, albumId, navigate, setText, dispatch]);
+  }, [queryParam, languageId, lecturerId, categoryId, albumId, sortBy, navigate, setText, dispatch]);
 
   // Reset to page 1 when filters change
   useEffect(() => {
@@ -291,6 +298,17 @@ const SearchPage = () => {
       navigate(`${pathname}?${newSearchParams.toString()}`, { replace: true });
     }
   }, [languageId, lecturerId, categoryId, albumId]);
+
+  // Changing the sort order re-queries from page 1 (server returns sorted data).
+  const handleSortChange = (value) => {
+    setSortBy(value);
+    const currentPage = parseInt(pageParam) || 1;
+    if (currentPage !== 1) {
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.set("page", "1");
+      navigate(`${pathname}?${newSearchParams.toString()}`, { replace: true });
+    }
+  };
 
   useEffect(() => {
     const page = parseInt(pageParam) || 1;
@@ -313,21 +331,10 @@ const SearchPage = () => {
   const totalPages = Math.ceil(totalResults / 20);
   const searchValue = searchParams.get("query");
 
-  const sortedResults = React.useMemo(() => {
-    if (!Array.isArray(searchData)) return [];
-    if (sortBy === "relevance") return searchData;
-    const arr = [...searchData];
-    if (sortBy === "newest") {
-      arr.sort((a, b) => {
-        const da = new Date(a.upload_date || a.created_at || 0).getTime();
-        const db = new Date(b.upload_date || b.created_at || 0).getTime();
-        return db - da;
-      });
-    } else if (sortBy === "popular") {
-      arr.sort((a, b) => (parseInt(b.views) || 0) - (parseInt(a.views) || 0));
-    }
-    return arr;
-  }, [searchData, sortBy]);
+  // Results arrive already ordered from the server (by relevance, or by date
+  // when a sort is chosen). No client-side reordering — that would only reorder
+  // the current page, not the full result set.
+  const sortedResults = Array.isArray(searchData) ? searchData : [];
 
   return (
     <Container>
@@ -380,13 +387,13 @@ const SearchPage = () => {
               <span className="text-xs opacity-70">Sort:</span>
               <select
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
+                onChange={(e) => handleSortChange(e.target.value)}
                 className="bg-transparent text-color text-sm font-medium outline-none cursor-pointer"
                 aria-label="Sort search results"
               >
                 <option value="relevance">Relevance</option>
                 <option value="newest">Newest first</option>
-                <option value="popular">Most played</option>
+                <option value="oldest">Oldest first</option>
               </select>
             </label>
           </div>
@@ -531,7 +538,7 @@ const SearchPage = () => {
                     duration={item.mp3_duration || item.duration}
                     views={item.views}
                     language={item.language_name}
-                    uploadDate={item.upload_date || item.created_at}
+                    updatedDate={item.updated_date}
                   />
                 ))}
               </div>

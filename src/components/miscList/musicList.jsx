@@ -13,6 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Add_playlist from "../../pages/add_playlist/AddPlaylist";
 import ShareAudio from "../shareaudio/shareAudio";
 import { toast } from "../../utils/conditionalToast"; // SSR-safe toast utility
+import { formatLectureDate } from "../../utils/formatLectureDate";
 
 import {
   getaudioData,
@@ -55,7 +56,9 @@ function MusicList({
   controlData,
   views,
   favorites,
+  updatedDate,
 }) {
+  const lectureDate = formatLectureDate(updatedDate);
   const navigate = useNavigate();
   const { currentUser, audioId } = useSelector((state) => state.user);
 
@@ -206,6 +209,9 @@ function MusicList({
                 <div className="main_txt_wrap hover:text-gray-400" id="text">
                   {title}
                 </div>
+                {lectureDate && (
+                  <div className="text-xs text-color opacity-70">{lectureDate}</div>
+                )}
               </div>
             </div>
           </div>
