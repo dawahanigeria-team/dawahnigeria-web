@@ -76,6 +76,9 @@ export const refreshAccessToken = async () => {
 
   const currentRefreshToken = getRefreshToken(store);
   if (!currentRefreshToken) {
+    // Do not leave an expired access token persisted: every subsequent API
+    // request would otherwise repeat the same failed refresh cycle.
+    store.dispatch({ type: type.LOGOUT });
     return Promise.reject(new Error("No refresh token available"));
   }
 

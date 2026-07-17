@@ -34,6 +34,7 @@ import { RESOURCE_PERSON } from "../../utils/routes/constants";
 import { AddplayIcon, DownloadIcon } from "../svgcomponent/svgComponent";
 import { AudioDownloadModal } from "../audioDownloadModal/AudioDownloadModal";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
+import { formatTrackDuration } from "../../utils/albumPlayback";
 function MusicList({
   lecturer,
   id,
@@ -255,7 +256,7 @@ function MusicList({
           </div>
 
           <div className="tr3">
-            <div> {duration}</div>
+            <div>{formatTrackDuration(duration)}</div>
           </div>
         </div>
       </div>

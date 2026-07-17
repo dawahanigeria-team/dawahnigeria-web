@@ -30,8 +30,8 @@ import {
   VIDEO,
   LECTURERS,
   QURAN,
-  RAMADAN,
   LEADERBOARD,
+  LIBRARY,
 } from "../../utils/routes/constants";
 import HeadMeta from "../../components/head-meta";
 import { useLandingPageHook } from "../../hooks/landing";
@@ -39,6 +39,8 @@ import RowSkeletonContainer from "../../components/skeletion/skeleton.container"
 import { useMediaQuery } from "../../hooks/common/useMediaQuery.hook";
 import { MEDIA_QUERIES } from "../../utils/breakpoints";
 import { EVENTS, trackEvent } from "../../utils/posthog";
+import { useQueryGetRequest } from "../../hooks/getqueries";
+import { trendingApi } from "../../services/trending.service";
 
 const MOBILE_CAROUSEL_SETTINGS = {
   dots: true,
@@ -98,6 +100,8 @@ const Landing = () => {
 
   const [sliders, recentlyPosted, specialFeatures, recentlyviewed] =
     useLandingPageHook(id, page);
+  const { querieddata: trendingLectures, isLoading: trendingLoading } =
+    useQueryGetRequest("home-trending", { page: 1 }, trendingApi.getTrendings);
 
   // Extract data from the new API response structure
   const recentlyViewedData = recentlyviewed?.data?.data;
@@ -149,7 +153,7 @@ const Landing = () => {
                 </Slider>
                 <h2 className="landing_browse_heading text-color">Browse</h2>
                 <Slider className="landing_options" {...OPTIONS_SLIDER_SETTINGS}>
-                  <LandingOptions text={"Ramadan"} img={bplaylist} link={RAMADAN} />
+                  <LandingOptions text={"Library"} img={bplaylist} link={LIBRARY} />
                   <LandingOptions text={"Charts"} img={bchart} link={CHARTS} />
                   <LandingOptions text={"Lecturers"} img={blecturer} link={LECTURERS} />
                   <LandingOptions text={"Quran"} img={quranIcon} link={QURAN} />
@@ -160,8 +164,8 @@ const Landing = () => {
                   <LandingOptions text={"New"} img={bnew} link={NEW} />
                 </Slider>
 
-                <section className="landing_mobile_leaderboard_cta" aria-label="Ramadan leaderboard call to action">
-                  <p className="landing_mobile_leaderboard_badge">Ramadan challenge</p>
+                <section className="landing_mobile_leaderboard_cta" aria-label="Listening leaderboard call to action">
+                  <p className="landing_mobile_leaderboard_badge">Community listening</p>
                   <h2>Check today&apos;s leaderboard</h2>
                   <p>
                     Track your listening sessions and climb the daily ranking.
@@ -179,6 +183,25 @@ const Landing = () => {
           </>
         ) : (
           <CarouselSkeleton />
+        )}
+
+        {Array.isArray(trendingLectures) && trendingLectures.length > 0 && (
+          <div className="landing_recent landing_space my-1 mobile-up:my-3 home_trending_first">
+            <GroupWidget
+              data={trendingLectures.slice(0, 10)}
+              heading="Trending Now"
+              type="lectures"
+              endpoint_url="/popular_lec_api.php?langid=6&page="
+              currentPage={page}
+              nav1={{ title: "Home", link: HOME }}
+            />
+          </div>
+        )}
+
+        {trendingLoading && (
+          <div className="landing_recent landing_space my-1 mobile-up:my-3">
+            <RowSkeletonContainer />
+          </div>
         )}
 
         {recentlyPosted?.isSuccess && Array.isArray(recentlyPosted?.data) && (

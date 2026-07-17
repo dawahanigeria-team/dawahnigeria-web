@@ -53,13 +53,12 @@ const NETWORK_ERROR_MESSAGES = {
 let lastErrorTime = 0;
 let lastErrorMessage = '';
 const ERROR_COOLDOWN = 3000; // 3 seconds cooldown between same error messages
+let globalNetworkHandlersRegistered = false;
+const apiResourceCache = new Map();
 
 // see usage in apiService function definition below
 const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
   // Determine if we're in development or production
-  const isDevelopment = process.env.NODE_ENV === 'development' || 
-                       (typeof window !== 'undefined' && window.location.hostname === 'localhost');
-  
   // Base headers allowed in browsers
   const defaultHeaders = {
     Accept: "application/json",
@@ -92,7 +91,11 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
   };
 
   // Global error handler for uncaught XHR errors (client-only)
-  if (typeof window !== 'undefined') {
+  const shouldRegisterGlobalHandlers =
+    typeof window !== 'undefined' && !globalNetworkHandlersRegistered;
+  if (shouldRegisterGlobalHandlers) globalNetworkHandlersRegistered = true;
+
+  if (shouldRegisterGlobalHandlers) {
     window.addEventListener(
       "error",
       function (event) {
@@ -140,7 +143,7 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
   }
 
   // Handle audio playback interruption errors (client-only)
-  if (typeof window !== 'undefined') {
+  if (shouldRegisterGlobalHandlers) {
     window.addEventListener("unhandledrejection", function (event) {
       if (event.reason && typeof event.reason.message === "string") {
         // Check for audio play interruption error
@@ -181,7 +184,7 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
   // Helper to determine the type of network error
   const getNetworkErrorMessage = (error) => {
     // Check if browser is offline
-    if (!navigator.onLine) {
+    if (typeof navigator !== "undefined" && !navigator.onLine) {
       return NETWORK_ERROR_MESSAGES.OFFLINE;
     }
 
@@ -266,7 +269,9 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
           errorMessage || "Something went wrong! Please try again."
         );
       }
-      return Promise.reject(errors);
+      return Promise.reject(
+        errors || new Error(errorMessage || "The server rejected the request")
+      );
     }
   );
 
@@ -335,4 +340,10 @@ const apiResource = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
 };
 
 // call apiService with a different parameter if you want to use another baseURL other than REACT_APP_API_BASE_URL
-export const apiService = (baseURL) => apiResource(baseURL);
+export const apiService = (baseURL = process.env.REACT_APP_API_BASE_URL) => {
+  const cacheKey = baseURL || "__default__";
+  if (!apiResourceCache.has(cacheKey)) {
+    apiResourceCache.set(cacheKey, apiResource(baseURL));
+  }
+  return apiResourceCache.get(cacheKey);
+};

@@ -39,6 +39,7 @@ import {
 import ShareAudio from "../shareaudio/shareAudio";
 import { AudioDownloadModal } from "../audioDownloadModal/AudioDownloadModal";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
+import { formatTrackDuration } from "../../utils/albumPlayback";
 
 function List({
   lecturer,
@@ -316,7 +317,7 @@ function List({
           </div>
 
           <div className="tr3">
-            <div> {duration}</div>
+            <div>{formatTrackDuration(duration)}</div>
           </div>
         </div>
       </div>

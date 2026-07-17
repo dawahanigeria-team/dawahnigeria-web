@@ -4,6 +4,7 @@ import React, {
   useRef,
   useCallback,
   useContext,
+  useMemo,
 } from "react";
 import Container from "../../components/container/Container";
 import arrow from "../../assets/svg/arrowleft.svg";
@@ -17,6 +18,7 @@ import MobileList from "../../components/list/mobileList";
 import Loader from "../../components/UI/loader/loader";
 import { BsFillPlayFill } from "react-icons/bs";
 import { SlShare } from "react-icons/sl";
+import { FiShuffle } from "react-icons/fi";
 import { formatNumber } from "../../components/UI/formatter";
 import { useSelector, useDispatch } from "react-redux";
 import useaxios from "../../utils/useAxios";
@@ -42,6 +44,12 @@ import { AudioDownloadModal } from "../../components/audioDownloadModal/AudioDow
 import { CommentIcon } from "../../components/svgcomponent/svgComponent";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
 import { getBackNavigationConfig } from "../../utils/navigation";
+import {
+  formatTrackDuration,
+  orderAlbumTracks,
+  parseTrackDuration,
+  shuffleAlbumTracks,
+} from "../../utils/albumPlayback";
 
 const LecturesListDetail = () => {
   const { id } = useParams();
@@ -75,6 +83,21 @@ const LecturesListDetail = () => {
     queryParam,
     lectureListDetailApi.getAlbumLectures
   );
+  const orderedAlbumLectures = useMemo(
+    () => orderAlbumTracks(Array.isArray(albumlectures) ? albumlectures : []),
+    [albumlectures]
+  );
+  const knownAlbumDuration = useMemo(
+    () => orderedAlbumLectures.reduce(
+      (total, lecture) => total + parseTrackDuration(lecture?.duration),
+      0
+    ),
+    [orderedAlbumLectures]
+  );
+  const albumDurationLabel = knownAlbumDuration > 0
+    ? `${Math.floor(knownAlbumDuration / 3600)}h ${Math.floor((knownAlbumDuration % 3600) / 60)}m`
+        .replace(/^0h\s*/, "")
+    : "Durations updating";
   const { querieddata: similarAlbums } = useQueryGetRequest(
     "similarRpAlbums",
     keyParam,
@@ -107,7 +130,7 @@ const LecturesListDetail = () => {
         setaudioComment(res.data.reverse());
       })
       .catch((err) => {});
-  }, [id]);
+  }, [id, currentUser?.id]);
 
   /// Get the exiting element
   const firstElement = useCallback((node) => {
@@ -122,17 +145,21 @@ const LecturesListDetail = () => {
     if (node) observeEl.current.observe(node);
   }, []);
 
-  //play all audio files
-  const playAll = () => {
+  const startAlbumQueue = (queue) => {
+    if (!Array.isArray(queue) || queue.length === 0) return;
     if (window.innerWidth <= 615) {
-      navigate(`${LECTURE}${albumlectures[0]?.nid}`);
+      navigate(`${LECTURE}${queue[0]?.nid}`);
     } else {
-      dispatch(getaudioId(albumlectures[0]?.nid));
+      dispatch(getaudioId(queue[0]?.nid));
     }
     dispatch(getCount(0));
-    dispatch(getPack(albumlectures));
+    dispatch(getPack(queue));
     setinitial(false);
   };
+
+  // Play All follows the same oldest/lesson-first teaching order shown on screen.
+  const playAll = () => startAlbumQueue(orderedAlbumLectures);
+  const shuffleAll = () => startAlbumQueue(shuffleAlbumTracks(orderedAlbumLectures));
 
   ///**** share album ******** */
 
@@ -234,6 +261,13 @@ const LecturesListDetail = () => {
                     </p>
                   </div>
                 </div>
+                <div className="album_summary_line">
+                  <span>{orderedAlbumLectures.length} lectures</span>
+                  <span aria-hidden="true">•</span>
+                  <span>{albumDurationLabel}</span>
+                  <span aria-hidden="true">•</span>
+                  <span>Oldest first</span>
+                </div>
 
                 <div className="leclistdet_head_right_actions_wrap">
                   <div>
@@ -245,10 +279,24 @@ const LecturesListDetail = () => {
                       id="player"
                     >
                       <CiPlay1 className="leclistdet_play_icon" />
-                      <p className="leclistdet_play_text">Play All</p>
-                    </button>
+                    <p className="leclistdet_play_text">Play in order</p>
+                  </button>
                     <div className="dark:text-white text-center text-sm">
                       Play
+                    </div>
+                  </div>
+
+                  <div>
+                    <button
+                      type="button"
+                      onClick={shuffleAll}
+                      className="leclistdet_shuffle"
+                      aria-label="Shuffle all lectures in this album"
+                    >
+                      <FiShuffle aria-hidden="true" />
+                    </button>
+                    <div className="dark:text-white text-center text-sm">
+                      Shuffle
                     </div>
                   </div>
 
@@ -459,8 +507,17 @@ const LecturesListDetail = () => {
                       </div>
 
                       <p className="dark:text-color-primary text-gray-500 font-medium">
-                        Play All
+                        Play in order
                       </p>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={shuffleAll}
+                      className="album_shuffle_mobile"
+                      aria-label="Shuffle all lectures in this album"
+                    >
+                      <FiShuffle aria-hidden="true" />
+                      <span>Shuffle</span>
                     </button>
                   </div>
                 </div>
@@ -485,6 +542,11 @@ const LecturesListDetail = () => {
                   <span>Time</span>
                 </p>
               </div>
+              <div className="album_order_note" aria-live="polite">
+                <span>{orderedAlbumLectures.length} lectures</span>
+                <span aria-hidden="true">•</span>
+                <span>Oldest lesson first</span>
+              </div>
               {isLoading && (
                 <div className="loads">
                   <div className="load">
@@ -495,30 +557,7 @@ const LecturesListDetail = () => {
               <div className="lecsong_content">
                 {!isLoading &&
                   Array.isArray(albumlectures) &&
-                  albumlectures
-                    .filter((item, index, arr) => {
-                      // Remove duplicates based on title and nid
-                      const title = item.lectitle || item.title || item.Title;
-                      const nid = item.nid;
-                      return arr.findIndex(
-                        (otherItem) => 
-                          (otherItem.lectitle || otherItem.title || otherItem.Title) === title &&
-                          otherItem.nid === nid
-                      ) === index;
-                    })
-                    .sort((a, b) => {
-                      // Extract numbers from titles for proper sorting
-                      const getNumberFromTitle = (title) => {
-                        const match = title?.match(/(\d+)/);
-                        return match ? parseInt(match[1]) : 0;
-                      };
-                      
-                      const aNum = getNumberFromTitle(a.lectitle || a.title || a.Title);
-                      const bNum = getNumberFromTitle(b.lectitle || b.title || b.Title);
-                      
-                      return aNum - bNum;
-                    })
-                    .map(
+                  orderedAlbumLectures.map(
                     (
                       {
                         lectitle,
@@ -560,8 +599,8 @@ const LecturesListDetail = () => {
                               nid={nid}
                               navName={lectureTitleExtractor(querieddata?.title, 2) || "Album"}
                               navLink={-1}
-                              controlData={albumlectures}
-                              duration={duration}
+                              controlData={orderedAlbumLectures}
+                              duration={formatTrackDuration(duration)}
                               views={views}
                             />
                           </div>
@@ -582,8 +621,8 @@ const LecturesListDetail = () => {
                               favorites={favorites}
                               navName={lectureTitleExtractor(querieddata?.title, 2) || "Album"}
                               navLink={-1}
-                              controlData={albumlectures}
-                              duration={duration}
+                              controlData={orderedAlbumLectures}
+                              duration={formatTrackDuration(duration)}
                               views={views}
                             />
                           </div>

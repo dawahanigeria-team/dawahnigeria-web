@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getPack, getPage, getCount, setPlaying, getaudioData } from "../../Redux/Actions/ActionCreators";
 import { IMAGE_PLACEHOLDERS } from "../../utils/imagePlaceholders";
+import { formatTrackDuration } from "../../utils/albumPlayback";
 
 const MobileList = memo(function MobileList({
   lecturer,
@@ -75,7 +76,9 @@ const MobileList = memo(function MobileList({
           <div className="lecture-title">{title || Title}</div>
           <div className="lecture-meta">
             <span className="lecturer-name">{rpname}</span>
-            {duration && <span className="lecture-duration">{duration}</span>}
+            {duration !== undefined && duration !== null && (
+              <span className="lecture-duration">{formatTrackDuration(duration)}</span>
+            )}
           </div>
         </div>
       </div>
