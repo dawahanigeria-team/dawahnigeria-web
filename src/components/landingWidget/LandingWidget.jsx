@@ -22,10 +22,33 @@ const LandingWidget = memo(({ categories, img, views, nid, styling, rpname }) =>
     setinitial(false);
   }, [dispatch, nid, setinitial]);
 
-  const formatTitle = (title) => {
-    if (!title) return "";
-    return title.trim();
-  };
+  // Titles are stored with the lecturer appended, e.g.
+  //   "Fajr Talk-Salat 14(03-06-26) (Yoruba) - Ustadh AbdulWaasi Eleyinke (Yoruba)"
+  // while the same lecturer is already rendered on the line below. Dropping the
+  // duplicate buys back most of a card's title space, which is what pushes
+  // these titles to four wrapped lines.
+  //
+  // Only cut when the trailing segment actually matches the lecturer we are
+  // about to display — a blind "cut at the last dash" would eat real titles.
+  const formatTitle = useCallback(
+    (title) => {
+      if (!title) return "";
+      const cleaned = title.trim();
+      if (!rpname) return cleaned;
+
+      // "Ustadh AbdulWaasi Eleyinke (Iseyin)" -> "ustadh abdulwaasi eleyinke"
+      const lecturer = String(rpname).replace(/\s*\([^)]*\)\s*$/, "").trim().toLowerCase();
+      if (lecturer.length < 4) return cleaned;
+
+      const marker = cleaned.toLowerCase().lastIndexOf(` - ${lecturer}`);
+      if (marker <= 0) return cleaned;
+
+      const trimmed = cleaned.slice(0, marker).trim();
+      // Never return an empty or near-empty title just to remove a duplicate.
+      return trimmed.length >= 3 ? trimmed : cleaned;
+    },
+    [rpname]
+  );
 
   return (
     <div
@@ -61,7 +84,13 @@ const LandingWidget = memo(({ categories, img, views, nid, styling, rpname }) =>
         </button>
       </div>
       <div className="space-y-1 w-full">
-        <p className="text-xs sm:text-sm font-medium text-foreground pl-[3%] mb-0.5 break-words">
+        {/* Clamped to two lines so every card in a row is the same height and
+            a long title cannot push the rest of the feed down the page. The
+            full title stays available on hover and to screen readers. */}
+        <p
+          className="text-xs sm:text-sm font-medium text-foreground pl-[3%] mb-0.5 break-words line-clamp-2"
+          title={formatTitle(categories)}
+        >
           {formatTitle(categories)}
         </p>
         {rpname && (

@@ -29,6 +29,22 @@ export const injectTawkScript = ({
   }
 
   windowRef.Tawk_API = windowRef.Tawk_API || {};
+
+  // Lift the launcher clear of the persistent audio player and the bottom tab
+  // bar. Left at its default it sits on top of both, covering the Download tab
+  // and the right end of the seek bar. Tawk renders into iframes with
+  // randomised ids and no stable class or title, so there is nothing reliable
+  // to target from CSS — this offset has to be set through their API, and it
+  // must be assigned before the embed script runs.
+  windowRef.Tawk_API.customStyle = windowRef.Tawk_API.customStyle || {
+    visibility: {
+      // Desktop clears the player bar only.
+      desktop: { position: "br", xOffset: 20, yOffset: 100 },
+      // Mobile also has the bottom tab bar beneath the player.
+      mobile: { position: "br", xOffset: 10, yOffset: 145 },
+    },
+  };
+
   windowRef.Tawk_LoadStart = new Date();
 
   const script = buildTawkScript({ propertyId, widgetId, documentRef });
