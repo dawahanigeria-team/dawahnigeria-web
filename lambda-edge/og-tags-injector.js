@@ -10,7 +10,7 @@ const https = require('https');
 
 // Configuration (Lambda@Edge does NOT support environment variables)
 // Update these values directly for different environments
-const API_BASE_URL = 'https://backend.dawahbox.com/api';
+const API_BASE_URL = 'https://api.dawahnigeria.com/api';
 const SITE_DOMAIN = 'dawahnigeria.com';
 
 // Social media bot user agents to detect
