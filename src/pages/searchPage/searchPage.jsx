@@ -227,8 +227,10 @@ const SearchPage = () => {
       params.append("album_id", albumId.join(","));
     }
 
-    // Server-side date sort. Ignored by the backend on relevance-ranked
-    // free-text queries; honored on scoped/list results (e.g. by lecturer).
+    // Server-side date sort, applied across the whole result set rather than
+    // the current page. Sorting here instead of client-side matters because a
+    // query can match tens of thousands of rows paginated 20 at a time —
+    // reordering only the loaded page would look correct and be wrong.
     if (sortBy === "newest") {
       params.append("sort", "desc");
     } else if (sortBy === "oldest") {

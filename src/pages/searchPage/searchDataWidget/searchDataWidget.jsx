@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { getResultImage, getResultPlaceholder } from "../../../utils/getResultImage";
 import { FaPlay, FaEye } from "react-icons/fa";
-import { formatLectureDate } from "../../../utils/formatLectureDate";
+import { formatLectureDate, formatRelativeLectureDate } from "../../../utils/formatLectureDate";
 
 const SearchDataWidget = ({
   item,
@@ -17,7 +17,9 @@ const SearchDataWidget = ({
   updatedDate,
 }) => {
   const navigate = useNavigate();
-  const lectureDate = formatLectureDate(updatedDate);
+  // Relative for scanning ("3d ago"); the exact date stays available on hover.
+  const lectureDate = formatRelativeLectureDate(updatedDate);
+  const lectureDateExact = formatLectureDate(updatedDate);
   const imgSrc = getResultImage(item);
   const fallbackSrc = getResultPlaceholder(cat_name);
 
@@ -108,7 +110,9 @@ const SearchDataWidget = ({
                 </span>
               )}
               {lectureDate && (
-                <span className="text-gray-400 text-xs">{lectureDate}</span>
+                <span className="text-gray-400 text-xs" title={lectureDateExact}>
+                  {lectureDate}
+                </span>
               )}
             </div>
           </div>
