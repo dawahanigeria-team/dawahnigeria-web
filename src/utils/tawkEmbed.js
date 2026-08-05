@@ -30,18 +30,22 @@ export const injectTawkScript = ({
 
   windowRef.Tawk_API = windowRef.Tawk_API || {};
 
-  // Lift the launcher clear of the persistent audio player and the bottom tab
-  // bar. Left at its default it sits on top of both, covering the Download tab
-  // and the right end of the seek bar. Tawk renders into iframes with
-  // randomised ids and no stable class or title, so there is nothing reliable
-  // to target from CSS — this offset has to be set through their API, and it
-  // must be assigned before the embed script runs.
+  // Lift the launcher clear of the bottom chrome. At its default it overlaps
+  // the audio player's transport controls, which makes play/pause unclickable.
+  //
+  // `.layout_buttom_menue` holds the player and the tab bar together and
+  // measures 146px at both 1440x820 and 375x812, so the offset has to exceed
+  // that at every breakpoint — anything smaller puts the launcher inside the
+  // bar rather than above it. 170px leaves a margin over the measured 146px.
+  //
+  // Tawk renders into iframes with randomised ids and no stable class or
+  // title, so CSS cannot target it; the offset has to go through their API,
+  // and it must be assigned before the embed script runs.
+  const LAUNCHER_Y_OFFSET = 170;
   windowRef.Tawk_API.customStyle = windowRef.Tawk_API.customStyle || {
     visibility: {
-      // Desktop clears the player bar only.
-      desktop: { position: "br", xOffset: 20, yOffset: 100 },
-      // Mobile also has the bottom tab bar beneath the player.
-      mobile: { position: "br", xOffset: 10, yOffset: 145 },
+      desktop: { position: "br", xOffset: 20, yOffset: LAUNCHER_Y_OFFSET },
+      mobile: { position: "br", xOffset: 12, yOffset: LAUNCHER_Y_OFFSET },
     },
   };
 
