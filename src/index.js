@@ -87,6 +87,13 @@ if (typeof requestIdleCallback === "function") {
 const persistConfig = {
   key: "root",
   storage,
+  // Search state is a snapshot of one API response, not user data worth
+  // restoring. Persisting it meant a result array saved under an older API
+  // shape was rehydrated on every later visit and rendered before any fresh
+  // fetch could replace it — a row missing `_id` then took the whole search
+  // page down through the ErrorBoundary, and reloading only replayed it.
+  // The page refetches on mount, so dropping this loses nothing.
+  blacklist: ["search"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -341,7 +341,12 @@ const SearchPage = () => {
   // Results arrive already ordered from the server (by relevance, or by date
   // when a sort is chosen). No client-side reordering — that would only reorder
   // the current page, not the full result set.
-  const sortedResults = Array.isArray(searchData) ? searchData : [];
+  // Drop anything that isn't a usable row before rendering. One malformed
+  // entry previously threw inside the map and the ErrorBoundary replaced the
+  // entire page with "Something went wrong" — losing every valid result too.
+  const sortedResults = Array.isArray(searchData)
+    ? searchData.filter((item) => item && typeof item === "object")
+    : [];
 
   return (
     <Container>
@@ -535,7 +540,7 @@ const SearchPage = () => {
               <div className="space-y-0">
                 {sortedResults.map((item, idx) => (
                   <SearchDataWidget
-                    key={item._id.$oid || idx}
+                    key={item?._id?.$oid || item?.id || idx}
                     item={item}
                     cat_name={item.type}
                     mp3_title={item.mp3_title || item.title || item.name}
