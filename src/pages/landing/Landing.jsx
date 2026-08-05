@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./landing.scss";
@@ -14,7 +14,15 @@ import bgenre from "../../assets/svg/boom-genre.svg";
 import quranIcon from "../../assets/svg/quran.svg";
 import { BsFillPlayBtnFill } from "react-icons/bs";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import FilterChips from "../../components/filterChips/FilterChips";
+import {
+  ALL_LANGUAGES_ID,
+  DEFAULT_LANGUAGE_ID,
+  HOME_LANGUAGES,
+  readStoredLanguage,
+  storeLanguage,
+} from "../../utils/languages";
 import LandingOptions from "../../components/landingOptions/LandingOptions";
 import MyCarousel from "../../components/UI/carousel/myCarousel";
 import MobileImageWidget from "./mobileimagewidget/mobileImageWidget";
@@ -98,10 +106,41 @@ const Landing = () => {
     (typeof refreshToken === "string" && refreshToken.trim())
   );
 
+  // Language filter for the trending feed. Seeded from the URL so a filtered
+  // home can be shared or reloaded, then from the last choice, then English.
+  // Applied server-side (see trendingApi.getTrendings) rather than filtering
+  // the loaded page, which would only reorder the handful of rows on screen.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [languageId, setLanguageId] = useState(() => {
+    const fromUrl = searchParams.get("lang");
+    if (fromUrl === "all") return ALL_LANGUAGES_ID;
+    if (fromUrl !== null && fromUrl !== "") {
+      const parsed = Number(fromUrl);
+      if (HOME_LANGUAGES.some((l) => l.id === parsed)) return parsed;
+    }
+    const stored = readStoredLanguage();
+    return stored === undefined ? DEFAULT_LANGUAGE_ID : stored;
+  });
+
+  const handleLanguageChange = (nextId) => {
+    setLanguageId(nextId);
+    storeLanguage(nextId);
+    const next = new URLSearchParams(searchParams);
+    next.set("lang", nextId === ALL_LANGUAGES_ID ? "all" : String(nextId));
+    setSearchParams(next, { replace: true });
+  };
+
+  const activeLanguageName =
+    HOME_LANGUAGES.find((l) => l.id === languageId)?.name ?? "";
+
   const [sliders, recentlyPosted, specialFeatures, recentlyviewed] =
     useLandingPageHook(id, page);
   const { querieddata: trendingLectures, isLoading: trendingLoading } =
-    useQueryGetRequest("home-trending", { page: 1 }, trendingApi.getTrendings);
+    useQueryGetRequest(
+      "home-trending",
+      { page: 1, langid: languageId },
+      trendingApi.getTrendings
+    );
 
   // Extract data from the new API response structure
   const recentlyViewedData = recentlyviewed?.data?.data;
@@ -185,13 +224,30 @@ const Landing = () => {
           <CarouselSkeleton />
         )}
 
+        <div className="landing_space home_language_filter">
+          <FilterChips
+            options={HOME_LANGUAGES}
+            value={languageId}
+            onChange={handleLanguageChange}
+            label="Filter lectures by language"
+          />
+        </div>
+
         {Array.isArray(trendingLectures) && trendingLectures.length > 0 && (
           <div className="landing_recent landing_space my-1 mobile-up:my-3 home_trending_first">
             <GroupWidget
               data={trendingLectures.slice(0, 10)}
-              heading="Trending Now"
+              heading={
+                languageId === ALL_LANGUAGES_ID
+                  ? "Trending Now"
+                  : `Trending in ${activeLanguageName}`
+              }
               type="lectures"
-              endpoint_url="/popular_lec_api.php?langid=6&page="
+              endpoint_url={
+                languageId === ALL_LANGUAGES_ID
+                  ? "/popular_lec_api.php?page="
+                  : `/popular_lec_api.php?langid=${languageId}&page=`
+              }
               currentPage={page}
               nav1={{ title: "Home", link: HOME }}
             />
@@ -203,6 +259,26 @@ const Landing = () => {
             <RowSkeletonContainer />
           </div>
         )}
+
+        {/* A language with nothing trending would otherwise make the whole
+            section disappear, which reads as a broken page right after the
+            user taps a chip. Say what happened and offer the way back. */}
+        {!trendingLoading &&
+          Array.isArray(trendingLectures) &&
+          trendingLectures.length === 0 && (
+            <div className="landing_recent landing_space my-1 mobile-up:my-3">
+              <p className="home_empty_language" aria-live="polite">
+                No lectures trending in {activeLanguageName} right now.{" "}
+                <button
+                  type="button"
+                  className="home_empty_language_reset"
+                  onClick={() => handleLanguageChange(ALL_LANGUAGES_ID)}
+                >
+                  Show all languages
+                </button>
+              </p>
+            </div>
+          )}
 
         {recentlyPosted?.isSuccess && Array.isArray(recentlyPosted?.data) && (
           <div className="landing_recent landing_space my-1 mobile-up:my-3">

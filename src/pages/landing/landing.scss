@@ -348,3 +348,33 @@
     animation: none !important;
   }
 }
+
+// Language chip row sits directly above the trending feed so the filter and
+// the thing it filters read as one unit.
+.home_language_filter {
+  margin-top: 4px;
+  margin-bottom: 2px;
+}
+
+.home_empty_language {
+  color: #b9b9b9;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 12px 0 4px;
+}
+
+.home_empty_language_reset {
+  color: #ddff2b;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  touch-action: manipulation;
+  background: none;
+  border: 0;
+  padding: 0;
+
+  &:focus-visible {
+    outline: 2px solid #ddff2b;
+    outline-offset: 2px;
+  }
+}
