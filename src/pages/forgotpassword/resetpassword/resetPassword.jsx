@@ -90,6 +90,8 @@ const ResetPassword = () => {
           type="email"
           value={email}
           name="email"
+          autoComplete="email"
+          spellCheck={false}
           onChange={(e) => {
             setEmail(e.target.value);
           }}
@@ -101,6 +103,7 @@ const ResetPassword = () => {
             type={show}
             value={password}
             name="password"
+            autoComplete="new-password"
             onChange={(e) => {
               setPassword(e.target.value);
             }}
@@ -127,6 +130,7 @@ const ResetPassword = () => {
             type={show}
             value={confirmPassword}
             name="password"
+            autoComplete="new-password"
             onChange={(e) => {
               setConfirmPassword(e.target.value);
             }}

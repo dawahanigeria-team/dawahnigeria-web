@@ -27,8 +27,7 @@ const SearchDropdown = ({ results, loading, onSelect }) => {
               <img
                 src={item.img}
                 alt={item.name}
-                className="w-10 h-10 rounded-full object-cover"
-              />
+                className="w-10 h-10 rounded-full object-cover" loading="lazy" decoding="async" />
             )}
             <div className="flex-1">
               <div className="font-medium text-color">

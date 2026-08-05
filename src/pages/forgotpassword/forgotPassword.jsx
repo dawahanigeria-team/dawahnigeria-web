@@ -79,6 +79,8 @@ const ForgotPassword = () => {
               type="email"
               value={email}
               name="email"
+              autoComplete="email"
+              spellCheck={false}
               onChange={(e) => {
                 setEmail(e.target.value);
               }}

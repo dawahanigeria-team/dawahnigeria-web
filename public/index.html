@@ -5,6 +5,10 @@
     <link rel="icon" href="%PUBLIC_URL%/dn_logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
+    <!-- The UI is dark-only. Without this, the browser still paints its own
+         chrome light: scrollbars, <select> dropdowns, date pickers and form
+         controls render as light widgets on a dark page. -->
+    <meta name="color-scheme" content="dark" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta
       name="description"

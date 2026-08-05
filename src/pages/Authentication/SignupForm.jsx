@@ -157,6 +157,8 @@ const SignupForm = () => {
               onBlur={() => setFocusedField(null)}
               type="text"
               name="text"
+              autoComplete="username"
+              spellCheck={false}
               placeholder="Username"
               required
               value={name}
@@ -179,6 +181,8 @@ const SignupForm = () => {
               onBlur={() => setFocusedField(null)}
               type="email"
               name="email"
+              autoComplete="email"
+              spellCheck={false}
               placeholder="Email Address"
               required
               value={email}
@@ -203,6 +207,7 @@ const SignupForm = () => {
                 type={show}
                 placeholder="Password"
                 name="password"
+                autoComplete="new-password"
                 required
                 value={password}
                 id="password"
@@ -238,6 +243,7 @@ const SignupForm = () => {
                 type={show2}
                 placeholder="Confirm Password"
                 name="confirm_password"
+                autoComplete="new-password"
                 required
                 value={confirm_password}
                 id="confirm_password"

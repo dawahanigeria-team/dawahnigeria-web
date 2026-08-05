@@ -97,6 +97,8 @@ const LoginForm = () => {
               onBlur={() => setFocusedField(null)}
               type="email"
               name="email"
+              autoComplete="email"
+              spellCheck={false}
               placeholder="Email Address"
               required
               value={email}
@@ -121,6 +123,7 @@ const LoginForm = () => {
                 type={show}
                 placeholder="Password"
                 name="password"
+                autoComplete="current-password"
                 required
                 value={password}
                 id="password"

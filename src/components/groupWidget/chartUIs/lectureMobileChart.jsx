@@ -34,8 +34,7 @@ const LectureMobileChart = ({ data }) => {
                 <img
                   className="rounded-md w-full h-full"
                   src={data[1]?.img || IMAGE_PLACEHOLDERS.lecture}
-                  alt=""
-                />
+                  alt="" loading="lazy" decoding="async" />
 
                 <div className="w-full h-[20px]   text-[12px] inset-x-0 absolute bottom-[-5px] flex items-center justify-center">
                   <span className="w-[20px] h-[20px]  rounded-full bg-[#96734a] flex items-center justify-center">
@@ -61,8 +60,7 @@ const LectureMobileChart = ({ data }) => {
                 <img
                   className="rounded-md w-full h-full"
                   src={data[0]?.img || IMAGE_PLACEHOLDERS.lecture}
-                  alt=""
-                />
+                  alt="" loading="lazy" decoding="async" />
                 <div className="w-full h-[20px]   text-[12px] inset-x-0 absolute bottom-[-5px] flex items-center justify-center">
                   <span className="w-[20px] h-[20px] rounded-full bg-[#76a8d7] flex items-center justify-center">
                     {" "}
@@ -86,8 +84,7 @@ const LectureMobileChart = ({ data }) => {
                 <img
                   className="rounded-md w-full h-full"
                   src={data[2]?.img || IMAGE_PLACEHOLDERS.lecture}
-                  alt=""
-                />
+                  alt="" loading="lazy" decoding="async" />
 
                 <div className="w-full h-[20px]   text-[12px] inset-x-0 absolute bottom-[-5px] flex items-center justify-center">
                   <span className="w-[20px] h-[20px] rounded-full bg-[#ffa736] flex items-center justify-center">

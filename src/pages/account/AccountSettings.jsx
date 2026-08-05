@@ -185,6 +185,7 @@ const AccountSettings = () => {
                   type="password"
                   value={passwords.current}
                   onChange={(e) => setPasswords({ ...passwords, current: e.target.value })}
+                  autoComplete="current-password"
                   placeholder="Enter current password"
                   required
                 />
@@ -195,6 +196,7 @@ const AccountSettings = () => {
                   type="password"
                   value={passwords.new}
                   onChange={(e) => setPasswords({ ...passwords, new: e.target.value })}
+                  autoComplete="new-password"
                   placeholder="Enter new password"
                   minLength={8}
                   required
@@ -206,6 +208,7 @@ const AccountSettings = () => {
                   type="password"
                   value={passwords.confirm}
                   onChange={(e) => setPasswords({ ...passwords, confirm: e.target.value })}
+                  autoComplete="new-password"
                   placeholder="Confirm new password"
                   required
                 />
