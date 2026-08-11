@@ -100,6 +100,30 @@
     }
   }
 
+  // Keep the first content section at the same position while slider data is
+  // loading. The former skeleton reused `.carousel`, which is hidden on
+  // mobile, so the entire page shifted when the real 180px hero appeared.
+  .landing_carousel_skeleton {
+    display: block;
+    width: 100%;
+    height: 250px;
+    margin-bottom: 3rem;
+    border-radius: 20px;
+    overflow: hidden;
+
+    @include mobile {
+      height: 180px;
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: 16px;
+    }
+
+    @media screen and (min-width: 1283px) {
+      height: 300px;
+      border-radius: 24px;
+    }
+  }
+
   // Mobile carousel
   .landing_carousel {
     width: 100%;

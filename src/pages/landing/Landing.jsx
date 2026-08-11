@@ -182,46 +182,49 @@ const Landing = () => {
 
             {/* Mobile Carousel - only render on mobile */}
             {isMobile && (
-              <>
-                <Slider className="landing_carousel landing_space" {...MOBILE_CAROUSEL_SETTINGS}>
-                  {sliders.data.map((image, index) => (
-                    <div key={image} className="landing_carousel_img">
-                      <MobileImageWidget image={image} priority={index === 0} />
-                    </div>
-                  ))}
-                </Slider>
-                <h2 className="landing_browse_heading text-color">Browse</h2>
-                <Slider className="landing_options" {...OPTIONS_SLIDER_SETTINGS}>
-                  <LandingOptions text={"Library"} img={bplaylist} link={LIBRARY} />
-                  <LandingOptions text={"Charts"} img={bchart} link={CHARTS} />
-                  <LandingOptions text={"Lecturers"} img={blecturer} link={LECTURERS} />
-                  <LandingOptions text={"Quran"} img={quranIcon} link={QURAN} />
-                  <LandingOptions text={"Playlists"} img={bplaylist} link={PLAY} />
-                  <LandingOptions text={"Video"} icon={<BsFillPlayBtnFill />} link={VIDEO} />
-                  <LandingOptions text={"Categories"} img={bgenre} link={CATEGORIES} />
-                  <LandingOptions text={"Trending"} img={btrending} link={TRENDING} />
-                  <LandingOptions text={"New"} img={bnew} link={NEW} />
-                </Slider>
-
-                <section className="landing_mobile_leaderboard_cta" aria-label="Listening leaderboard call to action">
-                  <p className="landing_mobile_leaderboard_badge">Community listening</p>
-                  <h2>Check today&apos;s leaderboard</h2>
-                  <p>
-                    Track your listening sessions and climb the daily ranking.
-                  </p>
-                  <button
-                    type="button"
-                    className="landing_mobile_leaderboard_button"
-                    onClick={handleLeaderboardCtaClick}
-                  >
-                    View leaderboard
-                  </button>
-                </section>
-              </>
+              <Slider className="landing_carousel landing_space" {...MOBILE_CAROUSEL_SETTINGS}>
+                {sliders.data.map((image, index) => (
+                  <div key={image} className="landing_carousel_img">
+                    <MobileImageWidget image={image} priority={index === 0} />
+                  </div>
+                ))}
+              </Slider>
             )}
           </>
         ) : (
           <CarouselSkeleton />
+        )}
+
+        {isMobile && (
+          <>
+            <h2 className="landing_browse_heading text-color">Browse</h2>
+            <Slider className="landing_options" {...OPTIONS_SLIDER_SETTINGS}>
+              <LandingOptions text={"Library"} img={bplaylist} link={LIBRARY} />
+              <LandingOptions text={"Charts"} img={bchart} link={CHARTS} />
+              <LandingOptions text={"Lecturers"} img={blecturer} link={LECTURERS} />
+              <LandingOptions text={"Quran"} img={quranIcon} link={QURAN} />
+              <LandingOptions text={"Playlists"} img={bplaylist} link={PLAY} />
+              <LandingOptions text={"Video"} icon={<BsFillPlayBtnFill />} link={VIDEO} />
+              <LandingOptions text={"Categories"} img={bgenre} link={CATEGORIES} />
+              <LandingOptions text={"Trending"} img={btrending} link={TRENDING} />
+              <LandingOptions text={"New"} img={bnew} link={NEW} />
+            </Slider>
+
+            <section className="landing_mobile_leaderboard_cta" aria-label="Listening leaderboard call to action">
+              <p className="landing_mobile_leaderboard_badge">Community listening</p>
+              <h2>Check today&apos;s leaderboard</h2>
+              <p>
+                Track your listening sessions and climb the daily ranking.
+              </p>
+              <button
+                type="button"
+                className="landing_mobile_leaderboard_button"
+                onClick={handleLeaderboardCtaClick}
+              >
+                View leaderboard
+              </button>
+            </section>
+          </>
         )}
 
         <div className="landing_space home_language_filter">
