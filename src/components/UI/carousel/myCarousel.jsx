@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./carousel.css";
 import { MdNavigateBefore } from "react-icons/md";
 import { MdNavigateNext } from "react-icons/md";
@@ -6,12 +6,6 @@ import ImageWidget from "./imageWidget";
 
 const MyCarousel = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images?.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [currentIndex, images?.length]);
 
   return (
     <div className="w-full group h-full relative items-end justify-end px-[5] flex cursor-pointer">
@@ -52,7 +46,7 @@ const MyCarousel = ({ images }) => {
                 } 
               `}
               >
-                <ImageWidget image={image} />
+                <ImageWidget image={image} priority={index === 0} />
               </div>
 
               <div className="w-full flex items-center z-[12]   justify-center space-x-1 absolute bottom-7 inset-x-0">

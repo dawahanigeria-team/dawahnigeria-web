@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IMAGE_PLACEHOLDERS } from "../../../utils/imagePlaceholders";
 
-const MobileImageWidget = ({ image }) => {
+const MobileImageWidget = ({ image, priority = false }) => {
   const [imgSrc, setImgSrc] = useState(image || IMAGE_PLACEHOLDERS.carouselWidget);
 
   const handleError = () => {
@@ -15,7 +15,8 @@ const MobileImageWidget = ({ image }) => {
       alt="Featured content carousel slide"
       width={400}
       height={162}
-      loading="lazy"
+      loading={priority ? "eager" : "lazy"}
+      fetchPriority={priority ? "high" : "auto"}
       onError={handleError}
     />
   );

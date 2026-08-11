@@ -20,7 +20,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { setStore } from "./store/storeRegistry";
 import { isTawkError } from "./utils/thirdPartyErrors";
 
-const { Suspense, lazy } = React;
+const { Suspense } = React;
 
 // Defer Sentry initialization to after first render for faster FCP
 const initSentry = () => {
@@ -113,53 +113,40 @@ setStore(store);
 const persistor = persistStore(store);
 const container = document.getElementById("root");
 
-// Lazy-load PostHog so posthog-js (~150KB) doesn't block initial bundle
+// Load analytics after first paint. Do not suspend/wrap the application: the
+// previous Suspense fallback mounted the full app once without PostHog and
+// then mounted it again inside the provider, duplicating startup API work.
 const postHogApiKey = process.env.REACT_APP_POSTHOG_KEY;
 const postHogHost = process.env.REACT_APP_POSTHOG_HOST;
 
-const LazyPostHogProvider = postHogApiKey && postHogHost
-  ? lazy(() =>
-      import("posthog-js/react").then((mod) => ({
-        default: ({ children }) => (
-          <mod.PostHogProvider
-            apiKey={postHogApiKey}
-            options={{
-              api_host: postHogHost,
-              capture_pageview: true,
-              capture_pageleave: true,
-              autocapture: true,
-              disable_session_recording: false,
-              enable_recording_console_log: true,
-              loaded: (posthog) => {
-                if (process.env.NODE_ENV === "development") {
-                  posthog.debug();
-                }
-              },
-              capture_metrics: true,
-            }}
-          >
-            {children}
-          </mod.PostHogProvider>
-        ),
-      }))
-    )
-  : null;
-
-const AppWithProviders = ({ children }) => {
-  if (LazyPostHogProvider) {
-    return (
-      <Suspense fallback={children}>
-        <LazyPostHogProvider>{children}</LazyPostHogProvider>
-      </Suspense>
-    );
-  }
-  return <>{children}</>;
+const initPostHog = () => {
+  if (!postHogApiKey || !postHogHost) return;
+  import("posthog-js").then(({ default: posthog }) => {
+    posthog.init(postHogApiKey, {
+      api_host: postHogHost,
+      capture_pageview: true,
+      capture_pageleave: true,
+      autocapture: true,
+      disable_session_recording: false,
+      enable_recording_console_log: true,
+      capture_performance: true,
+      loaded: (instance) => {
+        instance.register({ app: "cra-web" });
+        if (process.env.NODE_ENV === "development") instance.debug();
+      },
+    });
+  });
 };
+
+if (typeof requestIdleCallback === "function") {
+  requestIdleCallback(initPostHog, { timeout: 1500 });
+} else {
+  setTimeout(initPostHog, 0);
+}
 
 const AppComponent = (
   <HelmetProvider>
-    <AppWithProviders>
-      <Router
+    <Router
         future={{
           v7_startTransition: true,
           v7_relativeSplatPath: true,
@@ -170,12 +157,20 @@ const AppComponent = (
             <App />
           </PersistGate>
         </Provider>
-      </Router>
-    </AppWithProviders>
+    </Router>
   </HelmetProvider>
 );
 
 const root = ReactDOM.createRoot(container);
 root.render(AppComponent);
 
-reportWebVitals();
+reportWebVitals((metric) => {
+  window.posthog?.capture("web_vital", {
+    id: metric.id,
+    name: metric.name,
+    value: metric.value,
+    rating: metric.rating,
+    navigation_type: metric.navigationType,
+    app: "cra-web",
+  });
+});

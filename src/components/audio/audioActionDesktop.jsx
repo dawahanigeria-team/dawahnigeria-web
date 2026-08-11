@@ -698,6 +698,7 @@ const AudioActionDesktop = () => {
         <audio
           ref={audioRef}
           src={currentaudio?.audio}
+          preload="metadata"
           onLoadedData={handleState}
           onTimeUpdate={() => {
             if (audioRef.current && !audioRef.current?.seeking) {

@@ -16,6 +16,8 @@
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.dawahnigeria.com" crossorigin />
+    <link rel="preconnect" href="https://media.dawahnigeria.com" crossorigin />
     <!-- Non-blocking font preloads -->
     <link
       rel="preload"
@@ -55,20 +57,9 @@
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script
-      async
-      defer
-      src="https://www.googletagmanager.com/gtag/js?id=G-VGHJ94CCWM"
-    ></script>
-    <script async>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-VGHJ94CCWM", { send_page_view: false });
-    </script>
+    <!-- Google Sign-In is loaded by GoogleOAuthProvider only on auth pages.
+         PostHog owns product analytics; avoid two unused global scripts on
+         every catalogue visit. -->
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.

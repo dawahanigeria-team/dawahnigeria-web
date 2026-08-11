@@ -53,7 +53,7 @@ import { trendingApi } from "../../services/trending.service";
 const MOBILE_CAROUSEL_SETTINGS = {
   dots: true,
   infinite: true,
-  autoplay: true,
+  autoplay: false,
   fade: true,
   speed: 500,
   slidesToShow: 1,
@@ -186,7 +186,7 @@ const Landing = () => {
                 <Slider className="landing_carousel landing_space" {...MOBILE_CAROUSEL_SETTINGS}>
                   {sliders.data.map((image, index) => (
                     <div key={image} className="landing_carousel_img">
-                      <MobileImageWidget image={image} />
+                      <MobileImageWidget image={image} priority={index === 0} />
                     </div>
                   ))}
                 </Slider>

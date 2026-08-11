@@ -130,7 +130,9 @@ const Layout = () => {
           audioRef.current.setAttribute("webkit-playsinline", "true");
           audioRef.current.setAttribute("autoplay", "false");
           audioRef.current.setAttribute("x-webkit-airplay", "allow");
-          audioRef.current.setAttribute("preload", "auto");
+          // Persisted now-playing metadata must not download megabytes of
+          // audio on every home visit. Full buffering begins on user play.
+          audioRef.current.setAttribute("preload", "metadata");
 
           if (typeof window !== 'undefined' && "mediaSession" in navigator) {
             navigator.mediaSession.setActionHandler("play", () => {
