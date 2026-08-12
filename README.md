@@ -1,4 +1,4 @@
-# Dawahnig Live
+# Dawah Nigeria Web
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
@@ -23,8 +23,8 @@ You need **Node.js 18+** and **Yarn 1.x**. The project enforces Yarn — `npm in
 will refuse to run.
 
 ```bash
-git clone https://github.com/dawahanigeria-team/dawahnig-live.git
-cd dawahnig-live
+git clone https://github.com/dawahanigeria-team/dawahnigeria-web.git
+cd dawahnigeria-web
 yarn install
 cp .env.example .env
 yarn start

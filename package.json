@@ -5,11 +5,11 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dawahanigeria-team/dawahnig-live.git"
+    "url": "https://github.com/dawahanigeria-team/dawahnigeria-web.git"
   },
   "homepage": "https://dawahnigeria.com",
   "bugs": {
-    "url": "https://github.com/dawahanigeria-team/dawahnig-live/issues"
+    "url": "https://github.com/dawahanigeria-team/dawahnigeria-web/issues"
   },
   "private": true,
   "dependencies": {

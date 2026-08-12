@@ -5,7 +5,7 @@
 **Please do not open a public GitHub issue for security problems.**
 
 Report vulnerabilities privately to **server@dawahnigeria.com**, or through
-GitHub's [private vulnerability reporting](https://github.com/dawahanigeria-team/dawahnig-live/security/advisories/new)
+GitHub's [private vulnerability reporting](https://github.com/dawahanigeria-team/dawahnigeria-web/security/advisories/new)
 on this repository.
 
 Please include:

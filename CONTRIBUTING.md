@@ -1,4 +1,4 @@
-# Contributing to Dawahnig Live
+# Contributing to Dawah Nigeria Web
 
 Thank you for considering a contribution. This repository is the **web frontend**
 for [dawahnigeria.com](https://dawahnigeria.com) — a React application that reads
@@ -15,8 +15,8 @@ You will need **Node.js 18+** and **Yarn 1.x**. The project enforces Yarn — `n
 install` will refuse to run.
 
 ```bash
-git clone https://github.com/dawahanigeria-team/dawahnig-live.git
-cd dawahnig-live
+git clone https://github.com/dawahanigeria-team/dawahnigeria-web.git
+cd dawahnigeria-web
 yarn install
 cp .env.example .env
 yarn start

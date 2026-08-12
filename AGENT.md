@@ -27,7 +27,7 @@
 ## Project Structure
 
 ```
-dawahnig-live/
+dawahnigeria-web/
 ├── src/
 │   ├── App.jsx                 # Root application component
 │   ├── index.js                # Entry point with Redux, Sentry
@@ -94,8 +94,8 @@ yarn test             # Run Jest tests
 
 ### Installation
 ```bash
-git clone https://github.com/dawahanigeria-team/dawahnig-live.git
-cd dawahnig-live
+git clone https://github.com/dawahanigeria-team/dawahnigeria-web.git
+cd dawahnigeria-web
 yarn install
 cp .env.example .env  # Configure environment variables
 yarn start            # Start development server

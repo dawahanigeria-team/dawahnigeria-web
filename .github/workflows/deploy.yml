@@ -110,7 +110,7 @@ jobs:
             chmod 600 /root/.ssh/known_hosts || true
             # Ensure server code exists and is on the correct branch
             if [ ! -d "$APP_DIR/.git" ]; then
-              GIT_SSH_COMMAND="ssh -i /root/.ssh/github_deploy -o IdentitiesOnly=yes" git clone --branch master --depth 1 git@github.com:dawahanigeria-team/dawahnig-live.git "$APP_DIR"
+              GIT_SSH_COMMAND="ssh -i /root/.ssh/github_deploy -o IdentitiesOnly=yes" git clone --branch master --depth 1 git@github.com:dawahanigeria-team/dawahnigeria-web.git "$APP_DIR"
             else
               cd "$APP_DIR"
               GIT_SSH_COMMAND="ssh -i /root/.ssh/github_deploy -o IdentitiesOnly=yes" git fetch origin master
