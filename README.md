@@ -108,7 +108,8 @@ Contributions are welcome. Please read:
 - [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) — how we expect people to treat each other
 - [SECURITY.md](SECURITY.md) — how to report a vulnerability (please do not open a public issue)
 
-The default branch is `master`.
+The default branch is `dev` — please open pull requests against it, not against
+`master`. `master` deploys straight to production.
 
 ## License
 

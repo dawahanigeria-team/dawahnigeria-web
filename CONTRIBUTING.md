@@ -43,8 +43,12 @@ issue first rather than working around it in the client.
 
 ## Branching and pull requests
 
-The default branch is **`master`**. Branch from it and open your pull request
-against it.
+The default branch is **`dev`**, and that is where contributions go. Branch from
+`dev` and open your pull request against `dev` — not against `master`.
+
+`master` is the production branch: every push to it deploys straight to the live
+site. Maintainers promote `dev` to `master` once changes have been checked on the
+development deployment.
 
 Use a descriptive branch name — for example `fix/player-seek-on-mobile` or
 `feat/lecturer-filter-chips`.

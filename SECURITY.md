@@ -44,5 +44,6 @@ Out of scope:
 
 ## Supported versions
 
-Only the current `master` branch receives security fixes. There are no
-long-lived release branches.
+Only the current `master` branch (what is live on dawahnigeria.com) receives
+security fixes. Fixes land on `dev` first and are promoted to `master`. There are
+no long-lived release branches.
