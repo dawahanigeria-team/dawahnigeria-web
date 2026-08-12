@@ -1,0 +1,43 @@
+name: Feature request
+description: Suggest an improvement to the web frontend
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This repository is the **web frontend only**. Requests for new lecture
+        content, or for data the API does not yet return, cannot be solved here.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the situation you run into, not the solution you have in mind.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you like to happen?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: needs-api
+    attributes:
+      label: Does this need new data from the API?
+      options:
+        - "No — everything needed is already returned"
+        - "Yes — the API would need to change"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Would you like to work on this?
+      options:
+        - label: I am willing to open a pull request for this
+          required: false

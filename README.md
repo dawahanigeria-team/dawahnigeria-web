@@ -1,196 +1,119 @@
 # Dawahnig Live
 
-This is the codebase for the Dawahnig Live website built with **React 19** and Redux, featuring server-side rendering capabilities.
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
-## Getting Started
+The web frontend for [dawahnigeria.com](https://dawahnigeria.com) — a React
+application for discovering and listening to Islamic lectures.
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+This repository contains **the frontend only**. The API it reads from, and the
+lecture audio itself, are not part of this repository.
 
-### Prerequisites
+## Tech stack
 
-You will need to have the following installed on your machine:
+- [React 19](https://react.dev/) with [Create React App](https://create-react-app.dev/) (`react-scripts` 5)
+- [Redux](https://redux.js.org/) with `redux-persist` for state
+- [React Router 7](https://reactrouter.com/) for routing
+- [TanStack Query](https://tanstack.com/query) for server state
+- [Tailwind CSS](https://tailwindcss.com/) for styling
+- Sentry, PostHog and Tawk.to for monitoring, analytics and support chat
 
-- Node.js (v18 or higher)
-- Yarn (v1.22.0 or higher)
+## Getting started
 
-### Installing
+You need **Node.js 18+** and **Yarn 1.x**. The project enforces Yarn — `npm install`
+will refuse to run.
 
-Follow these steps to get the project up and running:
-
-1. Clone the repository
 ```bash
 git clone https://github.com/dawahanigeria-team/dawahnig-live.git
 cd dawahnig-live
-```
-
-2. Install dependencies
-```bash
 yarn install
-```
-
-### Development
-
-#### Client-Side Development
-Start the React development server:
-```bash
+cp .env.example .env
 yarn start
 ```
-This will start the app on http://localhost:3000
 
-#### Production Server (Full SSR)
-1. Build the production bundle:
+The development server runs at http://localhost:3000.
+
+`.env.example` points at the live production API, which is read-only for the
+endpoints this app uses. Copy it as-is to get running; the analytics and error
+reporting keys are optional and the app works without them.
+
+> **The dev server must run on port 3000.** The API's CORS allowlist contains
+> `http://localhost:3000` exactly — other ports, and `127.0.0.1`, are rejected.
+> On a different port the page renders but no content loads.
+
+### Available scripts
+
+| Command | What it does |
+| --- | --- |
+| `yarn start` | Start the development server on port 3000 |
+| `yarn build` | Build the production bundle into `build/` |
+| `yarn test` | Run the Jest test suite |
+
+To preview a production build locally:
+
 ```bash
 yarn build
+npx serve -s build
 ```
 
-2. Start the full SSR server:
-```bash
-yarn start
-```
-This will start the server with **full Server-Side Rendering** on http://localhost:3000
+## Project structure
 
-#### Alternative: Simple Server (Client-Side Only)
-For basic hosting without SSR:
-```bash
-yarn start:simple
 ```
-
-#### Development with Auto-Reload
-For development with automatic rebuilding and server restart:
-```bash
-yarn dev:simple
+src/
+  assets/       Images, fonts and static media
+  components/   Shared UI components
+  pages/        Route-level components
+  Redux/        Store, actions and reducers
+  hooks/        Custom React hooks
+  services/     API clients and auth/token handling
+  utils/        Helpers (formatting, downloads, analytics)
+lambda-edge/    Lambda@Edge function that injects Open Graph tags at CloudFront
+public/         Static files copied verbatim into the build
 ```
 
-### Available Scripts
+## How SEO and link previews work
 
-- `yarn dev` - Start React development server
-- `yarn start` - **Start full SSR production server (recommended)**
-- `yarn build` - Build production bundle
-- `yarn start:ssr` - Start full SSR server (same as `yarn start`)
-- `yarn start:simple` - Start simple server (client-side only)
-- `yarn dev:ssr` - Development mode with SSR and auto-reload
-- `yarn dev:simple` - Development mode with simple server
-- `yarn test` - Run tests
+This is a client-rendered single-page app, so social media crawlers and search
+engines would normally see an empty shell. Instead of server-rendering, a
+**Lambda@Edge function** (`lambda-edge/og-tags-injector.js`) runs at the
+CloudFront edge and injects per-page Open Graph tags and JSON-LD structured data
+into the HTML for bot requests. See [lambda-edge/README.md](lambda-edge/README.md)
+for how it is deployed.
 
-### Health Check
+## Deployment
 
-Once the server is running, you can check its status:
-```bash
-curl http://localhost:3000/health
-```
+Production and staging are static builds deployed to **Amazon S3** and served
+through **CloudFront**, driven by the workflows in `.github/workflows/`:
 
-## SEO Features
+| Workflow | Trigger | Target |
+| --- | --- | --- |
+| `main.yml` | push to `master` | Production |
+| `staging-ci-cd.yml` | push to `staging` | Staging |
+| `dev-ci.yml` | push to `dev` | Development |
+| `pr-ci.yml` | pull requests | Build and test only, no deployment |
 
-This application includes comprehensive SEO optimization:
+All build-time configuration comes from GitHub Actions secrets. Pull requests
+from forks intentionally have no access to those secrets, so `pr-ci.yml` builds
+using `.env.example` only.
 
-### ✅ **Full Server-Side Rendering**
-- All pages are pre-rendered on the server
-- Search engines receive complete HTML content
-- No dependency on JavaScript for content visibility
-
-### ✅ **Dynamic Meta Tags**
-Route-specific optimization:
-- **Home/Dawahcast**: Islamic knowledge and education focus
-- **Trending**: Popular Islamic content discovery
-- **Lecturers**: Islamic scholars and teachers directory
-- **Genres**: Content categorization by Islamic topics
-- **Quran**: Quranic recitations and teachings
-
-### ✅ **Social Media Optimization**
-- Open Graph meta tags for Facebook, LinkedIn
-- Twitter Cards for enhanced sharing
-- Dynamic URLs and descriptions per page
-
-### ✅ **Search Engine Ready**
-- Pre-rendered content in `<div id="root">`
-- Proper HTML structure for crawlers
-- Fast loading with React 19 streaming
-- Fallback content for any rendering issues
-
-## Deployment & Hosting
-
-This application can be hosted as a Node.js application on various platforms:
-
-### Platform Options
-
-#### 1. **Heroku**
-```bash
-# Install Heroku CLI, then:
-heroku create your-app-name
-git push heroku main
-```
-- Add `"start": "yarn start:simple"` to package.json scripts
-- Heroku will automatically detect Node.js and run the build
-
-#### 2. **Railway**
-```bash
-# Connect your GitHub repo to Railway
-# Railway will auto-deploy on git push
-```
-- Set start command: `yarn start:simple`
-- Set build command: `yarn build`
-
-#### 3. **Render**
-- Connect GitHub repository
-- Build command: `yarn build`
-- Start command: `yarn start:simple`
-- Auto-deploys on git push
-
-#### 4. **Vercel** (Recommended for React apps)
-```bash
-npm i -g vercel
-vercel
-```
-- Optimized for React applications
-- Automatic builds and deployments
-
-#### 5. **DigitalOcean App Platform**
-- Connect GitHub repository
-- Build command: `yarn build`
-- Run command: `yarn start:simple`
-
-#### 6. **AWS/GCP/Azure**
-Deploy using Docker or directly:
-```dockerfile
-# Example Dockerfile
-FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN yarn install
-COPY . .
-RUN yarn build
-EXPOSE 3000
-CMD ["yarn", "start:simple"]
-```
-
-### Environment Variables
-
-Set these environment variables in your hosting platform:
-- `NODE_ENV=production`
-- `PORT=3000` (or your preferred port)
-
-### Production Checklist
-
-- ✅ **Full Server-Side Rendering (SSR)** with React 19
-- ✅ **SEO Optimized** - Dynamic meta tags per route
-- ✅ **React 19 Streaming** - Advanced SSR capabilities
-- ✅ **Route-specific SEO** - Optimized titles, descriptions, keywords
-- ✅ **Open Graph & Twitter Cards** - Social media optimization
-- ✅ Express.js server ready
-- ✅ Static asset serving configured
-- ✅ Health check endpoint available
-- ✅ Environment variable support
-- ✅ Auto-scaling compatible
-- ✅ **Search Engine Ready** - Pre-rendered content for crawlers
-
-## Built With
-
-- [React 19](https://reactjs.org/) - Latest React with improved SSR capabilities
-- [Redux](https://redux.js.org/) - State management
-- [Express.js](https://expressjs.com/) - Node.js web framework
-- [Tailwind CSS](https://tailwindcss.com/) - Styling
+> **Note:** an experimental server-side rendered deployment exists on the
+> `yusuf/hosting-ssr` branch (`deploy.yml`, Express + pm2 on a VPS). It is not
+> part of `master`, and the Express server and its scripts are not in this
+> branch.
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
-# Trigger deployment Thu Aug 28 11:41:53 WAT 2025
+Contributions are welcome. Please read:
+
+- [CONTRIBUTING.md](CONTRIBUTING.md) — setup, branching, and what to check before opening a PR
+- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) — how we expect people to treat each other
+- [SECURITY.md](SECURITY.md) — how to report a vulnerability (please do not open a public issue)
+
+The default branch is `master`.
+
+## License
+
+Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE).
+
+The license covers the source code in this repository. It does **not** grant any
+rights to the Dawah Nigeria name or logo, or to the lecture content served by the
+application.

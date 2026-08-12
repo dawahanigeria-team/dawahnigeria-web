@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/dawahanigeria-team/dawahnig-live/security/advisories/new
+    about: Please report vulnerabilities privately, never as a public issue.
+  - name: Problem with a lecture, audio file, or other content
+    url: https://dawahnigeria.com
+    about: Content issues are not handled in this repository — contact the site team.

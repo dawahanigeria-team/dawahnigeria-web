@@ -1,0 +1,62 @@
+name: PR Checks
+
+# `pull_request` (not `pull_request_target`) is deliberate: pull requests from
+# forks run with a read-only token and no access to repository secrets, so
+# untrusted code cannot reach the AWS or VPS credentials used by the deploy
+# workflows.
+on:
+  pull_request:
+    branches:
+      - master
+      - dev
+      - staging
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Build and test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run tests
+        run: yarn test --watchAll=false
+        env:
+          CI: true
+
+      - name: Build
+        # No secrets here on purpose. The build only needs the public API URLs,
+        # which come from .env.example so a fork PR can build without any
+        # repository configuration.
+        run: |
+          cp .env.example .env
+          yarn build
+
+      - name: Check for committed env files
+        # .env.example is tracked on purpose; any other .env variant is not.
+        run: |
+          OFFENDERS=$(git ls-files \
+            | grep -xE '(.*/)?\.env(\..+)?' \
+            | grep -vxE '(.*/)?\.env\.(example|sample|template)' || true)
+          if [ -n "$OFFENDERS" ]; then
+            echo "::error::Environment files are tracked in this pull request:"
+            echo "$OFFENDERS"
+            exit 1
+          fi
