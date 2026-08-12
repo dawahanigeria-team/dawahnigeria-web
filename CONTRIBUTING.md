@@ -24,6 +24,14 @@ yarn start
 
 The app runs at http://localhost:3000.
 
+### You must use port 3000
+
+The API's CORS allowlist contains **`http://localhost:3000` exactly**. Any other
+port — and even `http://127.0.0.1:3000` — is rejected, and every request will
+fail in the browser with a CORS error while the page shell still renders. If you
+see "Unable to establish connection to server" and empty content, check your
+port before anything else.
+
 ### About the API
 
 `.env.example` points at the live production API. It is read-only for the

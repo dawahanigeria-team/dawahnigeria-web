@@ -36,6 +36,10 @@ The development server runs at http://localhost:3000.
 endpoints this app uses. Copy it as-is to get running; the analytics and error
 reporting keys are optional and the app works without them.
 
+> **The dev server must run on port 3000.** The API's CORS allowlist contains
+> `http://localhost:3000` exactly — other ports, and `127.0.0.1`, are rejected.
+> On a different port the page renders but no content loads.
+
 ### Available scripts
 
 | Command | What it does |
