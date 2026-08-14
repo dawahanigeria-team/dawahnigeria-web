@@ -8,7 +8,10 @@ const initailState = {
   addplaylist: false,
   lecid: "",
   audioData: null,
-  audioId: 164864,
+  // No lecture is selected until the visitor explicitly chooses one or opens
+  // a lecture URL. A hard-coded ID made unrelated audio appear on shared
+  // playlist and album pages.
+  audioId: null,
   count: 0,
   pack: [],
   page: 0,

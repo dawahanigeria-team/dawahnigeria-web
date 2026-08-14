@@ -367,7 +367,8 @@ const Layout = () => {
 
       {/* ----------------Mobile Buttom menue------------------- */}
       <div className="layout_buttom_menue bg-background">
-        <div className="layout_buttom_menue1">
+        {audioId && currentLecture && (
+          <div className="layout_buttom_menue1">
           <div className="mini_player_top">
             <div
               className="mini_player_meta"
@@ -504,7 +505,8 @@ const Layout = () => {
               <BiShareAlt className="layout_buttom_share text-color" />
             </button>
           </div>
-        </div>
+          </div>
+        )}
 
         <div className="layout_buttom_menue2 px-6 py-2">
           <div
@@ -606,7 +608,7 @@ const Layout = () => {
           </div>
         </div>
       </div>
-      <AudioActionDesktop />
+      {audioId && <AudioActionDesktop />}
       {isShare && (
         <ShareAudio
           isShare={isShare}

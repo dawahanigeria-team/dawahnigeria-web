@@ -9,7 +9,7 @@ import {
   createRoutesFromChildren,
   matchRoutes,
 } from "react-router-dom";
-import { persistStore, persistReducer } from "redux-persist";
+import { createTransform, persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
@@ -19,6 +19,7 @@ import { thunk } from "redux-thunk";
 import { HelmetProvider } from "react-helmet-async";
 import { setStore } from "./store/storeRegistry";
 import { isTawkError } from "./utils/thirdPartyErrors";
+import { sanitizePersistedUserPlayback } from "./utils/playerPersistence";
 
 const { Suspense } = React;
 
@@ -87,6 +88,13 @@ if (typeof requestIdleCallback === "function") {
 const persistConfig = {
   key: "root",
   storage,
+  transforms: [
+    createTransform(
+      (state) => sanitizePersistedUserPlayback(state),
+      (state) => sanitizePersistedUserPlayback(state),
+      { whitelist: ["user"] }
+    ),
+  ],
   // Search state is a snapshot of one API response, not user data worth
   // restoring. Persisting it meant a result array saved under an older API
   // shape was rehydrated on every later visit and rendered before any fresh
