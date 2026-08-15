@@ -41,6 +41,3 @@ yarn-error.log*
 /output
 /pages
 /dist
-
-# Next.js rewrite (WIP, not ready to commit)
-next-app/
